@@ -1,0 +1,12 @@
+ trades  win_rate_net  mean_net_rupees  median_net_rupees  sum_net_rupees  mean_gross_rupees  sum_gross_rupees  sum_cost_rupees  target_exit_rate  expiry_exit_rate  mean_x_selected  mean_lot_size  slippage_ticks  brokerage_per_order  target_fraction  dte_sessions  entry_hour  entry_minute
+    195      0.210256      -229.656688        -264.051878   -44783.054137        -154.628205          -30152.5     14630.554137          0.210256          0.789744         12.05359      53.871795             1.0                 10.0              1.0             4          10             0
+
+BY DIRECTION
+ direction  trades  win_rate_net  mean_net_rupees  sum_net_rupees  target_exit_rate    mean_x
+  BEARISH       4       0.00000      -256.003664    -1024.014656           0.00000  3.325000
+  BULLISH     191       0.21466      -229.104919   -43759.039481           0.21466 12.236387
+
+BY EXIT
+ exit_reason  trades  mean_net_rupees  sum_net_rupees  win_rate_net
+     EXPIRY     154      -687.646472  -105897.556703           0.0
+     TARGET      41      1490.597624    61114.502567           1.0
