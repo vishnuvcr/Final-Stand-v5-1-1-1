@@ -76,12 +76,8 @@ def get_weekly_expiries(api):
             if START <= d <= END:
                 expiries.append(d)
     expiry_set = sorted(set(expiries))
-    monthly = set()
-    for y, m in sorted({(d.year, d.month) for d in expiry_set}):
-        md = [d for d in expiry_set if d.year == y and d.month == m]
-        if md:
-            monthly.add(max(md))
-    return [d for d in expiry_set if d not in monthly]
+    # Include every expiry file, including month-end weekly/monthly expiry dates.
+    return expiry_set
 
 
 def run_component(spot, expiry_list, typ, label):
