@@ -63,3 +63,5 @@
 
 | 2026-10-03 | Phase 20 design | Entry-time payoff-chart green area is an expiry-time construct; an intraday NIFTY breach can occur while option time value remains. | Treat the expiry zero-P&L boundary as a structural stress boundary and pre-register negative-MTM and MFE-filtered variants rather than assuming every breach is an automatic loss. |
 | 2026-10-03 | Phase 20 data alignment | NIFTY spot and all three option legs may not share every exact minute timestamp. | Use only exact common timestamps for boundary-stop evaluation; no forward filling or interpolation. |
+
+| 2026-10-03 | Phase 20 execution | First real Phase 20 Actions run failed with `ModuleNotFoundError: No module named 'research'` before analysis. | Added the repository root to `sys.path`, matching the proven Phase-17 fix; no research output from the failed run is used. |
