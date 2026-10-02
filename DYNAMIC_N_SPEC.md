@@ -65,3 +65,11 @@ Otherwise exit using the latest complete three-leg observation at or before 15:2
 - Date-aware NIFTY lots.
 - Brokerage ₹10/order.
 - Audited statutory/transaction fees.
+
+
+## 8. Controlled n-selection ablation
+To isolate the contribution of dynamic n from the direction selector, run three variants using the same Stage-1 OTM6/7/8 direction selector, same 10:00 entry, same 4-DTE schedule, same target definition, same slippage, same historical lots and same costs:
+- fixed6: always select n=6;
+- fixed15: always select n=15;
+- dynamic: select the highest n satisfying X_n >= 0.95×max(X_6..X_15).
+The ablation is descriptive and uses no outcome-based re-optimization.
