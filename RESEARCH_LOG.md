@@ -133,3 +133,10 @@
 - All previous Phase 7/8/9/9A numerical results are superseded pending this rerun.
 
 [RUN_PHASE7C]
+
+
+## 2026-10-03 — Phase 7D expiry-universe correction
+- Audit found that the implementation excluded the maximum expiry in each month as a separate monthly contract. This is not consistent with treating every expiry-date file as an eligible weekly-expiry date for the user's 4-trading-day rule and is also inconsistent with the 218-trade AlgoTest component reports.
+- Corrected the eligible expiry universe to include every expiry-date file. Prior Phase 7C results remain superseded.
+
+[RUN_PHASE7D]
