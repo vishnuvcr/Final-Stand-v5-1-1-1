@@ -4,7 +4,7 @@ Research repository for systematic testing of NIFTY weekly-options directional 3
 
 ## Current research status
 
-**Dynamic-n corrected research completed, including controlled n-selection ablation and final manuscript revision.**
+**Dynamic-n corrected research completed; Phase 17 stop-loss extension is now in progress.**
 
 The dynamic-n branch was restarted from the raw option-data workflow after two critical implementation errors were discovered during AlgoTest reconciliation:
 1. OTM strikes had initially been selected by ordinal availability instead of exact ₹50 strike distance.
@@ -122,3 +122,19 @@ A controlled ablation held the OTM6/7/8 Stage-1 direction selector and all execu
 The dynamic rule therefore produced **₹606.85 less net P&L than fixed n=6** on the identical trade universe. It selected n=7 only 6 times and n=8 once; n=6 was selected on 183/190 trades. This means the positive primary result should not be interpreted as evidence that the higher-n preference adds incremental value. The controlled ablation isolates n-selection from the separate OTM6/7/8 versus OTM15/16/17 direction-selector difference.
 
 The final manuscript has been revised accordingly.
+## Phase 17 — stop-loss extension
+
+The locked dynamic-n primary remains unchanged: **190 trades, ₹138,937.12 net P&L, 94.21% net win rate, 178 target exits and 12 expiry exits**.
+
+A stop-loss extension is being tested on the exact minute-level three-leg P&L paths. The research goal is stricter than simply reducing drawdown: the development screen requires **zero baseline-positive trades to be stopped before their original exit**, and the selected rule is then frozen for temporal validation.
+
+Development period: **2021-05-27 through 2024-12-31**.  
+Validation period: **2025-01-01 through 2026-09-30**.
+
+### Phase 17 artifacts
+
+- [Stop-loss research code](research/stop_loss_research.py)
+- [Phase 17 workflow](.github/workflows/phase-17-stop-loss-research.yml)
+- [Updated dynamic-n research plan](DYNAMIC_N_RESEARCH_PLAN.md)
+
+The baseline remains the no-stop strategy until a stop rule demonstrates improvement under the pre-registered protocol.  
