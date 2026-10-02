@@ -4,7 +4,7 @@ Research repository for systematic testing of the OTMn / OTM(n+1) / OTM(n+2) NIF
 
 ## Current status
 
-**Phase 2 — Primary backtest: IMPLEMENTED; DATA EXECUTION PENDING**
+**Phase 2 — Primary backtest: IMPLEMENTED; MULTI-YEAR DATA EXECUTION PENDING**
 
 Phase 1 locked the strategy:
 - 20 X candidates per entry: n=6..15 × Call/Put.
@@ -15,7 +15,7 @@ Phase 1 locked the strategy:
 - No stop-loss in the primary strategy.
 - Gross and net P&L are both recorded.
 
-Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot sizes for the 2024–2025 primary sample.
+Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot sizes for the expanded 2021–2026 primary sample.
 
 ## Research files
 - [Research Plan](RESEARCH_PLAN.md)
@@ -23,6 +23,7 @@ Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot
 - [Research Log](RESEARCH_LOG.md)
 - [Error Log](ERROR_LOG.md)
 - [Project Research Instructions](PROJECT_RESEARCH_INSTRUCTIONS.md)
+- [Data Acquisition](DATA_ACQUISITION.md)
 - Backtest: `research/backtest_otm_ratio.py`
 - Results: `results/`
 
