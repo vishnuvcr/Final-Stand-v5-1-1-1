@@ -186,3 +186,11 @@
 - Next step is the pre-registered statistical analysis; no interpretation is being finalized from the primary summary alone.
 
 [RUN_DYNAMIC_STATS]
+
+
+## 2026-10-03 — Dynamic-n robustness
+- Primary statistics show the corrected dynamic-n sample is dominated by selected n=6, with small counts at n=7/8 under the 95%-of-maximum higher-n preference.
+- Robustness now tests target fraction, adverse slippage, entry time, DTE, brokerage, and the higher-n threshold itself (90% and 97.5% around the 95% primary rule).
+- No changes will be made to the primary specification based on these results.
+
+[RUN_DYNAMIC_ROBUSTNESS]
