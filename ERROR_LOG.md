@@ -82,3 +82,6 @@
 
 | 2026-10-03 | Phase 21 design | Extra hedge option data initially lacked normalization. | Normalization was fixed before the first workflow run; no Phase 21 result was produced before the fix. |
 | 2026-10-03 | Phase 21 start | Pre-expiry adverse-move protection requested. | Frozen a bounded test of early exits and one-lot OTM-(n+3) tail hedges on top of the Phase-20 comparator. |
+
+| 2026-10-03 | Phase 21 execution | Final research grid contained no rule with zero baseline-positive training trades affected; the first implementation aborted before persisting diagnostics. | Changed the phase runner to persist the complete grid and top unconstrained diagnostics instead of aborting. No candidate was promoted. |
+| 2026-10-03 | Phase 21 reporting | The first diagnostic persistence retry failed because the reporting code sorted the full grid using training-only column names. | Replaced that reference with the training-selection table and reran; final Phase 21 workflow completed successfully. |
