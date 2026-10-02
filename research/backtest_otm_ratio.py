@@ -201,7 +201,8 @@ def main():
             missing.append([str(expiry.date()), "download/read " + repr(e)])
             continue
 
-        strikes = sorted(df["strike"].dropna().unique())
+        entry_quotes = df[df["timestamp"] == entry_ts]
+        strikes = sorted(entry_quotes["strike"].dropna().unique())
         atm = min(strikes, key=lambda x: abs(x - s0))
 
         cand = candidate_table(strikes, atm, df, entry_ts)
