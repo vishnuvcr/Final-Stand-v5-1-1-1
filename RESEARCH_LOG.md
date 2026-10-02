@@ -321,3 +321,9 @@
 - Corrected the loader to return both the path map and alignment-error records, then updated the report writer.
 - No persisted numerical result from the failed run is used.
 [RUN_PHASE20_BOUNDARY_REPORT_FIX]
+
+## 2026-10-03 — Phase 20 comparator correction and persistence retry
+- The first successful numerical run showed that the prior Phase-19 artifact represented the train-selected 1.00x MFE rule rather than the locked 0.50x comparator.
+- Phase 20 now reconstructs the fixed 0.50x comparator directly from minute-level paths and cross-checks it against the Phase-19 walk-forward grid before accepting results.
+- Persistence was also hardened to rebase onto the current phase branch before pushing generated artifacts.
+[RUN_PHASE20_TRUE_COMPARATOR]
