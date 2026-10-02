@@ -259,3 +259,9 @@
 - Phase 17 broad grid: no candidate improved validation net P&L while leaving every baseline-positive trade untouched.
 - Phase 18 narrows the hypothesis to expiry-day negative MTM plus insufficient earlier MFE.
 [RUN_CONDITIONAL_STOP]
+
+
+## 2026-10-03 — Phase 19 walk-forward confirmation started
+- Phase 18 produced a positive full-sample candidate but requires temporal confirmation before operational promotion.
+- Phase 19 uses train/validation/holdout periods and the same pre-registered candidate family.
+[RUN_STOP_WALK_FORWARD]
