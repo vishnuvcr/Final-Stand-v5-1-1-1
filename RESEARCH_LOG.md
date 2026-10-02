@@ -178,3 +178,11 @@
 - Corrected the guard. The failed run produced no research result and is not used as evidence.
 
 [RUN_DYNAMIC_N]
+
+
+## 2026-10-03 — Dynamic-n primary result
+- Corrected dynamic-n primary completed: 190 executable trades under the locked 95%-of-maximum higher-n preference.
+- Primary output is persisted under results/dynamic_n_corrected/phase10_primary/.
+- Next step is the pre-registered statistical analysis; no interpretation is being finalized from the primary summary alone.
+
+[RUN_DYNAMIC_STATS]
