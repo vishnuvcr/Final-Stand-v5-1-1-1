@@ -1,7 +1,6 @@
 name: Phase 7 Fixed OTM15 Primary Backtest
 
 on:
-  push:
   workflow_dispatch:
 
 permissions:
