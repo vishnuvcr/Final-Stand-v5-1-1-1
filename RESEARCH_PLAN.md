@@ -3,7 +3,7 @@
 ## Phase 1 — Strategy definition and data validation
 - Define OTM6/7/8 as the 6th/7th/8th OTM strike from the nearest ATM strike at the 10:00 IST entry snapshot.
 - Working underlying: NIFTY 50 weekly index options, because the request did not specify an underlying.
-- Entry: 4 calendar days before expiry at 10:00 IST, only when that date is a trading session.
+- Entry: 4-DTE market-session convention: enter on the fourth trading session counting the expiry session as session 1, at 10:00 IST.
 - Strategy 1: +1 OTM6 PE, -1 OTM7 PE, -1 OTM8 PE.
 - Strategy 2: +1 OTM6 CE, -1 OTM7 CE, -1 OTM8 CE.
 - Selection: P = premium(OTM7)+premium(OTM8)-premium(OTM6); trade the side with higher P.
