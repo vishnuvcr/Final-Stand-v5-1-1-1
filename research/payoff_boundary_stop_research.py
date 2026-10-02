@@ -178,7 +178,7 @@ def load_candidate_paths(meta, spot):
         running_mfe = -np.inf
         ep = r.entry_exec
 
-        for ts, row in merged.iterrows():
+        for _, row in merged.iterrows():
             raw_exit = (
                 float(row[r.k_n]),
                 float(row[r.k_n1]),
@@ -203,7 +203,7 @@ def load_candidate_paths(meta, spot):
             )
             path.append(
                 {
-                    "ts": ts,
+                    "ts": pd.Timestamp(row["timestamp"]),
                     "spot": float(row["spot"]),
                     "gross": gross,
                     "mfe": running_mfe,
