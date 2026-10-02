@@ -425,7 +425,7 @@ The corrected fixed OTM15 strategy produced ₹98,560.04 net P&L over 183 comple
 
 However, the central structural result is more nuanced: the higher-n preference selected n=6 on 96.3% of dynamic-n trades. Therefore the present experiment demonstrates a positive corrected dynamic-n historical result, but it does not demonstrate that frequent dynamic movement across n=6..15 is the source of that performance.
 
-The next controlled research step should hold the direction selector constant and compare fixed n=6, fixed n=15 and the 95%-band dynamic selector. That isolates the effect of dynamic n itself.
+The controlled ablation has now been completed. Holding the OTM6/7/8 direction selector constant, fixed n=6 produced ₹139,543.97 net versus ₹138,937.12 for the 95%-band dynamic rule and ₹87,322.86 for fixed n=15. Therefore the primary dynamic rule does not demonstrate an incremental economic benefit from its higher-n preference in this sample.
 
 ---
 
