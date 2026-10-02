@@ -28,4 +28,4 @@ NIFTY 50 weekly options began trading in February 2019. Therefore 2017–2018 ca
 
 ## Current acquisition target
 
-The research target is the longest compatible weekly-options sample available: approximately February 2019 through September 2026, using the Zenodo source for 2019–2020 and the Hugging Face source for the later period.
+The research target is the longest compatible weekly-options sample available: approximately May 2021 through September 2026 using the validated Hugging Face source.
