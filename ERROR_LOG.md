@@ -18,3 +18,8 @@
 | 2026-10-02 | Phase 2 | A 2017–2020 public minute dataset was found, but it uses a different file organization/schema. | Recorded it as a supplemental source; require schema/coverage validation before merging. |
 
 | 2026-10-02 | Phase 2 | Verification found stale 2024–2025 fallback values in the workflow/script after the first expansion edit. | Rechecked both files and corrected all default/fallback dates to 2021-01-01 through 2026-09-30; bumped cache key to v3. |
+
+| 2026-10-02 | Phase 2 | Audit found that the first documentation-file writes were absent from the current branch tree. | Restored DATA_ACQUISITION.md and ZENODO_2019_2020_VALIDATION.md and verified the tree. |
+| 2026-10-02 | Phase 2 | Backtest used the full expiry-file strike list to define ATM/OTM ranks, creating potential strike-list look-ahead. | Changed ATM/OTM strike discovery to the 10:00 entry snapshot only. |
+| 2026-10-02 | Phase 2 | Expiry list did not explicitly exclude monthly expiries from the weekly-options sample. | Excluded the final available expiry date in each calendar month. |
+| 2026-10-02 | Phase 2 | NIFTY 65-lot transition was initially applied from Jan-2026 rather than the first revised weekly expiry. | Corrected boundary to 06-Jan-2026 using NSE FAOP70616. |
