@@ -13,7 +13,7 @@
 - Costs: Paytm Money brokerage plus statutory charges and configurable slippage; STT must be date-aware.
 
 ## Phase 2 — Backtest
-- Use 1-minute historical option OHLC plus NIFTY spot/index OHLC.
+- Use 1-minute historical option OHLC plus NIFTY spot/index OHLC; primary clean sample is 2024-01-01 through 2025-12-31 because the selected public dataset is incomplete in parts of 2026.
 - Download only required weekly expiry files; cache raw downloads in GitHub Actions and persist compact filtered observations/results in the repository.
 - Use close-based execution for the base test, then stress adverse one-tick-per-leg and percentage slippage.
 - Record every trade's strikes, premiums, strategy, entry/exit, gross/net P&L, costs, MAE, MFE, and exit reason.
