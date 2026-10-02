@@ -126,3 +126,10 @@
 - Correct convention: long OTM15 contributes `exit - entry`; short OTM16/17 contribute `entry - exit`.
 - The first uploaded AlgoTest call trade confirms this exactly: buy 1.90 -> 0.05 = -120.25; sell 1.70 -> 0.05 = +107.25; sell 1.80 -> 0.05 = +113.75; total = +100.75 for quantity 65.
 - Therefore Phase 7B, Phase 9B and Phase 9C numerical outputs are superseded. A full corrected primary rerun is required before any further robustness or inference.
+
+
+## 2026-10-03 — Phase 7C corrected P&L primary execution
+- Exact strike mapping and long/short P&L signs are now corrected.
+- All previous Phase 7/8/9/9A numerical results are superseded pending this rerun.
+
+[RUN_PHASE7C]
