@@ -1,6 +1,7 @@
 name: Phase 2 Primary Backtest - OTMn Ratio
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       start_date:
@@ -21,6 +22,7 @@ permissions:
 
 jobs:
   backtest:
+    if: contains(github.event.head_commit.message, '[RUN_PHASE2]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
