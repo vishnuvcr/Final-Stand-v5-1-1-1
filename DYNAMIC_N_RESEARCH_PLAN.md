@@ -275,3 +275,23 @@ Applying the final exit logic to all 190 corrected trades:
 - baseline-positive trades stopped early: **0**
 
 This result is historical and does not establish future profitability or live implementability.
+
+## Phase 21 — pre-expiry adverse-move risk control
+
+User question: what should be done when NIFTY moves very far against the strategy before expiry?
+
+This phase tests a bounded, pre-registered extension on top of the frozen Phase-20 strategy rather than changing the historical comparator.
+
+Candidate families:
+- direction-aware early exit after 200/300/400/500/600 adverse NIFTY points from the 10:00 entry spot;
+- 1/5/15 consecutive-minute confirmation;
+- spot-only, negative-MTM, and negative-MTM-plus-MFE<0.50×target filters;
+- tail-hedge repair that buys one OTM-(n+3) option on the dangerous side after the same signal, with either target-or-baseline exit or recovery-to-zero-baseline exit.
+
+Comparator: the frozen Phase-20 final strategy, including the 13:30 expiry-day MTM/MFE stop.
+
+Selection: training through 2023-12-31 only; zero baseline-positive trades may be affected; no hedge execution gaps; then maximize training net uplift and loss reduction.
+
+Promotion: positive validation and 2026 holdout uplift; zero baseline-positive trades affected; no material maximum-drawdown deterioration; no hedge execution gaps.
+
+No additional threshold family will be introduced after inspecting results. A materially different adjustment is a separate registered phase.
