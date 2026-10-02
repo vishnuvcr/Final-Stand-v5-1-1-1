@@ -251,8 +251,8 @@ def main():
             continue
 
         cand = x_candidates(df, entry_ts, side_strikes, typ)
-        if cand.empty:
-            missing.append([str(expiry.date()), "no complete Stage 2 candidates"])
+        if len(cand) != (N_MAX - N_MIN + 1):
+            missing.append([str(expiry.date()), "incomplete Stage 2 n=6..15 candidate set"])
             continue
 
         cand.insert(0, "expiry", str(expiry.date()))
