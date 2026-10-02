@@ -18,7 +18,9 @@ Across 190 completed trades, the corrected dynamic-n strategy produced gross P&L
 
 A corrected fixed-OTM15 strategy run under the same audited execution framework produced 183 trades and ₹98,560.04 net P&L. On the 180 expiry dates common to both strategies, dynamic-n generated ₹132,977.71 net versus ₹88,176.60 for fixed OTM15, a paired difference of ₹44,801.11. Because the two strategies also use different direction selectors (dynamic OTM6/7/8 versus fixed OTM15/16/17), this comparison is descriptive rather than a pure causal estimate of the value of n-selection.
 
-These results support a positive historical-sample association for the corrected dynamic-n specification, but they do not establish out-of-sample performance or guarantee future profitability. The dominant empirical feature is that the 95%-band rule selected n=6 on 96.3% of completed trades, meaning the dynamic mechanism changed the selected n only rarely in this sample.
+After the final exit-rule extension, the 190-trade historical result is ₹149,129.53 net P&L, with ₹784.89 mean net P&L per trade, 179/190 positive net trades (94.21%), profit factor 2.34, and ₹27,336.11 maximum cumulative drawdown. The final rule changes five exits, all baseline losers, and adds no payoff-boundary stop. The payoff-boundary study was explicitly walk-forward tested and rejected after negative validation and 2026 holdout performance.
+
+These results support a positive historical-sample association for the final corrected specification, but they do not establish future profitability or live implementability. The dominant empirical feature remains that the 95%-band rule selected n=6 on 96.3% of completed trades, so the dynamic mechanism changed the selected n only rarely in this sample.
 
 ---
 
