@@ -88,6 +88,7 @@ Validated executable overlap:
 5. Direct comparison with corrected fixed-OTM15 under the same sample and execution assumptions.
 6. Controlled n-selection ablation: hold the Stage-1 direction selector constant and compare fixed n=6, fixed n=15, and the 95%-band dynamic selector under identical execution assumptions.
 7. Final manuscript with tables, figures, appendices and reproducibility details.
+8. Stop-loss extension: use the same corrected minute-level engine to test pre-registered exit rules, with strict protection of baseline-positive trades and temporal validation.
 
 ## Pre-registered robustness
 
@@ -103,3 +104,28 @@ The primary 95% higher-n preference remains fixed unless a sensitivity analysis 
 ## Supersession
 
 All previous dynamic-n numerical results are superseded because the prior implementation contained calculation and strike-mapping errors. No previous dynamic-n trade ledger is reused.
+
+## Phase 17 stop-loss research protocol
+
+The objective is not to maximize win rate. The primary constraint is to identify a rule that can reduce the tail losses **without stopping any baseline-positive trade before its baseline exit** on the development sample.
+
+Candidate families are fixed before execution:
+- hard MTM stop after 0/24/48/72 elapsed hours at 0.50× to 2.00× target;
+- expiry-day negative-P&L cutoffs at 14:00, 14:30 and 15:00 IST;
+- stagnation stops after 24/48/72 hours;
+- MFE-based trailing stops;
+- hard-stop plus expiry-day cutoff combinations.
+
+For hard, expiry-day and stagnation candidates, both one-minute and three-minute confirmation are tested.
+
+Temporal validation:
+- development: through 2024-12-31;
+- validation: 2025-01-01 through 2026-09-30.
+
+Rule selection is frozen using development data only:
+1. zero baseline-positive trades affected;
+2. maximize development net-P&L uplift;
+3. maximize development loss reduction;
+4. minimize affected winners as the final tie-break.
+
+The selected rule is then applied unchanged to the validation period. Exact stop-time leg prices and the same date-aware fee model are used. This extension does not alter the no-stop primary result unless a later phase explicitly promotes a rule after successful validation.
