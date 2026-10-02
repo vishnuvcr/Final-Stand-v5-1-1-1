@@ -21,10 +21,10 @@ def walk_zip(zdata, label, depth=0, max_depth=3):
                     walk_zip(raw, f"{label}!{n}", depth+1, max_depth)
                 except Exception as e:
                     manifest["samples"].append({"label":label,"member":n,"zip_error":repr(e)})
-            elif depth>=1 and len(manifest["samples"])<50:
+            elif depth>=1 and len(manifest["samples"])<8:
                 item={"label":label,"member":n,"size":len(raw)}
                 if low.endswith((".csv",".txt")):
-                    item["text_head"]=raw.decode("utf-8",errors="replace").splitlines()[:8]
+                    item["text_head"]=raw.decode("utf-8",errors="replace").splitlines()[:12]
                 else:
                     item["signature"]=raw[:16].hex()
                 manifest["samples"].append(item)
