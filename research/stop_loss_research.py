@@ -184,6 +184,7 @@ def build_paths():
                     "gross": gross,
                     "mfe": running_mfe,
                     "elapsed_h": (ts - entry_ts).total_seconds() / 3600.0,
+                    "raw_exit": raw_exit,
                 }
             )
             if gross >= target:
@@ -238,6 +239,7 @@ def build_paths():
                 "base_mae": min(p["gross"] for p in path),
                 "path": path,
                 "raw_entry": raw_entry,
+                "entry_exec": (ep_n, ep_n1, ep_n2),
                 "strikes": (k_n, k_n1, k_n2),
             }
         )
@@ -399,8 +401,6 @@ def evaluate_rule(trades, rule):
     rows = []
     for t in trades:
         idx = stop_index_for_rule(t, rule)
-        # Never allow a stop to replace a baseline target if the target is reached
-        # first. Path construction ends at the baseline target when reached.
         if idx is None:
             exit_idx = len(t["path"]) - 1
             reason = t["base_exit_reason"]
@@ -409,44 +409,44 @@ def evaluate_rule(trades, rule):
             reason = "STOP"
 
         p = t["path"][exit_idx]
-        raw_exit = None
-        ts = p["ts"]
-        k_n, k_n1, k_n2 = t["strikes"]
-        # Raw exit prices are not stored in path, so recover them only for charge
-        # calculation through a marker-free re-evaluation below. Costs are tiny
-        # relative to the gross decision, but must still be modeled.
-        # The base trade stores raw exit information only through the path's
-        # timestamp; the exact row is reconstructed by the price loader in the
-        # charge pass below.
+        raw_exit = p["raw_exit"]
+        exit_exec = (
+            exec_px(raw_exit[0], "sell"),
+            exec_px(raw_exit[1], "buy"),
+            exec_px(raw_exit[2], "buy"),
+        )
+        entry_ts = pd.Timestamp(t["entry_ts"])
+        entry_orders = [
+            (entry_ts, "buy", t["entry_exec"][0]),
+            (entry_ts, "sell", t["entry_exec"][1]),
+            (entry_ts, "sell", t["entry_exec"][2]),
+        ]
+        exit_orders = [
+            (p["ts"], "sell", exit_exec[0]),
+            (p["ts"], "buy", exit_exec[1]),
+            (p["ts"], "buy", exit_exec[2]),
+        ]
+        cost = charges(entry_orders, exit_orders, t["lot"])
+        candidate_net = p["gross"] - cost
+
         rows.append(
             {
                 "expiry": t["expiry"],
                 "base_net": t["base_net"],
                 "base_gross": t["base_gross"],
                 "base_reason": t["base_exit_reason"],
-                "stop_ts": ts,
+                "stop_ts": p["ts"],
                 "stop_reason": reason,
                 "stop_gross": p["gross"],
+                "candidate_net": candidate_net,
                 "base_positive": t["base_net"] > 0,
-                "changed_before_base": ts < t["base_exit_ts"],
+                "changed_before_base": p["ts"] < t["base_exit_ts"],
             }
         )
 
     out = pd.DataFrame(rows)
-
-    # Charge adjustments at candidate exits are intentionally approximated by
-    # replacing the baseline cost with the per-trade cost at the candidate stop
-    # using the observed exit timestamp. This keeps the fee model date-aware while
-    # preserving the primary stop trigger on gross MTM.
-    # Candidate exit price reconstruction is added in the next research revision
-    # if the zero-false-stop screen identifies a viable family.
-    out["candidate_net"] = out["stop_gross"] - (
-        out["base_gross"] - out["base_net"]
-    )
     out["net_uplift"] = out["candidate_net"] - out["base_net"]
-    out["winner_affected"] = (
-        out["base_positive"] & out["changed_before_base"]
-    )
+    out["winner_affected"] = out["base_positive"] & out["changed_before_base"]
     out["loss_reduction"] = np.where(
         out["base_net"] < 0,
         np.maximum(out["candidate_net"] - out["base_net"], 0.0),
@@ -457,141 +457,3 @@ def evaluate_rule(trades, rule):
     )
     return out
 
-
-def summarize(dev_trades, val_trades, rules):
-    records = []
-    per_rule = {}
-
-    for rule in rules:
-        dev = evaluate_rule(dev_trades, rule)
-        val = evaluate_rule(val_trades, rule)
-        per_rule[rule["name"]] = (dev, val)
-
-        records.append(
-            {
-                **{k: v for k, v in rule.items() if k != "family"},
-                "family": rule["family"],
-                "dev_trades": len(dev),
-                "dev_base_net": float(dev.base_net.sum()),
-                "dev_candidate_net": float(dev.candidate_net.sum()),
-                "dev_net_uplift": float(dev.net_uplift.sum()),
-                "dev_winner_affected": int(dev.winner_affected.sum()),
-                "dev_profit_uplift_lost": float(
-                    (dev.loc[dev.winner_affected, "base_net"] - dev.loc[dev.winner_affected, "candidate_net"]).sum()
-                ),
-                "dev_losses": int((dev.base_net < 0).sum()),
-                "dev_loss_reduction": float(dev.loss_reduction.sum()),
-                "dev_losses_eliminated": int(dev.loss_eliminated.sum()),
-                "val_trades": len(val),
-                "val_base_net": float(val.base_net.sum()),
-                "val_candidate_net": float(val.candidate_net.sum()),
-                "val_net_uplift": float(val.net_uplift.sum()),
-                "val_winner_affected": int(val.winner_affected.sum()),
-                "val_profit_uplift_lost": float(
-                    (val.loc[val.winner_affected, "base_net"] - val.loc[val.winner_affected, "candidate_net"]).sum()
-                ),
-                "val_losses": int((val.base_net < 0).sum()),
-                "val_loss_reduction": float(val.loss_reduction.sum()),
-                "val_losses_eliminated": int(val.loss_eliminated.sum()),
-            }
-        )
-
-    result = pd.DataFrame(records)
-
-    # Freeze a rule using development only:
-    # 1) zero affected positive trades;
-    # 2) maximize development net uplift;
-    # 3) maximize development loss reduction;
-    # 4) minimize number of stops.
-    eligible = result[result.dev_winner_affected == 0].copy()
-    if eligible.empty:
-        eligible = result.copy()
-
-    selected = eligible.sort_values(
-        by=["dev_net_uplift", "dev_loss_reduction", "dev_winner_affected"],
-        ascending=[False, False, True],
-    ).iloc[0]
-
-    selected_name = selected["name"]
-    chosen_dev, chosen_val = per_rule[selected_name]
-
-    return result, selected_name, chosen_dev, chosen_val
-
-
-def main():
-    all_trades = build_paths()
-    if not all_trades:
-        raise RuntimeError("No trades reconstructed")
-
-    dev_trades = [t for t in all_trades if pd.Timestamp(t["expiry"], tz=TZ) <= DEV_END]
-    val_trades = [t for t in all_trades if pd.Timestamp(t["expiry"], tz=TZ) >= VAL_START]
-
-    rules = candidate_rules()
-    result, selected_name, selected_dev, selected_val = summarize(
-        dev_trades, val_trades, rules
-    )
-
-    result.to_csv(OUT / "stop_rule_grid.csv", index=False)
-    selected_dev.to_csv(OUT / "selected_rule_dev_trade_level.csv", index=False)
-    selected_val.to_csv(OUT / "selected_rule_validation_trade_level.csv", index=False)
-
-    selected = result[result.name == selected_name].iloc[0]
-    report = f"""# Phase 17 Stop-Loss Research
-
-## Frozen baseline
-
-- Same corrected dynamic-n engine.
-- 10:00 IST entry, 4 trading sessions before expiry.
-- OTM6/7/8 direction selector.
-- Dynamic n = highest candidate n within 95% of Xmax.
-- Target = 0.90 × X_selected × lot.
-- One adverse tick per leg.
-- ₹10/order brokerage and date-aware statutory costs.
-- Baseline remains the primary strategy; stop-loss results are an extension.
-
-## Candidate families
-
-Hard stops, expiry-day negative cutoffs, stagnation stops, MFE trailing stops, and a hard-stop-plus-expiry-day rule were pre-registered before execution.
-
-## Selection protocol
-
-Using only expiries through {DEV_END.date()}:
-1. zero affected baseline-positive trades;
-2. maximize aggregate net-P&L uplift;
-3. maximize loss reduction;
-4. minimize affected winners as a final tie-break.
-
-The selected rule is then frozen and evaluated on {VAL_START.date()} through {END.date()}.
-
-## Selected rule
-
-**{selected_name}**
-
-Development:
-- trades: {int(selected.dev_trades)}
-- net uplift: ₹{selected.dev_net_uplift:,.2f}
-- winner-affected trades: {int(selected.dev_winner_affected)}
-- loss reduction: ₹{selected.dev_loss_reduction:,.2f}
-- losses eliminated: {int(selected.dev_losses_eliminated)}
-
-Validation:
-- trades: {int(selected.val_trades)}
-- net uplift: ₹{selected.val_net_uplift:,.2f}
-- winner-affected trades: {int(selected.val_winner_affected)}
-- loss reduction: ₹{selected.val_loss_reduction:,.2f}
-- losses eliminated: {int(selected.val_losses_eliminated)}
-
-## Important implementation note
-
-Candidate stop net-P&L currently reuses each trade's baseline fee amount rather than reconstructing the exact stop-time exit leg prices for date-aware exit charges. Therefore the stop-rule ranking is driven by the exact minute-level gross P&L path, while small fee differences at the stop timestamp are not yet incorporated. Any rule that survives the zero-false-stop screen is required to pass a second exact-fee rerun before being considered operational.
-"""
-    (OUT / "STOP_LOSS_REPORT.md").write_text(report, encoding="utf-8")
-
-    print(result.sort_values(["dev_winner_affected", "dev_net_uplift"], ascending=[True, False]).head(20).to_string(index=False))
-    print("\nSELECTED RULE:", selected_name)
-    print("\nDEV\n", selected_dev[["expiry","base_net","candidate_net","net_uplift","stop_reason","stop_ts","winner_affected"]].to_string(index=False))
-    print("\nVALIDATION\n", selected_val[["expiry","base_net","candidate_net","net_uplift","stop_reason","stop_ts","winner_affected"]].to_string(index=False))
-
-
-if __name__ == "__main__":
-    main()
