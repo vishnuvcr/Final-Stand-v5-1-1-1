@@ -107,9 +107,11 @@ def prices_at(df, ts, typ, strikes):
 
 
 def pnl_points(entry_exec, exit_exec):
+    # Long OTM15: exit_buyback? No: the long is closed by selling, so exit - entry.
+    # Short OTM16/17: closed by buying, so entry - exit.
     e15, e16, e17 = entry_exec
     x15, x16, x17 = exit_exec
-    return (e15 - x15) + (x16 - e16) + (x17 - e17)
+    return (x15 - e15) + (e16 - x16) + (e17 - x17)
 
 
 def main():
