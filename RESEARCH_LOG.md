@@ -208,3 +208,11 @@
 - Corrected the aggregation and will rerun the comparison.
 
 [RUN_DYNAMIC_COMPARE]
+
+
+## 2026-10-03 — Controlled n-selection ablation
+- Because the 95%-band dynamic rule selected n=6 on 183 of 190 trades, an additional controlled ablation was added before closing the research.
+- The ablation holds the dynamic OTM6/7/8 Stage-1 direction selector constant and compares fixed n=6, fixed n=15, and the pre-registered dynamic 95%-band rule.
+- The purpose is to isolate the contribution of n-selection from the contribution of the direction selector.
+
+[RUN_N_ABLATION]
