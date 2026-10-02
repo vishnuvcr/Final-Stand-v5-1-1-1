@@ -4,7 +4,7 @@ Research repository for systematic testing of the restarted NIFTY weekly-options
 
 ## Current status
 
-**Phase 3 — STATISTICAL ANALYSIS: COMPLETE**
+**Phase 4 — ROBUSTNESS & SENSITIVITY: COMPLETE**
 
 The latest two-stage strategy was tested on the validated executable sample. Prior global-selector results are superseded.
 
@@ -85,7 +85,20 @@ The single n=15 trade was profitable, but its sample size is one and therefore i
 1. Phase 1 — Restarted specification/audit **complete**
 2. Phase 2 — Restarted primary backtest **complete**
 3. Phase 3 — Statistical analysis **complete**
-4. Phase 4 — Robustness and sensitivity **next**
-5. Phase 5 — Final manuscript
+4. Phase 4 — Robustness and sensitivity **complete**
+5. Phase 5 — Final manuscript **next**
 
 Prior global-selector results remain in repository history for audit purposes only.
+
+## Phase 4 robustness findings
+
+All 15 planned robustness scenarios completed successfully in GitHub Actions run 37048711849. The verified scenario table is persisted in [results/restarted_v2/phase4/VERIFIED_PHASE4_SUMMARY.md](results/restarted_v2/phase4/VERIFIED_PHASE4_SUMMARY.md).
+
+- 90% threshold: total net P&L ranged from -₹60,953 to -₹55,473 across 0–2 adverse ticks.
+- 95% threshold: -₹62,805 to -₹57,268 across 0–2 adverse ticks; primary 1-tick result -₹59,482.
+- 97.5% threshold: -₹62,371 to -₹56,956 across 0–2 adverse ticks.
+- Entry sensitivity: 09:45 -₹45,811; 10:00 -₹59,482; 10:15 -₹59,069.
+- DTE sensitivity: 3 DTE +₹2,603; 4 DTE -₹59,482; 5 DTE -₹95,662.
+- Brokerage sensitivity on the primary trade set: ₹0/order -₹47,722; ₹10/order -₹59,482; ₹20/order -₹71,242.
+
+The DTE=3 positive result is treated as a robustness observation only; the primary DTE=4 specification remains unchanged because it was pre-registered before this sensitivity analysis.
