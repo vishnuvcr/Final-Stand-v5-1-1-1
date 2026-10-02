@@ -6,7 +6,7 @@ on:
       start_date:
         description: Start date (YYYY-MM-DD)
         required: false
-        default: '2019-02-14'
+        default: '2021-01-01'
       end_date:
         description: End date (YYYY-MM-DD)
         required: false
