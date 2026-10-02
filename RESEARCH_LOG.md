@@ -156,3 +156,15 @@
 - Rerun the corrected primary so reported net P&L uses the audited charge model.
 
 [RUN_PHASE7D]
+
+
+## 2026-10-03 — Dynamic-n corrected restart
+- User requested a separate branch for a complete dynamic-n rerun after discovering the fixed-strategy calculation errors.
+- Created branch `phase-10-dynamic-n-restart` from the fee-audited corrected fixed-OTM15 primary branch.
+- Locked dynamic-n Stage 1 direction: OTM6/7/8 call expression versus OTM6/7/8 put expression at 10:00 IST.
+- Locked candidate n range: 6 through 15.
+- Locked higher-n preference: eligible when X_n >= 95% of the maximum candidate X_n; select the highest eligible n.
+- This 95%-of-maximum rule is the explicit deterministic weightage/preference criterion. No post-result optimization is allowed.
+- Previous dynamic-n numerical results and trade ledgers are discarded and will not be reused.
+
+[RUN_DYNAMIC_N]
