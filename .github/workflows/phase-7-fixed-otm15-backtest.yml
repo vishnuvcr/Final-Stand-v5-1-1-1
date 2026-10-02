@@ -1,6 +1,7 @@
 name: Phase 7 Fixed OTM15 Primary Backtest
 
 on:
+  push:
   workflow_dispatch:
 
 permissions:
@@ -8,6 +9,7 @@ permissions:
 
 jobs:
   backtest:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[RUN_PHASE7]')
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
