@@ -23,3 +23,5 @@
 | 2026-10-02 | Phase 2 | Backtest used the full expiry-file strike list to define ATM/OTM ranks, creating potential strike-list look-ahead. | Changed ATM/OTM strike discovery to the 10:00 entry snapshot only. |
 | 2026-10-02 | Phase 2 | Expiry list did not explicitly exclude monthly expiries from the weekly-options sample. | Excluded the final available expiry date in each calendar month. |
 | 2026-10-02 | Phase 2 | NIFTY 65-lot transition was initially applied from Jan-2026 rather than the first revised weekly expiry. | Corrected boundary to 06-Jan-2026 using NSE FAOP70616. |
+
+| 2026-10-02 | Phase 2 | A later repository write temporarily reintroduced the full expiry-file strike list. | Reapplied entry-timestamp-only strike discovery and added an explicit missing-entry-snapshot check; verified executable lines after commit. |
