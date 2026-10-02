@@ -41,7 +41,7 @@ def payoff(side,S,k6,k7,k8,p):
     return max(S-k6,0)-max(S-k7,0)-max(S-k8,0)+p
 
 def load(path):
-    p=hf_hub_download(repo_id=REPO,filename=path,repo_type="dataset",token=os.getenv("HF_TOKEN"))
+    p=hf_hub_download(repo_id=REPO,filename=path,repo_type="dataset",token=(os.getenv("HF_TOKEN") or None))
     df=pd.read_parquet(p)
     df["timestamp"]=pd.to_datetime(df["timestamp"])
     if df["timestamp"].dt.tz is None: df["timestamp"]=df["timestamp"].dt.tz_localize("Asia/Kolkata")
