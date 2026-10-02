@@ -19,6 +19,7 @@ SLIPPAGE_TICKS = float(os.getenv("SLIPPAGE_TICKS", "1"))
 TICK = float(os.getenv("OPTION_TICK", "0.05"))
 BROKERAGE_PER_ORDER = float(os.getenv("BROKERAGE_PER_ORDER", "10"))
 TARGET_FRACTION = float(os.getenv("TARGET_FRACTION", "0.90"))
+STRIKE_INTERVAL = float(os.getenv("NIFTY_STRIKE_INTERVAL", "50"))
 
 
 def lot_size_for_expiry(expiry):
@@ -89,14 +90,11 @@ def normalize(df):
     return df
 
 
-def rank_strikes(entry_quotes, spot):
+def nearest_atm_strike(entry_quotes, spot):
     strikes = sorted(entry_quotes["strike"].dropna().unique())
     if not strikes:
-        return None, [], []
-    atm = min(strikes, key=lambda x: abs(x - spot))
-    puts = sorted([x for x in strikes if x < atm], reverse=True)
-    calls = sorted([x for x in strikes if x > atm])
-    return atm, puts, calls
+        return None
+    return min(strikes, key=lambda x: abs(x - spot))
 
 
 def prices_at(df, ts, typ, strikes):
@@ -167,29 +165,32 @@ def main():
             missing.append([str(expiry.date()), "missing entry option snapshot"])
             continue
 
-        atm, puts, calls = rank_strikes(entry_quotes, s0)
-        if atm is None or len(puts) < 17 or len(calls) < 17:
-            missing.append([str(expiry.date()), "fewer than OTM17 strikes on one or both sides"])
+        atm = nearest_atm_strike(entry_quotes, s0)
+        if atm is None:
+            missing.append([str(expiry.date()), "missing ATM strike at entry snapshot"])
             continue
 
-        p = prices_at(df, entry_ts, "PE", (puts[14], puts[15], puts[16]))
-        c = prices_at(df, entry_ts, "CE", (calls[14], calls[15], calls[16]))
+        put_strikes = (atm - 15 * STRIKE_INTERVAL, atm - 16 * STRIKE_INTERVAL, atm - 17 * STRIKE_INTERVAL)
+        call_strikes = (atm + 15 * STRIKE_INTERVAL, atm + 16 * STRIKE_INTERVAL, atm + 17 * STRIKE_INTERVAL)
+
+        p = prices_at(df, entry_ts, "PE", put_strikes)
+        c = prices_at(df, entry_ts, "CE", call_strikes)
         if len(p) < 3 or len(c) < 3:
-            missing.append([str(expiry.date()), "missing OTM15/16/17 entry prices"])
+            missing.append([str(expiry.date()), "missing one or more exact OTM15/16/17 entry prices"])
             continue
 
-        x_put = p[puts[16]] + p[puts[15]] - p[puts[14]]
-        x_call = c[calls[16]] + c[calls[15]] - c[calls[14]]
+        x_put = p[put_strikes[2]] + p[put_strikes[1]] - p[put_strikes[0]]
+        x_call = c[call_strikes[2]] + c[call_strikes[1]] - c[call_strikes[0]]
 
         if x_call > x_put:
             direction, typ, side = "BEARISH", "CE", "CALL"
-            strikes = (calls[14], calls[15], calls[16])
-            raw_prices = (c[calls[14]], c[calls[15]], c[calls[16]])
+            strikes = call_strikes
+            raw_prices = (c[call_strikes[0]], c[call_strikes[1]], c[call_strikes[2]])
             x = x_call
         elif x_call < x_put:
             direction, typ, side = "BULLISH", "PE", "PUT"
-            strikes = (puts[14], puts[15], puts[16])
-            raw_prices = (p[puts[14]], p[puts[15]], p[puts[16]])
+            strikes = put_strikes
+            raw_prices = (p[put_strikes[0]], p[put_strikes[1]], p[put_strikes[2]])
             x = x_put
         else:
             stage1.append({"expiry": str(expiry.date()), "entry_ts": str(entry_ts), "spot_entry": s0,
@@ -234,6 +235,8 @@ def main():
         mae = np.inf
 
         for ts, row in piv.iterrows():
+            if ts <= entry_ts:
+                continue
             m15, m16, m17 = float(row[k15]), float(row[k16]), float(row[k17])
             ex15, ex16, ex17 = exec_px(m15, "sell"), exec_px(m16, "buy"), exec_px(m17, "buy")
             gross = pnl_points((ep15, ep16, ep17), (ex15, ex16, ex17)) * lot
