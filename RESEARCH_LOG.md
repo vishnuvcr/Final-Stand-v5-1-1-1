@@ -46,3 +46,14 @@
 - Position is fixed OTM15/16/17; no high-n threshold or n optimization.
 - Target remains T = 0.90 * selected X * lot quantity; otherwise expiry exit.
 - Created Phase 7 primary backtest implementation and manual workflow.
+
+## Phase 7 result — fixed OTM15 primary backtest
+- Completed successfully on GitHub Actions.
+- 195 completed trades; 8 expiries excluded/missing.
+- Net P&L: -₹39,626.40; mean -₹203.21/trade; median -₹237.86/trade.
+- Win rate after modeled costs: 25.13%.
+- Gross P&L: -₹24,976.75; modeled costs: ₹14,649.65.
+- Target exits: 49/195 (25.13%); expiry exits: 146/195 (74.87%).
+- Target exits had 100% positive net P&L; expiry exits had 0% positive net P&L.
+- Direction: 191 bullish/put trades, 4 bearish/call trades.
+- This result is the locked primary Phase 7 result for statistical analysis; previous v2 results remain superseded.
