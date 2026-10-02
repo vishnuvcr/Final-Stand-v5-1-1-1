@@ -10,6 +10,7 @@ START=pd.Timestamp(os.getenv("START_DATE","2024-01-01"),tz="Asia/Kolkata")
 END=pd.Timestamp(os.getenv("END_DATE","2026-09-30"),tz="Asia/Kolkata")
 OUT=Path("results"); OUT.mkdir(parents=True,exist_ok=True)
 SLIPPAGE_TICKS=float(os.getenv("SLIPPAGE_TICKS","1"))
+TARGET_FRACTION=float(os.getenv("TARGET_FRACTION","0.90"))
 TICK=float(os.getenv("OPTION_TICK","0.05"))
 LOT_SIZE=int(os.getenv("LOT_SIZE","75"))
 
@@ -61,7 +62,12 @@ def main():
             if START<=d<=END: exps.append(d)
     trades=[]; missing=[]
     for exp in sorted(set(exps)):
-        entry_ts=(exp-pd.Timedelta(days=4)).normalize()+pd.Timedelta(hours=10)
+        # 4-DTE convention: count the expiry session as session 1; enter on the fourth trading session.
+        week_start=exp-pd.Timedelta(days=8)
+        session_dates=sorted(pd.to_datetime(spot[(spot.timestamp>=week_start)&(spot.timestamp<=exp)].timestamp.dt.normalize().unique()))
+        if len(session_dates)<4: missing.append([str(exp.date()),"fewer than 4 trading sessions before expiry"]); continue
+        entry_date=session_dates[-4]
+        entry_ts=entry_date+pd.Timedelta(hours=10)
         sr=spot[spot.timestamp==entry_ts]
         if sr.empty: missing.append([str(exp.date()),"missing 10:00 spot"]); continue
         s0=float(sr.iloc[0].spot)
@@ -91,7 +97,7 @@ def main():
         q=df[(df.timestamp>=entry_ts)&(df.timestamp<=end_ts)&(df.option_type.str.upper()==typ)&(df.strike.astype(float).isin([k6,k7,k8]))]
         piv=q.pivot_table(index="timestamp",columns="strike",values="close",aggfunc="last").dropna(subset=[k6,k7,k8])
         if piv.empty: missing.append([str(exp.date()),"no complete 3-leg minute"]); continue
-        target=entryP
+        target=max(0.0, TARGET_FRACTION*entryP)
         exit_ts=piv.index[-1]; reason="EXPIRY"; xp=None; mfe=-1e99
         for ts,row in piv.iterrows():
             m6,m7,m8=float(row[k6]),float(row[k7]),float(row[k8])
