@@ -38,3 +38,6 @@
 
 
 | 2026-10-03 | Phase 7C P&L accounting audit | The P&L formula had the signs of all three legs inverted relative to the actual long/short execution directions. For a long OTM15, P&L is exit minus entry; for the short OTM16/17 legs, P&L is entry minus exit. | Corrected the shared P&L formula in the primary backtest and AlgoTest reproduction. The Phase 7B and Phase 9C numerical outputs are superseded. The uploaded AlgoTest first trade independently confirms the corrected convention: buy 1.90 -> sell 0.05 is -₹120.25, sell 1.70 -> buy 0.05 is +₹107.25, sell 1.80 -> buy 0.05 is +₹113.75, total +₹100.75. |
+
+
+| 2026-10-03 | Dynamic-n restart | Previous dynamic-n results were generated before the strike-mapping and P&L-sign corrections discovered during AlgoTest reconciliation. | Marked all previous dynamic-n numerical results and ledgers superseded; new branch uses exact strike distances and corrected long/short accounting. |
