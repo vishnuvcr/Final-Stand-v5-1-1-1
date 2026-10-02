@@ -1,0 +1,56 @@
+name: Execute isolated Phase 20 research
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "RESEARCH_LOG.md"
+      - ".github/workflows/run-phase20-bridge.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  phase20:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout Phase 20 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-20-payoff-boundary-stop-research
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache Hugging Face dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-nifty-options-${{ runner.os }}-v1
+          restore-keys: |
+            hf-nifty-options-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy pyarrow huggingface_hub
+
+      - name: Run Phase 20
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python research/payoff_boundary_stop_research.py
+
+      - name: Persist Phase 20 results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/dynamic_n_corrected/phase20_payoff_boundary
+          git commit -m "Phase 20: persist payoff-boundary results" || exit 0
+          git push origin HEAD:phase-20-payoff-boundary-stop-research
