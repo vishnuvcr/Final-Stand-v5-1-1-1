@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-BASE=Path("results/fixed_otm15_v3")
-OUT=BASE/"phase8"
+BASE=Path("results/fixed_otm15_v3/phase7c")
+OUT=Path("results/fixed_otm15_v3/phase8b")
 OUT.mkdir(parents=True,exist_ok=True)
 tr=pd.read_csv(BASE/"trades.csv",parse_dates=["entry_ts","exit_ts"])
 tr["year"]=tr["expiry"].str[:4].astype(int)
