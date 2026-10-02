@@ -277,3 +277,12 @@
 - Five of 190 exits changed across the full sample; all five were baseline losing trades.
 - No loss was fully eliminated; the rule truncates selected losses earlier.
 - Phase 19 is the final stop-loss research phase under the current plan. The locked no-stop dynamic-n primary remains unchanged.
+
+
+## 2026-10-03 — Phase 20 payoff-boundary stop research started
+- User requested a test of the risk created when NIFTY moves materially beyond the green/profit region of the entry-time payoff chart before expiry.
+- Created branch `phase-20-payoff-boundary-stop-research`.
+- Pre-registered the entry-time expiry zero-P&L boundary, buffers of 0/50/100/200/400 NIFTY points, 1/3-minute confirmation, and three condition families: boundary-only; boundary + negative MTM; boundary + negative MTM + MFE below 0.50× target.
+- The fixed Phase-19 13:30 expiry-day / negative MTM / MFE<0.50× target rule is a comparator and will not be re-optimised.
+- Training/validation/holdout periods remain 2021-05-27–2023-12-31, 2024-01-01–2025-12-31 and 2026-01-01–2026-09-30.
+[RUN_PHASE20_BOUNDARY]
