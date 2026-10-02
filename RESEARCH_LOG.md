@@ -315,3 +315,9 @@
 - Fixed the path timestamp assignment and narrowed the workflow push trigger to code/plan changes so log updates do not create duplicate runs.
 - No numerical result from the failed run is used.
 [RUN_PHASE20_BOUNDARY_TIMESTAMP_FIX]
+
+## 2026-10-03 — Phase 20 execution correction and retry 4
+- Fourth Actions run completed the boundary calculations but failed in the final data-alignment error writer after the path-map refactor.
+- Corrected the loader to return both the path map and alignment-error records, then updated the report writer.
+- No persisted numerical result from the failed run is used.
+[RUN_PHASE20_BOUNDARY_REPORT_FIX]
