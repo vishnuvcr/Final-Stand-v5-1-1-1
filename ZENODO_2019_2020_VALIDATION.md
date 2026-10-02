@@ -18,3 +18,7 @@ Validation must establish:
 9. absence of look-ahead.
 
 A manual workflow downloads the 311.9 MB options archive into an Actions cache, extracts it temporarily, and writes a structural validation manifest. The source is not merged into the primary results until full compatibility validation succeeds.
+
+## Compatibility verdict
+
+**Rejected for primary weekly-contract backtest.** Deep inspection reached the strike-file level. Rows contain symbol, trade date, trade time, OHLC and volume, but no expiry identifier. Strike files span multiple expiry cycles within the monthly archive. Assigning a weekly expiry to each row would require inference not supported by the recorded fields, so the source is not merged into the strategy results.
