@@ -176,11 +176,11 @@ def load_candidate_paths(meta, spot):
         running_mfe = -np.inf
         ep = r.entry_exec
 
-        for row in merged.itertuples():
+        for ts, row in merged.iterrows():
             raw_exit = (
-                float(getattr(row, str(r.k_n))),
-                float(getattr(row, str(r.k_n1))),
-                float(getattr(row, str(r.k_n2))),
+                float(row[r.k_n]),
+                float(row[r.k_n1]),
+                float(row[r.k_n2]),
             )
             xp = (
                 exec_px(raw_exit[0], "sell"),
@@ -195,14 +195,14 @@ def load_candidate_paths(meta, spot):
             gross = gross_points * r.lot
             running_mfe = max(running_mfe, gross)
             breached = (
-                float(row.spot) >= r.boundary
+                float(row["spot"]) >= r.boundary
                 if r.boundary_side == "upper"
-                else float(row.spot) <= r.boundary
+                else float(row["spot"]) <= r.boundary
             )
             path.append(
                 {
-                    "ts": row.timestamp,
-                    "spot": float(row.spot),
+                    "ts": ts,
+                    "spot": float(row["spot"]),
                     "gross": gross,
                     "mfe": running_mfe,
                     "breached": breached,
