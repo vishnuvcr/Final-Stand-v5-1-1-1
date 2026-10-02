@@ -333,3 +333,15 @@
 - The previous successful calculation still used the pre-rebase workflow revision; no persisted result was accepted from it.
 - Final retry will use the hardened persistence step that rebases before pushing results.
 [RUN_PHASE20_FINAL_PERSIST]
+
+
+## 2026-10-03 — Phase 20 completion and final strategy lock
+- Phase 20 workflow completed end-to-end successfully; result artifacts were persisted on `phase-20-payoff-boundary-stop-research`.
+- The fixed Phase-19 0.50× MFE comparator was reconstructed directly from the minute-level paths and cross-checked against the Phase-19 grid: **PASS**.
+- Payoff-boundary search selected a training-safe 400-point / 1-minute boundary-only rule, but it failed validation (−₹14,390.87) and 2026 holdout (−₹49,064.48) and materially worsened drawdown. Combined boundary + Phase-19 was also negative out of sample.
+- Decision: **do not use any pre-expiry payoff-boundary/green-area stop**.
+- Final expiry-day stop remains: **from 13:30 IST on expiry day, exit when combined three-leg MTM < ₹0 and running MFE < 0.50× original target**.
+- Final exit precedence is frozen: target → 13:30 conditional expiry stop → 15:29 expiry fallback.
+- Final-rule historical result across 190 trades: **₹149,129.53 net**, **₹784.89 mean/trade**, **94.21% net win rate**, **2.34 profit factor**, **₹27,336.11 max drawdown**, 178 target exits, 5 conditional-stop exits, 7 expiry-fallback exits, and 0 baseline-positive trades stopped early.
+- Canonical rules are stored in `FINAL_STRATEGY_RULES.md`, `STRATEGY_SPEC.md`, and `DYNAMIC_N_SPEC.md`.
+- Phase 20 is complete. No further historical exit-rule optimization is planned under the current research plan.
