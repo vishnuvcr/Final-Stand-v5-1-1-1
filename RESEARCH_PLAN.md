@@ -80,6 +80,23 @@ After the primary result, robustness will examine:
 
 The primary strategy itself remains fixed at OTM15/16/17.
 
+
+## Phase 9A — AlgoTest reconciliation audit (inserted before robustness interpretation)
+
+The uploaded AlgoTest reports produced materially different headline results from the locked research backtest. Before treating that as a contradiction or proceeding to final inference, an apples-to-apples reconciliation is required.
+
+The audit will reproduce the uploaded AlgoTest configuration exactly as shown in the reports, then reconcile differences one variable at a time against the locked research implementation. The reconciliation dimensions are:
+- entry time (09:35 vs 10:00 IST);
+- exit rule (15:14 expiry-day square-off vs 90%-of-X target, otherwise 15:29 expiry);
+- number and identity of legs (the uploaded screenshots show four configured legs, not the locked three-leg research structure);
+- directional logic (separate static call and put tests vs X_call/X_put conditional selector);
+- lot-size convention (the uploaded reports show quantity 65 even in 2021, versus date-aware historical NIFTY lot sizes in the research backtest);
+- slippage and charges (the uploaded reports show 0% slippage and disabled brokerage/taxes controls, while the research primary includes modeled execution costs);
+- date/sample coverage and excluded expiries;
+- OTM strike mapping and snapshot timing.
+
+No final conclusion will be strengthened or weakened solely from the headline AlgoTest P&L until this reconciliation is completed. Phase 9 robustness remains the planned sensitivity phase after reconciliation.
+
 ## Supersession
 All earlier v2 results using OTM6-based Stage 1 and n=6..15 high-n selection are superseded for this restart and must not be used as evidence for the present strategy.
 
