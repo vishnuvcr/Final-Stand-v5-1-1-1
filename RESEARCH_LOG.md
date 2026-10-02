@@ -32,3 +32,8 @@
 - Identified a public Zenodo one-minute NIFTY options dataset covering 2017–2020 as a possible pre-2021 extension; it is not yet merged because schema/contract coverage must be validated first.
 - Recorded additional paid/claimed sources for possible cross-validation in DATA_ACQUISITION.md.
 - Corrected the lot-size model for the expanded period: 75 before the Aug-2021 weekly transition, 50 thereafter until Apr-2024, 25 from May-2024, 75 from Jan-2025, and 65 from Jan-2026.
+
+## 2026-10-02 — Configuration verification
+- Re-read the executable and workflow after the multi-year edit.
+- Found stale fallback dates in the first edit; corrected them to 2021-01-01 through 2026-09-30.
+- Bumped the Hugging Face Actions cache key to v3 so the expanded acquisition is isolated from the earlier 2024–2025 cache generation.
