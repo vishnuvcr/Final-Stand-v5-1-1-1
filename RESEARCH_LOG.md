@@ -327,3 +327,9 @@
 - Phase 20 now reconstructs the fixed 0.50x comparator directly from minute-level paths and cross-checks it against the Phase-19 walk-forward grid before accepting results.
 - Persistence was also hardened to rebase onto the current phase branch before pushing generated artifacts.
 [RUN_PHASE20_TRUE_COMPARATOR]
+
+## 2026-10-03 — Phase 20 final persistence retry
+- Corrected comparator validated exactly against Phase-19 0.50x walk-forward metrics.
+- The previous successful calculation still used the pre-rebase workflow revision; no persisted result was accepted from it.
+- Final retry will use the hardened persistence step that rebases before pushing results.
+[RUN_PHASE20_FINAL_PERSIST]
