@@ -128,12 +128,9 @@ def main():
                 expiries.append(d)
 
     expiry_set = sorted(set(expiries))
-    monthly = set()
-    for y, m in sorted({(d.year, d.month) for d in expiry_set}):
-        md = [d for d in expiry_set if d.year == y and d.month == m]
-        if md:
-            monthly.add(max(md))
-    expiries = [d for d in expiry_set if d not in monthly]
+    # Every expiry-date file is eligible. Month-end expiry is also a weekly expiry
+    # date and must not be dropped merely because it is the month's last expiry.
+    expiries = expiry_set
 
     trades, stage1, missing = [], [], []
 
