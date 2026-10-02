@@ -362,3 +362,14 @@
 - Walk-forward split remains training through 2023, validation 2024–2025, holdout 2026.
 - Promotion requires positive validation and holdout uplift, zero baseline-positive trades affected, no material drawdown deterioration and no hedge execution gaps.
 [RUN_PHASE21_ADVERSE_MOVE]
+
+## 2026-10-03 — Phase 21 execution completed
+- First execution reached the research calculation but aborted because no candidate passed the strict training safety screen; this was converted into a diagnostic persistence path and no result from that aborted run was used.
+- Second execution reached the diagnostic writer but failed on a table-reference bug; no numerical result from that run was used.
+- Final execution completed successfully and persisted the full candidate grid and training-selection grid.
+- No pre-registered candidate preserved all training-positive trades.
+- Closest training candidate: 600-point adverse NIFTY move / 1-minute confirmation / spot-only early exit, with +₹1,885.47 training uplift but 1 profitable training trade affected.
+- That candidate produced −₹33,923.36 validation uplift and −₹44,039.53 2026 holdout uplift; full-sample uplift −₹76,077.42 and maximum drawdown ₹52,740.01.
+- Closest tail-hedge analogue also failed validation and holdout.
+- Decision: **no pre-expiry adverse-move exit or one-lot OTM-(n+3) hedge is promoted; Phase-20 final strategy remains unchanged.**
+[RUN_PHASE21_ADVERSE_MOVE_COMPLETE]
