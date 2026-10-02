@@ -41,3 +41,6 @@
 
 
 | 2026-10-03 | Dynamic-n restart | Previous dynamic-n results were generated before the strike-mapping and P&L-sign corrections discovered during AlgoTest reconciliation. | Marked all previous dynamic-n numerical results and ledgers superseded; new branch uses exact strike distances and corrected long/short accounting. |
+
+
+| 2026-10-03 | Dynamic-n execution audit | First dynamic-n Actions run failed because Stage 1 checked only dictionary length, which could equal three while a required OTM6/7/8 key was absent; direct key access then raised KeyError. | Changed validation to explicitly require OTM6, OTM7 and OTM8 on both call and put sides before calculating Stage 1. No research result was produced by the failed run. |
