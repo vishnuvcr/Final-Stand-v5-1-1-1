@@ -258,3 +258,11 @@ The Phase-20 historical strategy remains frozen. A separate Phase-21 branch is t
 - [Phase 21 workflow](.github/workflows/phase-21-preexpiry-adverse-move-risk-control.yml)
 
 Phase 21 does not change the final strategy unless a candidate passes the frozen walk-forward promotion screen. Until then, the canonical strategy remains the Phase-20 specification.
+
+## Phase 21 completion — pre-expiry risk control
+
+Phase 21 tested pre-expiry adverse NIFTY moves of 200–600 points with 1/5/15-minute confirmation, spot/MTM/MFE filters, early exits, and one-lot OTM-(n+3) tail hedges. No candidate passed the training requirement of zero profitable baseline trades affected. The closest candidate (600-point / 1-minute / spot-only early exit) improved training by ₹1,885.47 but lost ₹33,923.36 in 2024–2025 validation and ₹44,039.53 in the 2026 holdout. It also increased full-sample max drawdown to ₹52,740.01. **No Phase-21 adjustment is promoted; the Phase-20 strategy remains frozen.**
+
+- [Phase 21 pre-registration](PHASE21_PRE_REGISTRATION.md)
+- [Phase 21 conclusion](results/dynamic_n_corrected/phase21_adverse_move_risk_control/PHASE21_CONCLUSION.md)
+- [Phase 21 full candidate grid](results/dynamic_n_corrected/phase21_adverse_move_risk_control/phase21_full_grid.csv)
