@@ -52,7 +52,8 @@ The target is defined from the initial collected credit; costs are deducted from
 Lock formulas, strike ranking, DTE convention, exit rule, cost model, data fields, and missing-data policy.
 
 ### Phase 2 — Primary backtest
-Run the complete n=6..15 × Call/Put selection across the validated historical sample. Persist raw/filtered data metadata, trade-level results, missing observations, and summary statistics.
+Run the complete n=6..15 × Call/Put selection across the longest validated minute-level NIFTY sample available. The current primary acquisition target is approximately 2021-01-01 through 2026-09-30 using thetrademarkk/india-index-options-1m. A separate validation task will assess the 2017–2020 Zenodo dataset before any pre-2021 data are merged.
+Persist raw/filtered data metadata, trade-level results, missing observations, and summary statistics.
 
 ### Phase 3 — Statistical analysis
 Compute aggregate and stratified performance: trade count, hit rate, mean/median P&L, standard deviation, profit factor, expectancy, cumulative P&L, drawdown, Sharpe/Sortino where appropriate, target-hit rate, holding time, and bootstrap confidence intervals. Analyze selection by n and side without ranking political or other unrelated choices.
