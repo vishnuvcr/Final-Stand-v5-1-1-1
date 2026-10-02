@@ -1,0 +1,8 @@
+expiry,reason
+2021-11-11,missing 10:00 spot
+2024-03-07,fewer than OTM8 strikes for Stage 1
+2024-11-07,missing 10:00 spot
+2026-04-07,incomplete Stage 2 n=6..15 candidate set
+2026-06-02,missing 10:00 option-chain snapshot
+2026-07-14,fewer than 4 pre-expiry trading sessions
+2026-07-21,fewer than 4 pre-expiry trading sessions
