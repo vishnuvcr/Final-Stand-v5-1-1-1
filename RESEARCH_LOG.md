@@ -118,3 +118,11 @@
 - Compare the validated HF overlap period with the user-supplied full-period AlgoTest headline results.
 
 [RUN_PHASE9C]
+
+
+## 2026-10-03 — Critical P&L sign correction
+- The corrected strike mapping still produced near-total losses, which triggered a manual leg-by-leg check against the uploaded AlgoTest report.
+- The check exposed a second critical implementation error: the backtest P&L formula had inverted the long and short leg signs.
+- Correct convention: long OTM15 contributes `exit - entry`; short OTM16/17 contribute `entry - exit`.
+- The first uploaded AlgoTest call trade confirms this exactly: buy 1.90 -> 0.05 = -120.25; sell 1.70 -> 0.05 = +107.25; sell 1.80 -> 0.05 = +113.75; total = +100.75 for quantity 65.
+- Therefore Phase 7B, Phase 9B and Phase 9C numerical outputs are superseded. A full corrected primary rerun is required before any further robustness or inference.
