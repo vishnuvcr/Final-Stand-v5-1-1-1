@@ -9,3 +9,5 @@
 | 2026-10-02 | Phase 2 | GitHub Actions exposed HF_TOKEN as empty; huggingface_hub failed with an illegal empty Bearer header. | Made HF_TOKEN optional because the selected dataset is public; retain the secret only if later needed for authenticated/bulk access. |
 
 | 2026-10-02 | Phase 2 | The first workflow fix still injected an empty HF_TOKEN via github.event.inputs.HF_TOKEN, so huggingface_hub continued to construct an invalid Bearer header. | Removed HF_TOKEN from the workflow environment entirely; the client now uses anonymous public access unless a real token is intentionally provided. |
+
+| 2026-10-02 | Phase 2 | GitHub Actions still exposed an empty HF_TOKEN at process level despite workflow removal, and Hugging Face client auto-read it. | Python now removes an empty HF_TOKEN before Hugging Face API/download calls. |
