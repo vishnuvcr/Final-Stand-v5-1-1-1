@@ -21,3 +21,8 @@
 - The GitHub connector can create/update the manual workflow but does not expose workflow dispatch/write actions or a repository-wide Actions-run listing in this session.
 - Direct container internet access is unavailable, so the Hugging Face dataset cannot be downloaded locally.
 - The Phase 2 code is therefore committed and auditable, but no new full-sample performance result is claimed from this session.
+
+## 2026-10-02 — Phase 2 methodology correction
+- Corrected NIFTY lot-size mapping using NSE's expiry-specific transition: 25 remained for weekly expiries through 19-Dec-2024; 75 began with the 02-Jan-2025 weekly expiry. cite source recorded in external research notes
+- Corrected workflow to manual-only to prevent self-triggering when the workflow commits result files.
+- Enabled optional use of the repository HF_TOKEN secret for authenticated/bulk Hugging Face downloads; anonymous access remains valid for public data.
