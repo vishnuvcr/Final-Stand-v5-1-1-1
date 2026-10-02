@@ -1,0 +1,2 @@
+trades,net_pnl,mean_net,win_rate,profit_factor,max_drawdown,target_exits,conditional_stop_exits,expiry_fallback_exits,winners_stopped
+190,149129.526556424,784.892245034,0.9421052632,2.3356704201,27336.113568,178,5,7,0
