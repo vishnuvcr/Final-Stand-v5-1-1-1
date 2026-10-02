@@ -18,6 +18,10 @@ HIGH_N_THRESHOLD = float(os.getenv("HIGH_N_THRESHOLD", "0.95"))
 TARGET_FRACTION = 0.90
 SLIPPAGE_TICKS = float(os.getenv("SLIPPAGE_TICKS", "1"))
 TICK = float(os.getenv("OPTION_TICK", "0.05"))
+ENTRY_HOUR = int(os.getenv("ENTRY_HOUR", "10"))
+ENTRY_MINUTE = int(os.getenv("ENTRY_MINUTE", "0"))
+DTE_SESSIONS = int(os.getenv("DTE_SESSIONS", "4"))
+BROKERAGE_PER_ORDER = float(os.getenv("BROKERAGE_PER_ORDER", "10"))
 
 
 def lot_size_for_expiry(expiry):
@@ -60,7 +64,7 @@ def charges(entry, exit_, d, lot):
     turnover = sum(p for _, p in entry + exit_) * lot
     sells = sum(p for side, p in entry + exit_ if side == "sell") * lot
     buys = sum(p for side, p in entry + exit_ if side == "buy") * lot
-    brokerage = 10.0 * 6.0
+    brokerage = BROKERAGE_PER_ORDER * 6.0
     exchange = txn * turnover
     sebi_fee = sebi * turnover
     ipft_fee = ipft * turnover
@@ -185,8 +189,8 @@ def main():
             missing.append([str(expiry.date()), "fewer than 4 pre-expiry trading sessions"])
             continue
 
-        entry_date = pre_expiry[-4]
-        entry_ts = entry_date + pd.Timedelta(hours=10)
+        entry_date = pre_expiry[-DTE_SESSIONS]
+        entry_ts = entry_date + pd.Timedelta(hours=ENTRY_HOUR, minutes=ENTRY_MINUTE)
 
         sr = spot[spot.timestamp == entry_ts]
         if sr.empty:
@@ -349,7 +353,7 @@ def main():
             "x_call6": x_call6,
             "x_put6": x_put6,
             "x_max_selected_side": x_max,
-            "high_n_threshold": HIGH_N_THRESHOLD,
+            "high_n_threshold": HIGH_N_THRESHOLD,\n            "entry_hour": ENTRY_HOUR,\n            "entry_minute": ENTRY_MINUTE,\n            "dte_sessions": DTE_SESSIONS,\n            "brokerage_per_order": BROKERAGE_PER_ORDER,
             "high_n_threshold_x": threshold_x,
             "x_raw": x_raw,
             "spot_entry": s0,
@@ -394,7 +398,7 @@ def main():
         "mean_gross_rupees": float(tr.gross_rupees.mean()),
         "sum_gross_rupees": float(tr.gross_rupees.sum()),
         "sum_cost_rupees": float(tr.cost_rupees.sum()),
-        "target_exit_rate": float((tr.exit_reason == "TARGET").mean()),
+        "target_exit_rate": float((tr.exit_reason == "TARGET").mean()),\n        "entry_hour": ENTRY_HOUR, "entry_minute": ENTRY_MINUTE, "dte_sessions": DTE_SESSIONS, "brokerage_per_order": BROKERAGE_PER_ORDER,
         "mean_x_raw": float(tr.x_raw.mean()),
         "mean_selected_n": float(tr.n.mean()),
         "mean_x_call6": float(tr.x_call6.mean()),
