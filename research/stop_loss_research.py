@@ -460,3 +460,185 @@ def evaluate_rule(trades, rule):
     )
     return out
 
+
+def summarize(dev_trades, val_trades, rules):
+    records = []
+    per_rule = {}
+
+    for rule in rules:
+        dev = evaluate_rule(dev_trades, rule)
+        val = evaluate_rule(val_trades, rule)
+        per_rule[rule["name"]] = (dev, val)
+
+        records.append(
+            {
+                **{k: v for k, v in rule.items() if k != "family"},
+                "family": rule["family"],
+                "dev_trades": len(dev),
+                "dev_base_net": float(dev.base_net.sum()),
+                "dev_candidate_net": float(dev.candidate_net.sum()),
+                "dev_net_uplift": float(dev.net_uplift.sum()),
+                "dev_winner_affected": int(dev.winner_affected.sum()),
+                "dev_profit_uplift_lost": float(
+                    (dev.loc[dev.winner_affected, "base_net"] - dev.loc[dev.winner_affected, "candidate_net"]).sum()
+                ),
+                "dev_losses": int((dev.base_net < 0).sum()),
+                "dev_loss_reduction": float(dev.loss_reduction.sum()),
+                "dev_losses_eliminated": int(dev.loss_eliminated.sum()),
+                "val_trades": len(val),
+                "val_base_net": float(val.base_net.sum()),
+                "val_candidate_net": float(val.candidate_net.sum()),
+                "val_net_uplift": float(val.net_uplift.sum()),
+                "val_winner_affected": int(val.winner_affected.sum()),
+                "val_profit_uplift_lost": float(
+                    (val.loc[val.winner_affected, "base_net"] - val.loc[val.winner_affected, "candidate_net"]).sum()
+                ),
+                "val_losses": int((val.base_net < 0).sum()),
+                "val_loss_reduction": float(val.loss_reduction.sum()),
+                "val_losses_eliminated": int(val.loss_eliminated.sum()),
+            }
+        )
+
+    result = pd.DataFrame(records)
+
+    eligible = result[result["dev_winner_affected"] == 0].copy()
+    if eligible.empty:
+        eligible = result.copy()
+
+    selected = eligible.sort_values(
+        by=["dev_net_uplift", "dev_loss_reduction", "dev_winner_affected"],
+        ascending=[False, False, True],
+    ).iloc[0]
+
+    selected_name = selected["name"]
+    chosen_dev, chosen_val = per_rule[selected_name]
+
+    return result, selected_name, chosen_dev, chosen_val
+
+
+def main():
+    all_trades = build_paths()
+    if not all_trades:
+        raise RuntimeError("No trades reconstructed")
+
+    dev_trades = [
+        t for t in all_trades
+        if pd.Timestamp(t["expiry"], tz=TZ) <= DEV_END
+    ]
+    val_trades = [
+        t for t in all_trades
+        if pd.Timestamp(t["expiry"], tz=TZ) >= VAL_START
+    ]
+
+    rules = candidate_rules()
+    result, selected_name, selected_dev, selected_val = summarize(
+        dev_trades, val_trades, rules
+    )
+
+    OUT.mkdir(parents=True, exist_ok=True)
+    result.to_csv(OUT / "stop_rule_grid.csv", index=False)
+    selected_dev.to_csv(OUT / "selected_rule_dev_trade_level.csv", index=False)
+    selected_val.to_csv(OUT / "selected_rule_validation_trade_level.csv", index=False)
+
+    selected_val_all = pd.concat([selected_dev, selected_val], ignore_index=True)
+    selected_val_all.to_csv(OUT / "selected_rule_full_trade_level.csv", index=False)
+
+    selected = result.loc[result["name"] == selected_name].iloc[0]
+
+    def trade_summary(df):
+        if df.empty:
+            return {}
+        return {
+            "trades": int(len(df)),
+            "base_net": float(df["base_net"].sum()),
+            "candidate_net": float(df["candidate_net"].sum()),
+            "net_uplift": float(df["net_uplift"].sum()),
+            "stops": int((df["changed_before_base"]).sum()),
+            "winner_affected": int(df["winner_affected"].sum()),
+            "losses": int((df["base_net"] < 0).sum()),
+            "losses_eliminated": int(df["loss_eliminated"].sum()),
+            "loss_reduction": float(df["loss_reduction"].sum()),
+        }
+
+    full_summary = trade_summary(selected_val_all)
+    pd.DataFrame([{
+        "selected_rule": selected_name,
+        **full_summary,
+    }]).to_csv(OUT / "selected_rule_full_summary.csv", index=False)
+
+    report = f"""# Phase 17 Stop-Loss Research
+
+## Baseline
+
+The locked dynamic-n primary remains the no-stop strategy. This phase tests stop-loss extensions only.
+
+## Candidate families
+
+- Hard MTM stop after 0/24/48/72 elapsed hours at 0.50x to 2.00x target.
+- Expiry-day negative-P&L cutoffs at 14:00, 14:30 and 15:00 IST.
+- Stagnation stops after 24/48/72 hours.
+- MFE-based trailing stops.
+- Hard-stop plus expiry-day cutoff combinations.
+
+Hard, expiry-day and stagnation families use 1-minute and 3-minute confirmation variants where applicable.
+
+## Temporal split
+
+- Development: through {DEV_END.date()}.
+- Validation: {VAL_START.date()} through {END.date()}.
+
+## Selection rule
+
+Development-only selection:
+1. zero baseline-positive trades affected;
+2. maximize development net-P&L uplift;
+3. maximize development loss reduction;
+4. minimize affected winners as final tie-break.
+
+Selected rule: **{selected_name}**
+
+### Development
+
+- Net uplift: ₹{selected.dev_net_uplift:,.2f}
+- Loss reduction: ₹{selected.dev_loss_reduction:,.2f}
+- Losses eliminated: {int(selected.dev_losses_eliminated)}
+- Baseline-positive trades affected: {int(selected.dev_winner_affected)}
+
+### Validation
+
+- Net uplift: ₹{selected.val_net_uplift:,.2f}
+- Loss reduction: ₹{selected.val_loss_reduction:,.2f}
+- Losses eliminated: {int(selected.val_losses_eliminated)}
+- Baseline-positive trades affected: {int(selected.val_winner_affected)}
+
+### Full reconstructed sample
+
+- Net uplift: ₹{full_summary["net_uplift"]:,.2f}
+- Loss reduction: ₹{full_summary["loss_reduction"]:,.2f}
+- Losses eliminated: {full_summary["losses_eliminated"]}
+- Baseline-positive trades affected: {full_summary["winner_affected"]}
+
+## Interpretation guard
+
+The rule is not eligible for promotion to an operational stop unless:
+- validation has zero baseline-positive trades affected;
+- validation net-P&L uplift is positive;
+- the reduction is not driven by a single anomalous trade;
+- exact stop-time fees are included (they are);
+- the rule remains plausible under nearby parameter changes.
+
+"""
+    (OUT / "STOP_LOSS_REPORT.md").write_text(report, encoding="utf-8")
+
+    print(result.sort_values(
+        ["dev_winner_affected", "dev_net_uplift"],
+        ascending=[True, False],
+    ).head(25).to_string(index=False))
+    print("\nSELECTED RULE:", selected_name)
+    print("\nDEVELOPMENT\n", selected_dev.to_string(index=False))
+    print("\nVALIDATION\n", selected_val.to_string(index=False))
+    print("\nFULL SUMMARY\n", full_summary)
+
+
+if __name__ == "__main__":
+    main()
