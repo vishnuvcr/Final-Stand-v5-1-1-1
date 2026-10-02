@@ -149,3 +149,22 @@ The Phase 18 candidate family produced a positive result under the 2021-2026 dev
 - holdout: 2026-01-01 through 2026-09-30.
 
 The same pre-registered Phase 18 cutoff/MFE family is tested. The rule is selected using training data only. Promotion requires zero baseline-positive trades affected and positive net-P&L uplift in both validation and holdout, with no material maximum-drawdown deterioration.
+
+
+## Phase 19 result — final stop-loss research state
+
+The formal training-only selector chose **13:30 IST / negative MTM / MFE < 1.00× target**, but that rule materially worsened the 2026 holdout maximum drawdown and is **not promoted**.
+
+A nearby robustness candidate, tested in the same pre-registered Phase 19 grid, is retained for paper/forward validation:
+
+**13:30 IST on expiry day + combined three-leg MTM < ₹0 + running MFE < 0.50× original target.**
+
+Walk-forward evidence for this candidate:
+- Training (through 2023-12-31): +₹1,963.67 net uplift, 0 baseline-positive trades affected.
+- Validation (2024-01-01 to 2025-12-31): +₹1,923.59 net uplift, 0 baseline-positive trades affected.
+- Holdout (2026-01-01 to 2026-09-30): +₹6,305.15 net uplift, 0 baseline-positive trades affected, no change in maximum drawdown.
+- Full sample: +₹10,192.41 net uplift, 0 baseline-positive trades affected, 5 of 190 exits changed, all of them baseline losing trades.
+
+The candidate does not eliminate any loss completely; it truncates selected expiry losses earlier. It remains a **research candidate**, not a replacement for the locked no-stop primary, until forward execution validation is completed.
+
+Phase 19 is therefore the final stop-loss research phase unless a future forward-data phase is explicitly initiated.
