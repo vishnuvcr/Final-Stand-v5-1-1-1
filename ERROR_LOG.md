@@ -29,3 +29,6 @@
 
 
 | 2026-10-03 | Phase 9A audit | Uploaded AlgoTest reports are not configuration-equivalent to the locked research strategy: 09:35 vs 10:00 entry, 15:14 fixed exit vs target/expiry exit, four visible legs vs three, separate static call/put tests vs conditional X selector, fixed quantity 65 vs date-aware historical lot sizes, and 0%/disabled cost settings vs modeled costs. | Added a dedicated reconciliation audit before interpreting the apparent performance contradiction. |
+
+
+| 2026-10-03 | Phase 9A audit | The first AlgoTest PDFs supplied were the wrong files and led to an invalid four-leg interpretation. | Marked that interpretation superseded; re-audited the newly uploaded three-leg call/put reports. |
