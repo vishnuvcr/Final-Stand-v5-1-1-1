@@ -4,10 +4,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from research.stop_loss_research import (
+from research.backtest_dynamic_n_corrected import (
     TZ,
-    END,
-    build_paths,
     load,
     exec_px,
     charges,
@@ -17,7 +15,6 @@ OUT = Path(os.getenv("OUT_DIR", "results/dynamic_n_corrected/phase20_payoff_boun
 OUT.mkdir(parents=True, exist_ok=True)
 
 TRAIN_END = pd.Timestamp("2023-12-31", tz=TZ)
-VALIDATION_START = pd.Timestamp("2024-01-01", tz=TZ)
 VALIDATION_END = pd.Timestamp("2025-12-31", tz=TZ)
 HOLDOUT_START = pd.Timestamp("2026-01-01", tz=TZ)
 
@@ -37,421 +34,528 @@ def max_dd(values):
     return dd
 
 
-def exit_net(trade, point):
-    raw_exit = point["raw_exit"]
-    exit_exec = (
-        exec_px(raw_exit[0], "sell"),
-        exec_px(raw_exit[1], "buy"),
-        exec_px(raw_exit[2], "buy"),
+def load_trade_ledgers():
+    base = pd.read_csv("results/dynamic_n_corrected/phase10_primary/trades.csv")
+    base["entry_ts"] = pd.to_datetime(base["entry_ts"])
+    base["exit_ts"] = pd.to_datetime(base["exit_ts"])
+    base["expiry"] = base["expiry"].astype(str)
+
+    p19 = pd.read_csv(
+        "results/dynamic_n_corrected/phase19_walk_forward/selected_full_trade_level.csv"
     )
-    entry_ts = pd.Timestamp(trade["entry_ts"])
-    entry_orders = [
-        (entry_ts, "buy", trade["entry_exec"][0]),
-        (entry_ts, "sell", trade["entry_exec"][1]),
-        (entry_ts, "sell", trade["entry_exec"][2]),
-    ]
-    exit_orders = [
-        (point["ts"], "sell", exit_exec[0]),
-        (point["ts"], "buy", exit_exec[1]),
-        (point["ts"], "buy", exit_exec[2]),
-    ]
-    return point["gross"] - charges(entry_orders, exit_orders, trade["lot"])
+    p19["stop_ts"] = pd.to_datetime(p19["stop_ts"])
+    p19["expiry"] = p19["expiry"].astype(str)
+    return base, p19
 
 
-def prepare_paths(trades):
+def load_spot():
     spot = load("index/NIFTY.parquet")[["timestamp", "close"]].copy()
     spot["timestamp"] = pd.to_datetime(spot["timestamp"])
     if spot["timestamp"].dt.tz is None:
         spot["timestamp"] = spot["timestamp"].dt.tz_localize(TZ)
     else:
         spot["timestamp"] = spot["timestamp"].dt.tz_convert(TZ)
-    spot_map = dict(zip(spot["timestamp"], spot["close"]))
-
-    for t in trades:
-        common = []
-        for i, p in enumerate(t["path"]):
-            q = dict(p)
-            q["idx"] = i
-            q["spot"] = spot_map.get(pd.Timestamp(p["ts"]))
-            common.append(q)
-        t["path_with_spot"] = common
-
-        ep = t["entry_exec"]
-        kn, kn1, kn2 = t["strikes"]
-        credit = ep[1] + ep[2] - ep[0]
-        base_level = kn1 + kn2 - kn
-        if t["option_type"] == "CE":
-            t["boundary"] = base_level + credit
-            t["boundary_side"] = "upper"
-        else:
-            t["boundary"] = base_level - credit
-            t["boundary_side"] = "lower"
-        t["entry_credit_points"] = credit
-        t["base_level"] = base_level
-    return trades
+    return spot.rename(columns={"close": "spot"})
 
 
-def first_confirmed_boundary_stop(trade, buffer, condition_family, confirm):
-    pts = [p for p in trade["path_with_spot"] if p["spot"] is not None]
-    if not pts:
-        return None
-
-    def condition(p):
-        if trade["boundary_side"] == "upper":
-            breached = float(p["spot"]) >= trade["boundary"] + buffer
-        else:
-            breached = float(p["spot"]) <= trade["boundary"] - buffer
-        if not breached:
-            return False
-        if condition_family in ("negative_mtm", "negative_mtm_mfe50"):
-            if not (p["gross"] < 0):
-                return False
-        if condition_family == "negative_mtm_mfe50":
-            if not (p["mfe"] < 0.50 * trade["target"]):
-                return False
-        return True
-
-    if confirm <= 1:
-        for p in pts:
-            if condition(p):
-                return p["idx"]
-        return None
-
-    for j in range(len(pts) - confirm + 1):
-        window = pts[j:j + confirm]
-        ok = True
-        for k, p in enumerate(window):
-            if not condition(p):
-                ok = False
-                break
-            if k > 0:
-                delta = (pd.Timestamp(window[k]["ts"]) - pd.Timestamp(window[k - 1]["ts"])).total_seconds()
-                if delta != 60:
-                    ok = False
-                    break
-        if ok:
-            return window[0]["idx"]
-    return None
-
-
-def expiry_phase19_stop(trade):
-    expiry_date = pd.Timestamp(trade["expiry"], tz=TZ).date()
-    for p in trade["path"]:
-        ts = pd.Timestamp(p["ts"])
-        after_cut = (
-            ts.date() == expiry_date
-            and (ts.hour > 13 or (ts.hour == 13 and ts.minute >= 30))
-        )
-        if after_cut and p["gross"] < 0 and p["mfe"] < 0.50 * trade["target"]:
-            return p["idx"]
-    return None
-
-
-def evaluate(trades, stop_index_fn, variant_name):
+def build_boundary_metadata(base):
     rows = []
-    for t in trades:
-        idx = stop_index_fn(t)
-        if idx is None:
-            exit_idx = len(t["path"]) - 1
-            reason = t["base_exit_reason"]
+    for r in base.itertuples():
+        ep = (
+            exec_px(float(r.p_n_raw), "buy"),
+            exec_px(float(r.p_n1_raw), "sell"),
+            exec_px(float(r.p_n2_raw), "sell"),
+        )
+        credit = ep[1] + ep[2] - ep[0]
+        base_level = float(r.k_n1) + float(r.k_n2) - float(r.k_n)
+        if r.option_type == "CE":
+            boundary = base_level + credit
+            side = "upper"
         else:
-            exit_idx = min(idx, len(t["path"]) - 1)
-            reason = "STOP"
-        p = t["path"][exit_idx]
-        candidate_net = exit_net(t, p)
-
-        rows.append({
-            "expiry": t["expiry"],
-            "direction": t["direction"],
-            "option_type": t["option_type"],
-            "n_selected": t["n_selected"],
-            "spot_entry": t.get("spot_entry", np.nan),
-            "boundary": t["boundary"],
-            "boundary_side": t["boundary_side"],
-            "entry_credit_points": t["entry_credit_points"],
-            "target": t["target"],
-            "base_net": t["base_net"],
-            "candidate_net": candidate_net,
-            "net_uplift": candidate_net - t["base_net"],
-            "base_positive": t["base_net"] > 0,
-            "changed_before_base": p["ts"] < t["base_exit_ts"],
-            "winner_affected": (t["base_net"] > 0) and (p["ts"] < t["base_exit_ts"]),
-            "loss_reduction": max(candidate_net - t["base_net"], 0.0) if t["base_net"] < 0 else 0.0,
-            "loss_eliminated": (t["base_net"] < 0) and (candidate_net >= 0),
-            "stop_ts": p["ts"],
-            "stop_reason": reason,
-            "boundary_distance_at_stop": (
-                (float(p["spot"]) - t["boundary"]) if t["boundary_side"] == "upper"
-                else (t["boundary"] - float(p["spot"]))
-            ) if p.get("spot") is not None else np.nan,
-            "variant": variant_name,
-        })
+            boundary = base_level - credit
+            side = "lower"
+        rows.append(
+            {
+                "expiry": r.expiry,
+                "entry_ts": r.entry_ts,
+                "exit_ts": r.exit_ts,
+                "direction": r.direction,
+                "option_type": r.option_type,
+                "spot_entry": float(r.spot_entry),
+                "n_selected": int(r.n_selected),
+                "k_n": float(r.k_n),
+                "k_n1": float(r.k_n1),
+                "k_n2": float(r.k_n2),
+                "lot": float(r.lot_size),
+                "target": float(r.target_rupees),
+                "base_net": float(r.net_rupees),
+                "base_positive": bool(r.net_rupees > 0),
+                "entry_credit_points": credit,
+                "boundary": boundary,
+                "boundary_side": side,
+                "raw_entry": (
+                    float(r.p_n_raw),
+                    float(r.p_n1_raw),
+                    float(r.p_n2_raw),
+                ),
+                "entry_exec": ep,
+            }
+        )
     return pd.DataFrame(rows)
 
 
+def load_candidate_paths(meta, spot):
+    candidates = []
+
+    for r in meta.itertuples():
+        s = spot[
+            (spot["timestamp"] > r.entry_ts)
+            & (spot["timestamp"] <= r.exit_ts)
+        ][["timestamp", "spot"]]
+        if s.empty:
+            continue
+
+        if r.boundary_side == "upper":
+            max_spot = float(s["spot"].max())
+            if max_spot < r.boundary:
+                continue
+        else:
+            min_spot = float(s["spot"].min())
+            if min_spot > r.boundary:
+                continue
+
+        try:
+            option_df = load(f"options/NIFTY/{r.expiry}.parquet")
+        except Exception as exc:
+            candidates.append({
+                "expiry": r.expiry,
+                "error": repr(exc),
+                "path": None,
+            })
+            continue
+
+        q = option_df[
+            (option_df["timestamp"] > r.entry_ts)
+            & (option_df["timestamp"] <= r.exit_ts)
+            & (option_df["option_type"] == r.option_type)
+            & (
+                option_df["strike"].isin([r.k_n, r.k_n1, r.k_n2])
+            )
+        ]
+
+        piv = q.pivot_table(
+            index="timestamp",
+            columns="strike",
+            values="close",
+            aggfunc="last",
+        ).dropna(subset=[r.k_n, r.k_n1, r.k_n2])
+
+        if piv.empty:
+            candidates.append({
+                "expiry": r.expiry,
+                "error": "no complete three-leg option path",
+                "path": None,
+            })
+            continue
+
+        merged = s.merge(
+            piv.reset_index(),
+            on="timestamp",
+            how="inner",
+        ).sort_values("timestamp")
+
+        if merged.empty:
+            candidates.append({
+                "expiry": r.expiry,
+                "error": "no exact common timestamp between NIFTY and all three option legs",
+                "path": None,
+            })
+            continue
+
+        path = []
+        running_mfe = -np.inf
+        ep = r.entry_exec
+
+        for row in merged.itertuples():
+            raw_exit = (
+                float(getattr(row, str(r.k_n))),
+                float(getattr(row, str(r.k_n1))),
+                float(getattr(row, str(r.k_n2))),
+            )
+            xp = (
+                exec_px(raw_exit[0], "sell"),
+                exec_px(raw_exit[1], "buy"),
+                exec_px(raw_exit[2], "buy"),
+            )
+            gross_points = (
+                (xp[0] - ep[0])
+                + (ep[1] - xp[1])
+                + (ep[2] - xp[2])
+            )
+            gross = gross_points * r.lot
+            running_mfe = max(running_mfe, gross)
+            breached = (
+                float(row.spot) >= r.boundary
+                if r.boundary_side == "upper"
+                else float(row.spot) <= r.boundary
+            )
+            path.append(
+                {
+                    "ts": row.timestamp,
+                    "spot": float(row.spot),
+                    "gross": gross,
+                    "mfe": running_mfe,
+                    "breached": breached,
+                    "raw_exit": raw_exit,
+                }
+            )
+
+        candidates.append({
+            "expiry": r.expiry,
+            "error": None,
+            "path": path,
+        })
+
+    return {x["expiry"]: x for x in candidates}
+
+
+def first_stop(entry, path, buffer, family, confirm):
+    if path is None:
+        return None
+
+    def cond(p):
+        if entry.boundary_side == "upper":
+            crossed = p["spot"] >= entry.boundary + buffer
+        else:
+            crossed = p["spot"] <= entry.boundary - buffer
+        if not crossed:
+            return False
+        if family in ("negative_mtm", "negative_mtm_mfe50"):
+            if p["gross"] >= 0:
+                return False
+        if family == "negative_mtm_mfe50":
+            if p["mfe"] >= 0.50 * entry.target:
+                return False
+        return True
+
+    if confirm == 1:
+        for p in path:
+            if cond(p):
+                return p
+        return None
+
+    for i in range(len(path) - confirm + 1):
+        window = path[i:i + confirm]
+        if all(cond(p) for p in window):
+            ok = True
+            for j in range(1, len(window)):
+                delta = (
+                    pd.Timestamp(window[j]["ts"])
+                    - pd.Timestamp(window[j - 1]["ts"])
+                ).total_seconds()
+                if delta != 60:
+                    ok = False
+                    break
+            if ok:
+                return window[0]
+    return None
+
+
+def net_at(entry, stop_point):
+    raw_exit = stop_point["raw_exit"]
+    xp = (
+        exec_px(raw_exit[0], "sell"),
+        exec_px(raw_exit[1], "buy"),
+        exec_px(raw_exit[2], "buy"),
+    )
+    entry_orders = [
+        (entry.entry_ts, "buy", entry.entry_exec[0]),
+        (entry.entry_ts, "sell", entry.entry_exec[1]),
+        (entry.entry_ts, "sell", entry.entry_exec[2]),
+    ]
+    exit_orders = [
+        (stop_point["ts"], "sell", xp[0]),
+        (stop_point["ts"], "buy", xp[1]),
+        (stop_point["ts"], "buy", xp[2]),
+    ]
+    return float(stop_point["gross"]) - charges(
+        entry_orders,
+        exit_orders,
+        entry.lot,
+    )
+
+
+def make_rows(meta, path_map, stop_function, variant):
+    rows = []
+    for entry in meta.itertuples():
+        stop = stop_function(entry, path_map.get(entry.expiry))
+        if stop is None:
+            candidate_net = entry.base_net
+            stop_ts = entry.exit_ts
+            reason = "BASELINE"
+            distance = np.nan
+        else:
+            candidate_net = net_at(entry, stop)
+            stop_ts = stop["ts"]
+            reason = "STOP"
+            distance = (
+                float(stop["spot"]) - entry.boundary
+                if entry.boundary_side == "upper"
+                else entry.boundary - float(stop["spot"])
+            )
+
+        changed = pd.Timestamp(stop_ts) < entry.exit_ts
+        rows.append(
+            {
+                "expiry": entry.expiry,
+                "base_net": entry.base_net,
+                "candidate_net": candidate_net,
+                "net_uplift": candidate_net - entry.base_net,
+                "base_positive": entry.base_positive,
+                "changed_before_base": changed,
+                "winner_affected": entry.base_positive and changed,
+                "loss_reduction": (
+                    max(candidate_net - entry.base_net, 0.0)
+                    if entry.base_net < 0
+                    else 0.0
+                ),
+                "loss_eliminated": entry.base_net < 0 and candidate_net >= 0,
+                "stop_ts": stop_ts,
+                "stop_reason": reason,
+                "boundary": entry.boundary,
+                "boundary_side": entry.boundary_side,
+                "boundary_distance": distance,
+                "variant": variant,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def phase19_rows(base, p19):
+    out = base[["expiry", "net_rupees", "exit_ts"]].rename(
+        columns={"net_rupees": "base_net"}
+    ).copy()
+    out = out.merge(
+        p19[["expiry", "candidate_net", "stop_ts", "changed_before_base", "winner_affected", "loss_reduction", "loss_eliminated"]],
+        on="expiry",
+        how="left",
+    )
+    out["net_uplift"] = out["candidate_net"] - out["base_net"]
+    out["base_positive"] = out["base_net"] > 0
+    out["stop_reason"] = np.where(out["changed_before_base"], "STOP", "BASELINE")
+    out["boundary"] = np.nan
+    out["boundary_side"] = ""
+    out["boundary_distance"] = np.nan
+    out["variant"] = "phase19_expiry_stop"
+    return out.rename(columns={"exit_ts": "base_exit_ts"})
+
+
 def summarize(df):
-    if df.empty:
-        return {
-            "trades": 0,
-            "base_net": 0.0,
-            "candidate_net": 0.0,
-            "net_uplift": 0.0,
-            "winner_affected": 0,
-            "loss_reduction": 0.0,
-            "losses_eliminated": 0,
-            "stops": 0,
-            "base_dd": 0.0,
-            "candidate_dd": 0.0,
-        }
     return {
         "trades": int(len(df)),
-        "base_net": float(df["base_net"].sum()),
-        "candidate_net": float(df["candidate_net"].sum()),
-        "net_uplift": float(df["net_uplift"].sum()),
-        "winner_affected": int(df["winner_affected"].sum()),
-        "loss_reduction": float(df["loss_reduction"].sum()),
-        "losses_eliminated": int(df["loss_eliminated"].sum()),
-        "stops": int(df["changed_before_base"].sum()),
-        "base_dd": max_dd(df["base_net"].tolist()),
-        "candidate_dd": max_dd(df["candidate_net"].tolist()),
+        "base_net": float(df.base_net.sum()),
+        "candidate_net": float(df.candidate_net.sum()),
+        "net_uplift": float(df.net_uplift.sum()),
+        "winner_affected": int(df.winner_affected.sum()),
+        "loss_reduction": float(df.loss_reduction.sum()),
+        "losses_eliminated": int(df.loss_eliminated.sum()),
+        "stops": int(df.changed_before_base.sum()),
+        "base_dd": max_dd(df.base_net.tolist()),
+        "candidate_dd": max_dd(df.candidate_net.tolist()),
     }
 
 
-def split_trades(trades):
-    train, validation, holdout = [], [], []
-    for t in trades:
-        d = pd.Timestamp(t["expiry"], tz=TZ)
-        if d <= TRAIN_END:
-            train.append(t)
-        elif d <= VALIDATION_END:
-            validation.append(t)
-        else:
-            holdout.append(t)
+def split(df):
+    exp = pd.to_datetime(df["expiry"]).dt.tz_localize(TZ)
+    train = df[exp <= TRAIN_END].copy()
+    validation = df[(exp > TRAIN_END) & (exp <= VALIDATION_END)].copy()
+    holdout = df[exp >= HOLDOUT_START].copy()
     return train, validation, holdout
 
 
-def make_boundary_rules():
-    rules = []
-    for buffer in BOUNDARY_BUFFERS:
-        for confirm in CONFIRM_BARS:
-            for family in CONDITION_FAMILIES:
-                rules.append({
-                    "name": f"boundary_b{buffer:g}_c{confirm}_{family}",
-                    "buffer": buffer,
-                    "confirm": confirm,
-                    "condition_family": family,
-                })
-    return rules
+def main():
+    base, p19 = load_trade_ledgers()
+    meta = build_boundary_metadata(base)
+    spot = load_spot()
+    paths = load_candidate_paths(meta, spot)
 
+    rules = [
+        {
+            "name": f"boundary_b{b:g}_c{c}_{fam}",
+            "buffer": b,
+            "confirm": c,
+            "family": fam,
+        }
+        for b in BOUNDARY_BUFFERS
+        for c in CONFIRM_BARS
+        for fam in CONDITION_FAMILIES
+    ]
 
-def run_rule_set(trades, rules):
-    records = []
-    details = {}
+    grid = []
+    rule_detail = {}
     for rule in rules:
-        df = evaluate(
-            trades,
-            lambda t, r=rule: first_confirmed_boundary_stop(
-                t, r["buffer"], r["condition_family"], r["confirm"]
+        df = make_rows(
+            meta,
+            paths,
+            lambda entry, path, r=rule: first_stop(
+                entry, path, r["buffer"], r["family"], r["confirm"]
             ),
             rule["name"],
         )
-        details[rule["name"]] = df
+        rule_detail[rule["name"]] = df
         s = summarize(df)
-        records.append({**rule, **s})
-    return pd.DataFrame(records), details
+        grid.append({**rule, **s})
 
-
-def combined_stop(trade, boundary_rule):
-    b = first_confirmed_boundary_stop(
-        trade,
-        boundary_rule["buffer"],
-        boundary_rule["condition_family"],
-        boundary_rule["confirm"],
-    )
-    e = expiry_phase19_stop(trade)
-    choices = [x for x in (b, e) if x is not None]
-    return min(choices) if choices else None
-
-
-def main():
-    trades = prepare_paths(build_paths())
-    if not trades:
-        raise RuntimeError("No reconstructed trades")
-
-    train, validation, holdout = split_trades(trades)
-    rules = make_boundary_rules()
-
-    train_grid, train_details = run_rule_set(train, rules)
-    eligible = train_grid[train_grid["winner_affected"] == 0].copy()
-
+    grid_df = pd.DataFrame(grid)
+    eligible = grid_df[grid_df.winner_affected == 0].copy()
     if eligible.empty:
-        raise RuntimeError("No boundary rule preserved all training baseline-positive trades")
+        raise RuntimeError("No training-safe boundary rule existed.")
 
-    selected = eligible.sort_values(
+    # Selection is training-only.
+    grid_df["period"] = "full"
+    train_grid = []
+    for rule in rules:
+        df_train, _, _ = split(rule_detail[rule["name"]])
+        s = summarize(df_train)
+        train_grid.append({**rule, **s})
+    train_grid = pd.DataFrame(train_grid)
+
+    train_safe = train_grid[train_grid.winner_affected == 0].copy()
+    if train_safe.empty:
+        raise RuntimeError("No boundary rule preserved all training winners.")
+
+    selected = train_safe.sort_values(
         ["net_uplift", "loss_reduction", "stops"],
         ascending=[False, False, True],
     ).iloc[0].to_dict()
-    selected_name = selected["name"]
+    selected_rule = next(r for r in rules if r["name"] == selected["name"])
 
-    selected_train = train_details[selected_name]
-    selected_rule = next(r for r in rules if r["name"] == selected_name)
+    selected_all = rule_detail[selected_rule["name"]]
+    selected_train, selected_validation, selected_holdout = split(selected_all)
 
-    validation_selected = evaluate(
-        validation,
-        lambda t: first_confirmed_boundary_stop(
-            t,
-            selected_rule["buffer"],
-            selected_rule["condition_family"],
-            selected_rule["confirm"],
-        ),
-        selected_name,
-    )
-    holdout_selected = evaluate(
-        holdout,
-        lambda t: first_confirmed_boundary_stop(
-            t,
-            selected_rule["buffer"],
-            selected_rule["condition_family"],
-            selected_rule["confirm"],
-        ),
-        selected_name,
+    p19_all = phase19_rows(base, p19)
+    p19_train, p19_validation, p19_holdout = split(
+        p19_all.rename(columns={"base_exit_ts": "exit_ts"})
     )
 
-    # Fixed Phase-19 comparator.
-    expiry_stop_train = evaluate(train, expiry_phase19_stop, "phase19_expiry_stop")
-    expiry_stop_validation = evaluate(validation, expiry_phase19_stop, "phase19_expiry_stop")
-    expiry_stop_holdout = evaluate(holdout, expiry_phase19_stop, "phase19_expiry_stop")
+    def combined_rows(period_df, p19_df):
+        boundary = period_df.set_index("expiry")
+        phase19 = p19_df.set_index("expiry")
+        rows = []
+        for expiry, b in boundary.iterrows():
+            p = phase19.loc[expiry]
+            if b["changed_before_base"] and pd.Timestamp(b["stop_ts"]) <= pd.Timestamp(p["stop_ts"]):
+                rows.append(b.to_dict())
+            else:
+                rows.append(p.to_dict())
+        return pd.DataFrame(rows)
 
-    # Combined rule: selected payoff-boundary stop OR fixed Phase-19 stop.
-    combined_train = evaluate(
-        train,
-        lambda t: combined_stop(t, selected_rule),
-        "combined_boundary_or_phase19",
-    )
-    combined_validation = evaluate(
-        validation,
-        lambda t: combined_stop(t, selected_rule),
-        "combined_boundary_or_phase19",
-    )
-    combined_holdout = evaluate(
-        holdout,
-        lambda t: combined_stop(t, selected_rule),
-        "combined_boundary_or_phase19",
-    )
+    combined_train = combined_rows(selected_train, p19_train)
+    combined_validation = combined_rows(selected_validation, p19_validation)
+    combined_holdout = combined_rows(selected_holdout, p19_holdout)
+    combined_full = pd.concat([combined_train, combined_validation, combined_holdout], ignore_index=True)
 
-    full_train = pd.concat([selected_train], ignore_index=True)
-    full_boundary = pd.concat([selected_train, validation_selected, holdout_selected], ignore_index=True)
-    full_phase19 = pd.concat([expiry_stop_train, expiry_stop_validation, expiry_stop_holdout], ignore_index=True)
-    full_combined = pd.concat([combined_train, combined_validation, combined_holdout], ignore_index=True)
-    baseline = pd.DataFrame([{
-        "variant": "baseline_no_stop",
-        **summarize(pd.concat([
-            evaluate(train, lambda t: None, "baseline_no_stop"),
-            evaluate(validation, lambda t: None, "baseline_no_stop"),
-            evaluate(holdout, lambda t: None, "baseline_no_stop"),
-        ], ignore_index=True)),
-    }])
+    baseline_rows = base.rename(
+        columns={"net_rupees": "base_net", "exit_ts": "stop_ts"}
+    )[["expiry", "base_net", "stop_ts"]].copy()
+    baseline_rows["candidate_net"] = baseline_rows["base_net"]
+    baseline_rows["net_uplift"] = 0.0
+    baseline_rows["base_positive"] = baseline_rows["base_net"] > 0
+    baseline_rows["changed_before_base"] = False
+    baseline_rows["winner_affected"] = False
+    baseline_rows["loss_reduction"] = 0.0
+    baseline_rows["loss_eliminated"] = False
+    baseline_rows["variant"] = "baseline_no_stop"
 
-    variant_rows = []
-    for variant, df in [
-        ("phase19_expiry_stop", full_phase19),
-        ("selected_boundary_stop", full_boundary),
-        ("combined_boundary_or_phase19", full_combined),
-    ]:
-        variant_rows.append({"variant": variant, **summarize(df)})
-    variant_rows.insert(0, baseline.iloc[0].to_dict())
-    variants = pd.DataFrame(variant_rows)
+    variants = pd.DataFrame([
+        {"variant": "baseline_no_stop", **summarize(baseline_rows)},
+        {"variant": "phase19_expiry_stop", **summarize(p19_all)},
+        {"variant": "selected_boundary_stop", **summarize(selected_all)},
+        {"variant": "combined_boundary_or_phase19", **summarize(combined_full)},
+    ])
 
     train_compare = pd.DataFrame([
-        {"variant": "phase19_expiry_stop", **summarize(expiry_stop_train)},
+        {"variant": "phase19_expiry_stop", **summarize(p19_train)},
         {"variant": "selected_boundary_stop", **summarize(selected_train)},
         {"variant": "combined_boundary_or_phase19", **summarize(combined_train)},
     ])
     validation_compare = pd.DataFrame([
-        {"variant": "phase19_expiry_stop", **summarize(expiry_stop_validation)},
-        {"variant": "selected_boundary_stop", **summarize(validation_selected)},
+        {"variant": "phase19_expiry_stop", **summarize(p19_validation)},
+        {"variant": "selected_boundary_stop", **summarize(selected_validation)},
         {"variant": "combined_boundary_or_phase19", **summarize(combined_validation)},
     ])
     holdout_compare = pd.DataFrame([
-        {"variant": "phase19_expiry_stop", **summarize(expiry_stop_holdout)},
-        {"variant": "selected_boundary_stop", **summarize(holdout_selected)},
+        {"variant": "phase19_expiry_stop", **summarize(p19_holdout)},
+        {"variant": "selected_boundary_stop", **summarize(selected_holdout)},
         {"variant": "combined_boundary_or_phase19", **summarize(combined_holdout)},
     ])
 
     OUT.mkdir(parents=True, exist_ok=True)
-    train_grid.to_csv(OUT / "boundary_rule_train_grid.csv", index=False)
+    grid_df.to_csv(OUT / "boundary_rule_full_grid.csv", index=False)
+    train_grid.to_csv(OUT / "boundary_rule_training_grid.csv", index=False)
     variants.to_csv(OUT / "variant_full_sample_summary.csv", index=False)
     train_compare.to_csv(OUT / "variant_train_summary.csv", index=False)
     validation_compare.to_csv(OUT / "variant_validation_summary.csv", index=False)
     holdout_compare.to_csv(OUT / "variant_holdout_summary.csv", index=False)
+    selected_all.to_csv(OUT / "selected_boundary_full_trade_level.csv", index=False)
     selected_train.to_csv(OUT / "selected_boundary_train_trade_level.csv", index=False)
-    validation_selected.to_csv(OUT / "selected_boundary_validation_trade_level.csv", index=False)
-    holdout_selected.to_csv(OUT / "selected_boundary_holdout_trade_level.csv", index=False)
-    full_boundary.to_csv(OUT / "selected_boundary_full_trade_level.csv", index=False)
-    full_phase19.to_csv(OUT / "phase19_expiry_stop_full_trade_level.csv", index=False)
-    full_combined.to_csv(OUT / "combined_boundary_or_phase19_full_trade_level.csv", index=False)
+    selected_validation.to_csv(OUT / "selected_boundary_validation_trade_level.csv", index=False)
+    selected_holdout.to_csv(OUT / "selected_boundary_holdout_trade_level.csv", index=False)
+    p19_all.to_csv(OUT / "phase19_expiry_stop_full_trade_level.csv", index=False)
+    combined_full.to_csv(OUT / "combined_boundary_or_phase19_full_trade_level.csv", index=False)
 
-    safe_all = train_grid[train_grid["winner_affected"] == 0].sort_values(
+    safe_train = train_grid[train_grid.winner_affected == 0].sort_values(
         ["net_uplift", "loss_reduction"], ascending=[False, False]
     )
-    safe_all.to_csv(OUT / "zero_winner_training_rules.csv", index=False)
+    safe_train.to_csv(OUT / "zero_winner_training_rules.csv", index=False)
 
-    formal_promotion = (
-        summarize(validation_selected)["winner_affected"] == 0
-        and summarize(holdout_selected)["winner_affected"] == 0
-        and summarize(validation_selected)["net_uplift"] > 0
-        and summarize(holdout_selected)["net_uplift"] > 0
-        and summarize(validation_selected)["candidate_dd"] <= summarize(validation_selected)["base_dd"] * 1.05
-        and summarize(holdout_selected)["candidate_dd"] <= summarize(holdout_selected)["base_dd"] * 1.05
+    val_s = summarize(selected_validation)
+    hold_s = summarize(selected_holdout)
+    boundary_pass = (
+        val_s["winner_affected"] == 0
+        and hold_s["winner_affected"] == 0
+        and val_s["net_uplift"] > 0
+        and hold_s["net_uplift"] > 0
+        and val_s["candidate_dd"] <= val_s["base_dd"] * 1.05
+        and hold_s["candidate_dd"] <= hold_s["base_dd"] * 1.05
     )
-
-    boundary_status = "PASS" if formal_promotion else "FAIL"
 
     report = f"""# Phase 20 — Payoff-Boundary Stop Research
 
-## Research question
+## Question
 
-Does the entry-time expiry zero-P&L boundary from the payoff chart provide a robust early-warning stop when NIFTY moves beyond the green/profit region before expiry, and does it add information beyond the fixed Phase-19 expiry-day stop?
+What happens when NIFTY moves materially beyond the green/profit region of the entry-time payoff chart before expiry?
 
-## Boundary definition
+## Structural boundary
 
-The selected position is known at entry. Using the same entry execution slippage as the backtest, the net entry credit in option points is:
+Using the actual selected strikes and the same one-tick entry slippage as the locked backtest, define the entry net credit in points as:
 
-credit = short-leg executed premiums - long-leg executed premium.
+short-leg executed premiums - long-leg executed premium.
 
-The expiry zero-P&L boundary is:
+The expiry zero-P&L stress boundary is:
 
 - call-side upper boundary = K_(n+1) + K_(n+2) - K_n + credit;
 - put-side lower boundary = K_(n+1) + K_(n+2) - K_n - credit.
 
-A boundary breach is therefore a **structural expiry risk signal**, not a claim that the intraday position is already losing. That is why MTM/MFE-filtered variants were pre-registered.
+This boundary is calculated entirely from entry information.
 
-## Pre-registered boundary grid
+## Pre-registered search
 
-Buffers: 0, 50, 100, 200 and 400 NIFTY points.
+Buffers: 0, 50, 100, 200 and 400 NIFTY points.  
+Confirmation: 1 or 3 exact consecutive minutes.  
+Conditions: boundary-only; boundary + negative MTM; boundary + negative MTM + MFE < 0.50× target.
 
-Confirmation: 1 or 3 exact consecutive minute observations.
-
-Condition families:
-- boundary-only;
-- boundary + current combined MTM < 0;
-- boundary + MTM < 0 + MFE < 0.50× target.
-
-Selection was frozen using training data only, requiring zero baseline-positive trades affected and then maximizing training net uplift.
+Selection used training only, requiring zero baseline-positive trades affected and then maximizing training net uplift.
 
 ## Selected boundary rule
 
-**{selected_name}**
+**{selected_rule["name"]}**
 
-Boundary buffer: {selected_rule["buffer"]:.0f} points  
+Buffer: {selected_rule["buffer"]:.0f} NIFTY points  
 Confirmation: {selected_rule["confirm"]} minute(s)  
-Condition: {selected_rule["condition_family"]}
+Condition: {selected_rule["family"]}
 
 ## Walk-forward comparison
-
-Training: through 2023-12-31  
-Validation: 2024-01-01 to 2025-12-31  
-Holdout: 2026-01-01 to 2026-09-30
 
 ### Training
 {train_compare.to_string(index=False)}
@@ -467,46 +571,46 @@ Holdout: 2026-01-01 to 2026-09-30
 
 ## Phase-19 comparator
 
-The Phase-19 comparator is fixed and not re-optimised:
+The fixed comparator remains:
 
-**13:30 IST on expiry day + combined MTM < 0 + MFE < 0.50× original target.**
+**13:30 IST on expiry day + combined MTM < 0 + running MFE < 0.50× original target.**
 
 ## Boundary promotion screen
 
-Result: **{boundary_status}**
+Boundary candidate passes the pre-registered screen: **{boundary_pass}**
 
-The screen requires:
+Required:
 - zero baseline-positive trades affected in validation and holdout;
-- positive net-P&L uplift in validation and holdout;
-- no material maximum-drawdown deterioration (5% tolerance used as a research screen);
-- exact minute-level costs retained.
+- positive net uplift in validation and holdout;
+- no more than 5% deterioration in maximum drawdown;
+- exact minute-level execution costs retained.
 
-## Interpretation
+## Interpretation guard
 
-An expiry payoff boundary is useful only as an early structural stress marker. Because option time value remains before expiry, a boundary crossing can recover; the MTM/MFE-filtered variants explicitly test whether requiring present loss and insufficient prior favourable excursion makes the signal more selective.
+The expiry payoff boundary is an expiry-time structural stress level. An intraday breach does not mean the option position is already at its expiry loss; time value can allow recovery. This is why the research explicitly tested negative-MTM and MFE-filtered variants.
 
-This phase does not claim the boundary rule is guaranteed to improve live execution. Exact common timestamps are required for both NIFTY spot and all three option legs, and crossings between observations are not observed.
-
-## Complete-strategy decision
-
-The final strategy specification should include the Phase-19 expiry-day rule only if the boundary comparison does not provide a robust incremental improvement under the locked screen. The repository will record the exact final decision after the workflow completes.
+Spot/option alignment uses exact common timestamps only. No forward filling, interpolation or unobserved crossing is assumed.
 """
 
     (OUT / "BOUNDARY_STOP_CONCLUSION.md").write_text(report, encoding="utf-8")
     pd.DataFrame([{
-        "selected_rule": selected_name,
-        "boundary_status": boundary_status,
+        "selected_rule": selected_rule["name"],
+        "boundary_pass": boundary_pass,
         "train_net_uplift": summarize(selected_train)["net_uplift"],
-        "validation_net_uplift": summarize(validation_selected)["net_uplift"],
-        "holdout_net_uplift": summarize(holdout_selected)["net_uplift"],
-        "validation_winner_affected": summarize(validation_selected)["winner_affected"],
-        "holdout_winner_affected": summarize(holdout_selected)["winner_affected"],
-        "validation_candidate_dd": summarize(validation_selected)["candidate_dd"],
-        "holdout_candidate_dd": summarize(holdout_selected)["candidate_dd"],
+        "validation_net_uplift": val_s["net_uplift"],
+        "holdout_net_uplift": hold_s["net_uplift"],
+        "validation_winner_affected": val_s["winner_affected"],
+        "holdout_winner_affected": hold_s["winner_affected"],
+        "validation_candidate_dd": val_s["candidate_dd"],
+        "holdout_candidate_dd": hold_s["candidate_dd"],
     }]).to_csv(OUT / "phase20_status.csv", index=False)
 
-    print("SELECTED_BOUNDARY_RULE", selected_name)
-    print("BOUNDARY_STATUS", boundary_status)
+    errors = pd.DataFrame([x for x in paths.values() if x["error"]])
+    if not errors.empty:
+        errors.to_csv(OUT / "data_alignment_errors.csv", index=False)
+
+    print("SELECTED_BOUNDARY_RULE", selected_rule["name"])
+    print("BOUNDARY_PASS", boundary_pass)
     print("\nTRAIN\n", train_compare.to_string(index=False))
     print("\nVALIDATION\n", validation_compare.to_string(index=False))
     print("\nHOLDOUT\n", holdout_compare.to_string(index=False))
