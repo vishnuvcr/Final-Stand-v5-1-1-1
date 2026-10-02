@@ -292,3 +292,8 @@
 - Corrective marker commit added to `RESEARCH_LOG.md`; this change matches the configured push-path filter and is intended to trigger the workflow exactly once.
 - No research output was produced by the non-triggered commit.
 [RUN_PHASE20_BOUNDARY_RETRY]
+
+## 2026-10-03 — Phase 20 PR workflow activation
+- Added the Phase 20 workflow to `main` so GitHub can evaluate the PR-triggered workflow from the base branch as required by GitHub Actions.
+- Touched the phase branch research log to trigger PR synchronization; the phase branch remains unmerged and is still the isolated Phase 20 research branch.
+[RUN_PHASE20_BOUNDARY_PR]
