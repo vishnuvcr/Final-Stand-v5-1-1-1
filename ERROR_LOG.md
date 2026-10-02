@@ -53,3 +53,6 @@
 
 
 | 2026-10-03 | Phase 15 n-selection ablation | First ablation Actions run failed before completing the matrix. | Reran with an explicit marker commit; fixed6, fixed15 and dynamic jobs completed successfully and persisted results. |
+
+
+| 2026-10-03 | Phase 17 stop-loss execution | First Phase 17 GitHub Actions run failed before calculation because `research/stop_loss_research.py` could not import the local `research` module under the Actions execution path. | Added the repository root to `sys.path`; no stop-loss result was produced by the failed run. |
