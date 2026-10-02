@@ -1,4 +1,5 @@
-name: Phase 2 Backtest - OTM6/7/8
+name: Phase 2 Primary Backtest - OTMn Ratio
+
 on:
   workflow_dispatch:
     inputs:
@@ -10,10 +11,16 @@ on:
         description: End date (YYYY-MM-DD)
         required: false
         default: '2025-12-31'
+      slippage_ticks:
+        description: Adverse slippage per leg in ticks
+        required: false
+        default: '1'
   push:
-    branches: [phase-1-strategy-definition]
+    branches: [phase-2-primary-backtest]
+
 permissions:
   contents: write
+
 jobs:
   backtest:
     runs-on: ubuntu-latest
@@ -28,12 +35,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
-          key: hf-nifty-options-phase2-v1
-      - name: Run backtest
+          key: hf-nifty-options-phase2-full-n-v2
+          restore-keys: |
+            hf-nifty-options-phase2-full-n-
+      - name: Run full n=6..15 backtest
         env:
-          HF_TOKEN: ${{ github.event.inputs.HF_TOKEN }}
           START_DATE: ${{ github.event.inputs.start_date || '2024-01-01' }}
-          END_DATE: ${{ github.event.inputs.end_date || '2026-09-30' }}
+          END_DATE: ${{ github.event.inputs.end_date || '2025-12-31' }}
+          SLIPPAGE_TICKS: ${{ github.event.inputs.slippage_ticks || '1' }}
         run: python research/backtest_otm_ratio.py
       - name: Persist results
         if: always()
@@ -41,5 +50,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add results || true
-          git commit -m 'Phase 2: persist backtest results' || echo 'No result changes'
+          git commit -m 'Phase 2: persist full n=6..15 backtest results' || echo 'No result changes'
           git push origin HEAD:${GITHUB_REF_NAME} || true
