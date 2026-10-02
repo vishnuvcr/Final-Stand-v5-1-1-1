@@ -35,14 +35,29 @@ def lot_size_for_expiry(expiry):
 
 
 def fee_rates(d):
+    # STT: official NSE rates. Transaction/IPFT assumptions are documented
+    # separately because broker pass-through can vary by period.
     if d >= pd.Timestamp("2026-04-01", tz=TZ):
         stt = 0.0015
     elif d >= pd.Timestamp("2024-10-01", tz=TZ):
         stt = 0.0010
     else:
         stt = 0.000625
-    txn = 0.0003503 if d >= pd.Timestamp("2024-10-01", tz=TZ) else 0.000495
-    return stt, txn, 0.000001, 0.000001, 0.00003
+
+    # NSE option transaction outflow:
+    # - pre-2024-10: retained project assumption 0.0495% premium turnover
+    # - 2024-10 through 2026-02: ₹3,503/cr transaction + ₹50/cr IPFT
+    # - from 2026-03: ₹3,552.99/cr transaction + ₹0.01/cr IPFT
+    if d >= pd.Timestamp("2026-03-01", tz=TZ):
+        txn = 0.000355299
+        ipft = 0.000000001
+    elif d >= pd.Timestamp("2024-10-01", tz=TZ):
+        txn = 0.0003503
+        ipft = 0.000005
+    else:
+        txn = 0.000495
+        ipft = 0.000005
+    return stt, txn, 0.000001, ipft, 0.00003
 
 
 def exec_px(px, action):
