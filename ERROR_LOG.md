@@ -2,30 +2,10 @@
 
 | Date | Phase | Error / limitation | Action |
 |---|---|---|---|
-| 2026-10-02 | Phase 0 | Repository was initially empty. | Initialized research structure. |
-| 2026-10-02 | Phase 1 | Hidden chain-of-thought cannot be exported into the repository. | Record concise reproducible decisions and research updates instead. |
-| 2026-10-02 | Phase 1 | Earlier artifacts introduced a stop-loss phase not requested. | Removed stop-loss from the primary strategy. |
-| 2026-10-02 | Phase 1 | Earlier implementation evaluated only OTM6/7/8. | Replaced with all n=6..15 candidates and global maximum selection. |
-| 2026-10-02 | Phase 1 | n=15 requires OTM17. | Added explicit OTM17 validation. |
-| 2026-10-02 | Phase 2 | Primary dataset notes sparse/absent far strikes. | Missing candidate/expiry observations are logged instead of imputed. |
-| 2026-10-02 | Phase 2 | Workflow dispatch/readback and direct internet execution are unavailable in this session. | Committed the runnable workflow; no unverified performance result is reported. |
-| 2026-10-02 | Phase 2 | Lot-size transition was initially mapped from Nov-2024 instead of expiry-specific transition. | Corrected to 25 through 19-Dec-2024 weekly expiry and 75 from 02-Jan-2025 weekly expiry using NSE circulars. |
-| 2026-10-02 | Phase 2 | Push-triggered workflow could retrigger itself after persisting results. | Changed Phase 2 workflow to manual workflow_dispatch only. |
-| 2026-10-02 | Phase 2 | Prior workflow could pass an empty HF_TOKEN. | Current workflow uses anonymous public access unless a real token is supplied outside the workflow. |
-
-| 2026-10-02 | Phase 2 | Original execution window covered only 2024–2025 despite the dataset advertising approximately 2021–2026. | Expanded workflow/script defaults to 2021-01-01 through 2026-09-30. |
-| 2026-10-02 | Phase 2 | Expanded period required additional historical NIFTY lot-size transitions. | Updated date-aware lot mapping; primary backtest still logs data gaps rather than imputing. |
-| 2026-10-02 | Phase 2 | A 2017–2020 public minute dataset was found, but it uses a different file organization/schema. | Recorded it as a supplemental source; require schema/coverage validation before merging. |
-
-| 2026-10-02 | Phase 2 | Verification found stale 2024–2025 fallback values in the workflow/script after the first expansion edit. | Rechecked both files and corrected all default/fallback dates to 2021-01-01 through 2026-09-30; bumped cache key to v3. |
-
-| 2026-10-02 | Phase 2 | Audit found that the first documentation-file writes were absent from the current branch tree. | Restored DATA_ACQUISITION.md and ZENODO_2019_2020_VALIDATION.md and verified the tree. |
-| 2026-10-02 | Phase 2 | Backtest used the full expiry-file strike list to define ATM/OTM ranks, creating potential strike-list look-ahead. | Changed ATM/OTM strike discovery to the 10:00 entry snapshot only. |
-| 2026-10-02 | Phase 2 | Expiry list did not explicitly exclude monthly expiries from the weekly-options sample. | Excluded the final available expiry date in each calendar month. |
-| 2026-10-02 | Phase 2 | NIFTY 65-lot transition was initially applied from Jan-2026 rather than the first revised weekly expiry. | Corrected boundary to 06-Jan-2026 using NSE FAOP70616. |
-
-| 2026-10-02 | Phase 2 | A later repository write temporarily reintroduced the full expiry-file strike list. | Reapplied entry-timestamp-only strike discovery and added an explicit missing-entry-snapshot check; verified executable lines after commit. |
-
-| 2026-10-02 | Phase 2 | Initial autonomous run used a 2021 fallback and concurrent workflow runs caused result-push contention. | Performed a clean single primary run with 2019 input; source availability yielded the validated 2021-2026 executable sample, and the successful result commit was persisted. |
-| 2026-10-02 | Phase 2 | Zenodo 2019-2020 data are nested archives and initially appeared compatible only at structural level. | Deep schema inspection found no row-level expiry identifier; source rejected for weekly-contract backtest rather than inferring expiry. |
-| 2026-10-02 | Phase 2 | Temporary push triggers were required because direct workflow dispatch is unavailable through the connector. | One-shot triggers were used only for execution and both workflows were restored to manual-only. |
+| 2026-10-02 | Phase 1 restart | Prior implementation used a global maximum over all 20 call/put candidates. | Superseded prior results and restarted with the two-stage selector. |
+| 2026-10-02 | Phase 1 restart | Prior DTE convention counted expiry as one of four sessions, making ordinary Thursday entry Monday rather than 4 DTE Friday. | Restarted with four trading sessions before expiry, expiry=0 DTE. |
+| 2026-10-02 | Phase 1 restart | Higher-n preference was requested without a numeric weight. | Pre-registered 95%-of-maximum-X threshold, then highest eligible n; test 90%/97.5% later. |
+| 2026-10-02 | Phase 1 restart | Non-positive X would make a 90%-of-X target non-meaningful. | Record NO_POSITIVE_X and do not enter. |
+| 2026-10-02 | Phase 1 restart | Far-strike option coverage can be sparse. | Require complete selected legs; log and exclude missing observations without imputation. |
+| 2026-10-02 | Phase 1 restart | Historical bid/ask is unavailable in the primary dataset. | Use explicit adverse slippage and label fills as modelled rather than observed bid/ask. |
+| 2026-10-02 | Phase 1 restart | Target basis needed explicit distinction from executable credit. | Lock target to raw user-specified X*lot and report executable credit/costs separately. |
