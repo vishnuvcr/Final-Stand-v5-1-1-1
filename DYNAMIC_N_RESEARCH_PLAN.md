@@ -168,3 +168,50 @@ Walk-forward evidence for this candidate:
 The candidate does not eliminate any loss completely; it truncates selected expiry losses earlier. It remains a **research candidate**, not a replacement for the locked no-stop primary, until forward execution validation is completed.
 
 Phase 19 is therefore the final stop-loss research phase unless a future forward-data phase is explicitly initiated.
+
+
+## Phase 20 — payoff-boundary stop research
+
+User question motivating this phase:
+- What happens if NIFTY moves materially beyond the green/profit region of the entry-time payoff chart before expiry?
+
+Research question:
+- Does an entry-time expiry zero-P&L payoff boundary provide a robust early-warning exit that improves the corrected dynamic-n strategy without cutting baseline-profitable trades, and does it add information beyond the Phase-19 expiry-day conditional stop?
+
+Definition:
+- For the selected three-leg structure, compute the entry-time net credit after the same modeled entry slippage used by the backtest.
+- Construct the expiry intrinsic P&L as a function of NIFTY spot using the actual selected strikes and entry credit.
+- Define the dangerous-side boundary as the zero-P&L point of that expiry payoff:
+  - call-side: upper boundary = K_(n+1) + K_(n+2) - K_n + entry_credit;
+  - put-side: lower boundary = K_(n+1) + K_(n+2) - K_n - entry_credit.
+- This is a structural expiry boundary, not an intraday fair-value boundary. A spot breach while time remains can recover; therefore filtered variants are tested separately.
+
+Pre-registration:
+- Boundary buffers: 0, 50, 100, 200 and 400 NIFTY points beyond the expiry breakeven boundary.
+- Confirmation: 1 consecutive complete minute or 3 consecutive complete minutes.
+- Condition families:
+  1. boundary-cross only;
+  2. boundary-cross + current combined three-leg MTM < 0;
+  3. boundary-cross + current MTM < 0 + running MFE < 0.50× target.
+- The Phase-19 rule is a fixed comparator, not re-optimised here:
+  **13:30 IST on expiry day + combined MTM < 0 + running MFE < 0.50× original target.**
+- A combined rule is evaluated only after the boundary candidate is selected: earliest of the selected boundary stop and the fixed Phase-19 comparator.
+
+Walk-forward protocol:
+- Training/selection: through 2023-12-31.
+- Validation: 2024-01-01 through 2025-12-31.
+- Holdout: 2026-01-01 through 2026-09-30.
+- Boundary-rule selection uses training only.
+- Primary safety constraint: zero baseline-positive trades affected in training; validation/holdout are then observed without re-optimisation.
+- Promotion evidence requires positive net-P&L uplift in validation and holdout, zero baseline-positive trades affected, and no material maximum-drawdown deterioration.
+- Exact minute-level three-leg execution prices, one-adverse-tick slippage, six-order brokerage and date-aware statutory charges are retained.
+
+Coverage and limitations:
+- Boundary monitoring uses exact timestamps where all three option legs and NIFTY spot are simultaneously available; no forward filling or interpolation is permitted.
+- If the underlying crosses between observations, the backtest cannot claim that the crossing was observed.
+- The boundary is based only on entry information and therefore contains no look-ahead.
+- The Phase-19 rule remains the fixed comparator. This phase does not silently replace it.
+
+Phase-20 completion criterion:
+- Produce a frozen comparison report covering baseline, Phase-19 comparator, best boundary candidate, and combined candidate; report train/validation/holdout/full-sample P&L, drawdown, stop counts, affected winners and loss reductions.
+- Conclude whether payoff-boundary information should enter the complete research strategy specification.
