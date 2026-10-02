@@ -1,0 +1,42 @@
+name: Phase 2 Supplemental Zenodo 2019-2020 Validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Zenodo archive
+        uses: actions/cache@v4
+        with:
+          path: data/zenodo_cache
+          key: zenodo-nifty-options-2017-2020-v1
+
+      - name: Acquire Zenodo archive
+        run: |
+          mkdir -p data/zenodo_cache
+          if [ ! -f data/zenodo_cache/Nifty-Options-Data.zip ]; then
+            curl -L --fail --retry 5               "https://zenodo.org/records/10899828/files/Nifty%20Options%20Data.zip?download=1"               -o data/zenodo_cache/Nifty-Options-Data.zip
+          fi
+          sha256sum data/zenodo_cache/Nifty-Options-Data.zip
+
+      - name: Inspect archive
+        run: |
+          mkdir -p data/zenodo_2017_2020
+          unzip -q -o data/zenodo_cache/Nifty-Options-Data.zip -d data/zenodo_2017_2020
+          python research/validate_zenodo_2019_2020.py data/zenodo_2017_2020 results/zenodo_2019_2020_manifest.json
+
+      - name: Persist validation manifest
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/zenodo_2019_2020_manifest.json
+          git commit -m 'Phase 2: persist Zenodo 2019-2020 validation manifest' || echo 'No manifest changes'
+          git push origin HEAD:${GITHUB_REF_NAME} || true
