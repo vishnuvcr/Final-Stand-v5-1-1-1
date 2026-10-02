@@ -1,5 +1,4 @@
 import os, re
-os.environ.pop("HF_TOKEN", None)
 
 from pathlib import Path
 import pandas as pd
@@ -21,7 +20,7 @@ def lot_size_for_expiry(expiry):
     # NSE NIFTY weekly lots for the primary 2024-2025 sample:
     # 25 before the April-2024 revision; 75 for weekly contracts from
     # the Nov-2024 revision through the Dec-2025 weekly expiries.
-    if expiry < pd.Timestamp("2024-11-20", tz="Asia/Kolkata"):
+    if expiry <= pd.Timestamp("2024-12-19", tz="Asia/Kolkata"):
         return 25
     return 75
 
