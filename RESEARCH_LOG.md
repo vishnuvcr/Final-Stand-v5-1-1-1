@@ -354,3 +354,11 @@
 - Updated the corrected manuscript and added `manuscript/PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md`.
 - Updated README and main-branch README with Phase 20 completion and final strategy links.
 - Final historical research phase is complete; no further historical exit-rule optimization is planned under the current plan.
+
+## 2026-10-03 — Phase 21 pre-expiry adverse-move risk control started
+- Created branch `phase-21-pre-expiry-adverse-move-risk-control`.
+- Frozen comparator is the Phase-20 final strategy, including the 13:30 expiry-day MTM/MFE stop.
+- Pre-registered direction-aware adverse NIFTY moves of 200/300/400/500/600 points, 1/5/15-minute confirmation, spot/MTM/MFE signal families, and one-lot OTM-(n+3) tail-hedge repair.
+- Walk-forward split remains training through 2023, validation 2024–2025, holdout 2026.
+- Promotion requires positive validation and holdout uplift, zero baseline-positive trades affected, no material drawdown deterioration and no hedge execution gaps.
+[RUN_PHASE21_ADVERSE_MOVE]
