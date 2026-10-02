@@ -1,40 +1,37 @@
 # Final Stand v5 1-1-1-1
 
-Research repository for systematic testing of the **OTMn / OTM(n+1) / OTM(n+2)** NIFTY weekly-options strategy.
+Research repository for systematic testing of the OTMn / OTM(n+1) / OTM(n+2) NIFTY weekly-options strategy.
 
 ## Current status
 
-**Phase 1 — Strategy definition and data validation: IN PROGRESS**
+**Phase 2 — Primary backtest: IN PROGRESS**
 
-The strategy specification is now locked to the requested rules:
-- Calculate X for **n=6..15** for both Calls and Puts: **20 candidates per entry**.
+Phase 1 locked the strategy:
+- 20 X candidates per entry: n=6..15 × Call/Put.
 - Select the single highest X.
-- Buy OTMn and sell OTM(n+1) and OTM(n+2), on the selected side.
-- Profit target: **90% of X × lot quantity**.
-- Otherwise exit at **0 DTE / expiry**.
+- Buy OTMn; sell OTM(n+1) and OTM(n+2).
+- Target = 90% of initial credit X × actual lot quantity.
+- Otherwise exit at 0 DTE / expiry.
 - No stop-loss in the primary strategy.
-- Report gross and net P&L, including slippage and transaction costs.
+- Gross and net P&L are both recorded.
+
+Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot sizes for the 2024–2025 primary sample.
 
 ## Research files
-
 - [Research Plan](RESEARCH_PLAN.md)
 - [Strategy Specification](STRATEGY_SPEC.md)
 - [Research Log](RESEARCH_LOG.md)
 - [Error Log](ERROR_LOG.md)
 - [Project Research Instructions](PROJECT_RESEARCH_INSTRUCTIONS.md)
-- Phase 2 backtest code: `research/backtest_otm_ratio.py`
-- Phase 2 results: `results/`
+- Backtest: `research/backtest_otm_ratio.py`
+- Results: `results/`
 
 ## Phase structure
-
 1. Phase 1 — Strategy definition and data validation
-2. Phase 2 — Primary backtest
+2. Phase 2 — Primary backtest **(current)**
 3. Phase 3 — Statistical analysis
 4. Phase 4 — Robustness and sensitivity
 5. Phase 5 — Research manuscript
 
-Each phase is maintained on a separate branch and has a manually runnable workflow where applicable.
-
-## Reproducibility
-
-Historical data sources, transformations, missing observations, assumptions, errors, and results are recorded in the repository. Hidden model chain-of-thought is not stored; only concise reproducible research decisions are archived.
+## External data references
+The primary historical dataset is the public `thetrademarkk/india-index-options-1m` dataset. It provides 1-minute NIFTY spot and option-chain OHLC data, but explicitly notes partial coverage for illiquid/far strikes. Official NSE documentation is used to validate contract/lot-size conventions and option-chain structure.
