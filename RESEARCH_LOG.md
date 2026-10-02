@@ -64,3 +64,7 @@
 
 ## Phase 8 execution note
 - First push-triggered Phase 8 run was skipped because the workflow event/marker did not execute the job. A second explicit marker commit is being used.
+
+## Phase 9 started
+- Robustness will test target fraction (0.80/0.90/1.00), adverse slippage (0/1/2 ticks), entry time (09:45/10:00/10:15), DTE (3/4/5 sessions), and brokerage (0/10/20 per order).
+- Primary remains fixed at 0.90 target, 1 tick slippage, 10:00, 4 DTE, ₹10/order.
