@@ -253,3 +253,9 @@
 - Restored `summarize()` and `main()`; added full-sample selected-rule output.
 - No numerical result from the second run is used.
 [RUN_STOP_LOSS]
+
+
+## 2026-10-03 — Phase 18 conditional-stop refinement started
+- Phase 17 broad grid: no candidate improved validation net P&L while leaving every baseline-positive trade untouched.
+- Phase 18 narrows the hypothesis to expiry-day negative MTM plus insufficient earlier MFE.
+[RUN_CONDITIONAL_STOP]
