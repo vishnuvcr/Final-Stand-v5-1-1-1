@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from research.stop_loss_research import build_paths
-from research.backtest_dynamic_n_corrected import TZ, load, exec_px, charges
+from research.backtest_dynamic_n_corrected import TZ, load, normalize, exec_px, charges
 
 OUT = Path(os.getenv("OUT_DIR", "results/dynamic_n_corrected/phase21_adverse_move_risk_control"))
 TRAIN_END = pd.Timestamp("2023-12-31", tz=TZ)
@@ -76,7 +76,7 @@ def enrich(trades, spot_map):
         expiry = t["expiry"]
         try:
             if expiry not in cache:
-                cache[expiry] = load(f"options/NIFTY/{expiry}.parquet")
+                cache[expiry] = normalize(load(f"options/NIFTY/{expiry}.parquet"))
         except Exception as e:
             errors.append({"expiry": expiry, "error": repr(e)})
             continue
