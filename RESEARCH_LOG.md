@@ -1,15 +1,18 @@
 # Research Log
 
 ## 2026-10-02 — Phase 1 specification review
-- Inspected the existing Phase 1 branch and prior research artifacts.
+- Inspected existing repository artifacts.
 - Confirmed the intended selector is the maximum X across all 20 candidates: n=6..15 × Call/Put.
-- Corrected the specification to remove an earlier, unintended stop-loss research phase.
-- Locked the primary exit rules to: 90% of initial credit, otherwise 0 DTE/expiry.
-- Locked the credit calculation to X × actual lot quantity.
-- Preserved a separate gross-vs-net accounting layer for costs and slippage.
-- n=15 requires OTM17 data.
+- Removed an unintended stop-loss research phase.
+- Locked exits to 90% of initial credit or 0 DTE/expiry.
+- Locked initial credit to X × actual lot quantity.
 
-## 2026-10-02 — Phase 1 status
-- Strategy definition: COMPLETE after correction.
-- Data validation: IN PROGRESS.
-- Phase 2 implementation: NOT STARTED on its dedicated branch.
+## 2026-10-02 — Phase 2 start
+- Created dedicated branch: phase-2-primary-backtest.
+- Replaced the prior OTM6/7/8-only implementation with a full n=6..15 implementation.
+- Added global maximum-X selection across calls and puts.
+- Added candidate-level output so all 20 X candidates can be audited per expiry.
+- Added date-aware NIFTY weekly lot sizes for the 2024–2025 primary sample.
+- Added a manual GitHub Actions workflow and Hugging Face cache.
+- Primary data source provenance and limitations are documented in the README and research plan.
+- Backtest execution is pending workflow completion.
