@@ -298,3 +298,12 @@ No additional threshold family will be introduced after inspecting results. A ma
 
 
 [RUN_PHASE21_ADVERSE_MOVE_TRIGGER]
+
+## Phase 21 completion — pre-expiry adverse-move risk control
+
+The pre-registered 200/300/400/500/600-point direction-aware trigger grid, 1/5/15-minute confirmations, spot/MTM/MFE signal families, and one-lot OTM-(n+3) tail-hedge repair were completed on the corrected 190-trade minute-level engine.
+
+No candidate passed the training safety constraint of zero baseline-positive trades affected. The closest candidate, 600-point/1-minute/spot-only early exit, improved training by ₹1,885.47 but produced −₹33,923.36 validation uplift and −₹44,039.53 2026 holdout uplift and increased full-sample maximum drawdown to ₹52,740.01.
+
+Decision: no pre-expiry adverse-move stop or one-lot n+3 hedge is promoted. The Phase-20 final strategy remains frozen. A materially different risk-control mechanism requires a separately registered phase.
+
