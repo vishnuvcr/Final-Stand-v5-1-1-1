@@ -635,3 +635,5 @@ Spot/option alignment uses exact common timestamps only. No forward filling, int
 
 if __name__ == "__main__":
     main()
+
+# Final Phase 20 execution trigger: persistence workflow is now rebasing before push.
