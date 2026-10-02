@@ -53,6 +53,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-20-payoff-boundary-stop-research
+          git rebase origin/phase-20-payoff-boundary-stop-research
           git add results/dynamic_n_corrected/phase20_payoff_boundary
           git commit -m "Phase 20: persist payoff-boundary research results" || exit 0
           git push origin HEAD:phase-20-payoff-boundary-stop-research
