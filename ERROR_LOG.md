@@ -12,3 +12,7 @@
 | 2026-10-02 | Phase 2 | Lot-size transition was initially mapped from Nov-2024 instead of expiry-specific transition. | Corrected to 25 through 19-Dec-2024 weekly expiry and 75 from 02-Jan-2025 weekly expiry using NSE circulars. |
 | 2026-10-02 | Phase 2 | Push-triggered workflow could retrigger itself after persisting results. | Changed Phase 2 workflow to manual workflow_dispatch only. |
 | 2026-10-02 | Phase 2 | Prior workflow could pass an empty HF_TOKEN. | Current workflow uses anonymous public access unless a real token is supplied outside the workflow. |
+
+| 2026-10-02 | Phase 2 | Original execution window covered only 2024–2025 despite the dataset advertising approximately 2021–2026. | Expanded workflow/script defaults to 2021-01-01 through 2026-09-30. |
+| 2026-10-02 | Phase 2 | Expanded period required additional historical NIFTY lot-size transitions. | Updated date-aware lot mapping; primary backtest still logs data gaps rather than imputing. |
+| 2026-10-02 | Phase 2 | A 2017–2020 public minute dataset was found, but it uses a different file organization/schema. | Recorded it as a supplemental source; require schema/coverage validation before merging. |
