@@ -1,80 +1,111 @@
 # Final Stand v5 1-1-1-1
 
-Research repository for systematic testing of the NIFTY weekly-options directional 3-leg ratio strategy.
+Research repository for systematic testing of NIFTY weekly-options directional 3-leg ratio strategies.
 
-## Current status
+## Current research status
 
-**Phase 9A — ALGO TEST RECONCILIATION AUDIT: REQUIRED BEFORE FINAL ROBUSTNESS INTERPRETATION**
+**Dynamic-n corrected research completed through final manuscript.**
 
-The locked fixed-OTM15 research backtest is **not directly comparable** to the two newly uploaded AlgoTest reports. The corrected AlgoTest screenshots show the intended three-leg fixed OTM15/16/17 component strategies (separate call and put reports), with 09:35 entry and 15:14 expiry-day exit. The previously uploaded files were the wrong reports and are superseded. The corrected reports are structurally much closer to the research specification, but still differ from the locked research backtest in entry time, exit rule, conditional X_call-vs-X_put selection, and modeled execution-cost assumptions.
+The dynamic-n branch was restarted from the raw option-data workflow after two critical implementation errors were discovered during AlgoTest reconciliation:
+1. OTM strikes had initially been selected by ordinal availability instead of exact ₹50 strike distance.
+2. Long/short P&L signs had initially been inverted.
 
-### Locked research strategy
+All prior dynamic-n numerical results and trade ledgers are superseded and were not reused.
 
-At 10:00 IST, four trading sessions before expiry:
-- X_call = OTM17 CE + OTM16 CE - OTM15 CE
-- X_put = OTM17 PE + OTM16 PE - OTM15 PE
-- X_call > X_put -> BEARISH call structure
-- X_call < X_put -> BULLISH put structure
-- equality -> no trade
+### Corrected dynamic-n primary
 
-Position:
-- BULLISH: buy OTM15 PE, sell OTM16 PE, sell OTM17 PE
-- BEARISH: buy OTM15 CE, sell OTM16 CE, sell OTM17 CE
+Validated executable sample: **2021-05-27 to 2026-09-30**
 
-Exit:
-- target T = 0.90 * selected X * lot quantity;
-- otherwise latest complete three-leg observation at or before 15:29 IST on expiry day;
-- one adverse ₹0.05 tick per leg in the primary model;
-- date-aware NIFTY lot size and six executed orders per trade;
-- explicit modeled brokerage/statutory/transaction charges.
+- **190 completed trades**
+- Gross P&L: **₹154,742.25**
+- Modeled costs: **₹15,805.13**
+- Net P&L: **₹138,937.12**
+- Mean net/trade: **₹731.25**
+- Median net/trade: **₹814.85**
+- Net win rate: **94.21%**
+- Profit factor: **2.14**
+- Maximum cumulative drawdown: **₹27,321.08**
+- Target exits: **178/190**
+- Expiry exits: **12/190**
+- Mean selected n: **6.04**
+- Median selected n: **6**
 
-Specification: [STRATEGY_SPEC.md](STRATEGY_SPEC.md)
-Research plan: [RESEARCH_PLAN.md](RESEARCH_PLAN.md)
+### Higher-n weightage criterion
 
-## Fixed OTM15 primary backtest — current locked result
+The locked n-selection rule was:
 
-Validated executable sample: **2021-05-27 through 2026-09-30**.
+- evaluate n=6..15;
+- compute X_n for each n;
+- identify max(X_n);
+- consider n eligible when X_n >= 95% of max(X_n);
+- **prefer the highest eligible n**.
 
-- 195 completed trades; 8 expiries excluded/missing.
-- Total net P&L: **-₹39,626.40**.
-- Total gross P&L: **-₹24,976.75**.
-- Modeled costs: **₹14,649.65**.
-- Mean net P&L: **-₹203.21/trade**.
-- Median net P&L: **-₹237.86/trade**.
-- Net win rate: **25.13%**.
-- Target exits: 49/195; expiry exits: 146/195.
-- Direction: 191 BULLISH/put trades and 4 BEARISH/call trades.
-- Bootstrap 95% CI for mean net P&L: **-₹481.66 to +₹135.74**.
-- Profit factor: **0.609**.
-- Maximum cumulative drawdown: **₹44,141.23**.
+The corrected sample selected:
+- n=6: **183 trades**
+- n=7: **6 trades**
+- n=8: **1 trade**
+- n=9..15: **0 trades**
 
-These are descriptive historical results under the locked primary assumptions; the confidence interval crosses zero, so the sample does not by itself establish a strictly negative population mean.
+Thus the dynamic mechanism operated essentially as n=6 in this historical sample, with occasional higher-n selections.
 
-## AlgoTest reconciliation evidence
+### Corrected fixed OTM15 comparison
 
-The corrected call report shows **218 trades and ₹43,267.25 overall profit** with 99.08% winning trades; the configuration shows 09:35 entry, 15:14 expiry-day exit, and three legs: buy OTM15 CE, sell OTM16 CE, sell OTM17 CE. fileciteturn547file0L2-L3
+Corrected fixed OTM15 primary:
 
-The corrected put report shows **218 trades and ₹138,258.25 overall profit** with 99.54% winning trades; its configuration shows 09:35 entry, 15:14 expiry-day exit, and three legs: buy OTM15 PE, sell OTM16 PE, sell OTM17 PE. fileciteturn547file1L2-L3
+- 183 completed trades
+- Gross P&L: **₹112,080.50**
+- Costs: **₹13,520.46**
+- Net P&L: **₹98,560.04**
+- Mean net/trade: **₹538.58**
+- Median net/trade: **₹195.35**
+- Net win rate: **99.45%**
+- Maximum cumulative drawdown: **₹3,593.39**
 
-These are benchmark configurations to reproduce first, not evidence that the locked research strategy has those returns.
+Across **180 common expiry dates**:
 
-## Phase 9A reconciliation plan
+- Dynamic-n net: **₹132,977.71**
+- Fixed OTM15 net: **₹88,176.60**
+- Dynamic-minus-fixed net difference: **₹44,801.11**
+- Dynamic-n net exceeded fixed OTM15 on **93.89%** of common expiry dates.
 
-1. Reproduce the corrected AlgoTest call configuration exactly.
-2. Reproduce the corrected AlgoTest put configuration exactly.
-3. Compare trade counts, dates, strikes, entry prices, exit prices and per-leg P&L against the exported/report rows.
-4. Change one parameter at a time to the locked research definition: 09:35->10:00, fixed exit->target/expiry, four legs->three legs, static side->X selector, fixed 65->date-aware lots, 0 costs->modeled costs/slippage.
-5. Only after this audit, execute/interpret Phase 9 robustness and final manuscript conclusions.
+This is a descriptive comparison, not a pure causal test of n-selection, because the direction selectors differ: dynamic-n uses OTM6/7/8 while fixed OTM15 uses OTM15/16/17.
 
-## Research history and artifacts
+## Key dynamic-n findings
 
-- Phase 6 fixed specification: [STRATEGY_SPEC.md](STRATEGY_SPEC.md)
-- Phase 7 primary backtest artifacts: [results/fixed_otm15_v3/](results/fixed_otm15_v3/)
-- Phase 8 statistical artifacts: [results/fixed_otm15_v3/phase8/](results/fixed_otm15_v3/phase8/)
-- Phase 9 robustness implementation: [research/robustness_fixed_otm15.py](research/robustness_fixed_otm15.py)
-- Research log: [RESEARCH_LOG.md](RESEARCH_LOG.md)
-- Error log: [ERROR_LOG.md](ERROR_LOG.md)
+The positive historical result is concentrated in target exits:
 
-## Superseded research
+- Target exits: **₹258,460.02 net**
+- Expiry exits: **-₹119,522.91 net**
 
-Earlier v2 results using OTM6-based Stage 1 and high-n selection are retained for audit only and are not evidence for the present fixed-OTM15 strategy. See repository history and [results/restarted_v2/](results/restarted_v2/).
+The high 94.21% win rate therefore does not remove tail-loss risk.
+
+Bootstrap results:
+- Mean-net 95% CI: **₹145.58 to ₹1,252.17**
+- Win-rate 95% CI: **90.53% to 97.37%**
+
+All pre-registered robustness families remained positive in the tested scenarios, including target fraction, slippage, entry time, DTE, brokerage and higher-n threshold sensitivity.
+
+## Research artifacts
+
+- [Final corrected manuscript](manuscript/DYNAMIC_N_CORRECTED_MANUSCRIPT.md)
+- [Dynamic-n research plan](DYNAMIC_N_RESEARCH_PLAN.md)
+- [Dynamic-n specification](DYNAMIC_N_SPEC.md)
+- [Dynamic-n primary backtest](research/backtest_dynamic_n_corrected.py)
+- [Primary dynamic-n results](results/dynamic_n_corrected/phase10_primary/)
+- [Dynamic-n statistics](results/dynamic_n_corrected/phase11_statistics/)
+- [Dynamic-n robustness](results/dynamic_n_corrected/phase12_robustness/)
+- [Dynamic-n vs fixed comparison](results/dynamic_n_corrected/phase13_comparison/)
+- [Research log](RESEARCH_LOG.md)
+- [Error log](ERROR_LOG.md)
+
+## Corrected fixed OTM15 artifacts
+
+- [Corrected fixed primary](results/fixed_otm15_v3/phase7d/)
+- [Corrected fixed statistics](results/fixed_otm15_v3/phase8b/)
+- [Corrected fixed robustness](results/fixed_otm15_v3/phase9/)
+
+## Research integrity status
+
+Previous dynamic-n and earlier fixed-OTM15 numerical outputs produced before the strike-mapping and P&L corrections remain in Git history for audit only. They are explicitly superseded and are not used as evidence in the final manuscript.
+
+The primary conclusion is historical and in-sample. No claim is made that future performance will match the backtest.
