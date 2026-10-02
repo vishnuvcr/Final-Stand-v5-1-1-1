@@ -227,45 +227,185 @@ def main():
     trades, errors = enrich(raw, spot_map)
     if not trades:
         raise RuntimeError("No trades after exact spot alignment")
+
     base = baseline_rows(trades)
-    detail = {}; rows = []
+    detail = {}
+    rows = []
+
     for thr in MOVE_THRESHOLDS:
         for c in CONFIRM_BARS:
             for fam in SIGNAL_FAMILIES:
-                name=f"stop_move{thr}_c{c}_{fam}"
-                df=eval_stop(trades,base,thr,fam,c); detail[name]=df
-                rows.append({"variant":name,"family":"early_exit","threshold":thr,"confirm":c,"signal":fam,**stats(df)})
+                name = f"stop_move{thr}_c{c}_{fam}"
+                df = eval_stop(trades, base, thr, fam, c)
+                detail[name] = df
+                rows.append({
+                    "variant": name,
+                    "family": "early_exit",
+                    "threshold": thr,
+                    "confirm": c,
+                    "signal": fam,
+                    **stats(df),
+                })
+
                 for policy in HEDGE_POLICIES:
-                    hname=f"hedge_move{thr}_c{c}_{fam}_{policy}"
-                    hdf=eval_hedge(trades,base,thr,fam,c,policy); detail[hname]=hdf
-                    rows.append({"variant":hname,"family":"tail_hedge","threshold":thr,"confirm":c,"signal":fam,"policy":policy,**stats(hdf)})
-    grid=pd.DataFrame(rows)
-    selected_train=[]
-    for name,df in detail.items():
-        tr,va,ho=split(df); s=stats(tr)
-        selected_train.append({"variant":name,"train_net_uplift":s["net_uplift"],"train_winner_affected":s["winner_affected"],"train_loss_reduction":s["loss_reduction"],"train_hedge_gaps":s["hedge_gaps"]})
-    train=pd.DataFrame(selected_train)
-    safe=train[(train.train_winner_affected==0)&(train.train_hedge_gaps==0)]
+                    hname = f"hedge_move{thr}_c{c}_{fam}_{policy}"
+                    hdf = eval_hedge(trades, base, thr, fam, c, policy)
+                    detail[hname] = hdf
+                    rows.append({
+                        "variant": hname,
+                        "family": "tail_hedge",
+                        "threshold": thr,
+                        "confirm": c,
+                        "signal": fam,
+                        "policy": policy,
+                        **stats(hdf),
+                    })
+
+    grid = pd.DataFrame(rows)
+    train_rows = []
+    for name, df in detail.items():
+        tr, va, ho = split(df)
+        s = stats(tr)
+        train_rows.append({
+            "variant": name,
+            "train_net_uplift": s["net_uplift"],
+            "train_winner_affected": s["winner_affected"],
+            "train_loss_reduction": s["loss_reduction"],
+            "train_hedge_gaps": s["hedge_gaps"],
+        })
+    train = pd.DataFrame(train_rows)
+
+    OUT.mkdir(parents=True, exist_ok=True)
+    grid.to_csv(OUT/"phase21_full_grid.csv", index=False)
+    train.to_csv(OUT/"phase21_training_selection_grid.csv", index=False)
+    if errors:
+        pd.DataFrame(errors).to_csv(OUT/"data_alignment_errors.csv", index=False)
+
+    safe = train[
+        (train.train_winner_affected == 0)
+        & (train.train_hedge_gaps == 0)
+    ].copy()
+
+    family_rows = []
+    for fam in ["early_exit", "tail_hedge"]:
+        fam_names = grid.loc[grid.family == fam, "variant"].tolist()
+        cg = train[train.variant.isin(fam_names)].copy()
+        if cg.empty:
+            continue
+        eligible = cg[
+            (cg.train_winner_affected == 0)
+            & (cg.train_hedge_gaps == 0)
+        ]
+        pool = eligible if not eligible.empty else cg
+        nm = pool.sort_values(
+            ["train_net_uplift", "train_loss_reduction", "train_winner_affected"],
+            ascending=[False, False, True],
+        ).iloc[0]["variant"]
+        ft, fv, fh = split(detail[nm])
+        family_rows.append({
+            "family": fam,
+            "training_reference_variant": nm,
+            "training_rule_was_safe": bool(nm in set(eligible.variant)),
+            "train_uplift": stats(ft)["net_uplift"],
+            "validation_uplift": stats(fv)["net_uplift"],
+            "holdout_uplift": stats(fh)["net_uplift"],
+            "full_uplift": stats(pd.concat([ft, fv, fh], ignore_index=True))["net_uplift"],
+            "train_winner_affected": stats(ft)["winner_affected"],
+            "validation_winner_affected": stats(fv)["winner_affected"],
+            "holdout_winner_affected": stats(fh)["winner_affected"],
+        })
+
     if safe.empty:
-        raise RuntimeError("No training-safe rule")
-    chosen=safe.sort_values(["train_net_uplift","train_loss_reduction"],ascending=[False,False]).iloc[0]["variant"]
-    sdf=detail[chosen]; tr,va,ho=split(sdf); full=pd.concat([tr,va,ho],ignore_index=True)
-    st,sv,sh,sf=map(stats,[tr,va,ho,full])
-    promotion=(sv["net_uplift"]>0 and sh["net_uplift"]>0 and sv["winner_affected"]==0 and sh["winner_affected"]==0 and sv["max_dd"]<=sv["base_dd"]*1.05 and sh["max_dd"]<=sh["base_dd"]*1.05 and sv["hedge_gaps"]==0 and sh["hedge_gaps"]==0)
-    fam_rows=[]
-    for fam in ["early_exit","tail_hedge"]:
-        candidates=train[train.variant.isin(grid[grid.family==fam].variant)&(train.train_winner_affected==0)&(train.train_hedge_gaps==0)]
-        if candidates.empty: continue
-        nm=candidates.sort_values(["train_net_uplift","train_loss_reduction"],ascending=[False,False]).iloc[0]["variant"]
-        fdf=detail[nm]; ft,fv,fh=split(fdf)
-        fam_rows.append({"family":fam,"training_selected_variant":nm,"train_uplift":stats(ft)["net_uplift"],"validation_uplift":stats(fv)["net_uplift"],"holdout_uplift":stats(fh)["net_uplift"],"full_uplift":stats(pd.concat([ft,fv,fh],ignore_index=True))["net_uplift"],"validation_winner_affected":stats(fv)["winner_affected"],"holdout_winner_affected":stats(fh)["winner_affected"],"validation_dd_change":stats(fv)["dd_change"],"holdout_dd_change":stats(fh)["dd_change"]})
-    OUT.mkdir(parents=True,exist_ok=True)
-    grid.to_csv(OUT/"phase21_full_grid.csv",index=False)
-    train.to_csv(OUT/"phase21_training_selection_grid.csv",index=False)
-    sdf.to_csv(OUT/"selected_variant_full_trade_level.csv",index=False)
-    pd.DataFrame(fam_rows).to_csv(OUT/"family_selected_summary.csv",index=False)
-    if errors: pd.DataFrame(errors).to_csv(OUT/"data_alignment_errors.csv",index=False)
-    report=f"""# Phase 21 — Pre-Expiry Adverse-Move Risk Control
+        top = train.sort_values(
+            ["train_net_uplift", "train_loss_reduction", "train_winner_affected"],
+            ascending=[False, False, True],
+        ).iloc[0]
+        top_name = top["variant"]
+        top_df = detail[top_name]
+        tr, va, ho = split(top_df)
+        full = pd.concat([tr, va, ho], ignore_index=True)
+        top_stats = [stats(x) for x in [tr, va, ho, full]]
+        selected = top_name
+
+        grid.sort_values(
+            ["train_net_uplift", "train_loss_reduction", "train_winner_affected"],
+            ascending=[False, False, True],
+        ).head(20).to_csv(
+            OUT/"top20_unconstrained_training_diagnostic.csv", index=False
+        )
+        report = f"""# Phase 21 — Pre-Expiry Adverse-Move Risk Control
+
+## Result
+
+**No pre-registered candidate passed the training safety screen.**
+
+The safety screen required zero baseline-positive trades affected during training. The complete candidate grid is persisted for audit. The top unconstrained training candidate below is diagnostic only and is **not promoted**.
+
+## Top unconstrained training candidate
+
+**{top_name}**
+
+Training winner-affected trades: **{int(top_stats[0]["winner_affected"])}**
+Training net uplift: **₹{top_stats[0]["net_uplift"]:.2f}**
+Validation net uplift: **₹{top_stats[1]["net_uplift"]:.2f}**
+2026 holdout net uplift: **₹{top_stats[2]["net_uplift"]:.2f}**
+Full-sample net uplift: **₹{top_stats[3]["net_uplift"]:.2f}**
+
+## Promotion
+
+**False**
+
+No pre-expiry risk-control rule is added to the frozen Phase-20 strategy.
+
+## Family diagnostics
+
+{pd.DataFrame(family_rows).to_string(index=False)}
+
+The comparator is the frozen Phase-20 strategy. Exact timestamps, corrected strike mapping, corrected long/short signs, historical lot sizes, adverse ₹0.05 option slippage, ₹10/order brokerage and audited statutory charges are retained.
+"""
+        pd.DataFrame(family_rows).to_csv(OUT/"family_selected_summary.csv", index=False)
+        pd.DataFrame([{
+            "selected_variant": selected,
+            "promotion": False,
+            "train_uplift": top_stats[0]["net_uplift"],
+            "validation_uplift": top_stats[1]["net_uplift"],
+            "holdout_uplift": top_stats[2]["net_uplift"],
+            "full_uplift": top_stats[3]["net_uplift"],
+        }]).to_csv(OUT/"phase21_status.csv", index=False)
+        print(report)
+        return
+
+    chosen = safe.sort_values(
+        ["train_net_uplift", "train_loss_reduction", "train_winner_affected"],
+        ascending=[False, False, True],
+    ).iloc[0]["variant"]
+    sdf = detail[chosen]
+    tr, va, ho = split(sdf)
+    full = pd.concat([tr, va, ho], ignore_index=True)
+    st, sv, sh, sf = map(stats, [tr, va, ho, full])
+    promotion = (
+        sv["net_uplift"] > 0
+        and sh["net_uplift"] > 0
+        and sv["winner_affected"] == 0
+        and sh["winner_affected"] == 0
+        and sv["max_dd"] <= sv["base_dd"] * 1.05
+        and sh["max_dd"] <= sh["base_dd"] * 1.05
+        and sv["hedge_gaps"] == 0
+        and sh["hedge_gaps"] == 0
+    )
+
+    sdf.to_csv(OUT/"selected_variant_full_trade_level.csv", index=False)
+    pd.DataFrame(family_rows).to_csv(OUT/"family_selected_summary.csv", index=False)
+    pd.DataFrame([{
+        "selected_variant": chosen,
+        "promotion": promotion,
+        "train_uplift": st["net_uplift"],
+        "validation_uplift": sv["net_uplift"],
+        "holdout_uplift": sh["net_uplift"],
+        "full_uplift": sf["net_uplift"],
+    }]).to_csv(OUT/"phase21_status.csv", index=False)
+
+    report = f"""# Phase 21 — Pre-Expiry Adverse-Move Risk Control
 
 ## Selected candidate
 **{chosen}**
@@ -288,13 +428,12 @@ def main():
 Required: positive validation and holdout uplift, zero baseline-positive trades affected, no more than 5% max-drawdown deterioration, and zero hedge execution gaps.
 
 ## Family comparison
-{pd.DataFrame(fam_rows).to_string(index=False)}
+{pd.DataFrame(family_rows).to_string(index=False)}
 
 The comparator is the frozen Phase-20 strategy. No payoff-boundary rule was introduced. Exact timestamps, corrected strike mapping, corrected long/short signs, historical lot sizes, adverse ₹0.05 option slippage, ₹10/order brokerage and audited statutory charges are retained.
 """
-    (OUT/"PHASE21_CONCLUSION.md").write_text(report,encoding="utf-8")
-    pd.DataFrame([{"selected_variant":chosen,"promotion":promotion,"train_uplift":st["net_uplift"],"validation_uplift":sv["net_uplift"],"holdout_uplift":sh["net_uplift"],"full_uplift":sf["net_uplift"]}]).to_csv(OUT/"phase21_status.csv",index=False)
     print(report)
+    (OUT/"PHASE21_CONCLUSION.md").write_text(report, encoding="utf-8")
 
 
 if __name__=="__main__":
