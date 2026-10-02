@@ -55,3 +55,12 @@
 - The 2019–2020 Zenodo source has a manual cached acquisition/validation workflow; 2017–2018 is excluded from this strategy.
 - Primary backtest now uses entry-time strike availability and excludes monthly expiry dates from the weekly sample.
 - No performance result is promoted to the research conclusions until the multi-year workflow has actually executed successfully.
+
+## 2026-10-02 — Autonomous Phase 2 execution
+- Executed the primary GitHub Actions backtest autonomously using the one-shot push mechanism, then restored the workflow to manual-only operation.
+- Validated primary execution window: 2021-05-27 onward through 2026-09-30, subject to available expiry files and missing-observation logging.
+- Primary execution completed successfully with 195 eligible trades under the finalized 20-candidate selector, 1-tick slippage, 90% target, no stop-loss, and modeled transaction costs.
+- Gross and net results were persisted to results/*.csv.
+- Two expiry observations were logged as missing 10:00 spot snapshots: 2024-11-07 and 2025-10-28.
+- Zenodo 2019–2020 was deeply inspected and rejected for the primary strategy because its row-level option records lack expiry identifiers; merging it would require unsupported expiry inference.
+- The rejected-source decision is documented in ZENODO_2019_2020_VALIDATION.md and DATA_ACQUISITION.md.
