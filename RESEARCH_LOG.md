@@ -141,3 +141,10 @@
 - All earlier Phase 9 numerical outputs are superseded.
 
 [RUN_PHASE9E]
+
+
+## 2026-10-03 — Phase 8B corrected statistical analysis
+- Statistical analysis is rerun from the corrected Phase 7C primary trade ledger.
+- Prior Phase 8 results are superseded because the earlier primary used incorrect strike mapping and inverted P&L signs.
+
+[RUN_PHASE8B]
