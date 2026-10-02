@@ -52,7 +52,7 @@ The target is defined from the initial collected credit; costs are deducted from
 Lock formulas, strike ranking, DTE convention, exit rule, cost model, data fields, and missing-data policy.
 
 ### Phase 2 — Primary backtest
-Run the complete n=6..15 × Call/Put selection across the longest validated minute-level NIFTY sample available. The current primary acquisition target is approximately 2021-01-01 through 2026-09-30 using thetrademarkk/india-index-options-1m. A separate validation task will assess the 2017–2020 Zenodo dataset before any pre-2021 data are merged.
+Run the complete n=6..15 × Call/Put selection across the longest validated minute-level NIFTY sample available. The current primary acquisition target is approximately February 2019 through September 2026. Thetrademarkk/india-index-options-1m covers the later period; the Zenodo 2017–2020 source is being validated for the eligible 2019–2020 weekly-options portion. 2017–2018 is excluded because NIFTY weekly options were not yet available.
 Persist raw/filtered data metadata, trade-level results, missing observations, and summary statistics.
 
 ### Phase 3 — Statistical analysis
