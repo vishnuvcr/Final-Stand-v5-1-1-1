@@ -18,3 +18,11 @@
 - Candidate stop losses: 0.25x, 0.50x, 0.75x, 1.00x, 1.50x, and 2.00x of the positive entry flatline premium.
 - Each candidate exits on the first minute where either the 90%-flatline target or the candidate loss threshold is reached; otherwise expiry close.
 - Paytm brokerage parameter changed to ₹20 per executed order for the primary run, consistent with Paytm Money's published new-user rate; older-account rates can be tested through the environment parameter.
+
+## 2026-10-02 — initial stop-loss result
+- Primary sample: 122 trades from 2024-01-01 through 2025-12-31.
+- Baseline with 90%-flatline target and modeled costs: overall mean approximately -11.23 option points/trade; win rate approximately 42.6%.
+- Call selections: 23 trades, mean -14.57 points. Put selections: 99 trades, mean -10.45 points.
+- Stop-loss grid results: 0.25x mean -9.15; 0.50x -12.47; 0.75x -12.29; 1.00x -11.86; 1.50x -12.21; 2.00x -11.22 option points/trade.
+- The 0.25x candidate has the smallest average loss in this in-sample grid, but its stop-out rate is about 82%; it is not considered validated.
+- Next research phase: chronological holdout validation, bid/ask/liquidity stress, DTE/entry/strike sensitivity, and regime analysis.
