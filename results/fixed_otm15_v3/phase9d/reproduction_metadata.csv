@@ -1,0 +1,2 @@
+hf_start_used,hf_end_used,weekly_expiries_tested,put_completed,call_completed,put_missing_expiries,call_missing_expiries,note
+2021-05-27,2026-09-30,203,196,188,7,15,AlgoTest report covers 2021-01-01 through 2026-10-03; this reproduction uses the validated HF executable overlap 2021-05-27 through 2026-09-30.
