@@ -1,6 +1,6 @@
 
 STDERR
-  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/backtest_restarted_v2.py", line 356
-    "high_n_threshold": HIGH_N_THRESHOLD,\n            "entry_hour": ENTRY_HOUR,\n            "entry_minute": ENTRY_MINUTE,\n            "dte_sessions": DTE_SESSIONS,\n            "brokerage_per_order": BROKERAGE_PER_ORDER,
-                                          ^
+  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/backtest_restarted_v2.py", line 405
+    "target_exit_rate": float((tr.exit_reason == "TARGET").mean()),\n        "entry_hour": ENTRY_HOUR, "entry_minute": ENTRY_MINUTE, "dte_sessions": DTE_SESSIONS, "brokerage_per_order": BROKERAGE_PER_ORDER,
+                                                                    ^
 SyntaxError: unexpected character after line continuation character
