@@ -15,8 +15,6 @@ on:
         description: Adverse slippage per leg in ticks
         required: false
         default: '1'
-  push:
-    branches: [phase-2-primary-backtest]
 
 permissions:
   contents: write
@@ -40,6 +38,7 @@ jobs:
             hf-nifty-options-phase2-full-n-
       - name: Run full n=6..15 backtest
         env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
           START_DATE: ${{ github.event.inputs.start_date || '2024-01-01' }}
           END_DATE: ${{ github.event.inputs.end_date || '2025-12-31' }}
           SLIPPAGE_TICKS: ${{ github.event.inputs.slippage_ticks || '1' }}
