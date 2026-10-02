@@ -286,3 +286,9 @@
 - The fixed Phase-19 13:30 expiry-day / negative MTM / MFE<0.50× target rule is a comparator and will not be re-optimised.
 - Training/validation/holdout periods remain 2021-05-27–2023-12-31, 2024-01-01–2025-12-31 and 2026-01-01–2026-09-30.
 [RUN_PHASE20_BOUNDARY]
+
+## 2026-10-03 — Phase 20 execution trigger correction
+- The first Phase 20 workflow commit did not trigger Actions because the workflow path filter excludes `.github/workflows/*` changes.
+- Corrective marker commit added to `RESEARCH_LOG.md`; this change matches the configured push-path filter and is intended to trigger the workflow exactly once.
+- No research output was produced by the non-triggered commit.
+[RUN_PHASE20_BOUNDARY_RETRY]
