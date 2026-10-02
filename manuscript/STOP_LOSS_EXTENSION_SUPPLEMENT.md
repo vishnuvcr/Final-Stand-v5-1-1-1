@@ -96,3 +96,12 @@ The research does not support a claim that a stop-loss can guarantee avoidance o
 It does support a specific historical candidate: a 13:30 IST expiry-day exit when the three-leg MTM is negative and running MFE is below 0.50 × target. It preserved every historically profitable baseline trade in the tested sample and improved net P&L in training, validation and the 2026 holdout.
 
 The candidate should remain an extension to the primary no-stop strategy and be validated in paper trading before any live deployment.
+
+
+## Phase 20 final disposition
+
+Phase 20 tested whether the entry-time expiry payoff green-area/zero-P&L boundary could provide an earlier stop. The training-safe 400-point/1-minute boundary candidate failed both temporal evaluation periods, and the combined boundary-plus-expiry-stop rule also failed.
+
+Therefore the historical candidate described above is no longer merely an extension awaiting historical comparison: the final research specification **retains the 13:30 IST / negative MTM / MFE<0.50×target stop and rejects all payoff-boundary stops**.
+
+The final complete rules are frozen in `FINAL_STRATEGY_RULES.md`.
