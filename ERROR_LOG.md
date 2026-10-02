@@ -24,3 +24,5 @@
 | 2026-10-03 | Phase 6 restart | Earlier v2 strategy used OTM6-based Stage 1 and high-n selection, which does not match the newly requested fixed OTM15 strategy. | Superseded v2 evidence and created a new v3 fixed-OTM15 research plan, specification, branch and backtest. |
 
 | 2026-10-03 | Phase 7 execution | Three push-triggered runs were started because the workflow was temporarily push-gated for autonomous execution. | All runs used the same locked code/data; primary successful result was persisted once and will be used for Phase 8. Workflow will be restored to manual-only after automated execution is complete. |
+
+| 2026-10-03 | Phase 8 trigger | First Phase 8 push-triggered run was skipped before executing the statistical job. | Added explicit marker retry; no research calculation was performed by the skipped run. |
