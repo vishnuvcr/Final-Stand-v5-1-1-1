@@ -1,44 +1,67 @@
-# Strategy Specification
+# Strategy Specification — Restarted Research (v2)
 
-## Entry selector
+## 1. Entry-time directional selector
 
-At 10:00 IST on the selected 4-DTE trading date, identify the nearest ATM strike A.
+At exactly 10:00 IST on the date that is **4 trading sessions before expiry** (expiry day excluded from the DTE count), identify the nearest available ATM strike from the 10:00 option-chain snapshot.
 
-For each n in 6..15, calculate:
+For OTM rank k, rank strikes outward from ATM separately for calls and puts.
 
-- Put X(n) = PE(n+2) + PE(n+1) - PE(n)
-- Call X(n) = CE(n+2) + CE(n+1) - CE(n)
+First calculate only OTM6/OTM7/OTM8:
+- X_call6 = CE(OTM8) + CE(OTM7) - CE(OTM6)
+- X_put6 = PE(OTM8) + PE(OTM7) - PE(OTM6)
 
-Here OTMk means the kth strike outside ATM on that side.
+Directional rule:
+- If X_call6 > X_put6: select the BEARISH strategy (call structure).
+- If X_call6 < X_put6: select the BULLISH strategy (put structure).
+- If X_call6 = X_put6: record NO_TRADE_TIE rather than inventing a direction.
 
-Select the single maximum X across all 20 candidates. Ties are resolved deterministically in favor of Put, then smaller n.
+## 2. n selection inside the selected strategy
 
-## Position
+For the selected side only, calculate for every n = 6,...,15:
 
-If the winner is Put:
-- Buy 1 OTMn Put
-- Sell 1 OTM(n+1) Put
-- Sell 1 OTM(n+2) Put
+X(n) = Premium(OTM(n+2)) + Premium(OTM(n+1)) - Premium(OTMn).
 
-If the winner is Call:
-- Buy 1 OTMn Call
-- Sell 1 OTM(n+1) Call
-- Sell 1 OTM(n+2) Call
+The requested higher-n preference has no numeric weight supplied. The primary pre-registered rule is:
+1. Let X_max be the largest X(n).
+2. Keep n where X(n) >= 0.95 * X_max.
+3. Select the highest n among those candidates.
 
-## Credit and target
+Phase 4 will test 90%, 95% and 97.5% thresholds.
 
-Initial credit per unit = winning X.
+If X_max <= 0, record NO_POSITIVE_X and do not enter because the requested 90%-of-credit target is not meaningful for a non-positive credit.
 
-Initial credit for one lot = winning X × lot quantity.
+For selected n:
+- BULLISH: buy OTMn PE; sell OTM(n+1) PE; sell OTM(n+2) PE.
+- BEARISH: buy OTMn CE; sell OTM(n+1) CE; sell OTM(n+2) CE.
 
-Profit target = 0.90 × initial credit for one lot.
+## 3. Entry
+- Exact timestamp: 10:00 IST.
+- DTE: four trading sessions before expiry, excluding expiry.
+- ATM and OTM ranks use only strikes present at the 10:00 snapshot.
+- No synthetic prices or forward filling.
 
-The primary backtest does not add a stop-loss.
+## 4. Exit
 
-## Exit
+Initial X is the raw 10:00 premium expression for the selected n.
 
-Exit all three legs when the position P&L reaches the 90% initial-credit target. Otherwise exit at 0 DTE/expiry using the historical execution convention defined in RESEARCH_PLAN.md.
+User-specified target:
+T = 0.90 * X * lot quantity.
 
-## Accounting
+The primary implementation keeps this target basis exactly as specified. Slippage and transaction costs are deducted from realized P&L and are reported separately.
 
-Report gross P&L and net P&L separately. Net P&L includes slippage, brokerage, statutory charges, and applicable taxes/fees.
+At each available minute after entry, calculate slippage-adjusted gross three-leg P&L. Exit at the first complete timestamp where gross P&L >= T.
+
+If not reached, exit at 15:29 IST on expiry day using the latest complete three-leg observation at or before that time.
+
+No stop-loss.
+
+## 5. Execution and accounting
+- One adverse slippage tick per leg, configurable.
+- Report raw X, executable entry credit, gross P&L, costs and net P&L separately.
+- Date/expiry-aware NIFTY lot size.
+- Explicit brokerage, STT, exchange, SEBI/IPFT, stamp duty and GST model.
+- Missing observations are logged, not imputed.
+
+## 6. Supersession
+
+This specification supersedes the earlier global 20-candidate selector. Earlier Phase 2 performance results are retained for audit history only and are not results for this restarted strategy.
