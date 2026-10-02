@@ -4,7 +4,7 @@ Research repository for systematic testing of the OTMn / OTM(n+1) / OTM(n+2) NIF
 
 ## Current status
 
-**Phase 2 — Primary backtest: IN PROGRESS**
+**Phase 2 — Primary backtest: IMPLEMENTED; DATA EXECUTION PENDING**
 
 Phase 1 locked the strategy:
 - 20 X candidates per entry: n=6..15 × Call/Put.
