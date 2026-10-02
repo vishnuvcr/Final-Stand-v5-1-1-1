@@ -75,3 +75,7 @@
 | 2026-10-03 | Phase 20 result persistence | Fifth Actions run completed the boundary research successfully but result commit push was rejected because the branch advanced during execution. | Persistence step now fetches and rebases onto the current Phase-20 branch before pushing. The numerical output itself was valid; the persisted copy is being regenerated with the corrected Phase-19 0.50x comparator. |
 
 | 2026-10-03 | Phase 20 result persistence | Sixth run completed the corrected comparison but was still executed with the pre-rebase workflow revision, so its generated result commit was rejected by the remote branch. | Workflow revision `96bf697` now rebases before pushing; a final calculation trigger will use that revision. |
+
+
+| 2026-10-03 | Phase 20 completion audit | Phase-19 published selected ledger represented the formal 1.00× MFE train-selected rule, while the locked research comparator was the 0.50× robustness candidate. | Reconstructed the 0.50× comparator directly from minute paths and required an exact cross-check against Phase-19 grid values before accepting the Phase-20 comparison. Cross-check passed. |
+| 2026-10-03 | Phase 20 final decision | Entry-time payoff-boundary stops can appear attractive in training while harming later periods because expiry payoff boundaries are not intraday fair-value boundaries. | Retain the fixed 13:30 expiry-day conditional stop and explicitly reject all payoff-boundary stops from the final historical specification. |
