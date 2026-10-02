@@ -44,3 +44,6 @@
 
 
 | 2026-10-03 | Dynamic-n execution audit | First dynamic-n Actions run failed because Stage 1 checked only dictionary length, which could equal three while a required OTM6/7/8 key was absent; direct key access then raised KeyError. | Changed validation to explicitly require OTM6, OTM7 and OTM8 on both call and put sides before calculating Stage 1. No research result was produced by the failed run. |
+
+
+| 2026-10-03 | Dynamic-vs-fixed comparison | Comparison script failed during construction of the direction table because two DataFrames with different indexes were passed directly to DataFrame(). | Replaced with pandas concat; no comparison result was produced by the failed run. |
