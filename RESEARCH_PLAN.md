@@ -1,40 +1,73 @@
-# Research Plan — OTM6/OTM7/OTM8 Ratio Strategy
+# Research Plan — OTMn / OTM(n+1) / OTM(n+2) Selection Strategy
 
-## Phase 1 — Strategy definition and data validation
-- Define OTM6/7/8 as the 6th/7th/8th OTM strike from the nearest ATM strike at the 10:00 IST entry snapshot.
-- Working underlying: NIFTY 50 weekly index options, because the request did not specify an underlying.
-- Entry: 4-DTE market-session convention: enter on the fourth trading session counting the expiry session as session 1, at 10:00 IST.
-- Strategy 1: +1 OTM6 PE, -1 OTM7 PE, -1 OTM8 PE.
-- Strategy 2: +1 OTM6 CE, -1 OTM7 CE, -1 OTM8 CE.
-- Selection: P = premium(OTM7)+premium(OTM8)-premium(OTM6); trade the side with higher P.
-- Exit target: derive the expiry payoff flatline profit from actual strikes and entry premium, then test it net of costs.
-- Fallback exit: expiry-day 15:29 IST mark unless stop-loss/profit target occurs first.
-- Stop-loss research: compare fixed loss, premium-relative loss, and structural breach rules without choosing one before out-of-sample validation.
-- Costs: Paytm Money brokerage plus statutory charges and configurable slippage; STT must be date-aware.
+## Research question
+Does the specified dynamic 3-leg ratio strategy produce positive risk-adjusted net returns after realistic transaction costs and slippage when tested on historical NIFTY 50 weekly index options?
 
-## Phase 2 — Backtest
-- Use 1-minute historical option OHLC plus NIFTY spot/index OHLC; primary clean sample is 2024-01-01 through 2025-12-31 because the selected public dataset is incomplete in parts of 2026.
-- Download only required weekly expiry files; cache raw downloads in GitHub Actions and persist compact filtered observations/results in the repository.
-- Use close-based execution for the base test, then stress adverse one-tick-per-leg and percentage slippage.
-- Record every trade's strikes, premiums, strategy, entry/exit, gross/net P&L, costs, MAE, MFE, and exit reason.
-- No look-ahead: strikes are selected only from the 10:00 entry snapshot.
+## Exact strategy specification
+At the 10:00 IST entry snapshot, for every n = 6,7,...,15:
 
-## Phase 3 — Stop-loss selection
-- Train candidates only on an early chronological sample.
-- Candidate SLs: 0.25x/0.50x/0.75x/1.00x entry flatline; 1.0x/1.5x/2.0x initial premium magnitude; structural breach/breakeven rules.
-- Compare expectancy, median trade, worst trade, max drawdown, profit factor, hit rate, tail loss, and slippage sensitivity.
-- Validate the selected candidate on a later holdout.
+- Put X(n) = PE(n+2) + PE(n+1) - PE(n)
+- Call X(n) = CE(n+2) + CE(n+1) - CE(n)
 
-## Phase 4 — Robustness
-- Year and volatility-regime analysis.
-- Slippage/fee sensitivity.
-- Entry-time sensitivity around 09:45–10:15.
-- DTE sensitivity around 3–5 calendar days.
-- Strike-distance sensitivity around OTM5–OTM9.
-- Missing/illiquid quote sensitivity.
+Compute all 20 X values. Select the single largest X across both option types and all n.
 
-## Phase 5 — Research manuscript
-- Produce methods, results, statistical analysis, charts, tables, appendices, limitations, conclusion, and future research.
+If the winner is Put, enter:
+- Buy 1 × OTMn Put
+- Sell 1 × OTM(n+1) Put
+- Sell 1 × OTM(n+2) Put
 
-### Stop condition
-Stop after Phase 5. Live-trading automation is outside this research unless separately requested.
+If the winner is Call, enter:
+- Buy 1 × OTMn Call
+- Sell 1 × OTM(n+1) Call
+- Sell 1 × OTM(n+2) Call
+
+The OTM rank is measured from the nearest ATM strike at the 10:00 entry snapshot. For n=15, the data must contain OTM17.
+
+## Entry
+- Target entry: 4 DTE at 10:00 IST.
+- Base calendar convention: for ordinary Thursday weekly expiries, this is Monday 10:00 IST.
+- Holiday/exception handling must be explicit and logged rather than silently inventing a timestamp.
+- No look-ahead: only information available at the entry timestamp may determine ATM, strikes, X values, and the selected trade.
+
+## Exit
+1. Profit target: 90% of the initial credit X × lot quantity.
+2. If the target is not reached, exit the complete position at 0 DTE / expiry according to the defined historical execution convention.
+3. There is NO stop-loss in the requested strategy. Do not introduce one into the primary backtest.
+
+## Costs and execution
+Report gross and net results separately. Net results must account for:
+- Paytm Money brokerage assumptions documented from current/period-appropriate public fee information.
+- Exchange transaction charges.
+- SEBI charges.
+- GST.
+- STT.
+- Stamp duty.
+- Configurable slippage.
+- Lot quantity effective on the trade date.
+
+The target is defined from the initial collected credit; costs are deducted from realized P&L rather than changing the 90% target definition.
+
+## Research phases
+### Phase 1 — Strategy definition and data validation
+Lock formulas, strike ranking, DTE convention, exit rule, cost model, data fields, and missing-data policy.
+
+### Phase 2 — Primary backtest
+Run the complete n=6..15 × Call/Put selection across the validated historical sample. Persist raw/filtered data metadata, trade-level results, missing observations, and summary statistics.
+
+### Phase 3 — Statistical analysis
+Compute aggregate and stratified performance: trade count, hit rate, mean/median P&L, standard deviation, profit factor, expectancy, cumulative P&L, drawdown, Sharpe/Sortino where appropriate, target-hit rate, holding time, and bootstrap confidence intervals. Analyze selection by n and side without ranking political or other unrelated choices.
+
+### Phase 4 — Robustness and sensitivity
+Test slippage/fees, entry timing, DTE convention, data completeness/liquidity filters, volatility regimes, and year-by-year stability. These are sensitivity analyses, not changes to the primary strategy.
+
+### Phase 5 — Research manuscript
+Produce a reproducible manuscript with research question, aims/objectives, literature/data review, methodology, results, statistical analysis, discussion, strengths, limitations, conclusion, future research, charts, tables, appendices, and supplements.
+
+## Stop condition
+Stop after Phase 5. Do not convert the research into live-trading automation unless separately requested.
+
+## Phase branch policy
+Each phase has a dedicated Git branch and manually runnable GitHub Actions workflow. Results and research-status files are updated at every completed step.
+
+## Reproducibility/data policy
+Prefer cached repository/Actions artifacts and immutable data manifests. Do not redownload unchanged data unnecessarily. Every data gap, execution error, methodological change, or failed workflow must be recorded in ERROR_LOG.md.
