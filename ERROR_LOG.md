@@ -20,3 +20,5 @@
 ## 2026-10-02 — Phase 4 second syntax correction
 - A second literal-newline insertion existed in the summary metadata block. Corrected before the next autonomous run.
 | 2026-10-02 | Phase 4 | Robustness runner completed all scenarios, but its result-persistence push was rejected because the remote branch had advanced; remote summary files therefore retained stale returncode metadata. | Record runner output as valid only after reconciliation; fix workflow persistence with fetch/rebase before push and explicitly write returncode=0 for completed scenarios. |
+
+| 2026-10-03 | Phase 6 restart | Earlier v2 strategy used OTM6-based Stage 1 and high-n selection, which does not match the newly requested fixed OTM15 strategy. | Superseded v2 evidence and created a new v3 fixed-OTM15 research plan, specification, branch and backtest. |
