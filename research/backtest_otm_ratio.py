@@ -202,6 +202,9 @@ def main():
             continue
 
         entry_quotes = df[df["timestamp"] == entry_ts]
+        if entry_quotes.empty:
+            missing.append([str(expiry.date()), "missing 10:00 option-chain snapshot"])
+            continue
         strikes = sorted(entry_quotes["strike"].dropna().unique())
         atm = min(strikes, key=lambda x: abs(x - s0))
 
