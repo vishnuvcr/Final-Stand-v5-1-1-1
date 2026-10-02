@@ -35,3 +35,6 @@
 
 
 | 2026-10-03 | Phase 7B strike-mapping audit | Initial fixed OTM15 implementation treated OTM15/16/17 as ordinal ranks among quoted strikes. This skipped exact strikes when a minute quote was missing. | Reclassified OTM15/16/17 as exact NIFTY strike-ladder distances using the ₹50 weekly/monthly strike interval; missing exact strikes will be logged/excluded. All initial Phase 7/8/9 numerical results are superseded pending rerun. |
+
+
+| 2026-10-03 | Phase 7C P&L accounting audit | The P&L formula had the signs of all three legs inverted relative to the actual long/short execution directions. For a long OTM15, P&L is exit minus entry; for the short OTM16/17 legs, P&L is entry minus exit. | Corrected the shared P&L formula in the primary backtest and AlgoTest reproduction. The Phase 7B and Phase 9C numerical outputs are superseded. The uploaded AlgoTest first trade independently confirms the corrected convention: buy 1.90 -> sell 0.05 is -₹120.25, sell 1.70 -> buy 0.05 is +₹107.25, sell 1.80 -> buy 0.05 is +₹113.75, total +₹100.75. |
