@@ -47,3 +47,6 @@
 
 
 | 2026-10-03 | Dynamic-vs-fixed comparison | Comparison script failed during construction of the direction table because two DataFrames with different indexes were passed directly to DataFrame(). | Replaced with pandas concat; no comparison result was produced by the failed run. |
+
+
+| 2026-10-03 | Research design extension | Full-sample dynamic-n vs fixed OTM15 comparison also changes the Stage-1 direction selector, so it cannot isolate the contribution of n-selection alone. | Added controlled fixed6/fixed15/dynamic ablation with the same OTM6/7/8 Stage-1 direction selector and identical execution assumptions. |
