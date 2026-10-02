@@ -49,3 +49,9 @@
 ## 2026-10-02 — Repository persistence verification
 - The first attempt to persist DATA_ACQUISITION.md and Zenodo documentation was not present in the branch tree during re-audit.
 - Restored both files and verified their presence through the branch tree before continuing.
+
+## 2026-10-02 — Final Phase 2 acquisition preparation
+- Current target is the compatible weekly-options era: Feb-2019 through Sep-2026.
+- The 2019–2020 Zenodo source has a manual cached acquisition/validation workflow; 2017–2018 is excluded from this strategy.
+- Primary backtest now uses entry-time strike availability and excludes monthly expiry dates from the weekly sample.
+- No performance result is promoted to the research conclusions until the multi-year workflow has actually executed successfully.
