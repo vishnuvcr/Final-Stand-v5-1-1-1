@@ -218,7 +218,7 @@ def load_candidate_paths(meta, spot):
             "path": path,
         })
 
-    return {x["expiry"]: x for x in candidates}
+    return {x["expiry"]: x["path"] for x in candidates}
 
 
 def first_stop(entry, path, buffer, family, confirm):
