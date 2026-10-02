@@ -7,7 +7,7 @@ from huggingface_hub import HfApi, hf_hub_download
 
 REPO = "thetrademarkk/india-index-options-1m"
 START = pd.Timestamp(os.getenv("START_DATE", "2024-01-01"), tz="Asia/Kolkata")
-END = pd.Timestamp(os.getenv("END_DATE", "2025-12-31"), tz="Asia/Kolkata")
+END = pd.Timestamp(os.getenv("END_DATE", "2026-09-30"), tz="Asia/Kolkata")
 OUT = Path("results")
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -20,9 +20,13 @@ def lot_size_for_expiry(expiry):
     # NSE NIFTY weekly lots for the primary 2024-2025 sample:
     # 25 before the April-2024 revision; 75 for weekly contracts from
     # the Nov-2024 revision through the Dec-2025 weekly expiries.
-    if expiry <= pd.Timestamp("2024-12-19", tz="Asia/Kolkata"):
+    if expiry < pd.Timestamp("2024-04-26", tz="Asia/Kolkata"):
+        return 50
+    if expiry < pd.Timestamp("2025-01-01", tz="Asia/Kolkata"):
         return 25
-    return 75
+    if expiry < pd.Timestamp("2026-01-01", tz="Asia/Kolkata"):
+        return 75
+    return 65
 
 def fee_model(d):
     # Date-aware Indian equity-derivatives charges used for research.
