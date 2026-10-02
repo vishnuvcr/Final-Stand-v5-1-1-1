@@ -27,3 +27,6 @@
 - Statistical artifacts persisted under results/restarted_v2/phase3/.
 - Workflow restored to manual-only after autonomous execution.
 - Next phase: robustness and sensitivity.
+
+## 2026-10-02 — Phase 4 retry trigger
+- Corrected a literal newline syntax error in the parameterized backtest before rerunning robustness scenarios.
