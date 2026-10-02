@@ -1,14 +1,96 @@
 {
   "root": "data/zenodo_2017_2020",
-  "file_count": 4,
-  "extension_counts": {
-    ".zip": 4
-  },
-  "expiry_like_paths": [],
-  "validation_status": "STRUCTURE_ONLY",
-  "notes": [
-    "This validator intentionally does not merge the source into the primary backtest.",
-    "2017-2018 data are excluded from the weekly-options strategy because NIFTY weekly options began in Feb-2019.",
-    "A subsequent parser validation must establish exact schema, timestamps, expiry mapping, weekly/monthly separation, and OTM17 availability."
-  ]
+  "outer_files": [
+    "Nifty Options Data/NiftyOptions 2019.zip",
+    "Nifty Options Data/NiftyOptions 2018.zip",
+    "Nifty Options Data/NiftyOptions 2020.zip",
+    "Nifty Options Data/NiftyOptions 2017.zip"
+  ],
+  "nested_archives": [
+    {
+      "archive": "Nifty Options Data/NiftyOptions 2019.zip",
+      "member_count": 12,
+      "sample_members": [
+        "December 2019.zip",
+        "September 2019.zip",
+        "November 2019.zip",
+        "October 2019.zip",
+        "July 2019.zip",
+        "April 2019.zip",
+        "May 2019.zip",
+        "August 2019.zip",
+        "February 2019.zip",
+        "January 2019.zip",
+        "March 2019.zip",
+        "June 2019.zip"
+      ],
+      "extensions": [
+        ".zip"
+      ]
+    },
+    {
+      "archive": "Nifty Options Data/NiftyOptions 2018.zip",
+      "member_count": 11,
+      "sample_members": [
+        "December 2018.zip",
+        "June 2018.zip",
+        "May 2018.zip",
+        "February 2018.zip",
+        "April 2018.zip",
+        "July 2018.zip",
+        "August 2018.zip",
+        "September 2018.zip",
+        "March 2018.zip",
+        "October 2018.zip",
+        "November 2018.zip"
+      ],
+      "extensions": [
+        ".zip"
+      ]
+    },
+    {
+      "archive": "Nifty Options Data/NiftyOptions 2020.zip",
+      "member_count": 12,
+      "sample_members": [
+        "June.zip",
+        "January.zip",
+        "February.zip",
+        "August.zip",
+        "May.zip",
+        "July.zip",
+        "November.zip",
+        "September.zip",
+        "October.zip",
+        "December.zip",
+        "April.zip",
+        "March.zip"
+      ],
+      "extensions": [
+        ".zip"
+      ]
+    },
+    {
+      "archive": "Nifty Options Data/NiftyOptions 2017.zip",
+      "member_count": 12,
+      "sample_members": [
+        "December 2017.zip",
+        "November 2017.zip",
+        "October 2017.zip",
+        "September 2017.zip",
+        "August 2017.zip",
+        "July 2017.zip",
+        "June 2017.zip",
+        "May 2017.zip",
+        "March 2017.zip",
+        "April 2017.zip",
+        "February 2017.zip",
+        "January 2017.zip"
+      ],
+      "extensions": [
+        ".zip"
+      ]
+    }
+  ],
+  "sample_files": [],
+  "validation_status": "NESTED_ARCHIVE_SCHEMA_DISCOVERED"
 }
