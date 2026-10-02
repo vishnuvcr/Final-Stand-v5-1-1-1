@@ -1,4 +1,5 @@
 import os, re
+os.environ.pop("HF_TOKEN", None)
 from pathlib import Path
 import pandas as pd
 import numpy as np
