@@ -1,67 +1,70 @@
-# Strategy Specification — Restarted Research (v2)
+# Strategy Specification — Fixed OTM15 Restart (v3)
 
 ## 1. Entry-time directional selector
 
-At exactly 10:00 IST on the date that is **4 trading sessions before expiry** (expiry day excluded from the DTE count), identify the nearest available ATM strike from the 10:00 option-chain snapshot.
+At exactly 10:00 IST, on the date that is 4 trading sessions before expiry (expiry day excluded), identify the nearest available ATM strike using the exact 10:00 option snapshot.
 
-For OTM rank k, rank strikes outward from ATM separately for calls and puts.
+Rank available strikes outward from ATM separately for calls and puts.
 
-First calculate only OTM6/OTM7/OTM8:
-- X_call6 = CE(OTM8) + CE(OTM7) - CE(OTM6)
-- X_put6 = PE(OTM8) + PE(OTM7) - PE(OTM6)
+Calculate:
+- X_call = CE(OTM17) + CE(OTM16) - CE(OTM15)
+- X_put = PE(OTM17) + PE(OTM16) - PE(OTM15)
 
-Directional rule:
-- If X_call6 > X_put6: select the BEARISH strategy (call structure).
-- If X_call6 < X_put6: select the BULLISH strategy (put structure).
-- If X_call6 = X_put6: record NO_TRADE_TIE rather than inventing a direction.
+Direction:
+- X_call > X_put -> BEARISH
+- X_call < X_put -> BULLISH
+- X_call = X_put -> NO_TRADE_TIE
 
-## 2. n selection inside the selected strategy
+## 2. Fixed three-leg position
 
-For the selected side only, calculate for every n = 6,...,15:
+No n-selection, threshold, or optimization is performed.
 
-X(n) = Premium(OTM(n+2)) + Premium(OTM(n+1)) - Premium(OTMn).
+BULLISH:
+- Buy OTM15 PE
+- Sell OTM16 PE
+- Sell OTM17 PE
 
-The requested higher-n preference has no numeric weight supplied. The primary pre-registered rule is:
-1. Let X_max be the largest X(n).
-2. Keep n where X(n) >= 0.95 * X_max.
-3. Select the highest n among those candidates.
+BEARISH:
+- Buy OTM15 CE
+- Sell OTM16 CE
+- Sell OTM17 CE
 
-Phase 4 will test 90%, 95% and 97.5% thresholds.
-
-If X_max <= 0, record NO_POSITIVE_X and do not enter because the requested 90%-of-credit target is not meaningful for a non-positive credit.
-
-For selected n:
-- BULLISH: buy OTMn PE; sell OTM(n+1) PE; sell OTM(n+2) PE.
-- BEARISH: buy OTMn CE; sell OTM(n+1) CE; sell OTM(n+2) CE.
+The OTM ranking is determined from strikes available in the exact 10:00 snapshot. No look-ahead from later observations is permitted.
 
 ## 3. Entry
-- Exact timestamp: 10:00 IST.
-- DTE: four trading sessions before expiry, excluding expiry.
-- ATM and OTM ranks use only strikes present at the 10:00 snapshot.
-- No synthetic prices or forward filling.
+
+- 4 trading sessions before expiry
+- 10:00 IST
+- Raw X is the selected-side expression above.
 
 ## 4. Exit
 
-Initial X is the raw 10:00 premium expression for the selected n.
+Target:
+T = 0.90 × X × lot quantity
 
-User-specified target:
-T = 0.90 * X * lot quantity.
+The primary backtest exits at the first complete minute after entry at which the slippage-adjusted gross P&L of the three-leg position reaches or exceeds T.
 
-The primary implementation keeps this target basis exactly as specified. Slippage and transaction costs are deducted from realized P&L and are reported separately.
+If target is not reached:
+- exit at 15:29 IST on expiry day;
+- use the latest complete observation of all three legs at or before 15:29.
 
-At each available minute after entry, calculate slippage-adjusted gross three-leg P&L. Exit at the first complete timestamp where gross P&L >= T.
+No stop loss.
 
-If not reached, exit at 15:29 IST on expiry day using the latest complete three-leg observation at or before that time.
+## 5. Execution/accounting
 
-No stop-loss.
+- Primary slippage: one adverse ₹0.05 tick per leg.
+- Record raw premiums, executable prices, gross P&L, all modeled charges, and net P&L separately.
+- Date-aware NIFTY lot size.
+- Brokerage assumption: ₹10 per unique F&O order, six orders per completed trade.
+- Model exchange/transaction charges, STT, SEBI/IPFT, stamp duty and GST using date-aware assumptions.
+- Missing observations are logged and not imputed.
 
-## 5. Execution and accounting
-- One adverse slippage tick per leg, configurable.
-- Report raw X, executable entry credit, gross P&L, costs and net P&L separately.
-- Date/expiry-aware NIFTY lot size.
-- Explicit brokerage, STT, exchange, SEBI/IPFT, stamp duty and GST model.
-- Missing observations are logged, not imputed.
+## 6. Tie/non-positive X
 
-## 6. Supersession
+If X_call == X_put, no trade.
 
-This specification supersedes the earlier global 20-candidate selector. Earlier Phase 2 performance results are retained for audit history only and are not results for this restarted strategy.
+If selected-side X <= 0, no trade because the requested 90%-of-X target would be non-positive. This is an explicit data-quality/strategy rule and will be counted.
+
+## 7. Supersession
+
+This v3 specification supersedes the earlier v2 strategy. v2 results remain in history for audit only.
