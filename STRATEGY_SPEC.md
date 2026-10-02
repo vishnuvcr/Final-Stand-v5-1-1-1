@@ -1,19 +1,44 @@
 # Strategy Specification
 
-## Legs
-At 10:00 IST, identify the nearest ATM strike A.
-
-Put side: buy 1 sixth-OTM put below A; sell 1 seventh-OTM put; sell 1 eighth-OTM put.
-
-Call side: buy 1 sixth-OTM call above A; sell 1 seventh-OTM call; sell 1 eighth-OTM call.
-
 ## Entry selector
-P_put = PE7 + PE8 - PE6.
-P_call = CE7 + CE8 - CE6.
-Trade the side with the larger P; ties go to puts.
 
-## Expiry payoff
-Put payoff = max(K6-S,0) - max(K7-S,0) - max(K8-S,0) + (P_put).
-Call payoff = max(S-K6,0) - max(S-K7,0) - max(S-K8,0) + (P_call).
+At 10:00 IST on the selected 4-DTE trading date, identify the nearest ATM strike A.
 
-The actual flatline, bump/peak, and breakevens are calculated from the selected strikes and premium rather than assumed from a textbook ratio spread.
+For each n in 6..15, calculate:
+
+- Put X(n) = PE(n+2) + PE(n+1) - PE(n)
+- Call X(n) = CE(n+2) + CE(n+1) - CE(n)
+
+Here OTMk means the kth strike outside ATM on that side.
+
+Select the single maximum X across all 20 candidates. Ties are resolved deterministically in favor of Put, then smaller n.
+
+## Position
+
+If the winner is Put:
+- Buy 1 OTMn Put
+- Sell 1 OTM(n+1) Put
+- Sell 1 OTM(n+2) Put
+
+If the winner is Call:
+- Buy 1 OTMn Call
+- Sell 1 OTM(n+1) Call
+- Sell 1 OTM(n+2) Call
+
+## Credit and target
+
+Initial credit per unit = winning X.
+
+Initial credit for one lot = winning X × lot quantity.
+
+Profit target = 0.90 × initial credit for one lot.
+
+The primary backtest does not add a stop-loss.
+
+## Exit
+
+Exit all three legs when the position P&L reaches the 90% initial-credit target. Otherwise exit at 0 DTE/expiry using the historical execution convention defined in RESEARCH_PLAN.md.
+
+## Accounting
+
+Report gross P&L and net P&L separately. Net P&L includes slippage, brokerage, statutory charges, and applicable taxes/fees.
