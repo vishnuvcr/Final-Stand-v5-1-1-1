@@ -55,3 +55,37 @@ The no-stop dynamic-n strategy remains the locked primary until the stop candida
 All previous superseded dynamic-n numerical results remain marked as obsolete. Execution errors and corrections are logged in `ERROR_LOG.md`; research-phase progress is tracked in `RESEARCH_LOG.md`; the research protocol is maintained in `DYNAMIC_N_RESEARCH_PLAN.md`.
 
 **Phase 19 is the final stop-loss research phase under the current plan.**
+
+
+## Latest completed phase — Phase 20
+
+Phase 20 compared entry-time payoff-chart/green-area boundary stops against the fixed expiry-day conditional stop.
+
+The boundary family tested 0/50/100/200/400 NIFTY-point buffers, 1/3-minute confirmation, and boundary/MTM/MFE variants. The training-safe selector was 400 points with 1-minute confirmation, but it lost **₹14,390.87** in 2024–2025 validation and **₹49,064.48** in the 2026 holdout, while materially worsening drawdown. Therefore **no payoff-boundary stop is included**.
+
+The fixed Phase-19 comparator was independently reconstructed and cross-checked:
+- 13:30 IST on expiry day;
+- combined three-leg MTM < ₹0;
+- running MFE < 0.50× original target.
+
+Walk-forward uplift: +₹1,963.67 training, +₹1,923.59 validation, +₹6,305.15 holdout, +₹10,192.41 full sample, with zero baseline-positive trades affected.
+
+### Final entry-to-exit rules
+
+The final historical rules are recorded on the Phase-20 branch:
+- [Final strategy rules](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-20-payoff-boundary-stop-research/FINAL_STRATEGY_RULES.md)
+- [Final strategy specification](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-20-payoff-boundary-stop-research/STRATEGY_SPEC.md)
+- [Phase 20 supplement](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-20-payoff-boundary-stop-research/manuscript/PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md)
+- [Phase 20 conclusion](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-20-payoff-boundary-stop-research/results/dynamic_n_corrected/phase20_payoff_boundary/BOUNDARY_STOP_CONCLUSION.md)
+
+Final historical result over 190 corrected trades:
+- Net P&L: **₹149,129.53**
+- Mean net/trade: **₹784.89**
+- Net winning trades: **179/190 (94.21%)**
+- Profit factor: **2.34**
+- Maximum cumulative drawdown: **₹27,336.11**
+- Target exits: **178**
+- Conditional-stop exits: **5**
+- Expiry-fallback exits: **7**
+
+This is historical research evidence, not a guarantee of future or live performance. Forward/paper execution validation remains separate from the historical research.
