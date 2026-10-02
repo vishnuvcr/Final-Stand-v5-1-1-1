@@ -1,0 +1,3 @@
+family,training_reference_variant,training_rule_was_safe,train_uplift,validation_uplift,holdout_uplift,full_uplift,train_winner_affected,validation_winner_affected,holdout_winner_affected
+early_exit,stop_move600_c1_spot_only,False,1885.4736208000013,-33923.364253955,-44039.525771104505,-76077.41640425952,1,2,2
+tail_hedge,hedge_move600_c1_spot_only_target_or_baseline,False,1078.8360039499948,-32168.32248838,-44400.82384190051,-75490.31032633052,1,2,2
