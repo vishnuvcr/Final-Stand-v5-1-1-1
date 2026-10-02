@@ -133,3 +133,11 @@
 - All previous Phase 7/8/9/9A numerical results are superseded pending this rerun.
 
 [RUN_PHASE7C]
+
+
+## 2026-10-03 — Phase 9D corrected AlgoTest component execution
+- Re-run corrected call and put component strategies with both exact OTM strike mapping and corrected long/short P&L signs.
+- Settings remain 09:35 entry, 4 trading sessions before expiry, 15:14 expiry-day exit, fixed quantity 65, zero slippage and zero brokerage.
+- Results are written to `results/fixed_otm15_v3/phase9d/` for persistent reconciliation.
+
+[RUN_PHASE9D]
