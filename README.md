@@ -89,3 +89,7 @@ Final historical result over 190 corrected trades:
 - Expiry-fallback exits: **7**
 
 This is historical research evidence, not a guarantee of future or live performance. Forward/paper execution validation remains separate from the historical research.
+
+## Phase 21 status — pre-expiry risk-control research
+
+Phase 21 is being evaluated on isolated branch `phase-21-pre-expiry-adverse-move-risk-control`. It tests bounded early exits and one-lot OTM-(n+3) tail-hedge repairs against the frozen Phase-20 strategy. The canonical strategy remains unchanged unless the pre-registered walk-forward promotion screen is passed.
