@@ -20,6 +20,8 @@ def lot_size_for_expiry(expiry):
     # NSE NIFTY weekly lots for the primary 2024-2025 sample:
     # 25 before the April-2024 revision; 75 for weekly contracts from
     # the Nov-2024 revision through the Dec-2025 weekly expiries.
+    if expiry < pd.Timestamp("2021-08-01", tz="Asia/Kolkata"):
+        return 75
     if expiry < pd.Timestamp("2024-04-26", tz="Asia/Kolkata"):
         return 50
     if expiry < pd.Timestamp("2025-01-01", tz="Asia/Kolkata"):
