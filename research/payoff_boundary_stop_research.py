@@ -41,13 +41,7 @@ def load_trade_ledgers():
     base["entry_ts"] = pd.to_datetime(base["entry_ts"])
     base["exit_ts"] = pd.to_datetime(base["exit_ts"])
     base["expiry"] = base["expiry"].astype(str)
-
-    p19 = pd.read_csv(
-        "results/dynamic_n_corrected/phase19_walk_forward/selected_full_trade_level.csv"
-    )
-    p19["stop_ts"] = pd.to_datetime(p19["stop_ts"])
-    p19["expiry"] = p19["expiry"].astype(str)
-    return base, p19
+    return base
 
 
 def load_spot():
@@ -116,15 +110,6 @@ def load_candidate_paths(meta, spot):
         ][["timestamp", "spot"]]
         if s.empty:
             continue
-
-        if r.boundary_side == "upper":
-            max_spot = float(s["spot"].max())
-            if max_spot < r.boundary:
-                continue
-        else:
-            min_spot = float(s["spot"].min())
-            if min_spot > r.boundary:
-                continue
 
         try:
             option_df = load(f"options/NIFTY/{r.expiry}.parquet")
@@ -264,6 +249,22 @@ def first_stop(entry, path, buffer, family, confirm):
     return None
 
 
+def phase19_fixed_mfe50_stop(entry, path):
+    """Locked comparator: 13:30 expiry-day + negative MTM + MFE < 0.50x target."""
+    if path is None:
+        return None
+    expiry_date = pd.Timestamp(entry.expiry, tz=TZ).date()
+    for p in path:
+        ts = pd.Timestamp(p["ts"])
+        after_cut = (
+            ts.date() == expiry_date
+            and (ts.hour > 13 or (ts.hour == 13 and ts.minute >= 30))
+        )
+        if after_cut and p["gross"] < 0 and p["mfe"] < 0.50 * entry.target:
+            return p
+    return None
+
+
 def net_at(entry, stop_point):
     raw_exit = stop_point["raw_exit"]
     xp = (
@@ -334,25 +335,6 @@ def make_rows(meta, path_map, stop_function, variant):
     return pd.DataFrame(rows)
 
 
-def phase19_rows(base, p19):
-    out = base[["expiry", "net_rupees", "exit_ts"]].rename(
-        columns={"net_rupees": "base_net"}
-    ).copy()
-    out = out.merge(
-        p19[["expiry", "candidate_net", "stop_ts", "changed_before_base", "winner_affected", "loss_reduction", "loss_eliminated"]],
-        on="expiry",
-        how="left",
-    )
-    out["net_uplift"] = out["candidate_net"] - out["base_net"]
-    out["base_positive"] = out["base_net"] > 0
-    out["stop_reason"] = np.where(out["changed_before_base"], "STOP", "BASELINE")
-    out["boundary"] = np.nan
-    out["boundary_side"] = ""
-    out["boundary_distance"] = np.nan
-    out["variant"] = "phase19_expiry_stop"
-    return out.rename(columns={"exit_ts": "base_exit_ts"})
-
-
 def summarize(df):
     return {
         "trades": int(len(df)),
@@ -377,7 +359,7 @@ def split(df):
 
 
 def main():
-    base, p19 = load_trade_ledgers()
+    base = load_trade_ledgers()
     meta = build_boundary_metadata(base)
     spot = load_spot()
     paths, path_errors = load_candidate_paths(meta, spot)
@@ -436,10 +418,37 @@ def main():
     selected_all = rule_detail[selected_rule["name"]]
     selected_train, selected_validation, selected_holdout = split(selected_all)
 
-    p19_all = phase19_rows(base, p19)
-    p19_train, p19_validation, p19_holdout = split(
-        p19_all.rename(columns={"base_exit_ts": "exit_ts"})
+    p19_all = make_rows(
+        meta,
+        paths,
+        lambda entry, path: phase19_fixed_mfe50_stop(entry, path),
+        "phase19_expiry_stop_mfe50",
     )
+    p19_train, p19_validation, p19_holdout = split(p19_all)
+
+    phase19_expected = {
+        "train_net_uplift": 1963.6676450499945,
+        "validation_net_uplift": 1923.593403995007,
+        "holdout_net_uplift": 6305.147862968499,
+        "full_stops": 5,
+    }
+    phase19_crosscheck = {
+        "train_net_uplift": summarize(p19_train)["net_uplift"],
+        "validation_net_uplift": summarize(p19_validation)["net_uplift"],
+        "holdout_net_uplift": summarize(p19_holdout)["net_uplift"],
+        "full_stops": summarize(p19_all)["stops"],
+    }
+    phase19_crosscheck_ok = (
+        abs(phase19_crosscheck["train_net_uplift"] - phase19_expected["train_net_uplift"]) < 1e-6
+        and abs(phase19_crosscheck["validation_net_uplift"] - phase19_expected["validation_net_uplift"]) < 1e-6
+        and abs(phase19_crosscheck["holdout_net_uplift"] - phase19_expected["holdout_net_uplift"]) < 1e-6
+        and phase19_crosscheck["full_stops"] == phase19_expected["full_stops"]
+    )
+    if not phase19_crosscheck_ok:
+        raise RuntimeError(
+            "Phase-19 0.50x MFE comparator failed cross-check: "
+            + repr(phase19_crosscheck)
+        )
 
     def combined_rows(period_df, p19_df):
         boundary = period_df.set_index("expiry")
@@ -606,6 +615,11 @@ Spot/option alignment uses exact common timestamps only. No forward filling, int
         "holdout_winner_affected": hold_s["winner_affected"],
         "validation_candidate_dd": val_s["candidate_dd"],
         "holdout_candidate_dd": hold_s["candidate_dd"],
+        "phase19_crosscheck_ok": phase19_crosscheck_ok,
+        "phase19_train_uplift": phase19_crosscheck["train_net_uplift"],
+        "phase19_validation_uplift": phase19_crosscheck["validation_net_uplift"],
+        "phase19_holdout_uplift": phase19_crosscheck["holdout_net_uplift"],
+        "phase19_full_stops": phase19_crosscheck["full_stops"],
     }]).to_csv(OUT / "phase20_status.csv", index=False)
 
     if path_errors:
