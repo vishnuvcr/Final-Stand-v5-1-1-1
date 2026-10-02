@@ -1,0 +1,55 @@
+name: Phase 21 pre-expiry adverse-move risk control research
+
+on:
+  push:
+    branches:
+      - phase-21-pre-expiry-adverse-move-risk-control
+    paths:
+      - "research/preexpiry_adverse_move_risk_control.py"
+      - "PHASE21_PRE_REGISTRATION.md"
+      - "DYNAMIC_N_RESEARCH_PLAN.md"
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Cache Hugging Face dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-nifty-options-${{ runner.os }}-v1
+          restore-keys: |
+            hf-nifty-options-${{ runner.os }}-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy pyarrow huggingface_hub
+      - name: Run Phase 21
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/preexpiry_adverse_move_risk_control.py
+      - name: Persist Phase 21 artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-21-pre-expiry-adverse-move-risk-control
+          git rebase origin/phase-21-pre-expiry-adverse-move-risk-control
+          git add results/dynamic_n_corrected/phase21_adverse_move_risk_control
+          git commit -m "Phase 21: persist pre-expiry risk-control results" || exit 0
+          git push origin HEAD:phase-21-pre-expiry-adverse-move-risk-control
