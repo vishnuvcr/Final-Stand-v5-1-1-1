@@ -110,3 +110,11 @@
 - Primary settings remain 10:00 IST, 4 trading sessions before expiry, 0.90×X target, one adverse tick per leg, date-aware lot sizes and ₹10/order brokerage.
 
 [RUN_PHASE7B]
+
+
+## 2026-10-03 — Phase 9C corrected AlgoTest reproduction
+- Rerun the two corrected AlgoTest component strategies using exact NIFTY OTM15/16/17 strike distances on the ₹50 strike ladder.
+- Settings: 09:35 IST entry, 4 trading sessions before expiry, fixed 15:14 IST expiry-day exit, fixed quantity 65, zero slippage, zero brokerage, no target/stop-loss.
+- Compare the validated HF overlap period with the user-supplied full-period AlgoTest headline results.
+
+[RUN_PHASE9C]
