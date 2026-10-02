@@ -50,3 +50,6 @@
 
 
 | 2026-10-03 | Research design extension | Full-sample dynamic-n vs fixed OTM15 comparison also changes the Stage-1 direction selector, so it cannot isolate the contribution of n-selection alone. | Added controlled fixed6/fixed15/dynamic ablation with the same OTM6/7/8 Stage-1 direction selector and identical execution assumptions. |
+
+
+| 2026-10-03 | Phase 15 n-selection ablation | First ablation Actions run failed before completing the matrix. | Reran with an explicit marker commit; fixed6, fixed15 and dynamic jobs completed successfully and persisted results. |
