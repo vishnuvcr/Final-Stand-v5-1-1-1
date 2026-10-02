@@ -4,7 +4,7 @@ Research repository for systematic testing of the restarted NIFTY weekly-options
 
 ## Current status
 
-**Phase 4 — ROBUSTNESS & SENSITIVITY: COMPLETE**
+**Phase 6 — FIXED OTM15 RESTART: SPECIFICATION COMPLETE; PRIMARY BACKTEST EXECUTING**
 
 The latest two-stage strategy was tested on the validated executable sample. Prior global-selector results are superseded.
 
@@ -102,3 +102,8 @@ All 15 planned robustness scenarios completed successfully in GitHub Actions run
 - Brokerage sensitivity on the primary trade set: ₹0/order -₹47,722; ₹10/order -₹59,482; ₹20/order -₹71,242.
 
 The DTE=3 positive result is treated as a robustness observation only; the primary DTE=4 specification remains unchanged because it was pre-registered before this sensitivity analysis.
+
+
+## Fixed OTM15 restart
+
+The v2 results are superseded for this new research question. The new primary strategy fixes the structure at OTM15/16/17 and uses OTM17 + OTM16 - OTM15 to select bullish versus bearish direction at 4 DTE, 10:00 IST. There is no high-n threshold. See `RESEARCH_PLAN.md` and `STRATEGY_SPEC.md` on branch `phase-6-fixed-otm15-restart`.
