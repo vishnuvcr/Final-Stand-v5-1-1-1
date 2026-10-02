@@ -184,3 +184,17 @@ This is not a guarantee against losses. The stopped trades remain losses, and li
 - [Selected full trade ledger](results/dynamic_n_corrected/phase19_walk_forward/selected_full_trade_level.csv)
 
 The locked primary no-stop strategy is unchanged.
+
+
+## Phase 20 — payoff-boundary stop research
+
+Phase 20 tests whether the entry-time payoff chart's expiry zero-P&L boundary is useful as an early risk-control signal when NIFTY moves beyond the green/profit region before expiry.
+
+Pre-registered boundary buffers are **0/50/100/200/400 NIFTY points**, with 1-minute and 3-minute confirmation. Three boundary conditions are tested: boundary-only; boundary + negative combined MTM; and boundary + negative MTM + MFE below 50% of target. The fixed Phase-19 expiry-day rule remains the comparator.
+
+- [Phase 20 research plan](DYNAMIC_N_RESEARCH_PLAN.md)
+- [Phase 20 research code](research/payoff_boundary_stop_research.py)
+- [Phase 20 workflow](.github/workflows/phase-20-payoff-boundary-stop-research.yml)
+- [Phase 20 results](results/dynamic_n_corrected/phase20_payoff_boundary/)
+
+Phase 20 is the final planned historical comparison needed to decide whether payoff-boundary information belongs in the complete entry-to-exit specification.
