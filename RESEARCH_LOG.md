@@ -148,3 +148,11 @@
 - Prior Phase 8 results are superseded because the earlier primary used incorrect strike mapping and inverted P&L signs.
 
 [RUN_PHASE8B]
+
+
+## 2026-10-03 — Phase 7D fee audit
+- Audited the transaction/IPFT cost model against NSE circulars. STT rates are aligned with NSE's published rates; option transaction/IPFT components were corrected for the 2024-10 and 2026-03 changes.
+- The pre-2024-10 transaction assumption remains a conservative project assumption because broker-level pass-through can differ by historical exchange slab.
+- Rerun the corrected primary so reported net P&L uses the audited charge model.
+
+[RUN_PHASE7D]
