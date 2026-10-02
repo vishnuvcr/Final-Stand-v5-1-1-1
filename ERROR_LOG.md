@@ -32,3 +32,6 @@
 
 
 | 2026-10-03 | Phase 9A audit | The first AlgoTest PDFs supplied were the wrong files and led to an invalid four-leg interpretation. | Marked that interpretation superseded; re-audited the newly uploaded three-leg call/put reports. |
+
+
+| 2026-10-03 | Phase 7B strike-mapping audit | Initial fixed OTM15 implementation treated OTM15/16/17 as ordinal ranks among quoted strikes. This skipped exact strikes when a minute quote was missing. | Reclassified OTM15/16/17 as exact NIFTY strike-ladder distances using the ₹50 weekly/monthly strike interval; missing exact strikes will be logged/excluded. All initial Phase 7/8/9 numerical results are superseded pending rerun. |
