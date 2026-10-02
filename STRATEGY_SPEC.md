@@ -1,74 +1,83 @@
-# Strategy Specification — Fixed OTM15 Restart (v3)
+# Strategy Specification — Corrected Dynamic-n Final Historical Specification
 
-## 1. Entry-time directional selector
+This file supersedes the older fixed-OTM15 specification as the canonical strategy definition for the corrected dynamic-n research.
 
-At exactly 10:00 IST, on the date that is 4 trading sessions before expiry (expiry day excluded), identify the nearest available ATM strike using the exact 10:00 option snapshot.
+## 1. Entry
+- NIFTY weekly expiry.
+- Enter exactly 4 trading sessions before expiry.
+- Entry snapshot: exactly 10:00 IST.
+- ATM = strike nearest NIFTY spot at 10:00.
+- NIFTY strike interval = ₹50.
+- OTM-n = exact ATM ± n×₹50.
+- Missing exact strikes/data are exclusions; no ordinal substitution or forward filling.
 
-Use the exchange strike ladder rather than the nth available quote. For NIFTY weekly/monthly index options, the strike interval is ₹50. OTM15/16/17 therefore mean exactly 15/16/17 strike intervals away from the selected ATM strike: calls = ATM + n×50; puts = ATM − n×50. Missing exact strikes are exclusions; they are never replaced by a farther available strike.
+## 2. Direction selector
+- X_call = CE(OTM8) + CE(OTM7) − CE(OTM6)
+- X_put = PE(OTM8) + PE(OTM7) − PE(OTM6)
+- X_call > X_put → BEARISH call-side structure.
+- X_call < X_put → BULLISH put-side structure.
+- Equality → no trade.
+- Missing OTM6/7/8 on either side → no trade.
 
-Calculate:
-- X_call = CE(OTM17) + CE(OTM16) - CE(OTM15)
-- X_put = PE(OTM17) + PE(OTM16) - PE(OTM15)
+## 3. Dynamic n
+For n=6…15:
+- X_n = Premium(OTM(n+2)) + Premium(OTM(n+1)) − Premium(OTM n)
+- All candidate n values must be computable from exact OTM6…17 strikes.
+- X_max = max(X_6…X_15)
+- Eligible n: X_n >= 0.95×X_max
+- Select the largest eligible n.
+- Selected-side X must be positive.
 
-Direction:
-- X_call > X_put -> BEARISH
-- X_call < X_put -> BULLISH
-- X_call = X_put -> NO_TRADE_TIE
+## 4. Position
+- Buy OTM-n.
+- Sell OTM-(n+1).
+- Sell OTM-(n+2).
+- All legs same expiry and selected option type.
 
-## 2. Fixed three-leg position
+## 5. Target
+T = 0.90 × X_selected × lot.
 
-No n-selection, threshold, or optimization is performed.
+Exit at the first complete minute after entry where the slippage-adjusted combined three-leg gross P&L reaches or exceeds T.
 
-BULLISH:
-- Buy OTM15 PE
-- Sell OTM16 PE
-- Sell OTM17 PE
+## 6. Final conditional expiry-day stop
+At 13:30 IST or later on expiry day, exit when:
+- combined three-leg MTM < ₹0; and
+- running MFE since entry < 0.50 × original target.
 
-BEARISH:
-- Buy OTM15 CE
-- Sell OTM16 CE
-- Sell OTM17 CE
+MFE is the cumulative running maximum of the combined three-leg slippage-adjusted gross P&L. It does not reset.
 
-The OTM ranking is determined from strikes available in the exact 10:00 snapshot. No look-ahead from later observations is permitted.
+## 7. Expiry fallback
+If neither target nor conditional stop occurs, exit at the latest complete three-leg observation at or before 15:29 IST on expiry day.
 
-## 3. Entry
+## 8. Payoff-boundary rule
+No pre-expiry payoff-boundary/green-area stop is applied. Phase 20 tested 0/50/100/200/400 point boundary buffers, 1/3-minute confirmation, boundary-only and MTM/MFE-filtered variants; the selected boundary candidate failed validation and 2026 holdout and materially worsened drawdown.
 
-- 4 trading sessions before expiry
-- 10:00 IST
-- Raw X is the selected-side expression above.
+## 9. Execution and costs
+- One adverse ₹0.05 option tick per leg.
+- Correct long/short P&L signs.
+- Historical/date-aware NIFTY lot size.
+- Six executed orders per completed trade.
+- Modeled brokerage: ₹10 per unique executed F&O order.
+- Date-aware transaction/exchange charges, STT, SEBI/IPFT, stamp duty and GST.
+- No forward-filled, interpolated or synthetic option prices.
+- Incomplete observations are excluded and logged.
 
-## 4. Exit
+## 10. Exit precedence
+1. Target.
+2. 13:30 expiry-day conditional stop.
+3. 15:29 expiry fallback.
 
-Target:
-T = 0.90 × X × lot quantity
+## 11. Historical final-rule result
+- 190 completed trades.
+- Net P&L: ₹149,129.53.
+- Mean net/trade: ₹784.89.
+- Net winning trades: 179/190 (94.21%).
+- Profit factor: 2.34.
+- Maximum cumulative drawdown: ₹27,336.11.
+- Target exits: 178.
+- Conditional-stop exits: 5.
+- Expiry-fallback exits: 7.
+- Baseline-positive trades stopped early: 0.
 
-The primary backtest exits at the first complete minute after entry at which the slippage-adjusted gross P&L of the three-leg position reaches or exceeds T.
-
-If target is not reached:
-- exit at 15:29 IST on expiry day;
-- use the latest complete observation of all three legs at or before 15:29.
-
-No stop loss.
-
-## 5. Execution/accounting
-
-- Primary slippage: one adverse ₹0.05 tick per leg.
-- Record raw premiums, executable prices, gross P&L, all modeled charges, and net P&L separately.
-- Date-aware NIFTY lot size.
-- Brokerage assumption: ₹10 per unique F&O order, six orders per completed trade.
-- Model exchange/transaction charges, STT, SEBI/IPFT, stamp duty and GST using date-aware assumptions.
-- Missing observations are logged and not imputed.
-
-## 6. Tie/non-positive X
-
-If X_call == X_put, no trade.
-
-If selected-side X <= 0, no trade because the requested 90%-of-X target would be non-positive. This is an explicit data-quality/strategy rule and will be counted.
-
-## 7. Strike-mapping audit correction
-
-The initial v3 implementation incorrectly interpreted OTM15/16/17 as the 15th/16th/17th available strike in the exact snapshot. That can skip strikes when a minute quote is missing. The corrected interpretation uses the fixed NIFTY ₹50 strike interval and exact strike distance. This correction supersedes the initial Phase 7/8 numerical results.
-
-## 8. Supersession
-
-This v3 specification supersedes the earlier v2 strategy. v2 results remain in history for audit only.
+## 12. Research status
+This is the final historical research specification. It is not a guarantee of future performance. Paper/forward execution should validate live bid/ask, spreads, partial fills, latency and broker execution before any live deployment.
