@@ -1,7 +1,7 @@
 import os, subprocess, pandas as pd
 from pathlib import Path
-BASE=Path("results/fixed_otm15_v3")
-OUT=BASE/"phase9"; OUT.mkdir(parents=True,exist_ok=True)
+BASE=Path("results/fixed_otm15_v3/phase7c")
+OUT=Path("results/fixed_otm15_v3/phase9e"); OUT.mkdir(parents=True,exist_ok=True)
 scenarios=[]
 # 9 target/slippage combinations
 for target in [0.80,0.90,1.00]:
