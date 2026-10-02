@@ -15,7 +15,7 @@ Phase 1 locked the strategy:
 - No stop-loss in the primary strategy.
 - Gross and net P&L are both recorded.
 
-Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot sizes for the expanded 2021–2026 primary sample.
+Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot sizes for the weekly-options-era 2019–2026 research sample.
 
 ## Research files
 - [Research Plan](RESEARCH_PLAN.md)
@@ -24,6 +24,7 @@ Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot
 - [Error Log](ERROR_LOG.md)
 - [Project Research Instructions](PROJECT_RESEARCH_INSTRUCTIONS.md)
 - [Data Acquisition](DATA_ACQUISITION.md)
+- [Zenodo 2019–2020 Validation](ZENODO_2019_2020_VALIDATION.md)
 - Backtest: `research/backtest_otm_ratio.py`
 - Results: `results/`
 
@@ -35,4 +36,4 @@ Phase 2 now implements the global 20-candidate selector and date-aware NIFTY lot
 5. Phase 5 — Research manuscript
 
 ## External data references
-The primary historical dataset is the public `thetrademarkk/india-index-options-1m` dataset. It provides 1-minute NIFTY spot and option-chain OHLC data, but explicitly notes partial coverage for illiquid/far strikes. Official NSE documentation is used to validate contract/lot-size conventions and option-chain structure.
+The primary historical dataset is the public `thetrademarkk/india-index-options-1m` dataset for the later period, with a separately validated Zenodo source targeted for 2019–2020. It provides 1-minute NIFTY spot and option-chain OHLC data, but explicitly notes partial coverage for illiquid/far strikes. Official NSE documentation is used to validate contract/lot-size conventions and option-chain structure.
