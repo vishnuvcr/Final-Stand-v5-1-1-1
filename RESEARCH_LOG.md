@@ -156,3 +156,10 @@
 - Rerun the corrected primary so reported net P&L uses the audited charge model.
 
 [RUN_PHASE7D]
+
+
+## 2026-10-03 — Phase 9F fee-audited robustness
+- Re-run the pre-registered 15 robustness scenarios from the fee-audited primary code so sensitivity and primary use the same cost model.
+- No strategy parameters are changed by this audit.
+
+[RUN_PHASE9F]
