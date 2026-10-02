@@ -87,6 +87,10 @@ The Phase 9B reproduction exposed a materially important mapping error: the firs
 
 The original Phase 7/8/9 numerical outputs are retained for audit but are superseded until the corrected strike-mapping rerun is complete.
 
+## Critical P&L accounting correction
+
+The Phase 7B rerun exposed a second critical implementation error after strike mapping was corrected: long/short leg P&L signs were inverted. The shared P&L function has now been corrected and the prior Phase 7B/Phase 9B/Phase 9C numerical outputs are superseded.
+
 ## Phase 9A — AlgoTest reconciliation audit (inserted before robustness interpretation)
 
 The uploaded AlgoTest reports produced materially different headline results from the locked research backtest. Before treating that as a contradiction or proceeding to final inference, an apples-to-apples reconciliation is required.
