@@ -345,3 +345,12 @@
 - Final-rule historical result across 190 trades: **₹149,129.53 net**, **₹784.89 mean/trade**, **94.21% net win rate**, **2.34 profit factor**, **₹27,336.11 max drawdown**, 178 target exits, 5 conditional-stop exits, 7 expiry-fallback exits, and 0 baseline-positive trades stopped early.
 - Canonical rules are stored in `FINAL_STRATEGY_RULES.md`, `STRATEGY_SPEC.md`, and `DYNAMIC_N_SPEC.md`.
 - Phase 20 is complete. No further historical exit-rule optimization is planned under the current research plan.
+
+
+## 2026-10-03 — Final specification and manuscript freeze
+- Added `FINAL_STRATEGY_RULES.md` as the canonical complete entry-to-exit specification.
+- Updated `STRATEGY_SPEC.md` and `DYNAMIC_N_SPEC.md` from the earlier no-stop/fixed-OTM15 wording to the final corrected dynamic-n rules.
+- Added reproducible `research/final_strategy_backtest.py` wrapper and canonical `results/final_strategy/` summary artifacts.
+- Updated the corrected manuscript and added `manuscript/PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md`.
+- Updated README and main-branch README with Phase 20 completion and final strategy links.
+- Final historical research phase is complete; no further historical exit-rule optimization is planned under the current plan.
