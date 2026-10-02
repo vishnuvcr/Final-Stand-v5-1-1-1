@@ -16,3 +16,6 @@
 
 ## 2026-10-02 — Phase 4 execution correction
 - The first retry still used a workflow commit whose checked-out tree preceded the syntax fix. A fresh marker commit is required so the runner checks out the corrected backtest.
+
+## 2026-10-02 — Phase 4 second syntax correction
+- A second literal-newline insertion existed in the summary metadata block. Corrected before the next autonomous run.
