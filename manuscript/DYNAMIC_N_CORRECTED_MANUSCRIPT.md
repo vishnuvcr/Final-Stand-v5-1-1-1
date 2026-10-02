@@ -421,6 +421,38 @@ The bootstrap mean interval is positive, but bootstrap resampling does not addre
 
 ---
 
+## 17. Phase 20 — payoff-boundary stop test and final exit specification
+
+Phase 20 tested whether the entry-time expiry zero-P&L/green-area boundary could act as an early risk-control signal. The pre-registered search used 0/50/100/200/400 NIFTY-point buffers, 1-minute and 3-minute confirmation, and three condition families: boundary-only; boundary + negative MTM; and boundary + negative MTM + MFE below 0.50×target.
+
+The training-safe boundary selector was a 400-point buffer with one-minute confirmation and boundary-only condition. Its training uplift was ₹711.91, but its validation uplift was −₹14,390.87 and its 2026 holdout uplift was −₹49,064.48. Maximum drawdown increased to ₹41,711.94 in validation and ₹65,371.18 in holdout. The combined boundary-plus-Phase-19 rule also failed out of sample.
+
+The fixed Phase-19 comparator was reconstructed directly from minute-level paths and matched the published walk-forward grid exactly. It is:
+
+**13:30 IST on expiry day + combined MTM < ₹0 + running MFE < 0.50× original target.**
+
+Walk-forward uplift:
+- training: +₹1,963.67;
+- validation: +₹1,923.59;
+- 2026 holdout: +₹6,305.15;
+- full sample: +₹10,192.41.
+
+Zero baseline-positive trades were affected in all periods; five of 190 exits changed in the full sample.
+
+Applying the final exit specification to the 190 corrected trades gives:
+- net P&L: ₹149,129.53;
+- mean net/trade: ₹784.89;
+- net winners: 179/190 (94.21%);
+- profit factor: 2.34;
+- maximum drawdown: ₹27,336.11;
+- 178 target exits;
+- 5 conditional-stop exits;
+- 7 expiry-fallback exits.
+
+The payoff-boundary rule is therefore rejected from the final specification, while the 13:30 expiry-day conditional stop is retained as the final historical exit rule.
+
+See [FINAL_STRATEGY_RULES.md](../FINAL_STRATEGY_RULES.md) and [Phase 20 supplement](PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md).
+
 ## 18. Conclusion
 
 The corrected dynamic-n baseline strategy produced ₹138,937.12 net P&L across 190 completed trades under the primary assumptions, with a 94.21% net win rate and profit factor 2.14. The higher-n preference selected n=6 on 183/190 trades, so the historical result should not be interpreted as evidence that frequent movement across n=6…15 creates incremental value.
@@ -499,35 +531,3 @@ The repository retains the complete trade ledger, candidate-n scores, direction 
 ---
 
 ---
-
-## 17. Phase 20 — payoff-boundary stop test and final exit specification
-
-Phase 20 tested whether the entry-time expiry zero-P&L/green-area boundary could act as an early risk-control signal. The pre-registered search used 0/50/100/200/400 NIFTY-point buffers, 1-minute and 3-minute confirmation, and three condition families: boundary-only; boundary + negative MTM; and boundary + negative MTM + MFE below 0.50×target.
-
-The training-safe boundary selector was a 400-point buffer with one-minute confirmation and boundary-only condition. Its training uplift was ₹711.91, but its validation uplift was −₹14,390.87 and its 2026 holdout uplift was −₹49,064.48. Maximum drawdown increased to ₹41,711.94 in validation and ₹65,371.18 in holdout. The combined boundary-plus-Phase-19 rule also failed out of sample.
-
-The fixed Phase-19 comparator was reconstructed directly from minute-level paths and matched the published walk-forward grid exactly. It is:
-
-**13:30 IST on expiry day + combined MTM < ₹0 + running MFE < 0.50× original target.**
-
-Walk-forward uplift:
-- training: +₹1,963.67;
-- validation: +₹1,923.59;
-- 2026 holdout: +₹6,305.15;
-- full sample: +₹10,192.41.
-
-Zero baseline-positive trades were affected in all periods; five of 190 exits changed in the full sample.
-
-Applying the final exit specification to the 190 corrected trades gives:
-- net P&L: ₹149,129.53;
-- mean net/trade: ₹784.89;
-- net winners: 179/190 (94.21%);
-- profit factor: 2.34;
-- maximum drawdown: ₹27,336.11;
-- 178 target exits;
-- 5 conditional-stop exits;
-- 7 expiry-fallback exits.
-
-The payoff-boundary rule is therefore rejected from the final specification, while the 13:30 expiry-day conditional stop is retained as the final historical exit rule.
-
-See [FINAL_STRATEGY_RULES.md](../FINAL_STRATEGY_RULES.md) and [Phase 20 supplement](PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md).
