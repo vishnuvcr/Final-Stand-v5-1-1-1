@@ -61,3 +61,6 @@
 ## Phase 8 started
 - Primary Phase 7 result locked.
 - Statistical analysis includes profit factor, drawdown, trade-level dispersion, bootstrap confidence intervals, yearly results, direction decomposition and exit decomposition.
+
+## Phase 8 execution note
+- First push-triggered Phase 8 run was skipped because the workflow event/marker did not execute the job. A second explicit marker commit is being used.
