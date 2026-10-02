@@ -194,3 +194,10 @@
 - No changes will be made to the primary specification based on these results.
 
 [RUN_DYNAMIC_ROBUSTNESS]
+
+
+## 2026-10-03 — Dynamic-n vs corrected fixed-OTM15 comparison
+- Comparison uses the fee-audited corrected fixed-OTM15 trade ledger and the corrected dynamic-n primary ledger under the same validated date range, 10:00 entry, 4-DTE convention, one adverse tick, date-aware lots, ₹10/order brokerage and audited fees.
+- Both full-sample and common-expiry paired comparisons are calculated.
+
+[RUN_DYNAMIC_COMPARE]
