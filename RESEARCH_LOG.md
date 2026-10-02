@@ -102,3 +102,11 @@
 - NSE's documented NIFTY strike scheme is ₹50 for weekly/monthly contracts; therefore exact OTM15/16/17 must be ATM±750/800/850 respectively. citeturn166378search0turn166378search18
 - This is a critical implementation error. Initial Phase 7/8/9 numeric results are superseded and must not be interpreted as evidence for the strategy.
 - New Phase 7B repair branch created; corrected primary and corrected AlgoTest component reproduction will be rerun before any robustness or final conclusion.
+
+
+## 2026-10-03 — Phase 7B corrected primary execution
+- Corrected OTM mapping is now exact ATM±15/16/17 strike intervals using the NIFTY ₹50 strike ladder.
+- The original Phase 7/8/9 results are formally superseded.
+- Primary settings remain 10:00 IST, 4 trading sessions before expiry, 0.90×X target, one adverse tick per leg, date-aware lot sizes and ₹10/order brokerage.
+
+[RUN_PHASE7B]
