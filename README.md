@@ -205,6 +205,8 @@ Phase 20 is the final planned historical comparison needed to decide whether pay
 The complete historical research specification is now frozen:
 
 - [Final strategy rules](FINAL_STRATEGY_RULES.md)
+- [Final strategy backtest wrapper](research/final_strategy_backtest.py)
+- [Final strategy result](results/final_strategy/FINAL_STRATEGY_RESULT.md)
 - [Canonical strategy specification](STRATEGY_SPEC.md)
 - [Dynamic-n specification](DYNAMIC_N_SPEC.md)
 
