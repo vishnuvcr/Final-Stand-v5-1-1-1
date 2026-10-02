@@ -218,7 +218,8 @@ def load_candidate_paths(meta, spot):
             "path": path,
         })
 
-    return {x["expiry"]: x["path"] for x in candidates}
+    return ({x["expiry"]: x["path"] for x in candidates},
+            [x for x in candidates if x["error"]])
 
 
 def first_stop(entry, path, buffer, family, confirm):
@@ -379,7 +380,7 @@ def main():
     base, p19 = load_trade_ledgers()
     meta = build_boundary_metadata(base)
     spot = load_spot()
-    paths = load_candidate_paths(meta, spot)
+    paths, path_errors = load_candidate_paths(meta, spot)
 
     rules = [
         {
@@ -607,9 +608,8 @@ Spot/option alignment uses exact common timestamps only. No forward filling, int
         "holdout_candidate_dd": hold_s["candidate_dd"],
     }]).to_csv(OUT / "phase20_status.csv", index=False)
 
-    errors = pd.DataFrame([x for x in paths.values() if x["error"]])
-    if not errors.empty:
-        errors.to_csv(OUT / "data_alignment_errors.csv", index=False)
+    if path_errors:
+        pd.DataFrame(path_errors).to_csv(OUT / "data_alignment_errors.csv", index=False)
 
     print("SELECTED_BOUNDARY_RULE", selected_rule["name"])
     print("BOUNDARY_PASS", boundary_pass)
