@@ -13,6 +13,8 @@ SLIPPAGE_TICKS=float(os.getenv("SLIPPAGE_TICKS","1"))
 TARGET_FRACTION=float(os.getenv("TARGET_FRACTION","0.90"))
 TICK=float(os.getenv("OPTION_TICK","0.05"))
 LOT_SIZE=int(os.getenv("LOT_SIZE","75"))
+BROKERAGE_PER_ORDER=float(os.getenv("BROKERAGE_PER_ORDER","20"))
+SL_CANDIDATES=[0.25,0.50,0.75,1.00,1.50,2.00]
 
 def fee_model(d):
     if d >= pd.Timestamp("2026-04-01",tz="Asia/Kolkata"): stt=0.0015
@@ -29,7 +31,7 @@ def charges(entry,exit_,d):
     turnover=sum(p for _,p in entry+exit_)
     sells=sum(p for s,p in entry+exit_ if s=="sell")
     buys=sum(p for s,p in entry+exit_ if s=="buy")
-    brokerage=60.0
+    brokerage=BROKERAGE_PER_ORDER*6.0
     exchange=txn*turnover*LOT_SIZE
     sebi_fee=sebi*turnover*LOT_SIZE
     ipft_fee=ipft*turnover*LOT_SIZE
@@ -60,7 +62,7 @@ def main():
         if m:
             d=pd.Timestamp(m.group(1),tz="Asia/Kolkata")
             if START<=d<=END: exps.append(d)
-    trades=[]; missing=[]
+    trades=[]; sl_rows=[]; missing=[]
     for exp in sorted(set(exps)):
         # 4-DTE convention: count the expiry session as session 1; enter on the fourth trading session.
         week_start=exp-pd.Timedelta(days=8)
@@ -114,9 +116,32 @@ def main():
         c=charges([("buy",ep6),("sell",ep7),("sell",ep8)],[("sell",xp6),("buy",xp7),("buy",xp8)],entry_ts)
         net=gross-c/LOT_SIZE
         trades.append({"expiry":str(exp.date()),"entry_ts":str(entry_ts),"exit_ts":str(exit_ts),"strategy":side,"spot_entry":s0,"atm":atm,"k6":k6,"k7":k7,"k8":k8,"raw_P":rawP[side],"entry_P":entryP,"flatline_target":target,"gross_points":gross,"charges_rupees":c,"net_points":net,"net_rupees_lot":net*LOT_SIZE,"exit_reason":reason,"mfe_points":mfe})
+        # Stop-loss grid: first of target or MTM loss threshold, otherwise expiry.
+        for frac in SL_CANDIDATES:
+            sl=max(0.01,frac*max(entryP,0.0))
+            st=piv.index[-1]; rs="EXPIRY"; sp=None
+            for ts,row in piv.iterrows():
+                m6,m7,m8=float(row[k6]),float(row[k7]),float(row[k8])
+                mtm=(m7+m8-m6)-entryP
+                if mtm>=target:
+                    st=ts; rs="TARGET"; sp=(m6,m7,m8); break
+                if mtm<=-sl:
+                    st=ts; rs="STOP"; sp=(m6,m7,m8); break
+            if sp is None:
+                rr=piv.loc[st]; sp=(float(rr[k6]),float(rr[k7]),float(rr[k8]))
+            sx6,sx7,sx8=sp
+            se6,se7,se8=exec_px(sx6,"sell"),exec_px(sx7,"buy"),exec_px(sx8,"buy")
+            sgross=(ep6-se6)+(se7-ep7)+(se8-ep8)
+            scost=charges([("buy",ep6),("sell",ep7),("sell",ep8)],[("sell",se6),("buy",se7),("buy",se8)],entry_ts)
+            snet=sgross-scost/LOT_SIZE
+            sl_rows.append({"expiry":str(exp.date()),"strategy":side,"sl_fraction":frac,"net_points":snet,"net_rupees_lot":snet*LOT_SIZE,"exit_reason":rs})
     tr=pd.DataFrame(trades); tr.to_csv(OUT/"trades.csv",index=False)
     pd.DataFrame(missing,columns=["expiry","reason"]).to_csv(OUT/"missing.csv",index=False)
     if not tr.empty:
+        sl=pd.DataFrame(sl_rows)
+        if not sl.empty:
+            ssm=sl.groupby("sl_fraction").agg(trades=("expiry","count"),win_rate=("net_points",lambda x:(x>0).mean()),mean_net_points=("net_points","mean"),median_net_points=("net_points","median"),sum_net_points=("net_points","sum"),stop_rate=("exit_reason",lambda x:(x=="STOP").mean()),target_rate=("exit_reason",lambda x:(x=="TARGET").mean())).reset_index()
+            ssm.to_csv(OUT/"stoploss_summary.csv",index=False)
         sm=tr.groupby("strategy").agg(trades=("expiry","count"),win_rate=("net_points",lambda x:(x>0).mean()),mean_net_points=("net_points","mean"),median_net_points=("net_points","median"),sum_net_points=("net_points","sum"),mean_charges=("charges_rupees","mean"),target_exit_rate=("exit_reason",lambda x:(x=="TARGET").mean()),mean_mfe=("mfe_points","mean")).reset_index()
         sm.to_csv(OUT/"summary.csv",index=False)
         print(sm.to_string(index=False))
