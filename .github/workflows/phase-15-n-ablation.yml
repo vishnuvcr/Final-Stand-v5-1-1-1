@@ -1,0 +1,58 @@
+name: Phase 15 N Selection Ablation
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ablation:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[RUN_N_ABLATION]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 720
+    strategy:
+      matrix:
+        mode: [fixed6, fixed15, dynamic]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pandas numpy pyarrow huggingface_hub
+      - name: Cache Hugging Face data
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-nifty-options-n-ablation-v1
+          restore-keys: |
+            hf-nifty-options-dynamic-n-corrected-v1
+            hf-nifty-options-fixed-otm15-fee-audited-v1
+            hf-nifty-options-
+      - name: Run ${{ matrix.mode }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          OUT_DIR: results/dynamic_n_corrected/phase15_ablation/${{ matrix.mode }}
+          START_DATE: 2021-05-27
+          END_DATE: 2026-09-30
+          ENTRY_HOUR: 10
+          ENTRY_MINUTE: 0
+          DTE_SESSIONS: 4
+          SLIPPAGE_TICKS: 1
+          BROKERAGE_PER_ORDER: 10
+          TARGET_FRACTION: 0.90
+          NIFTY_STRIKE_INTERVAL: 50
+          HIGH_N_THRESHOLD: 0.95
+          N_SELECTION_MODE: ${{ matrix.mode }}
+        run: python research/backtest_dynamic_n_corrected.py
+      - name: Persist ablation output
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/dynamic_n_corrected/phase15_ablation/${{ matrix.mode }}
+          git commit -m 'Phase 15: persist ${{ matrix.mode }} ablation' || echo 'No result changes'
+          git fetch origin ${GITHUB_REF_NAME}
+          git rebase origin/${GITHUB_REF_NAME}
+          git push origin HEAD:${GITHUB_REF_NAME}
