@@ -13,17 +13,17 @@ for dte in [3,5]:
 for brok in [0,20]:
     scenarios.append((f"brok{int(brok)}",0.90,1,10,0,4,brok))
 
-out=Path("results/fixed_otm15_v3/phase9"); out.mkdir(parents=True,exist_ok=True)
+out=Path("results/fixed_otm15_v3/phase9e"); out.mkdir(parents=True,exist_ok=True)
 rows=[]
 for name,tf,slip,h,m,dte,brok in scenarios:
     env=os.environ.copy()
-    env.update({"OUT_DIR":f"results/fixed_otm15_v3/phase9/{name}","TARGET_FRACTION":str(tf),
+    env.update({"OUT_DIR":f"results/fixed_otm15_v3/phase9e/{name}","TARGET_FRACTION":str(tf),
                 "SLIPPAGE_TICKS":str(slip),"ENTRY_HOUR":str(h),"ENTRY_MINUTE":str(m),
                 "DTE_SESSIONS":str(dte),"BROKERAGE_PER_ORDER":str(brok)})
     r=subprocess.run([sys.executable,"research/backtest_fixed_otm15.py"],env=env,text=True,capture_output=True)
     if r.returncode!=0:
         print(r.stdout); print(r.stderr,file=sys.stderr); raise SystemExit(r.returncode)
-    s=pd.read_csv(f"results/fixed_otm15_v3/phase9/{name}/summary.csv").iloc[0].to_dict()
+    s=pd.read_csv(f"results/fixed_otm15_v3/phase9e/{name}/summary.csv").iloc[0].to_dict()
     s["scenario"]=name
     rows.append(s)
 pd.DataFrame(rows).to_csv(out/"robustness_summary.csv",index=False)
