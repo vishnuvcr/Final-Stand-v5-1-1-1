@@ -1,0 +1,2 @@
+selected_rule,boundary_pass,train_net_uplift,validation_net_uplift,holdout_net_uplift,validation_winner_affected,holdout_winner_affected,validation_candidate_dd,holdout_candidate_dd,phase19_crosscheck_ok,phase19_train_uplift,phase19_validation_uplift,phase19_holdout_uplift,phase19_full_stops
+boundary_b400_c1_boundary_only,False,711.9063324000017,-14390.865529679988,-49064.47911268149,0,0,41711.94427782748,65371.175997312996,True,1963.667645049998,1923.5934039950034,6305.147862968499,5
