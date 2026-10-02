@@ -229,3 +229,13 @@
 - The dynamic rule was n=6 on 183 trades, n=7 on 6 trades and n=8 on 1 trade.
 - Dynamic n therefore underperformed fixed n=6 by ₹606.85 on the identical trade universe. The higher-n preference did not add incremental aggregate net P&L in this sample.
 - Final manuscript interpretation is updated to distinguish the positive performance of the OTM6/7/8 direction-selector framework from any claimed benefit of dynamic n-selection.
+
+
+## 2026-10-03 — Phase 17 stop-loss research started
+- Baseline corrected dynamic-n result remains locked and unchanged.
+- Repository ledger correction: 190 trades contain 11 losing trades and 12 expiry exits; one expiry exit (2026-07-07) was profitable.
+- Added a separate Phase 17 branch and workflow to reconstruct exact minute-level trade paths and test a pre-registered stop-loss grid.
+- Development/validation split is fixed at 2024-12-31.
+- Candidate selection requires zero baseline-positive trades affected on development, then maximizes development net-P&L uplift.
+- Exact stop-time execution prices and the same date-aware fee model are used.
+[RUN_STOP_LOSS]
