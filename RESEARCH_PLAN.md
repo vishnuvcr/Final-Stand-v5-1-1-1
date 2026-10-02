@@ -8,7 +8,7 @@ Does the fixed-OTM15, 4-DTE, 10:00 IST NIFTY weekly-options directional 3-leg ra
 ### Stage 1 — Direction
 At exactly 10:00 IST on the date that is 4 trading sessions before expiry (expiry day = 0 DTE), identify the nearest available ATM strike from the exact 10:00 option snapshot.
 
-Rank strikes outward from ATM separately for calls and puts.
+Use exact NIFTY strike-ladder distances, not ordinal ranking among currently quoted strikes. For weekly/monthly NIFTY options the strike interval is ₹50, so OTM15 = ATM ± 15×50, OTM16 = ATM ± 16×50, OTM17 = ATM ± 17×50. If an exact strike is unavailable at the entry snapshot, exclude and log the expiry rather than selecting the next available strike.
 
 Calculate:
 - X_call = CE(OTM17) + CE(OTM16) - CE(OTM15)
@@ -80,6 +80,12 @@ After the primary result, robustness will examine:
 
 The primary strategy itself remains fixed at OTM15/16/17.
 
+
+## Critical implementation correction — strike mapping
+
+The Phase 9B reproduction exposed a materially important mapping error: the first v3 implementation selected OTM15/16/17 as the 15th/16th/17th available strikes. The uploaded AlgoTest screenshots use fixed strike-type semantics (e.g. OTM15/16/17 are consecutive ₹50 strikes), and NSE documents a ₹50 strike interval for NIFTY weekly/monthly contracts. Therefore the primary backtest and AlgoTest reproduction must be rerun using exact strike distances.
+
+The original Phase 7/8/9 numerical outputs are retained for audit but are superseded until the corrected strike-mapping rerun is complete.
 
 ## Phase 9A — AlgoTest reconciliation audit (inserted before robustness interpretation)
 
