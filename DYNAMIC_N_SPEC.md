@@ -1,75 +1,63 @@
-# Dynamic-n Strategy Specification — Corrected Restart
+# Dynamic-n Strategy Specification — Final Corrected Entry-to-Exit Rules
 
-## 1. Entry snapshot
-
+## Entry snapshot
 - NIFTY weekly options.
 - Four trading sessions before expiry.
 - Exactly 10:00 IST.
-- ATM = available strike nearest NIFTY spot at 10:00.
-- OTM-n = exact strike distance of n × ₹50.
+- ATM = strike nearest NIFTY spot at 10:00.
+- OTM-n = exact strike distance of n×₹50.
+- No ordinal quote substitution and no forward filling.
 
-## 2. Direction selector
+## Direction
+X_call_direction = CE8 + CE7 − CE6  
+X_put_direction = PE8 + PE7 − PE6
 
-Let:
-- X_call_direction = CE8 + CE7 − CE6
-- X_put_direction = PE8 + PE7 − PE6
+- Call expression higher → BEARISH call-side trade.
+- Put expression higher → BULLISH put-side trade.
+- Equality → no trade.
 
-Decision:
-- call expression higher → BEARISH call-side trade;
-- put expression higher → BULLISH put-side trade;
-- equality → no trade.
-
-## 3. Dynamic candidate score
-
-For each n from 6 through 15:
+## Dynamic candidate score
+For each n=6,…,15:
 
 X_n = P(OTM(n+2)) + P(OTM(n+1)) − P(OTM n)
 
-All n values must be available on the selected side.
+All exact OTM6…17 prices on the selected side are required.
 
-## 4. Weightage / higher-n preference
+## Higher-n preference
+threshold = 0.95×max(X_6…X_15)
 
-Primary rule:
+Select the largest n with X_n >= threshold.
 
-threshold = 0.95 × max(X_6,...,X_15)
-
-Eligible n values satisfy:
-
-X_n >= threshold
-
-Select the largest eligible n.
-
-Interpretation: a higher n is preferred whenever its X value is within 5% of the best available X. This is the pre-registered higher-n preference and is not changed after observing returns.
-
-## 5. Position
-
-Selected n:
+## Position
 - Buy OTM-n.
 - Sell OTM-(n+1).
 - Sell OTM-(n+2).
 
-## 6. Target
+## Target
+Target = 0.90×X_selected×lot.
 
-Target = 0.90 × X_selected × lot.
+Exit at the first complete minute where slippage-adjusted combined gross P&L reaches target.
 
-Exit at the first complete minute after entry where slippage-adjusted gross P&L reaches target.
+## Conditional expiry-day stop
+At or after 13:30 IST on expiry day:
+- current combined MTM must be negative;
+- running combined MFE from entry must be below 0.50×original target.
 
-Otherwise exit using the latest complete three-leg observation at or before 15:29 IST on expiry day.
+Then exit all three legs.
 
-## 7. Accounting
+## Expiry fallback
+If still open, exit at the latest complete three-leg observation at or before 15:29 IST.
 
-- Long leg P&L = exit premium − entry premium.
-- Short-leg P&L = entry premium − exit premium.
-- One adverse ₹0.05 tick per leg.
-- Six orders per round-trip trade.
-- Date-aware NIFTY lots.
-- Brokerage ₹10/order.
-- Audited statutory/transaction fees.
+## No payoff-boundary stop
+Crossing the entry-time expiry payoff green-area/zero-P&L boundary does not by itself trigger an exit before expiry day. Phase 20 rejected boundary-based stops after out-of-sample testing.
 
+## Costs
+- one adverse ₹0.05 tick per leg;
+- six option orders;
+- modeled ₹10/order brokerage;
+- date-aware statutory/transaction charges;
+- historical lot sizes;
+- no imputation or synthetic fills.
 
-## 8. Controlled n-selection ablation
-To isolate the contribution of dynamic n from the direction selector, run three variants using the same Stage-1 OTM6/7/8 direction selector, same 10:00 entry, same 4-DTE schedule, same target definition, same slippage, same historical lots and same costs:
-- fixed6: always select n=6;
-- fixed15: always select n=15;
-- dynamic: select the highest n satisfying X_n >= 0.95×max(X_6..X_15).
-The ablation is descriptive and uses no outcome-based re-optimization.
+## Exit precedence
+Target → 13:30 conditional stop → 15:29 expiry fallback.
