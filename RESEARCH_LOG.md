@@ -32,3 +32,6 @@
 - Created phase-2-restart-v2 from the completed Phase 1 execution state.
 - Restored the workflow to manual-only after autonomous execution.
 - Phase 3 statistical analysis is now the next planned phase.
+
+## 2026-10-02 — Phase 3 execution retry
+- First statistical workflow run failed during grouped-statistics generation; grouped processing was rewritten to an explicit loop before retry.
