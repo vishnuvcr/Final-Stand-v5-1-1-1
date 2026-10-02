@@ -78,13 +78,20 @@ overall["bootstrap_win_rate_ci95_low"]=wlo
 overall["bootstrap_win_rate_ci95_high"]=whi
 overall.to_csv(OUT/"overall_statistics.csv",index=False)
 
-for name, grp in [
-    ("by_year",df.groupby("year")),
-    ("by_direction",df.groupby("direction")),
-    ("by_n",df.groupby(["direction","n"])),
-    ("by_exit_reason",df.groupby("exit_reason"))
+for name, keys in [
+    ("by_year", ["year"]),
+    ("by_direction", ["direction"]),
+    ("by_n", ["direction","n"]),
+    ("by_exit_reason", ["exit_reason"])
 ]:
-    grp.apply(stats, include_groups=False).reset_index().to_csv(OUT/f"{name}.csv",index=False)
+    rows=[]
+    for key, g in df.groupby(keys, dropna=False):
+        s=stats(g).to_dict()
+        if not isinstance(key, tuple):
+            key=(key,)
+        s.update({k:v for k,v in zip(keys,key)})
+        rows.append(s)
+    pd.DataFrame(rows).to_csv(OUT/f"{name}.csv",index=False)
 
 # Additional selection diagnostics
 selection = df.groupby("direction").agg(
