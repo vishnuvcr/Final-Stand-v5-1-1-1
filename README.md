@@ -146,3 +146,11 @@ Phase 17 found six candidates that affected zero baseline-positive trades in bot
 - [Phase 18 code](research/conditional_stop_refinement.py)
 - [Phase 18 workflow](.github/workflows/phase-18-conditional-stop-refinement.yml)
 - [Phase 18 results](results/dynamic_n_corrected/phase18_conditional_stop/)
+
+## Phase 19 — walk-forward stop confirmation
+
+Phase 18 found a candidate stop that improved the full sample while leaving every profitable baseline trade untouched. Phase 19 now checks whether that result survives an earlier training split and a 2026 holdout.
+
+- [Phase 19 code](research/stop_walk_forward.py)
+- [Phase 19 workflow](.github/workflows/phase-19-stop-walk-forward.yml)
+- [Phase 19 results](results/dynamic_n_corrected/phase19_walk_forward/)
