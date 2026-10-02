@@ -1,0 +1,2 @@
+trades,win_rate_net,mean_net_rupees,median_net_rupees,sum_net_rupees,mean_gross_rupees,sum_gross_rupees,sum_cost_rupees,target_exit_rate,expiry_exit_rate,mean_x_selected,mean_lot_size,slippage_ticks,brokerage_per_order,target_fraction,dte_sessions,entry_hour,entry_minute
+195,0.23076923076923078,-230.38252159196665,-266.6257389,-44924.591710433495,-155.28717948717951,-30281.000000000007,14643.591710433499,0.23076923076923078,0.7692307692307693,12.053589743589743,53.87179487179487,0.0,10.0,0.9,4,10,0
