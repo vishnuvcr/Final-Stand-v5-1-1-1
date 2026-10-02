@@ -67,3 +67,5 @@
 | 2026-10-03 | Phase 20 execution | First real Phase 20 Actions run failed with `ModuleNotFoundError: No module named 'research'` before analysis. | Added the repository root to `sys.path`, matching the proven Phase-17 fix; no research output from the failed run is used. |
 
 | 2026-10-03 | Phase 20 execution | Second Actions run reached the boundary evaluation but failed because the path map returned metadata dictionaries instead of minute-path lists, causing `TypeError: string indices must be integers`. | Changed the path-map return value to map each expiry directly to its `path`; no research output from this run is used. |
+
+| 2026-10-03 | Phase 20 execution | Third Actions run failed in `charges()` because the reconstructed path stored the DataFrame integer row index as the stop timestamp. | Changed the path builder to store `row['timestamp']` as a timezone-aware pandas timestamp; no numerical result from the failed run is used. |
