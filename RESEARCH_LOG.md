@@ -68,3 +68,12 @@
 ## Phase 9 started
 - Robustness will test target fraction (0.80/0.90/1.00), adverse slippage (0/1/2 ticks), entry time (09:45/10:00/10:15), DTE (3/4/5 sessions), and brokerage (0/10/20 per order).
 - Primary remains fixed at 0.90 target, 1 tick slippage, 10:00, 4 DTE, ₹10/order.
+
+
+## 2026-10-03 — AlgoTest contradiction audit
+- Two user-supplied AlgoTest PDFs were inspected visually, including strategy configuration and result/report pages.
+- AlgoTest call report shows 218 trades, overall profit ₹96,307.25, 99.08% win rate, entry 09:35, exit 15:14, 4 trading days before weekly expiry, 0% slippage, and quantity 65 in the displayed 2021 rows.
+- AlgoTest put report shows 218 trades, overall profit ₹191,298.25, 98.62% win rate, entry 09:35, exit 15:14, 4 trading days before weekly expiry, 0% slippage, and quantity 65 in the displayed 2021 rows.
+- The uploaded configurations visibly contain four legs. The call report uses buy OTM15 CE, sell OTM16 CE, and two sell OTM17 CE legs. The put report uses buy OTM15 PE, sell OTM16 PE, sell OTM17 CE, and an additional sell OTM17 PE leg. These are not the locked three-leg research structures.
+- The AlgoTest reports also use fixed-time expiry-day exit rather than the locked target/expiry rule and do not visibly enable brokerage/taxes/slippage for the reported P&L.
+- Therefore the headline AlgoTest results are not an apples-to-apples replication of the locked research strategy. An exact configuration-replication audit was inserted as Phase 9A before interpreting the discrepancy or finalizing robustness conclusions.
