@@ -4,7 +4,7 @@ Research repository for systematic testing of NIFTY weekly-options directional 3
 
 ## Current research status
 
-**Dynamic-n corrected research completed; Phase 17 broad stop-loss grid found no validation-improving safe stop; Phase 18 conditional refinement is in progress.**
+**Dynamic-n corrected research completed through Phase 20. Final entry-to-exit rules are frozen; payoff-boundary stops are rejected and the 13:30 expiry-day MFE stop is retained.**
 
 The dynamic-n branch was restarted from the raw option-data workflow after two critical implementation errors were discovered during AlgoTest reconciliation:
 1. OTM strikes had initially been selected by ordinal availability instead of exact ₹50 strike distance.
@@ -198,3 +198,50 @@ Pre-registered boundary buffers are **0/50/100/200/400 NIFTY points**, with 1-mi
 - [Phase 20 results](results/dynamic_n_corrected/phase20_payoff_boundary/)
 
 Phase 20 is the final planned historical comparison needed to decide whether payoff-boundary information belongs in the complete entry-to-exit specification.
+
+
+## Final strategy — entry to exit
+
+The complete historical research specification is now frozen:
+
+- [Final strategy rules](FINAL_STRATEGY_RULES.md)
+- [Canonical strategy specification](STRATEGY_SPEC.md)
+- [Dynamic-n specification](DYNAMIC_N_SPEC.md)
+
+### Final exit logic
+
+1. Exit at the 0.90×X_selected×lot target when reached.
+2. From 13:30 IST on expiry day, exit when combined three-leg MTM < ₹0 and running MFE < 0.50×original target.
+3. Otherwise exit at the latest complete three-leg observation at or before 15:29 IST on expiry day.
+4. Do **not** exit merely because NIFTY crosses the entry-time payoff green-area/zero-P&L boundary.
+
+### Final historical result
+
+Across 190 corrected trades, the final exit specification produced:
+
+| Metric | Final result |
+|---|---:|
+| Net P&L | **₹149,129.53** |
+| Mean net/trade | **₹784.89** |
+| Net winners | **179/190 (94.21%)** |
+| Profit factor | **2.34** |
+| Maximum cumulative drawdown | **₹27,336.11** |
+| Target exits | **178** |
+| Conditional-stop exits | **5** |
+| Expiry-fallback exits | **7** |
+| Baseline-positive trades stopped early | **0** |
+
+### Phase 20 — payoff-boundary conclusion
+
+The training-safe boundary candidate was a 400-point breach with 1-minute confirmation. It improved training P&L by ₹711.91, but reduced validation P&L by ₹14,390.87 and 2026 holdout P&L by ₹49,064.48, while materially worsening drawdown. The combined boundary-plus-13:30 stop also failed out of sample.
+
+Therefore the payoff chart's green-area boundary is **not** part of the final strategy.
+
+- [Phase 20 supplement](manuscript/PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md)
+- [Phase 20 conclusion](results/dynamic_n_corrected/phase20_payoff_boundary/BOUNDARY_STOP_CONCLUSION.md)
+- [Phase 20 result summary](results/dynamic_n_corrected/phase20_payoff_boundary/phase20_status.csv)
+- [Final trade-level ledger](results/dynamic_n_corrected/phase20_payoff_boundary/phase19_expiry_stop_full_trade_level.csv)
+
+### Final research status
+
+Phase 20 is the final planned historical exit-rule comparison. No further historical stop optimization is scheduled under the current research plan. The remaining research step before any live deployment is forward/paper execution validation under live bid/ask, spread, latency, partial-fill and broker-execution conditions.
