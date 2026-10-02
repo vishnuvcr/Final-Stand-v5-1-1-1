@@ -246,3 +246,10 @@
 - Repository root import path was fixed.
 - No research output from the failed run is used.
 [RUN_STOP_LOSS]
+
+
+## 2026-10-03 — Phase 17 second execution correction and retry
+- The second run reached the script successfully but produced no output because the execution section had been truncated during patching.
+- Restored `summarize()` and `main()`; added full-sample selected-rule output.
+- No numerical result from the second run is used.
+[RUN_STOP_LOSS]
