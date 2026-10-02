@@ -139,3 +139,13 @@ Phase 17 found no rule that both improved validation net P&L and left all baseli
 - one-minute and three-minute confirmation.
 
 The rule is selected on development data only, then frozen for validation. A candidate is not promoted unless validation also leaves all baseline-positive trades untouched and improves net P&L.
+
+
+## Phase 19 walk-forward stop confirmation
+
+The Phase 18 candidate family produced a positive result under the 2021-2026 development/validation split. Because the 13:30 / target-MFE condition still requires temporal confirmation, Phase 19 performs a separate walk-forward test using:
+- training/selection: through 2023-12-31;
+- validation: 2024-01-01 through 2025-12-31;
+- holdout: 2026-01-01 through 2026-09-30.
+
+The same pre-registered Phase 18 cutoff/MFE family is tested. The rule is selected using training data only. Promotion requires zero baseline-positive trades affected and positive net-P&L uplift in both validation and holdout, with no material maximum-drawdown deterioration.
