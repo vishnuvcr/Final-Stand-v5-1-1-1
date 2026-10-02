@@ -14,6 +14,7 @@ EXIT_HOUR = int(os.getenv("EXIT_HOUR", "15"))
 EXIT_MINUTE = int(os.getenv("EXIT_MINUTE", "14"))
 DTE_SESSIONS = int(os.getenv("DTE_SESSIONS", "4"))
 LOT = int(os.getenv("FIXED_LOT", "65"))
+STRIKE_INTERVAL = float(os.getenv("NIFTY_STRIKE_INTERVAL", "50"))
 
 OUT = Path(os.getenv("OUT_DIR", "results/fixed_otm15_v3/phase9b"))
 OUT.mkdir(parents=True, exist_ok=True)
@@ -42,14 +43,11 @@ def normalize(df):
     return df
 
 
-def rank_strikes(entry_quotes, spot):
+def nearest_atm_strike(entry_quotes, spot):
     strikes = sorted(entry_quotes["strike"].dropna().unique())
     if not strikes:
-        return None, [], []
-    atm = min(strikes, key=lambda x: abs(x - spot))
-    puts = sorted([x for x in strikes if x < atm], reverse=True)
-    calls = sorted([x for x in strikes if x > atm])
-    return atm, puts, calls
+        return None
+    return min(strikes, key=lambda x: abs(x - spot))
 
 
 def prices_at(df, ts, typ, strikes):
@@ -125,14 +123,17 @@ def run_component(spot, expiry_list, typ, label):
             missing.append([str(expiry.date()), "missing entry option snapshot"])
             continue
 
-        atm, puts, calls = rank_strikes(entry_quotes, s0)
-        strikes_ranked = calls if typ == "CE" else puts
-        if atm is None or len(strikes_ranked) < 17:
-            missing.append([str(expiry.date()), f"fewer than OTM17 {label} strikes"])
+        atm = nearest_atm_strike(entry_quotes, s0)
+        if atm is None:
+            missing.append([str(expiry.date()), "missing ATM strike at entry snapshot"])
             continue
 
-        # Match AlgoTest's fixed OTM15/16/17 component.
-        k15, k16, k17 = strikes_ranked[14], strikes_ranked[15], strikes_ranked[16]
+        if typ == "CE":
+            k15, k16, k17 = atm + 15 * STRIKE_INTERVAL, atm + 16 * STRIKE_INTERVAL, atm + 17 * STRIKE_INTERVAL
+        else:
+            k15, k16, k17 = atm - 15 * STRIKE_INTERVAL, atm - 16 * STRIKE_INTERVAL, atm - 17 * STRIKE_INTERVAL
+
+        # Match AlgoTest's fixed OTM15/16/17 semantics on the NIFTY ₹50 strike ladder.
         px = prices_at(df, entry_ts, typ, (k15, k16, k17))
         if len(px) < 3:
             missing.append([str(expiry.date()), "missing one or more entry leg prices"])
