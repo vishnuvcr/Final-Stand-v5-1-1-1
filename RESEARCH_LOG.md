@@ -38,3 +38,11 @@
 - Restored Phase 4 workflow to manual-only operation after execution.
 - Primary 95%/1-tick/10:00/4-DTE result remained -₹59,481.78 total net P&L across 196 trades.
 - DTE=3 sensitivity produced +₹2,603.15 in 197 trades; retained only as a robustness observation, not as a changed primary specification.
+
+## 2026-10-03 — Phase 6 fixed OTM15 restart
+- Prior v2 research is superseded for this restart.
+- Locked new Stage 1 selector: X_call = OTM17 CE + OTM16 CE - OTM15 CE; X_put = OTM17 PE + OTM16 PE - OTM15 PE.
+- Direction: X_call > X_put -> BEARISH; X_call < X_put -> BULLISH; equality -> no trade.
+- Position is fixed OTM15/16/17; no high-n threshold or n optimization.
+- Target remains T = 0.90 * selected X * lot quantity; otherwise expiry exit.
+- Created Phase 7 primary backtest implementation and manual workflow.
