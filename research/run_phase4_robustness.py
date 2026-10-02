@@ -29,6 +29,7 @@ for label,envv in scenarios:
     if sfile.exists():
         s=pd.read_csv(sfile).iloc[0].to_dict()
         s["scenario"]=label
+        s["returncode"]=int(p.returncode)
         s.update(envv)
         rows.append(s)
     else:
