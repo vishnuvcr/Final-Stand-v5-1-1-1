@@ -45,7 +45,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/fixed_otm15_v3/phase7c
+          git add results/fixed_otm15_v3/phase7d
           git commit -m 'Phase 7D: persist expiry-universe corrected primary result' || echo 'No result changes'
           git fetch origin ${GITHUB_REF_NAME}
           git rebase origin/${GITHUB_REF_NAME}
