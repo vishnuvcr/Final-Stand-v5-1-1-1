@@ -265,3 +265,15 @@
 - Phase 18 produced a positive full-sample candidate but requires temporal confirmation before operational promotion.
 - Phase 19 uses train/validation/holdout periods and the same pre-registered candidate family.
 [RUN_STOP_WALK_FORWARD]
+
+
+## 2026-10-03 — Phase 19 walk-forward confirmation completed
+- GitHub Actions completed successfully.
+- Formal train-only selector: 13:30 IST / negative MTM / MFE < 1.00× target.
+- Formal selector was not promoted because 2026 holdout maximum drawdown increased from ₹17,890.35 to ₹22,756.00.
+- Robustness candidate retained for forward validation: 13:30 IST / negative MTM / MFE < 0.50× target.
+- Candidate walk-forward uplift: +₹1,963.67 train, +₹1,923.59 validation, +₹6,305.15 holdout.
+- Zero baseline-positive trades were affected in train, validation and holdout.
+- Five of 190 exits changed across the full sample; all five were baseline losing trades.
+- No loss was fully eliminated; the rule truncates selected losses earlier.
+- Phase 19 is the final stop-loss research phase under the current plan. The locked no-stop dynamic-n primary remains unchanged.
