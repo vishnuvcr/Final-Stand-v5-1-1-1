@@ -219,3 +219,13 @@
 
 
 [RUN_N_ABLATION]
+
+
+## 2026-10-03 — Controlled n-selection ablation completed
+- Same OTM6/7/8 Stage-1 direction selector and identical execution assumptions were used for fixed n=6, fixed n=15 and the primary 95%-band dynamic rule.
+- Fixed n=6: 190 trades, ₹139,543.97 net, 94.21% win rate.
+- Dynamic 95%-band: 190 trades, ₹138,937.12 net, 94.21% win rate.
+- Fixed n=15: 190 trades, ₹87,322.86 net, 99.47% win rate.
+- The dynamic rule was n=6 on 183 trades, n=7 on 6 trades and n=8 on 1 trade.
+- Dynamic n therefore underperformed fixed n=6 by ₹606.85 on the identical trade universe. The higher-n preference did not add incremental aggregate net P&L in this sample.
+- Final manuscript interpretation is updated to distinguish the positive performance of the OTM6/7/8 direction-selector framework from any claimed benefit of dynamic n-selection.
