@@ -59,3 +59,7 @@
 
 
 | 2026-10-03 | Phase 17 stop-loss script | Second Phase 17 execution exited successfully but produced no results because the `summarize/main` section had been truncated during a file patch; the script defined helper functions but never invoked the research. | Restored the full `summarize()` and `main()` execution section and added full-sample selected-rule outputs. No research result from that run is used. |
+
+
+| 2026-10-03 | Phase 20 design | Entry-time payoff-chart green area is an expiry-time construct; an intraday NIFTY breach can occur while option time value remains. | Treat the expiry zero-P&L boundary as a structural stress boundary and pre-register negative-MTM and MFE-filtered variants rather than assuming every breach is an automatic loss. |
+| 2026-10-03 | Phase 20 data alignment | NIFTY spot and all three option legs may not share every exact minute timestamp. | Use only exact common timestamps for boundary-stop evaluation; no forward filling or interpolation. |
