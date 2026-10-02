@@ -7,9 +7,6 @@ on:
     paths:
       - "research/payoff_boundary_stop_research.py"
       - "DYNAMIC_N_RESEARCH_PLAN.md"
-      - "RESEARCH_LOG.md"
-      - "ERROR_LOG.md"
-      - "README.md"
   workflow_dispatch:
   pull_request:
     branches:
