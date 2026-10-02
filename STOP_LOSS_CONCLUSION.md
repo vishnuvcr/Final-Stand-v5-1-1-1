@@ -83,3 +83,12 @@ Do not reinterpret the rule as a guarantee of avoiding losses. Its historical ro
 The next useful test is live or paper-trading validation with actual Paytm Money execution and observed bid/ask spreads, followed by a frozen out-of-sample period in which the stop threshold is not changed.
 
 No stop rule should replace the locked no-stop dynamic-n result in the primary research ledger until that forward test is completed.
+
+
+## Phase 20 final disposition
+
+Phase 20 then tested entry-time payoff-boundary/green-area stops. The training-safe boundary candidate used a 400-point buffer with one-minute confirmation, but it produced negative validation and 2026 holdout uplift and materially worsened drawdown. The combined boundary-plus-expiry-stop rule also failed out of sample.
+
+Therefore the final historical strategy retains the 13:30 IST expiry-day conditional stop and **does not use a payoff-boundary stop**.
+
+See [FINAL_STRATEGY_RULES.md](FINAL_STRATEGY_RULES.md) and [Phase 20 supplement](manuscript/PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md).
