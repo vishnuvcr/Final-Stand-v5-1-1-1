@@ -1,7 +1,7 @@
 # Corrected Dynamic-n NIFTY Weekly-Options Research Manuscript
 
 **Version:** 2026-10-03  
-**Repository branch:** phase-14-dynamic-n-final-manuscript  
+**Repository branch:** phase-20-payoff-boundary-stop-research  
 **Primary data window:** 2021-05-27 through 2026-09-30  
 **Instrument:** NIFTY 50 weekly index options  
 **Primary source:** thetrademarkk/india-index-options-1m
@@ -12,7 +12,7 @@
 
 This study evaluates a corrected dynamic-n three-leg NIFTY weekly-options ratio strategy. The research was restarted after an audit identified two implementation errors in the earlier backtesting engine: incorrect ordinal OTM strike mapping and an inverted long/short P&L sign convention. All earlier dynamic-n numerical results and trade ledgers were therefore discarded and not reused.
 
-The corrected strategy enters exactly four trading sessions before expiry at 10:00 IST. Direction is selected by comparing OTM6/7/8 call and put premium expressions. For the selected side, candidate n values from 6 through 15 are evaluated with the score X_n = P(n+2) + P(n+1) - P(n). The pre-registered higher-n preference uses a 95%-of-maximum eligibility band and selects the highest eligible n. The position buys OTM-n and sells OTM-(n+1) and OTM-(n+2). The target is 90% of the selected X_n multiplied by the historical lot size; otherwise the position exits on expiry using the latest complete three-leg observation at or before 15:29 IST.
+The corrected strategy enters exactly four trading sessions before expiry at 10:00 IST. Direction is selected by comparing OTM6/7/8 call and put premium expressions. For the selected side, candidate n values from 6 through 15 are evaluated with the score X_n = P(n+2) + P(n+1) - P(n). The pre-registered higher-n preference uses a 95%-of-maximum eligibility band and selects the highest eligible n. The position buys OTM-n and sells OTM-(n+1) and OTM-(n+2). The target is 90% of the selected X_n multiplied by the historical lot size. The final historical specification adds an expiry-day conditional stop from 13:30 IST when combined MTM is negative and running MFE is below 50% of the original target; otherwise the trade exits at the latest complete three-leg observation at or before 15:29 IST.
 
 Across 190 completed trades, the corrected dynamic-n strategy produced gross P&L of ₹154,742.25 and net P&L of ₹138,937.12 after ₹15,805.13 of modeled costs. Mean net P&L was ₹731.25 per trade, median ₹814.85, net win rate 94.21%, and profit factor 2.14. The bootstrap 95% confidence interval for mean net P&L was ₹145.58 to ₹1,252.17. The strategy selected n=6 on 183 trades, n=7 on 6 trades, and n=8 on 1 trade; no n above 8 was selected under the pre-registered 95% higher-n rule.
 
@@ -125,17 +125,21 @@ For selected n:
 - Sell OTM-(n+1).
 - Sell OTM-(n+2).
 
-### 3.6 Exit
+### 3.6 Final exit
 
 Target:
 
 T = 0.90 × X_selected × lot
 
-The first complete minute after entry with slippage-adjusted gross P&L at or above T is the exit.
+Exit at the first complete minute after entry where slippage-adjusted combined three-leg gross P&L reaches or exceeds T.
 
-Otherwise exit at the latest complete three-leg observation at or before 15:29 IST on expiry day.
+From 13:30 IST on expiry day, exit when both conditions hold:
+- combined three-leg MTM < ₹0;
+- running MFE since entry < 0.50 × original target.
 
-No stop loss is used.
+If neither event occurs, exit at the latest complete three-leg observation at or before 15:29 IST on expiry day.
+
+No pre-expiry payoff-boundary/green-area stop is used.
 
 ---
 
@@ -484,3 +488,38 @@ The controlled ablation has now been completed. Holding the OTM6/7/8 direction s
 ## Supplementary materials
 
 The repository retains the complete trade ledger, candidate-n scores, direction observations, missing-data log, yearly/direction/exit decompositions, robustness scenarios, and paired dynamic-vs-fixed expiry comparison.
+
+
+---
+
+## 17. Phase 20 — payoff-boundary stop test and final exit specification
+
+Phase 20 tested whether the entry-time expiry zero-P&L/green-area boundary could act as an early risk-control signal. The pre-registered search used 0/50/100/200/400 NIFTY-point buffers, 1-minute and 3-minute confirmation, and three condition families: boundary-only; boundary + negative MTM; and boundary + negative MTM + MFE below 0.50×target.
+
+The training-safe boundary selector was a 400-point buffer with one-minute confirmation and boundary-only condition. Its training uplift was ₹711.91, but its validation uplift was −₹14,390.87 and its 2026 holdout uplift was −₹49,064.48. Maximum drawdown increased to ₹41,711.94 in validation and ₹65,371.18 in holdout. The combined boundary-plus-Phase-19 rule also failed out of sample.
+
+The fixed Phase-19 comparator was reconstructed directly from minute-level paths and matched the published walk-forward grid exactly. It is:
+
+**13:30 IST on expiry day + combined MTM < ₹0 + running MFE < 0.50× original target.**
+
+Walk-forward uplift:
+- training: +₹1,963.67;
+- validation: +₹1,923.59;
+- 2026 holdout: +₹6,305.15;
+- full sample: +₹10,192.41.
+
+Zero baseline-positive trades were affected in all periods; five of 190 exits changed in the full sample.
+
+Applying the final exit specification to the 190 corrected trades gives:
+- net P&L: ₹149,129.53;
+- mean net/trade: ₹784.89;
+- net winners: 179/190 (94.21%);
+- profit factor: 2.34;
+- maximum drawdown: ₹27,336.11;
+- 178 target exits;
+- 5 conditional-stop exits;
+- 7 expiry-fallback exits.
+
+The payoff-boundary rule is therefore rejected from the final specification, while the 13:30 expiry-day conditional stop is retained as the final historical exit rule.
+
+See [FINAL_STRATEGY_RULES.md](../FINAL_STRATEGY_RULES.md) and [Phase 20 supplement](PHASE20_PAYOFF_BOUNDARY_SUPPLEMENT.md).
