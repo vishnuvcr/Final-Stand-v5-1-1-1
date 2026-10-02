@@ -247,3 +247,14 @@ Therefore the payoff chart's green-area boundary is **not** part of the final st
 ### Final research status
 
 Phase 20 is the final planned historical exit-rule comparison. No further historical stop optimization is scheduled under the current research plan. The remaining research step before any live deployment is forward/paper execution validation under live bid/ask, spread, latency, partial-fill and broker-execution conditions.
+
+
+## Phase 21 — pre-expiry adverse-move risk-control research
+
+The Phase-20 historical strategy remains frozen. A separate Phase-21 branch is testing whether a very large adverse NIFTY move before expiry can be handled by a deterministic early exit or by adding one OTM-(n+3) tail hedge.
+
+- [Phase 21 pre-registration](PHASE21_PRE_REGISTRATION.md)
+- [Phase 21 research code](research/preexpiry_adverse_move_risk_control.py)
+- [Phase 21 workflow](.github/workflows/phase-21-preexpiry-adverse-move-risk-control.yml)
+
+Phase 21 does not change the final strategy unless a candidate passes the frozen walk-forward promotion screen. Until then, the canonical strategy remains the Phase-20 specification.
