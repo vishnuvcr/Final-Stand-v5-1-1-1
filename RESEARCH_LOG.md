@@ -57,3 +57,7 @@
 - Target exits had 100% positive net P&L; expiry exits had 0% positive net P&L.
 - Direction: 191 bullish/put trades, 4 bearish/call trades.
 - This result is the locked primary Phase 7 result for statistical analysis; previous v2 results remain superseded.
+
+## Phase 8 started
+- Primary Phase 7 result locked.
+- Statistical analysis includes profit factor, drawdown, trade-level dispersion, bootstrap confidence intervals, yearly results, direction decomposition and exit decomposition.
