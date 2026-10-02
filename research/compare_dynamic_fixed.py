@@ -72,10 +72,10 @@ n_mix=dyn.groupby("n_selected").agg(
     mean_net=("net_rupees","mean"),
 ).reset_index()
 
-direction_mix=pd.DataFrame([
+direction_mix=pd.concat([
     dyn.groupby("direction").net_rupees.agg(["count","sum","mean"]).reset_index().assign(strategy="DYNAMIC_N"),
     fix.groupby("direction").net_rupees.agg(["count","sum","mean"]).reset_index().assign(strategy="FIXED_OTM15"),
-])
+], ignore_index=True)
 
 overall.to_csv(OUT/"overall_comparison.csv",index=False)
 common_summary.to_csv(OUT/"common_sample_comparison.csv",index=False)
