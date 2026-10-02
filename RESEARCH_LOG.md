@@ -94,3 +94,11 @@
 - The workflow will compare the overlap-period gross P&L with the user-supplied AlgoTest headline results while preserving the known date-coverage difference.
 
 [RUN_PHASE9B]
+
+
+## 2026-10-03 — Critical strike-mapping correction
+- The Phase 9B component reproduction produced strongly negative call/put results instead of matching the user-supplied AlgoTest reports. Inspection of the reproduced strikes showed the implementation had selected the 15th/16th/17th available quoted strikes rather than exact OTM15/16/17 strike levels.
+- Example: on 2021-05-28, the implementation selected call strikes 16200/16400/16500, skipping the exact 16250/16300 ladder levels. The AlgoTest screenshot semantics use consecutive OTM strikes on the ₹50 NIFTY strike ladder.
+- NSE's documented NIFTY strike scheme is ₹50 for weekly/monthly contracts; therefore exact OTM15/16/17 must be ATM±750/800/850 respectively. citeturn166378search0turn166378search18
+- This is a critical implementation error. Initial Phase 7/8/9 numeric results are superseded and must not be interpreted as evidence for the strategy.
+- New Phase 7B repair branch created; corrected primary and corrected AlgoTest component reproduction will be rerun before any robustness or final conclusion.
