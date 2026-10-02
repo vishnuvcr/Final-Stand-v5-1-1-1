@@ -1,71 +1,87 @@
-# Research Plan — Restarted NIFTY Ratio Strategy (v2)
+# Research Plan — Fixed OTM15 Restart (v3)
 
 ## Research question
-Does the restarted two-stage directional-selection and high-OTM-preference 3-leg ratio strategy produce positive gross and net returns after realistic execution costs on historical NIFTY weekly index options?
+Does the fixed-OTM15, 4-DTE, 10:00 IST NIFTY weekly-options directional 3-leg ratio strategy produce positive gross and net returns after realistic execution costs over the validated historical sample?
 
 ## Locked primary algorithm
 
 ### Stage 1 — Direction
-X_call6 = CE8 + CE7 - CE6
-X_put6 = PE8 + PE7 - PE6
+At exactly 10:00 IST on the date that is 4 trading sessions before expiry (expiry day = 0 DTE), identify the nearest available ATM strike from the exact 10:00 option snapshot.
 
-If X_call6 > X_put6 -> BEARISH call structure.
-If X_call6 < X_put6 -> BULLISH put structure.
-Exact equality -> NO_TRADE_TIE.
+Rank strikes outward from ATM separately for calls and puts.
 
-### Stage 2 — n
-For the selected side only, calculate X(n) for n=6..15.
-- X_max = max X(n).
-- Eligible n satisfy X(n) >= 95% of X_max.
-- Select the highest eligible n.
-- If X_max <= 0, record NO_POSITIVE_X and do not enter.
+Calculate:
+- X_call = CE(OTM17) + CE(OTM16) - CE(OTM15)
+- X_put = PE(OTM17) + PE(OTM16) - PE(OTM15)
 
-The 95% rule is the primary transparent implementation of the requested higher-n preference with significant X. Phase 4 tests 90%, 95% and 97.5%.
+Directional rule:
+- If X_call > X_put -> trade the BEARISH call structure.
+- If X_call < X_put -> trade the BULLISH put structure.
+- If exactly equal -> NO_TRADE_TIE; do not invent a direction.
 
-### Stage 3 — position
+### Stage 2 — Position
+There is no high-n optimization or threshold in this restart. OTM15/16/17 are fixed.
+
 BULLISH:
-- buy OTMn PE
-- sell OTM(n+1) PE
-- sell OTM(n+2) PE
+- buy OTM15 PE
+- sell OTM16 PE
+- sell OTM17 PE
 
 BEARISH:
-- buy OTMn CE
-- sell OTM(n+1) CE
-- sell OTM(n+2) CE
+- buy OTM15 CE
+- sell OTM16 CE
+- sell OTM17 CE
 
-### Stage 4 — exit
-T = 0.90 * X_selected * lot quantity.
-Exit at the first complete minute where slippage-adjusted gross P&L >= T.
-Otherwise exit at 15:29 IST on expiry day using the latest complete three-leg observation.
+### Stage 3 — Target exit
+Let X be the selected-side raw 10:00 premium expression.
+
+T = 0.90 * X * lot quantity.
+
+Exit at the first complete minute after entry where slippage-adjusted gross three-leg P&L >= T.
+
+### Stage 4 — Expiry exit
+If target is not reached, exit at 15:29 IST on expiry day using the latest complete three-leg observation at or before 15:29.
+
 No stop-loss.
 
 ## DTE definition
-"4 trading Days to expiry" means four trading sessions before expiry, with expiry day = 0 DTE. For an ordinary Thursday expiry, entry is the preceding Friday at 10:00 IST. Holiday/exception expiries use actual trading sessions and are logged.
+Four trading sessions before expiry, excluding expiry itself. For an ordinary Thursday expiry this normally means the preceding Friday; holiday/exception expiries use the actual exchange sessions.
 
-## Data
-Primary executable source: thetrademarkk/india-index-options-1m. Public documentation describes 1-minute NIFTY spot and option-chain OHLCV(+OI), option files with strike, option type and expiry, and partial far/illiquid strike coverage. Current executable option files begin 2021-05-27.
+## Data and provenance
+Primary executable source remains thetrademarkk/india-index-options-1m, with 1-minute NIFTY spot/options data and expiry-specific option files. Existing validated date coverage begins 2021-05-27.
 
-The earlier Zenodo 2019–2020 source remains rejected for the weekly-contract primary test because row-level expiry identification was not available.
+The earlier Zenodo 2019–2020 dataset remains excluded from the primary weekly-contract backtest because row-level expiry identification was not adequate.
 
-## Cost/execution
-Primary:
-- one adverse tick per leg, configurable;
-- date-aware NIFTY lot size;
-- Paytm Money F&O brokerage assumption of Rs 10 per unique executed order according to its current F&O FAQ;
-- statutory/exchange charges explicitly modelled.
-Historical pricing differences are a sensitivity item.
+## Execution and costs
+Primary assumptions:
+- one adverse ₹0.05 option tick per leg;
+- date/expiry-aware NIFTY lot size;
+- six executed orders per completed round-trip trade;
+- Paytm Money F&O brokerage assumption: ₹10 per unique executed order;
+- statutory/exchange charges explicitly modelled;
+- no forward filling or synthetic prices;
+- incomplete three-leg observations are excluded and logged.
 
-## Research phases
-1. Phase 1 — restarted specification and implementation audit
-2. Phase 2 — restarted primary backtest
-3. Phase 3 — statistical analysis
-4. Phase 4 — robustness and sensitivity
-5. Phase 5 — complete manuscript
+## Research phases for this restart
+1. Phase 6 — fixed-OTM15 specification and implementation audit
+2. Phase 7 — fixed-OTM15 primary backtest
+3. Phase 8 — statistical analysis
+4. Phase 9 — robustness/sensitivity
+5. Phase 10 — final manuscript
 
-Phase 2 must persist Stage-1 directional X, all Stage-2 candidates, selection threshold, selected n, trade results and missing observations.
+## Pre-registered robustness scope
+After the primary result, robustness will examine:
+- adverse slippage;
+- entry time;
+- DTE definition/sensitivity;
+- brokerage sensitivity;
+- target fraction;
+- fixed strike rank around OTM15 only if needed to diagnose sensitivity.
 
-## Stop condition
-Stop after Phase 5.
+The primary strategy itself remains fixed at OTM15/16/17.
 
 ## Supersession
-All prior Phase 2 results using the global 20-candidate selector are superseded and must not be used as evidence for this restart.
+All earlier v2 results using OTM6-based Stage 1 and n=6..15 high-n selection are superseded for this restart and must not be used as evidence for the present strategy.
+
+## Stop condition
+Stop after Phase 10.
