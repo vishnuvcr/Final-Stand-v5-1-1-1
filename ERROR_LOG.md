@@ -25,3 +25,7 @@
 | 2026-10-02 | Phase 2 | NIFTY 65-lot transition was initially applied from Jan-2026 rather than the first revised weekly expiry. | Corrected boundary to 06-Jan-2026 using NSE FAOP70616. |
 
 | 2026-10-02 | Phase 2 | A later repository write temporarily reintroduced the full expiry-file strike list. | Reapplied entry-timestamp-only strike discovery and added an explicit missing-entry-snapshot check; verified executable lines after commit. |
+
+| 2026-10-02 | Phase 2 | Initial autonomous run used a 2021 fallback and concurrent workflow runs caused result-push contention. | Performed a clean single primary run with 2019 input; source availability yielded the validated 2021-2026 executable sample, and the successful result commit was persisted. |
+| 2026-10-02 | Phase 2 | Zenodo 2019-2020 data are nested archives and initially appeared compatible only at structural level. | Deep schema inspection found no row-level expiry identifier; source rejected for weekly-contract backtest rather than inferring expiry. |
+| 2026-10-02 | Phase 2 | Temporary push triggers were required because direct workflow dispatch is unavailable through the connector. | One-shot triggers were used only for execution and both workflows were restored to manual-only. |
