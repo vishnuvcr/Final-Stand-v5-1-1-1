@@ -1,0 +1,31 @@
+name: Phase 11 Dynamic N Statistics
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  statistics:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[RUN_DYNAMIC_STATS]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pandas numpy
+      - name: Run dynamic-n statistics
+        run: python research/analyze_dynamic_n.py
+      - name: Persist statistics
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/dynamic_n_corrected/phase11_statistics
+          git commit -m 'Phase 11: persist dynamic-n statistics' || echo 'No result changes'
+          git fetch origin ${GITHUB_REF_NAME}
+          git rebase origin/${GITHUB_REF_NAME}
+          git push origin HEAD:${GITHUB_REF_NAME}
