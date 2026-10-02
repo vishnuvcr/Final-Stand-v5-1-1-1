@@ -16,3 +16,8 @@
 - Added a manual GitHub Actions workflow and Hugging Face cache.
 - Primary data source provenance and limitations are documented in the README and research plan.
 - Backtest execution is pending workflow completion.
+
+## 2026-10-02 — Phase 2 execution environment limitation
+- The GitHub connector can create/update the manual workflow but does not expose workflow dispatch/write actions or a repository-wide Actions-run listing in this session.
+- Direct container internet access is unavailable, so the Hugging Face dataset cannot be downloaded locally.
+- The Phase 2 code is therefore committed and auditable, but no new full-sample performance result is claimed from this session.
