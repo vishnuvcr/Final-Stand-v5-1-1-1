@@ -69,3 +69,5 @@
 | 2026-10-03 | Phase 20 execution | Second Actions run reached the boundary evaluation but failed because the path map returned metadata dictionaries instead of minute-path lists, causing `TypeError: string indices must be integers`. | Changed the path-map return value to map each expiry directly to its `path`; no research output from this run is used. |
 
 | 2026-10-03 | Phase 20 execution | Third Actions run failed in `charges()` because the reconstructed path stored the DataFrame integer row index as the stop timestamp. | Changed the path builder to store `row['timestamp']` as a timezone-aware pandas timestamp; no numerical result from the failed run is used. |
+
+| 2026-10-03 | Phase 20 execution | Fourth Actions run completed the research calculations but failed in the final alignment-error reporting because the refactored path map now contains lists rather than dictionaries. | Returned the path map together with its error-record list and updated the final report writer; no persisted numerical result from that run is used. |
