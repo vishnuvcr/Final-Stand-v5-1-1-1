@@ -1,66 +1,32 @@
 # Research Log
 
-## 2026-10-02 — Phase 1 specification review
-- Inspected existing repository artifacts.
-- Confirmed the intended selector is the maximum X across all 20 candidates: n=6..15 × Call/Put.
-- Removed an unintended stop-loss research phase.
-- Locked exits to 90% of initial credit or 0 DTE/expiry.
-- Locked initial credit to X × actual lot quantity.
+## 2026-10-02 — Research restart
+- Restarted because the prior implementation did not exactly match the latest strategy definition.
+- Created branch phase-1-restart-strategy-v2.
+- Prior global n=6..15 x Call/Put results are superseded.
 
-## 2026-10-02 — Phase 2 start
-- Created dedicated branch: phase-2-primary-backtest.
-- Replaced the prior OTM6/7/8-only implementation with a full n=6..15 implementation.
-- Added global maximum-X selection across calls and puts.
-- Added candidate-level output so all 20 X candidates can be audited per expiry.
-- Added date-aware NIFTY weekly lot sizes for the 2024–2025 primary sample.
-- Added a manual GitHub Actions workflow and Hugging Face cache.
-- Primary data source provenance and limitations are documented in the README and research plan.
-- Backtest execution is pending workflow completion.
+## 2026-10-02 — Direction selector locked
+- Stage 1 uses OTM6/7/8 only.
+- X_call6 > X_put6 selects the user-defined BEARISH call structure.
+- X_call6 < X_put6 selects the user-defined BULLISH put structure.
+- Exact equality is NO_TRADE_TIE.
 
-## 2026-10-02 — Phase 2 execution environment limitation
-- The GitHub connector can create/update the manual workflow but does not expose workflow dispatch/write actions or a repository-wide Actions-run listing in this session.
-- Direct container internet access is unavailable, so the Hugging Face dataset cannot be downloaded locally.
-- The Phase 2 code is therefore committed and auditable, but no new full-sample performance result is claimed from this session.
+## 2026-10-02 — High-n selector locked
+- Stage 2 evaluates n=6..15 only on the Stage-1-selected side.
+- Because no numeric weight was specified for higher n, the primary rule is X(n) >= 95% of selected-side X_max, then choose the highest n.
+- 90% and 97.5% thresholds are reserved for robustness analysis.
+- Non-positive X_max is recorded as NO_POSITIVE_X with no fabricated entry.
 
-## 2026-10-02 — Phase 2 methodology correction
-- Corrected NIFTY lot-size mapping using NSE circulars FAOP64625/FAOP64672: 25 remained for weekly expiries through 19-Dec-2024; 75 began with the 02-Jan-2025 weekly expiry.
-- Corrected workflow to manual-only to prevent self-triggering when the workflow commits result files.
-- Enabled optional use of the repository HF_TOKEN secret for authenticated/bulk Hugging Face downloads; anonymous access remains valid for public data.
+## 2026-10-02 — DTE correction
+- "4 trading Days to expiry" is interpreted as four trading sessions before expiry, with expiry=0 DTE.
+- Ordinary Thursday weekly expiry therefore uses preceding Friday 10:00, not Monday 10:00.
 
-## 2026-10-02 — Multi-year data acquisition expansion
-- Expanded the Phase 2 default sample from 2024–2025 to 2021–2026-09-30.
-- Identified a public Zenodo one-minute NIFTY options dataset covering 2017–2020 as a possible pre-2021 extension; it is not yet merged because schema/contract coverage must be validated first.
-- Recorded additional paid/claimed sources for possible cross-validation in DATA_ACQUISITION.md.
-- Corrected the lot-size model for the expanded period: 75 before the Aug-2021 weekly transition, 50 thereafter until Apr-2024, 25 from May-2024, 75 from Jan-2025, and 65 from Jan-2026.
+## 2026-10-02 — Target locked
+- Target is exactly T = 0.9 * X_selected * lot quantity.
+- X_selected is the raw 10:00 premium expression for final selected n.
+- Slippage and transaction costs affect realized P&L and are reported separately.
 
-## 2026-10-02 — Configuration verification
-- Re-read the executable and workflow after the multi-year edit.
-- Found stale fallback dates in the first edit; corrected them to 2021-01-01 through 2026-09-30.
-- Bumped the Hugging Face Actions cache key to v3 so the expanded acquisition is isolated from the earlier 2024–2025 cache generation.
-
-## 2026-10-02 — Weekly-era source audit
-- Confirmed NIFTY weekly options began in February 2019; 2017–2018 cannot be included in the exact weekly-options strategy.
-- Expanded the intended compatible research window to approximately Feb-2019 through Sep-2026.
-- Added a manual Zenodo acquisition/validation workflow for the 2019–2020 supplement.
-- Corrected the backtest to rank ATM/OTM strikes only from prices available at the 10:00 entry timestamp, preventing strike-list look-ahead.
-- Restricted the expiry set by excluding the final expiry date of each month, which represents the monthly expiry and avoids mixing it into the weekly-only sample.
-- Corrected the NIFTY 65-lot transition to the first revised weekly expiry, 06-Jan-2026.
-
-## 2026-10-02 — Repository persistence verification
-- The first attempt to persist DATA_ACQUISITION.md and Zenodo documentation was not present in the branch tree during re-audit.
-- Restored both files and verified their presence through the branch tree before continuing.
-
-## 2026-10-02 — Final Phase 2 acquisition preparation
-- Current target is the compatible weekly-options era: Feb-2019 through Sep-2026.
-- The 2019–2020 Zenodo source has a manual cached acquisition/validation workflow; 2017–2018 is excluded from this strategy.
-- Primary backtest now uses entry-time strike availability and excludes monthly expiry dates from the weekly sample.
-- No performance result is promoted to the research conclusions until the multi-year workflow has actually executed successfully.
-
-## 2026-10-02 — Autonomous Phase 2 execution
-- Executed the primary GitHub Actions backtest autonomously using the one-shot push mechanism, then restored the workflow to manual-only operation.
-- Validated primary execution window: 2021-05-27 onward through 2026-09-30, subject to available expiry files and missing-observation logging.
-- Primary execution completed successfully with 195 eligible trades under the finalized 20-candidate selector, 1-tick slippage, 90% target, no stop-loss, and modeled transaction costs.
-- Gross and net results were persisted to results/*.csv.
-- Two expiry observations were logged as missing 10:00 spot snapshots: 2024-11-07 and 2025-10-28.
-- Zenodo 2019–2020 was deeply inspected and rejected for the primary strategy because its row-level option records lack expiry identifiers; merging it would require unsupported expiry inference.
-- The rejected-source decision is documented in ZENODO_2019_2020_VALIDATION.md and DATA_ACQUISITION.md.
+## 2026-10-02 — Data/provenance audit
+- Primary dataset documentation was rechecked for 1-minute NIFTY options schema and partial far-strike coverage.
+- Primary executable option files begin 2021-05-27.
+- Current Paytm Money F&O FAQ states Rs 10 brokerage per unique executed order; historical fee differences will be sensitivity-tested.
