@@ -14,3 +14,8 @@
 - The initial 4-calendar-day implementation produced only 34 trades because Thursday weekly expiries map four calendar days earlier to Sunday.
 - Corrected DTE convention to the fourth trading session counting expiry as session 1, which maps ordinary Thursday expiries to Monday and handles holiday weeks using actual spot trading sessions.
 - Base profit target set to 90% of the positive entry flatline premium; this fraction remains a parameter for Phase 3 sensitivity testing.
+
+## 2026-10-02 — primary sample correction
+- The first corrected run included entry dates before 2024-01-01 and partial 2026 coverage.
+- Primary performance sample is now constrained to entries/expiries within 2024-01-01 through 2025-12-31.
+- Partial 2026 observations remain available for supplemental inspection but are not used for the primary conclusion.
