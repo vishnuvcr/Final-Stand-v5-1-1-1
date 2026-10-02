@@ -201,3 +201,10 @@
 - Both full-sample and common-expiry paired comparisons are calculated.
 
 [RUN_DYNAMIC_COMPARE]
+
+
+## 2026-10-03 — Comparison execution correction
+- First comparison execution failed during direction-table assembly before writing any research result.
+- Corrected the aggregation and will rerun the comparison.
+
+[RUN_DYNAMIC_COMPARE]
