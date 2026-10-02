@@ -4,7 +4,7 @@
 
 At exactly 10:00 IST, on the date that is 4 trading sessions before expiry (expiry day excluded), identify the nearest available ATM strike using the exact 10:00 option snapshot.
 
-Rank available strikes outward from ATM separately for calls and puts.
+Use the exchange strike ladder rather than the nth available quote. For NIFTY weekly/monthly index options, the strike interval is ₹50. OTM15/16/17 therefore mean exactly 15/16/17 strike intervals away from the selected ATM strike: calls = ATM + n×50; puts = ATM − n×50. Missing exact strikes are exclusions; they are never replaced by a farther available strike.
 
 Calculate:
 - X_call = CE(OTM17) + CE(OTM16) - CE(OTM15)
@@ -65,6 +65,10 @@ If X_call == X_put, no trade.
 
 If selected-side X <= 0, no trade because the requested 90%-of-X target would be non-positive. This is an explicit data-quality/strategy rule and will be counted.
 
-## 7. Supersession
+## 7. Strike-mapping audit correction
+
+The initial v3 implementation incorrectly interpreted OTM15/16/17 as the 15th/16th/17th available strike in the exact snapshot. That can skip strikes when a minute quote is missing. The corrected interpretation uses the fixed NIFTY ₹50 strike interval and exact strike distance. This correction supersedes the initial Phase 7/8 numerical results.
+
+## 8. Supersession
 
 This v3 specification supersedes the earlier v2 strategy. v2 results remain in history for audit only.
