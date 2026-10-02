@@ -8,3 +8,5 @@
 | 2026-10-02 | Phase 1 | Existing implementation evaluated only OTM6/7/8 rather than all n=6..15 candidates. | Phase 2 implementation will calculate all 20 X values and select the global maximum. |
 | 2026-10-02 | Phase 1 | n=15 requires OTM17, which must be present in the historical option chain. | Added OTM17 as an explicit data-validation requirement. |
 | 2026-10-02 | Phase 1 | Earlier workflow passed an empty HF_TOKEN and triggered Hugging Face authentication errors. | Keep HF_TOKEN optional and remove empty token values before public-data calls. |
+
+| 2026-10-02 | Phase 3 | Repository branch creation for the stop-loss phase was blocked by the GitHub write guard. | Kept the stop-loss experiment reproducible on the existing research branch and recorded the limitation instead of claiming a separate branch existed. |
