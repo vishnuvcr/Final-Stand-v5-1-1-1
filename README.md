@@ -4,7 +4,7 @@ Research repository for systematic testing of NIFTY weekly-options directional 3
 
 ## Current research status
 
-**Dynamic-n corrected research completed through final manuscript.**
+**Dynamic-n corrected research completed, including controlled n-selection ablation and final manuscript revision.**
 
 The dynamic-n branch was restarted from the raw option-data workflow after two critical implementation errors were discovered during AlgoTest reconciliation:
 1. OTM strikes had initially been selected by ordinal availability instead of exact ₹50 strike distance.
@@ -109,3 +109,16 @@ All pre-registered robustness families remained positive in the tested scenarios
 Previous dynamic-n and earlier fixed-OTM15 numerical outputs produced before the strike-mapping and P&L corrections remain in Git history for audit only. They are explicitly superseded and are not used as evidence in the final manuscript.
 
 The primary conclusion is historical and in-sample. No claim is made that future performance will match the backtest.
+
+
+## Controlled n-selection ablation — final audit
+
+A controlled ablation held the OTM6/7/8 Stage-1 direction selector and all execution assumptions constant:
+
+- Fixed n=6: **₹139,543.97 net**, 190 trades, 94.21% win rate.
+- Dynamic 95%-band: **₹138,937.12 net**, 190 trades, 94.21% win rate.
+- Fixed n=15: **₹87,322.86 net**, 190 trades, 99.47% win rate.
+
+The dynamic rule therefore produced **₹606.85 less net P&L than fixed n=6** on the identical trade universe. It selected n=7 only 6 times and n=8 once; n=6 was selected on 183/190 trades. This means the positive primary result should not be interpreted as evidence that the higher-n preference adds incremental value. The controlled ablation isolates n-selection from the separate OTM6/7/8 versus OTM15/16/17 direction-selector difference.
+
+The final manuscript has been revised accordingly.
