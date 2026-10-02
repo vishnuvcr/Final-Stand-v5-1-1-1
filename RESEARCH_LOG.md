@@ -26,3 +26,9 @@
 - Corrected NIFTY lot-size mapping using NSE circulars FAOP64625/FAOP64672: 25 remained for weekly expiries through 19-Dec-2024; 75 began with the 02-Jan-2025 weekly expiry.
 - Corrected workflow to manual-only to prevent self-triggering when the workflow commits result files.
 - Enabled optional use of the repository HF_TOKEN secret for authenticated/bulk Hugging Face downloads; anonymous access remains valid for public data.
+
+## 2026-10-02 — Multi-year data acquisition expansion
+- Expanded the Phase 2 default sample from 2024–2025 to 2021–2026-09-30.
+- Identified a public Zenodo one-minute NIFTY options dataset covering 2017–2020 as a possible pre-2021 extension; it is not yet merged because schema/contract coverage must be validated first.
+- Recorded additional paid/claimed sources for possible cross-validation in DATA_ACQUISITION.md.
+- Corrected the lot-size model for the expanded period: 75 before the Aug-2021 weekly transition, 50 thereafter until Apr-2024, 25 from May-2024, 75 from Jan-2025, and 65 from Jan-2026.
