@@ -129,3 +129,13 @@ Rule selection is frozen using development data only:
 4. minimize affected winners as the final tie-break.
 
 The selected rule is then applied unchanged to the validation period. Exact stop-time leg prices and the same date-aware fee model are used. This extension does not alter the no-stop primary result unless a later phase explicitly promotes a rule after successful validation.
+
+
+## Phase 18 conditional-stop refinement
+
+Phase 17 found no rule that both improved validation net P&L and left all baseline-positive trades untouched. Phase 18 therefore tests one narrowly motivated refinement rather than expanding the search indiscriminately:
+- expiry-day negative MTM cutoffs at 13:30, 14:00, 14:30 and 15:00 IST;
+- require running MFE to remain below 0, 0.10, 0.25, 0.50, 0.75 or 1.00 times target;
+- one-minute and three-minute confirmation.
+
+The rule is selected on development data only, then frozen for validation. A candidate is not promoted unless validation also leaves all baseline-positive trades untouched and improves net P&L.
