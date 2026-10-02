@@ -77,3 +77,12 @@
 - The uploaded configurations visibly contain four legs. The call report uses buy OTM15 CE, sell OTM16 CE, and two sell OTM17 CE legs. The put report uses buy OTM15 PE, sell OTM16 PE, sell OTM17 CE, and an additional sell OTM17 PE leg. These are not the locked three-leg research structures.
 - The AlgoTest reports also use fixed-time expiry-day exit rather than the locked target/expiry rule and do not visibly enable brokerage/taxes/slippage for the reported P&L.
 - Therefore the headline AlgoTest results are not an apples-to-apples replication of the locked research strategy. An exact configuration-replication audit was inserted as Phase 9A before interpreting the discrepancy or finalizing robustness conclusions.
+
+
+## 2026-10-03 — Corrected AlgoTest uploads
+- User clarified that the previous two AlgoTest PDFs were the wrong files.
+- The newly uploaded reports were inspected and are materially different from the prior mistaken uploads.
+- Corrected put report: 3 legs — Buy OTM15 PE, Sell OTM16 PE, Sell OTM17 PE; entry 09:35; exit 15:14; 4 trading days before weekly expiry; 218 trades; displayed overall profit ₹138,258.25 and win rate 99.54%.
+- Corrected call report: 3 legs — Buy OTM15 CE, Sell OTM16 CE, Sell OTM17 CE; entry 09:35; exit 15:14; 4 trading days before weekly expiry; 218 trades; displayed overall profit ₹43,267.25 and win rate 99.08%.
+- These corrected reports are structurally aligned with the three-leg fixed OTM15/16/17 call and put components, but they still do not by themselves reproduce the locked research strategy because they independently backtest each side, use 09:35 entry and 15:14 expiry-day exit, and show target/stop-loss disabled. The research strategy additionally uses the X_call-versus-X_put selector, 10:00 entry, target T=0.90*X*lot with expiry fallback, and modeled execution costs.
+- The earlier Phase 9A interpretation based on the mistaken files is superseded and must not be used as evidence.
