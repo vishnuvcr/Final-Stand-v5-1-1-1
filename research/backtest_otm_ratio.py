@@ -6,7 +6,7 @@ import numpy as np
 from huggingface_hub import HfApi, hf_hub_download
 
 REPO = "thetrademarkk/india-index-options-1m"
-START = pd.Timestamp(os.getenv("START_DATE", "2019-02-14"), tz="Asia/Kolkata")
+START = pd.Timestamp(os.getenv("START_DATE", "2021-01-01"), tz="Asia/Kolkata")
 END = pd.Timestamp(os.getenv("END_DATE", "2026-09-30"), tz="Asia/Kolkata")
 OUT = Path("results")
 OUT.mkdir(parents=True, exist_ok=True)
