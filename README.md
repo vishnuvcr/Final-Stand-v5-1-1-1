@@ -6,7 +6,7 @@ Research repository for systematic testing of the NIFTY weekly-options direction
 
 **Phase 9A — ALGO TEST RECONCILIATION AUDIT: REQUIRED BEFORE FINAL ROBUSTNESS INTERPRETATION**
 
-The locked fixed-OTM15 research backtest is **not directly comparable** to the two newly uploaded AlgoTest reports. The uploaded AlgoTest screenshots show materially different entry/exit rules, four configured legs, separate static call/put tests, fixed quantity 65, and 0% slippage with brokerage/taxes controls not visibly enabled. The research backtest uses the X_call-vs-X_put selector, three legs, 10:00 entry, a 0.90*X target with expiry fallback, date-aware lot sizes, adverse slippage and transaction-cost modeling.
+The locked fixed-OTM15 research backtest is **not directly comparable** to the two newly uploaded AlgoTest reports. The corrected AlgoTest screenshots show the intended three-leg fixed OTM15/16/17 component strategies (separate call and put reports), with 09:35 entry and 15:14 expiry-day exit. The previously uploaded files were the wrong reports and are superseded. The corrected reports are structurally much closer to the research specification, but still differ from the locked research backtest in entry time, exit rule, conditional X_call-vs-X_put selection, and modeled execution-cost assumptions.
 
 ### Locked research strategy
 
@@ -52,16 +52,16 @@ These are descriptive historical results under the locked primary assumptions; t
 
 ## AlgoTest reconciliation evidence
 
-The user-supplied call report shows **218 trades and ₹96,307.25 overall profit** with 99.08% winning trades; the configuration page shows 09:35 entry, 15:14 expiry-day exit, and four configured legs. fileciteturn547file0L2-L3
+The corrected call report shows **218 trades and ₹43,267.25 overall profit** with 99.08% winning trades; the configuration shows 09:35 entry, 15:14 expiry-day exit, and three legs: buy OTM15 CE, sell OTM16 CE, sell OTM17 CE. fileciteturn547file0L2-L3
 
-The user-supplied put report shows **218 trades and ₹191,298.25 overall profit** with 98.62% winning trades; its configuration page likewise shows 09:35 entry, 15:14 expiry-day exit, and four configured legs. fileciteturn547file1L2-L3
+The corrected put report shows **218 trades and ₹138,258.25 overall profit** with 99.54% winning trades; its configuration shows 09:35 entry, 15:14 expiry-day exit, and three legs: buy OTM15 PE, sell OTM16 PE, sell OTM17 PE. fileciteturn547file1L2-L3
 
 These are benchmark configurations to reproduce first, not evidence that the locked research strategy has those returns.
 
 ## Phase 9A reconciliation plan
 
-1. Reproduce the uploaded AlgoTest call configuration exactly.
-2. Reproduce the uploaded AlgoTest put configuration exactly.
+1. Reproduce the corrected AlgoTest call configuration exactly.
+2. Reproduce the corrected AlgoTest put configuration exactly.
 3. Compare trade counts, dates, strikes, entry prices, exit prices and per-leg P&L against the exported/report rows.
 4. Change one parameter at a time to the locked research definition: 09:35->10:00, fixed exit->target/expiry, four legs->three legs, static side->X selector, fixed 65->date-aware lots, 0 costs->modeled costs/slippage.
 5. Only after this audit, execute/interpret Phase 9 robustness and final manuscript conclusions.
