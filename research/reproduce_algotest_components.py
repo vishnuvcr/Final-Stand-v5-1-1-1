@@ -60,13 +60,11 @@ def prices_at(df, ts, typ, strikes):
 
 
 def leg_pnl(direction, entry_prices, exit_prices):
+    # Long OTM15 is closed with a sell: exit - entry.
+    # Short OTM16/17 are closed with buys: entry - exit.
     e15, e16, e17 = entry_prices
     x15, x16, x17 = exit_prices
-    if direction == "CALL":
-        points = (e15 - x15) + (x16 - e16) + (x17 - e17)
-    else:
-        points = (e15 - x15) + (x16 - e16) + (x17 - e17)
-    return points * LOT
+    return ((x15 - e15) + (e16 - x16) + (e17 - x17)) * LOT
 
 
 def get_weekly_expiries(api):
