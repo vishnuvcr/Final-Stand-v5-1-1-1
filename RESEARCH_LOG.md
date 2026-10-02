@@ -30,3 +30,11 @@
 
 ## 2026-10-02 — Phase 4 retry trigger
 - Corrected a literal newline syntax error in the parameterized backtest before rerunning robustness scenarios.
+
+## 2026-10-03 — Phase 4 completion
+- GitHub Actions run 37048711849 completed all 15 planned robustness scenarios successfully.
+- Verified scenario results were reconstructed from the successful runner log because the initial persistence push encountered a concurrent remote update.
+- Persisted verified results in results/restarted_v2/phase4/VERIFIED_PHASE4_SUMMARY.md.
+- Restored Phase 4 workflow to manual-only operation after execution.
+- Primary 95%/1-tick/10:00/4-DTE result remained -₹59,481.78 total net P&L across 196 trades.
+- DTE=3 sensitivity produced +₹2,603.15 in 197 trades; retained only as a robustness observation, not as a changed primary specification.
