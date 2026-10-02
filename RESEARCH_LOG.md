@@ -297,3 +297,9 @@
 - Added the Phase 20 workflow to `main` so GitHub can evaluate the PR-triggered workflow from the base branch as required by GitHub Actions.
 - Touched the phase branch research log to trigger PR synchronization; the phase branch remains unmerged and is still the isolated Phase 20 research branch.
 [RUN_PHASE20_BOUNDARY_PR]
+
+## 2026-10-03 — Phase 20 execution correction and retry
+- First real GitHub Actions run reached the analysis step but failed before calculation because `research/payoff_boundary_stop_research.py` could not import the local `research` package.
+- Fixed the import path by adding the repository root to `sys.path`.
+- No research output from the failed run is used.
+[RUN_PHASE20_BOUNDARY_IMPORT_FIX]
