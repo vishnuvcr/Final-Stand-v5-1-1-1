@@ -73,3 +73,5 @@
 | 2026-10-03 | Phase 20 execution | Fourth Actions run completed the research calculations but failed in the final alignment-error reporting because the refactored path map now contains lists rather than dictionaries. | Returned the path map together with its error-record list and updated the final report writer; no persisted numerical result from that run is used. |
 
 | 2026-10-03 | Phase 20 result persistence | Fifth Actions run completed the boundary research successfully but result commit push was rejected because the branch advanced during execution. | Persistence step now fetches and rebases onto the current Phase-20 branch before pushing. The numerical output itself was valid; the persisted copy is being regenerated with the corrected Phase-19 0.50x comparator. |
+
+| 2026-10-03 | Phase 20 result persistence | Sixth run completed the corrected comparison but was still executed with the pre-rebase workflow revision, so its generated result commit was rejected by the remote branch. | Workflow revision `96bf697` now rebases before pushing; a final calculation trigger will use that revision. |
