@@ -327,7 +327,7 @@ def main():
         top_stats = [stats(x) for x in [tr, va, ho, full]]
         selected = top_name
 
-        grid.sort_values(
+        train.sort_values(
             ["train_net_uplift", "train_loss_reduction", "train_winner_affected"],
             ascending=[False, False, True],
         ).head(20).to_csv(
