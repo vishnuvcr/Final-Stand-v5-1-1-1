@@ -245,8 +245,10 @@ def main():
         call_px = prices_at(df, entry_ts, "CE", tuple(call_strikes.values()))
         put_px = prices_at(df, entry_ts, "PE", tuple(put_strikes.values()))
 
-        # Stage 1 must be complete on both sides.
-        if len(call_px) < 3 or len(put_px) < 3:
+        # Stage 1 must contain the exact OTM6, OTM7 and OTM8 prices on both sides.
+        if any(call_px.get(call_strikes[n]) is None for n in (6, 7, 8)) or any(
+            put_px.get(put_strikes[n]) is None for n in (6, 7, 8)
+        ):
             missing.append([str(expiry.date()), "missing OTM6/7/8 direction strikes"])
             continue
 
