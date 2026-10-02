@@ -140,3 +140,11 @@
 - Inputs: exact OTM15/16/17 strike mapping, corrected long/short P&L signs, weekly-expiry universe, 10:00 IST, 4 trading sessions, target 0.90X, one adverse tick per leg, date-aware costs.
 
 [RUN_PHASE8B]
+
+
+## 2026-10-03 — Phase 9E corrected robustness
+- Robustness is rerun only after the strike mapping, P&L signs, and weekly-expiry universe were audited.
+- Scenarios: target fraction 0.80/0.90/1.00 × slippage 0/1/2 ticks; entry 09:45/10:15; DTE 3/5; brokerage ₹0/₹20 per order.
+- Base assumptions otherwise remain date-aware lots, six orders, modeled statutory charges, and no forward filling.
+
+[RUN_PHASE9E]
