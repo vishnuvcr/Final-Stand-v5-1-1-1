@@ -239,3 +239,10 @@
 - Candidate selection requires zero baseline-positive trades affected on development, then maximizes development net-P&L uplift.
 - Exact stop-time execution prices and the same date-aware fee model are used.
 [RUN_STOP_LOSS]
+
+
+## 2026-10-03 — Phase 17 execution correction and retry
+- The first stop-loss workflow failed at module import before any data were loaded.
+- Repository root import path was fixed.
+- No research output from the failed run is used.
+[RUN_STOP_LOSS]
