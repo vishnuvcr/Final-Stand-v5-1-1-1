@@ -133,3 +133,10 @@
 - All previous Phase 7/8/9/9A numerical results are superseded pending this rerun.
 
 [RUN_PHASE7C]
+
+
+## 2026-10-03 — Phase 8B corrected statistics
+- Phase 8 is rerun from the corrected Phase 7C trade ledger, not the superseded Phase 7/8 files.
+- Inputs: exact OTM15/16/17 strike mapping, corrected long/short P&L signs, weekly-expiry universe, 10:00 IST, 4 trading sessions, target 0.90X, one adverse tick per leg, date-aware costs.
+
+[RUN_PHASE8B]
