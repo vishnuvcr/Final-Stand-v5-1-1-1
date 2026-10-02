@@ -133,3 +133,11 @@
 - All previous Phase 7/8/9/9A numerical results are superseded pending this rerun.
 
 [RUN_PHASE7C]
+
+
+## 2026-10-03 — Phase 9E corrected robustness execution
+- Phase 9 robustness is restarted from the corrected strike mapping and corrected long/short P&L accounting.
+- The 15 pre-registered scenarios are unchanged: target fraction 0.80/0.90/1.00 × slippage 0/1/2 ticks; entry 09:45/10:15; DTE 3/5; brokerage ₹0/₹20 per order.
+- All earlier Phase 9 numerical outputs are superseded.
+
+[RUN_PHASE9E]
