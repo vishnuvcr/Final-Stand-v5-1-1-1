@@ -1,109 +1,80 @@
 # Final Stand v5 1-1-1-1
 
-Research repository for systematic testing of the restarted NIFTY weekly-options 3-leg ratio strategy.
+Research repository for systematic testing of the NIFTY weekly-options directional 3-leg ratio strategy.
 
 ## Current status
 
-**Phase 6 — FIXED OTM15 RESTART: SPECIFICATION COMPLETE; PRIMARY BACKTEST EXECUTING**
+**Phase 9A — ALGO TEST RECONCILIATION AUDIT: REQUIRED BEFORE FINAL ROBUSTNESS INTERPRETATION**
 
-The latest two-stage strategy was tested on the validated executable sample. Prior global-selector results are superseded.
+The locked fixed-OTM15 research backtest is **not directly comparable** to the two newly uploaded AlgoTest reports. The uploaded AlgoTest screenshots show materially different entry/exit rules, four configured legs, separate static call/put tests, fixed quantity 65, and 0% slippage with brokerage/taxes controls not visibly enabled. The research backtest uses the X_call-vs-X_put selector, three legs, 10:00 entry, a 0.90*X target with expiry fallback, date-aware lot sizes, adverse slippage and transaction-cost modeling.
 
-### Locked strategy
+### Locked research strategy
 
 At 10:00 IST, four trading sessions before expiry:
-- X_call6 = OTM8 CE + OTM7 CE - OTM6 CE
-- X_put6 = OTM8 PE + OTM7 PE - OTM6 PE
-- X_call6 > X_put6 -> user-defined BEARISH call structure
-- X_call6 < X_put6 -> user-defined BULLISH put structure
-- On the selected side, X(n) is calculated for n=6..15.
-- Primary high-n rule: X(n) >= 95% of selected-side X_max, then choose highest n.
-- Target: T = 0.9 * X_selected * lot quantity.
-- Otherwise exit at expiry.
-- One adverse tick per leg plus explicit transaction costs/brokerage.
+- X_call = OTM17 CE + OTM16 CE - OTM15 CE
+- X_put = OTM17 PE + OTM16 PE - OTM15 PE
+- X_call > X_put -> BEARISH call structure
+- X_call < X_put -> BULLISH put structure
+- equality -> no trade
 
-## Phase 2 primary result
+Position:
+- BULLISH: buy OTM15 PE, sell OTM16 PE, sell OTM17 PE
+- BEARISH: buy OTM15 CE, sell OTM16 CE, sell OTM17 CE
 
-Sample: **2021-05-27 through 2026-09-30**.
+Exit:
+- target T = 0.90 * selected X * lot quantity;
+- otherwise latest complete three-leg observation at or before 15:29 IST on expiry day;
+- one adverse ₹0.05 tick per leg in the primary model;
+- date-aware NIFTY lot size and six executed orders per trade;
+- explicit modeled brokerage/statutory/transaction charges.
 
-- 196 trades
-- Net win rate: 37.24%
-- Mean net P&L: -₹303.48/trade
-- Median net P&L: -₹448.21/trade
-- Total net P&L: -₹59,481.78
-- Total gross P&L: -₹42,880.50
-- Modeled costs: ₹16,601.28
-- Target exits: 73/196 (37.24%)
-- Expiry exits: 123/196 (62.76%)
+Specification: [STRATEGY_SPEC.md](STRATEGY_SPEC.md)
+Research plan: [RESEARCH_PLAN.md](RESEARCH_PLAN.md)
 
-## Phase 3 statistical findings
+## Fixed OTM15 primary backtest — current locked result
 
-- Profit factor: **0.719**
-- Net-P&L standard deviation: **₹2,797.64/trade**
-- Cumulative max drawdown: **₹80,224.28**
-- Mean credit-normalized trade return: **-31.38%**
-- Trade-level credit-normalized Sharpe (non-annualized): **-0.266**
-- Bootstrap 95% CI for mean net P&L: **-₹702.98 to ₹86.52**
-- Bootstrap 95% CI for win rate: **30.61% to 44.39%**
+Validated executable sample: **2021-05-27 through 2026-09-30**.
 
-Yearly total net P&L:
-- 2021: -₹7,813.05
-- 2022: -₹1,314.54
-- 2023: -₹9,536.07
-- 2024: -₹4,283.23
-- 2025: -₹47,088.19
-- 2026: +₹10,553.30 (partial year through Sep-2026)
+- 195 completed trades; 8 expiries excluded/missing.
+- Total net P&L: **-₹39,626.40**.
+- Total gross P&L: **-₹24,976.75**.
+- Modeled costs: **₹14,649.65**.
+- Mean net P&L: **-₹203.21/trade**.
+- Median net P&L: **-₹237.86/trade**.
+- Net win rate: **25.13%**.
+- Target exits: 49/195; expiry exits: 146/195.
+- Direction: 191 BULLISH/put trades and 4 BEARISH/call trades.
+- Bootstrap 95% CI for mean net P&L: **-₹481.66 to +₹135.74**.
+- Profit factor: **0.609**.
+- Maximum cumulative drawdown: **₹44,141.23**.
 
-Exit-path decomposition is notable: all 73 target exits were profitable after modeled costs, while all 123 expiry exits were losses in this sample. This is a descriptive decomposition of the backtest, not evidence that future target exits will behave the same way.
+These are descriptive historical results under the locked primary assumptions; the confidence interval crosses zero, so the sample does not by itself establish a strictly negative population mean.
 
-Direction:
-- BEARISH: 19 trades; mean net -₹632.24
-- BULLISH: 177 trades; mean net -₹268.19
+## AlgoTest reconciliation evidence
 
-Selected n distribution:
-- n=6: 188 trades
-- n=7: 6
-- n=8: 1
-- n=15: 1
+The user-supplied call report shows **218 trades and ₹96,307.25 overall profit** with 99.08% winning trades; the configuration page shows 09:35 entry, 15:14 expiry-day exit, and four configured legs. fileciteturn547file0L2-L3
 
-The single n=15 trade was profitable, but its sample size is one and therefore is not a reliable estimate of n=15 performance.
+The user-supplied put report shows **218 trades and ₹191,298.25 overall profit** with 98.62% winning trades; its configuration page likewise shows 09:35 entry, 15:14 expiry-day exit, and four configured legs. fileciteturn547file1L2-L3
 
-## Phase 3 artifacts
+These are benchmark configurations to reproduce first, not evidence that the locked research strategy has those returns.
 
-- results/restarted_v2/phase3/overall_statistics.csv
-- results/restarted_v2/phase3/by_year_bootstrap.csv
-- results/restarted_v2/phase3/by_direction.csv
-- results/restarted_v2/phase3/by_n.csv
-- results/restarted_v2/phase3/by_exit_reason.csv
-- results/restarted_v2/phase3/selection_diagnostics.csv
-- results/restarted_v2/phase3/equity_curve.csv
-- results/restarted_v2/phase3/equity_curve.png
-- results/restarted_v2/phase3/net_pnl_distribution.png
-- results/restarted_v2/phase3/annual_net_pnl.png
+## Phase 9A reconciliation plan
 
-## Research phases
+1. Reproduce the uploaded AlgoTest call configuration exactly.
+2. Reproduce the uploaded AlgoTest put configuration exactly.
+3. Compare trade counts, dates, strikes, entry prices, exit prices and per-leg P&L against the exported/report rows.
+4. Change one parameter at a time to the locked research definition: 09:35->10:00, fixed exit->target/expiry, four legs->three legs, static side->X selector, fixed 65->date-aware lots, 0 costs->modeled costs/slippage.
+5. Only after this audit, execute/interpret Phase 9 robustness and final manuscript conclusions.
 
-1. Phase 1 — Restarted specification/audit **complete**
-2. Phase 2 — Restarted primary backtest **complete**
-3. Phase 3 — Statistical analysis **complete**
-4. Phase 4 — Robustness and sensitivity **complete**
-5. Phase 5 — Final manuscript **next**
+## Research history and artifacts
 
-Prior global-selector results remain in repository history for audit purposes only.
+- Phase 6 fixed specification: [STRATEGY_SPEC.md](STRATEGY_SPEC.md)
+- Phase 7 primary backtest artifacts: [results/fixed_otm15_v3/](results/fixed_otm15_v3/)
+- Phase 8 statistical artifacts: [results/fixed_otm15_v3/phase8/](results/fixed_otm15_v3/phase8/)
+- Phase 9 robustness implementation: [research/robustness_fixed_otm15.py](research/robustness_fixed_otm15.py)
+- Research log: [RESEARCH_LOG.md](RESEARCH_LOG.md)
+- Error log: [ERROR_LOG.md](ERROR_LOG.md)
 
-## Phase 4 robustness findings
+## Superseded research
 
-All 15 planned robustness scenarios completed successfully in GitHub Actions run 37048711849. The verified scenario table is persisted in [results/restarted_v2/phase4/VERIFIED_PHASE4_SUMMARY.md](results/restarted_v2/phase4/VERIFIED_PHASE4_SUMMARY.md).
-
-- 90% threshold: total net P&L ranged from -₹60,953 to -₹55,473 across 0–2 adverse ticks.
-- 95% threshold: -₹62,805 to -₹57,268 across 0–2 adverse ticks; primary 1-tick result -₹59,482.
-- 97.5% threshold: -₹62,371 to -₹56,956 across 0–2 adverse ticks.
-- Entry sensitivity: 09:45 -₹45,811; 10:00 -₹59,482; 10:15 -₹59,069.
-- DTE sensitivity: 3 DTE +₹2,603; 4 DTE -₹59,482; 5 DTE -₹95,662.
-- Brokerage sensitivity on the primary trade set: ₹0/order -₹47,722; ₹10/order -₹59,482; ₹20/order -₹71,242.
-
-The DTE=3 positive result is treated as a robustness observation only; the primary DTE=4 specification remains unchanged because it was pre-registered before this sensitivity analysis.
-
-
-## Fixed OTM15 restart
-
-The v2 results are superseded for this new research question. The new primary strategy fixes the structure at OTM15/16/17 and uses OTM17 + OTM16 - OTM15 to select bullish versus bearish direction at 4 DTE, 10:00 IST. There is no high-n threshold. See `RESEARCH_PLAN.md` and `STRATEGY_SPEC.md` on branch `phase-6-fixed-otm15-restart`.
+Earlier v2 results using OTM6-based Stage 1 and high-n selection are retained for audit only and are not evidence for the present fixed-OTM15 strategy. See repository history and [results/restarted_v2/](results/restarted_v2/).
