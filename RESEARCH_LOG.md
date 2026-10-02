@@ -13,3 +13,8 @@
 - Strategy definition: COMPLETE after correction.
 - Data validation: IN PROGRESS.
 - Phase 2 implementation: NOT STARTED on its dedicated branch.
+
+## 2026-10-02 — stop-loss experiment initialized
+- Candidate stop losses: 0.25x, 0.50x, 0.75x, 1.00x, 1.50x, and 2.00x of the positive entry flatline premium.
+- Each candidate exits on the first minute where either the 90%-flatline target or the candidate loss threshold is reached; otherwise expiry close.
+- Paytm brokerage parameter changed to ₹20 per executed order for the primary run, consistent with Paytm Money's published new-user rate; older-account rates can be tested through the environment parameter.
