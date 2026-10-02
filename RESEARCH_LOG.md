@@ -309,3 +309,9 @@
 - Corrected the path-map return structure so each expiry maps directly to its path list.
 - No numerical result from the failed run is used.
 [RUN_PHASE20_BOUNDARY_PATHMAP_FIX]
+
+## 2026-10-03 — Phase 20 execution correction and retry 3
+- Third Actions run reached cost calculation but used the DataFrame integer index instead of the minute timestamp for stop execution, causing a type error in the fee-date logic.
+- Fixed the path timestamp assignment and narrowed the workflow push trigger to code/plan changes so log updates do not create duplicate runs.
+- No numerical result from the failed run is used.
+[RUN_PHASE20_BOUNDARY_TIMESTAMP_FIX]
