@@ -171,3 +171,10 @@
 
 
 [RUN_DYNAMIC_N]
+
+
+## 2026-10-03 — Dynamic-n execution correction
+- First Actions execution failed before producing any trade results because the Stage 1 completeness guard used dictionary length instead of explicit OTM6/7/8 key validation.
+- Corrected the guard. The failed run produced no research result and is not used as evidence.
+
+[RUN_DYNAMIC_N]
