@@ -26,7 +26,7 @@ def lot_size_for_expiry(expiry):
         return 50
     if expiry < pd.Timestamp("2025-01-01", tz="Asia/Kolkata"):
         return 25
-    if expiry < pd.Timestamp("2026-01-01", tz="Asia/Kolkata"):
+    if expiry < pd.Timestamp("2026-01-06", tz="Asia/Kolkata"):
         return 75
     return 65
 
