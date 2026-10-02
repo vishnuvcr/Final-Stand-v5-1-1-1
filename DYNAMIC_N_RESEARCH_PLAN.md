@@ -295,3 +295,6 @@ Selection: training through 2023-12-31 only; zero baseline-positive trades may b
 Promotion: positive validation and 2026 holdout uplift; zero baseline-positive trades affected; no material maximum-drawdown deterioration; no hedge execution gaps.
 
 No additional threshold family will be introduced after inspecting results. A materially different adjustment is a separate registered phase.
+
+
+[RUN_PHASE21_ADVERSE_MOVE_TRIGGER]
