@@ -53,11 +53,13 @@ T = 0.90 × X_selected × lot.
 
 Exit on the first complete minute after entry where the slippage-adjusted three-leg gross P&L is at least T.
 
-### Stage 5 — Expiry fallback
-If target is not reached:
-- exit at the latest complete three-leg observation at or before 15:29 IST on expiry day.
+### Stage 5 — Final exit sequence
+After entry, evaluate the open position on complete minute observations:
+1. target exit when combined slippage-adjusted gross P&L reaches T;
+2. from 13:30 IST on expiry day, conditional stop when combined MTM < ₹0 and running MFE < 0.50×original target;
+3. otherwise expiry fallback at the latest complete three-leg observation at or before 15:29 IST.
 
-No stop loss.
+No pre-expiry payoff-boundary stop is applied.
 
 ## Execution and costs
 
@@ -215,3 +217,61 @@ Coverage and limitations:
 Phase-20 completion criterion:
 - Produce a frozen comparison report covering baseline, Phase-19 comparator, best boundary candidate, and combined candidate; report train/validation/holdout/full-sample P&L, drawdown, stop counts, affected winners and loss reductions.
 - Conclude whether payoff-boundary information should enter the complete research strategy specification.
+
+
+## Phase 20 completion — final historical entry-to-exit specification
+
+Phase 20 was executed on branch `phase-20-payoff-boundary-stop-research` using the corrected 190-trade ledger and exact common-minute NIFTY/option observations.
+
+### Boundary research result
+
+The pre-registered grid tested:
+- expiry zero-P&L payoff boundary buffers: 0, 50, 100, 200 and 400 NIFTY points;
+- 1-minute and 3-minute confirmation;
+- boundary-only, boundary + negative MTM, and boundary + negative MTM + MFE<0.50×target.
+
+The training-safe selector was **400-point buffer / 1-minute / boundary-only**. It produced +₹711.91 training uplift, but **−₹14,390.87** validation uplift and **−₹49,064.48** 2026 holdout uplift, with maximum drawdown increasing to ₹41,711.94 in validation and ₹65,371.18 in holdout. The combined boundary-plus-Phase-19 rule was also negative out of sample.
+
+Therefore **no payoff-boundary/green-area stop is admitted to the final strategy**.
+
+### Phase-19 comparator audit
+
+Phase 20 reconstructed the fixed comparator directly from minute paths and cross-checked it against the Phase-19 walk-forward grid. Cross-check status: **PASS**.
+
+Final expiry-day conditional stop:
+**13:30 IST on expiry day + current combined MTM < ₹0 + running MFE < 0.50×original target.**
+
+Walk-forward:
+- Training: +₹1,963.67, zero baseline-positive trades affected.
+- Validation 2024–2025: +₹1,923.59, zero baseline-positive trades affected.
+- 2026 holdout: +₹6,305.15, zero baseline-positive trades affected, no holdout max-DD change.
+- Full sample: +₹10,192.41; 5 exits changed; zero baseline-positive trades affected.
+
+### Final strategy lock
+
+The final historical research specification is now frozen in:
+- `FINAL_STRATEGY_RULES.md`
+- `STRATEGY_SPEC.md`
+- `DYNAMIC_N_SPEC.md`
+
+Complete exit precedence:
+1. target;
+2. 13:30 expiry-day conditional stop;
+3. 15:29 expiry fallback.
+
+There is **no pre-expiry payoff-boundary stop**.
+
+### Final-rule historical result
+
+Applying the final exit logic to all 190 corrected trades:
+- net P&L: **₹149,129.53**
+- mean net/trade: **₹784.89**
+- net winners: **179/190 (94.21%)**
+- profit factor: **2.34**
+- max drawdown: **₹27,336.11**
+- target exits: **178**
+- conditional-stop exits: **5**
+- expiry-fallback exits: **7**
+- baseline-positive trades stopped early: **0**
+
+This result is historical and does not establish future profitability or live implementability.
