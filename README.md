@@ -154,3 +154,33 @@ Phase 18 found a candidate stop that improved the full sample while leaving ever
 - [Phase 19 code](research/stop_walk_forward.py)
 - [Phase 19 workflow](.github/workflows/phase-19-stop-walk-forward.yml)
 - [Phase 19 results](results/dynamic_n_corrected/phase19_walk_forward/)
+
+
+## Final Phase 19 stop-loss conclusion
+
+The research did not find a fixed hard stop that could safely cut the expiry-loss tail without disturbing profitable baseline trades. The robust candidate is instead a late expiry-day conditional exit:
+
+**At 13:30 IST on expiry day, exit all three legs when combined strategy MTM is negative and running MFE since entry is below 50% of the original target.**
+
+Historical walk-forward result:
+
+| Period | Net uplift | Baseline-positive trades affected | Stops |
+|---|---:|---:|---:|
+| Training | +₹1,963.67 | 0 | 1 |
+| Validation | +₹1,923.59 | 0 | 2 |
+| 2026 holdout | +₹6,305.15 | 0 | 2 |
+| Full sample | +₹10,192.41 | 0 | 5 |
+
+The candidate increases the reconstructed full-sample net P&L from ₹138,937.12 to approximately ₹149,129.53. It changes five exits, all baseline losers, and changes no historically profitable exit.
+
+This is not a guarantee against losses. The stopped trades remain losses, and live execution can differ because of spreads, partial fills, latency and slippage. The candidate remains paper/forward-validation only.
+
+### Final Phase 19 artifacts
+
+- [Stop-loss conclusion](STOP_LOSS_CONCLUSION.md)
+- [Stop-loss manuscript supplement](manuscript/STOP_LOSS_EXTENSION_SUPPLEMENT.md)
+- [Walk-forward summary](results/dynamic_n_corrected/phase19_walk_forward/WALK_FORWARD_SUMMARY.md)
+- [Walk-forward grid](results/dynamic_n_corrected/phase19_walk_forward/walk_forward_grid.csv)
+- [Selected full trade ledger](results/dynamic_n_corrected/phase19_walk_forward/selected_full_trade_level.csv)
+
+The locked primary no-stop strategy is unchanged.
