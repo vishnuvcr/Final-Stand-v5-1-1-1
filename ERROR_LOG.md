@@ -16,3 +16,5 @@
 | 2026-10-02 | Phase 2 | Original execution window covered only 2024–2025 despite the dataset advertising approximately 2021–2026. | Expanded workflow/script defaults to 2021-01-01 through 2026-09-30. |
 | 2026-10-02 | Phase 2 | Expanded period required additional historical NIFTY lot-size transitions. | Updated date-aware lot mapping; primary backtest still logs data gaps rather than imputing. |
 | 2026-10-02 | Phase 2 | A 2017–2020 public minute dataset was found, but it uses a different file organization/schema. | Recorded it as a supplemental source; require schema/coverage validation before merging. |
+
+| 2026-10-02 | Phase 2 | Verification found stale 2024–2025 fallback values in the workflow/script after the first expansion edit. | Rechecked both files and corrected all default/fallback dates to 2021-01-01 through 2026-09-30; bumped cache key to v3. |
