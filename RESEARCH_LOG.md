@@ -23,6 +23,6 @@
 - The Phase 2 code is therefore committed and auditable, but no new full-sample performance result is claimed from this session.
 
 ## 2026-10-02 — Phase 2 methodology correction
-- Corrected NIFTY lot-size mapping using NSE's expiry-specific transition: 25 remained for weekly expiries through 19-Dec-2024; 75 began with the 02-Jan-2025 weekly expiry. cite source recorded in external research notes
+- Corrected NIFTY lot-size mapping using NSE circulars FAOP64625/FAOP64672: 25 remained for weekly expiries through 19-Dec-2024; 75 began with the 02-Jan-2025 weekly expiry.
 - Corrected workflow to manual-only to prevent self-triggering when the workflow commits result files.
 - Enabled optional use of the repository HF_TOKEN secret for authenticated/bulk Hugging Face downloads; anonymous access remains valid for public data.
