@@ -423,36 +423,42 @@ The bootstrap mean interval is positive, but bootstrap resampling does not addre
 
 ## 18. Conclusion
 
-The corrected dynamic-n strategy produced ₹138,937.12 net P&L across 190 completed trades under the primary assumptions, with a 94.21% net win rate and profit factor 2.14. All pre-registered robustness families retained positive net P&L in the tested scenarios.
+The corrected dynamic-n baseline strategy produced ₹138,937.12 net P&L across 190 completed trades under the primary assumptions, with a 94.21% net win rate and profit factor 2.14. The higher-n preference selected n=6 on 183/190 trades, so the historical result should not be interpreted as evidence that frequent movement across n=6…15 creates incremental value.
 
-The corrected fixed OTM15 strategy produced ₹98,560.04 net P&L over 183 completed trades. On the 180 common expiry dates, dynamic-n generated ₹44,801.11 more net P&L than fixed OTM15.
+The controlled ablation held the OTM6/7/8 direction selector constant and found fixed n=6 at ₹139,543.97 net versus ₹138,937.12 for the 95%-band dynamic rule and ₹87,322.86 for fixed n=15. The dynamic rule therefore did not add incremental economic value over fixed n=6 in this sample.
 
-However, the central structural result is more nuanced: the higher-n preference selected n=6 on 96.3% of dynamic-n trades. Therefore the present experiment demonstrates a positive corrected dynamic-n historical result, but it does not demonstrate that frequent dynamic movement across n=6..15 is the source of that performance.
+The exit-rule extension then tested whether a late expiry-day conditional stop could reduce the adverse tail without changing profitable baseline exits. The fixed Phase-19 comparator—13:30 IST on expiry day, current combined MTM below zero, and running MFE below 0.50×original target—was independently reconstructed in Phase 20 and matched the published walk-forward grid exactly. It improved net P&L by ₹1,963.67 in training, ₹1,923.59 in 2024–2025 validation, and ₹6,305.15 in the 2026 holdout, with zero baseline-positive trades affected.
 
-The controlled ablation has now been completed. Holding the OTM6/7/8 direction selector constant, fixed n=6 produced ₹139,543.97 net versus ₹138,937.12 for the 95%-band dynamic rule and ₹87,322.86 for fixed n=15. Therefore the primary dynamic rule does not demonstrate an incremental economic benefit from its higher-n preference in this sample.
+The Phase-20 payoff-boundary study found no robust evidence for an earlier boundary-based stop. The training-safe 400-point boundary rule lost ₹14,390.87 in validation and ₹49,064.48 in the 2026 holdout, and materially increased drawdown. The combined boundary-plus-expiry-stop rule also failed out of sample.
 
+Accordingly, the final historical strategy specification is:
+
+**10:00 IST entry at 4 trading sessions before expiry → corrected direction selector → 95%-band dynamic-n selection → buy OTM-n / sell OTM-(n+1) / sell OTM-(n+2) → target at 0.90×X_selected×lot → from 13:30 expiry day, conditional exit if MTM<0 and MFE<0.50×target → otherwise 15:29 expiry fallback.**
+
+No payoff-boundary/green-area stop is part of the final specification.
+
+Applying these final exit rules to the 190 corrected trades produced ₹149,129.53 net P&L, ₹784.89 mean net/trade, 179/190 positive net trades (94.21%), profit factor 2.34 and ₹27,336.11 maximum cumulative drawdown. These figures are historical backtest results with modeled costs and slippage, not a guarantee of future performance or live execution.
 ---
 
-## Appendix A — Exact algorithm
+## Appendix A — Exact final algorithm
 
 1. Determine expiry and the fourth prior trading session.
 2. Read NIFTY spot and option prices at exactly 10:00 IST.
-3. Select nearest ATM strike.
-4. Construct exact OTM6..17 strikes with the ₹50 strike ladder.
+3. Select nearest ATM strike using the exact ₹50 strike ladder.
+4. Construct exact OTM6…17 strikes.
 5. Calculate X_call_direction and X_put_direction from OTM6/7/8.
-6. Select call or put side.
-7. Calculate X_6 through X_15.
-8. Compute the 95% eligibility threshold.
-9. Select the highest eligible n.
-10. Buy OTM-n and sell OTM-(n+1), OTM-(n+2).
-11. Apply one adverse ₹0.05 tick per leg.
-12. Target = 90% × X_selected × lot.
-13. Exit at first complete minute reaching target; otherwise at the last complete observation at or before 15:29 on expiry.
-14. Calculate long and short P&L with corrected signs.
-15. Subtract modeled transaction charges.
-16. Persist the trade, candidate scores and exclusion reason.
-
----
+6. Select the call or put side; equality or missing required direction quotes means no trade.
+7. Calculate X_6…X_15 on the selected side.
+8. Compute the 95% eligibility threshold and select the highest eligible n.
+9. Buy OTM-n and sell OTM-(n+1), OTM-(n+2).
+10. Apply one adverse ₹0.05 tick per leg.
+11. Set target = 90% × X_selected × lot.
+12. Exit at the first complete minute reaching target.
+13. From 13:30 IST on expiry day, exit if combined MTM < 0 and running MFE < 0.50×original target.
+14. If still open, exit at the latest complete three-leg observation at or before 15:29 on expiry day.
+15. Apply correct long/short P&L signs and subtract modeled brokerage and statutory/transaction charges.
+16. Never trigger an exit solely from the entry-time payoff green-area/zero-P&L boundary.
+17. Persist the trade, candidate scores, stop condition and exclusion reason.
 
 ## Appendix B — Reproducibility artifacts
 
@@ -489,6 +495,8 @@ The controlled ablation has now been completed. Holding the OTM6/7/8 direction s
 
 The repository retains the complete trade ledger, candidate-n scores, direction observations, missing-data log, yearly/direction/exit decompositions, robustness scenarios, and paired dynamic-vs-fixed expiry comparison.
 
+
+---
 
 ---
 
