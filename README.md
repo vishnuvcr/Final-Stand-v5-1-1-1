@@ -4,7 +4,7 @@ Research repository for systematic testing of NIFTY weekly-options directional 3
 
 ## Current research status
 
-**Dynamic-n corrected research completed; Phase 17 stop-loss extension is now in progress.**
+**Dynamic-n corrected research completed; Phase 17 broad stop-loss grid found no validation-improving safe stop; Phase 18 conditional refinement is in progress.**
 
 The dynamic-n branch was restarted from the raw option-data workflow after two critical implementation errors were discovered during AlgoTest reconciliation:
 1. OTM strikes had initially been selected by ordinal availability instead of exact ₹50 strike distance.
@@ -138,3 +138,11 @@ Validation period: **2025-01-01 through 2026-09-30**.
 - [Updated dynamic-n research plan](DYNAMIC_N_RESEARCH_PLAN.md)
 
 The baseline remains the no-stop strategy until a stop rule demonstrates improvement under the pre-registered protocol.  
+
+## Phase 18 — conditional stop refinement
+
+Phase 17 found six candidates that affected zero baseline-positive trades in both development and validation, but none improved validation net P&L. Phase 18 tests a narrower condition: an expiry-day negative trade is stopped only when its earlier running MFE is still below a fixed fraction of the target.
+
+- [Phase 18 code](research/conditional_stop_refinement.py)
+- [Phase 18 workflow](.github/workflows/phase-18-conditional-stop-refinement.yml)
+- [Phase 18 results](results/dynamic_n_corrected/phase18_conditional_stop/)
