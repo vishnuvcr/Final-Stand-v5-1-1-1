@@ -1,0 +1,2 @@
+trades,mean_net_rupees,median_net_rupees,std_net_rupees,sum_net_rupees,profit_factor,max_drawdown_rupees,trade_level_sharpe_nonannualized,win_rate,bootstrap_mean_net_ci_low,bootstrap_mean_net_ci_high,bootstrap_win_rate_ci_low,bootstrap_win_rate_ci_high
+183,538.5932937439125,195.35686905,1146.5824888682137,98562.57275513599,27440.588581485856,3.5919843500014395,0.4697379377174646,0.994535519125683,386.06115792573013,716.7426781101964,0.9836065573770492,1.0
