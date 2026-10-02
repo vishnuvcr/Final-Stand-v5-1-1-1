@@ -26,6 +26,7 @@ STRIKE_INTERVAL = float(os.getenv("NIFTY_STRIKE_INTERVAL", "50"))
 N_MIN = 6
 N_MAX = 15
 HIGH_N_THRESHOLD = float(os.getenv("HIGH_N_THRESHOLD", "0.95"))
+N_SELECTION_MODE = os.getenv("N_SELECTION_MODE", "dynamic")
 
 
 def lot_size_for_expiry(expiry):
@@ -176,11 +177,15 @@ def select_n(scores):
         return None, x_max, HIGH_N_THRESHOLD * x_max
 
     threshold = HIGH_N_THRESHOLD * x_max
-    eligible = scores[scores["x_n"] >= threshold].copy()
-    if eligible.empty:
-        return None, x_max, threshold
-
-    selected_n = int(eligible["n"].max())
+    if N_SELECTION_MODE == "fixed6":
+        selected_n = 6
+    elif N_SELECTION_MODE == "fixed15":
+        selected_n = 15
+    else:
+        eligible = scores[scores["x_n"] >= threshold].copy()
+        if eligible.empty:
+            return None, x_max, threshold
+        selected_n = int(eligible["n"].max())
     return selected_n, x_max, threshold
 
 
@@ -445,6 +450,8 @@ def main():
             "brokerage_per_order": BROKERAGE_PER_ORDER,
             "target_fraction": TARGET_FRACTION,
             "high_n_threshold_fraction": HIGH_N_THRESHOLD,
+        "n_selection_mode": N_SELECTION_MODE,
+            "n_selection_mode": N_SELECTION_MODE,
         })
 
     tr = pd.DataFrame(trades)
