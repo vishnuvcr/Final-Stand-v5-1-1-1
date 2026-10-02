@@ -67,6 +67,7 @@ def main():
         session_dates=sorted(pd.to_datetime(spot[(spot.timestamp>=week_start)&(spot.timestamp<=exp)].timestamp.dt.normalize().unique()))
         if len(session_dates)<4: missing.append([str(exp.date()),"fewer than 4 trading sessions before expiry"]); continue
         entry_date=session_dates[-4]
+        if entry_date < START.normalize() or exp > END: continue
         entry_ts=entry_date+pd.Timedelta(hours=10)
         sr=spot[spot.timestamp==entry_ts]
         if sr.empty: missing.append([str(exp.date()),"missing 10:00 spot"]); continue
