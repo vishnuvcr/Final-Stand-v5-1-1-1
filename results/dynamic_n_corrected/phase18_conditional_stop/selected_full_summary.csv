@@ -1,0 +1,2 @@
+selected_rule,base_net,candidate_net,net_uplift,winner_affected,loss_reduction,losses_eliminated
+mfe_cut_1330_mfe1_c1,138937.11764441052,150912.001379761,11974.8837353505,0,27379.755342337994,0
