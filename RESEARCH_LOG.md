@@ -86,3 +86,11 @@
 - Corrected call report: 3 legs — Buy OTM15 CE, Sell OTM16 CE, Sell OTM17 CE; entry 09:35; exit 15:14; 4 trading days before weekly expiry; 218 trades; displayed overall profit ₹43,267.25 and win rate 99.08%.
 - These corrected reports are structurally aligned with the three-leg fixed OTM15/16/17 call and put components, but they still do not by themselves reproduce the locked research strategy because they independently backtest each side, use 09:35 entry and 15:14 expiry-day exit, and show target/stop-loss disabled. The research strategy additionally uses the X_call-versus-X_put selector, 10:00 entry, target T=0.90*X*lot with expiry fallback, and modeled execution costs.
 - The earlier Phase 9A interpretation based on the mistaken files is superseded and must not be used as evidence.
+
+
+## 2026-10-03 — Phase 9B execution
+- Added `research/reproduce_algotest_components.py` to reproduce the corrected AlgoTest three-leg call and put component configurations on the validated HF overlap sample.
+- Locked replication settings: 09:35 IST entry, 4 trading sessions before expiry, 15:14 IST expiry-day exit, OTM15/16/17, fixed quantity 65, zero modeled slippage, zero brokerage, and no target/stop-loss logic.
+- The workflow will compare the overlap-period gross P&L with the user-supplied AlgoTest headline results while preserving the known date-coverage difference.
+
+[RUN_PHASE9B]
