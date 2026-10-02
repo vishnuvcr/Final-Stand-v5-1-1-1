@@ -303,3 +303,9 @@
 - Fixed the import path by adding the repository root to `sys.path`.
 - No research output from the failed run is used.
 [RUN_PHASE20_BOUNDARY_IMPORT_FIX]
+
+## 2026-10-03 — Phase 20 execution correction and retry 2
+- Second Actions run reached boundary evaluation but failed on a path-map container-shape bug: the stop evaluator received dictionary keys instead of minute-path records.
+- Corrected the path-map return structure so each expiry maps directly to its path list.
+- No numerical result from the failed run is used.
+[RUN_PHASE20_BOUNDARY_PATHMAP_FIX]
