@@ -19,11 +19,11 @@ jobs:
       - name: Install dependencies
         run: pip install pandas numpy matplotlib
       - name: Run statistical analysis
-        run: python research/analyze_phase3.py
+        run: python research/analyze_phase3.py 2>&1 | tee phase3_run.log
       - name: Persist Phase 3 results
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/restarted_v2/phase3
+          git add results/restarted_v2/phase3 phase3_run.log
           git commit -m 'Phase 3: persist statistical analysis' || echo 'No result changes'
           git push origin HEAD:${GITHUB_REF_NAME} || true
