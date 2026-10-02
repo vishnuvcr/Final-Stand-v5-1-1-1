@@ -1,0 +1,2 @@
+common_expiries,dynamic_net_common,fixed_net_common,dynamic_gross_common,fixed_gross_common,dynamic_cost_common,fixed_cost_common,net_advantage_dynamic,dynamic_positive_vs_fixed_share,mean_net_difference_per_common_expiry
+180,132977.71314541053,88176.60067884001,148022.25,101434.25,15044.5368545895,13257.649321159999,44801.112466570514,0.9388888888888889,248.89506925872507
