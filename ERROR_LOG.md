@@ -56,3 +56,6 @@
 
 
 | 2026-10-03 | Phase 17 stop-loss execution | First Phase 17 GitHub Actions run failed before calculation because `research/stop_loss_research.py` could not import the local `research` module under the Actions execution path. | Added the repository root to `sys.path`; no stop-loss result was produced by the failed run. |
+
+
+| 2026-10-03 | Phase 17 stop-loss script | Second Phase 17 execution exited successfully but produced no results because the `summarize/main` section had been truncated during a file patch; the script defined helper functions but never invoked the research. | Restored the full `summarize()` and `main()` execution section and added full-sample selected-rule outputs. No research result from that run is used. |
