@@ -86,7 +86,8 @@ Validated executable overlap:
 3. Statistical analysis.
 4. Robustness/sensitivity.
 5. Direct comparison with corrected fixed-OTM15 under the same sample and execution assumptions.
-6. Final manuscript with tables, figures, appendices and reproducibility details.
+6. Controlled n-selection ablation: hold the Stage-1 direction selector constant and compare fixed n=6, fixed n=15, and the 95%-band dynamic selector under identical execution assumptions.
+7. Final manuscript with tables, figures, appendices and reproducibility details.
 
 ## Pre-registered robustness
 
