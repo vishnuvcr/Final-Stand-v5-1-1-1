@@ -37,3 +37,15 @@
 - Re-read the executable and workflow after the multi-year edit.
 - Found stale fallback dates in the first edit; corrected them to 2021-01-01 through 2026-09-30.
 - Bumped the Hugging Face Actions cache key to v3 so the expanded acquisition is isolated from the earlier 2024–2025 cache generation.
+
+## 2026-10-02 — Weekly-era source audit
+- Confirmed NIFTY weekly options began in February 2019; 2017–2018 cannot be included in the exact weekly-options strategy.
+- Expanded the intended compatible research window to approximately Feb-2019 through Sep-2026.
+- Added a manual Zenodo acquisition/validation workflow for the 2019–2020 supplement.
+- Corrected the backtest to rank ATM/OTM strikes only from prices available at the 10:00 entry timestamp, preventing strike-list look-ahead.
+- Restricted the expiry set by excluding the final expiry date of each month, which represents the monthly expiry and avoids mixing it into the weekly-only sample.
+- Corrected the NIFTY 65-lot transition to the first revised weekly expiry, 06-Jan-2026.
+
+## 2026-10-02 — Repository persistence verification
+- The first attempt to persist DATA_ACQUISITION.md and Zenodo documentation was not present in the branch tree during re-audit.
+- Restored both files and verified their presence through the branch tree before continuing.
