@@ -91,3 +91,13 @@
 | 2026-10-03 | Phase 22 execution | First feature build incorrectly required exact OTM6–17 prices on both call and put sides, causing 10 of 190 valid trades to be discarded before analysis. | Corrected completeness logic to require OTM6–8 on both sides and OTM6–17 only on the selected side, exactly matching the frozen dynamic-n specification. No filter result from the failed run is used. |
 
 | 2026-10-03 | Phase 22 final analysis | No registered entry filter satisfied the safety screen. | Kept the Phase-20 entry unchanged; recorded the zero-winner-loss-removal frontier and the closest diagnostic candidates instead of relaxing thresholds after seeing results. |
+
+
+## 2026-10-03 — Phase 23 import-path failure
+- **Phase:** 23
+- **Run:** GitHub Actions run 37099376853
+- **Symptom:** `research/phase23_entry_state_audit.py` failed immediately with `ModuleNotFoundError: No module named 'research'`.
+- **Cause:** standalone script did not add the repository root to Python's module search path.
+- **Impact:** no data were processed; no Phase-23 results were generated from the failed run.
+- **Correction:** inserted the repository root into `sys.path` before importing shared research modules.
+- **Prevention:** Phase-23 scripts should be executable both from GitHub Actions and from the repository root without relying on implicit package installation.
