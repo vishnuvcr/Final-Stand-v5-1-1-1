@@ -307,3 +307,11 @@ No candidate passed the training safety constraint of zero baseline-positive tra
 
 Decision: no pre-expiry adverse-move stop or one-lot n+3 hedge is promoted. The Phase-20 final strategy remains frozen. A materially different risk-control mechanism requires a separately registered phase.
 
+
+## Phase 22 — entry-filter loss avoidance
+
+User question: can an entry criterion avoid the known losing trades before they happen while affecting profitable trades as little as possible?
+
+Pre-registered entry feature families: payoff-buffer geometry, Stage-1 direction confidence, structure-quality measures, and pre-entry NIFTY volatility/return regime. A controlled two-feature conjunction grid is also fixed. Selection uses training only, requires at least 95% winner retention, removes at least two training losses and has positive training uplift. Promotion requires positive 2024–2025 and 2026 holdout uplift, at least 90% winner retention in both, and no more than 5% max-DD deterioration.
+
+The frozen Phase-20 entry/exit rules are the comparator and remain unchanged unless the Phase-22 promotion screen is passed.
