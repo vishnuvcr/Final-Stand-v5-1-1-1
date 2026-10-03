@@ -59,6 +59,32 @@ def select_n_from_map(px_map, strike_map):
     }
 
 
+def bs_iv_proxy(price, spot, strike, t_years, is_call, r=0.0):
+    if not np.isfinite(price) or price <= 0 or spot <= 0 or strike <= 0 or t_years <= 0:
+        return np.nan
+    intrinsic=max(spot-strike,0.0) if is_call else max(strike-spot,0.0)
+    if price <= intrinsic:
+        return np.nan
+    def norm_cdf(x): return 0.5*(1.0+math.erf(x/math.sqrt(2.0)))
+    def value(sig):
+        if sig <= 0: return intrinsic
+        d1=(math.log(spot/strike)+(r+0.5*sig*sig)*t_years)/(sig*math.sqrt(t_years))
+        d2=d1-sig*math.sqrt(t_years)
+        if is_call:
+            return spot*norm_cdf(d1)-strike*math.exp(-r*t_years)*norm_cdf(d2)
+        return strike*math.exp(-r*t_years)*norm_cdf(-d2)-spot*norm_cdf(-d1)
+    lo,hi=1e-6,8.0
+    vlo,vhi=value(lo)-price,value(hi)-price
+    if vlo*vhi>0: return np.nan
+    for _ in range(80):
+        mid=(lo+hi)/2
+        vm=value(mid)-price
+        if abs(vm)<1e-8: return mid
+        if vlo*vm<=0: hi=mid
+        else: lo=mid; vlo=vm
+    return (lo+hi)/2
+
+
 def build_path(df, entry_ts, expiry, typ, strike_map, sel):
     n = sel["n"]
     k = [float(strike_map[n]), float(strike_map[n+1]), float(strike_map[n+2])]
@@ -137,8 +163,8 @@ def prior_return(series, date):
     return float(np.log(s.iloc[-1]/s.iloc[-2]))
 
 
-def build_option_entry_row(expiry, entry_ts, spot_entry, atm, cpx, ppx, cks, pks, selected_direction):
-    row={"expiry":str(expiry.date()),"entry_ts":str(entry_ts),"spot":spot_entry,"atm":atm,
+def build_option_entry_row(expiry, entry_ts, spot_entry, atm, cpx, ppx, cks, pks, selected_direction, snapshot):
+    row={"expiry":str(expiry.date()),"entry_date":str(entry_ts.date()),"entry_ts":str(entry_ts),"spot":spot_entry,"atm":atm,
          "x_call":float(cpx[cks[8]]+cpx[cks[7]]-cpx[cks[6]]),
          "x_put":float(ppx[pks[8]]+ppx[pks[7]]-ppx[pks[6]]),
          "selected_direction":selected_direction}
@@ -154,6 +180,15 @@ def build_option_entry_row(expiry, entry_ts, spot_entry, atm, cpx, ppx, cks, pks
         for n in range(6,18):
             strike=strikes[n]
             recs=[] if px.get(strike) is None else [px[strike]]
+    for typ, px, strikes in [("CE",cpx,cks),("PE",ppx,pks)]:
+        for n in range(6,18):
+            k = strikes[n]
+            rec = snapshot.get((typ, float(k)))
+            row[f"{typ}_oi{n}"] = rec.get("open_interest", np.nan) if rec else np.nan
+            row[f"{typ}_vol{n}"] = rec.get("volume", np.nan) if rec else np.nan
+    row["total_ce_oi"] = float(np.nansum([row.get(f"CE_oi{n}",np.nan) for n in range(6,18)]))
+    row["total_pe_oi"] = float(np.nansum([row.get(f"PE_oi{n}",np.nan) for n in range(6,18)]))
+    row["put_call_oi_ratio"] = row["total_pe_oi"]/row["total_ce_oi"] if row["total_ce_oi"] > 0 else np.nan
     return row
 
 
@@ -209,6 +244,11 @@ def main():
             spot_entry=float(sr.iloc[0].spot)
             df=normalize(load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet"))
             eq=df[df.timestamp==entry_ts]
+            for col in ("open_interest","volume"):
+                if col not in df.columns:
+                    FEATURE_AUDIT.append({"feature":"option_"+col,"source":"primary HF option parquet","status":"unavailable","reason":f"missing column {col}"})
+                else:
+                    FEATURE_AUDIT.append({"feature":"option_"+col,"source":"primary HF option parquet","status":"available","granularity":"entry timestamp"})
             atm=nearest_atm(eq,spot_entry)
             if atm is None: log_error(str(expiry.date()),"no ATM"); continue
             cks=required_strikes(atm,"CE"); pks=required_strikes(atm,"PE")
@@ -219,7 +259,21 @@ def main():
             xp=ppx[pks[8]]+ppx[pks[7]]-ppx[pks[6]]
             if xc==xp: continue
             direction="BEARISH" if xc>xp else "BULLISH"
-            row=build_option_entry_row(expiry,entry_ts,spot_entry,atm,cpx,ppx,cks,pks,direction)
+            snapshot = {}
+            for _, rr in eq.iterrows():
+                snapshot[(str(rr.option_type).upper(), float(rr.strike))] = {
+                    "open_interest": float(rr.open_interest) if "open_interest" in df.columns and pd.notna(rr.open_interest) else np.nan,
+                    "volume": float(rr.volume) if "volume" in df.columns and pd.notna(rr.volume) else np.nan,
+                }
+            row=build_option_entry_row(expiry,entry_ts,spot_entry,atm,cpx,ppx,cks,pks,direction,snapshot)
+            t_years=max((expiry-entry_ts).total_seconds()/31557600.0, 1e-6)
+            for typ, px, strikes, is_call in [("CE",cpx,cks,True),("PE",ppx,pks,False)]:
+                for n in range(6,18):
+                    prem=px.get(strikes[n])
+                    row[f"{typ}_iv{n}"]=bs_iv_proxy(float(prem) if prem is not None else np.nan,spot_entry,float(strikes[n]),t_years,is_call)
+                ivs=[row[f"{typ}_iv{n}"] for n in range(6,18)]
+                row[f"{typ}_iv_skew_6_17"]=float(np.nanmean(ivs[:3])-np.nanmean(ivs[-3:])) if np.isfinite(np.nanmean(ivs)) else np.nan
+            row["iv_proxy_call_minus_put"]=row.get("CE_iv_skew_6_17",np.nan)-row.get("PE_iv_skew_6_17",np.nan)
             for typ,px,strikes in [("CE",cpx,cks),("PE",ppx,pks)]:
                 complete=all(px.get(strikes[n]) is not None for n in range(6,18))
                 sel=select_n_from_map(px,strikes) if complete else None
