@@ -420,6 +420,37 @@ def main():
             drops.append(abs(float(loss_model.predict_proba(Xperm)[:,1].mean())-base))
         perm_rows.append({"feature_group":group,"mean_probability_shift":float(np.mean(drops)) if drops else np.nan})
 
+    # Out-of-sample comparison for each action family using thresholds selected on training only.
+    mode_period_rows=[]
+    for mode,row in choices.items():
+        mts=float(row.skip_threshold) if pd.notna(row.skip_threshold) else None
+        mtr=float(row.reverse_threshold) if pd.notna(row.reverse_threshold) else None
+        for period,frame,pl,pr in [("training",train,p_loss_tr,p_rev_tr),("validation",val,p_loss_va,p_rev_va),("holdout",hold,p_loss_ho,p_rev_ho)]:
+            if mode=="skip_only":
+                pol=frame.copy()
+                pol["action"]=np.where(pl>=mts,"SKIP","CANONICAL")
+            elif mode=="reverse_only":
+                pol=frame.copy()
+                pol["action"]=np.where((pr>=mtr)&frame.reverse_available.to_numpy(),"REVERSE","CANONICAL")
+            else:
+                pol=evaluate_policy(frame,pl,pr,mts,mtr)
+            mm,_=policy_metrics(pol)
+            mm.update({"mode":mode,"period":period,"skip_threshold":mts,"reverse_threshold":mtr})
+            mode_period_rows.append(mm)
+    pd.DataFrame(mode_period_rows).to_csv(OUT/"phase23_mode_walkforward_summary.csv",index=False)
+
+    # Reproducibility: persist fitted transforms and model coefficients.
+    def model_params(model):
+        return {"coef":model.coef_.tolist(),"intercept":model.intercept_.tolist(),"classes":model.classes_.tolist()}
+    (OUT/"phase23_model_parameters.json").write_text(json.dumps({
+        "group_component_stats":gt.component_stats,
+        "group_medians":gt.group_medians,
+        "group_scales":gt.group_scales,
+        "loss_model":model_params(loss_model),
+        "reverse_model":model_params(rev_model),
+        "selected_thresholds":{"skip":ts,"reverse":trv}
+    },indent=2,default=str))
+
     # Full output ledger.
     pol_all["p_loss"]=np.nan
     pol_all["p_reverse"]=np.nan
