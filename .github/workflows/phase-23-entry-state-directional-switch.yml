@@ -1,0 +1,64 @@
+name: Phase 23 entry-state audit and reverse-direction research
+
+on:
+  push:
+    branches:
+      - phase-23-regime-option-crossmarket-directional-switch
+    paths:
+      - "research/phase23_entry_state_audit.py"
+      - "research/phase23_model.py"
+      - "PHASE23_PRE_REGISTRATION.md"
+      - "DYNAMIC_N_RESEARCH_PLAN.md"
+      - ".github/workflows/phase-23-entry-state-directional-switch.yml"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  phase23:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Cache Hugging Face
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-nifty-options-${{ runner.os }}-v2
+          restore-keys: |
+            hf-nifty-options-${{ runner.os }}-
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-phase23-${{ runner.os }}-v1
+          restore-keys: |
+            pip-phase23-${{ runner.os }}-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy pyarrow huggingface_hub yfinance scikit-learn scipy
+      - name: Run Phase 23 audit
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase23_entry_state_audit.py
+      - name: Persist artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-23-regime-option-crossmarket-directional-switch
+          git rebase origin/phase-23-regime-option-crossmarket-directional-switch
+          git add results/dynamic_n_corrected/phase23_entry_state
+          git commit -m "Phase 23: persist entry-state audit and reverse ledger" || exit 0
+          git push origin HEAD:phase-23-regime-option-crossmarket-directional-switch
