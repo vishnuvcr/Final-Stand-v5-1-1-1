@@ -1,5 +1,7 @@
 name: Phase 25 alternative direction choosers
 
+# automatic phase execution trigger
+
 on:
   push:
     branches:
