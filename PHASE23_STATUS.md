@@ -14,8 +14,8 @@
 - [x] Feature families registered.
 - [x] Reverse-direction hypothesis registered.
 - [x] Temporal split and promotion gate registered.
-- [ ] Point-in-time data availability audit
-- [ ] Feature dataset construction
+- [x] Point-in-time data availability audit — automated run active; primary dataset/OI/premium reconstruction underway
+- [ ] Feature dataset construction — pending successful audit
 - [ ] Canonical/reverse trade ledger
 - [ ] Training model selection
 - [ ] Validation
@@ -24,4 +24,4 @@
 - [ ] Manuscript supplement
 - [ ] Final strategy decision
 
-No result has been used to select the Phase-23 rules.
+No result has been used to select the Phase-23 rules. A first automated run failed only on a repository import-path issue; the correction is logged in ERROR_LOG.md and the rerun is in progress.
