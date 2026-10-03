@@ -57,8 +57,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin phase-23-regime-option-crossmarket-directional-switch
-          git rebase origin/phase-23-regime-option-crossmarket-directional-switch
           git add results/dynamic_n_corrected/phase23_entry_state
-          git commit -m "Phase 23: persist entry-state audit and reverse ledger" || exit 0
+          git commit -m "Phase 23: persist entry-state audit and reverse ledger" || true
+          git pull --rebase origin phase-23-regime-option-crossmarket-directional-switch
           git push origin HEAD:phase-23-regime-option-crossmarket-directional-switch
