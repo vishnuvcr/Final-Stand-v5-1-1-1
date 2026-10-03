@@ -1,5 +1,7 @@
 name: Build final research manuscript and figures
 
+# Final package build trigger
+
 on:
   push:
     branches:
