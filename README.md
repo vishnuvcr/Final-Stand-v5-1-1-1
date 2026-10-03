@@ -284,3 +284,12 @@ Phase 23 tests a narrow hypothesis revealed by Phase 22: every historical loss w
 - [Phase 23 pre-registration](PHASE23_PRE_REGISTRATION.md)
 - [Phase 23 research code](research/conditional_bullish_entry_filter.py)
 - [Phase 23 workflow](.github/workflows/phase-23-conditional-bullish-entry-filter.yml)
+
+## Phase 23 completion — conditional BULLISH entry filter
+
+Phase 23 confirmed the subgroup asymmetry: 172 BULLISH trades contained all 11 losses and 161 winners; 18 BEARISH trades were all profitable. However, no BULLISH-only filter from the pre-registered trend, direction-confidence, payoff-buffer and two-feature families could remove at least two training losses while retaining 95% of winners and improving training P&L. **No entry rule is promoted; Phase-20 entry remains unchanged.**
+
+- [Phase 23 conclusion](results/dynamic_n_corrected/phase23_conditional_bullish_entry_filter/PHASE23_CONCLUSION.md)
+- [Phase 23 direction check](results/dynamic_n_corrected/phase23_conditional_bullish_entry_filter/phase23_direction_check.csv)
+- [Phase 23 full filter grid](results/dynamic_n_corrected/phase23_conditional_bullish_entry_filter/phase23_full_filter_grid.csv)
+- [Phase 23 manuscript supplement](manuscript/PHASE23_CONDITIONAL_BULLISH_ENTRY_FILTER_SUPPLEMENT.md)
