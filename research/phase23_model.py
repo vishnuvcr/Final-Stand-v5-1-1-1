@@ -423,19 +423,19 @@ def main():
     # Out-of-sample comparison for each action family using thresholds selected on training only.
     mode_period_rows=[]
     for mode,row in choices.items():
-        mts=float(row.skip_threshold) if pd.notna(row.skip_threshold) else None
-        mtr=float(row.reverse_threshold) if pd.notna(row.reverse_threshold) else None
+        mode_skip_threshold=float(row.skip_threshold) if pd.notna(row.skip_threshold) else None
+        mode_reverse_threshold=float(row.reverse_threshold) if pd.notna(row.reverse_threshold) else None
         for period,frame,pl,pr in [("training",train,p_loss_tr,p_rev_tr),("validation",val,p_loss_va,p_rev_va),("holdout",hold,p_loss_ho,p_rev_ho)]:
             if mode=="skip_only":
                 pol=frame.copy()
-                pol["action"]=np.where(pl>=mts,"SKIP","CANONICAL")
+                pol["action"]=np.where(pl>=mode_skip_threshold,"SKIP","CANONICAL")
             elif mode=="reverse_only":
                 pol=frame.copy()
-                pol["action"]=np.where((pr>=mtr)&frame.reverse_available.to_numpy(),"REVERSE","CANONICAL")
+                pol["action"]=np.where((pr>=mode_reverse_threshold)&frame.reverse_available.to_numpy(),"REVERSE","CANONICAL")
             else:
-                pol=evaluate_policy(frame,pl,pr,mts,mtr)
+                pol=evaluate_policy(frame,pl,pr,mode_skip_threshold,mode_reverse_threshold)
             mm,_=policy_metrics(pol)
-            mm.update({"mode":mode,"period":period,"skip_threshold":mts,"reverse_threshold":mtr})
+            mm.update({"mode":mode,"period":period,"skip_threshold":mode_skip_threshold,"reverse_threshold":mode_reverse_threshold})
             mode_period_rows.append(mm)
     pd.DataFrame(mode_period_rows).to_csv(OUT/"phase23_mode_walkforward_summary.csv",index=False)
 
