@@ -342,3 +342,10 @@ Preregistered action families:
 Training thresholds are fixed before results. The training screen requires positive uplift, at least one loss reversed, ≥95% winner retention, zero winner-to-loss conversions, and ≤5% of baseline-positive training P&L sacrificed. Promotion requires positive validation and holdout uplift, ≥90% winner retention, no winner-to-loss conversions, acceptable drawdown, and at least one OOS loss reversal.
 
 Phase 24 is the last currently registered reversal-specific phase. No new threshold family or model class may be introduced after observing its results.
+
+
+## Phase 24 completion — targeted reversal trigger
+
+Phase 24 exhausted the preregistered two-stage reversal grid. No candidate passed the training safety gate. The closest diagnostic candidate (Family B, L=0.85, R=0.85, M=-0.10) produced +₹25,202.33 training uplift but exceeded the 5% training profitable-P&L sacrifice cap and produced ₹0 uplift in both validation and the 2026 holdout, with zero OOS losses reversed.
+
+Decision: **no reversal trigger is promoted**. The Phase-20 canonical dynamic-n strategy remains the final historical specification. The currently registered reversal-specific research is complete; further work requires a materially new research question or new point-in-time data source.
