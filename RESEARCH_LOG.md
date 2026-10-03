@@ -403,3 +403,24 @@
 - Added a competing **canonical / reverse / skip** hypothesis. The reverse portfolio is constructed with the same dynamic-n, target, exit, slippage, brokerage and statutory-cost engine rather than a simplified payoff calculation.
 - Registered temporal training/validation/2026 holdout testing and a low-complexity model restriction before examining Phase-23 outcomes.
 - Phase status: preregistration complete; point-in-time data availability audit pending.
+
+
+## 2026-10-03 — Phase 23 final
+- Phase 23 completed on an exact 190-trade aligned universe.
+- 185 reverse structures were fully reconstructed.
+- Canonical/reverse/skip rich-entry model failed OOS promotion: -₹1,344.36 validation uplift; ₹0 holdout uplift.
+- Phase-20 remained canonical.
+- Phase 23 manuscript supplement and conclusion persisted.
+
+## 2026-10-03 — Phase 24 final
+- Targeted reversal grid completed using the fixed Phase-23 model and no new features.
+- No candidate passed the training safety gate.
+- Closest diagnostic candidate: Family B, L=0.85, R=0.85, M=-0.10.
+- Training uplift +₹25,202.33, but 7.18% of training positive P&L was sacrificed versus a preregistered 5% ceiling.
+- Validation uplift ₹0; 2026 holdout uplift ₹0; zero OOS losses reversed.
+- No reversal trigger promoted; Phase-20 final strategy remains unchanged.
+
+## Research closeout
+- Registered reversal-specific phases are complete.
+- Final historical strategy remains the Phase-20 canonical dynamic-n specification.
+- Final manuscript package is being generated from persisted research artifacts.
