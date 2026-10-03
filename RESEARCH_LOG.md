@@ -424,3 +424,9 @@
 - Registered reversal-specific phases are complete.
 - Final historical strategy remains the Phase-20 canonical dynamic-n specification.
 - Final manuscript package is being generated from persisted research artifacts.
+
+## 2026-10-03 — Phase 25 complete
+- Tested alternative direction choosers while holding all non-direction strategy rules fixed.
+- No candidate passed training eligibility.
+- OTM6/7/8 remains the direction chooser.
+- Phase 25 conclusion and manuscript supplement persisted.
