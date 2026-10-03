@@ -196,3 +196,9 @@
 - **Control remains:** Phase-20 canonical strategy.
 - **New logic:** reversal only when fixed loss-risk and reverse-superiority thresholds are simultaneously satisfied; an optional preregistered margin gate further restricts reversals.
 - **No new feature family:** Phase-24 uses the exact Phase-23 entry feature/model construction.
+
+## 2026-10-03 — Phase 25 final
+- Phase 25 automated direction-chooser grid completed successfully.
+- No implementation failure was accepted as evidence.
+- No alternative passed the preregistered training eligibility gate.
+- OTM6/7/8 remains the final direction chooser.
