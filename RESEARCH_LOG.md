@@ -383,3 +383,15 @@
 - The Phase-20 final strategy remains the comparator and is unchanged before research results.
 [RUN_PHASE22_ENTRY_FILTER]
 
+
+## 2026-10-03 — Phase 22 completed
+- Corrected the entry-data completeness bug from the first run; no result from that failed run was used.
+- Corrected workflow completed successfully on commit b88f3eb3.
+- 190/190 corrected Phase-20 trades were represented in the feature set.
+- No pre-registered candidate retained >=95% of training winners, removed >=2 training losses, and improved training P&L.
+- The zero-winner-loss-removal frontier was empty: no tested filter removed even one training loss without also removing a profitable training trade.
+- Closest loss-removing candidate: direction_margin >=0.15; training uplift −₹2,300.22, 85.26% winner retention, 1 loss removed; validation uplift −₹70,498.06; holdout uplift −₹11,906.12.
+- Another candidate, RV20 <= training 80th percentile, had +₹6,148.49 holdout uplift but failed training/validation and retained only 82.11% of training winners.
+- Decision: no Phase-22 entry filter is promoted. Canonical Phase-20 strategy remains unchanged.
+[RUN_PHASE22_ENTRY_FILTER_COMPLETE]
+
