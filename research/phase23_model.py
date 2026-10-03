@@ -481,3 +481,5 @@ def main():
 
 if __name__=="__main__":
     main()
+
+# Phase 23 rerun marker: consume latest persisted audit feature table.
