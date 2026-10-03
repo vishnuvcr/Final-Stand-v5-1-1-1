@@ -430,3 +430,12 @@
 - No candidate passed training eligibility.
 - OTM6/7/8 remains the direction chooser.
 - Phase 25 conclusion and manuscript supplement persisted.
+
+## 2026-10-03 — Phase 26 complete: direct OTM7/8/9 structure test
+- Added fixed n=7 mode to the corrected dynamic-n engine.
+- Ran automated Phase-26 workflow with HF dataset caching and the same execution-cost model.
+- Completed 190/190 comparable trades.
+- Fixed OTM7/8/9 had 10 losses versus 11 for dynamic-n: exactly 1 loss-to-win conversion (2026-03-17), not 2.
+- No dynamic-n winner became a fixed-789 loss.
+- Fixed 789 net P&L was ₹129,567.71 versus ₹138,937.12 for dynamic-n; max drawdown was ₹24,081.63 versus ₹27,321.08.
+- Decision: no strategy change; canonical Phase-20 dynamic-n remains frozen.
