@@ -270,7 +270,8 @@ def main():
             selected_typ = "CE" if direction == "BEARISH" else "PE"
             sstrikes = cks if selected_typ == "CE" else pks
             spx = cpx if selected_typ == "CE" else ppx
-            sn = row.get(f"{selected_typ}_selected_n", np.nan)
+            sel_tmp = select_n_from_map(spx,sstrikes)
+            sn = sel_tmp["n"] if sel_tmp else np.nan
             if pd.notna(sn) and all(spx.get(sstrikes[int(sn)+j]) is not None for j in (0,1,2)):
                 sn = int(sn)
                 p0,p1,p2 = float(spx[sstrikes[sn]]),float(spx[sstrikes[sn+1]]),float(spx[sstrikes[sn+2]])
@@ -278,9 +279,8 @@ def main():
                 k0,k1,k2 = float(sstrikes[sn]),float(sstrikes[sn+1]),float(sstrikes[sn+2])
                 boundary = (k1+k2-k0+credit) if selected_typ=="CE" else (k1+k2-k0-credit)
                 row["boundary_distance"] = (boundary-spot_entry) if selected_typ=="CE" else (spot_entry-boundary)
-                rv10_tmp = row.get("nifty_rv10", np.nan)
-                row["expected_move_4d"] = spot_entry*rv10_tmp*np.sqrt(4/252.0) if pd.notna(rv10_tmp) and rv10_tmp>0 else np.nan
-                row["boundary_z"] = row["boundary_distance"]/row["expected_move_4d"] if pd.notna(row["expected_move_4d"]) and row["expected_move_4d"]>0 else np.nan
+                row["expected_move_4d"] = np.nan
+                row["boundary_z"] = np.nan
                 row["selected_x_over_long_premium"] = row["selected_x"]/p0 if p0>0 else np.nan
                 row["selected_x_over_xmax"] = row[f"{selected_typ}_x_selected"]/row[f"{selected_typ}_x_max"] if row.get(f"{selected_typ}_x_max",0)>0 else np.nan
                 row["selected_n"] = sn
@@ -354,6 +354,9 @@ def main():
                     opt.loc[i,f"nifty_rv{k}"] = float(np.std(rr,ddof=1)*np.sqrt(252.0))
                 else:
                     opt.loc[i,f"nifty_rv{k}"] = np.nan
+            rv10_tmp = opt.loc[i,"nifty_rv10"] if "nifty_rv10" in opt.columns else np.nan
+            opt.loc[i,"expected_move_4d"] = float(row["spot"])*rv10_tmp*np.sqrt(4/252.0) if pd.notna(rv10_tmp) and rv10_tmp>0 else np.nan
+            opt.loc[i,"boundary_z"] = opt.loc[i,"boundary_distance"]/opt.loc[i,"expected_move_4d"] if pd.notna(opt.loc[i,"expected_move_4d"]) and opt.loc[i,"expected_move_4d"]>0 else np.nan
         for feat in ["nifty_futures_basis","nifty_futures_oi_change","gift_nifty_overnight","fii_dii_prior_flow"]:
             FEATURE_AUDIT.append({"feature":feat,"source":"separate historical source not yet validated for point-in-time backfill","status":"unavailable","granularity":"not used"})
         opt.to_csv(OUT/"phase23_entry_features.csv",index=False)
