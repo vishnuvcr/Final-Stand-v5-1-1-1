@@ -24,4 +24,4 @@
 - [ ] Manuscript supplement
 - [ ] Final strategy decision
 
-No result has been used to select the Phase-23 rules. A first automated run failed only on a repository import-path issue; the correction is logged in ERROR_LOG.md and the rerun is in progress.
+No result has been used to select the Phase-23 rules. The first two automated runs exposed only implementation/schema errors; both are logged in ERROR_LOG.md and corrected before accepting any result.
