@@ -101,3 +101,13 @@
 - **Impact:** no data were processed; no Phase-23 results were generated from the failed run.
 - **Correction:** inserted the repository root into `sys.path` before importing shared research modules.
 - **Prevention:** Phase-23 scripts should be executable both from GitHub Actions and from the repository root without relying on implicit package installation.
+
+
+## 2026-10-03 — Phase 23 entry-feature schema failure
+- **Phase:** 23
+- **Run:** GitHub Actions run 37099407333
+- **Symptom:** audit reached the feature assembly stage, then failed with `AttributeError: 'DataFrame' object has no attribute 'entry_date'`.
+- **Cause:** `build_option_entry_row` created `entry_ts` but did not also persist the derived `entry_date` field used to join daily cross-market features.
+- **Impact:** option processing completed to feature assembly, but no persisted Phase-23 result was accepted from this run.
+- **Correction:** added explicit `entry_date` to each feature row and added raw entry-time option OI/volume plus close-derived IV-proxy/skew fields.
+- **Prevention:** Phase-23 schema checks will validate required feature columns before external-data joins and before model fitting.
