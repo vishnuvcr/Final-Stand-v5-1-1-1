@@ -87,3 +87,5 @@
 | 2026-10-03 | Phase 21 reporting | The first diagnostic persistence retry failed because the reporting code sorted the full grid using training-only column names. | Replaced that reference with the training-selection table and reran; final Phase 21 workflow completed successfully. |
 
 | 2026-10-03 | Phase 22 design | Prior Phase-21 fixed-point interventions could not identify a robust rule. | Registered an entry-only filter phase with temporal validation and an explicit 95% training winner-retention cap. |
+
+| 2026-10-03 | Phase 22 execution | First feature build incorrectly required exact OTM6–17 prices on both call and put sides, causing 10 of 190 valid trades to be discarded before analysis. | Corrected completeness logic to require OTM6–8 on both sides and OTM6–17 only on the selected side, exactly matching the frozen dynamic-n specification. No filter result from the failed run is used. |
