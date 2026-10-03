@@ -151,3 +151,13 @@
 - **Impact:** all prior Phase-23 model-selection results are rejected and will be recomputed.
 - **Correction:** date-only keys are now parsed as naive normalized dates; the model asserts exact canonical-universe alignment and exact temporal partitioning. `selected_x_over_xmax` is computed directly from the selected-side n-selection result.
 - **Prevention:** `phase23_universe_alignment.csv` is now produced and any missing/extra trade causes the model workflow to fail before fitting.
+
+
+## 2026-10-03 — Phase 23 mode-summary threshold variable collision
+- **Phase:** 23
+- **Run:** GitHub Actions run 37100856040
+- **Symptom:** statistical execution reached the output stage but failed with `TypeError: 'float' object is not subscriptable` when building the promotion gate.
+- **Cause:** the newly added OOS mode-comparison loop reused the variable name `mtr`, overwriting the training policy-metrics dictionary with a threshold float.
+- **Impact:** no new Phase-23 artifact bundle was accepted from this run; the previously validated performance result remains the reference until the rerun succeeds.
+- **Correction:** renamed mode-loop threshold variables to `mode_skip_threshold` and `mode_reverse_threshold`.
+- **Prevention:** keep metric dictionaries and scalar threshold variables separately named in Phase-23 analysis code.
