@@ -91,3 +91,5 @@
 | 2026-10-03 | Phase 22 execution | First feature build incorrectly required exact OTM6–17 prices on both call and put sides, causing 10 of 190 valid trades to be discarded before analysis. | Corrected completeness logic to require OTM6–8 on both sides and OTM6–17 only on the selected side, exactly matching the frozen dynamic-n specification. No filter result from the failed run is used. |
 
 | 2026-10-03 | Phase 23 design | Phase 22 broad filters could not isolate losses while preserving winners, but all observed losses were in the BULLISH subgroup. | Registered a narrow BULLISH-only filter phase so BEARISH trades are never affected. |
+
+| 2026-10-03 | Phase 23 execution | Conditional BULLISH filters were evaluated after Phase 22 showed all 11 losses were BULLISH; no candidate passed the pre-registered safety screen. | No code correction was required; the phase was completed as a negative robustness result and the Phase-20 entry rule remains frozen. |
