@@ -383,3 +383,11 @@
 - The Phase-20 final strategy remains the comparator and is unchanged before research results.
 [RUN_PHASE22_ENTRY_FILTER]
 
+
+## 2026-10-03 — Phase 23 conditional BULLISH entry-filter research started
+- Phase 22 showed all 11 final-strategy losses were BULLISH/put-structure trades, while all 18 BEARISH/call-structure trades were profitable.
+- Created `phase-23-conditional-bullish-entry-filter` to test only BULLISH-entry filters and leave all BEARISH trades untouched.
+- Pre-registered signed 5-session return, Stage-1 direction margin, normalized payoff buffer, and two-feature combinations.
+- Training/validation/holdout splits and 95%/90% winner-retention promotion gates are unchanged.
+[RUN_PHASE23_BULLISH_FILTER]
+
