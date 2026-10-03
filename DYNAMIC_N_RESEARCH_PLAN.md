@@ -317,3 +317,9 @@ Pre-registered entry feature families: payoff-buffer geometry, Stage-1 direction
 The frozen Phase-20 entry/exit rules are the comparator and remain unchanged unless the Phase-22 promotion screen is passed.
 
 [RUN_PHASE22_ENTRY_FILTER_TRIGGER]
+
+## Phase 23 — conditional BULLISH entry filter
+
+Phase 22 found a strong but incomplete subgroup pattern: all 11 final-strategy losses were BULLISH/put-structure trades, while all 18 BEARISH/call-structure trades were profitable. Phase 23 therefore tests only BULLISH-entry filters and leaves every BEARISH trade untouched.
+
+Pre-registered filters use BULLISH-only signed 5-session return, Stage-1 direction margin, normalized payoff buffer, and two-feature combinations of those variables. Selection and temporal promotion criteria remain the Phase-22 safety thresholds.
