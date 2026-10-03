@@ -391,3 +391,11 @@
 - Training/validation/holdout splits and 95%/90% winner-retention promotion gates are unchanged.
 [RUN_PHASE23_BULLISH_FILTER]
 
+
+## 2026-10-03 — Phase 23 completed
+- The corrected Phase-22 ledger contains 172 BULLISH trades (161 winners, 11 losses) and 18 BEARISH trades (18 winners, 0 losses).
+- No BULLISH-only filter passed the 95% overall winner-retention training screen while removing at least two losses and improving training net P&L.
+- The top unconstrained training candidate was BULLISH direction margin >= 0.15, but it reduced training P&L by ₹1,299.89, removed 12 winners and only 1 loss; validation uplift was −₹44,201.97 and 2026 holdout uplift was −₹5,060.46.
+- Decision: do not reject the BULLISH/put structure and do not alter the Phase-20 entry rule.
+[RUN_PHASE23_BULLISH_FILTER_COMPLETE]
+
