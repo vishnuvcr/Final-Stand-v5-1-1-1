@@ -161,3 +161,13 @@
 - **Impact:** no new Phase-23 artifact bundle was accepted from this run; the previously validated performance result remains the reference until the rerun succeeds.
 - **Correction:** renamed mode-loop threshold variables to `mode_skip_threshold` and `mode_reverse_threshold`.
 - **Prevention:** keep metric dictionaries and scalar threshold variables separately named in Phase-23 analysis code.
+
+
+## 2026-10-03 — Phase 23 reproducibility-output variable collision
+- **Phase:** 23
+- **Run:** GitHub Actions run 37100856040
+- **Symptom:** statistical calculations completed, then the promotion JSON assembly raised `TypeError: 'float' object is not subscriptable` on the training metric object.
+- **Cause:** the compact metric variable names were too easy to collide during the added mode-specific reporting layer; the failed run did not persist a reproducibility artifact.
+- **Impact:** no new result was accepted from this run; the previously accepted Phase-23 performance result remains unchanged pending a clean rerun.
+- **Correction:** renamed the canonical metric objects to `metrics_train`, `metrics_validation`, and `metrics_holdout` and updated all downstream references.
+- **Prevention:** metric objects now use explicit names that are not reused by threshold/mode loops.
