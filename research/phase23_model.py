@@ -503,9 +503,9 @@ def main():
     },indent=2,default=str))
 
     print(json.dumps({
-        "training":mtr,
-        "validation":mva,
-        "holdout":mho,
+        "training":metrics_train,
+        "validation":metrics_validation,
+        "holdout":metrics_holdout,
         "promotion":promotion
     },indent=2,default=str))
 
