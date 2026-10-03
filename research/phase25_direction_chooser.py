@@ -140,7 +140,7 @@ def main():
     promotion=bool(selected!='baseline_otm678' and trm.uplift>0 and trm.winner_retention>=.95 and trm.winner_to_loss_count==0 and trm.coverage>=.95 and trm.switches_improving>=2 and vam.uplift>0 and hom.uplift>0 and vam.winner_retention>=.90 and hom.winner_retention>=.90 and vam.winner_to_loss_count==0 and hom.winner_to_loss_count==0 and vam.coverage>=.95 and hom.coverage>=.95 and vam.max_dd<=1.05*basev.max_dd and hom.max_dd<=1.05*baseh.max_dd and (vam.switches_improving+hom.switches_improving)>=2)
     # Bootstrap selected-candidate OOS uplift.
     boots=[]
-    for period,mask in [('validation',x.entry_date>TRAIN_END)&(x.entry_date<=VAL_END),('holdout',x.entry_date>=HOLD_START)]:
+    for period,mask in [('validation',(x.entry_date>TRAIN_END)&(x.entry_date<=VAL_END)),('holdout',(x.entry_date>=HOLD_START))]:
         fr=x.loc[mask].copy().reset_index(drop=True); dd=np.asarray(candidates[selected])[mask.to_numpy()] if selected!='baseline_otm678' else fr.canonical_direction.to_numpy(dtype=object)
         pol=np.where(dd==fr.canonical_direction,fr.canonical_net,np.where(dd=='BULLISH',fr.reverse_net,np.where(dd=='BEARISH',fr.reverse_net,0.0)))
         diff=np.nan_to_num(pol-fr.canonical_net,nan=-fr.canonical_net.to_numpy())
