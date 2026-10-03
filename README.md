@@ -285,3 +285,17 @@ Phase 22 tested pre-entry filters based on payoff-buffer geometry, direction con
 - [Phase 22 conclusion](results/dynamic_n_corrected/phase22_entry_filter_loss_avoidance/PHASE22_CONCLUSION.md)
 - [Phase 22 full filter grid](results/dynamic_n_corrected/phase22_entry_filter_loss_avoidance/phase22_full_filter_grid.csv)
 - [Phase 22 manuscript supplement](manuscript/PHASE22_ENTRY_FILTER_SUPPLEMENT.md)
+
+
+## Phase 23 — rich entry-state and directional-switch research
+
+Phase 23 is now registered as a separate research phase. It expands entry information beyond the Phase-22 simple filters to include **India VIX, realized/implied volatility, cross-market returns, overnight/global risk state, NIFTY futures basis and OI/volume, option premiums/OI/volume, IV/skew/term structure, and timestamp-safe event/flow variables where data are available**. It also explicitly tests the opposite direction as a competing action rather than assuming every weak canonical signal should simply be skipped.
+
+The preregistered action space is **canonical / reverse / skip**, with the reverse trade reconstructed through the same dynamic-n, 90% target, expiry-day conditional stop, expiry fallback, slippage and Paytm Money transaction-cost engine. Model complexity is capped because the historical control has only 11 losing trades. Training, 2024–2025 validation and untouched 2026 holdout remain mandatory.
+
+- [Phase 23 preregistration](PHASE23_PRE_REGISTRATION.md)
+- [Phase 23 status](PHASE23_STATUS.md)
+
+### Research-source rationale
+
+NSE documents India VIX as a 30-day expected-volatility measure derived from NIFTY option bid/ask order-book information, making it directly relevant to an entry-state model. NSE also exposes historical VIX, index, derivatives and option-chain/OI/volume data sources. Academic option-return research supports examining volatility, moneyness, open interest/liquidity and higher-moment/implied-volatility variables rather than relying only on spot direction. These sources motivate the registered feature families; they do **not** establish that any Phase-23 feature improves this particular strategy.
