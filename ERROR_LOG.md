@@ -188,3 +188,11 @@
 - **Symptom:** the statistical run completed, but the final console-summary JSON still referenced deleted `mtr/mva/mho` aliases and raised `NameError`.
 - **Impact:** no new artifact persistence from that run.
 - **Correction:** final return-object serialization now uses `metrics_train`, `metrics_validation`, and `metrics_holdout`.
+
+
+## 2026-10-03 — Phase 24 initiated
+- **Phase:** 24
+- **Purpose:** targeted two-stage reversal trigger after Phase 23 failed OOS promotion.
+- **Control remains:** Phase-20 canonical strategy.
+- **New logic:** reversal only when fixed loss-risk and reverse-superiority thresholds are simultaneously satisfied; an optional preregistered margin gate further restricts reversals.
+- **No new feature family:** Phase-24 uses the exact Phase-23 entry feature/model construction.
