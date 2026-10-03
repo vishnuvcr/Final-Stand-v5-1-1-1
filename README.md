@@ -343,3 +343,15 @@ Final historical result: **190 trades, ₹149,129.53 net P&L, 179/190 profitable
 - [Phase 24 conclusion](results/dynamic_n_corrected/phase24_targeted_reversal/PHASE24_CONCLUSION.md)
 - [Research plan](DYNAMIC_N_RESEARCH_PLAN.md)
 - [Error log](ERROR_LOG.md)
+
+## Phase 25 — alternative direction chooser — complete
+
+Phase 25 tested alternatives to the OTM6/7/8 direction chooser while holding the rest of the strategy fixed. No alternative passed the preregistered training and out-of-sample gates.
+
+- [Phase 25 pre-registration](PHASE25_PRE_REGISTRATION.md)
+- [Phase 25 status](PHASE25_STATUS.md)
+- [Phase 25 conclusion](results/dynamic_n_corrected/phase25_direction_chooser/PHASE25_CONCLUSION.md)
+- [Phase 25 manuscript supplement](manuscript/PHASE25_DIRECTION_CHOOSER_SUPPLEMENT.md)
+- [Phase 25 full candidate grid](results/dynamic_n_corrected/phase25_direction_chooser/phase25_direction_chooser_grid.csv)
+
+**Decision: retain OTM6/7/8 as the final direction chooser.**
