@@ -373,3 +373,13 @@
 - Closest tail-hedge analogue also failed validation and holdout.
 - Decision: **no pre-expiry adverse-move exit or one-lot OTM-(n+3) hedge is promoted; Phase-20 final strategy remains unchanged.**
 [RUN_PHASE21_ADVERSE_MOVE_COMPLETE]
+
+## 2026-10-03 — Phase 22 entry-filter research started
+- Created branch `phase-22-entry-filter-loss-avoidance` from the completed Phase-21 branch.
+- The research objective is to identify entry-state filters that remove losing trades while retaining at least 95% of profitable training trades.
+- Pre-registered feature families: payoff-boundary distance and normalized buffer, Stage-1 direction confidence, X-selected structure quality, selected-n robustness, and pre-entry NIFTY return/realized-volatility regime.
+- Controlled two-feature combinations are limited to boundary/direction, boundary/trend, boundary/structure and direction/trend.
+- Training through 2023-12-31; validation 2024–2025; 2026 holdout.
+- The Phase-20 final strategy remains the comparator and is unchanged before research results.
+[RUN_PHASE22_ENTRY_FILTER]
+
