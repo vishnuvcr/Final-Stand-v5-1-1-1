@@ -411,3 +411,7 @@ gold,GC=F,available,daily close; prior-session only
 brent,BZ=F,available,daily close; prior-session only
 us10y,^TNX,available,daily close; prior-session only
 us_vix,^VIX,available,daily close; prior-session only
+nifty_futures_basis,separate historical source not yet validated for point-in-time backfill,unavailable,not used
+nifty_futures_oi_change,separate historical source not yet validated for point-in-time backfill,unavailable,not used
+gift_nifty_overnight,separate historical source not yet validated for point-in-time backfill,unavailable,not used
+fii_dii_prior_flow,separate historical source not yet validated for point-in-time backfill,unavailable,not used
