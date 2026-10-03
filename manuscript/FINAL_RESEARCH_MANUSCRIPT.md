@@ -370,3 +370,15 @@ Any future model should retain the same no-lookahead discipline, walk-forward va
 ## Appendix C — reproducibility
 
 Every research modification was committed to a dedicated phase branch, automated through GitHub Actions where available, and implementation failures were logged in ERROR_LOG.md. The phase-specific data and result artifacts are retained in the repository so later research can begin from the frozen evidence rather than recomputing or redefining the historical control.
+
+## 8.6 Phase 25 — alternative direction choosers
+
+Phase 25 isolated the direction-selection rule. It tested alternate premium-curvature locations, normalized curvature, relative call/put prices, matched IV spreads, OI/volume PCR in both sign conventions, NIFTY/opening/overnight signals, global-equity direction and fixed aggregate votes. Dynamic-n selection and all exit/cost rules were unchanged.
+
+No candidate passed the preregistered training eligibility gate.
+
+The closest raw-curvature alternatives at k=7 and k=8 produced +₹162.83 training uplift but −₹209.03 validation uplift and ₹0 holdout uplift. An overnight-gap chooser produced +₹1,037.87 in training but −₹127,189.87 in validation and −₹25,293.57 in holdout. The global-equity median produced −₹9,107.76 in training, −₹31,734.34 in validation and +₹8,221.91 in the small 2026 holdout; it therefore failed the preregistered sequence.
+
+Phase 25 therefore provides no evidence sufficient to replace the OTM6/7/8 direction chooser.
+
+See `PHASE25_DIRECTION_CHOOSER_SUPPLEMENT.md` and `results/dynamic_n_corrected/phase25_direction_chooser/PHASE25_CONCLUSION.md`.
