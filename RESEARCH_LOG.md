@@ -399,3 +399,8 @@
 - Decision: do not reject the BULLISH/put structure and do not alter the Phase-20 entry rule.
 [RUN_PHASE23_BULLISH_FILTER_COMPLETE]
 
+
+## 2026-10-03 — Phase 22 relaxed-retention audit
+- After the Phase-22 95% winner-retention screen failed, a fixed audit of the pre-registered grid was performed at a relaxed 90% winner-retention threshold.
+- No candidate both removed at least one training loss and produced positive training net-P&L while retaining at least 90% of baseline winners.
+- This strengthens the conclusion that the tested entry-only variables do not isolate the losing trades economically.
