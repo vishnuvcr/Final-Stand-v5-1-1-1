@@ -141,3 +141,13 @@
 - **Impact:** no model-selection results were accepted from the failed run.
 - **Correction:** changed the access to `grid["mode"].eq(mode)`; also removed an obsolete sklearn penalty argument and copied the derived dataframe to reduce fragmentation warnings.
 - **Prevention:** model workflow will run `python -m py_compile research/phase23_model.py` before fitting.
+
+
+## 2026-10-03 — Phase 23 universe/feature integrity correction
+- **Phase:** 23
+- **Finding during model audit:** the first successful model output represented only 189 of the 190 canonical trades; the missing expiry was 2026-01-06. The underlying source files themselves contained the 190th trade.
+- **Cause:** the model used timezone-converted timestamp keys for date-only fields, creating avoidable temporal-join fragility in the train/validation/holdout pipeline.
+- **Additional feature issue:** `selected_x_over_xmax` was being calculated before the selected-side X fields were populated, leaving that preregistered feature entirely missing.
+- **Impact:** all prior Phase-23 model-selection results are rejected and will be recomputed.
+- **Correction:** date-only keys are now parsed as naive normalized dates; the model asserts exact canonical-universe alignment and exact temporal partitioning. `selected_x_over_xmax` is computed directly from the selected-side n-selection result.
+- **Prevention:** `phase23_universe_alignment.csv` is now produced and any missing/extra trade causes the model workflow to fail before fitting.
