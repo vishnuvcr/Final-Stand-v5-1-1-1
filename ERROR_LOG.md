@@ -180,3 +180,11 @@
 - **Impact:** no artifact persistence from that run; the statistical calculations themselves completed.
 - **Correction:** replaced all remaining legacy aliases with `metrics_validation` and `metrics_holdout`.
 - **Prevention:** final model compile check remains mandatory before execution.
+
+
+## 2026-10-03 — Phase 23 final return-object alias
+- **Phase:** 23
+- **Run:** GitHub Actions run 37101139092
+- **Symptom:** the statistical run completed, but the final console-summary JSON still referenced deleted `mtr/mva/mho` aliases and raised `NameError`.
+- **Impact:** no new artifact persistence from that run.
+- **Correction:** final return-object serialization now uses `metrics_train`, `metrics_validation`, and `metrics_holdout`.
