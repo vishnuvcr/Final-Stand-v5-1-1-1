@@ -299,3 +299,21 @@ The preregistered action space is **canonical / reverse / skip**, with the rever
 ### Research-source rationale
 
 NSE documents India VIX as a 30-day expected-volatility measure derived from NIFTY option bid/ask order-book information, making it directly relevant to an entry-state model. NSE also exposes historical VIX, index, derivatives and option-chain/OI/volume data sources. Academic option-return research supports examining volatility, moneyness, open interest/liquidity and higher-moment/implied-volatility variables rather than relying only on spot direction. These sources motivate the registered feature families; they do **not** establish that any Phase-23 feature improves this particular strategy.
+
+
+## Phase 23 completion — rich entry-state and directional-switch research
+
+Phase 23 completed with the exact 190-trade universe aligned and 185 reconstructed reverse trades available. The final low-complexity canonical/reverse/skip policy passed its training screen but **failed OOS promotion**: 2024–2025 validation uplift was **-₹1,344.36** and the untouched 2026 holdout uplift was **₹0.00**. The Phase-20 canonical strategy therefore remains unchanged.
+
+- [Phase 23 conclusion](results/dynamic_n_corrected/phase23_entry_state/PHASE23_CONCLUSION.md)
+- [Phase 23 manuscript supplement](manuscript/PHASE23_ENTRY_STATE_SUPPLEMENT.md)
+- [Phase 23 model walk-forward](results/dynamic_n_corrected/phase23_entry_state/phase23_mode_walkforward_summary.csv)
+
+## Phase 24 — targeted reversal-trigger research
+
+Phase 24 is a separately preregistered, narrower reversal study. It tests whether reversal should occur only when both canonical loss-risk and reverse-superiority probabilities are simultaneously high, optionally with a fixed probability-margin gate. It uses the same 190-trade feature universe and execution-cost assumptions and introduces no new feature family.
+
+- [Phase 24 pre-registration](PHASE24_PRE_REGISTRATION.md)
+- [Phase 24 status](PHASE24_STATUS.md)
+- [Phase 24 research code](research/phase24_targeted_reversal.py)
+- [Phase 24 workflow](.github/workflows/phase-24-targeted-reversal-trigger.yml)
