@@ -121,3 +121,13 @@
 - **Impact:** that run's newly generated artifacts were not pushed, although the prior successful audit artifacts remained valid.
 - **Correction:** commit generated result files first, then `git pull --rebase`, then push.
 - **Prevention:** Phase-23 workflows now treat generated-result commits as the local changeset before synchronizing the branch.
+
+
+## 2026-10-03 — Phase 23 payoff/IV feature indentation failure
+- **Phase:** 23
+- **Runs:** GitHub Actions runs 37100182283 and 37100189925
+- **Symptom:** audit failed at startup with `IndentationError: unexpected indent` in the IV/skew loop.
+- **Cause:** the newly inserted payoff-geometry block was followed by a loop with one excess indentation level.
+- **Impact:** no new Phase-23 result was accepted from those runs.
+- **Correction:** restored the IV/skew loop to the same block level as the payoff-geometry calculation.
+- **Prevention:** the script is now lint-checked by the next automated run before artifact persistence is considered valid.
