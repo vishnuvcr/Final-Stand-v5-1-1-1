@@ -1,0 +1,76 @@
+{
+  "groups": {
+    "vix_volatility": [
+      "india_vix_prev",
+      "india_vix_change1",
+      "nifty_rv5",
+      "nifty_rv10",
+      "nifty_rv20",
+      "us_vix_ret1"
+    ],
+    "cross_market": [
+      "directional_cross_market",
+      "usd_inr_ret1",
+      "gold_ret1",
+      "brent_ret1",
+      "us10y_ret1"
+    ],
+    "opening_regime": [
+      "directional_gap",
+      "directional_open",
+      "range_to_10am_pct"
+    ],
+    "direction_confidence": [
+      "direction_margin"
+    ],
+    "option_geometry": [
+      "selected_x",
+      "selected_x_over_long_premium"
+    ],
+    "payoff_geometry": [
+      "boundary_z",
+      "boundary_distance"
+    ],
+    "oi_volume": [
+      "put_call_oi_ratio",
+      "selected_oi_share",
+      "selected_volume_share"
+    ],
+    "iv_skew_structure": [
+      "directional_iv_skew",
+      "iv_proxy_call_minus_put",
+      "selected_x_over_xmax",
+      "selected_n"
+    ]
+  },
+  "skip_thresholds": [
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8
+  ],
+  "reverse_thresholds": [
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8
+  ],
+  "log_components": [
+    "boundary_distance",
+    "india_vix_prev",
+    "nifty_rv10",
+    "nifty_rv20",
+    "nifty_rv5",
+    "put_call_oi_ratio",
+    "selected_n",
+    "selected_x",
+    "selected_x_over_long_premium"
+  ],
+  "logistic_C": 0.5,
+  "class_weight": "balanced",
+  "bootstrap_B": 5000
+}

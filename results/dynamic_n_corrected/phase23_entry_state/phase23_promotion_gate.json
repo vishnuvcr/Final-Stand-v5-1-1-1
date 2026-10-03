@@ -1,0 +1,13 @@
+{
+  "chosen_skip_threshold": 0.8,
+  "chosen_reverse_threshold": 0.7,
+  "training_uplift_positive": true,
+  "training_winner_retention_ge_95pct": true,
+  "validation_uplift_positive": false,
+  "holdout_uplift_positive": false,
+  "validation_winner_retention_ge_90pct": true,
+  "holdout_winner_retention_ge_90pct": true,
+  "validation_dd_ok": true,
+  "holdout_dd_ok": true,
+  "promotion_pass": false
+}
