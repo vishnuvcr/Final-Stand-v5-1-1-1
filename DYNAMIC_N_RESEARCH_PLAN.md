@@ -323,3 +323,5 @@ The frozen Phase-20 entry/exit rules are the comparator and remain unchanged unl
 Phase 22 found a strong but incomplete subgroup pattern: all 11 final-strategy losses were BULLISH/put-structure trades, while all 18 BEARISH/call-structure trades were profitable. Phase 23 therefore tests only BULLISH-entry filters and leaves every BEARISH trade untouched.
 
 Pre-registered filters use BULLISH-only signed 5-session return, Stage-1 direction margin, normalized payoff buffer, and two-feature combinations of those variables. Selection and temporal promotion criteria remain the Phase-22 safety thresholds.
+
+[RUN_PHASE23_BULLISH_FILTER_TRIGGER]
