@@ -131,3 +131,13 @@
 - **Impact:** no new Phase-23 result was accepted from those runs.
 - **Correction:** restored the IV/skew loop to the same block level as the payoff-geometry calculation.
 - **Prevention:** the script is now lint-checked by the next automated run before artifact persistence is considered valid.
+
+
+## 2026-10-03 — Phase 23 model-selection column-access failure
+- **Phase:** 23
+- **Run:** GitHub Actions run 37100423369
+- **Symptom:** model execution failed with `AttributeError: 'function' object has no attribute 'eq'` at `grid.mode.eq(mode)`.
+- **Cause:** pandas column name `mode` collided with the DataFrame `.mode()` method.
+- **Impact:** no model-selection results were accepted from the failed run.
+- **Correction:** changed the access to `grid["mode"].eq(mode)`; also removed an obsolete sklearn penalty argument and copied the derived dataframe to reduce fragmentation warnings.
+- **Prevention:** model workflow will run `python -m py_compile research/phase23_model.py` before fitting.
