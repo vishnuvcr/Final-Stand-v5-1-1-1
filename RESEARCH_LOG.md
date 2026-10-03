@@ -395,3 +395,11 @@
 - Decision: no Phase-22 entry filter is promoted. Canonical Phase-20 strategy remains unchanged.
 [RUN_PHASE22_ENTRY_FILTER_COMPLETE]
 
+
+
+## Phase 23 initiation — 2026-10-03
+- Created branch `phase-23-regime-option-crossmarket-directional-switch` from the completed Phase-22 branch.
+- Registered a richer point-in-time entry-state research phase covering VIX/volatility, cross-market variables, overnight/opening state, NIFTY futures basis, option premiums/OI/volume, IV/skew, event/flow context and strategy geometry.
+- Added a competing **canonical / reverse / skip** hypothesis. The reverse portfolio is constructed with the same dynamic-n, target, exit, slippage, brokerage and statutory-cost engine rather than a simplified payoff calculation.
+- Registered temporal training/validation/2026 holdout testing and a low-complexity model restriction before examining Phase-23 outcomes.
+- Phase status: preregistration complete; point-in-time data availability audit pending.
