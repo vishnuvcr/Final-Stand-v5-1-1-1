@@ -171,3 +171,12 @@
 - **Impact:** no new result was accepted from this run; the previously accepted Phase-23 performance result remains unchanged pending a clean rerun.
 - **Correction:** renamed the canonical metric objects to `metrics_train`, `metrics_validation`, and `metrics_holdout` and updated all downstream references.
 - **Prevention:** metric objects now use explicit names that are not reused by threshold/mode loops.
+
+
+## 2026-10-03 — Phase 23 final promotion-reference cleanup
+- **Phase:** 23
+- **Run:** GitHub Actions run 37101085821
+- **Symptom:** after the metric-object rename, the promotion boolean still referenced legacy `mva`/`mho` names and raised `NameError`.
+- **Impact:** no artifact persistence from that run; the statistical calculations themselves completed.
+- **Correction:** replaced all remaining legacy aliases with `metrics_validation` and `metrics_holdout`.
+- **Prevention:** final model compile check remains mandatory before execution.
