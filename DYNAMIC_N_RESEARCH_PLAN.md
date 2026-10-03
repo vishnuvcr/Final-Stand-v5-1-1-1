@@ -349,3 +349,13 @@ Phase 24 is the last currently registered reversal-specific phase. No new thresh
 Phase 24 exhausted the preregistered two-stage reversal grid. No candidate passed the training safety gate. The closest diagnostic candidate (Family B, L=0.85, R=0.85, M=-0.10) produced +₹25,202.33 training uplift but exceeded the 5% training profitable-P&L sacrifice cap and produced ₹0 uplift in both validation and the 2026 holdout, with zero OOS losses reversed.
 
 Decision: **no reversal trigger is promoted**. The Phase-20 canonical dynamic-n strategy remains the final historical specification. The currently registered reversal-specific research is complete; further work requires a materially new research question or new point-in-time data source.
+
+## Phase 25 — alternative direction chooser — COMPLETE
+
+Phase 25 tested only the direction-selection rule while keeping the Phase-20 dynamic-n construction, target, expiry-day conditional stop, expiry fallback and execution costs fixed. The preregistered grid covered premium curvature at alternate moneyness levels, normalized curvature, call/put price ratios, IV spreads, OI/volume PCR, NIFTY/opening/overnight signals, global-equity direction and fixed aggregate votes.
+
+No alternative passed the training eligibility gate. The closest curvature alternatives k=7/k=8 gained only ₹162.83 in training and then lost ₹209.03 in validation with ₹0 holdout uplift. The overnight-gap signal gained ₹1,037.87 in training but lost ₹127,189.87 in validation and ₹25,293.57 in holdout. The global-equity median gained ₹8,221.91 in the small holdout but failed training and validation.
+
+Decision: retain OTM6/7/8 as the final direction chooser. No further permutation of the same signal families is registered.
+
+See PHASE25_PRE_REGISTRATION.md, PHASE25_STATUS.md, results/dynamic_n_corrected/phase25_direction_chooser/PHASE25_CONCLUSION.md, and manuscript/PHASE25_DIRECTION_CHOOSER_SUPPLEMENT.md.
