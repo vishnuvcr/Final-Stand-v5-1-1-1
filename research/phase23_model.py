@@ -217,6 +217,7 @@ def policy_metrics(x, action_col="action"):
         "canonical_count":actions.count("CANONICAL"),
         "losing_pnl_removed":float(baseline_loss_abs - (-arr[(control<0)&(arr<0)].sum())),
         "winner_pnl_sacrificed":float(gains_removed),
+        "top_trade_uplift_share":float(np.max(np.abs(arr-control))/max(abs(float(arr.sum()-control.sum())),1e-9)) if len(arr) else np.nan,
     }
     return out, np.asarray(actions)
 
@@ -303,15 +304,29 @@ def main():
             pol=evaluate_policy(train,p_loss_tr,p_rev_tr,ts,trv)
             m,_=policy_metrics(pol)
             eligible=(m["winner_retention"]>=0.95 and m["uplift"]>0)
-            candidate_rows.append({"skip_threshold":ts,"reverse_threshold":trv,"eligible_training":eligible,**m})
+            candidate_rows.append({"mode":"combined","skip_threshold":ts,"reverse_threshold":trv,"eligible_training":eligible,**m})
+    for ts in SKIP_THRESHOLDS:
+        pol=train.copy()
+        pol["action"]=np.where(p_loss_tr>=ts,"SKIP","CANONICAL")
+        m,_=policy_metrics(pol)
+        eligible=(m["winner_retention"]>=0.95 and m["uplift"]>0)
+        candidate_rows.append({"mode":"skip_only","skip_threshold":ts,"reverse_threshold":np.nan,"eligible_training":eligible,**m})
+    for trv in REVERSE_THRESHOLDS:
+        pol=train.copy()
+        pol["action"]=np.where((p_rev_tr>=trv)&train.reverse_available.to_numpy(),"REVERSE","CANONICAL")
+        m,_=policy_metrics(pol)
+        eligible=(m["winner_retention"]>=0.95 and m["uplift"]>0)
+        candidate_rows.append({"mode":"reverse_only","skip_threshold":np.nan,"reverse_threshold":trv,"eligible_training":eligible,**m})
     grid=pd.DataFrame(candidate_rows)
-    elig=grid[grid.eligible_training].copy()
-    if len(elig):
-        chosen=elig.sort_values(["uplift","winner_retention","reverse_count"],ascending=[False,False,True]).iloc[0]
-    else:
-        chosen=grid.sort_values(["uplift","winner_retention"],ascending=[False,False]).iloc[0]
-
-    ts=float(chosen.skip_threshold); trv=float(chosen.reverse_threshold)
+    choices={}
+    for mode in ["combined","skip_only","reverse_only"]:
+        sub=grid[grid.mode.eq(mode)]
+        elig=sub[sub.eligible_training]
+        choices[mode]=(elig.sort_values(["uplift","winner_retention","reverse_count"],ascending=[False,False,True]).iloc[0]
+                       if len(elig) else sub.sort_values(["uplift","winner_retention"],ascending=[False,False]).iloc[0])
+    chosen=choices["combined"]
+    ts=float(chosen.skip_threshold)
+    trv=float(chosen.reverse_threshold)
     pol_train=evaluate_policy(train,p_loss_tr,p_rev_tr,ts,trv)
     pol_val=evaluate_policy(val,p_loss_va,p_rev_va,ts,trv)
     pol_hold=evaluate_policy(hold,p_loss_ho,p_rev_ho,ts,trv)
@@ -418,6 +433,10 @@ def main():
         )
     }
 
+    mode_rows=[]
+    for mode,row in choices.items():
+        mode_rows.append({"mode":mode,**{k:(None if pd.isna(row.get(k,np.nan)) else row[k]) for k in row.index if k!="mode"}})
+    pd.DataFrame(mode_rows).to_csv(OUT/"phase23_mode_comparison.csv",index=False)
     grid.to_csv(OUT/"phase23_action_threshold_grid.csv",index=False)
     diag.to_csv(OUT/"phase23_univariate_diagnostics.csv",index=False)
     pd.DataFrame(model_stats).to_csv(OUT/"phase23_model_diagnostics.csv",index=False)
