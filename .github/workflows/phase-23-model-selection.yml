@@ -1,6 +1,15 @@
 name: Phase 23 model selection and canonical-reverse-skip analysis
 
 on:
+  push:
+    branches:
+      - phase-23-regime-option-crossmarket-directional-switch
+    paths:
+      - "research/phase23_model.py"
+      - ".github/workflows/phase-23-model-selection.yml"
+      - "results/dynamic_n_corrected/phase23_entry_state/phase23_entry_features.csv"
+      - "results/dynamic_n_corrected/phase23_entry_state/canonical_trade_ledger.csv"
+      - "results/dynamic_n_corrected/phase23_entry_state/reverse_trade_ledger.csv"
   workflow_run:
     workflows:
       - "Phase 23 entry-state audit and reverse-direction research"
