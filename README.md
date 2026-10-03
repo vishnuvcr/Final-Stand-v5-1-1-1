@@ -266,3 +266,13 @@ Phase 21 tested pre-expiry adverse NIFTY moves of 200–600 points with 1/5/15-m
 - [Phase 21 pre-registration](PHASE21_PRE_REGISTRATION.md)
 - [Phase 21 conclusion](results/dynamic_n_corrected/phase21_adverse_move_risk_control/PHASE21_CONCLUSION.md)
 - [Phase 21 full candidate grid](results/dynamic_n_corrected/phase21_adverse_move_risk_control/phase21_full_grid.csv)
+
+## Phase 22 — entry filter research
+
+Phase 22 tests whether entry-time information can avoid the strategy's losing trades before entry. Pre-registered filters cover payoff-buffer geometry, direction confidence, structure quality and pre-entry NIFTY regime, with controlled two-feature combinations.
+
+- [Phase 22 pre-registration](PHASE22_PRE_REGISTRATION.md)
+- [Phase 22 research code](research/entry_filter_loss_avoidance.py)
+- [Phase 22 workflow](.github/workflows/phase-22-entry-filter-loss-avoidance.yml)
+
+No Phase-22 filter changes the canonical strategy unless it passes the frozen training/validation/holdout promotion screen.
