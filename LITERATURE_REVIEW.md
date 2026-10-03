@@ -54,3 +54,18 @@ The present research therefore contributes a reproducible, cost-aware historical
 - Potharla, S., & Sen, G. (2026). *Conditional Dynamics of Volatility Smile Asymmetry: Evidence from Nifty-50 Index Options*. SSRN 6857939.
 - Kumar, A., Sarva, M., & Gupta, N. (2025). *Testing Market Efficiency in Indian Index Options Using the Black-Scholes Model: Empirical Analysis and Dynamic Hedging Approach*. SSRN 5289505.
 - NSE historical circulars: FAOP47854, FAOP64625, FAOP70616.
+
+
+## Phase 23 literature/data update — 2026-10-03
+
+### India VIX and option-market state
+NSE describes India VIX as an annualized near-term expected-volatility measure calculated from NIFTY option bid/ask order-book information, with a 30-calendar-day horizon. This supports using India VIX level and changes as point-in-time volatility-state variables, provided the historical observation is available before the 10:00 IST decision. NSE also provides historical India VIX and derivatives-report infrastructure. [NSE India VIX](https://www.nseindia.com/static/products-services/indices-indiavix-index); [NSE historical VIX](https://www.nseindia.com/reports-indices-historical-vix); [NSE derivatives reports](https://www.nseindia.com/all-reports-derivatives).
+
+### Option moneyness, volatility and open interest
+Aretz, Lin and Poon (Review of Finance, 2023) examine the interaction between option returns, underlying volatility and moneyness and discuss option open interest, bid-ask spreads, liquidity, implied volatility, skewness and higher moments as relevant option-pricing variables. This provides literature support for testing these variables as candidate state descriptors, while not implying that they predict this strategy's weekly NIFTY outcomes. [Review of Finance article](https://academic.oup.com/rof/article/27/1/289/6510952).
+
+### Volatility-factor evidence
+Published option-factor research also examines VIX changes, realized-vs-implied volatility and implied skew/kurtosis as economic state variables. These findings motivate a constrained cross-market/volatility feature family rather than unrestricted model mining. [Review of Financial Studies](https://academic.oup.com/rfs/article/38/6/1783/8010873).
+
+### Research implication for Phase 23
+The literature and exchange-data sources justify measuring volatility regime, option demand/liquidity proxies, moneyness/skew and broader market state. They do not establish a directional reversal rule. Therefore Phase 23 preregisters both canonical and opposite-direction actions and requires out-of-sample validation before any strategy change.
