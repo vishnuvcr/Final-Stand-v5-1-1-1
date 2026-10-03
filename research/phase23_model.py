@@ -223,7 +223,7 @@ def policy_metrics(x, action_col="action"):
 
 
 def fit_model(X, y):
-    model=LogisticRegression(C=0.5,penalty="l2",solver="liblinear",class_weight="balanced",random_state=20261003,max_iter=2000)
+    model=LogisticRegression(C=0.5,solver="liblinear",class_weight="balanced",random_state=20261003,max_iter=2000)
     model.fit(X,y)
     return model
 
@@ -255,7 +255,7 @@ def main():
     x["reverse_available"]=x.reverse_net.notna()
     x["canonical_loss"]=(x.canonical_net<0).astype(int)
     x["reverse_better"]=np.where(x.reverse_available,(x.reverse_net>x.canonical_net).astype(int),np.nan)
-    x=build_derived(x)
+    x=build_derived(x).copy()
 
     # Keep only the 190-trade canonical universe.
     x=x.sort_values("entry_date").reset_index(drop=True)
@@ -320,7 +320,7 @@ def main():
     grid=pd.DataFrame(candidate_rows)
     choices={}
     for mode in ["combined","skip_only","reverse_only"]:
-        sub=grid[grid.mode.eq(mode)]
+        sub=grid[grid["mode"].eq(mode)]
         elig=sub[sub.eligible_training]
         choices[mode]=(elig.sort_values(["uplift","winner_retention","reverse_count"],ascending=[False,False,True]).iloc[0]
                        if len(elig) else sub.sort_values(["uplift","winner_retention"],ascending=[False,False]).iloc[0])
