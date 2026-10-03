@@ -1,0 +1,46 @@
+name: Phase 23 conditional BULLISH entry filter research
+
+on:
+  push:
+    branches:
+      - phase-23-conditional-bullish-entry-filter
+    paths:
+      - "research/conditional_bullish_entry_filter.py"
+      - "PHASE23_PRE_REGISTRATION.md"
+      - "DYNAMIC_N_RESEARCH_PLAN.md"
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy
+      - name: Run Phase 23
+        run: python research/conditional_bullish_entry_filter.py
+      - name: Persist Phase 23 artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-23-conditional-bullish-entry-filter
+          git rebase origin/phase-23-conditional-bullish-entry-filter
+          git add results/dynamic_n_corrected/phase23_conditional_bullish_entry_filter
+          git commit -m "Phase 23: persist conditional bullish entry-filter results" || exit 0
+          git push origin HEAD:phase-23-conditional-bullish-entry-filter
