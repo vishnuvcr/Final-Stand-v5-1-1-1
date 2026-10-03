@@ -14,8 +14,8 @@
 - [x] Feature families registered.
 - [x] Reverse-direction hypothesis registered.
 - [x] Temporal split and promotion gate registered.
-- [x] Point-in-time data availability audit — automated run active; primary dataset/OI/premium reconstruction underway
-- [ ] Feature dataset construction — pending successful audit
+- [x] Point-in-time data availability audit — completed; 190 canonical trades and 185 reverse trades reconstructed
+- [x] Feature dataset construction — option OI/volume, IV-proxy/skew, VIX, cross-market and NIFTY pre-10:00 state fields persisted; realized-volatility fields added for rerun
 - [ ] Canonical/reverse trade ledger
 - [ ] Training model selection
 - [ ] Validation
