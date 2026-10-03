@@ -19,3 +19,10 @@
 - Final historical result: ₹149,129.53 net P&L across 190 trades; 179/190 positive net trades; 5 conditional stops; 0 baseline-positive trades stopped.
 - Canonical final rules: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-20-payoff-boundary-stop-research/FINAL_STRATEGY_RULES.md
 - Detailed Phase 20 log, errors and artifacts remain on the isolated research branch.
+
+
+## Final research closeout — 2026-10-03
+- Phase 23 complete; no OOS strategy adjustment promoted.
+- Phase 24 complete; no reversal trigger promoted.
+- Final strategy remains the Phase-20 canonical dynamic-n specification.
+- Final manuscript and evidence package are retained on branch phase-24-targeted-reversal-trigger.
