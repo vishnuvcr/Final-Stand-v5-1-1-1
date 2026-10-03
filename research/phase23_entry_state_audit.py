@@ -282,7 +282,7 @@ def main():
                 row["expected_move_4d"] = np.nan
                 row["boundary_z"] = np.nan
                 row["selected_x_over_long_premium"] = row["selected_x"]/p0 if p0>0 else np.nan
-                row["selected_x_over_xmax"] = row[f"{selected_typ}_x_selected"]/row[f"{selected_typ}_x_max"] if row.get(f"{selected_typ}_x_max",0)>0 else np.nan
+                row["selected_x_over_xmax"] = sel_tmp["x_selected"]/sel_tmp["x_max"] if sel_tmp["x_max"]>0 else np.nan
                 row["selected_n"] = sn
             else:
                 row["boundary_distance"]=np.nan; row["expected_move_4d"]=np.nan; row["boundary_z"]=np.nan
