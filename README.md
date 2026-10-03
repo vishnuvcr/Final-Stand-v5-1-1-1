@@ -276,3 +276,12 @@ Phase 22 tests whether entry-time information can avoid the strategy's losing tr
 - [Phase 22 workflow](.github/workflows/phase-22-entry-filter-loss-avoidance.yml)
 
 No Phase-22 filter changes the canonical strategy unless it passes the frozen training/validation/holdout promotion screen.
+
+## Phase 22 completion — entry-filter research
+
+Phase 22 tested pre-entry filters based on payoff-buffer geometry, direction confidence, structure quality and pre-entry NIFTY regime. **No candidate passed the pre-registered safety screen.** The zero-winner-loss-removal frontier was empty: no tested filter removed even one training loss without also removing a profitable training trade. The closest loss-removing rule retained only 85.26% of training winners and failed validation. **The Phase-20 canonical entry and exit rules remain unchanged.**
+
+- [Phase 22 pre-registration](PHASE22_PRE_REGISTRATION.md)
+- [Phase 22 conclusion](results/dynamic_n_corrected/phase22_entry_filter_loss_avoidance/PHASE22_CONCLUSION.md)
+- [Phase 22 full filter grid](results/dynamic_n_corrected/phase22_entry_filter_loss_avoidance/phase22_full_filter_grid.csv)
+- [Phase 22 manuscript supplement](manuscript/PHASE22_ENTRY_FILTER_SUPPLEMENT.md)
