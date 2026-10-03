@@ -179,6 +179,8 @@ def select_n(scores):
     threshold = HIGH_N_THRESHOLD * x_max
     if N_SELECTION_MODE == "fixed6":
         selected_n = 6
+    elif N_SELECTION_MODE == "fixed7":
+        selected_n = 7
     elif N_SELECTION_MODE == "fixed15":
         selected_n = 15
     else:
