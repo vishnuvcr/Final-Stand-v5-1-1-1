@@ -1,0 +1,18 @@
+{
+  "selected_family": "B",
+  "L": 0.85,
+  "R": 0.85,
+  "M": -0.1,
+  "selection_basis": "no training-eligible rule; diagnostic closest candidate only",
+  "training_gate_pass": false,
+  "validation_uplift_positive": false,
+  "holdout_uplift_positive": false,
+  "validation_winner_retention_ge_90": true,
+  "holdout_winner_retention_ge_90": true,
+  "validation_no_winner_to_loss": true,
+  "holdout_no_winner_to_loss": true,
+  "validation_dd_ok": true,
+  "holdout_dd_ok": true,
+  "oos_loss_reversed": false,
+  "promotion_pass": false
+}

@@ -1,0 +1,7 @@
+{
+  "family": "B",
+  "L": 0.85,
+  "R": 0.85,
+  "M": -0.1,
+  "selection_basis": "no training-eligible rule; diagnostic closest candidate only"
+}
