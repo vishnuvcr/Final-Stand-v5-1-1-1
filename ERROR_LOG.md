@@ -202,3 +202,8 @@
 - No implementation failure was accepted as evidence.
 - No alternative passed the preregistered training eligibility gate.
 - OTM6/7/8 remains the final direction chooser.
+
+## Phase 26 — direct OTM7/8/9 structure test
+- No numerical or execution error occurred in the successful Phase-26 workflow.
+- The research scope was kept explicit: this was a direct structure test using the standard corrected target/expiry fallback, not an unregistered substitution of the Phase-20 expiry-day stop.
+- No failed numerical run was used as evidence.
