@@ -355,3 +355,22 @@ Phase 25 tested alternatives to the OTM6/7/8 direction chooser while holding the
 - [Phase 25 full candidate grid](results/dynamic_n_corrected/phase25_direction_chooser/phase25_direction_chooser_grid.csv)
 
 **Decision: retain OTM6/7/8 as the final direction chooser.**
+
+## Phase 26 — direct OTM7/8/9 (789) structure test — COMPLETE
+
+A direct corrected-engine test evaluated fixed **buy OTM7 / sell OTM8 / sell OTM9** against the locked dynamic-n construction on the same 190-trade universe, keeping the OTM6/7/8 Stage-1 direction chooser and execution-cost model unchanged.
+
+- Dynamic-n losses: **11**
+- Fixed 789 losses: **10**
+- Losses avoided: **1**, not 2
+- Winner-to-loss conversions: **0**
+- Dynamic-n net P&L: **₹138,937.12**
+- Fixed 789 net P&L: **₹129,567.71**
+- Fixed 789 maximum drawdown: **₹24,081.63** versus **₹27,321.08** for dynamic-n
+- The single loss-to-win conversion was expiry **2026-03-17**: −₹632.58 to +₹5,850.83.
+
+The direct test therefore does not support a two-loss-saving claim. It also does not justify replacing dynamic-n because fixed 789 sacrificed ₹9,369.41 of aggregate net P&L. The Phase-20 canonical strategy remains unchanged.
+
+- [Phase 26 conclusion](results/dynamic_n_corrected/phase26_fixed789/PHASE26_CONCLUSION.md)
+- [Phase 26 manuscript supplement](manuscript/PHASE26_789_STRUCTURE_SUPPLEMENT.md)
+- [Phase 26 status](PHASE26_STATUS.md)
