@@ -323,6 +323,19 @@ def main():
 
     can=pd.DataFrame(canonical); rev=pd.DataFrame(reverse)
     if not opt.empty:
+        daily_nifty = spot.groupby(spot.timestamp.dt.normalize())["spot"].last().sort_index()
+        for i,row in opt.iterrows():
+            d = pd.Timestamp(row["entry_date"], tz=TZ).normalize()
+            prior = daily_nifty[daily_nifty.index < d]
+            for k in (5,10,20):
+                cls = prior.iloc[-(k+1):] if len(prior) >= k+1 else pd.Series(dtype=float)
+                if len(cls) == k+1:
+                    rr = np.log(pd.Series(cls).astype(float)).diff().dropna().to_numpy()
+                    opt.loc[i,f"nifty_rv{k}"] = float(np.std(rr,ddof=1)*np.sqrt(252.0))
+                else:
+                    opt.loc[i,f"nifty_rv{k}"] = np.nan
+        for feat in ["nifty_futures_basis","nifty_futures_oi_change","gift_nifty_overnight","fii_dii_prior_flow"]:
+            FEATURE_AUDIT.append({"feature":feat,"source":"separate historical source not yet validated for point-in-time backfill","status":"unavailable","granularity":"not used"})
         opt.to_csv(OUT/"phase23_entry_features.csv",index=False)
     can.to_csv(OUT/"canonical_trade_ledger.csv",index=False)
     rev.to_csv(OUT/"reverse_trade_ledger.csv",index=False)
