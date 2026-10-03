@@ -15,9 +15,9 @@ REV = OUT / "reverse_trade_ledger.csv"
 RNG = np.random.default_rng(20261003)
 BOOTSTRAP_B = 5000
 
-TRAIN_END = pd.Timestamp("2023-12-31", tz="Asia/Kolkata")
-VALIDATION_END = pd.Timestamp("2025-12-31", tz="Asia/Kolkata")
-HOLDOUT_START = pd.Timestamp("2026-01-01", tz="Asia/Kolkata")
+TRAIN_END = pd.Timestamp("2023-12-31")
+VALIDATION_END = pd.Timestamp("2025-12-31")
+HOLDOUT_START = pd.Timestamp("2026-01-01")
 
 SKIP_THRESHOLDS = [0.55,0.60,0.65,0.70,0.75,0.80]
 REVERSE_THRESHOLDS = [0.55,0.60,0.65,0.70,0.75,0.80]
@@ -245,13 +245,25 @@ def main():
     can=pd.read_csv(CAN)
     rev=pd.read_csv(REV)
 
-    feat["entry_date"]=pd.to_datetime(feat.entry_date,utc=True).dt.tz_convert("Asia/Kolkata")
-    can["entry_date"]=pd.to_datetime(can.entry_date,utc=True).dt.tz_convert("Asia/Kolkata")
-    rev["entry_date"]=pd.to_datetime(rev.entry_date,utc=True).dt.tz_convert("Asia/Kolkata")
+    feat["entry_date"]=pd.to_datetime(feat.entry_date,errors="coerce").dt.normalize()
+    can["entry_date"]=pd.to_datetime(can.entry_date,errors="coerce").dt.normalize()
+    rev["entry_date"]=pd.to_datetime(rev.entry_date,errors="coerce").dt.normalize()
 
     can=can[["expiry","entry_date","net","mfe","exit_reason"]].rename(columns={"net":"canonical_net"})
     rev=rev[["expiry","net"]].rename(columns={"net":"reverse_net"})
     x=feat.merge(can,on=["expiry","entry_date"],how="inner").merge(rev,on="expiry",how="left")
+    expected_keys=set(can["expiry"].astype(str)+"|"+can["entry_date"].dt.strftime("%Y-%m-%d"))
+    actual_keys=set(x["expiry"].astype(str)+"|"+x["entry_date"].dt.strftime("%Y-%m-%d"))
+    missing_keys=sorted(expected_keys-actual_keys)
+    extra_keys=sorted(actual_keys-expected_keys)
+    pd.DataFrame([{
+        "expected_canonical_trades":len(expected_keys),
+        "merged_trades":len(actual_keys),
+        "missing_keys":";".join(missing_keys),
+        "extra_keys":";".join(extra_keys),
+    }]).to_csv(OUT/"phase23_universe_alignment.csv",index=False)
+    if missing_keys or extra_keys or len(x)!=len(can):
+        raise RuntimeError(f"Phase 23 universe misalignment: expected {len(can)}, merged {len(x)}, missing={missing_keys}, extra={extra_keys}")
     x["reverse_available"]=x.reverse_net.notna()
     x["canonical_loss"]=(x.canonical_net<0).astype(int)
     x["reverse_better"]=np.where(x.reverse_available,(x.reverse_net>x.canonical_net).astype(int),np.nan)
@@ -263,6 +275,10 @@ def main():
     train=x[x.entry_date<=TRAIN_END].copy()
     val=x[(x.entry_date>TRAIN_END)&(x.entry_date<=VALIDATION_END)].copy()
     hold=x[x.entry_date>=HOLDOUT_START].copy()
+
+    period_total=len(train)+len(val)+len(hold)
+    if period_total != len(x):
+        raise RuntimeError(f"Phase 23 temporal split lost trades: merged={len(x)}, split_sum={period_total}")
 
     if train.canonical_loss.nunique()<2:
         raise RuntimeError("Training canonical-loss label lacks both classes")
