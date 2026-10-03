@@ -1,6 +1,6 @@
 # Phase 23 Status
 
-**Status:** preregistration / data-availability audit
+**Status:** complete — no adjustment promoted
 
 **Control:** Phase-20 canonical dynamic-n strategy.
 
@@ -16,12 +16,12 @@
 - [x] Temporal split and promotion gate registered.
 - [x] Point-in-time data availability audit — completed; 190 canonical trades and 185 reverse trades reconstructed
 - [x] Feature dataset construction — option OI/volume, IV-proxy/skew, VIX, cross-market and NIFTY pre-10:00 state fields persisted; realized-volatility fields added for rerun
-- [ ] Canonical/reverse trade ledger
-- [ ] Training model selection
-- [ ] Validation
-- [ ] 2026 holdout
-- [ ] Statistical analysis
-- [ ] Manuscript supplement
-- [ ] Final strategy decision
+- [x] Canonical/reverse trade ledger
+- [x] Training model selection
+- [x] Validation
+- [x] 2026 holdout
+- [x] Statistical analysis
+- [x] Manuscript supplement
+- [x] Final strategy decision — Phase-20 remains canonical
 
-No result has been used to select the Phase-23 rules. The first two automated runs exposed only implementation/schema errors; both are logged in ERROR_LOG.md and corrected before accepting any result.
+Phase 23 is complete. The exact 190-trade universe aligned and the final low-complexity canonical/reverse/skip policy failed the OOS promotion gate. Phase-20 therefore remains unchanged.
