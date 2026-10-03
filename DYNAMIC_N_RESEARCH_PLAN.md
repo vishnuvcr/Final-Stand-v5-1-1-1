@@ -324,3 +324,21 @@ The frozen Phase-20 entry/exit rules are the comparator and remain unchanged unl
 Phase 22 found no simple entry filter that robustly removed losses. Phase 23 therefore tests a separately registered richer entry-state family: India VIX/volatility, cross-market state, overnight/opening state, NIFTY futures basis, option premium/OI/volume, IV/skew, event/flow context, and strategy geometry. It also tests a **canonical / reverse / skip** policy. The reverse hypothesis is evaluated using the same dynamic-n construction, target, expiry-day stop, fallback, slippage and Paytm Money cost assumptions as the canonical strategy. The phase is constrained to low-complexity models and the frozen train/validation/holdout protocol; no unrestricted feature mining is permitted.
 
 Phase 23 ends after its preregistered feature families are exhausted. A candidate can change the canonical strategy only if it produces positive validation and untouched-holdout P&L uplift, acceptable drawdown, adequate replacement/winner retention, no look-ahead, and identical execution-cost treatment.
+
+## Phase 23 completion — rich entry-state and directional-switch research
+
+Phase 23 completed on the corrected 190-trade universe. The final low-complexity canonical/reverse/skip model passed its training screen but failed out-of-sample promotion: validation uplift was -₹1,344.36 and the untouched 2026 holdout uplift was ₹0.00. The canonical Phase-20 rules therefore remain unchanged.
+
+A retrospective diagnostic found that all 11 canonical losing trades had profitable reconstructed reverse trades, but Phase 23 did not identify them reliably enough at entry. This motivates a narrower, separately registered reversal-trigger phase rather than a post-hoc change to Phase 23.
+
+## Phase 24 — targeted reversal trigger
+
+Research question: can simultaneous high canonical-loss probability and high reverse-superiority probability identify a small subset of trades where reversal is preferable, without sacrificing a material amount of profitable-trade P&L?
+
+Preregistered action families:
+- two-stage loss-probability/reverse-probability AND gate;
+- the same gate plus a fixed reverse-minus-loss probability margin.
+
+Training thresholds are fixed before results. The training screen requires positive uplift, at least one loss reversed, ≥95% winner retention, zero winner-to-loss conversions, and ≤5% of baseline-positive training P&L sacrificed. Promotion requires positive validation and holdout uplift, ≥90% winner retention, no winner-to-loss conversions, acceptable drawdown, and at least one OOS loss reversal.
+
+Phase 24 is the last currently registered reversal-specific phase. No new threshold family or model class may be introduced after observing its results.
