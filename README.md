@@ -317,3 +317,14 @@ Phase 24 is a separately preregistered, narrower reversal study. It tests whethe
 - [Phase 24 status](PHASE24_STATUS.md)
 - [Phase 24 research code](research/phase24_targeted_reversal.py)
 - [Phase 24 workflow](.github/workflows/phase-24-targeted-reversal-trigger.yml)
+
+
+## Phase 24 completion — targeted reversal trigger
+
+Phase 24 exhausted the preregistered reversal-trigger grid. **No candidate passed the training safety gate.** The closest diagnostic rule (Family B, L=0.85, R=0.85, M=-0.10) produced +₹25,202.33 training uplift but sacrificed 7.18% of baseline-positive training P&L and produced **₹0 validation uplift and ₹0 2026 holdout uplift**, with zero OOS losses reversed. **No reversal adjustment is promoted.**
+
+The complete historical strategy therefore remains the Phase-20 canonical dynamic-n specification:
+- [Final strategy rules](FINAL_STRATEGY_RULES.md)
+- [Strategy specification](STRATEGY_SPEC.md)
+- [Final research manuscript](manuscript/FINAL_RESEARCH_MANUSCRIPT.md)
+- [Phase 24 conclusion](results/dynamic_n_corrected/phase24_targeted_reversal/PHASE24_CONCLUSION.md)
