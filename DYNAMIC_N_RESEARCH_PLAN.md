@@ -325,3 +325,9 @@ Phase 22 found a strong but incomplete subgroup pattern: all 11 final-strategy l
 Pre-registered filters use BULLISH-only signed 5-session return, Stage-1 direction margin, normalized payoff buffer, and two-feature combinations of those variables. Selection and temporal promotion criteria remain the Phase-22 safety thresholds.
 
 [RUN_PHASE23_BULLISH_FILTER_TRIGGER]
+
+## Phase 23 completion — conditional BULLISH entry filter
+
+The narrow BULLISH-only entry-filter search is complete. The 172 BULLISH trades contained 161 winners and 11 losses; the 18 BEARISH trades were all profitable. No BULLISH-only filter passed the pre-registered 95% winner-retention training screen while removing at least two losses and improving training net P&L. The Phase-20 entry rules remain frozen.
+
+A future entry phase would need genuinely new information available before 10:00, such as event/overnight/global regime, India VIX/implied-vs-realized volatility, or broader market tail-risk state, rather than more thresholds on the same variables.
