@@ -473,10 +473,10 @@ def main():
         "holdout_dd_ok":bool(metrics_holdout["max_dd"]<=1.05*max_dd(hold.canonical_net)),
         "promotion_pass":bool(
             metrics_train["uplift"]>0 and metrics_train["winner_retention"]>=0.95 and
-            mva["uplift"]>0 and mho["uplift"]>0 and
-            mva["winner_retention"]>=0.90 and mho["winner_retention"]>=0.90 and
-            mva["max_dd"]<=1.05*max_dd(val.canonical_net) and
-            mho["max_dd"]<=1.05*max_dd(hold.canonical_net)
+            metrics_validation["uplift"]>0 and metrics_holdout["uplift"]>0 and
+            metrics_validation["winner_retention"]>=0.90 and metrics_holdout["winner_retention"]>=0.90 and
+            metrics_validation["max_dd"]<=1.05*max_dd(val.canonical_net) and
+            metrics_holdout["max_dd"]<=1.05*max_dd(hold.canonical_net)
         )
     }
 
