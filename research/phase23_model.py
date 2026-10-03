@@ -346,7 +346,7 @@ def main():
     pol_train=evaluate_policy(train,p_loss_tr,p_rev_tr,ts,trv)
     pol_val=evaluate_policy(val,p_loss_va,p_rev_va,ts,trv)
     pol_hold=evaluate_policy(hold,p_loss_ho,p_rev_ho,ts,trv)
-    mtr,_=policy_metrics(pol_train); mva,_=policy_metrics(pol_val); mho,_=policy_metrics(pol_hold)
+    metrics_train,_=policy_metrics(pol_train); metrics_validation,_=policy_metrics(pol_val); metrics_holdout,_=policy_metrics(pol_hold)
 
     # Bootstrap P&L uplift CIs on frozen validation/holdout policy.
     for frame,name in [(pol_val,"validation"),(pol_hold,"holdout")]:
@@ -358,8 +358,8 @@ def main():
             else: pol.append(float(r.canonical_net))
         diff=np.asarray(pol)-ctrl
         ci=bootstrap_ci(diff)
-        if name=="validation": mva["uplift_bootstrap_mean"],mva["uplift_ci_low"],mva["uplift_ci_high"]=ci
-        else: mho["uplift_bootstrap_mean"],mho["uplift_ci_low"],mho["uplift_ci_high"]=ci
+        if name=="validation": metrics_validation["uplift_bootstrap_mean"],metrics_validation["uplift_ci_low"],metrics_validation["uplift_ci_high"]=ci
+        else: metrics_holdout["uplift_bootstrap_mean"],metrics_holdout["uplift_ci_low"],metrics_holdout["uplift_ci_high"]=ci
 
     # Year / regime breakdown of frozen policy.
     pol_all=pd.concat([
@@ -463,14 +463,14 @@ def main():
     promotion = {
         "chosen_skip_threshold":ts,
         "chosen_reverse_threshold":trv,
-        "training_uplift_positive":bool(mtr["uplift"]>0),
-        "training_winner_retention_ge_95pct":bool(mtr["winner_retention"]>=0.95),
-        "validation_uplift_positive":bool(mva["uplift"]>0),
-        "holdout_uplift_positive":bool(mho["uplift"]>0),
-        "validation_winner_retention_ge_90pct":bool(mva["winner_retention"]>=0.90),
-        "holdout_winner_retention_ge_90pct":bool(mho["winner_retention"]>=0.90),
-        "validation_dd_ok":bool(mva["max_dd"]<=1.05*max_dd(val.canonical_net)),
-        "holdout_dd_ok":bool(mho["max_dd"]<=1.05*max_dd(hold.canonical_net)),
+        "training_uplift_positive":bool(metrics_train["uplift"]>0),
+        "training_winner_retention_ge_95pct":bool(metrics_train["winner_retention"]>=0.95),
+        "validation_uplift_positive":bool(metrics_validation["uplift"]>0),
+        "holdout_uplift_positive":bool(metrics_holdout["uplift"]>0),
+        "validation_winner_retention_ge_90pct":bool(metrics_validation["winner_retention"]>=0.90),
+        "holdout_winner_retention_ge_90pct":bool(metrics_holdout["winner_retention"]>=0.90),
+        "validation_dd_ok":bool(metrics_validation["max_dd"]<=1.05*max_dd(val.canonical_net)),
+        "holdout_dd_ok":bool(metrics_holdout["max_dd"]<=1.05*max_dd(hold.canonical_net)),
         "promotion_pass":bool(
             mtr["uplift"]>0 and mtr["winner_retention"]>=0.95 and
             mva["uplift"]>0 and mho["uplift"]>0 and
@@ -490,7 +490,7 @@ def main():
     pd.DataFrame(perm_rows).to_csv(OUT/"phase23_permutation_sensitivity.csv",index=False)
     yearly.to_csv(OUT/"phase23_yearly_policy_breakdown.csv",index=False)
     pol_all.sort_values("entry_date").to_csv(OUT/"phase23_selected_policy_trade_level.csv",index=False)
-    pd.DataFrame([mtr,mva,mho],index=["training","validation","holdout"]).to_csv(OUT/"phase23_selected_policy_summary.csv")
+    pd.DataFrame([metrics_train,metrics_validation,metrics_holdout],index=["training","validation","holdout"]).to_csv(OUT/"phase23_selected_policy_summary.csv")
     (OUT/"phase23_promotion_gate.json").write_text(json.dumps(promotion,indent=2,default=str))
     (OUT/"phase23_model_spec.json").write_text(json.dumps({
         "groups":GROUPS,
