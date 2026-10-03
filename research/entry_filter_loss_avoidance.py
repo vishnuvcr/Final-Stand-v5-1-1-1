@@ -156,10 +156,10 @@ def build_features(trades, spot_df, daily):
         call_px = prices_at(odf, entry_ts, "CE", tuple(call_strikes.values()))
         put_px = prices_at(odf, entry_ts, "PE", tuple(put_strikes.values()))
 
-        req_call = [call_px.get(call_strikes[i]) for i in range(6, 18)]
-        req_put = [put_px.get(put_strikes[i]) for i in range(6, 18)]
-        if any(x is None for x in req_call + req_put):
-            alignment_errors.append({"expiry": expiry, "error": "missing exact entry OTM6..17 prices"})
+        if any(call_px.get(call_strikes[i]) is None for i in (6, 7, 8)) or any(
+            put_px.get(put_strikes[i]) is None for i in (6, 7, 8)
+        ):
+            alignment_errors.append({"expiry": expiry, "error": "missing exact entry OTM6..8 direction prices"})
             continue
 
         x_call = float(call_px[call_strikes[8]] + call_px[call_strikes[7]] - call_px[call_strikes[6]])
@@ -169,14 +169,19 @@ def build_features(trades, spot_df, daily):
         opposite_x = x_put if t["direction"] == "BEARISH" else x_call
 
         side_prices = call_px if typ == "CE" else put_px
+        side_strikes = call_strikes if typ == "CE" else put_strikes
+        if any(side_prices.get(side_strikes[i]) is None for i in range(6, 18)):
+            alignment_errors.append({"expiry": expiry, "error": "missing exact selected-side OTM6..17 prices"})
+            continue
+
         scores = []
         for j in range(6, 16):
             scores.append(
-                float(side_prices[(
-                    call_strikes if typ == "CE" else put_strikes
-                )[j + 2]]
-                + side_prices[(call_strikes if typ == "CE" else put_strikes)[j + 1]]
-                - side_prices[(call_strikes if typ == "CE" else put_strikes)[j]])
+                float(
+                    side_prices[side_strikes[j + 2]]
+                    + side_prices[side_strikes[j + 1]]
+                    - side_prices[side_strikes[j]]
+                )
             )
         scores = np.asarray(scores, dtype=float)
         x_max = float(np.max(scores))
