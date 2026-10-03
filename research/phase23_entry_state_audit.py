@@ -287,7 +287,7 @@ def main():
             else:
                 row["boundary_distance"]=np.nan; row["expected_move_4d"]=np.nan; row["boundary_z"]=np.nan
                 row["selected_x_over_long_premium"]=np.nan; row["selected_x_over_xmax"]=np.nan; row["selected_n"]=np.nan
-                        for typ, px, strikes, is_call in [("CE",cpx,cks,True),("PE",ppx,pks,False)]:
+            for typ, px, strikes, is_call in [("CE",cpx,cks,True),("PE",ppx,pks,False)]:
                 for n in range(6,18):
                     prem=px.get(strikes[n])
                     row[f"{typ}_iv{n}"]=bs_iv_proxy(float(prem) if prem is not None else np.nan,spot_entry,float(strikes[n]),t_years,is_call)
