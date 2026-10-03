@@ -267,7 +267,27 @@ def main():
                 }
             row=build_option_entry_row(expiry,entry_ts,spot_entry,atm,cpx,ppx,cks,pks,direction,snapshot)
             t_years=max((expiry-entry_ts).total_seconds()/31557600.0, 1e-6)
-            for typ, px, strikes, is_call in [("CE",cpx,cks,True),("PE",ppx,pks,False)]:
+            selected_typ = "CE" if direction == "BEARISH" else "PE"
+            sstrikes = cks if selected_typ == "CE" else pks
+            spx = cpx if selected_typ == "CE" else ppx
+            sn = row.get(f"{selected_typ}_selected_n", np.nan)
+            if pd.notna(sn) and all(spx.get(sstrikes[int(sn)+j]) is not None for j in (0,1,2)):
+                sn = int(sn)
+                p0,p1,p2 = float(spx[sstrikes[sn]]),float(spx[sstrikes[sn+1]]),float(spx[sstrikes[sn+2]])
+                credit = (p1-SLIPPAGE_TICKS*TICK)+(p2-SLIPPAGE_TICKS*TICK)-(p0+SLIPPAGE_TICKS*TICK)
+                k0,k1,k2 = float(sstrikes[sn]),float(sstrikes[sn+1]),float(sstrikes[sn+2])
+                boundary = (k1+k2-k0+credit) if selected_typ=="CE" else (k1+k2-k0-credit)
+                row["boundary_distance"] = (boundary-spot_entry) if selected_typ=="CE" else (spot_entry-boundary)
+                rv10_tmp = row.get("nifty_rv10", np.nan)
+                row["expected_move_4d"] = spot_entry*rv10_tmp*np.sqrt(4/252.0) if pd.notna(rv10_tmp) and rv10_tmp>0 else np.nan
+                row["boundary_z"] = row["boundary_distance"]/row["expected_move_4d"] if pd.notna(row["expected_move_4d"]) and row["expected_move_4d"]>0 else np.nan
+                row["selected_x_over_long_premium"] = row["selected_x"]/p0 if p0>0 else np.nan
+                row["selected_x_over_xmax"] = row[f"{selected_typ}_x_selected"]/row[f"{selected_typ}_x_max"] if row.get(f"{selected_typ}_x_max",0)>0 else np.nan
+                row["selected_n"] = sn
+            else:
+                row["boundary_distance"]=np.nan; row["expected_move_4d"]=np.nan; row["boundary_z"]=np.nan
+                row["selected_x_over_long_premium"]=np.nan; row["selected_x_over_xmax"]=np.nan; row["selected_n"]=np.nan
+                        for typ, px, strikes, is_call in [("CE",cpx,cks,True),("PE",ppx,pks,False)]:
                 for n in range(6,18):
                     prem=px.get(strikes[n])
                     row[f"{typ}_iv{n}"]=bs_iv_proxy(float(prem) if prem is not None else np.nan,spot_entry,float(strikes[n]),t_years,is_call)
