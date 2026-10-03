@@ -85,3 +85,5 @@
 
 | 2026-10-03 | Phase 21 execution | Final research grid contained no rule with zero baseline-positive training trades affected; the first implementation aborted before persisting diagnostics. | Changed the phase runner to persist the complete grid and top unconstrained diagnostics instead of aborting. No candidate was promoted. |
 | 2026-10-03 | Phase 21 reporting | The first diagnostic persistence retry failed because the reporting code sorted the full grid using training-only column names. | Replaced that reference with the training-selection table and reran; final Phase 21 workflow completed successfully. |
+
+| 2026-10-03 | Phase 22 design | Prior Phase-21 fixed-point interventions could not identify a robust rule. | Registered an entry-only filter phase with temporal validation and an explicit 95% training winner-retention cap. |
