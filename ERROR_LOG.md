@@ -111,3 +111,13 @@
 - **Impact:** option processing completed to feature assembly, but no persisted Phase-23 result was accepted from this run.
 - **Correction:** added explicit `entry_date` to each feature row and added raw entry-time option OI/volume plus close-derived IV-proxy/skew fields.
 - **Prevention:** Phase-23 schema checks will validate required feature columns before external-data joins and before model fitting.
+
+
+## 2026-10-03 — Phase 23 workflow persistence ordering failure
+- **Phase:** 23
+- **Run:** GitHub Actions run 37099898099
+- **Symptom:** research calculation completed successfully, but the artifact-persistence step failed with `cannot rebase: You have unstaged changes`.
+- **Cause:** workflow attempted to `git rebase` before staging/committing the generated result files.
+- **Impact:** that run's newly generated artifacts were not pushed, although the prior successful audit artifacts remained valid.
+- **Correction:** commit generated result files first, then `git pull --rebase`, then push.
+- **Prevention:** Phase-23 workflows now treat generated-result commits as the local changeset before synchronizing the branch.
