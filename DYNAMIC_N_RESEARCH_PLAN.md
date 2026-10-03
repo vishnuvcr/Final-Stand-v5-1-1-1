@@ -317,3 +317,10 @@ Pre-registered entry feature families: payoff-buffer geometry, Stage-1 direction
 The frozen Phase-20 entry/exit rules are the comparator and remain unchanged unless the Phase-22 promotion screen is passed.
 
 [RUN_PHASE22_ENTRY_FILTER_TRIGGER]
+
+
+## Phase 23 — rich entry-state and directional-switch research
+
+Phase 22 found no simple entry filter that robustly removed losses. Phase 23 therefore tests a separately registered richer entry-state family: India VIX/volatility, cross-market state, overnight/opening state, NIFTY futures basis, option premium/OI/volume, IV/skew, event/flow context, and strategy geometry. It also tests a **canonical / reverse / skip** policy. The reverse hypothesis is evaluated using the same dynamic-n construction, target, expiry-day stop, fallback, slippage and Paytm Money cost assumptions as the canonical strategy. The phase is constrained to low-complexity models and the frozen train/validation/holdout protocol; no unrestricted feature mining is permitted.
+
+Phase 23 ends after its preregistered feature families are exhausted. A candidate can change the canonical strategy only if it produces positive validation and untouched-holdout P&L uplift, acceptable drawdown, adequate replacement/winner retention, no look-ahead, and identical execution-cost treatment.
