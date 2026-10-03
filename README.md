@@ -328,3 +328,18 @@ The complete historical strategy therefore remains the Phase-20 canonical dynami
 - [Strategy specification](STRATEGY_SPEC.md)
 - [Final research manuscript](manuscript/FINAL_RESEARCH_MANUSCRIPT.md)
 - [Phase 24 conclusion](results/dynamic_n_corrected/phase24_targeted_reversal/PHASE24_CONCLUSION.md)
+
+
+## Final research closeout — Phase 24 complete
+
+The preregistered research phases are complete. Phase 23 and Phase 24 did not produce an out-of-sample improvement that passed the registered promotion gates. The **Phase-20 canonical dynamic-n strategy remains the final historical entry-to-exit specification**.
+
+Final historical result: **190 trades, ₹149,129.53 net P&L, 179/190 profitable trades (94.21%), profit factor 2.34, maximum drawdown ₹27,336.11** under the research execution-cost model.
+
+- [Final strategy rules](FINAL_STRATEGY_RULES.md)
+- [Final strategy specification](STRATEGY_SPEC.md)
+- [Final research manuscript](manuscript/FINAL_RESEARCH_MANUSCRIPT.md)
+- [Phase 23 conclusion](results/dynamic_n_corrected/phase23_entry_state/PHASE23_CONCLUSION.md)
+- [Phase 24 conclusion](results/dynamic_n_corrected/phase24_targeted_reversal/PHASE24_CONCLUSION.md)
+- [Research plan](DYNAMIC_N_RESEARCH_PLAN.md)
+- [Error log](ERROR_LOG.md)
