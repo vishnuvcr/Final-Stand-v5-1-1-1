@@ -315,3 +315,5 @@ User question: can an entry criterion avoid the known losing trades before they 
 Pre-registered entry feature families: payoff-buffer geometry, Stage-1 direction confidence, structure-quality measures, and pre-entry NIFTY volatility/return regime. A controlled two-feature conjunction grid is also fixed. Selection uses training only, requires at least 95% winner retention, removes at least two training losses and has positive training uplift. Promotion requires positive 2024–2025 and 2026 holdout uplift, at least 90% winner retention in both, and no more than 5% max-DD deterioration.
 
 The frozen Phase-20 entry/exit rules are the comparator and remain unchanged unless the Phase-22 promotion screen is passed.
+
+[RUN_PHASE22_ENTRY_FILTER_TRIGGER]
