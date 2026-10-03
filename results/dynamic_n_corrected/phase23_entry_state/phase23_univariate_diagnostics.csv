@@ -71,9 +71,9 @@ iv_skew_structure,directional_iv_skew,holdout,15,0.3863636363636364,0.2714285714
 iv_skew_structure,iv_proxy_call_minus_put,training,98,0.6302083333333334,0.6055059324573315
 iv_skew_structure,iv_proxy_call_minus_put,validation,77,0.36111111111111105,0.42807192807192807
 iv_skew_structure,iv_proxy_call_minus_put,holdout,15,0.7045454545454546,0.3
-iv_skew_structure,selected_x_over_xmax,training,0,,
-iv_skew_structure,selected_x_over_xmax,validation,0,,
-iv_skew_structure,selected_x_over_xmax,holdout,0,,
+iv_skew_structure,selected_x_over_xmax,training,98,0.5260416666666667,0.31292042835355266
+iv_skew_structure,selected_x_over_xmax,validation,77,0.5069444444444444,-0.19095518421349494
+iv_skew_structure,selected_x_over_xmax,holdout,15,0.5,
 iv_skew_structure,selected_n,training,98,0.46875,-0.3317464630431108
 iv_skew_structure,selected_n,validation,77,0.4930555555555556,0.19095518421349494
 iv_skew_structure,selected_n,holdout,15,0.5,
