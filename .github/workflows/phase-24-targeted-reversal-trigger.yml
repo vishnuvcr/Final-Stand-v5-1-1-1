@@ -1,5 +1,7 @@
 name: Phase 24 targeted reversal trigger
 
+# Trigger registration verified for phase-24-targeted-reversal-trigger
+
 on:
   push:
     branches:
