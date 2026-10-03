@@ -276,3 +276,11 @@ Phase 22 tests whether entry-time information can avoid the strategy's losing tr
 - [Phase 22 workflow](.github/workflows/phase-22-entry-filter-loss-avoidance.yml)
 
 No Phase-22 filter changes the canonical strategy unless it passes the frozen training/validation/holdout promotion screen.
+
+## Phase 23 — conditional BULLISH entry filter
+
+Phase 23 tests a narrow hypothesis revealed by Phase 22: every historical loss was in the BULLISH/put structure, while all BEARISH/call trades were profitable. Only BULLISH entries are filtered; BEARISH trades are always retained.
+
+- [Phase 23 pre-registration](PHASE23_PRE_REGISTRATION.md)
+- [Phase 23 research code](research/conditional_bullish_entry_filter.py)
+- [Phase 23 workflow](.github/workflows/phase-23-conditional-bullish-entry-filter.yml)
