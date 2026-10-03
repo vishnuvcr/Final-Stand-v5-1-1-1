@@ -1,0 +1,51 @@
+name: Phase 25 alternative direction choosers
+
+on:
+  push:
+    branches:
+      - phase-25-direction-chooser-alternatives
+    paths:
+      - "PHASE25_PRE_REGISTRATION.md"
+      - "research/phase25_direction_chooser.py"
+      - ".github/workflows/phase-25-direction-chooser.yml"
+      - "results/dynamic_n_corrected/phase23_entry_state/phase23_entry_features.csv"
+      - "results/dynamic_n_corrected/phase23_entry_state/canonical_trade_ledger.csv"
+      - "results/dynamic_n_corrected/phase23_entry_state/reverse_trade_ledger.csv"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  phase25:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: phase-25-direction-chooser-alternatives
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy
+      - name: Compile
+        run: python -m py_compile research/phase25_direction_chooser.py
+      - name: Run Phase 25
+        run: python research/phase25_direction_chooser.py
+      - name: Persist artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/dynamic_n_corrected/phase25_direction_chooser
+          git commit -m "Phase 25: persist direction chooser results" || true
+          git pull --rebase origin phase-25-direction-chooser-alternatives
+          git push origin HEAD:phase-25-direction-chooser-alternatives
