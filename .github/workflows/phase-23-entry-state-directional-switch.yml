@@ -6,10 +6,8 @@ on:
       - phase-23-regime-option-crossmarket-directional-switch
     paths:
       - "research/phase23_entry_state_audit.py"
-      - "research/phase23_model.py"
       - "PHASE23_PRE_REGISTRATION.md"
       - "DYNAMIC_N_RESEARCH_PLAN.md"
-      - ".github/workflows/phase-23-entry-state-directional-switch.yml"
   pull_request:
     branches:
       - main
