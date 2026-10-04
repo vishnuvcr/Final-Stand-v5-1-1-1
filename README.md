@@ -143,3 +143,22 @@ Phase 27 tested portfolio-delta-based profit booking and adverse-delta stops aga
 - [Phase 27 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-27-delta-exit-research)
 - [Phase 27 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-research/PHASE27_STATUS.md)
 - [Phase 27 supplement](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-research/manuscript/PHASE27_DELTA_EXIT_SUPPLEMENT.md)
+
+## Phase 28 — individual-leg delta research — COMPLETE
+
+Phase 28 directly tested **per-leg delta**, especially the short OTM-(n+1) and OTM-(n+2) legs, rather than portfolio delta. The Phase-20 strategy remained frozen as control.
+
+- Delta coverage: **99.21%**.
+- Training-selected rule: S1 |delta| ≤ 0.05 after MTM ≥ 90% of target.
+- Training uplift: **−₹2,998.16**.
+- 2024–2025 validation uplift: **−₹2,487.05**.
+- 2026 holdout uplift: **−₹35.91**.
+- Full-sample uplift: **−₹5,521.12**.
+- No adverse short-leg delta stop was promoted.
+
+**Decision: reject individual-leg absolute-delta exit rules. Phase-20 remains canonical.**
+
+- [Phase 28 pre-registration](PHASE28_PRE_REGISTRATION.md)
+- [Phase 28 status](PHASE28_STATUS.md)
+- [Phase 28 supplement](manuscript/PHASE28_INDIVIDUAL_LEG_DELTA_SUPPLEMENT.md)
+- [Phase 28 results](results/dynamic_n_corrected/phase28_leg_delta_exit/)
