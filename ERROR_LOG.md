@@ -37,3 +37,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The first corrected implementation used repeated Python path loops and was too slow for efficient CI execution. It was cancelled before evidence acceptance and replaced with vectorized first-hit confirmation logic. The replacement run completed successfully.
 - The raw Phase-29 summary used the no-stop dynamic-n ledger as an internal diagnostic control. Before any promotion decision, the candidate was explicitly recomputed against the canonical Phase-20 P&L. No misleading raw full-sample uplift was used to promote the rule.
 - Cancelled-run outputs were not accepted as evidence.
+
+
+## Phase 31 engineering errors
+- Run 37228929824 failed before research because the workflow checked out the Phase-30 branch and therefore could not find the Phase-31 script. Corrected workflow checkout/path configuration.
+- Run 37229041262 failed because a frozen research dependency (`research.backtest_dynamic_n_corrected`) was absent from the Phase-31 branch. Restored the dependency.
+- Run 37229148481 failed because the canonical Phase-10 trade ledger was absent. Restored the frozen `phase10_primary/trades.csv` ledger.
+- These failed runs produced no accepted research evidence. Run 37229448057 was the first successful Phase-31 execution.
