@@ -236,3 +236,8 @@
 - No numerical evidence was lost conceptually, but the artifacts were not committed by that run.
 - Hardened the workflow to commit generated results before rebasing, then push the rebased commit.
 - A fresh execution is required so the corrected control-comparison artifacts are committed reproducibly.
+
+## Phase 28 initialization — 2026-10-04
+- New isolated phase created specifically for individual-leg delta, with S1=OTM-(n+1) and S2=OTM-(n+2) as primary variables.
+- Phase 27 portfolio-delta result is not reused as evidence.
+- Preregistered threshold families, control, walk-forward periods and promotion gates.
