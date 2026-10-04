@@ -8,7 +8,7 @@ from research.payoff_boundary_stop_research import TZ, load_trade_ledgers, build
 OUT=Path(os.getenv("OUT_DIR","results/dynamic_n_corrected/phase31_asymmetric_delta_exit"))
 OUT.mkdir(parents=True,exist_ok=True)
 TRAIN_END=pd.Timestamp("2023-12-31",tz=TZ); VALIDATION_END=pd.Timestamp("2025-12-31",tz=TZ); HOLDOUT_START=pd.Timestamp("2026-01-01",tz=TZ)
-THRESHOLDS=[0.05,0.10,0.15,0.20,0.25,0.30,0.40,0.50,0.60]; CONFIRMS=[1,3]
+TARGET_THRESHOLDS=[0.05,0.10,0.15,0.20,0.25,0.30,0.40,0.50]; STOP_THRESHOLDS=[0.50,0.75,1.00,1.25,1.50,2.00,2.50,3.00]; CONFIRMS=[1,3]
 
 def norm_cdf(x):
     x=np.asarray(x,float); ax=np.abs(x); t=1/(1+0.2316419*ax)
@@ -85,8 +85,8 @@ def main():
     panel.to_csv(OUT/"minute_combined_short_delta_panel.csv",index=False); delta_errors.to_csv(OUT/"delta_errors.csv",index=False); pd.DataFrame(path_errors).to_csv(OUT/"path_errors.csv",index=False)
     if coverage<.95: raise RuntimeError(f"Delta coverage below 95%: {coverage:.4f}")
     paths={e:g.sort_values("ts").to_dict("records") for e,g in panel.groupby("expiry",sort=False)}; rules=[]; details={}
-    for t in THRESHOLDS:
-        for s in THRESHOLDS:
+    for t in TARGET_THRESHOLDS:
+        for s in STOP_THRESHOLDS:
             for c in CONFIRMS:
                 name=f"target{t:.2f}_stop{s:.2f}_c{c}"; df=apply_rule(meta,paths,t,s,c); details[name]=df; rules.append({"name":name,"target":t,"stop":s,"confirm":c,**summary(df)})
     grid=pd.DataFrame(rules); grid.to_csv(OUT/"entry_delta_proportion_grid.csv",index=False)
