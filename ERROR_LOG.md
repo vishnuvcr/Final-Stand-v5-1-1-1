@@ -241,3 +241,8 @@
 - New isolated phase created specifically for individual-leg delta, with S1=OTM-(n+1) and S2=OTM-(n+2) as primary variables.
 - Phase 27 portfolio-delta result is not reused as evidence.
 - Preregistered threshold families, control, walk-forward periods and promotion gates.
+
+## Phase 28 engineering notes — 2026-10-04
+- Initial workflow calculation run remained in the minute-level calculation step without advancing its GitHub job metadata. This was treated as an execution/infrastructure issue, not as research evidence.
+- Added progress checkpoints and workflow concurrency cancellation so a stale Phase-28 calculation cannot block the replacement run.
+- The replacement run completed and persisted the full delta panel/grid. No numerical result from the stalled run was used.
