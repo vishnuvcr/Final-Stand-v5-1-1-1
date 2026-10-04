@@ -22,7 +22,13 @@ ADVERSE_DELTAS = [0.10,0.15,0.20,0.25,0.30,0.40,0.50]
 CONFIRMS = [1,3]
 
 def norm_cdf(x):
-    return 0.5*(1.0+np.vectorize(math.erf)(x/np.sqrt(2.0)))
+    x=np.asarray(x,float)
+    ax=np.abs(x)
+    t=1.0/(1.0+0.2316419*ax)
+    poly=((((1.330274429*t-1.821255978)*t+1.781477937)*t-0.356563782)*t+0.319381530)*t
+    pdf=np.exp(-0.5*ax*ax)/np.sqrt(2.0*np.pi)
+    cdf=1.0-pdf*poly
+    return np.where(x>=0,cdf,1.0-cdf)
 
 def bs_price(S,K,T,sig,typ,r=0.0,q=0.0):
     T=np.maximum(T,1e-10); sig=np.maximum(sig,1e-8)
@@ -48,7 +54,7 @@ def implied_vol_delta(price,S,K,T,typ):
     p=price[idx]; s=S[idx]; t=T[idx]
     lo=np.full_like(p,1e-5); hi=np.full_like(p,5.0)
     x=np.full_like(p,0.30)
-    for _ in range(12):
+    for _ in range(10):
         px=bs_price(s,K,t,x,typ)
         v=s*np.exp(-0.5*((np.log(s/K)+0.5*x*x*t)/(x*np.sqrt(t)))**2)/np.sqrt(2*np.pi)*np.sqrt(t)
         step=(px-p)/np.maximum(v,1e-10)
