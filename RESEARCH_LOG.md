@@ -479,3 +479,11 @@ Interpretation: S1 is more delta-sensitive than S2 on average, but absolute delt
 - Correct canonical Phase-20 comparison: +₹18,251.49 train, −₹1,092.14 validation, −₹6,879.84 holdout, +₹10,279.51 full.
 - Promotion: NO. Phase 20 remains canonical.
 - Detailed status: PHASE29_STATUS.md. Manuscript supplement: manuscript/PHASE29_DELTA_CHANGE_SUPPLEMENT.md.
+
+
+## 2026-10-05 — Phase 30 initialization: corrected entry-referenced delta proportion research
+- User corrected the intended delta mechanism after Phase 29: use the **sum of the two short-option deltas**, reference it to the delta at entry, and express change as a proportion rather than an absolute difference.
+- Created isolated branch `phase-30-entry-delta-proportion-exit`.
+- Pre-registered combined short-leg delta magnitude: |Delta S1| + |Delta S2|; proportional change = current combined magnitude / entry combined magnitude - 1.
+- No prior-minute lookback, no mean of short-leg changes, and no option-P&L target percentage is used.
+- Candidate thresholds are 5%–60% with 1- or 3-minute confirmation; walk-forward selection and Phase-20 canonical comparison are locked before evidence review.
