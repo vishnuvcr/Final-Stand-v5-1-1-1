@@ -128,10 +128,20 @@ def apply_rule(meta, paths, rule):
     out=[]
     for e in meta.itertuples():
         path=paths.get(e.expiry)
+        control_stop=None
+        control_net=e.base_net
+        control_ts=e.exit_ts
+        control_reason="BASELINE"
+        if path:
+            p19=phase19_fixed_mfe50_stop(e,path)
+            if p19 is not None:
+                control_stop=p19
+                control_net=net_at(e,p19)
+                control_ts=p19["ts"]
+                control_reason="P19_STOP"
         stop=None
         if path:
-            # target is always evaluated first.
-            for p in path:
+            for i,p in enumerate(path):
                 if p.get("delta_valid") and p["gross"]>=e.target:
                     stop={"p":p,"reason":"TARGET"}
                     break
@@ -140,27 +150,28 @@ def apply_rule(meta, paths, rule):
                         stop={"p":p,"reason":"DELTA_PROFIT"}
                         break
                     if rule["adverse_delta"] is not None and p["gross"]<0 and p["adverse_delta"]>=rule["adverse_delta"]:
-                        # exact consecutive-minute confirmation
                         if rule["confirm"]==1:
-                            stop={"p":p,"reason":"DELTA_STOP"}; break
-                        i=path.index(p)
+                            stop={"p":p,"reason":"DELTA_STOP"}
+                            break
                         if i>=rule["confirm"]-1:
                             win=path[i-rule["confirm"]+1:i+1]
                             ok=all(x.get("delta_valid") and x["gross"]<0 and x["adverse_delta"]>=rule["adverse_delta"] for x in win)
-                            if ok and all((pd.Timestamp(win[j]["ts"])-pd.Timestamp(win[j-1]["ts"])).total_seconds()==60 for j in range(1,len(win))):
-                                stop={"p":win[0],"reason":"DELTA_STOP"}; break
-            # If no delta exit, apply locked Phase-20 expiry stop, then fallback.
-            if stop is None:
-                p19=phase19_fixed_mfe50_stop(e,path)
-                if p19 is not None: stop={"p":p19,"reason":"P19_STOP"}
+                            exact=all((pd.Timestamp(win[j]["ts"])-pd.Timestamp(win[j-1]["ts"])).total_seconds()==60 for j in range(1,len(win)))
+                            if ok and exact:
+                                stop={"p":win[0],"reason":"DELTA_STOP"}
+                                break
+                if control_stop is not None and pd.Timestamp(p["ts"]) == pd.Timestamp(control_ts):
+                    # Phase-20 control stop has reached its exact observed trigger minute.
+                    stop={"p":p,"reason":control_reason}
+                    break
         if stop is None:
-            cand=e.base_net; ts=e.exit_ts; reason="BASELINE"
+            cand=control_net; ts=control_ts; reason=control_reason
         else:
             cand=net_at(e,stop["p"]); ts=stop["p"]["ts"]; reason=stop["reason"]
-        changed=pd.Timestamp(ts)<pd.Timestamp(e.exit_ts)
-        out.append({"expiry":e.expiry,"base_net":e.base_net,"candidate_net":cand,
-                    "net_uplift":cand-e.base_net,"base_positive":e.base_positive,
-                    "changed_before_base":changed,"winner_affected":bool(e.base_positive and changed),
+        changed=pd.Timestamp(ts)<pd.Timestamp(control_ts)
+        out.append({"expiry":e.expiry,"base_net":control_net,"candidate_net":cand,
+                    "net_uplift":cand-control_net,"base_positive":control_net>0,
+                    "changed_before_base":changed,"winner_affected":bool(control_net>0 and changed),
                     "exit_reason":reason,"exit_ts":ts,
                     "abs_delta_at_exit":stop["p"].get("abs_delta") if stop else np.nan,
                     "adverse_delta_at_exit":stop["p"].get("adverse_delta") if stop else np.nan})
