@@ -121,3 +121,5 @@ Delta coverage: {coverage:.2%}
 """
     (OUT/"PHASE30_CONCLUSION.md").write_text(report,encoding="utf-8"); print(report,flush=True)
 if __name__=="__main__": main()
+
+# Phase 31 execution retry: frozen dependency restored; parameters unchanged.
