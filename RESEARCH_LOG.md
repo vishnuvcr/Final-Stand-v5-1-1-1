@@ -26,3 +26,12 @@
 - Phase 24 complete; no reversal trigger promoted.
 - Final strategy remains the Phase-20 canonical dynamic-n specification.
 - Final manuscript and evidence package are retained on branch phase-24-targeted-reversal-trigger.
+
+
+## 2026-10-04 — Phase 27 final status
+- Phase 27 delta-based exit research completed on isolated branch `phase-27-delta-exit-research`.
+- Training-selected delta profit rule: MTM ≥ 0.90×target and |portfolio delta| ≤ 0.05.
+- Validation uplift: −₹2,334.04. 2026 holdout uplift: −₹1,108.04.
+- Holdout bootstrap 95% CI for mean trade-level uplift: −₹141.92 to −₹13.82.
+- No adverse-delta stop selected.
+- **No Phase-27 rule promoted; Phase-20 remains canonical.**
