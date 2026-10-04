@@ -123,3 +123,5 @@ Delta coverage: {coverage:.2%}
 if __name__=="__main__": main()
 
 # Phase 31 execution retry: frozen dependency restored; parameters unchanged.
+
+# Phase 31 retry: restored canonical backtest dependency.
