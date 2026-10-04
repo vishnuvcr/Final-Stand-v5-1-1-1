@@ -6,9 +6,9 @@ Delta coverage: 99.21%
 Training-selected target: MEAN_target_lb5_d0.20_c3
 Training-selected stop: S1_stop_lb1_d0.05_c3
 
-Training: {'trades': 97, 'base_net': np.float64(60942.315013499996), 'candidate_net': np.float64(15341.431265749996), 'net_uplift': np.float64(-45600.883747750006), 'winner_affected': 25, 'stops': 27, 'base_dd': 21763.229811150002, 'candidate_dd': 12933.832836000005, 'win_rate': 0.7938144329896907}
-Validation: {'trades': 77, 'base_net': np.float64(73886.18577038005), 'candidate_net': np.float64(63181.56073901753), 'net_uplift': np.float64(-10704.625031362502), 'winner_affected': 25, 'stops': 30, 'base_dd': 27321.078748147494, 'candidate_dd': 6415.238019809998, 'win_rate': 0.7662337662337663}
-2026 holdout: {'trades': 16, 'base_net': np.float64(4108.616860530492), 'candidate_net': np.float64(-4569.16067957001), 'net_uplift': np.float64(-8677.777540100506), 'winner_affected': 7, 'stops': 11, 'base_dd': 17890.35296654, 'candidate_dd': 24862.685747598014, 'win_rate': 0.5}
-Full: {'trades': 190, 'base_net': np.float64(138937.11764441052), 'candidate_net': np.float64(73953.8313251975), 'net_uplift': np.float64(-64983.28631921302), 'winner_affected': 57, 'stops': 68, 'base_dd': 27321.078748147498, 'candidate_dd': 24862.685747598, 'win_rate': 0.7578947368421053}
+Training: {'trades': 97, 'base_net': np.float64(60942.315013499996), 'candidate_net': np.float64(81157.47119775001), 'net_uplift': np.float64(20215.15618425), 'winner_affected': 2, 'stops': 3, 'base_dd': 21763.229811150002, 'candidate_dd': 6825.297276500001, 'win_rate': 0.9896907216494846}
+Validation: {'trades': 77, 'base_net': np.float64(73886.18577038005), 'candidate_net': np.float64(74717.64182745505), 'net_uplift': np.float64(831.4560570750015), 'winner_affected': 1, 'stops': 2, 'base_dd': 27321.078748147494, 'candidate_dd': 27321.078748147494, 'win_rate': 0.935064935064935}
+2026 holdout: {'trades': 16, 'base_net': np.float64(4108.616860530492), 'candidate_net': np.float64(3533.9246939494915), 'net_uplift': np.float64(-574.6921665810005), 'winner_affected': 1, 'stops': 1, 'base_dd': 17890.35296654, 'candidate_dd': 17890.35296654, 'win_rate': 0.75}
+Full: {'trades': 190, 'base_net': np.float64(138937.11764441052), 'candidate_net': np.float64(159409.0377191545), 'net_uplift': np.float64(20471.920074744), 'winner_affected': 4, 'stops': 6, 'base_dd': 27321.078748147498, 'candidate_dd': 27321.078748147498, 'win_rate': 0.9473684210526315}
 
 Promotion: False

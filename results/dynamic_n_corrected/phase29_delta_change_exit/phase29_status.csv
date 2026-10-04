@@ -1,2 +1,2 @@
 combined_promote,train_target,train_stop,delta_coverage,validation_uplift,holdout_uplift,validation_dd,holdout_dd
-False,MEAN_target_lb5_d0.20_c3,S1_stop_lb1_d0.05_c3,0.992127582515114,-10704.625031362502,-8677.777540100506,6415.238019809998,24862.685747598014
+False,MEAN_target_lb5_d0.20_c3,S1_stop_lb1_d0.05_c3,0.992127582515114,831.4560570750015,-574.6921665810005,27321.078748147494,17890.35296654
