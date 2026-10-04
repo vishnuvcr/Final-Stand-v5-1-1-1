@@ -246,3 +246,10 @@
 - Initial workflow calculation run remained in the minute-level calculation step without advancing its GitHub job metadata. This was treated as an execution/infrastructure issue, not as research evidence.
 - Added progress checkpoints and workflow concurrency cancellation so a stale Phase-28 calculation cannot block the replacement run.
 - The replacement run completed and persisted the full delta panel/grid. No numerical result from the stalled run was used.
+
+
+## Phase 29 engineering corrections — 2026-10-05
+- Initial Phase-29 joint-candidate implementation did not apply the selected rule's 3-minute confirmation consistently; the run was cancelled before evidence acceptance, and the joint logic was corrected.
+- The first corrected implementation evaluated 480 rules with repeated Python path loops and was unacceptably slow on GitHub Actions. It was cancelled before evidence acceptance and replaced with vectorized first-hit confirmation logic. The replacement run completed successfully.
+- The persisted Phase-29 raw summary used the no-stop dynamic-n ledger as its internal diagnostic control. This is not the canonical research comparator. A separate Phase-20 canonical comparison was therefore computed before the final decision; no promotion decision was based on the misleading raw full-sample uplift.
+- No output from the cancelled runs was accepted as research evidence.
