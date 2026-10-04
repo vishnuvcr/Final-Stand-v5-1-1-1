@@ -363,3 +363,18 @@ See PHASE25_PRE_REGISTRATION.md, PHASE25_STATUS.md, results/dynamic_n_corrected/
 ## Phase 27 extension — delta-based exit research
 
 Phase 27 was added as a controlled extension after the Phase-20 canonical strategy. The plan tests portfolio-delta-based profit booking and adverse-delta stops against the frozen Phase-20 strategy using the same costs/slippage and train/validation/2026 holdout protocol. It is now complete. No delta rule passed the promotion gate, so the canonical strategy is unchanged.
+
+## Phase 28 completion — individual-leg delta research
+
+Phase 28 directly tested per-leg delta rather than portfolio delta:
+- S1 = short OTM-(n+1), primary.
+- S2 = short OTM-(n+2), secondary.
+- Long-leg delta retained as diagnostic.
+- Absolute delta used for CE/PE-comparable level tests.
+- Profit-booking grid: 50/60/70/80/90% target crossed with short-leg delta thresholds.
+- Adverse-stop grid: negative MTM plus short-leg delta thresholds with 1/3-minute confirmation.
+- Same Phase-20 control, execution costs and train/validation/holdout split.
+
+Result: **no individual-leg delta rule promoted.** Training selected S1 at 90% target and |delta|≤0.05 as the least-bad profit-booking rule, but validation and holdout were both negative. No adverse short-leg delta stop passed.
+
+Decision: retain Phase-20 exit logic unchanged. Any future delta research must address a materially different mechanism (for example delta change/rate, gamma/acceleration, or a jointly preregistered risk-state model) rather than re-sweeping the same absolute-delta level grid.
