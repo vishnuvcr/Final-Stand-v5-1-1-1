@@ -382,3 +382,9 @@ The closest raw-curvature alternatives at k=7 and k=8 produced +₹162.83 traini
 Phase 25 therefore provides no evidence sufficient to replace the OTM6/7/8 direction chooser.
 
 See `PHASE25_DIRECTION_CHOOSER_SUPPLEMENT.md` and `results/dynamic_n_corrected/phase25_direction_chooser/PHASE25_CONCLUSION.md`.
+
+## Phase 27 Extension — Delta-Based Exit Research
+
+Phase 27 tested whether portfolio delta reconstructed from minute-level observed option prices could improve the Phase-20 canonical exit logic. The study used European Black-Scholes implied volatility with r=0 and q=0 as the baseline reconstruction, achieved 99.21% delta coverage, and tested pre-registered profit-booking and adverse-delta stop families.
+
+The training-selected rule (MTM ≥ 0.90×target and |portfolio delta| ≤ 0.05) reduced net P&L by ₹2,334.04 in validation and ₹1,108.04 in the 2026 holdout relative to the locked Phase-20 control. The holdout bootstrap 95% CI for mean trade-level uplift was −₹141.92 to −₹13.82. No adverse-delta stop was selected. Therefore no delta-based exit is promoted and the Phase-20 strategy remains canonical. Full details are in `manuscript/PHASE27_DELTA_EXIT_SUPPLEMENT.md`.
