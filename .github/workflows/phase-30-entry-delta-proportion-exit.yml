@@ -1,0 +1,55 @@
+name: Phase 30 entry-delta proportion exit research
+
+on:
+  push:
+    branches: [phase-30-entry-delta-proportion-exit]
+    paths:
+      - "research/phase30_entry_delta_proportion_exit.py"
+      - "PHASE30_PRE_REGISTRATION.md"
+      - ".github/workflows/phase-30-entry-delta-proportion-exit.yml"
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase30-entry-delta-proportion-exit
+  cancel-in-progress: true
+
+jobs:
+  phase30:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-30-entry-delta-proportion-exit
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-nifty-options-${{ runner.os }}-v1
+          restore-keys: hf-nifty-options-${{ runner.os }}-
+      - run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy pyarrow huggingface_hub
+      - run: python -m py_compile research/phase30_entry_delta_proportion_exit.py
+      - name: Run Phase 30
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          OUT_DIR: results/dynamic_n_corrected/phase30_entry_delta_proportion_exit
+        run: python research/phase30_entry_delta_proportion_exit.py
+      - name: Persist Phase 30 artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/dynamic_n_corrected/phase30_entry_delta_proportion_exit
+          git commit -m "Phase 30: persist entry delta proportion results" || true
+          git fetch origin phase-30-entry-delta-proportion-exit
+          git rebase origin/phase-30-entry-delta-proportion-exit
+          git push origin HEAD:phase-30-entry-delta-proportion-exit
