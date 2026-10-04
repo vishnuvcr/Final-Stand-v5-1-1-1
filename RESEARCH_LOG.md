@@ -439,3 +439,10 @@
 - No dynamic-n winner became a fixed-789 loss.
 - Fixed 789 net P&L was ₹129,567.71 versus ₹138,937.12 for dynamic-n; max drawdown was ₹24,081.63 versus ₹27,321.08.
 - Decision: no strategy change; canonical Phase-20 dynamic-n remains frozen.
+
+
+## 2026-10-04 — Phase 27 initialization
+- Created isolated branch `phase-27-delta-exit-research` from the latest completed Phase-26 research branch.
+- Preregistered Black-Scholes implied-volatility/portfolio-delta reconstruction, profit-booking thresholds, adverse-delta stops, walk-forward selection, bootstrap inference, and promotion gates.
+- External methodological review: NSE confirms NIFTY index options are European-style; the literature indicates practitioner implied-BS delta is model-dependent, motivating sensitivity checks.
+- A pre-evidence implementation omission of raw exit prices was detected and corrected; no result was accepted from the affected run.
