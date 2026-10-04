@@ -1,5 +1,9 @@
 name: Phase 28 individual-leg delta research
 
+concurrency:
+  group: phase28-individual-leg-delta
+  cancel-in-progress: true
+
 on:
   push:
     branches:
