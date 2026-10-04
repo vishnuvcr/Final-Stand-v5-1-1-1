@@ -224,3 +224,9 @@
 ## Phase 27 — performance hardening (2026-10-04)
 - The first full run spent several minutes reconstructing the minute delta panel using an element-wise normal CDF.
 - Replaced the slow element-wise implementation with a vectorized normal-CDF approximation and reduced Newton iterations from 12 to 10; this changes numerical speed only, not the preregistered thresholds or decision rules.
+
+## Phase 27 — comparator/precedence correction (2026-10-04)
+- The first successful computational run was initially framed against the Phase-10 no-stop ledger (₹138,937.12), while the registered Phase-27 control is the locked Phase-20 strategy including the 13:30/MFE<0.50×target stop (₹149,129.53).
+- In addition, the first implementation applied the Phase-20 stop only after scanning the whole path, which could let a later delta exit override an earlier control stop.
+- Corrected both issues: every delta candidate is now compared against the exact Phase-20 control exit for that trade, and exit precedence is evaluated minute-by-minute as target → delta profit → delta adverse stop → Phase-20 conditional stop, followed by the control expiry fallback.
+- The prior numerical outputs are retained only as diagnostics and are not accepted as Phase-27 evidence.
