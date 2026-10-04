@@ -487,3 +487,10 @@ Interpretation: S1 is more delta-sensitive than S2 on average, but absolute delt
 - Pre-registered combined short-leg delta magnitude: |Delta S1| + |Delta S2|; proportional change = current combined magnitude / entry combined magnitude - 1.
 - No prior-minute lookback, no mean of short-leg changes, and no option-P&L target percentage is used.
 - Candidate thresholds are 5%–60% with 1- or 3-minute confirmation; walk-forward selection and Phase-20 canonical comparison are locked before evidence review.
+
+
+## 2026-10-05 — Phase 30 completed and rejected
+- Corrected entry-referenced combined short-leg delta proportion mechanism executed successfully in GitHub Actions run 37228084351.
+- Delta coverage: 99.21%.
+- Training-selected rule: target0.60_stop0.60_c1.
+- Validation and 2026 holdout both underperformed Phase 20; decision: REJECT.
