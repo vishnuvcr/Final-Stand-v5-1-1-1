@@ -1,0 +1,2 @@
+selection,rule,train_uplift,validation_uplift,holdout_uplift,validation_dd,holdout_dd,validation_winners_affected,holdout_winners_affected
+profit,S1_profit_f0.90_d0.05,-2998.164991425,-2487.046718087501,-35.91203071950201,27336.11356767749,17890.35296654,30,1
