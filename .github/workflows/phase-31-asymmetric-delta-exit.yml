@@ -5,8 +5,8 @@ on:
     branches: [phase-31-asymmetric-delta-exit, main]
     paths:
       - "research/phase31_asymmetric_delta_exit.py"
-      - "PHASE30_PRE_REGISTRATION.md"
-      - ".github/workflows/phase-30-entry-delta-proportion-exit.yml"
+      - "PHASE31_PRE_REGISTRATION.md"
+      - ".github/workflows/phase-31-asymmetric-delta-exit.yml"
   workflow_dispatch:
   pull_request:
     branches: [main]
@@ -15,17 +15,17 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase30-entry-delta-proportion-exit
+  group: phase31-entry-delta-proportion-exit
   cancel-in-progress: true
 
 jobs:
-  phase30:
+  phase31:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: phase-30-entry-delta-proportion-exit
+          ref: phase-31-asymmetric-delta-exit
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -39,17 +39,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas numpy pyarrow huggingface_hub
       - run: python -m py_compile research/phase31_asymmetric_delta_exit.py
-      - name: Run Phase 30
+      - name: Run Phase 31
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          OUT_DIR: results/dynamic_n_corrected/phase30_entry_delta_proportion_exit
-        run: python research/phase30_entry_delta_proportion_exit.py
-      - name: Persist Phase 30 artifacts
+          OUT_DIR: results/dynamic_n_corrected/phase31_asymmetric_delta_exit
+        run: python research/phase31_asymmetric_delta_exit.py
+      - name: Persist Phase 31 artifacts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/dynamic_n_corrected/phase30_entry_delta_proportion_exit
-          git commit -m "Phase 30: persist entry delta proportion results" || true
-          git fetch origin phase-30-entry-delta-proportion-exit
-          git rebase origin/phase-30-entry-delta-proportion-exit
-          git push origin HEAD:phase-30-entry-delta-proportion-exit
+          git add results/dynamic_n_corrected/phase31_asymmetric_delta_exit
+          git commit -m "Phase 31: persist entry delta proportion results" || true
+          git fetch origin phase-31-asymmetric-delta-exit
+          git rebase origin/phase-31-asymmetric-delta-exit
+          git push origin HEAD:phase-31-asymmetric-delta-exit
