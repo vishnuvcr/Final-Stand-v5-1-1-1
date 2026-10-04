@@ -135,22 +135,35 @@ def delta_change(path, i, mode, lookback):
 def apply_rule(meta, paths, rule):
     out=[]
     for e in meta.itertuples():
-        path=paths.get(e.expiry, []); control_net=e.base_net; control_ts=e.exit_ts; stop=None
-        for i,p in enumerate(path):
-            if not p.get("delta_valid"): continue
-            ch=delta_change(path,i,rule["mode"],rule["lookback"])
-            if not np.isfinite(ch): continue
-            hit=(ch <= -rule["threshold"]) if rule["kind"]=="TARGET" else (ch >= rule["threshold"])
-            if not hit: continue
-            if rule["confirm"]==1: stop={"p":p,"reason":"DELTA_CHANGE_TARGET" if rule["kind"]=="TARGET" else "DELTA_CHANGE_STOP"}; break
-            if i < rule["confirm"]-1: continue
-            win=path[i-rule["confirm"]+1:i+1]
-            exact=all((pd.Timestamp(win[j]["ts"])-pd.Timestamp(win[j-1]["ts"])).total_seconds()==60 for j in range(1,len(win)))
-            vals=[delta_change(path,j,rule["mode"],rule["lookback"]) for j in range(i-rule["confirm"]+1,i+1)]
-            ok=exact and all(np.isfinite(v) and ((v <= -rule["threshold"]) if rule["kind"]=="TARGET" else (v >= rule["threshold"])) for v in vals)
-            if ok: stop={"p":win[0],"reason":"DELTA_CHANGE_TARGET" if rule["kind"]=="TARGET" else "DELTA_CHANGE_STOP"}; break
-        if stop is None: cand=control_net; ts=control_ts; reason="EXPIRY_FALLBACK"
-        else: cand=net_at(e,stop["p"]); ts=stop["p"]["ts"]; reason=stop["reason"]
+        path=paths.get(e.expiry, [])
+        control_net=e.base_net; control_ts=e.exit_ts; stop=None
+        n=len(path)
+        if n:
+            vals=np.array([delta_change(path,i,rule["mode"],rule["lookback"]) for i in range(n)],dtype=float)
+            if rule["kind"]=="TARGET":
+                cond=np.isfinite(vals) & (vals <= -float(rule["threshold"]))
+            else:
+                cond=np.isfinite(vals) & (vals >= float(rule["threshold"]))
+            conf=int(rule["confirm"])
+            if conf==1:
+                idxs=np.flatnonzero(cond)
+            else:
+                ts_arr=pd.to_datetime([p["ts"] for p in path])
+                consecutive=np.zeros(n,dtype=bool)
+                if n>1:
+                    consecutive[1:]=np.diff(ts_arr.view("int64"))==60_000_000_000
+                run=cond.copy()
+                for k in range(1,conf):
+                    run[k:]=run[k:] & cond[:-k] & consecutive[k:]
+                idxs=np.flatnonzero(run)
+            if len(idxs):
+                i=int(idxs[0])
+                first=i-conf+1 if conf>1 else i
+                stop={"p":path[first],"reason":"DELTA_CHANGE_TARGET" if rule["kind"]=="TARGET" else "DELTA_CHANGE_STOP"}
+        if stop is None:
+            cand=control_net; ts=control_ts; reason="EXPIRY_FALLBACK"
+        else:
+            cand=net_at(e,stop["p"]); ts=stop["p"]["ts"]; reason=stop["reason"]
         changed=pd.Timestamp(ts)<pd.Timestamp(control_ts)
         out.append({"expiry":e.expiry,"base_net":control_net,"candidate_net":cand,"net_uplift":cand-control_net,
                     "base_positive":control_net>0,"changed_before_base":changed,"winner_affected":bool(control_net>0 and changed),
