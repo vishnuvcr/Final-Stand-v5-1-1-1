@@ -38,3 +38,12 @@ Training selected `target0.60_stop0.60_c1`, equivalent to exiting on a 60% propo
 The selected rule was rejected because it underperformed the frozen Phase-20 strategy in validation by **₹56,130.10** and in the 2026 holdout by **₹17,171.69**. Full-sample P&L fell from **₹138,937.12** for the no-stop diagnostic comparator to **₹24,088.97** under the selected rule. Against canonical Phase 20, full-sample difference was **−₹125,040.56**.
 
 The research conclusion is that **entry-referenced proportional change in the combined short-leg delta is not a useful exit mechanism for this strategy under the tested specification**.
+
+
+## Final result
+
+GitHub Actions run 37228084351 completed successfully. Delta coverage was 99.21%.
+
+Training-selected rule: target0.60_stop0.60_c1.
+
+Validation and 2026 holdout both underperformed the frozen Phase-20 canonical strategy. The entry-referenced combined short-leg delta proportion mechanism is rejected and is not promoted.
