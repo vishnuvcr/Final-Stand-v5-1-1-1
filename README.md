@@ -440,3 +440,16 @@ Artifacts:
 - [Phase 29 conclusion](results/dynamic_n_corrected/phase29_delta_change_exit/PHASE29_CONCLUSION.md)
 - [Phase 29 manuscript supplement](manuscript/PHASE29_DELTA_CHANGE_SUPPLEMENT.md)
 - [Phase 20 canonical comparison](results/dynamic_n_corrected/phase29_delta_change_exit/phase20_canonical_comparison.csv)
+
+
+## Phase 30 — corrected entry-referenced delta-proportion exit research
+
+Phase 30 supersedes the Phase-29 delta definition after a user methodological correction. It tests the **sum of the two short-leg deltas**, fixed at the actual purchase-time delta, with later movement expressed as a **proportion of that entry value**.
+
+- [Phase 30 pre-registration](PHASE30_PRE_REGISTRATION.md)
+- [Phase 30 status](PHASE30_STATUS.md)
+- [Phase 30 research code](research/phase30_entry_delta_proportion_exit.py)
+- [Phase 30 workflow](.github/workflows/phase-30-entry-delta-proportion-exit.yml)
+- [Phase 30 PR #8](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/8)
+
+No Phase-30 numerical evidence has yet been accepted because the available GitHub Actions connector has not exposed a runnable workflow execution for the isolated branch. The research remains open; no conclusion is inferred from the absence of a run.
