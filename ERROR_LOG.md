@@ -214,3 +214,13 @@
 - The omission was identified before any Phase-27 result was accepted.
 - Corrected the delta panel to retain `raw_exit` for every minute observation, then allowed the workflow to rerun from the corrected code.
 - The affected run is not treated as evidence.
+
+## Phase 27 — run-1 numerical implementation error (2026-10-04)
+- GitHub Actions run 1 failed before evidence generation with `TypeError: float() argument must be a string or a real number, not 'Index'` inside the implied-volatility solver.
+- Root cause: `implied_vol_delta()` expects arguments `price, spot, strike, time`, but the caller supplied `price, spot, time, strike`.
+- Corrected the call to pass strike before time-to-expiry.
+- No Phase-27 result artifact from run 1 was accepted.
+
+## Phase 27 — performance hardening (2026-10-04)
+- The first full run spent several minutes reconstructing the minute delta panel using an element-wise normal CDF.
+- Replaced the slow element-wise implementation with a vectorized normal-CDF approximation and reduced Newton iterations from 12 to 10; this changes numerical speed only, not the preregistered thresholds or decision rules.
