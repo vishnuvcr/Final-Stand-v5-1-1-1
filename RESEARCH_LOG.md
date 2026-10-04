@@ -467,3 +467,15 @@ Question: does the delta of each option leg, especially the two short legs, prov
 Result: **No promotion.** Delta coverage 99.21%. Training-selected rule was S1 |delta| <= 0.05 after MTM reached 90% of target. Uplift was -₹2,998.16 training, -₹2,487.05 validation and -₹35.91 in the 2026 holdout. Full-sample uplift was -₹5,521.12. No adverse short-leg delta stop passed.
 
 Interpretation: S1 is more delta-sensitive than S2 on average, but absolute delta level did not provide robust incremental exit timing. Phase-20 remains canonical.
+
+
+## 2026-10-05 — Phase 29 complete: short-leg delta-change exits
+- Tested target and stop entirely from individual/combined short-leg absolute-delta change; removed all target-percentage criteria.
+- 480 preregistered rules: S1, S2, MEAN and BOTH modes; 1/3/5/10/15-minute lookbacks; six delta-change thresholds; 1/3-minute confirmation.
+- Delta coverage: 99.21%.
+- Training-selected target: MEAN, 5-minute lookback, 0.20 threshold, 3-minute confirmation.
+- Training-selected stop: S1, 1-minute lookback, 0.05 threshold, 3-minute confirmation; zero uplift in every partition.
+- Against the no-stop diagnostic control: +₹20,215.16 train, +₹831.46 validation, −₹574.69 holdout, +₹20,471.92 full.
+- Correct canonical Phase-20 comparison: +₹18,251.49 train, −₹1,092.14 validation, −₹6,879.84 holdout, +₹10,279.51 full.
+- Promotion: NO. Phase 20 remains canonical.
+- Detailed status: PHASE29_STATUS.md. Manuscript supplement: manuscript/PHASE29_DELTA_CHANGE_SUPPLEMENT.md.
