@@ -259,3 +259,9 @@
 - Phase 29 did not match the user's intended definition: it used past-minute lookbacks, absolute delta differences, and a MEAN mode.
 - These are design errors, not numerical evidence. Phase-29 results remain rejected and are not reused for Phase 30 evidence.
 - Phase 30 uses the sum of the two short-leg delta magnitudes at entry as the fixed reference and evaluates proportional change from that entry reference at each later complete minute.
+
+
+## Phase 30 timing correction — 2026-10-05
+- Pre-run audit found that the shared minute-path loader begins strictly after the recorded entry timestamp. Using the first path observation as the reference would therefore violate the requested entry-time definition.
+- Corrected Phase 30 to reconstruct both short-leg entry deltas directly from the recorded entry premiums, entry spot, entry timestamp and expiry. All subsequent minute observations are expressed proportionally against this fixed entry reference.
+- No numerical evidence was accepted before this correction.
