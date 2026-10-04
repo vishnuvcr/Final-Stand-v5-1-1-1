@@ -35,3 +35,8 @@
 - Holdout bootstrap 95% CI for mean trade-level uplift: −₹141.92 to −₹13.82.
 - No adverse-delta stop selected.
 - **No Phase-27 rule promoted; Phase-20 remains canonical.**
+
+
+## Phase 28 — individual-leg delta research — COMPLETE — 2026-10-04
+
+Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. Coverage was 99.21%. The least-bad training rule was S1 |delta|≤0.05 after 90% target, but it lost ₹2,998.16 training, ₹2,487.05 validation and ₹35.91 in the 2026 holdout. No adverse short-leg delta stop passed. **No promotion; Phase-20 remains canonical.**
