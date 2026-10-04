@@ -1,7 +1,7 @@
-name: Phase 29 individual-leg delta research
+name: Phase 29 delta-change exit research
 
 concurrency:
-  group: phase28-individual-leg-delta
+  group: phase29-delta-change-exit
   cancel-in-progress: true
 
 on:
@@ -10,7 +10,7 @@ on:
       - phase-29-delta-change-exit-research
     paths:
       - "research/phase29_delta_change_research.py"
-      - "PHASE28_PRE_REGISTRATION.md"
+      - "PHASE29_PRE_REGISTRATION.md"
       - ".github/workflows/phase-29-delta-change-exit-research.yml"
   workflow_dispatch:
   pull_request:
@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 jobs:
-  phase28:
+  phase29:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
