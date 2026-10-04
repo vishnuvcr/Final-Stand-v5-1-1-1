@@ -1,0 +1,3 @@
+selection,rule,train_uplift,validation_uplift,holdout_uplift,validation_dd,holdout_dd,validation_winners_affected,holdout_winners_affected
+target,MEAN_target_lb5_d0.20_c3,20215.15618425,831.4560570750015,-574.6921665810005,27321.078748147494,17890.35296654,1,1
+stop,S1_stop_lb1_d0.05_c3,0.0,0.0,0.0,27321.078748147494,17890.35296654,0,0
