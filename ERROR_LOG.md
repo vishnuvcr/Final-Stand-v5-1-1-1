@@ -253,3 +253,9 @@
 - The first corrected implementation evaluated 480 rules with repeated Python path loops and was unacceptably slow on GitHub Actions. It was cancelled before evidence acceptance and replaced with vectorized first-hit confirmation logic. The replacement run completed successfully.
 - The persisted Phase-29 raw summary used the no-stop dynamic-n ledger as its internal diagnostic control. This is not the canonical research comparator. A separate Phase-20 canonical comparison was therefore computed before the final decision; no promotion decision was based on the misleading raw full-sample uplift.
 - No output from the cancelled runs was accepted as research evidence.
+
+
+## Phase 30 methodology correction — 2026-10-05
+- Phase 29 did not match the user's intended definition: it used past-minute lookbacks, absolute delta differences, and a MEAN mode.
+- These are design errors, not numerical evidence. Phase-29 results remain rejected and are not reused for Phase 30 evidence.
+- Phase 30 uses the sum of the two short-leg delta magnitudes at entry as the fixed reference and evaluates proportional change from that entry reference at each later complete minute.
