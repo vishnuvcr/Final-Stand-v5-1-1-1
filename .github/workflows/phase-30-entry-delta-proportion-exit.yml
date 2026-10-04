@@ -2,7 +2,7 @@ name: Phase 30 entry-delta proportion exit research
 
 on:
   push:
-    branches: [phase-30-entry-delta-proportion-exit]
+    branches: [phase-30-entry-delta-proportion-exit, main]
     paths:
       - "research/phase30_entry_delta_proportion_exit.py"
       - "PHASE30_PRE_REGISTRATION.md"
