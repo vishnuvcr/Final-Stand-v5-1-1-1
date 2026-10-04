@@ -378,3 +378,11 @@ Phase 28 directly tested per-leg delta rather than portfolio delta:
 Result: **no individual-leg delta rule promoted.** Training selected S1 at 90% target and |delta|≤0.05 as the least-bad profit-booking rule, but validation and holdout were both negative. No adverse short-leg delta stop passed.
 
 Decision: retain Phase-20 exit logic unchanged. Any future delta research must address a materially different mechanism (for example delta change/rate, gamma/acceleration, or a jointly preregistered risk-state model) rather than re-sweeping the same absolute-delta level grid.
+
+
+## Phase 29 completion — short-leg delta-change exits
+Phase 29 tested whether target and stop exits could be driven entirely by changes in the two short-leg absolute deltas, with no target-percentage criterion, no absolute-delta level trigger and no portfolio-delta trigger. The 480-rule grid covered S1, S2, their mean and a conservative joint statistic across fixed lookbacks, thresholds and confirmations.
+
+Result: **no promotion**. The selected target was MEAN, 5-minute, 0.20 threshold, 3-minute confirmation. The selected stop was S1, 1-minute, 0.05 threshold, 3-minute confirmation and produced zero uplift. Against the canonical Phase-20 strategy, Phase 29 lost ₹1,092.14 in validation and ₹6,879.84 in the 2026 holdout.
+
+Decision: **Phase 20 remains canonical.** The current plan should not add another fixed delta-change threshold sweep. Any future delta work requires a materially different preregistered mechanism, such as delta acceleration/gamma-state conditioning.
