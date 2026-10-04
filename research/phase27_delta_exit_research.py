@@ -99,6 +99,7 @@ def add_deltas(meta, paths):
                 "expiry":entry.expiry,"ts":z["ts"],"direction":entry.direction,
                 "option_type":typ,"spot":z["spot"],"gross":z["gross"],
                 "mfe":z["mfe"],"target":entry.target,
+                "raw_exit":z["raw_exit"],
                 "portfolio_delta":z["portfolio_delta"],"abs_delta":z["abs_delta"],
                 "favorable_delta":z["favorable_delta"],"adverse_delta":z["adverse_delta"],
                 "delta_valid":z["delta_valid"]
