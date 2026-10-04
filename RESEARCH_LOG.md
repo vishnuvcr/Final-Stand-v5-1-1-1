@@ -40,3 +40,13 @@
 ## Phase 28 — individual-leg delta research — COMPLETE — 2026-10-04
 
 Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. Coverage was 99.21%. The least-bad training rule was S1 |delta|≤0.05 after 90% target, but it lost ₹2,998.16 training, ₹2,487.05 validation and ₹35.91 in the 2026 holdout. No adverse short-leg delta stop passed. **No promotion; Phase-20 remains canonical.**
+
+
+## 2026-10-05 — Phase 29 complete: short-leg delta-change exits
+- Tested target and stop entirely from individual/combined short-leg delta change; removed target-percentage criteria.
+- Delta coverage 99.21%; 480 preregistered rules.
+- Training-selected target: MEAN, 5-minute, 0.20 threshold, 3-minute confirmation.
+- Training-selected stop: S1, 1-minute, 0.05 threshold, 3-minute confirmation; zero uplift.
+- Versus canonical Phase 20: +₹18,251.49 training, −₹1,092.14 validation, −₹6,879.84 2026 holdout, +₹10,279.51 full.
+- **Decision: no promotion; Phase 20 remains canonical.**
+- Artifacts persisted on the Phase-29 branch.
