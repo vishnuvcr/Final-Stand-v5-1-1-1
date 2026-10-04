@@ -103,7 +103,8 @@ def main():
         vals=df.net_uplift.to_numpy(float); sims=np.array([rng.choice(vals,len(vals),replace=True).mean() for _ in range(5000)]); boot.append({"period":period,"mean_uplift":vals.mean(),"ci95_low":np.quantile(sims,.025),"ci95_high":np.quantile(sims,.975)})
     pd.DataFrame(boot).to_csv(OUT/"bootstrap_uplift_ci.csv",index=False)
     pd.DataFrame([{"selected_rule":sel["name"],"delta_coverage":coverage,"promotion":promote,"validation_vs_phase20":comp.loc[comp.period=="validation","difference"].iloc[0],"holdout_vs_phase20":comp.loc[comp.period=="holdout","difference"].iloc[0]}]).to_csv(OUT/"phase30_status.csv",index=False)
-    report=f"""# Phase 30 Conclusion — Entry-Referenced Combined Short-Leg Delta Proportion
+    report=f"""# Phase 30
+# Execution revision: path-filter trigger only; research parameters unchanged Conclusion — Entry-Referenced Combined Short-Leg Delta Proportion
 
 **Selected rule:** {sel["name"]}
 
