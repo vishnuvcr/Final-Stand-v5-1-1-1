@@ -38,12 +38,20 @@ def add_deltas(meta,paths):
         if not path: continue
         expiry_ts=pd.Timestamp(e.expiry,tz=TZ)+pd.Timedelta(hours=15,minutes=30); ts=pd.to_datetime([p["ts"] for p in path])
         T=np.maximum((expiry_ts-ts).total_seconds()/31557600.0,1e-10); S=np.asarray([p["spot"] for p in path],float); vals=[]
+        # Entry reference is reconstructed at the actual buy timestamp, not from the first post-entry minute.
+        entry_T=max((expiry_ts-pd.Timestamp(e.entry_ts)).total_seconds()/31557600.0,1e-10)
+        entry_S=float(e.spot_entry)
+        entry_short=[]
+        for K,px in [(e.k_n1,e.raw_entry[1]),(e.k_n2,e.raw_entry[2])]:
+            ed=implied_delta(np.asarray([float(px)]),np.asarray([entry_S]),float(K),np.asarray([entry_T]),e.option_type)[0]
+            entry_short.append(ed)
+        entry_combined=abs(entry_short[0])+abs(entry_short[1]) if all(np.isfinite(entry_short)) else np.nan
         for j,K in enumerate([e.k_n,e.k_n1,e.k_n2]):
             vals.append(implied_delta(np.asarray([p["raw_exit"][j] for p in path],float),S,float(K),T,e.option_type))
         valid=np.isfinite(vals[0])&np.isfinite(vals[1])&np.isfinite(vals[2])
         for i,p in enumerate(path):
             d1,d2=vals[1][i],vals[2][i]; comb=abs(d1)+abs(d2) if np.isfinite(d1+d2) else np.nan
-            rows.append({"expiry":e.expiry,"ts":p["ts"],"direction":e.direction,"option_type":e.option_type,"spot":p["spot"],"gross":p["gross"],"mfe":p["mfe"],"target":e.target,"raw_exit":p["raw_exit"],"short1_delta":d1,"short2_delta":d2,"short1_abs_delta":abs(d1) if np.isfinite(d1) else np.nan,"short2_abs_delta":abs(d2) if np.isfinite(d2) else np.nan,"combined_short_abs_delta":comb,"delta_valid":bool(valid[i])})
+            rows.append({"expiry":e.expiry,"ts":p["ts"],"direction":e.direction,"option_type":e.option_type,"spot":p["spot"],"gross":p["gross"],"mfe":p["mfe"],"target":e.target,"raw_exit":p["raw_exit"],"short1_delta":d1,"short2_delta":d2,"short1_abs_delta":abs(d1) if np.isfinite(d1) else np.nan,"short2_abs_delta":abs(d2) if np.isfinite(d2) else np.nan,"combined_short_abs_delta":comb,"entry_combined_short_abs_delta":entry_combined,"delta_valid":bool(valid[i])})
         if not valid.any(): errors.append({"expiry":e.expiry,"error":"no valid combined short-leg delta observations"})
     return pd.DataFrame(rows),pd.DataFrame(errors)
 def split(df):
@@ -58,7 +66,7 @@ def apply_rule(meta,paths,target,stop,confirm):
     out=[]
     for e in meta.itertuples():
         path=paths.get(e.expiry,[]); base=e.base_net
-        entry=path[0].get("combined_short_abs_delta",np.nan) if path else np.nan
+        entry=path[0].get("entry_combined_short_abs_delta",np.nan) if path else np.nan
         sig=np.array([p.get("combined_short_abs_delta",np.nan) for p in path],float)/entry-1 if np.isfinite(entry) and entry>0 else np.full(len(path),np.nan)
         hit=None
         for i in range(confirm-1,len(path)):
