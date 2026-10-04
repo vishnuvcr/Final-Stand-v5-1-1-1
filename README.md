@@ -384,3 +384,37 @@ Phase 27 tested whether reconstructed **portfolio delta** could improve exits. D
 - [Phase 27 pre-registration](PHASE27_PRE_REGISTRATION.md)
 - [Phase 27 manuscript supplement](manuscript/PHASE27_DELTA_EXIT_SUPPLEMENT.md)
 - [Phase 27 conclusion](results/dynamic_n_corrected/phase27_delta_exit/PHASE27_CONCLUSION.md)
+
+## Phase 28 — individual-leg delta exit research — COMPLETE
+
+Phase 28 directly tested the user's corrected hypothesis: **do not aggregate delta across the portfolio; examine each leg separately, especially the short legs.** S1 is the nearer short OTM-(n+1) leg and S2 is the farther short OTM-(n+2) leg.
+
+The experiment reconstructed each leg's delta independently from observed minute option prices using European Black-Scholes implied volatility, with 99.21% minute-level three-leg delta coverage. The frozen Phase-20 strategy remained the control.
+
+### Phase 28 result
+
+The training selector chose the least-bad short-leg profit rule:
+**S1: MTM ≥ 90% of target AND |delta(S1)| ≤ 0.05.**
+
+It did **not** improve performance:
+- Training uplift: **−₹2,998.16**
+- 2024–2025 validation uplift: **−₹2,487.05**
+- 2026 holdout uplift: **−₹35.91**
+- Full-sample uplift: **−₹5,521.12**
+- Promotion: **NO**
+
+No short-leg adverse-delta stop was promoted. The stop grid generally destroyed substantial P&L, even where it reduced drawdown.
+
+The short-leg diagnostics show S1 is structurally more delta-sensitive than S2 at entry on average (mean absolute delta approximately **0.180 vs 0.155**), but that extra sensitivity did not translate into useful exit timing.
+
+Therefore:
+**Phase 28 rejects individual-leg absolute-delta level rules as a replacement or supplement to the Phase-20 exit logic.**
+The Phase-20 canonical strategy remains unchanged.
+
+Artifacts:
+- [Phase 28 pre-registration](PHASE28_PRE_REGISTRATION.md)
+- [Phase 28 research code](research/phase28_leg_delta_research.py)
+- [Phase 28 workflow](.github/workflows/phase-28-individual-leg-delta-research.yml)
+- [Phase 28 conclusion](results/dynamic_n_corrected/phase28_leg_delta_exit/PHASE28_CONCLUSION.md)
+- [Phase 28 grid](results/dynamic_n_corrected/phase28_leg_delta_exit/individual_leg_delta_grid.csv)
+- [Phase 28 walk-forward selection](results/dynamic_n_corrected/phase28_leg_delta_exit/selected_leg_rules_walkforward.csv)
