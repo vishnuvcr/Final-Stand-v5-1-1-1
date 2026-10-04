@@ -230,3 +230,9 @@
 - In addition, the first implementation applied the Phase-20 stop only after scanning the whole path, which could let a later delta exit override an earlier control stop.
 - Corrected both issues: every delta candidate is now compared against the exact Phase-20 control exit for that trade, and exit precedence is evaluated minute-by-minute as target → delta profit → delta adverse stop → Phase-20 conditional stop, followed by the control expiry fallback.
 - The prior numerical outputs are retained only as diagnostics and are not accepted as Phase-27 evidence.
+
+## Phase 27 — artifact persistence race (2026-10-04)
+- Corrected numerical run 4 completed successfully, but the persistence step failed because the branch advanced while the runner was executing; `git rebase` encountered unstaged generated results.
+- No numerical evidence was lost conceptually, but the artifacts were not committed by that run.
+- Hardened the workflow to commit generated results before rebasing, then push the rebased commit.
+- A fresh execution is required so the corrected control-comparison artifacts are committed reproducibly.
