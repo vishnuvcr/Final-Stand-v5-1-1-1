@@ -359,3 +359,7 @@ No alternative passed the training eligibility gate. The closest curvature alter
 Decision: retain OTM6/7/8 as the final direction chooser. No further permutation of the same signal families is registered.
 
 See PHASE25_PRE_REGISTRATION.md, PHASE25_STATUS.md, results/dynamic_n_corrected/phase25_direction_chooser/PHASE25_CONCLUSION.md, and manuscript/PHASE25_DIRECTION_CHOOSER_SUPPLEMENT.md.
+
+## Phase 27 extension — delta-based exit research
+
+Phase 27 was added as a controlled extension after the Phase-20 canonical strategy. The plan tests portfolio-delta-based profit booking and adverse-delta stops against the frozen Phase-20 strategy using the same costs/slippage and train/validation/2026 holdout protocol. It is now complete. No delta rule passed the promotion gate, so the canonical strategy is unchanged.
