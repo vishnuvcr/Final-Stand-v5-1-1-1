@@ -446,3 +446,16 @@
 - Preregistered Black-Scholes implied-volatility/portfolio-delta reconstruction, profit-booking thresholds, adverse-delta stops, walk-forward selection, bootstrap inference, and promotion gates.
 - External methodological review: NSE confirms NIFTY index options are European-style; the literature indicates practitioner implied-BS delta is model-dependent, motivating sensitivity checks.
 - A pre-evidence implementation omission of raw exit prices was detected and corrected; no result was accepted from the affected run.
+
+
+## 2026-10-04 — Phase 27 complete: delta-based exit research
+- Created isolated branch `phase-27-delta-exit-research`.
+- Preregistered portfolio-delta profit booking and adverse-delta stop families.
+- Literature review covered NSE contract specifications and research on implied-BS, smile-adjusted and regime-dependent deltas.
+- Delta coverage: 99.21%.
+- The training-selected rule was MTM >= 0.90×target with |portfolio delta| <= 0.05.
+- Against the locked Phase-20 control, this lost ₹2,334.04 in validation and ₹1,108.04 in the 2026 holdout.
+- Bootstrap holdout mean uplift CI: −₹141.92 to −₹13.82.
+- No adverse-delta stop was selected.
+- **Decision: no delta exit promoted; Phase-20 remains canonical.**
+- Detailed supplement: `manuscript/PHASE27_DELTA_EXIT_SUPPLEMENT.md`.
