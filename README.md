@@ -374,3 +374,13 @@ The direct test therefore does not support a two-loss-saving claim. It also does
 - [Phase 26 conclusion](results/dynamic_n_corrected/phase26_fixed789/PHASE26_CONCLUSION.md)
 - [Phase 26 manuscript supplement](manuscript/PHASE26_789_STRUCTURE_SUPPLEMENT.md)
 - [Phase 26 status](PHASE26_STATUS.md)
+
+
+## Phase 27 — Delta-based exit research — COMPLETE
+
+Phase 27 tested whether reconstructed **portfolio delta** could improve exits. Delta coverage was 99.21%. The training-selected rule was **MTM ≥ 0.90×target and |portfolio delta| ≤ 0.05**, but versus the locked Phase-20 strategy it produced **−₹2,334.04 validation uplift** and **−₹1,108.04 2026 holdout uplift**. The holdout bootstrap 95% CI for mean trade-level uplift was **−₹141.92 to −₹13.82**. No adverse-delta stop was selected. **No delta rule is promoted; Phase-20 remains canonical.**
+
+- [Phase 27 status](PHASE27_STATUS.md)
+- [Phase 27 pre-registration](PHASE27_PRE_REGISTRATION.md)
+- [Phase 27 manuscript supplement](manuscript/PHASE27_DELTA_EXIT_SUPPLEMENT.md)
+- [Phase 27 conclusion](results/dynamic_n_corrected/phase27_delta_exit/PHASE27_CONCLUSION.md)
