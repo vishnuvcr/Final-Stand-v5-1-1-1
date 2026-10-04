@@ -182,7 +182,9 @@ def max_dd(vals):
 def main():
     base=load_trade_ledgers(); meta=build_boundary_metadata(base); spot=load_spot()
     raw_paths, path_errors=load_candidate_paths(meta,spot)
+    print(f"Phase28: loaded {len(meta)} trades and {sum(len(v) for v in raw_paths.values())} path observations", flush=True)
     delta_rows, delta_errors=add_deltas(meta,raw_paths)
+    print(f"Phase28: delta panel complete; coverage={delta_rows.delta_valid.mean():.4%}", flush=True)
     paths={}
     for exp,g in delta_rows.groupby("expiry",sort=False):
         paths[exp]=g.to_dict("records")
@@ -222,8 +224,9 @@ def main():
                 rules.append({"name":f"{label}_stop_d{d:.2f}_c{c}","leg_col":leg,"profit_frac":None,
                               "profit_threshold":None,"adverse_threshold":d,"confirm":c})
     grid=[]; details={}
-    for r in rules:
+    for idx,r in enumerate(rules,1):
         df=apply_rule(meta,paths,r); details[r["name"]]=df; grid.append({**r,**summary(df)})
+        if idx % 10 == 0: print(f"Phase28 rule {idx}/{len(rules)} complete", flush=True)
     grid_df=pd.DataFrame(grid); grid_df.to_csv(OUT/"individual_leg_delta_grid.csv",index=False)
 
     train_rows=[]
