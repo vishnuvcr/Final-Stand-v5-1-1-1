@@ -125,3 +125,5 @@ if __name__=="__main__": main()
 # Phase 31 execution retry: frozen dependency restored; parameters unchanged.
 
 # Phase 31 retry: restored canonical backtest dependency.
+
+# Phase 31 retry: restored frozen trade ledger dependency.
