@@ -459,3 +459,11 @@
 - No adverse-delta stop was selected.
 - **Decision: no delta exit promoted; Phase-20 remains canonical.**
 - Detailed supplement: `manuscript/PHASE27_DELTA_EXIT_SUPPLEMENT.md`.
+
+## Phase 28 — individual-leg delta exit research — COMPLETE — 2026-10-04
+
+Question: does the delta of each option leg, especially the two short legs, provide useful exit information that portfolio delta hides?
+
+Result: **No promotion.** Delta coverage 99.21%. Training-selected rule was S1 |delta| <= 0.05 after MTM reached 90% of target. Uplift was -₹2,998.16 training, -₹2,487.05 validation and -₹35.91 in the 2026 holdout. Full-sample uplift was -₹5,521.12. No adverse short-leg delta stop passed.
+
+Interpretation: S1 is more delta-sensitive than S2 on average, but absolute delta level did not provide robust incremental exit timing. Phase-20 remains canonical.
