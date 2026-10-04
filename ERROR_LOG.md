@@ -207,3 +207,10 @@
 - No numerical or execution error occurred in the successful Phase-26 workflow.
 - The research scope was kept explicit: this was a direct structure test using the standard corrected target/expiry fallback, not an unregistered substitution of the Phase-20 expiry-day stop.
 - No failed numerical run was used as evidence.
+
+
+## Phase 27 — pre-evidence implementation correction (2026-10-04)
+- Initial delta panel rows omitted the raw three-leg exit prices needed by the existing audited `net_at()` cost engine when a delta-triggered exit was selected.
+- The omission was identified before any Phase-27 result was accepted.
+- Corrected the delta panel to retain `raw_exit` for every minute observation, then allowed the workflow to rerun from the corrected code.
+- The affected run is not treated as evidence.
