@@ -1,4 +1,5 @@
-# Phase 30 Conclusion — Entry-Referenced Combined Short-Leg Delta Proportion
+# Phase 30
+# Execution revision: path-filter trigger only; research parameters unchanged Conclusion — Entry-Referenced Combined Short-Leg Delta Proportion
 
 **Selected rule:** target0.60_stop0.60_c1
 
