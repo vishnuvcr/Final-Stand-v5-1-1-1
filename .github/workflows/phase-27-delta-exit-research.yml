@@ -52,8 +52,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/dynamic_n_corrected/phase27_delta_exit
+          git commit -m "Phase 27: persist delta exit research results" || true
           git fetch origin phase-27-delta-exit-research
           git rebase origin/phase-27-delta-exit-research
-          git add results/dynamic_n_corrected/phase27_delta_exit
-          git commit -m "Phase 27: persist delta exit research results" || exit 0
           git push origin HEAD:phase-27-delta-exit-research
