@@ -89,7 +89,7 @@ def add_deltas(meta, paths):
         leg=[]
         for j,K in enumerate(strikes):
             px=np.asarray([p["raw_exit"][j] for p in path],float)
-            leg.append(implied_vol_delta(px,S,T,K,typ))
+            leg.append(implied_vol_delta(px,S,K,T,typ))
         dport=leg[0]-leg[1]-leg[2]
         valid=np.isfinite(dport)
         favorable=np.where(typ=="CE",dport,-dport)
