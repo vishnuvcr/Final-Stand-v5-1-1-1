@@ -386,3 +386,18 @@ Phase 29 tested whether target and stop exits could be driven entirely by change
 Result: **no promotion**. The selected target was MEAN, 5-minute, 0.20 threshold, 3-minute confirmation. The selected stop was S1, 1-minute, 0.05 threshold, 3-minute confirmation and produced zero uplift. Against the canonical Phase-20 strategy, Phase 29 lost ₹1,092.14 in validation and ₹6,879.84 in the 2026 holdout.
 
 Decision: **Phase 20 remains canonical.** The current plan should not add another fixed delta-change threshold sweep. Any future delta work requires a materially different preregistered mechanism, such as delta acceleration/gamma-state conditioning.
+
+
+## Phase 30 — entry-referenced combined short-leg delta proportion exits
+
+A new phase was registered after a methodological correction to Phase 29. The research question is whether target and stop can be driven entirely by the proportional change from entry in the combined delta magnitude of the two short option legs.
+
+Definition:
+- S1 = short OTM-(n+1); S2 = short OTM-(n+2).
+- Entry reference D0 = |Delta S1(entry)| + |Delta S2(entry)|.
+- Current D(t) = |Delta S1(t)| + |Delta S2(t)|.
+- Proportional change R(t) = D(t)/D0 - 1.
+- Target when R(t) falls below the selected negative threshold.
+- Stop when R(t) rises above the selected positive threshold.
+
+There is no prior-minute lookback, no delta difference in absolute units, no mean of the two legs, and no option-P&L target percentage. Candidate target/stop thresholds and 1/3-minute confirmation are selected on training only, then frozen for validation and the 2026 holdout. Phase-20 remains the canonical comparator and promotion requires positive validation and holdout improvement with drawdown protection.
