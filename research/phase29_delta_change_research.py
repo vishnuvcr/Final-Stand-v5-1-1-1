@@ -216,10 +216,19 @@ def main():
             if not p.get("delta_valid"): continue
             for rule in [selected_target,selected_stop]:
                 if not rule: continue
-                ch=delta_change(path,i,rule["mode"],int(rule["lookback"]))
-                hit=(ch<=-float(rule["threshold"])) if rule["kind"]=="TARGET" else (ch>=float(rule["threshold"]))
+                conf=int(rule["confirm"])
+                if i < conf-1: continue
+                if conf==1:
+                    vals=[delta_change(path,i,rule["mode"],int(rule["lookback"]))]
+                else:
+                    win=path[i-conf+1:i+1]
+                    exact=all((pd.Timestamp(win[j]["ts"])-pd.Timestamp(win[j-1]["ts"])).total_seconds()==60 for j in range(1,len(win)))
+                    if not exact: continue
+                    vals=[delta_change(path,j,rule["mode"],int(rule["lookback"])) for j in range(i-conf+1,i+1)]
+                if not all(np.isfinite(v) for v in vals): continue
+                hit=all((v<=-float(rule["threshold"])) if rule["kind"]=="TARGET" else (v>=float(rule["threshold"])) for v in vals)
                 if hit:
-                    stop={"p":p,"reason":"DELTA_CHANGE_TARGET" if rule["kind"]=="TARGET" else "DELTA_CHANGE_STOP"}; break
+                    stop={"p":path[i-conf+1] if conf>1 else p,"reason":"DELTA_CHANGE_TARGET" if rule["kind"]=="TARGET" else "DELTA_CHANGE_STOP"}; break
             if stop: break
         if stop is None: cand=e.base_net; ts=e.exit_ts; reason="EXPIRY_FALLBACK"
         else: cand=net_at(e,stop["p"]); ts=stop["p"]["ts"]; reason=stop["reason"]
