@@ -418,3 +418,25 @@ Artifacts:
 - [Phase 28 conclusion](results/dynamic_n_corrected/phase28_leg_delta_exit/PHASE28_CONCLUSION.md)
 - [Phase 28 grid](results/dynamic_n_corrected/phase28_leg_delta_exit/individual_leg_delta_grid.csv)
 - [Phase 28 walk-forward selection](results/dynamic_n_corrected/phase28_leg_delta_exit/selected_leg_rules_walkforward.csv)
+
+
+## Phase 29 — short-leg delta-change exit research — COMPLETE / REJECTED
+
+Phase 29 tested the user's requested mechanism: **target and stop entirely from individual or combined short-leg delta change**, with the target-percentage criterion removed. No portfolio delta, absolute-delta level, or Phase-20 conditional stop was used inside the candidate.
+
+- Delta coverage: **99.21%**
+- Training-selected target: **MEAN, 5-minute lookback, 0.20 delta-change threshold, 3-minute confirmation**
+- Training-selected stop: **S1, 1-minute lookback, 0.05 threshold, 3-minute confirmation**; zero uplift in every partition
+- Raw no-stop diagnostic uplift: +₹831.46 validation, −₹574.69 2026 holdout
+- **Canonical Phase-20 comparison:** −₹1,092.14 validation and **−₹6,879.84** 2026 holdout
+- Full-sample difference versus Phase 20: +₹10,279.51, but this is not sufficient because both OOS periods are negative
+- **Decision: NO PROMOTION — Phase 20 remains canonical.**
+
+Artifacts:
+- [Phase 29 status](PHASE29_STATUS.md)
+- [Phase 29 pre-registration](PHASE29_PRE_REGISTRATION.md)
+- [Phase 29 research code](research/phase29_delta_change_research.py)
+- [Phase 29 workflow](.github/workflows/phase-29-delta-change-exit-research.yml)
+- [Phase 29 conclusion](results/dynamic_n_corrected/phase29_delta_change_exit/PHASE29_CONCLUSION.md)
+- [Phase 29 manuscript supplement](manuscript/PHASE29_DELTA_CHANGE_SUPPLEMENT.md)
+- [Phase 20 canonical comparison](results/dynamic_n_corrected/phase29_delta_change_exit/phase20_canonical_comparison.csv)
