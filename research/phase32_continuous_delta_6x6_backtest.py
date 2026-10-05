@@ -212,22 +212,32 @@ def run_expiry(expiry,option_df,spot_df,target_dir,window_start):
             on="timestamp",how="inner"
         ).sort_values("timestamp").reset_index(drop=True)
 
-        exit_row=None; exit_reason=None; exit_delta=np.nan
-        for pidx,pr in path.iterrows():
-            tleft=max((expiry_ts-pd.Timestamp(pr.timestamp)).total_seconds()/31557600.0,1e-10)
-            d=implied_delta(
-                np.asarray([pr[short_k]]),
-                np.asarray([pr.spot]),
-                np.asarray([short_k]),
-                np.asarray([tleft]),
-                typ
-            )[0]
-            if not np.isfinite(d):
-                continue
-            hit=(d>=.50 or d<=.04) if typ=="CE" else (d<=-.50 or d>=-.04)
-            if hit:
-                exit_row=pr; exit_delta=d; exit_reason="DELTA_EXIT"
-                break
+        # Vectorized exit-delta inversion over the full future path.
+        # This is computationally equivalent to the prior minute-by-minute
+        # calculation but materially faster for the 1-minute historical sample.
+        tleft=np.maximum(
+            (expiry_ts-pd.to_datetime(path.timestamp)).dt.total_seconds().to_numpy(float)
+            /31557600.0,
+            1e-10
+        )
+        deltas=implied_delta(
+            path[short_k].to_numpy(float),
+            path.spot.to_numpy(float),
+            np.full(len(path),short_k,float),
+            tleft,
+            typ
+        )
+        hit=(deltas>=.50)|(deltas<=.04) if typ=="CE" else (deltas<=-.50)|(deltas>=-.04)
+        hit_idx=np.flatnonzero(np.isfinite(deltas)&hit)
+        if len(hit_idx):
+            eidx=int(hit_idx[0])
+            exit_row=path.iloc[eidx]
+            exit_delta=float(deltas[eidx])
+            exit_reason="DELTA_EXIT"
+        else:
+            exit_row=path.iloc[-1]
+            exit_delta=np.nan
+            exit_reason="CONTRACT_EXPIRY"
 
         if exit_row is None:
             exit_row=path.iloc[-1]
