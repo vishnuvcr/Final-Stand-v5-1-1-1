@@ -68,16 +68,16 @@ def bs_price(S,K,T,sig,typ):
     return S*norm_cdf(d1)-K*norm_cdf(d2) if typ=="CE" else K*norm_cdf(-d2)-S*norm_cdf(-d1)
 
 def implied_delta(price,S,K,T,typ):
-    p=np.asarray(price,float); s=np.asarray(S,float); t=np.asarray(T,float)
+    p=np.asarray(price,float); s=np.asarray(S,float); t=np.asarray(T,float); K=np.asarray(K,float)
     intrinsic=np.maximum(s-K,0) if typ=="CE" else np.maximum(K-s,0)
     valid=np.isfinite(p)&np.isfinite(s)&np.isfinite(t)&(t>0)&(s>0)&(p>=intrinsic-1e-7)&(p>1e-8)
     out=np.full(p.shape,np.nan)
     if not valid.any(): return out
-    idx=np.where(valid)[0]; pp=p[idx]; ss=s[idx]; tt=t[idx]
+    idx=np.where(valid)[0]; pp=p[idx]; ss=s[idx]; tt=t[idx]; kk=K[idx]
     lo=np.full_like(pp,1e-5); hi=np.full_like(pp,5.0); x=np.full_like(pp,.30)
     for _ in range(16):
-        d1=(np.log(ss/K)+.5*x*x*tt)/(x*np.sqrt(tt))
-        px=bs_price(ss,K,tt,x,typ); v=ss*np.exp(-.5*d1*d1)/np.sqrt(2*np.pi)*np.sqrt(tt)
+        d1=(np.log(ss/kk)+.5*x*x*tt)/(x*np.sqrt(tt))
+        px=bs_price(ss,kk,tt,x,typ); v=ss*np.exp(-.5*d1*d1)/np.sqrt(2*np.pi)*np.sqrt(tt)
         xn=np.clip(x-(px-pp)/np.maximum(v,1e-10),lo,hi)
         bad=~np.isfinite(xn)|(v<1e-10); xn[bad]=(lo[bad]+hi[bad])/2
         pxn=bs_price(ss,K,tt,xn,typ); low=pxn<pp
