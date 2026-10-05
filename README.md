@@ -273,3 +273,10 @@ Phase-32 artifacts:
 ### Phase 32 computational optimization — 2026-10-06
 - Exit-delta calculation was vectorized across each trade's future 1-minute path without changing the frozen strategy rules.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/c0ec4b90fd33eee75ed0515343e28d431aee924a
+
+
+### Phase 32 primary-sample coverage correction — 2026-10-06
+- Run #31 completed successfully but was rejected after artifact audit because missing/incomplete expiry files contaminated the later current-week windows.
+- The corrected engine now uses the NSE expiry-day calendar and stops at the first missing or incomplete weekly expiry path.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/a529ed4bd2519f2a47607ad53dd09ff522068c3b
+- Run #31 artifacts remain retained for audit only.

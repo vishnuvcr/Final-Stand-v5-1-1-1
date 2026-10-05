@@ -140,3 +140,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Correction: vectorize the same exit-delta calculation over the entire future path, then select the first qualifying observation chronologically.
 - This does not alter the trading rules or numerical inputs.
 - Corrected commit: c0ec4b90fd33eee75ed0515343e28d431aee924a.
+
+
+## Phase 32 data-coverage/model-window error — 2026-10-06
+- Audit of successful run 37386696219 found that some option files ended days before their stated expiry, while some intermediate weekly expiry files were absent.
+- The prior engine assumed adjacent available expiry files were adjacent current-week expiries. This can trade a future contract before it becomes current and can falsely treat the last available bar as contract expiry.
+- The successful run is therefore non-evidence.
+- Correction: derive expected weekly expiry dates from the NIFTY trading calendar using the NSE Thursday-to-Tuesday expiry-day transition, require every expected expiry file to be present, and require option and spot data to reach the expiry-day observation window. Stop the primary sample at the first gap/incomplete contract.
+- Corrected commit: a529ed4bd2519f2a47607ad53dd09ff522068c3b.

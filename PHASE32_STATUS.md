@@ -98,3 +98,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - The mathematical inputs, first-hit rule, chronological state machine, execution model and cost model are unchanged.
 - This optimization is required because the scalar minute-by-minute inversion risks exceeding the GitHub Actions timeout on the full historical sample.
 - Corrected commit: c0ec4b90fd33eee75ed0515343e28d431aee924a.
+
+
+### Step 11 — contiguous data-coverage correction
+- The successful run #31 is rejected as numerical evidence because the public dataset contains incomplete expiry files and missing weekly contracts; later-week contracts were therefore not guaranteed to be the actual current weekly expiry.
+- Added an NSE-consistent expected weekly expiry calendar: Thursday expiries through 28-Aug-2025 and Tuesday expiries for contracts expiring on/after 01-Sep-2025; holiday expiries use the previous observed NIFTY trading day.
+- The primary engine now stops at the first missing expected expiry file or incomplete option/spot path and writes coverage.json.
+- Corrected commit: a529ed4bd2519f2a47607ad53dd09ff522068c3b.
+- Run #31 artifacts are retained for audit only, not accepted as primary performance evidence.

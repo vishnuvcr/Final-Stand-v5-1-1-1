@@ -116,3 +116,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Vectorized the exit-delta inversion across future minute paths.
 - Preserved exact first-hit chronology and all frozen thresholds; optimization changes execution speed only.
 - Corrected commit: c0ec4b90fd33eee75ed0515343e28d431aee924a.
+
+
+## 2026-10-06 — Phase 32 primary data-coverage correction
+- Run #31 completed successfully but its result was rejected after artifact audit.
+- The artifact contained contract-termination trades whose option data stopped well before the nominal expiry, and a July-2026 contract was traded across a period with missing intervening weekly expiry files.
+- NSE circulars confirm NIFTY weekly expiry was Thursday through contracts expiring on/before 28-Aug-2025 and Tuesday for contracts expiring on/after 01-Sep-2025; holiday expiry uses the previous trading day. citeturn751823search12turn751823search13turn751823search0
+- The engine now uses that expected weekly calendar and a strict contiguous-complete-data rule. A machine-readable coverage.json is produced with the results.
