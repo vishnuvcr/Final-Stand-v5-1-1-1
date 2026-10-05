@@ -150,3 +150,8 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Final manuscript: manuscript/PHASE32_CONTINUOUS_DELTA_MANUSCRIPT.md
 - Final conclusion: results/dynamic_strategy_phase32/PHASE32_CONCLUSION.md
 - Statistical summary: results/dynamic_strategy_phase32/PHASE32_STATISTICAL_SUMMARY.csv
+### Step 15 — evidence-package and repository closeout
+- Final manuscript, conclusion, statistical summary, results index, frozen rule card, literature supplement and repository-hosted figures are now present on the Phase-32 branch.
+- Accepted workflow artifact is preserved as GitHub Actions artifact ID 11380124540, SHA-256 `c97657e5ec4acd4023e133e82cb586b242f030f7ef76985638fcdbcf0b84943`.
+- Main-branch README now links to the completed Phase-32 research package.
+- Final decision remains **PROMISING BUT INSUFFICIENTLY ROBUST — NO LIVE PROMOTION**; Phase-20 remains canonical.
