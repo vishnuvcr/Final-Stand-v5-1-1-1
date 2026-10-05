@@ -123,3 +123,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The artifact contained contract-termination trades whose option data stopped well before the nominal expiry, and a July-2026 contract was traded across a period with missing intervening weekly expiry files.
 - NSE circulars confirm NIFTY weekly expiry was Thursday through contracts expiring on/before 28-Aug-2025 and Tuesday for contracts expiring on/after 01-Sep-2025; holiday expiry uses the previous trading day. citeturn751823search12turn751823search13turn751823search0
 - The engine now uses that expected weekly calendar and a strict contiguous-complete-data rule. A machine-readable coverage.json is produced with the results.
+
+
+## 2026-10-06 — Phase 32 historical lot-size audit correction #2
+- Cross-check of the initial sample boundary found that the July-2021 monthly NIFTY expiry used the revised 50-lot contract before the August weekly transition.
+- Corrected the 29-Jul-2021 monthly exception and invalidated all prior numerical runs.

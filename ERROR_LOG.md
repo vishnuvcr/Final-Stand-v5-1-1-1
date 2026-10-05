@@ -148,3 +148,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The successful run is therefore non-evidence.
 - Correction: derive expected weekly expiry dates from the NIFTY trading calendar using the NSE Thursday-to-Tuesday expiry-day transition, require every expected expiry file to be present, and require option and spot data to reach the expiry-day observation window. Stop the primary sample at the first gap/incomplete contract.
 - Corrected commit: a529ed4bd2519f2a47607ad53dd09ff522068c3b.
+
+
+## Phase 32 historical contract-size error — 29-Jul-2021 monthly expiry — 2026-10-06
+- NSE Circular 28/2021 states that the July-2021 far-month NIFTY expiry was revised from 75 to 50 lots, while August-2021 weekly expiries onward used the revised lot.
+- The date-only multiplier assigned 75 to 29-Jul-2021.
+- No result from the pre-correction engine is accepted.
+- Correction: explicit 29-Jul-2021 monthly exception at 50 lots.
+- Corrected commit: d13af44516adec61ea0015eca2ab361fad5c9c2c.

@@ -106,3 +106,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - The primary engine now stops at the first missing expected expiry file or incomplete option/spot path and writes coverage.json.
 - Corrected commit: a529ed4bd2519f2a47607ad53dd09ff522068c3b.
 - Run #31 artifacts are retained for audit only, not accepted as primary performance evidence.
+
+
+### Step 10 — July 2021 historical lot-size correction
+- NSE Circular 28/2021 revised the July-2021 far-month NIFTY expiry to 50 lots while July weekly contracts otherwise retained the old lot until August weekly expiries.
+- The engine's broad pre-August-2021 rule incorrectly assigned 75 to the 29-Jul-2021 monthly expiry.
+- Corrected with an explicit 29-Jul-2021 exception at 50 lots.
+- Corrected commit: d13af44516adec61ea0015eca2ab361fad5c9c2c.
+- All earlier runs remain non-evidence.
