@@ -208,3 +208,10 @@ Paytm Money historical brokerage notice: https://www.paytmmoney.com/blog/brokera
 NSE 02-Mar-2024 special session: https://nsearchives.nseindia.com/content/circulars/MSD60677.pdf
 
 NSE 01-Feb-2026 special session: https://nsearchives.nseindia.com/content/circulars/FAOP72352.pdf
+
+
+## 17. Figures and supplements
+
+![Phase 32 final evidence figures](../results/dynamic_strategy_phase32/figures/PHASE32_FIGURES.svg)
+
+See the [literature and external-evidence supplement](../results/dynamic_strategy_phase32/PHASE32_LITERATURE_REVIEW.md), the [frozen rule card](../results/dynamic_strategy_phase32/PHASE32_STRATEGY_RULES.md), the [results index](../results/dynamic_strategy_phase32/PHASE32_RESULTS_INDEX.md), and the [final statistical summary](../results/dynamic_strategy_phase32/PHASE32_STATISTICAL_SUMMARY.csv).
