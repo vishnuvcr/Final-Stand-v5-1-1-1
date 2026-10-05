@@ -21,13 +21,14 @@
 - Added PHASE32_STRATEGY_SPEC.md.
 
 ### Numerical execution
-**Not started in this initialization step.**
+**First CI execution failed before numerical execution due to missing NumPy dependency. Correction in progress.**
 
 ### Errors
 - The first local file-write wrapper attempt failed due to JavaScript quoting syntax; it was corrected before repository evidence was accepted.
 - The error is recorded in `ERROR_LOG.md`.
 
-No numerical/backtest implementation error has occurred yet.
+- CI run 37380393437 failed before numerical execution: NumPy was absent from the runner.
+- The push-triggered workflow also exposed empty optional input environment variables; the script is being hardened to use defaults.
 
 ### Next registered phase step
 Implement and audit the continuous trade state machine, then run the Phase-32 GitHub Actions workflow. Do not change the frozen strategy after observing numerical results.
