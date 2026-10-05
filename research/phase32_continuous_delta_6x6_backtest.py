@@ -82,10 +82,10 @@ def implied_delta(price,S,K,T,typ):
         px=bs_price(ss,kk,tt,x,typ); v=ss*np.exp(-.5*d1*d1)/np.sqrt(2*np.pi)*np.sqrt(tt)
         xn=np.clip(x-(px-pp)/np.maximum(v,1e-10),lo,hi)
         bad=~np.isfinite(xn)|(v<1e-10); xn[bad]=(lo[bad]+hi[bad])/2
-        pxn=bs_price(ss,K,tt,xn,typ); low=pxn<pp
+        pxn=bs_price(ss,kk,tt,xn,typ); low=pxn<pp
         lo=np.where(low,xn,lo); hi=np.where(low,hi,xn); x=xn
-    residual=np.abs(bs_price(ss,K,tt,x,typ)-pp); good=residual<=.03
-    out[idx[good]]=bs_delta(ss[good],K,tt,x[good],typ)
+    residual=np.abs(bs_price(ss,kk,tt,x,typ)-pp); good=residual<=.03
+    out[idx[good]]=bs_delta(ss[good],kk[good],tt[good],x[good],typ)
     return out
 
 def nearest_delta_strike(q,spot,ts,typ,target):
