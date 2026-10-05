@@ -58,3 +58,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The push-triggered workflow also passed empty SAMPLE_START/SAMPLE_END variables because workflow_dispatch inputs are unavailable on push events.
 - No numerical evidence was produced or accepted.
 - Correction: explicitly install numpy, pandas, pyarrow and huggingface_hub; harden script defaults for empty environment variables.
+
+
+## Phase 32 CI error — implied-delta vectorization — 2026-10-06
+- GitHub Actions run 37380443812 reached historical data processing but failed in `implied_delta()` because a scalar strike argument was combined with a vector of option prices/strikes.
+- No numerical result was accepted.
+- Correction: vectorize strike handling inside the implied-volatility/delta inversion and expose the repository HF_TOKEN secret to the workflow.
