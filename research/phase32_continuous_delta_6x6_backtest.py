@@ -128,13 +128,14 @@ def expiry_list(api):
     # the current weekly contract for that week and must not be excluded.
     return sorted(set(out))
 
-def run_expiry(expiry,option_df,spot_df,target_dir):
+def run_expiry(expiry,option_df,spot_df,target_dir,window_start):
     df=option_df.copy()
     expiry_ts=expiry+pd.Timedelta(hours=15,minutes=30)
     df["expiry_ts"]=expiry_ts
     spot_df=spot_df.sort_values("timestamp").copy()
     timeline=spot_df[
-        (spot_df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))
+        (spot_df.timestamp>window_start)
+        &(spot_df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))
     ].drop_duplicates("timestamp").reset_index(drop=True)
     trades=[]; skips=[]
     cursor=0
@@ -290,9 +291,13 @@ def main():
         try: od=load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
         except Exception as e: all_skips.append([str(expiry.date()),"load",repr(e)]); continue
         od["option_type"]=od.option_type.astype(str).str.upper(); od["strike"]=pd.to_numeric(od.strike,errors="coerce"); od=od.dropna(subset=["strike","timestamp","close"])
-        sd=spot[(spot.timestamp>=expiry-pd.Timedelta(days=14))&(spot.timestamp<=expiry)].copy()
-        if sd.empty: continue
-        tr,sk,target_dir=run_expiry(expiry,od,sd,target_dir); all_trades.extend(tr); all_skips.extend([[str(expiry.date()),*x] for x in sk])
+        prev_expiry = expiries[i-1] if i>0 else None
+        window_start = prev_expiry+pd.Timedelta(hours=15,minutes=30) if prev_expiry is not None else expiry
+        sd=spot[(spot.timestamp>window_start)&(spot.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))].copy()
+        if sd.empty:
+            all_skips.append([str(expiry.date()),"no_current_week_window",str(window_start)])
+            continue
+        tr,sk,target_dir=run_expiry(expiry,od,sd,target_dir,window_start); all_trades.extend(tr); all_skips.extend([[str(expiry.date()),*x] for x in sk])
         print(f"expiry {expiry.date()} trades={len(tr)} direction={'CALL' if target_dir==1 else 'PUT'}",flush=True)
     tr=pd.DataFrame(all_trades)
     if tr.empty:
