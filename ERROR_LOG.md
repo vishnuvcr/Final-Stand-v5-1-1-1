@@ -180,3 +180,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - This is a model-window/lookahead contamination and invalidates run #39 as final evidence.
 - Correction: for every expected expiry, anchor the entry window to the immediately preceding expected calendar expiry timestamp, regardless of whether that preceding option file is present.
 - Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.
+
+
+## Phase 32 final-evidence audit note — 2026-10-06
+- No new implementation error was found in final run #41.
+- Two weekend-dated trades were audited and confirmed as legitimate NSE special live sessions: 02-Mar-2024 and 01-Feb-2026.
+- Final evidence was accepted only from run 37388261915 after the calendar-boundary correction.
