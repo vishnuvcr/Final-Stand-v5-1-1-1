@@ -1,0 +1,47 @@
+name: Phase 32 - Continuous Delta 6x6 Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      sample_start:
+        description: 'Primary sample start date (YYYY-MM-DD)'
+        required: false
+        default: '2021-01-01'
+      sample_end:
+        description: 'Primary sample end date (YYYY-MM-DD)'
+        required: false
+        default: '2026-09-30'
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Phase 32 backtest
+        env:
+          SAMPLE_START: ${{ inputs.sample_start }}
+          SAMPLE_END: ${{ inputs.sample_end }}
+        run: |
+          python research/phase32_continuous_delta_6x6_backtest.py
+
+      - name: Upload Phase 32 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase32-results
+          path: |
+            results/dynamic_strategy_phase32/**
+            phase32_run.log
+          if-no-files-found: warn
