@@ -39,3 +39,10 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - This was inconsistent with the frozen rule current weekly expiry because the monthly expiry is also the current weekly contract for that week.
 - No result from the affected runs is accepted.
 - Corrected in commit d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f; corrected run 37383091606 is now the active numerical attempt.
+
+
+### Step 5 — execution-convention audit correction
+- The live specification includes a final-action window ending 120 seconds before the 15:30 market close.
+- The 1-minute historical engine initially allowed fresh entries in the 15:28 and 15:29 bars.
+- No result from runs using that behavior is accepted.
+- Corrected the entry filter to reject timestamps at or after 15:28 IST; corrected engine commit 1513a1c00df8693ea630f6dae52d67a28164c1c7.

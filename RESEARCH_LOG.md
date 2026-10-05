@@ -66,3 +66,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The affected numerical runs are explicitly marked invalid and will not be used.
 - Corrected the expiry enumeration to include every weekly expiry file, including monthly expiries.
 - Corrected execution started as GitHub Actions run 37383091606 from commit d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f.
+
+
+## 2026-10-06 — Phase 32 execution-convention audit correction
+- A further specification audit found that the 1-minute engine did not implement the live strategy's final 120-second action cutoff for new entries.
+- Entries at 15:28 and 15:29 are now blocked; existing positions remain eligible for delta-triggered exits through the permitted contract path.
+- Runs before this correction are not accepted as evidence.

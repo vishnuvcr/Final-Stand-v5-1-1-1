@@ -79,3 +79,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Correction: include all dated weekly-expiry parquet files in the registered sample.
 - Corrected commit: d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f.
 - Corrected numerical run: 37383091606.
+
+
+## Phase 32 execution-convention error — final 120-second entry cutoff — 2026-10-06
+- Audit found that the engine allowed fresh entries during the 15:28 and 15:29 one-minute bars.
+- The frozen live execution convention states that action stops in the final 120 seconds before the 15:30 close.
+- Those runs are invalid for evidence because they can create trades that the live strategy would not initiate.
+- Correction: reject fresh entries at or after 15:28 IST in the 1-minute historical engine.
+- Corrected commit: 1513a1c00df8693ea630f6dae52d67a28164c1c7.

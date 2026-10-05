@@ -225,3 +225,9 @@ Phase-32 artifacts:
 - Corrected engine commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f
 - Corrected run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37383091606
 - Phase 32 remains open pending a successful corrected numerical run and audit of its artifacts.
+
+
+### Phase 32 execution-convention correction — 2026-10-06
+- The 1-minute engine initially allowed fresh entries in the final 120 seconds before market close, contrary to the live execution convention.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/1513a1c00df8693ea630f6dae52d67a28164c1c7
+- All earlier Phase-32 runs remain non-evidence.
