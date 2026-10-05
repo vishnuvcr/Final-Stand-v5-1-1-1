@@ -1,6 +1,8 @@
 name: Phase 32 - Continuous Delta 6x6 Backtest
 
 on:
+  push:
+    branches: [phase-32-continuous-delta-6x6-backtest]
   workflow_dispatch:
     inputs:
       sample_start:
