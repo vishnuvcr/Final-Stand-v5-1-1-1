@@ -64,3 +64,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - GitHub Actions run 37380443812 reached historical data processing but failed in `implied_delta()` because a scalar strike argument was combined with a vector of option prices/strikes.
 - No numerical result was accepted.
 - Correction: vectorize strike handling inside the implied-volatility/delta inversion and expose the repository HF_TOKEN secret to the workflow.
+
+
+## Phase 32 CI error — Black–Scholes strike vectorization — 2026-10-06
+- GitHub Actions run 37380642460 failed after the first vectorization correction because the lower-level `bs_price()` helper still treated strike as scalar.
+- No numerical evidence was accepted.
+- Correction: vectorize S, K, T and sigma consistently in both Black–Scholes price and delta helpers.
