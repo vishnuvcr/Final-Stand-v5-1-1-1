@@ -148,3 +148,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - This preserves the current-week definition even when the historical source has a missing expiry file.
 - Run #39 is reclassified as diagnostic/non-evidence.
 - Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.
+
+
+## 2026-10-06 — Phase 32 final evidence and closeout
+- Final corrected engine revision f89e1e5574aa26b69288ae93b9cf180bf9882242 executed successfully in GitHub Actions run 37388261915 (run #41).
+- Final evidence contains 478 completed trades, ₹83,820.48 net P&L, 63.60% win rate, profit factor 1.112, and ₹94,492.83 maximum drawdown.
+- Final coverage audit found 25 missing expected expiry files and one incomplete expiry file; the last complete trade-producing expiry is 19-May-2026.
+- Calendar-year results are negative in 2021 and 2022, positive in 2023–2025, and approximately flat/negative in the available 2026 segment.
+- Statistical evidence does not establish a positive mean trade P&L; bootstrap CI crosses zero and the t-test p-value is approximately 0.293.
+- Execution sensitivity is material: four modeled slippage ticks per order eliminate the aggregate edge; five ticks make it clearly negative.
+- Final classification: **PROMISING BUT INSUFFICIENTLY ROBUST**.
+- Phase-20 remains the canonical historical strategy; no Phase-32 parameter change is promoted.
