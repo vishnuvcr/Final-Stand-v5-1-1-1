@@ -347,7 +347,7 @@ def main():
               "missing_expiries":[str(x.date()) for x in missing_expected],
               "coverage_rule":"process all available weekly-expiry files; log missing/incomplete expiries and continue"}
 
-    prev_processed_expiry=None
+    expected_index={d:i for i,d in enumerate(expected)}
     for expiry in expiries:
         try: od=load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
         except Exception as e:
@@ -362,10 +362,14 @@ def main():
             all_skips.append([str(expiry.date()),"incomplete_expiry_data",f"last_option_timestamp={option_max}"])
             continue
 
-        if prev_processed_expiry is None:
+        idx=expected_index[expiry]
+        if idx==0:
             window_start=expiry-pd.Timedelta(days=7)
         else:
-            window_start=prev_processed_expiry+pd.Timedelta(hours=15,minutes=30)
+            # Use the calendar's immediately preceding expected expiry,
+            # not the last successfully processed file. Missing/incomplete
+            # option files must never enlarge the next contract's window.
+            window_start=expected[idx-1]+pd.Timedelta(hours=15,minutes=30)
 
         sd=spot[(spot.timestamp>window_start)&(spot.timestamp<=required_last)].copy()
         if sd.empty or sd.timestamp.max()<required_last:
@@ -375,7 +379,6 @@ def main():
         tr,sk,target_dir=run_expiry(expiry,od,sd,target_dir,window_start)
         all_trades.extend(tr)
         all_skips.extend([[str(expiry.date()),*x] for x in sk])
-        prev_processed_expiry=expiry
         print(f"expiry {expiry.date()} trades={len(tr)} direction={'CALL' if target_dir==1 else 'PUT'}",flush=True)
 
     processed_expiries=sorted(set(t["expiry"] for t in all_trades))
