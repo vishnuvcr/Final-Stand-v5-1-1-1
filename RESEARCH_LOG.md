@@ -134,3 +134,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Added the historically correct 2025 Monday transition before the permanent Tuesday expiry schedule.
 - NSE Circular 33/2025 changed NIFTY weekly expiry from Thursday to Monday effective April 04, 2025; NSE Circular 111/2025 later changed it to Tuesday for contracts expiring on/after September 01, 2025. 
 - Final reproduction run will establish the accepted evidence on the final engine revision.
+
+
+## 2026-10-06 — Phase 32 coverage reconciliation and correction
+- External audit of the Hugging Face dataset showed the NIFTY option repository contains later expiry files beyond the first missing week, despite the prior run stopping at the first gap.
+- The successful run was therefore reclassified as an execution-valid but sample-truncated diagnostic, not final evidence.
+- The engine now continues across missing expiry files and records the exact missing dates.
+- The first expiry now uses a seven-day pre-expiry spot window so the entry opportunity is not artificially removed.

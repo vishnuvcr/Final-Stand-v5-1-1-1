@@ -163,3 +163,12 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Correction: Thursday through 03-Apr-2025; Monday for 04-Apr-2025 to 28-Aug-2025; Tuesday from 01-Sep-2025 onward.
 - The accepted 2021 primary evidence is unaffected, but the phase will be reproduced on the final code revision.
 - Corrected commit: d9299e5b343a0bfdfe289b5e4065570b2ed86d99.
+
+
+## Phase 32 coverage-policy error — stop at first missing expiry — 2026-10-06
+- Run 37387371178 completed successfully but its coverage logic stopped at the missing 04-Nov-2021 expiry file even though subsequent expiries (for example 11-Nov-2021 onward) are present in the dataset.
+- This was an overly restrictive implementation of the coverage rule and produced only a 2021 partial sample.
+- The result is not accepted as the phase result.
+- Correction: process all available expected weekly expiries, log missing/incomplete expiries individually, and continue.
+- Also corrected the first-expiry entry window from expiry midnight to a seven-day pre-expiry window.
+- Corrected commit: 977913fa176bc5c826bb00bcb5684e61bc6c912f.

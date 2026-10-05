@@ -120,3 +120,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Corrected the expected NIFTY weekly expiry schedule for the 2025 transition: Thursday through 03-Apr-2025, Monday for contracts from 04-Apr-2025 through 28-Aug-2025, Tuesday from 01-Sep-2025 onward, with holiday adjustment to the prior trading day.
 - This change cannot affect the accepted 2021 primary sample, but a final reproduction run will be used so the evidence and final engine revision are identical.
 - Corrected commit: d9299e5b343a0bfdfe289b5e4065570b2ed86d99.
+
+
+### Step 11 — expiry-coverage policy correction
+- The successful run exposed an overly restrictive coverage rule: the engine stopped at the first missing expiry file (04-Nov-2021) even though later expiry files are present in the Hugging Face dataset.
+- Corrected the engine to process all available expected weekly expiries, log each missing/incomplete expiry, and continue.
+- Corrected the first-expiry window so the first weekly contract can use the valid seven-day pre-expiry trading window.
+- Corrected commit: 977913fa176bc5c826bb00bcb5684e61bc6c912f.
+- The previous successful numerical run is non-evidence for the final result because it truncated the sample at the first gap.

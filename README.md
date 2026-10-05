@@ -291,3 +291,10 @@ Phase-32 artifacts:
 ### Phase 32 final expiry-calendar correction — 2026-10-06
 - Historical NIFTY weekly expiry logic now includes the temporary Monday schedule in April-August 2025 before the permanent Tuesday schedule.
 - Final reproduction is being run on the corrected engine; the accepted 2021 result is not affected by this out-of-sample calendar correction.
+
+
+### Phase 32 coverage reconciliation — 2026-10-06
+- The first successful run was sample-truncated because the engine stopped at the first missing 04-Nov-2021 expiry even though later expiries exist.
+- Corrected engine: process all available expiries and log missing/incomplete dates; first expiry now has a valid pre-expiry window.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/977913fa176bc5c826bb00bcb5684e61bc6c912f
+- Prior P&L remains non-evidence for the phase conclusion.
