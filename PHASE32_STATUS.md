@@ -135,3 +135,18 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Corrected the engine so missing or incomplete option files do not enlarge the following contract's entry window.
 - Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.
 - Run #39 is diagnostic only and is not accepted as final evidence.
+
+
+### Step 14 — final numerical evidence and phase decision
+- Final accepted engine revision: f89e1e5574aa26b69288ae93b9cf180bf9882242.
+- Final accepted workflow: GitHub Actions run 37388261915 (run #41), completed successfully with artifact upload.
+- Final artifact ID: 11380124540; SHA-256 c97657e5ec4acd4023e133e82cb586b242f030f7ef76985638fcdbcf0b84943.
+- Final sample: 478 trades; net P&L ₹83,820.48; win rate 63.60%; profit factor 1.112; maximum drawdown ₹94,492.83.
+- Coverage: 264 expected expiries, 239 available, 25 missing, one incomplete; 238 processed; last complete trade-producing expiry 19-May-2026.
+- Statistical result: mean-trade bootstrap 95% CI approximately -₹156 to +₹494; t-test p≈0.293.
+- Slippage sensitivity: 1 tick ₹83,820; 2 ticks ₹54,378; 3 ticks ₹24,936; 4 ticks -₹4,506.
+- Decision under the preregistered promotion standard: **PROMISING BUT INSUFFICIENTLY ROBUST**.
+- No Phase-32 strategy modification is promoted. Phase-20 remains canonical.
+- Final manuscript: manuscript/PHASE32_CONTINUOUS_DELTA_MANUSCRIPT.md
+- Final conclusion: results/dynamic_strategy_phase32/PHASE32_CONCLUSION.md
+- Statistical summary: results/dynamic_strategy_phase32/PHASE32_STATISTICAL_SUMMARY.csv
