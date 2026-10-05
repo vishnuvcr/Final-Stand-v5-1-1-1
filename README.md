@@ -323,3 +323,12 @@ Headline result: 478 trades, ₹83,820.48 net P&L, 63.60% win rate, 1.112 profit
 The result is **not promoted** because the source has material expiry gaps, the trade-level mean is statistically weak, calendar-year performance is unstable, and moderate execution deterioration removes the edge.
 
 **Phase-20 remains the canonical historical strategy.**
+
+
+### Phase 32 final package
+
+- [Results index](results/dynamic_strategy_phase32/PHASE32_RESULTS_INDEX.md)
+- [Frozen rule card](results/dynamic_strategy_phase32/PHASE32_STRATEGY_RULES.md)
+- [Literature supplement](results/dynamic_strategy_phase32/PHASE32_LITERATURE_REVIEW.md)
+- [Evidence figures](results/dynamic_strategy_phase32/figures/PHASE32_FIGURES.svg)
+- [Complete manuscript](manuscript/PHASE32_CONTINUOUS_DELTA_MANUSCRIPT.md)
