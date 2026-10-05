@@ -85,3 +85,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 — Phase 32 implementation regression correction
 - The chronological state-machine rewrite introduced a non-numerical regression by removing the `expiry_ts` dataframe column needed by the delta-inversion helper.
 - Corrected before evidence acceptance; no result from run 37384048259 is used.
+
+
+## 2026-10-06 — Phase 32 historical lot-size audit correction
+- Historical contract-size validation found that NIFTY lot-size changes must be applied by expiry cycle, not only by a single calendar cutoff.
+- NSE's 2024 revision specifies the first revised weekly expiry on 02-May-2024; the November-2024 revision specifies the last weekly expiry at the old lot on 19-Dec-2024 and first revised weekly expiry on 02-Jan-2025, with the January-2025 monthly expiry still on the old lot and first revised monthly expiry on 27-Feb-2025.
+- NSE's 2025 revision specifies the last weekly old-lot expiry on 23-Dec-2025, first weekly 65-lot expiry on 06-Jan-2026, last monthly old-lot expiry on 30-Dec-2025, and first monthly 65-lot expiry on 27-Jan-2026.
+- Corrected commit: a29a17470b751c947ba1aa0f8c7ed6d3abfc6e13.

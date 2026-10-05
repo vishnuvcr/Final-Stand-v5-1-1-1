@@ -244,3 +244,9 @@ Phase-32 artifacts:
 - Run 37384048259 failed before numerical execution because the state-machine rewrite omitted the option `expiry_ts` field.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/81b83fb4af8f075a9fec2bab42304a7c8964b45a
 - No evidence from the failed run is used.
+
+
+### Phase 32 lot-size audit correction — 2026-10-06
+- Historical NIFTY lot-size transitions are now applied by expiry cycle using NSE's published transition dates rather than a coarse calendar cutoff.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/a29a17470b751c947ba1aa0f8c7ed6d3abfc6e13
+- Earlier Phase-32 numerical runs are not evidence.

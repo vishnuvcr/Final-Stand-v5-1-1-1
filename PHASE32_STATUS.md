@@ -60,3 +60,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Corrected run 37384048259 failed immediately after the chronological rewrite because `run_expiry()` no longer assigned the option dataframe's `expiry_ts` field required by the delta-selection helper.
 - No numerical evidence was produced.
 - Restored `df["expiry_ts"] = expiry_ts` in commit 81b83fb4af8f075a9fec2bab42304a7c8964b45a.
+
+
+### Step 8 — historical lot-size audit correction
+- Audited the NIFTY contract-size schedule against NSE circulars.
+- The previous engine treated the 2024-2025 transition too coarsely. The corrected schedule now reflects: 50-lot through the last pre-May-2024 weekly contract; 25-lot after the first revised weekly expiry on 02-May-2024; 25 through the last old weekly/monthly expiries in December 2024, with the first revised weekly expiry on 02-Jan-2025; the 30-Jan-2025 monthly expiry remains 25 while the first revised monthly expiry is 27-Feb-2025; 75 thereafter until the first 65-lot weekly expiry on 06-Jan-2026, with first revised monthly expiry 27-Jan-2026.
+- Primary references: NSE circulars and their expiry-specific annexures; these are recorded in the phase research log.
+- Corrected commit: a29a17470b751c947ba1aa0f8c7ed6d3abfc6e13.
+- All numerical runs before this correction are non-evidence.
