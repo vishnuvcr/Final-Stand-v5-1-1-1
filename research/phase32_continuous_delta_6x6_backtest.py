@@ -9,7 +9,7 @@ START=pd.Timestamp((os.getenv("SAMPLE_START") or "2021-05-27"),tz=TZ)
 END=pd.Timestamp((os.getenv("SAMPLE_END") or "2026-09-30"),tz=TZ)
 OUT=Path("results/dynamic_strategy_phase32"); OUT.mkdir(parents=True,exist_ok=True)
 TICK=0.05; SLIPPAGE_TICKS=float(os.getenv("SLIPPAGE_TICKS","1"))
-LOTS=6; WIDTH=50.0; ENTRY_HOUR=9; ENTRY_MINUTE=20
+LOTS=6; WIDTH=50.0; ENTRY_HOUR=9; ENTRY_MINUTE=20; LAST_ENTRY_HOUR=15; LAST_ENTRY_MINUTE=28
 BROKERAGE_PER_ORDER=10.0
 
 def lot_size_for_expiry(expiry):
@@ -129,6 +129,8 @@ def run_expiry(expiry,option_df,spot_df,target_dir):
         # entry candidates only if flat and direction points here; after an exit the next candidate is later in same day.
         for ts in day_spot.timestamp.tolist():
             if ts.hour<ENTRY_HOUR or (ts.hour==ENTRY_HOUR and ts.minute<ENTRY_MINUTE): continue
+            # Tradetron execution convention: no fresh action in the final 120 seconds before 15:30.
+            if ts.hour>LAST_ENTRY_HOUR or (ts.hour==LAST_ENTRY_HOUR and ts.minute>=LAST_ENTRY_MINUTE): continue
             if pos is not None: break
             row=day_spot[day_spot.timestamp==ts]
             spot=float(row.spot.iloc[0])
