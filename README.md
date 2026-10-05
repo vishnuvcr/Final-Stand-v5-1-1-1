@@ -195,3 +195,25 @@ Phase 30 tested entry-referenced proportional movement in the combined absolute 
 - [Phase 30 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-30-entry-delta-proportion-exit)
 - [Phase 30 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-30-entry-delta-proportion-exit/PHASE30_STATUS.md)
 - [Phase 30 conclusion](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-30-entry-delta-proportion-exit/results/dynamic_n_corrected/phase30_entry_delta_proportion_exit/PHASE30_CONCLUSION.md)
+
+
+## Phase 32 — Continuous Delta 6x6 Vertical Spread — INITIALIZED
+
+A separate research branch has been created for the user-specified Tradetron strategy:
+
+- Branch: [phase-32-continuous-delta-6x6-backtest](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-32-continuous-delta-6x6-backtest)
+- Strategy: 6-lot-per-leg, 50-point weekly vertical spread using a +0.25 CE / -0.25 PE short-leg delta entry and short-leg delta exits at 0.50 or 0.04 magnitude boundaries.
+- Direction engine: start CALL; keep direction after a winning trade; flip after a losing trade.
+- Entries: from 09:20 IST, blocked on weekly expiry day.
+- No universal 15:25 daily square-off.
+- No discretionary rollover.
+- Primary historical backtest resolution: 1-minute, because the public primary data used by this repository are 1-minute.
+
+Phase-32 artifacts:
+- [Research plan](PHASE32_RESEARCH_PLAN.md)
+- [Pre-registration](PHASE32_PRE_REGISTRATION.md)
+- [Strategy specification](PHASE32_STRATEGY_SPEC.md)
+- [Status](PHASE32_STATUS.md)
+- [Manual workflow](.github/workflows/phase-32-continuous-delta-6x6-backtest.yml)
+
+**Numerical backtest has not yet been accepted as evidence.** The branch is initialized and the strategy specification is frozen before numerical execution. The Phase-20 dynamic-n strategy remains the canonical historical strategy for the main research line.
