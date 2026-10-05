@@ -105,9 +105,11 @@ def expiry_list(api):
         m=re.match(r"options/NIFTY/(\d{4}-\d{2}-\d{2})\.parquet$",f)
         if m:
             d=pd.Timestamp(m.group(1),tz=TZ)
-            if START<=d<=END: out.append(d)
-    monthly={(d.year,d.month):max(x for x in out if x.year==d.year and x.month==d.month) for d in out}
-    return [d for d in sorted(set(out)) if monthly[(d.year,d.month)]!=d]
+            if START<=d<=END:
+                out.append(d)
+    # The strategy trades the current weekly expiry. A monthly expiry is also
+    # the current weekly contract for that week and must not be excluded.
+    return sorted(set(out))
 
 def run_expiry(expiry,option_df,spot_df,target_dir):
     df=option_df.copy(); df["expiry_ts"]=expiry+pd.Timedelta(hours=15,minutes=30)
@@ -179,6 +181,7 @@ def main():
     api=HfApi(token=os.getenv("HF_TOKEN") or None)
     spot=load("index/NIFTY.parquet")[["timestamp","close"]].rename(columns={"close":"spot"})
     expiries=expiry_list(api); all_trades=[]; all_skips=[]; target_dir=1
+    print(f"sample_start={START.date()} sample_end={END.date()} expiries={len(expiries)}",flush=True)
     for i,expiry in enumerate(expiries):
         try: od=load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
         except Exception as e: all_skips.append([str(expiry.date()),"load",repr(e)]); continue
