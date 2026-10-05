@@ -58,11 +58,13 @@ def norm_cdf(x):
     return np.where(x>=0,cdf,1-cdf)
 
 def bs_delta(S,K,T,sig,typ):
+    S=np.asarray(S,float); K=np.asarray(K,float); T=np.asarray(T,float); sig=np.asarray(sig,float)
     T=np.maximum(T,1e-10); sig=np.maximum(sig,1e-8)
     d1=(np.log(S/K)+.5*sig*sig*T)/(sig*np.sqrt(T)); n=norm_cdf(d1)
     return n if typ=="CE" else n-1
 
 def bs_price(S,K,T,sig,typ):
+    S=np.asarray(S,float); K=np.asarray(K,float); T=np.asarray(T,float); sig=np.asarray(sig,float)
     T=np.maximum(T,1e-10); sig=np.maximum(sig,1e-8)
     d1=(np.log(S/K)+.5*sig*sig*T)/(sig*np.sqrt(T)); d2=d1-sig*np.sqrt(T)
     return S*norm_cdf(d1)-K*norm_cdf(d2) if typ=="CE" else K*norm_cdf(-d2)-S*norm_cdf(-d1)
