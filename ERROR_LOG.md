@@ -156,3 +156,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - No result from the pre-correction engine is accepted.
 - Correction: explicit 29-Jul-2021 monthly exception at 50 lots.
 - Corrected commit: d13af44516adec61ea0015eca2ab361fad5c9c2c.
+
+
+## Phase 32 historical expiry-calendar correction — 2026-10-06
+- The expected-expiry generator initially modeled Thursday-to-Tuesday directly and omitted NSE's temporary Monday expiry period in April-August 2025.
+- Correction: Thursday through 03-Apr-2025; Monday for 04-Apr-2025 to 28-Aug-2025; Tuesday from 01-Sep-2025 onward.
+- The accepted 2021 primary evidence is unaffected, but the phase will be reproduced on the final code revision.
+- Corrected commit: d9299e5b343a0bfdfe289b5e4065570b2ed86d99.

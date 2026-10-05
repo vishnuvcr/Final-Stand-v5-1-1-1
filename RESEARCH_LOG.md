@@ -128,3 +128,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 — Phase 32 historical lot-size audit correction #2
 - Cross-check of the initial sample boundary found that the July-2021 monthly NIFTY expiry used the revised 50-lot contract before the August weekly transition.
 - Corrected the 29-Jul-2021 monthly exception and invalidated all prior numerical runs.
+
+
+## 2026-10-06 — Phase 32 final expiry-calendar correction
+- Added the historically correct 2025 Monday transition before the permanent Tuesday expiry schedule.
+- NSE Circular 33/2025 changed NIFTY weekly expiry from Thursday to Monday effective April 04, 2025; NSE Circular 111/2025 later changed it to Tuesday for contracts expiring on/after September 01, 2025. 
+- Final reproduction run will establish the accepted evidence on the final engine revision.

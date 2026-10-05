@@ -286,3 +286,8 @@ Phase-32 artifacts:
 - Corrected the 29-Jul-2021 NIFTY monthly contract multiplier from 75 to 50 in accordance with NSE Circular 28/2021.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/d13af44516adec61ea0015eca2ab361fad5c9c2c
 - All pre-correction Phase-32 runs remain non-evidence.
+
+
+### Phase 32 final expiry-calendar correction — 2026-10-06
+- Historical NIFTY weekly expiry logic now includes the temporary Monday schedule in April-August 2025 before the permanent Tuesday schedule.
+- Final reproduction is being run on the corrected engine; the accepted 2021 result is not affected by this out-of-sample calendar correction.

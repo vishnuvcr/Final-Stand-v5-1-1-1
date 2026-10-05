@@ -114,3 +114,9 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Corrected with an explicit 29-Jul-2021 exception at 50 lots.
 - Corrected commit: d13af44516adec61ea0015eca2ab361fad5c9c2c.
 - All earlier runs remain non-evidence.
+
+
+### Step 12 — final historical expiry-calendar correction
+- Corrected the expected NIFTY weekly expiry schedule for the 2025 transition: Thursday through 03-Apr-2025, Monday for contracts from 04-Apr-2025 through 28-Aug-2025, Tuesday from 01-Sep-2025 onward, with holiday adjustment to the prior trading day.
+- This change cannot affect the accepted 2021 primary sample, but a final reproduction run will be used so the evidence and final engine revision are identical.
+- Corrected commit: d9299e5b343a0bfdfe289b5e4065570b2ed86d99.
