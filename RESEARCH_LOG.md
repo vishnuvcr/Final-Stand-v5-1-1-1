@@ -80,3 +80,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Replaced this with an explicit chronological cursor and post-exit advancement.
 - Corrected engine commit df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e.
 - All prior Phase-32 runs remain non-evidence.
+
+
+## 2026-10-06 — Phase 32 implementation regression correction
+- The chronological state-machine rewrite introduced a non-numerical regression by removing the `expiry_ts` dataframe column needed by the delta-inversion helper.
+- Corrected before evidence acceptance; no result from run 37384048259 is used.

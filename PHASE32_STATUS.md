@@ -54,3 +54,9 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - A trade now occupies the timeline from its entry until its actual exit or contract termination; overlapping/impossible re-entry is prevented.
 - Corrected commit: df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e.
 - All earlier Phase-32 numerical runs remain invalid and will not be used.
+
+
+### Step 7 — state-machine regression correction
+- Corrected run 37384048259 failed immediately after the chronological rewrite because `run_expiry()` no longer assigned the option dataframe's `expiry_ts` field required by the delta-selection helper.
+- No numerical evidence was produced.
+- Restored `df["expiry_ts"] = expiry_ts` in commit 81b83fb4af8f075a9fec2bab42304a7c8964b45a.

@@ -238,3 +238,9 @@ Phase-32 artifacts:
 - The engine now enforces strict chronological occupation of a position and only permits the next entry after the realized exit timestamp.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e
 - All earlier Phase-32 runs are invalid and will not be used.
+
+
+### Phase 32 implementation regression correction — 2026-10-06
+- Run 37384048259 failed before numerical execution because the state-machine rewrite omitted the option `expiry_ts` field.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/81b83fb4af8f075a9fec2bab42304a7c8964b45a
+- No evidence from the failed run is used.

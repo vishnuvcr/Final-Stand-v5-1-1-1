@@ -95,3 +95,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - No numerical evidence from those runs is accepted.
 - Correction: replace the nested day/entry loop with a strict chronological cursor; after exit, resume only at the first timestamp strictly after the realized exit.
 - Corrected commit: df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e.
+
+
+## Phase 32 implementation regression — missing expiry_ts after state-machine rewrite — 2026-10-06
+- Corrected run 37384048259 failed before numerical execution because the rewritten `run_expiry()` did not restore the `expiry_ts` column required by `nearest_delta_strike()`.
+- No research evidence was produced or accepted.
+- Correction: restore the expiry timestamp column in `run_expiry()`.
+- Corrected commit: 81b83fb4af8f075a9fec2bab42304a7c8964b45a.
