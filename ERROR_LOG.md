@@ -117,3 +117,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - No result from the pre-correction run is accepted.
 - Correction: branch direction on positive, negative, and exactly zero net P&L separately.
 - Corrected commit: 559f520ba7feb795e2b09fd6ab17bfc083fd7ba0.
+
+
+## Phase 32 historical contract-size error — 30-Jan-2025 NIFTY monthly lot — 2026-10-06
+- Audit against NSE Circular 131/2024 found that the existing NIFTY monthly expiry on 30-Jan-2025 retained the old 25 lot, while revised weekly contracts had already moved to 75 from the 02-Jan-2025 weekly expiry.
+- The date-only lot-size function incorrectly assigned 75 to the 30-Jan-2025 monthly expiry.
+- No result from the pre-correction engine is accepted.
+- Correction: explicit 30-Jan-2025 monthly exception at 25 lots.
+- Corrected commit: 29458cacb40eab39cdd96c1b57881a70b1829b74.

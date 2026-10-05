@@ -75,3 +75,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - The frozen state machine requires zero net P&L to preserve the current direction.
 - Corrected commit: 559f520ba7feb795e2b09fd6ab17bfc083fd7ba0.
 - The running candidate before this correction is not accepted as evidence.
+
+
+### Step 9 — historical NIFTY lot-size correction
+- NSE's 2024 contract-size revision requires weekly NIFTY contracts to use 75 from the 02-Jan-2025 revised weekly expiry, while the existing 30-Jan-2025 monthly contract remains at 25.
+- The prior date-only lot-size function incorrectly assigned 75 to 30-Jan-2025.
+- Corrected by adding the 30-Jan-2025 monthly exception.
+- Corrected commit: 29458cacb40eab39cdd96c1b57881a70b1829b74.
+- All runs before this correction remain non-evidence.

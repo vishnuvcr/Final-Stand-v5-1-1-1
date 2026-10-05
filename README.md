@@ -256,3 +256,9 @@ Phase-32 artifacts:
 - Corrected a final state-machine mismatch: exact zero net P&L now preserves direction as pre-registered.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/559f520ba7feb795e2b09fd6ab17bfc083fd7ba0
 - The pre-correction candidate is not accepted as evidence.
+
+
+### Phase 32 historical lot-size correction — 2026-10-06
+- Corrected the 30-Jan-2025 NIFTY monthly contract multiplier from 75 to the actual 25-lot existing monthly size.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/29458cacb40eab39cdd96c1b57881a70b1829b74
+- All pre-correction Phase-32 runs remain non-evidence.

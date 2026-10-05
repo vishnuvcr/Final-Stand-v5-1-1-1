@@ -97,3 +97,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 — Phase 32 zero-net state correction
 - Final pre-result state-machine audit found zero-P&L handling inconsistent with the pre-registration.
 - Corrected before numerical evidence acceptance; the preceding candidate run is invalid for evidence.
+
+
+## 2026-10-06 — Phase 32 historical contract-size audit correction
+- Historical lot-size rules were cross-checked against NSE circulars.
+- Corrected the single 30-Jan-2025 monthly NIFTY expiry exception: 25 lots, despite revised weekly contracts using 75 from 02-Jan-2025.
+- Earlier numerical runs remain invalid for evidence.
