@@ -13,10 +13,27 @@ LOTS=6; WIDTH=50.0; ENTRY_HOUR=9; ENTRY_MINUTE=20; LAST_ENTRY_HOUR=15; LAST_ENTR
 BROKERAGE_PER_ORDER=10.0
 
 def lot_size_for_expiry(expiry):
-    if expiry<pd.Timestamp("2021-08-01",tz=TZ): return 75
-    if expiry<pd.Timestamp("2024-05-02",tz=TZ): return 50
-    if expiry<pd.Timestamp("2025-01-02",tz=TZ): return 25
-    if expiry<pd.Timestamp("2026-01-06",tz=TZ): return 75
+    # Expiry-specific NIFTY market-lot transitions from NSE circulars.
+    # 75 -> 50: first revised weekly expiry Aug-2021; July-2021 monthly was
+    # already revised to 50, so use 29-Jul-2021 as the practical cutoff.
+    # 50 -> 25: first revised weekly expiry 02-May-2024.
+    # 25 -> 75: last weekly old = 19-Dec-2024; first weekly new = 02-Jan-2025.
+    # The Jan-2025 monthly expiry (30-Jan-2025) remained on 25; first revised
+    # monthly expiry was 27-Feb-2025.
+    # 75 -> 65: first revised weekly expiry 06-Jan-2026; first revised monthly
+    # expiry 27-Jan-2026.
+    if expiry < pd.Timestamp("2021-07-29",tz=TZ):
+        return 75
+    if expiry < pd.Timestamp("2024-05-02",tz=TZ):
+        return 50
+    if expiry <= pd.Timestamp("2024-12-26",tz=TZ):
+        return 25
+    if expiry <= pd.Timestamp("2025-01-23",tz=TZ):
+        return 75
+    if expiry == pd.Timestamp("2025-01-30",tz=TZ):
+        return 25
+    if expiry < pd.Timestamp("2026-01-06",tz=TZ):
+        return 75
     return 65
 
 def fee_rates(d):
