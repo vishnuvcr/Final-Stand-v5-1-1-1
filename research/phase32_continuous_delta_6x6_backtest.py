@@ -114,6 +114,7 @@ def expiry_list(api):
 def run_expiry(expiry,option_df,spot_df,target_dir):
     df=option_df.copy()
     expiry_ts=expiry+pd.Timedelta(hours=15,minutes=30)
+    df["expiry_ts"]=expiry_ts
     spot_df=spot_df.sort_values("timestamp").copy()
     timeline=spot_df[
         (spot_df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))
