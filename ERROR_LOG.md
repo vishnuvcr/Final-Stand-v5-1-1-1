@@ -125,3 +125,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - No result from the pre-correction engine is accepted.
 - Correction: explicit 30-Jan-2025 monthly exception at 25 lots.
 - Corrected commit: 29458cacb40eab39cdd96c1b57881a70b1829b74.
+
+
+## Phase 32 current-week contract window error — 2026-10-06
+- The prior engine examined each expiry using the preceding 14 calendar days, which could trade the next week's contract before it became the current weekly expiry.
+- This violates the frozen strategy definition and can materially change entries, direction state and P&L.
+- Correction: each expiry gets a non-overlapping evaluation window beginning strictly after the previous expiry's contract termination. The first available expiry has no prior in-sample window and therefore cannot generate a valid entry.
+- Corrected commit: 1675f86b8a71add7a73c03479731e3a5623716b.

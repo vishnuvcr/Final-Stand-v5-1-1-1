@@ -262,3 +262,9 @@ Phase-32 artifacts:
 - Corrected the 30-Jan-2025 NIFTY monthly contract multiplier from 75 to the actual 25-lot existing monthly size.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/29458cacb40eab39cdd96c1b57881a70b1829b74
 - All pre-correction Phase-32 runs remain non-evidence.
+
+
+### Phase 32 current-week expiry correction — 2026-10-06
+- The engine was corrected so a weekly option contract is only traded after the previous expiry has terminated and before the current expiry, matching the literal current-week rule.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/1675f86b8a71add7a73c03479731e3a5623716b
+- All prior Phase-32 runs remain invalid/non-evidence.

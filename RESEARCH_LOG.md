@@ -103,3 +103,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Historical lot-size rules were cross-checked against NSE circulars.
 - Corrected the single 30-Jan-2025 monthly NIFTY expiry exception: 25 lots, despite revised weekly contracts using 75 from 02-Jan-2025.
 - Earlier numerical runs remain invalid for evidence.
+
+
+## 2026-10-06 — Phase 32 current-week expiry audit correction
+- A contract-selection audit found that the 14-day historical slice was incompatible with the rule current weekly expiry.
+- The corrected engine uses adjacent-expiry windows, preventing the future week's contract from being traded while an earlier weekly contract is still current.
+- The first in-sample expiry is treated as a warm-up/coverage boundary rather than an executable trade window.
+- Corrected commit: 1675f86b8a71add7a73c03479731e3a5623716b.

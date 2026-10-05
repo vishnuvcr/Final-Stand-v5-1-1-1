@@ -83,3 +83,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Corrected by adding the 30-Jan-2025 monthly exception.
 - Corrected commit: 29458cacb40eab39cdd96c1b57881a70b1829b74.
 - All runs before this correction remain non-evidence.
+
+
+### Step 9 — current-week expiry-window correction
+- Audit found that the prior engine supplied each expiry with a 14-day spot window. This allowed a later-week option contract to be entered before that contract became the current weekly expiry.
+- Corrected the engine to process each expiry only in the chronological window strictly after the previous expiry's contract termination and through the current expiry.
+- The first available expiry is not used for entries because its preceding current-week window is outside the available dataset.
+- Corrected commit: 1675f86b8a71add7a73c03479731e3a5623716b.
+- All numerical runs before this correction are non-evidence.
