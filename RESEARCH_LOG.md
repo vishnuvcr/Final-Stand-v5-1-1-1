@@ -50,3 +50,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Versus canonical Phase 20: +₹18,251.49 training, −₹1,092.14 validation, −₹6,879.84 2026 holdout, +₹10,279.51 full.
 - **Decision: no promotion; Phase 20 remains canonical.**
 - Artifacts persisted on the Phase-29 branch.
+
+
+## 2026-10-06 — Phase 32 initialized: Continuous Delta 6x6 Vertical Spread
+- Created isolated branch `phase-32-continuous-delta-6x6-backtest` from the successful Phase-31 head.
+- Registered a new strategy research question rather than modifying the canonical Phase-20 strategy.
+- Frozen the user-specified entry, exit, direction-state and no-daily-square-off rules.
+- Added Phase-32 research plan, pre-registration, strategy specification, status file, backtest entry point scaffold and manual GitHub Actions workflow.
+- Numerical execution has **not** yet been accepted as evidence.
