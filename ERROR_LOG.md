@@ -44,3 +44,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Run 37229041262 failed because a frozen research dependency (`research.backtest_dynamic_n_corrected`) was absent from the Phase-31 branch. Restored the dependency.
 - Run 37229148481 failed because the canonical Phase-10 trade ledger was absent. Restored the frozen `phase10_primary/trades.csv` ledger.
 - These failed runs produced no accepted research evidence. Run 37229448057 was the first successful Phase-31 execution.
+
+
+## Phase 32 initialization engineering note — 2026-10-06
+- The first automated GitHub file-write batch failed locally because the wrapper script had JavaScript quoting/template-literal syntax errors.
+- The failure occurred before any Phase-32 repository mutation from that batch; no numerical evidence was generated or affected.
+- The same registered Phase-32 file set was then written successfully in a corrected batch.
