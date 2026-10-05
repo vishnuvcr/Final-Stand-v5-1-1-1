@@ -125,10 +125,12 @@ def available_expiry_files(api):
     return out
 
 def expected_weekly_expiries(spot):
-    # NIFTY weekly expiry was Thursday through contracts expiring on/before
-    # 2025-08-28 and Tuesday for contracts expiring on/after 2025-09-01.
-    # If the scheduled day is a market holiday, NSE uses the previous trading
-    # day. Build the calendar from the observed NIFTY trading dates.
+    # NIFTY weekly expiry history used by this engine:
+    # - Thursday through contracts expiring on/before 03-Apr-2025.
+    # - Monday for new contracts expiring from 04-Apr-2025 through 28-Aug-2025.
+    # - Tuesday for new contracts expiring from 01-Sep-2025 onward.
+    # If the scheduled day is a trading holiday, NSE uses the previous trading
+    # day. Build the calendar from observed NIFTY trading dates.
     trading_days=sorted(set(pd.to_datetime(spot.timestamp.dt.normalize())))
     trading_set=set(trading_days)
     if not trading_days:
@@ -140,7 +142,12 @@ def expected_weekly_expiries(spot):
     for monday in weeks:
         if monday<first_day-pd.Timedelta(days=7) or monday>last_day:
             continue
-        scheduled_wd=1 if monday>=pd.Timestamp("2025-09-01",tz=TZ) else 3
+        if monday>=pd.Timestamp("2025-09-01",tz=TZ):
+            scheduled_wd=1  # Tuesday
+        elif monday>=pd.Timestamp("2025-04-04",tz=TZ):
+            scheduled_wd=0  # Monday
+        else:
+            scheduled_wd=3  # Thursday
         scheduled=monday+pd.Timedelta(days=scheduled_wd)
         candidates=[d for d in trading_days if monday<=d<=scheduled]
         if not candidates:
