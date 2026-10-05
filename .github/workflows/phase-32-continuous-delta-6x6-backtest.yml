@@ -34,6 +34,7 @@ jobs:
 
       - name: Phase 32 backtest
         env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
           SAMPLE_START: ${{ inputs.sample_start }}
           SAMPLE_END: ${{ inputs.sample_end }}
         run: |
