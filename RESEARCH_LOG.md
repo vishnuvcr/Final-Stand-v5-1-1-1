@@ -58,3 +58,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Frozen the user-specified entry, exit, direction-state and no-daily-square-off rules.
 - Added Phase-32 research plan, pre-registration, strategy specification, status file, backtest entry point scaffold and manual GitHub Actions workflow.
 - Numerical execution has **not** yet been accepted as evidence.
+
+
+## 2026-10-06 — Phase 32 specification audit correction
+- While the numerical CI job was running, an implementation audit identified a mismatch between the frozen rule current weekly expiry and the expiry enumeration.
+- The engine had excluded the last expiry of every calendar month. This would have omitted monthly expiry weeks from the research sample.
+- The affected numerical runs are explicitly marked invalid and will not be used.
+- Corrected the expiry enumeration to include every weekly expiry file, including monthly expiries.
+- Corrected execution started as GitHub Actions run 37383091606 from commit d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f.

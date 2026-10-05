@@ -217,3 +217,11 @@ Phase-32 artifacts:
 - [Manual workflow](.github/workflows/phase-32-continuous-delta-6x6-backtest.yml)
 
 **Numerical backtest has not yet been accepted as evidence.** The branch is initialized and the strategy specification is frozen before numerical execution. The Phase-20 dynamic-n strategy remains the canonical historical strategy for the main research line.
+
+
+### Phase 32 execution correction — 2026-10-06
+- An implementation audit found that the initial expiry enumeration excluded monthly expiries. Because the frozen rule is current weekly expiry, monthly expiry weeks must be included.
+- The affected runs are not accepted as evidence.
+- Corrected engine commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f
+- Corrected run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37383091606
+- Phase 32 remains open pending a successful corrected numerical run and audit of its artifacts.

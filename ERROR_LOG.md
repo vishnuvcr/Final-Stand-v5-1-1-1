@@ -70,3 +70,12 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - GitHub Actions run 37380642460 failed after the first vectorization correction because the lower-level `bs_price()` helper still treated strike as scalar.
 - No numerical evidence was accepted.
 - Correction: vectorize S, K, T and sigma consistently in both Black–Scholes price and delta helpers.
+
+
+## Phase 32 model-specification error — monthly expiry exclusion — 2026-10-06
+- Audit of the active backtest engine found that expiry enumeration removed the last expiry in each calendar month.
+- This excluded monthly expiries even though the frozen strategy rule is current weekly expiry; the monthly expiry is the current weekly contract during its expiry week.
+- Therefore runs using the pre-correction engine are invalid for evidence and must not be interpreted as performance results.
+- Correction: include all dated weekly-expiry parquet files in the registered sample.
+- Corrected commit: d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f.
+- Corrected numerical run: 37383091606.

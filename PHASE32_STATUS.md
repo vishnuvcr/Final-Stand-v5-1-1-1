@@ -33,3 +33,9 @@
 
 ### Next registered phase step
 Implement and audit the continuous trade state machine, then run the Phase-32 GitHub Actions workflow. Do not change the frozen strategy after observing numerical results.
+
+### Step 4 — specification audit correction
+- During execution audit, the first Phase-32 engine was found to exclude the last expiry of each month.
+- This was inconsistent with the frozen rule current weekly expiry because the monthly expiry is also the current weekly contract for that week.
+- No result from the affected runs is accepted.
+- Corrected in commit d1b44be28b87b2d6a264cc6ddcd72d3a551a9a2f; corrected run 37383091606 is now the active numerical attempt.
