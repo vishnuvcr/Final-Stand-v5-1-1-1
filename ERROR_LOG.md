@@ -172,3 +172,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Correction: process all available expected weekly expiries, log missing/incomplete expiries individually, and continue.
 - Also corrected the first-expiry entry window from expiry midnight to a seven-day pre-expiry window.
 - Corrected commit: 977913fa176bc5c826bb00bcb5684e61bc6c912f.
+
+
+## Phase 32 calendar-boundary error after gap continuation — 2026-10-06
+- Run #39 processed later weekly contracts after missing expiry files, but used the last successfully processed expiry as the next contract's window start.
+- Example: after a missing 04-Nov-2021 contract, the 11-Nov-2021 contract could see observations from 29-Oct through 10-Nov, although it was not the current weekly contract until after 04-Nov.
+- This is a model-window/lookahead contamination and invalidates run #39 as final evidence.
+- Correction: for every expected expiry, anchor the entry window to the immediately preceding expected calendar expiry timestamp, regardless of whether that preceding option file is present.
+- Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.

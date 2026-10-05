@@ -141,3 +141,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The successful run was therefore reclassified as an execution-valid but sample-truncated diagnostic, not final evidence.
 - The engine now continues across missing expiry files and records the exact missing dates.
 - The first expiry now uses a seven-day pre-expiry spot window so the entry opportunity is not artificially removed.
+
+
+## 2026-10-06 — Phase 32 calendar-boundary correction after gap continuation
+- The gap-continuation implementation is retained, but contract windows are now bounded by the expected weekly expiry calendar rather than available-file sequence.
+- This preserves the current-week definition even when the historical source has a missing expiry file.
+- Run #39 is reclassified as diagnostic/non-evidence.
+- Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.

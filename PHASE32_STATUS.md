@@ -128,3 +128,10 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Corrected the first-expiry window so the first weekly contract can use the valid seven-day pre-expiry trading window.
 - Corrected commit: 977913fa176bc5c826bb00bcb5684e61bc6c912f.
 - The previous successful numerical run is non-evidence for the final result because it truncated the sample at the first gap.
+
+
+### Step 13 — calendar-boundary correction after gap continuation
+- Run #39 demonstrated that continuing past missing expiry files is valid only if the next contract's historical window is anchored to the immediately preceding **expected calendar expiry**, not the last processed file.
+- Corrected the engine so missing or incomplete option files do not enlarge the following contract's entry window.
+- Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.
+- Run #39 is diagnostic only and is not accepted as final evidence.

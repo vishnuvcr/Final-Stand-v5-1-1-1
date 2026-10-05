@@ -298,3 +298,9 @@ Phase-32 artifacts:
 - Corrected engine: process all available expiries and log missing/incomplete dates; first expiry now has a valid pre-expiry window.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/977913fa176bc5c826bb00bcb5684e61bc6c912f
 - Prior P&L remains non-evidence for the phase conclusion.
+
+
+### Phase 32 calendar-boundary correction — 2026-10-06
+- Run #39 was rejected because missing expiry files could enlarge the next contract's historical window.
+- Corrected engine: every contract window is anchored to the immediately preceding expected expiry date, not the last processed file.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/cb0001f0e12376d27fa40b113ca47715a15c12cc
