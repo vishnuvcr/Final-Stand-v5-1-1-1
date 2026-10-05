@@ -231,3 +231,10 @@ Phase-32 artifacts:
 - The 1-minute engine initially allowed fresh entries in the final 120 seconds before market close, contrary to the live execution convention.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/1513a1c00df8693ea630f6dae52d67a28164c1c7
 - All earlier Phase-32 runs remain non-evidence.
+
+
+### Phase 32 state-machine correction — 2026-10-06
+- A serious lookahead/re-entry flaw was discovered and corrected before accepting any numerical evidence.
+- The engine now enforces strict chronological occupation of a position and only permits the next entry after the realized exit timestamp.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e
+- All earlier Phase-32 runs are invalid and will not be used.

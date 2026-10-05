@@ -46,3 +46,11 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - The 1-minute historical engine initially allowed fresh entries in the 15:28 and 15:29 bars.
 - No result from runs using that behavior is accepted.
 - Corrected the entry filter to reject timestamps at or after 15:28 IST; corrected engine commit 1513a1c00df8693ea630f6dae52d67a28164c1c7.
+
+
+### Step 6 — chronological state-machine correction
+- Audit identified a serious state-machine/lookahead bug: after selecting a future exit path, the previous loop could continue scanning entry timestamps that occurred before that exit.
+- Corrected the engine to a single chronological cursor. After each trade, the next candidate entry begins strictly after the realized exit timestamp.
+- A trade now occupies the timeline from its entry until its actual exit or contract termination; overlapping/impossible re-entry is prevented.
+- Corrected commit: df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e.
+- All earlier Phase-32 numerical runs remain invalid and will not be used.

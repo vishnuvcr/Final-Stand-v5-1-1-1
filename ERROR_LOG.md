@@ -87,3 +87,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Those runs are invalid for evidence because they can create trades that the live strategy would not initiate.
 - Correction: reject fresh entries at or after 15:28 IST in the 1-minute historical engine.
 - Corrected commit: 1513a1c00df8693ea630f6dae52d67a28164c1c7.
+
+
+## Phase 32 serious state-machine/lookahead error — 2026-10-06
+- The first continuous-loop implementation selected an exit by scanning future observations and then continued the entry-day timestamp loop.
+- This could permit a new entry at a timestamp earlier than the already-selected future exit, creating impossible overlapping/re-entry behavior and lookahead contamination.
+- No numerical evidence from those runs is accepted.
+- Correction: replace the nested day/entry loop with a strict chronological cursor; after exit, resume only at the first timestamp strictly after the realized exit.
+- Corrected commit: df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e.

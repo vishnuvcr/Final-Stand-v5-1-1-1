@@ -72,3 +72,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - A further specification audit found that the 1-minute engine did not implement the live strategy's final 120-second action cutoff for new entries.
 - Entries at 15:28 and 15:29 are now blocked; existing positions remain eligible for delta-triggered exits through the permitted contract path.
 - Runs before this correction are not accepted as evidence.
+
+
+## 2026-10-06 — Phase 32 state-machine audit correction
+- A serious chronological state-machine defect was found before evidence acceptance.
+- The engine could re-enter before a future exit timestamp because it calculated the future exit path inside the entry loop but did not advance the global cursor to the exit.
+- Replaced this with an explicit chronological cursor and post-exit advancement.
+- Corrected engine commit df8f9c0ca6e3fd3f84bcd6bd9c432f0b03ea171e.
+- All prior Phase-32 runs remain non-evidence.
