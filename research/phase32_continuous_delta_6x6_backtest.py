@@ -245,8 +245,13 @@ def run_expiry(expiry,option_df,spot_df,target_dir):
         ]
         cost=charges(orders,lot)
         net=gross-cost
+        if net>0:
+            direction_after=target_dir
+        elif net<0:
+            direction_after=-target_dir
+        else:
+            direction_after=target_dir
         win=net>0
-        direction_after=target_dir if win else -target_dir
 
         trades.append({
             "expiry":str(expiry.date()),
