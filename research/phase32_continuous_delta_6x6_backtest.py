@@ -331,20 +331,28 @@ def main():
     for expiry in expected:
         if expiry not in available:
             all_skips.append([str(expiry.date()),"missing_expiry_file","expected weekly expiry absent from dataset"])
-            break
+            continue
         expiries.append(expiry)
     if not expiries:
-        raise RuntimeError("Phase 32 found no contiguous expiry files in the requested sample")
+        raise RuntimeError("Phase 32 found no available expiry files in the requested sample")
 
+    missing_expected=[d for d in expected if d not in available]
     coverage={"dataset_repo":REPO,"requested_start":str(START.date()),"requested_end":str(END.date()),
               "first_expected_expiry":str(expected[0].date()) if expected else None,
-              "last_contiguous_expiry":str(expiries[-1].date()),
-              "expected_expiries":len(expected),"contiguous_expiries":len(expiries),
-              "coverage_rule":"stop at first missing weekly-expiry file or incomplete contract path"}
-    for i,expiry in enumerate(expiries):
+              "last_expected_expiry":str(expected[-1].date()) if expected else None,
+              "first_available_expiry":str(expiries[0].date()) if expiries else None,
+              "last_available_expiry":str(expiries[-1].date()) if expiries else None,
+              "expected_expiries":len(expected),"available_expiries":len(expiries),
+              "missing_expiry_count":len(missing_expected),
+              "missing_expiries":[str(x.date()) for x in missing_expected],
+              "coverage_rule":"process all available weekly-expiry files; log missing/incomplete expiries and continue"}
+
+    prev_processed_expiry=None
+    for expiry in expiries:
         try: od=load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
         except Exception as e:
-            all_skips.append([str(expiry.date()),"load",repr(e)]); break
+            all_skips.append([str(expiry.date()),"load",repr(e)])
+            continue
         od["option_type"]=od.option_type.astype(str).str.upper()
         od["strike"]=pd.to_numeric(od.strike,errors="coerce")
         od=od.dropna(subset=["strike","timestamp","close"])
@@ -352,19 +360,27 @@ def main():
         required_last=expiry+pd.Timedelta(hours=15,minutes=29)
         if pd.isna(option_max) or option_max<required_last:
             all_skips.append([str(expiry.date()),"incomplete_expiry_data",f"last_option_timestamp={option_max}"])
-            break
-        prev_expiry=expiries[i-1] if i>0 else None
-        window_start=prev_expiry+pd.Timedelta(hours=15,minutes=30) if prev_expiry is not None else expiry
+            continue
+
+        if prev_processed_expiry is None:
+            window_start=expiry-pd.Timedelta(days=7)
+        else:
+            window_start=prev_processed_expiry+pd.Timedelta(hours=15,minutes=30)
+
         sd=spot[(spot.timestamp>window_start)&(spot.timestamp<=required_last)].copy()
         if sd.empty or sd.timestamp.max()<required_last:
             all_skips.append([str(expiry.date()),"incomplete_spot_data",f"last_spot_timestamp={sd.timestamp.max() if not sd.empty else None}"])
-            break
+            continue
+
         tr,sk,target_dir=run_expiry(expiry,od,sd,target_dir,window_start)
         all_trades.extend(tr)
         all_skips.extend([[str(expiry.date()),*x] for x in sk])
+        prev_processed_expiry=expiry
         print(f"expiry {expiry.date()} trades={len(tr)} direction={'CALL' if target_dir==1 else 'PUT'}",flush=True)
-    coverage["processed_expiries"]=len(set(t["expiry"] for t in all_trades))
-    coverage["last_trade_expiry"]=max([t["expiry"] for t in all_trades],default=None)
+
+    processed_expiries=sorted(set(t["expiry"] for t in all_trades))
+    coverage["processed_expiries"]=len(processed_expiries)
+    coverage["last_trade_expiry"]=max(processed_expiries,default=None)
     with open(OUT/"coverage.json","w") as fh: json.dump(coverage,fh,indent=2)
     tr=pd.DataFrame(all_trades)
     if tr.empty:
