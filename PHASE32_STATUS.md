@@ -91,3 +91,10 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - The first available expiry is not used for entries because its preceding current-week window is outside the available dataset.
 - Corrected commit: 1675f86b8a71add7a73c03479731e3a5623716b.
 - All numerical runs before this correction are non-evidence.
+
+
+### Step 10 — computational optimization without methodological change
+- The exit delta inversion was vectorized across each complete future minute path.
+- The mathematical inputs, first-hit rule, chronological state machine, execution model and cost model are unchanged.
+- This optimization is required because the scalar minute-by-minute inversion risks exceeding the GitHub Actions timeout on the full historical sample.
+- Corrected commit: c0ec4b90fd33eee75ed0515343e28d431aee924a.

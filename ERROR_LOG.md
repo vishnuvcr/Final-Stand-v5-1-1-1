@@ -132,3 +132,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - This violates the frozen strategy definition and can materially change entries, direction state and P&L.
 - Correction: each expiry gets a non-overlapping evaluation window beginning strictly after the previous expiry's contract termination. The first available expiry has no prior in-sample window and therefore cannot generate a valid entry.
 - Corrected commit: 1675f86b8a71add7a73c03479731e3a5623716b.
+
+
+## Phase 32 performance bottleneck — scalar exit-delta inversion — 2026-10-06
+- The corrected engine performed Black–Scholes implied-volatility inversion separately for every future minute and every trade.
+- This created excessive runtime without adding methodological information and could exceed the CI timeout.
+- Correction: vectorize the same exit-delta calculation over the entire future path, then select the first qualifying observation chronologically.
+- This does not alter the trading rules or numerical inputs.
+- Corrected commit: c0ec4b90fd33eee75ed0515343e28d431aee924a.

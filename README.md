@@ -268,3 +268,8 @@ Phase-32 artifacts:
 - The engine was corrected so a weekly option contract is only traded after the previous expiry has terminated and before the current expiry, matching the literal current-week rule.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/1675f86b8a71add7a73c03479731e3a5623716b
 - All prior Phase-32 runs remain invalid/non-evidence.
+
+
+### Phase 32 computational optimization — 2026-10-06
+- Exit-delta calculation was vectorized across each trade's future 1-minute path without changing the frozen strategy rules.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/c0ec4b90fd33eee75ed0515343e28d431aee924a

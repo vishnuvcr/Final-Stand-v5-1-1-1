@@ -110,3 +110,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The corrected engine uses adjacent-expiry windows, preventing the future week's contract from being traded while an earlier weekly contract is still current.
 - The first in-sample expiry is treated as a warm-up/coverage boundary rather than an executable trade window.
 - Corrected commit: 1675f86b8a71add7a73c03479731e3a5623716b.
+
+
+## 2026-10-06 — Phase 32 computational optimization
+- Vectorized the exit-delta inversion across future minute paths.
+- Preserved exact first-hit chronology and all frozen thresholds; optimization changes execution speed only.
+- Corrected commit: c0ec4b90fd33eee75ed0515343e28d431aee924a.
