@@ -304,3 +304,22 @@ Phase-32 artifacts:
 - Run #39 was rejected because missing expiry files could enlarge the next contract's historical window.
 - Corrected engine: every contract window is anchored to the immediately preceding expected expiry date, not the last processed file.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/cb0001f0e12376d27fa40b113ca47715a15c12cc
+
+
+## Phase 32 — COMPLETE / PROMISING BUT INSUFFICIENTLY ROBUST
+
+The final corrected Continuous Delta 6x6 Vertical Spread research phase is complete.
+
+- [Phase 32 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-32-continuous-delta-6x6-backtest)
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-32-continuous-delta-6x6-backtest/manuscript/PHASE32_CONTINUOUS_DELTA_MANUSCRIPT.md)
+- [Conclusion](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-32-continuous-delta-6x6-backtest/results/dynamic_strategy_phase32/PHASE32_CONCLUSION.md)
+- [Statistical summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-32-continuous-delta-6x6-backtest/results/dynamic_strategy_phase32/PHASE32_STATISTICAL_SUMMARY.csv)
+- [Final code](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-32-continuous-delta-6x6-backtest/research/phase32_continuous_delta_6x6_backtest.py)
+- [Final workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-32-continuous-delta-6x6-backtest/.github/workflows/phase-32-continuous-delta-6x6-backtest.yml)
+- [Final GitHub Actions run #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37388261915)
+
+Headline result: 478 trades, ₹83,820.48 net P&L, 63.60% win rate, 1.112 profit factor, ₹94,492.83 maximum drawdown.
+
+The result is **not promoted** because the source has material expiry gaps, the trade-level mean is statistically weak, calendar-year performance is unstable, and moderate execution deterioration removes the edge.
+
+**Phase-20 remains the canonical historical strategy.**
