@@ -159,3 +159,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Execution sensitivity is material: four modeled slippage ticks per order eliminate the aggregate edge; five ticks make it clearly negative.
 - Final classification: **PROMISING BUT INSUFFICIENTLY ROBUST**.
 - Phase-20 remains the canonical historical strategy; no Phase-32 parameter change is promoted.
+## 2026-10-06 — Phase 32 repository and evidence closeout
+- Added the final manuscript, conclusion, statistical summary, results index, frozen rule card, literature review supplement and figure package.
+- Preserved the accepted run #41 artifact and digest in the phase documentation.
+- Updated the main README with Phase-32 completion status and links.
+- No strategy parameters were changed after observing the final results.
