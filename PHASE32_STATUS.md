@@ -21,7 +21,7 @@
 - Added PHASE32_STRATEGY_SPEC.md.
 
 ### Numerical execution
-**First CI setup was corrected; the second numerical attempt failed in implied-delta vectorization. Correction committed and retrying.**
+**CI setup is corrected; the second numerical attempt exposed implied-delta vectorization at the Black–Scholes helper level. Correction committed and retrying.**
 
 ### Errors
 - The first local file-write wrapper attempt failed due to JavaScript quoting syntax; it was corrected before repository evidence was accepted.
