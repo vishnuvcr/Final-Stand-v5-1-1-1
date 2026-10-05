@@ -50,3 +50,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The first automated GitHub file-write batch failed locally because the wrapper script had JavaScript quoting/template-literal syntax errors.
 - The failure occurred before any Phase-32 repository mutation from that batch; no numerical evidence was generated or affected.
 - The same registered Phase-32 file set was then written successfully in a corrected batch.
+
+
+## Phase 32 CI error — 2026-10-06
+- GitHub Actions run 37380393437 failed in the Phase-32 backtest step before numerical research: `ModuleNotFoundError: No module named 'numpy'`.
+- Root cause: the repository did not have a dependency-install path for the scientific Python stack on this branch.
+- The push-triggered workflow also passed empty SAMPLE_START/SAMPLE_END variables because workflow_dispatch inputs are unavailable on push events.
+- No numerical evidence was produced or accepted.
+- Correction: explicitly install numpy, pandas, pyarrow and huggingface_hub; harden script defaults for empty environment variables.
