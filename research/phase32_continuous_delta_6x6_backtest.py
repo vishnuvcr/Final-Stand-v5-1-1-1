@@ -112,71 +112,150 @@ def expiry_list(api):
     return sorted(set(out))
 
 def run_expiry(expiry,option_df,spot_df,target_dir):
-    df=option_df.copy(); df["expiry_ts"]=expiry+pd.Timedelta(hours=15,minutes=30)
-    spot_df=spot_df.sort_values("timestamp")
-    days=sorted(pd.to_datetime(spot_df.timestamp.dt.normalize().unique()))
+    df=option_df.copy()
+    expiry_ts=expiry+pd.Timedelta(hours=15,minutes=30)
+    spot_df=spot_df.sort_values("timestamp").copy()
+    timeline=spot_df[
+        (spot_df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))
+    ].drop_duplicates("timestamp").reset_index(drop=True)
     trades=[]; skips=[]
-    pos=None
-    # Work through all minutes up to expiry; entries are blocked on expiry day.
-    for day in days:
-        if day>expiry.normalize(): break
-        day_spot=spot_df[spot_df.timestamp.dt.normalize()==day]
-        if day_spot.empty: continue
-        if pos is not None:
-            # carried position is handled by the global minute loop below
-            pass
-        if day==expiry.normalize(): continue
-        # entry candidates only if flat and direction points here; after an exit the next candidate is later in same day.
-        for ts in day_spot.timestamp.tolist():
-            if ts.hour<ENTRY_HOUR or (ts.hour==ENTRY_HOUR and ts.minute<ENTRY_MINUTE): continue
-            # Tradetron execution convention: no fresh action in the final 120 seconds before 15:30.
-            if ts.hour>LAST_ENTRY_HOUR or (ts.hour==LAST_ENTRY_HOUR and ts.minute>=LAST_ENTRY_MINUTE): continue
-            if pos is not None: break
-            row=day_spot[day_spot.timestamp==ts]
-            spot=float(row.spot.iloc[0])
-            typ="CE" if target_dir==1 else "PE"
-            target=0.25 if typ=="CE" else -0.25
-            snap=df[df.timestamp==ts]
-            if snap.empty: continue
-            found=nearest_delta_strike(snap,spot,ts,typ,target)
-            if found is None: skips.append([str(ts),"no_entry_delta"]); continue
-            short_k,entry_delta=found
-            long_k=short_k+WIDTH if typ=="CE" else short_k-WIDTH
-            legs=df[(df.timestamp==ts)&(df.option_type==typ)&(df.strike.isin([short_k,long_k]))]
-            if len(legs)<2: skips.append([str(ts),"missing_entry_legs"]); continue
-            q={float(x.strike):float(x.close) for _,x in legs.iterrows()}
-            if short_k not in q or long_k not in q: continue
-            short_entry=q[short_k]; long_entry=q[long_k]
-            pos={"entry_ts":ts,"typ":typ,"short_k":short_k,"long_k":long_k,"short_entry":short_entry,"long_entry":long_entry,"entry_delta":entry_delta,"lot":lot_size_for_expiry(expiry)}
-            # monitor all subsequent timestamps until exit/expiry using selected short leg
-            path=df[(df.timestamp>ts)&(df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))&(df.option_type==typ)&(df.strike.isin([short_k,long_k]))].pivot_table(index="timestamp",columns="strike",values="close",aggfunc="last")
-            path=path.dropna(subset=[short_k,long_k])
-            spot_path=spot_df[(spot_df.timestamp>ts)&(spot_df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))][["timestamp","spot"]]
-            path=path.reset_index().merge(spot_path,on="timestamp",how="inner").sort_values("timestamp")
-            exit_row=None; exit_reason=None; exit_delta=np.nan
-            expiry_ts=expiry+pd.Timedelta(hours=15,minutes=30)
-            for _,pr in path.iterrows():
-                tleft=max((expiry_ts-pr.timestamp).total_seconds()/31557600.0,1e-10)
-                d=implied_delta(np.asarray([pr[short_k]]),np.asarray([pr.spot]),np.asarray([short_k]),np.asarray([tleft]),typ)[0]
-                if not np.isfinite(d): continue
-                hit=(d>=.50 or d<=.04) if typ=="CE" else (d<=-.50 or d>=-.04)
-                if hit:
-                    exit_row=pr; exit_delta=d; exit_reason="DELTA_EXIT"; break
-            if exit_row is None and not path.empty:
-                exit_row=path.iloc[-1]; exit_reason="CONTRACT_EXPIRY"
-            if exit_row is None:
-                skips.append([str(ts),"no_complete_exit_path"]); pos=None; continue
-            ep_long=exec_px(long_entry,"buy"); ep_short=exec_px(short_entry,"sell")
-            xp_short=exec_px(float(exit_row[short_k]),"buy"); xp_long=exec_px(float(exit_row[long_k]),"sell")
-            # short sells at entry, buys at exit; long buys at entry, sells at exit
-            gross=((ep_short-xp_short)+(xp_long-ep_long))*pos["lot"]*LOTS
-            orders=[(ts,"sell",ep_short),(ts,"buy",ep_long),(pd.Timestamp(exit_row.timestamp),"buy",xp_short),(pd.Timestamp(exit_row.timestamp),"sell",xp_long)]
-            cost=charges(orders,pos["lot"]); net=gross-cost
-            win=net>0
-            trades.append({"expiry":str(expiry.date()),"entry_ts":str(ts),"exit_ts":str(exit_row.timestamp),"direction":"CALL" if typ=="CE" else "PUT","short_delta_entry":entry_delta,"short_delta_exit":exit_delta,"short_strike":short_k,"long_strike":long_k,"lot_size":pos["lot"],"gross_rupees":gross,"cost_rupees":cost,"net_rupees":net,"exit_reason":exit_reason,"direction_after":"CALL" if ((target_dir==1 and win) or (target_dir==-1 and not win)) else "PUT"})
-            target_dir=target_dir if win else -target_dir
-            pos=None
-            # continue scanning; target_dir is global within this expiry
+    cursor=0
+
+    # Chronological event loop. Once a position is opened, the cursor advances
+    # only to the actual observed exit timestamp, preventing impossible
+    # re-entry before a future exit that has already been selected.
+    while cursor < len(timeline):
+        ts=pd.Timestamp(timeline.at[cursor,"timestamp"])
+        day=ts.normalize()
+
+        # No new positions on expiry day or in the final 120 seconds.
+        if day==expiry.normalize():
+            break
+        if ts.hour<ENTRY_HOUR or (ts.hour==ENTRY_HOUR and ts.minute<ENTRY_MINUTE):
+            cursor += 1
+            continue
+        if ts.hour>LAST_ENTRY_HOUR or (ts.hour==LAST_ENTRY_HOUR and ts.minute>=LAST_ENTRY_MINUTE):
+            cursor += 1
+            continue
+
+        spot=float(timeline.at[cursor,"spot"])
+        typ="CE" if target_dir==1 else "PE"
+        target=0.25 if typ=="CE" else -0.25
+        snap=df[df.timestamp==ts]
+        if snap.empty:
+            cursor += 1
+            continue
+
+        found=nearest_delta_strike(snap,spot,ts,typ,target)
+        if found is None:
+            skips.append([str(ts),"no_entry_delta"])
+            cursor += 1
+            continue
+
+        short_k,entry_delta=found
+        long_k=short_k+WIDTH if typ=="CE" else short_k-WIDTH
+        legs=df[
+            (df.timestamp==ts)
+            &(df.option_type==typ)
+            &(df.strike.isin([short_k,long_k]))
+        ]
+        if len(legs)<2:
+            skips.append([str(ts),"missing_entry_legs"])
+            cursor += 1
+            continue
+
+        q={float(x.strike):float(x.close) for _,x in legs.iterrows()}
+        if short_k not in q or long_k not in q:
+            skips.append([str(ts),"missing_entry_prices"])
+            cursor += 1
+            continue
+
+        short_entry=q[short_k]; long_entry=q[long_k]
+        lot=lot_size_for_expiry(expiry)
+
+        # Monitor only after the actual entry timestamp. The first qualifying
+        # observation is the exit; no later observation may be used first.
+        path=df[
+            (df.timestamp>ts)
+            &(df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))
+            &(df.option_type==typ)
+            &(df.strike.isin([short_k,long_k]))
+        ].pivot_table(
+            index="timestamp",columns="strike",values="close",aggfunc="last"
+        ).dropna(subset=[short_k,long_k])
+
+        if path.empty:
+            skips.append([str(ts),"no_complete_exit_path"])
+            break
+
+        path=path.reset_index().merge(
+            timeline[["timestamp","spot"]],
+            on="timestamp",how="inner"
+        ).sort_values("timestamp").reset_index(drop=True)
+
+        exit_row=None; exit_reason=None; exit_delta=np.nan
+        for pidx,pr in path.iterrows():
+            tleft=max((expiry_ts-pd.Timestamp(pr.timestamp)).total_seconds()/31557600.0,1e-10)
+            d=implied_delta(
+                np.asarray([pr[short_k]]),
+                np.asarray([pr.spot]),
+                np.asarray([short_k]),
+                np.asarray([tleft]),
+                typ
+            )[0]
+            if not np.isfinite(d):
+                continue
+            hit=(d>=.50 or d<=.04) if typ=="CE" else (d<=-.50 or d>=-.04)
+            if hit:
+                exit_row=pr; exit_delta=d; exit_reason="DELTA_EXIT"
+                break
+
+        if exit_row is None:
+            exit_row=path.iloc[-1]
+            exit_reason="CONTRACT_EXPIRY"
+
+        exit_ts=pd.Timestamp(exit_row.timestamp)
+        ep_long=exec_px(long_entry,"buy")
+        ep_short=exec_px(short_entry,"sell")
+        xp_short=exec_px(float(exit_row[short_k]),"buy")
+        xp_long=exec_px(float(exit_row[long_k]),"sell")
+
+        gross=((ep_short-xp_short)+(xp_long-ep_long))*lot*LOTS
+        orders=[
+            (ts,"sell",ep_short),(ts,"buy",ep_long),
+            (exit_ts,"buy",xp_short),(exit_ts,"sell",xp_long)
+        ]
+        cost=charges(orders,lot)
+        net=gross-cost
+        win=net>0
+        direction_after=target_dir if win else -target_dir
+
+        trades.append({
+            "expiry":str(expiry.date()),
+            "entry_ts":str(ts),
+            "exit_ts":str(exit_ts),
+            "direction":"CALL" if typ=="CE" else "PUT",
+            "short_delta_entry":entry_delta,
+            "short_delta_exit":exit_delta,
+            "short_strike":short_k,
+            "long_strike":long_k,
+            "lot_size":lot,
+            "gross_rupees":gross,
+            "cost_rupees":cost,
+            "net_rupees":net,
+            "exit_reason":exit_reason,
+            "direction_after":"CALL" if direction_after==1 else "PUT"
+        })
+
+        target_dir=direction_after
+
+        # Advance strictly beyond the realized exit. This is the critical
+        # state-machine guard against lookahead/overlapping re-entry.
+        future_idx=np.flatnonzero(timeline.timestamp.to_numpy()==exit_ts)
+        if len(future_idx)==0:
+            break
+        cursor=int(future_idx[0])+1
+
     return trades,skips,target_dir
 
 def main():
