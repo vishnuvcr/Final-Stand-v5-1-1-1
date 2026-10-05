@@ -250,3 +250,9 @@ Phase-32 artifacts:
 - Historical NIFTY lot-size transitions are now applied by expiry cycle using NSE's published transition dates rather than a coarse calendar cutoff.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/a29a17470b751c947ba1aa0f8c7ed6d3abfc6e13
 - Earlier Phase-32 numerical runs are not evidence.
+
+
+### Phase 32 zero-net state correction — 2026-10-06
+- Corrected a final state-machine mismatch: exact zero net P&L now preserves direction as pre-registered.
+- Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/559f520ba7feb795e2b09fd6ab17bfc083fd7ba0
+- The pre-correction candidate is not accepted as evidence.

@@ -109,3 +109,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - This can materially scale trade P&L and costs, so earlier numerical outputs are invalid for evidence.
 - Corrected using NSE expiry-specific transition dates: 02-May-2024, 19-Dec-2024 / 02-Jan-2025 weekly transition, 30-Jan-2025 / 27-Feb-2025 monthly transition, and 06-Jan-2026 / 27-Jan-2026 transition to 65 lots.
 - Corrected commit: a29a17470b751c947ba1aa0f8c7ed6d3abfc6e13.
+
+
+## Phase 32 state-machine error — zero-net outcome handling — 2026-10-06
+- The engine treated every non-positive net result as a loss and therefore flipped direction after an exactly zero-net trade.
+- The frozen rule explicitly states zero P&L -> keep the same direction.
+- No result from the pre-correction run is accepted.
+- Correction: branch direction on positive, negative, and exactly zero net P&L separately.
+- Corrected commit: 559f520ba7feb795e2b09fd6ab17bfc083fd7ba0.

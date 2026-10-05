@@ -68,3 +68,10 @@ Implement and audit the continuous trade state machine, then run the Phase-32 Gi
 - Primary references: NSE circulars and their expiry-specific annexures; these are recorded in the phase research log.
 - Corrected commit: a29a17470b751c947ba1aa0f8c7ed6d3abfc6e13.
 - All numerical runs before this correction are non-evidence.
+
+
+### Step 8 — zero-net direction-state correction
+- Audit found that the implementation used `net>0` versus otherwise, which would flip direction after an exactly zero-net trade.
+- The frozen state machine requires zero net P&L to preserve the current direction.
+- Corrected commit: 559f520ba7feb795e2b09fd6ab17bfc083fd7ba0.
+- The running candidate before this correction is not accepted as evidence.
