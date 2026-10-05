@@ -5,8 +5,8 @@ import pandas as pd
 from huggingface_hub import HfApi, hf_hub_download
 
 REPO="thetrademarkk/india-index-options-1m"; TZ="Asia/Kolkata"
-START=pd.Timestamp(os.getenv("SAMPLE_START","2021-05-27"),tz=TZ)
-END=pd.Timestamp(os.getenv("SAMPLE_END","2026-09-30"),tz=TZ)
+START=pd.Timestamp((os.getenv("SAMPLE_START") or "2021-05-27"),tz=TZ)
+END=pd.Timestamp((os.getenv("SAMPLE_END") or "2026-09-30"),tz=TZ)
 OUT=Path("results/dynamic_strategy_phase32"); OUT.mkdir(parents=True,exist_ok=True)
 TICK=0.05; SLIPPAGE_TICKS=float(os.getenv("SLIPPAGE_TICKS","1"))
 LOTS=6; WIDTH=50.0; ENTRY_HOUR=9; ENTRY_MINUTE=20
