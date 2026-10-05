@@ -116,16 +116,38 @@ def nearest_delta_strike(q,spot,ts,typ,target):
     i=(z.delta-target).abs().idxmin()
     return float(z.loc[i,"strike"]),float(z.loc[i,"delta"])
 
-def expiry_list(api):
-    out=[]
+def available_expiry_files(api):
+    out=set()
     for f in api.list_repo_files(REPO,repo_type="dataset"):
         m=re.match(r"options/NIFTY/(\d{4}-\d{2}-\d{2})\.parquet$",f)
         if m:
-            d=pd.Timestamp(m.group(1),tz=TZ)
-            if START<=d<=END:
-                out.append(d)
-    # The strategy trades the current weekly expiry. A monthly expiry is also
-    # the current weekly contract for that week and must not be excluded.
+            out.add(pd.Timestamp(m.group(1),tz=TZ))
+    return out
+
+def expected_weekly_expiries(spot):
+    # NIFTY weekly expiry was Thursday through contracts expiring on/before
+    # 2025-08-28 and Tuesday for contracts expiring on/after 2025-09-01.
+    # If the scheduled day is a market holiday, NSE uses the previous trading
+    # day. Build the calendar from the observed NIFTY trading dates.
+    trading_days=sorted(set(pd.to_datetime(spot.timestamp.dt.normalize())))
+    trading_set=set(trading_days)
+    if not trading_days:
+        return []
+    first_day=min(trading_days).normalize()
+    last_day=max(trading_days).normalize()
+    weeks=pd.date_range(first_day-pd.Timedelta(days=7),last_day+pd.Timedelta(days=7),freq="W-MON",tz=TZ)
+    out=[]
+    for monday in weeks:
+        if monday<first_day-pd.Timedelta(days=7) or monday>last_day:
+            continue
+        scheduled_wd=1 if monday>=pd.Timestamp("2025-09-01",tz=TZ) else 3
+        scheduled=monday+pd.Timedelta(days=scheduled_wd)
+        candidates=[d for d in trading_days if monday<=d<=scheduled]
+        if not candidates:
+            continue
+        expiry=max(candidates)
+        if first_day<=expiry<=last_day and START<=expiry<=END:
+            out.append(expiry)
     return sorted(set(out))
 
 def run_expiry(expiry,option_df,spot_df,target_dir,window_start):
@@ -295,20 +317,48 @@ def run_expiry(expiry,option_df,spot_df,target_dir,window_start):
 def main():
     api=HfApi(token=os.getenv("HF_TOKEN") or None)
     spot=load("index/NIFTY.parquet")[["timestamp","close"]].rename(columns={"close":"spot"})
-    expiries=expiry_list(api); all_trades=[]; all_skips=[]; target_dir=1
-    print(f"sample_start={START.date()} sample_end={END.date()} expiries={len(expiries)}",flush=True)
+    expected=expected_weekly_expiries(spot)
+    available=available_expiry_files(api)
+    expiries=[]
+    all_skips=[]; all_trades=[]; target_dir=1
+    for expiry in expected:
+        if expiry not in available:
+            all_skips.append([str(expiry.date()),"missing_expiry_file","expected weekly expiry absent from dataset"])
+            break
+        expiries.append(expiry)
+    if not expiries:
+        raise RuntimeError("Phase 32 found no contiguous expiry files in the requested sample")
+
+    coverage={"dataset_repo":REPO,"requested_start":str(START.date()),"requested_end":str(END.date()),
+              "first_expected_expiry":str(expected[0].date()) if expected else None,
+              "last_contiguous_expiry":str(expiries[-1].date()),
+              "expected_expiries":len(expected),"contiguous_expiries":len(expiries),
+              "coverage_rule":"stop at first missing weekly-expiry file or incomplete contract path"}
     for i,expiry in enumerate(expiries):
         try: od=load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
-        except Exception as e: all_skips.append([str(expiry.date()),"load",repr(e)]); continue
-        od["option_type"]=od.option_type.astype(str).str.upper(); od["strike"]=pd.to_numeric(od.strike,errors="coerce"); od=od.dropna(subset=["strike","timestamp","close"])
-        prev_expiry = expiries[i-1] if i>0 else None
-        window_start = prev_expiry+pd.Timedelta(hours=15,minutes=30) if prev_expiry is not None else expiry
-        sd=spot[(spot.timestamp>window_start)&(spot.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))].copy()
-        if sd.empty:
-            all_skips.append([str(expiry.date()),"no_current_week_window",str(window_start)])
-            continue
-        tr,sk,target_dir=run_expiry(expiry,od,sd,target_dir,window_start); all_trades.extend(tr); all_skips.extend([[str(expiry.date()),*x] for x in sk])
+        except Exception as e:
+            all_skips.append([str(expiry.date()),"load",repr(e)]); break
+        od["option_type"]=od.option_type.astype(str).str.upper()
+        od["strike"]=pd.to_numeric(od.strike,errors="coerce")
+        od=od.dropna(subset=["strike","timestamp","close"])
+        option_max=od.timestamp.max()
+        required_last=expiry+pd.Timedelta(hours=15,minutes=29)
+        if pd.isna(option_max) or option_max<required_last:
+            all_skips.append([str(expiry.date()),"incomplete_expiry_data",f"last_option_timestamp={option_max}"])
+            break
+        prev_expiry=expiries[i-1] if i>0 else None
+        window_start=prev_expiry+pd.Timedelta(hours=15,minutes=30) if prev_expiry is not None else expiry
+        sd=spot[(spot.timestamp>window_start)&(spot.timestamp<=required_last)].copy()
+        if sd.empty or sd.timestamp.max()<required_last:
+            all_skips.append([str(expiry.date()),"incomplete_spot_data",f"last_spot_timestamp={sd.timestamp.max() if not sd.empty else None}"])
+            break
+        tr,sk,target_dir=run_expiry(expiry,od,sd,target_dir,window_start)
+        all_trades.extend(tr)
+        all_skips.extend([[str(expiry.date()),*x] for x in sk])
         print(f"expiry {expiry.date()} trades={len(tr)} direction={'CALL' if target_dir==1 else 'PUT'}",flush=True)
+    coverage["processed_expiries"]=len(set(t["expiry"] for t in all_trades))
+    coverage["last_trade_expiry"]=max([t["expiry"] for t in all_trades],default=None)
+    with open(OUT/"coverage.json","w") as fh: json.dump(coverage,fh,indent=2)
     tr=pd.DataFrame(all_trades)
     if tr.empty:
         pd.DataFrame(columns=["expiry","reason","detail"]).to_csv(OUT/"skips.csv",index=False); raise RuntimeError("Phase 32 produced zero trades")
