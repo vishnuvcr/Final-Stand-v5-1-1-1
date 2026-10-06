@@ -11,6 +11,7 @@ on:
       - 'data/phase36_selector_predictions.csv'
       - 'results/phase39_features/point_in_time_features.csv'
       - 'research/phase40_inference.py'
+      - 'research/phase40_sequential_replay.py'
   workflow_dispatch:
 
 permissions:
@@ -57,6 +58,11 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python research/phase40_inference.py
 
+      - name: Run exact stateful top-10 replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase40_sequential_replay.py
+
       - name: Verify grid and artifacts
         run: |
           test -s results/phase40_ensemble/grid_validation.csv
@@ -66,6 +72,9 @@ jobs:
           test -s results/phase40_ensemble/inference_summary.json
           test -s results/phase40_ensemble/vix_mode_summary.csv
           test -s results/phase40_ensemble/validation_uplift_by_vix_mode.png
+          test -s results/phase40_ensemble/sequential_top10.csv
+          test -s results/phase40_ensemble/sequential_top10_expiry.csv
+          test -s results/phase40_ensemble/sequential_summary.json
           python -c "import json,pandas as pd; g=pd.read_csv('results/phase40_ensemble/grid_validation.csv'); s=json.load(open('results/phase40_ensemble/selection.json')); assert len(g)==1764,len(g); assert int(s['grid_candidates'])==1764,s; assert int(s['top10_count'])==10,s; assert g['signal_signature'].nunique()==int(s['unique_validation_policies']),s; print(s['top10'][0])"
 
       - name: Persist results
