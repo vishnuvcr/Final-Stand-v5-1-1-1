@@ -1,3 +1,4 @@
+# Phase-34 numerical engine; parameters frozen in PHASE34_PRE_REGISTRATION.md
 import os, json, math, subprocess, sys, warnings
 from pathlib import Path
 import numpy as np
