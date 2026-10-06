@@ -349,3 +349,19 @@ A control-reproducibility discrepancy was detected and logged as F38-001: a fres
 - [Phase 38 pull request #12](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/12)
 
 **Next research priority:** Phase 39 robustness of the canonical stateful strategy with broker-realistic bid/ask, latency, fill probability, and expanded cost/slippage stress.
+
+
+## Phase 39 — advanced counterfactual direction models — ACTIVE
+
+Phase 39 changes the prediction target from NIFTY expiry direction to the actual economic decision: the post-cost P&L difference between CALL and PUT Continuous Delta 6x6 spreads at the same entry opportunity.
+
+- [Phase 39 research plan](PHASE39_RESEARCH_PLAN.md)
+- [Phase 39 pre-registration](PHASE39_PRE_REGISTRATION.md)
+- [Phase 39 literature review](PHASE39_LITERATURE_REVIEW.md)
+- [Phase 39 status](PHASE39_STATUS.md)
+- [Phase 39 workflow](.github/workflows/phase-39-advanced-direction-models.yml)
+- [Phase 39 fixed-opportunity engine](research/phase39_counterfactual_engine.py)
+
+**Step 1 is running:** the exact 206-trade / 102-expiry frozen control opportunity ledger is being evaluated counterfactually for both CALL and PUT arms with the frozen slippage/cost model. No model training or strategy promotion is permitted until this ledger reproduces the control arm within the registered audit tolerance.
+
+The canonical Phase-38 stateful strategy remains unchanged and authoritative during this phase.
