@@ -1,0 +1,29 @@
+{
+  "phase": 45,
+  "decision": "NO_PROMOTION",
+  "evidence_status": "ACCEPTED",
+  "workflow_run": 37512787150,
+  "new_strategies_tested": 20,
+  "reused_phase43_strategies": 20,
+  "new_trade_rows": 5102,
+  "unified_trade_rows": 9699,
+  "validation_working_strategy_state_rows": 7,
+  "frozen_validation_candidates": 6,
+  "holdout_confirmation_rows": 6,
+  "holdout_positive_candidates": 5,
+  "holm_inference_survivors": 0,
+  "newly_added_defined_risk_candidates_passing_economic_screen": 0,
+  "strongest_validation_candidate": {
+    "strategy": "bear_call_spread",
+    "vix_state": "LOW",
+    "trades": 49,
+    "validation_net": 24742.586525279978,
+    "validation_net_plus50_cost": 23082.004787919985,
+    "mean_per_trade": 504.9507454138771,
+    "win_rate": 0.6326530612244898,
+    "max_drawdown": 18254.417345225014,
+    "profit_factor": 1.4641435861027676
+  },
+  "holdout_note": "Five of six frozen candidates were profitable under the same fixed definitions in 2026; the NORMAL-VIX call backspread lost ₹86,270.78 net and ₹86,855.55 under +50% cost stress.",
+  "conclusion": "No VIX-conditioned ready-made strategy is promoted. LOW-VIX bear call/bear put spreads are the strongest empirical candidates, but the broader strategy×regime family produced no Holm-adjusted statistical survivor. Canonical Phase-20/42 strategy remains unchanged."
+}
