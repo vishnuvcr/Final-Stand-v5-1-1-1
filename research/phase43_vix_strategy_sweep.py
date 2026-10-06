@@ -380,7 +380,13 @@ def pick_strategy(active, mapping):
 
 
 def make_figures(trades):
-    heat = trades.pivot_table(index="strategy", columns="vix_mode", values="net_rupees", aggfunc="mean")
+    expanded = trades.explode("active_states").rename(columns={"active_states": "vix_mode"})
+    heat = expanded.pivot_table(
+        index="strategy",
+        columns="vix_mode",
+        values="net_rupees",
+        aggfunc="mean"
+    )
     plt.figure(figsize=(13, 9))
     plt.imshow(heat.fillna(0).to_numpy(), aspect="auto")
     plt.yticks(range(len(heat.index)), heat.index)
