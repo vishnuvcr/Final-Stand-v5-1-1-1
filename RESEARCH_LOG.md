@@ -292,3 +292,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-06 — Phase 44 corrected Stage-1 selection
 - Corrected uplift definition applied to the persisted development matrix. eligible=522; frozen=30; decision=DEVELOPMENT_FROZEN_VALIDATION_PENDING.
+
+
+## 2026-10-06 — Phase 44 validation stage run 37509023680
+- status=COMPLETE_STAGE2_VALIDATION; rows=10130; candidates=30; frozen=0; Holm survivors=0; decision=NO_STAGE2_SURVIVOR.

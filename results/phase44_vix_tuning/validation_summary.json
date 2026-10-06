@@ -1,0 +1,9 @@
+{
+  "status": "COMPLETE_STAGE2_VALIDATION",
+  "stage1_rows": 10130,
+  "candidate_rows": 30,
+  "frozen_candidates": 0,
+  "holm_survivors": 0,
+  "holdout_opened_after_validation_freeze": false,
+  "decision": "NO_STAGE2_SURVIVOR"
+}
