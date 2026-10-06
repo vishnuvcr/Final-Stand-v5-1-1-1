@@ -663,3 +663,17 @@ Evidence status: Non-evidence dependency failure.
 Correction: Step-7 workflow now installs `scikit-learn`, matching the script's SimpleImputer and StandardScaler imports.
 
 Prevention: Each workflow dependency list will be checked against the runner imports before execution.
+
+
+### Error F39-038 — Step-7 symbolic grammar misclassified binary expressions
+Run: 37448412461 (Step-7 run #2).
+
+Symptom: The symbolic evaluator raised `ValueError: too many values to unpack` when processing a binary expression.
+
+Cause: Unary and binary expressions are both stored as one-element lists, so `len(expr)==1` was not sufficient to identify the unary grammar form.
+
+Evidence status: Non-evidence implementation failure.
+
+Correction: The evaluator now detects unary expressions by the inner tuple length (2 fields versus 5 for binary expressions).
+
+Prevention: Grammar nodes will use explicit expression-type tags in later structural-search code.
