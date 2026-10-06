@@ -22,6 +22,9 @@ The current authoritative Phase-49 status is recorded in [PHASE49_STATUS.md](htt
 
 **Phase 49 F49-010 correction (2026-10-07):** a final static audit found a remaining validation-stage import-path defect and an unhandled zero-candidate freeze branch. The active run #9 is NON-EVIDENCE. The corrected engine is on run #11 and no numerical conclusion is accepted until its full artifact/statistical audits pass.
 
+
+**Phase 49 F49-011 status (2026-10-07):** run #11 completed the numerical computation but failed the artifact self-audit solely because an empty development error ledger was zero bytes. The numerical values remain embargoed. Run #12 is the corrected full rerun with a valid empty error ledger and the same scientific definitions.
+
 ---
 
 ## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
