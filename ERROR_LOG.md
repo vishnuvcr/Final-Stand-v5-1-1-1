@@ -75,3 +75,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Date: 2026-10-06T06:24:56Z
 - Status: figure/statistical postprocessing failed; no postprocess output from this run is accepted.
 - Action: inspect workflow logs and correct the postprocess implementation.
+
+
+## 2026-10-06 — Phase 35 numerical run #1 (37424461585)
+- BART executed successfully; numerical execution then failed in the wavelet/EMD/VMD tree pathway.
+- Cause: decomposition feature columns were constructed in the decomposed test frame but the corresponding decomposed fit frame was not passed to the LightGBM fitter, producing a pandas missing-column KeyError for the wavelet features.
+- No Phase-35 numerical output from this run is accepted as evidence.
+- Correction: use the matching decomposed training frame for all decomposition-tree models; rerun the frozen preregistered battery.
+- The run's failure-log push also encountered a branch race because a status commit advanced the branch during execution. The workflow was hardened with a pull-rebase before persistence/logging pushes.
