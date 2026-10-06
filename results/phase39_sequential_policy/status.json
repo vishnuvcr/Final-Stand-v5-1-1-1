@@ -1,11 +1,11 @@
 {
   "status": "COMPLETE",
-  "model": "Sparse_GAM_margin",
-  "margin": 500.0,
+  "model": "candidate_credit_diff_symbolic",
+  "margin": 0.0,
   "uncertainty_z": 1.0,
   "warmup_policy_trades": 100,
   "trades": 479,
-  "overrides": 7,
+  "overrides": 1,
   "control_period_counts": {
     "development": 271,
     "validation": 172,
@@ -13,20 +13,20 @@
   },
   "validation_paired_expiry_bootstrap": {
     "expiries": 82,
-    "mean": 15492.772609450007,
+    "mean": 8984.014583950004,
     "lo": -7.73070496506989e-12,
-    "hi": 46478.31782835002,
+    "hi": 26952.04375185002,
     "p_positive": 0.7196
   },
   "holdout_paired_expiry_bootstrap": {
     "expiries": 20,
-    "mean": 7390.390842637,
-    "lo": -5.4569682106375694e-12,
-    "hi": 22171.172527911007,
-    "p_positive": 0.7342
+    "mean": -3.183231456205249e-12,
+    "lo": -9.549694368615746e-12,
+    "hi": 3.183231456205249e-12,
+    "p_positive": 0.1352
   },
-  "validation_uplift_rupees": 17983.530680550008,
-  "holdout_uplift_rupees": 7390.390842637002,
-  "fixed_opportunity_step3_result_used": "Sparse_GAM_margin / margin 500 / z 1.0",
+  "validation_uplift_rupees": 11474.772655050001,
+  "holdout_uplift_rupees": -3.637978807091713e-12,
+  "fixed_opportunity_step7_result_used": "candidate_credit_diff_symbolic / margin 0 / z 1.0",
   "promotion_status": "PENDING_FULL_ENGINE_AUDIT"
 }
