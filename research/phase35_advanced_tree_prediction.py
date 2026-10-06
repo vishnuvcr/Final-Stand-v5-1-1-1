@@ -352,7 +352,7 @@ def main():
     status=[]
     for split,fit,test,testd in [("validation",train,val,val_d),("holdout",pd.concat([train,val]).sort_values("ref_ts"),hold,hold_d)]:
         row=test[["expiry","ref_ts","target_return","target_direction"]].copy().reset_index(drop=True)
-        f=fit.reset_index(drop=True); td=test.reset_index(drop=True); tdd=testd.reset_index(drop=True)
+        f=fit.reset_index(drop=True); td=test.reset_index(drop=True); tdd=testd.reset_index(drop=True)\n        if split=="validation": fd=train_d.reset_index(drop=True)\n        else: fd=pd.concat([train_d,val_d]).sort_values("ref_ts").reset_index(drop=True)
         bundle=fit_tree_bundle(f,td,base_cols)
         for k,v in bundle.items(): row[k+"_prob"]=v
         row["tree_equal6_prob"]=row[["xgb_prob","lgbm_prob","catboost_prob","extra_prob","hist_prob","dart_prob"]].mean(axis=1)
@@ -371,7 +371,7 @@ def main():
             if not any(c.startswith(prefix) for c in colsx):
                 row[name+"_tree_prob"]=row["lgbm_prob"].to_numpy()
             else:
-                row[name+"_tree_prob"]=lgbm_classifier(f,tdd,colsx)
+                row[name+"_tree_prob"]=lgbm_classifier(fd,tdd,colsx)
         # Adaptive predictions are generated sequentially over train+test history.
         combined=pd.concat([f,td]).sort_values("ref_ts").reset_index(drop=True)
         ap=sequential_adaptive(combined,daily,base_cols)
