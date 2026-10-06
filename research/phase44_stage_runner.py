@@ -191,43 +191,78 @@ def development_stage():
 def validation_stage():
     idx=load_index(); vix=load_vix()
     frozen=pd.read_csv(OUT/"frozen_stage1.csv")
-    if frozen.empty: raise RuntimeError("empty development freeze")
+    if frozen.empty:
+        summary={
+            "status":"COMPLETE_STAGE2_VALIDATION_SKIPPED",
+            "stage1_rows":0,"candidate_rows":0,"frozen_candidates":0,
+            "holm_survivors":0,"holdout_opened_after_validation_freeze":False,
+            "decision":"NO_STAGE1_CANDIDATES"
+        }
+        (OUT/"validation_summary.json").write_text(json.dumps(summary,indent=2))
+        pd.DataFrame().to_csv(OUT/"validation_confirmation.csv",index=False)
+        return summary
+
     ex=[d for d in list_expiries() if DEV_END<d<=VAL_END]
     base,errors=process_expiries(idx,ex,"validation")
     base.to_csv(OUT/"validation_structure_time_matrix.csv",index=False)
     errors.to_csv(OUT/"validation_data_errors.csv",index=False)
-    rows=[]; profiles=profile_defs()
+
+    profiles=profile_defs()
+    rows=[]
     for r in frozen.itertuples(index=False):
-        g=base[(base.family==r.family)&(base.geom==r.geom)&(base.entry_time==r.entry_time)]
+        g=base[(base.family==r.family)&(base.geom==r.geom)&(base.entry_time==r.entry_time)].copy()
         par=next(par for pid,mm,par in profiles if pid==r.profile_id and mm==r.mode)
-        mask=[profile_active(vix,pd.Timestamp(x),par,r.mode) for x in g.entry_ts]
-        gz=g.loc[mask]
-        common=g[["expiry","net","net50"]].merge(gz[["expiry","net"]],on="expiry",suffixes=("_base","_cand"))
-        diff=(common.net_cand-common.net_base).to_numpy(float)
-        st=paired_stats(diff)
-        pos=diff[diff>0]
-        conc=float(pos.max()/pos.sum()) if len(pos) and pos.sum()>0 else np.nan
-        bdd=max_dd(g.sort_values("expiry").net.to_numpy()) if len(g) else np.nan
-        rows.append({**r._asdict(),"val_n":len(gz),"val_net":float(gz.net.sum()) if len(gz) else np.nan,
-            "val_net50":float(gz.net50.sum()) if len(gz) else np.nan,
-            "val_dd":max_dd(gz.sort_values("expiry").net.to_numpy()) if len(gz) else np.nan,
-            "base_val_net":float(g.net.sum()) if len(g) else np.nan,"base_val_dd":bdd,
-            "val_uplift":float(diff.sum()) if len(diff) else np.nan,"val_uplift_mean":st["mean"],
-            "val_ci_lo":st["ci_lo"],"val_ci_hi":st["ci_hi"],"val_p":st["p"],
-            "common_n":len(common),"max_positive_uplift_share":conc})
+        active=np.array([profile_active(vix,pd.Timestamp(x),par,r.mode) for x in g.entry_ts],dtype=bool)
+        cand_net=np.where(active,g.net.to_numpy(float),0.0)
+        cand_net50=np.where(active,g.net50.to_numpy(float),0.0)
+        uplift=cand_net-g.net.to_numpy(float)
+        st=paired_stats(uplift)
+        pos=uplift[uplift>0]
+        conc=float(pos.max()/pos.sum()) if len(pos) and pos.sum()>0 else 0.0
+        base_dd=max_dd(g.sort_values("expiry").net.to_numpy(float)) if len(g) else np.nan
+        rows.append({
+            **r._asdict(),
+            "val_n":int(active.sum()),
+            "val_total_expiries":int(len(g)),
+            "val_net":float(cand_net.sum()),
+            "val_net50":float(cand_net50.sum()),
+            "val_dd":max_dd(cand_net),
+            "base_val_net":float(g.net.sum()),
+            "base_val_dd":base_dd,
+            "val_uplift":float(uplift.sum()),
+            "val_uplift_mean":st["mean"],
+            "val_ci_lo":st["ci_lo"],
+            "val_ci_hi":st["ci_hi"],
+            "val_p":st["p"],
+            "common_n":int(len(g)),
+            "max_positive_uplift_share":conc,
+        })
+
     vd=pd.DataFrame(rows)
     if len(vd):
-        vd["validation_gate"]=(vd.val_n>=20)&(vd.val_net>0)&(vd.val_net50>0)&(vd.val_uplift>0)&(vd.val_ci_lo>0)&(vd.val_dd<=1.25*vd.base_val_dd)&(vd.max_positive_uplift_share<=0.40)
+        vd["validation_gate"]=(
+            (vd.val_n>=20)&
+            (vd.val_net>0)&
+            (vd.val_net50>0)&
+            (vd.val_uplift>0)&
+            (vd.val_ci_lo>0)&
+            (vd.val_dd<=1.25*vd.base_val_dd)&
+            (vd.max_positive_uplift_share<=0.40)
+        )
         from phase44_vix_tuning import holm
         vd["val_p_holm"]=holm(vd.val_p.fillna(1).to_numpy())
         vd["inference_survivor"]=vd.validation_gate&(vd.val_p_holm<0.05)
+
     vd.to_csv(OUT/"validation_confirmation.csv",index=False)
+    survivors=int(vd.inference_survivor.sum()) if len(vd) else 0
     summary={
-        "status":"COMPLETE_STAGE2_VALIDATION","stage1_rows":len(base),
-        "candidate_rows":len(vd),"frozen_candidates":int(vd.validation_gate.sum()) if len(vd) else 0,
-        "holm_survivors":int(vd.inference_survivor.sum()) if len(vd) else 0,
+        "status":"COMPLETE_STAGE2_VALIDATION",
+        "stage1_rows":len(base),
+        "candidate_rows":len(vd),
+        "frozen_candidates":int(vd.validation_gate.sum()) if len(vd) else 0,
+        "holm_survivors":survivors,
         "holdout_opened_after_validation_freeze":False,
-        "decision":"VALIDATION_PASS_HOLDOUT_PENDING" if len(vd) and vd.inference_survivor.any() else "NO_STAGE2_SURVIVOR"
+        "decision":"STAGE3_ACTIVE_EXIT_TUNING_PENDING" if survivors else "NO_STAGE2_SURVIVOR"
     }
     (OUT/"validation_summary.json").write_text(json.dumps(summary,indent=2))
     return summary
@@ -242,27 +277,42 @@ def holdout_stage():
     errors.to_csv(OUT/"holdout_data_errors.csv",index=False)
     profiles=profile_defs(); rows=[]
     for r in hs.itertuples(index=False):
-        g=base[(base.family==r.family)&(base.geom==r.geom)&(base.entry_time==r.entry_time)]
+        g=base[(base.family==r.family)&(base.geom==r.geom)&(base.entry_time==r.entry_time)].copy()
         par=next(par for pid,mm,par in profiles if pid==r.profile_id and mm==r.mode)
-        mask=[profile_active(vix,pd.Timestamp(x),par,r.mode) for x in g.entry_ts]
-        hz=g.loc[mask]
-        if hz.empty: continue
-        common=g[["expiry","net","net50"]].merge(hz[["expiry","net"]],on="expiry",suffixes=("_base","_cand"))
-        diff=(common.net_cand-common.net_base).to_numpy(float); st=paired_stats(diff)
-        rows.append({**r._asdict(),"hold_n":len(hz),"hold_net":float(hz.net.sum()),
-            "hold_net50":float(hz.net50.sum()),"hold_dd":max_dd(hz.sort_values("expiry").net.to_numpy()),
-            "hold_uplift":float(diff.sum()) if len(diff) else np.nan,"hold_uplift_mean":st["mean"],
-            "hold_ci_lo":st["ci_lo"],"hold_ci_hi":st["ci_hi"],"hold_p":st["p"],"hold_common_n":len(common)})
+        active=np.array([profile_active(vix,pd.Timestamp(x),par,r.mode) for x in g.entry_ts],dtype=bool)
+        cand_net=np.where(active,g.net.to_numpy(float),0.0)
+        cand_net50=np.where(active,g.net50.to_numpy(float),0.0)
+        uplift=cand_net-g.net.to_numpy(float)
+        st=paired_stats(uplift)
+        rows.append({
+            **r._asdict(),
+            "hold_n":int(active.sum()),
+            "hold_total_expiries":int(len(g)),
+            "hold_net":float(cand_net.sum()),
+            "hold_net50":float(cand_net50.sum()),
+            "hold_dd":max_dd(cand_net),
+            "hold_uplift":float(uplift.sum()) if len(uplift) else np.nan,
+            "hold_uplift_mean":st["mean"],
+            "hold_ci_lo":st["ci_lo"],
+            "hold_ci_hi":st["ci_hi"],
+            "hold_p":st["p"],
+            "hold_common_n":int(len(g)),
+        })
     hd=pd.DataFrame(rows)
     if len(hd):
         from phase44_vix_tuning import holm
         hd["hold_p_holm"]=holm(hd.hold_p.fillna(1).to_numpy())
-        hd["promotion_gate"]=(hd.hold_n>=10)&(hd.hold_net>0)&(hd.hold_net50>0)&(hd.hold_uplift>0)&(hd.hold_ci_lo>0)&(hd.hold_p_holm<0.05)
+        hd["promotion_gate"]=(
+            (hd.hold_n>=10)&(hd.hold_net>0)&(hd.hold_net50>0)&
+            (hd.hold_uplift>0)&(hd.hold_ci_lo>0)&(hd.hold_p_holm<0.05)
+        )
     hd.to_csv(OUT/"frozen_holdout_confirmation.csv",index=False)
     hd.to_csv(OUT/"frozen_stage1_holdout.csv",index=False)
     summary={
-        "status":"COMPLETE_STAGE3_HOLDOUT","stage1_rows":len(base),
-        "candidate_rows":len(hd),"frozen_candidates":len(hs),
+        "status":"COMPLETE_STAGE4_HOLDOUT",
+        "stage1_rows":len(base),
+        "candidate_rows":len(hd),
+        "frozen_candidates":len(hs),
         "holm_survivors":int(hd.promotion_gate.sum()) if len(hd) else 0,
         "holdout_opened_after_validation_freeze":True,
         "decision":"PROMOTION_CANDIDATE" if len(hd) and hd.promotion_gate.any() else "NO_HOLDOUT_PROMOTION"
