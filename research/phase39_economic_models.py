@@ -233,7 +233,10 @@ def main():
         raise AssertionError("Feature/ledger join lost required target/control fields")
     df=df.sort_values("entry_ts").reset_index(drop=True)
     features=select_features(df)
-    if len(features)<100:
+    forbidden={"call_net_rupees","put_net_rupees","control_net_rupees","delta_pnl_call_minus_put","control_direction"}
+    if forbidden.intersection(features):
+        raise AssertionError(f"Outcome/control leakage into feature set: {sorted(forbidden.intersection(features))}")
+    if len(features)<80:
         raise AssertionError(f"Unexpectedly small primary feature set: {len(features)}")
     results=[]; all_oof=[]; all_val=[]
     for name,fn in MODELS.items():
