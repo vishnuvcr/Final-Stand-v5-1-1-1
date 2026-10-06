@@ -1,0 +1,27 @@
+{
+  "reference_rule": "expiry minus 6 calendar days at exactly 10:00 IST",
+  "target_rule": "expiry-day latest complete NIFTY close at or before 15:29 IST",
+  "events_total": 245,
+  "train_events": 128,
+  "validation_events": 95,
+  "holdout_events": 22,
+  "feature_count": 67,
+  "sentiment_feature_count": 5,
+  "events_with_sentiment": 124,
+  "events_with_fii_dii": 20,
+  "models": [
+    "LSTM",
+    "GARCH",
+    "EGARCH",
+    "GJR-GARCH",
+    "SOFNN-inspired",
+    "Random Forest",
+    "equal-weight ensemble"
+  ],
+  "garch_stats": {
+    "garch_sigma_mae": 0.010203463720514195,
+    "garch_sigma_rmse": 0.012310516519222964,
+    "garch_direction_accuracy": 0.49572649572649574
+  },
+  "data_note": "D-6 reference events with missing exact 10:00 observations are excluded, not shifted."
+}

@@ -1,0 +1,68 @@
+Repo card metadata block was not found. Setting CardData to empty.
+Generating train split:   0%|          | 0/9960 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 9960/9960 [00:00<00:00, 146873.12 examples/s]
+OPTION_FEATURE_ERROR 2021-11-04 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48ea2-7de6f92666f9f2894e2d82ff;0fef978d-b776-49ae-902a-26c4a6d43ec6)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2021-11-04.parquet.')
+OPTION_FEATURE_ERROR 2025-04-07 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-657287f52d5cd35a380498cf;927869d7-7907-466a-807d-dd014a1aa0d1)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-04-07.parquet.')
+OPTION_FEATURE_ERROR 2025-04-21 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-105ce7242c7c692430167702;8f91b29c-72ae-429a-8df9-04a9cd631510)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-04-21.parquet.')
+OPTION_FEATURE_ERROR 2025-04-28 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-488767314e25f8c064a220ee;59e2ee46-973a-4555-b139-d738c7e04553)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-04-28.parquet.')
+OPTION_FEATURE_ERROR 2025-05-05 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-066b300a2b5b63a9238075fe;f0ec9a93-5d0b-413e-89ef-638f3cd2c43b)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-05-05.parquet.')
+OPTION_FEATURE_ERROR 2025-05-12 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-52d35a7d7dbd570f4f03c146;e695a8fd-3914-4861-aed0-b020c45f6c2a)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-05-12.parquet.')
+OPTION_FEATURE_ERROR 2025-05-19 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-0ed2f0f8367578e86abe0d8a;418d3d90-fed2-4558-a66e-19e2bc45d3f8)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-05-19.parquet.')
+OPTION_FEATURE_ERROR 2025-05-26 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-5fd853695b6209a254b50ffa;dfc6baf7-2fd7-4a76-868a-a13a489f5007)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-05-26.parquet.')
+OPTION_FEATURE_ERROR 2025-06-02 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-18aae6f74452bad356e6c54e;8fdd655e-0563-41fe-ad1c-86d1c5a1f1f9)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-06-02.parquet.')
+OPTION_FEATURE_ERROR 2025-06-09 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-358502de19dff18e338bce7d;6ab6621b-9203-4147-a1b8-d9be2c6adf8d)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-06-09.parquet.')
+OPTION_FEATURE_ERROR 2025-06-16 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-28d43979500d599822b3f510;18eaa7b6-f0f2-4904-889f-65349fc09542)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-06-16.parquet.')
+OPTION_FEATURE_ERROR 2025-06-23 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-474baf2d0ed10c1e51f267ae;69a430cb-b70e-4e75-8a9a-57741aceca27)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-06-23.parquet.')
+OPTION_FEATURE_ERROR 2025-06-30 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-21a8a99f60d9ecaf5c8f5a2b;4c79d67b-ae00-42b9-8f22-c8af8b2d5231)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-06-30.parquet.')
+OPTION_FEATURE_ERROR 2025-07-07 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-1cce02a844805f2e0dc9d3a2;3d6aab44-1cc7-4b59-8fa4-8314343246bb)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-07-07.parquet.')
+OPTION_FEATURE_ERROR 2025-07-14 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-04e3da1b1fe1d1f05709eac9;920261e6-cde8-4be6-a592-8395e7881c1f)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-07-14.parquet.')
+OPTION_FEATURE_ERROR 2025-07-21 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-59b9fa0477654d3973390392;9f70e879-3069-442b-94b5-d3e3268f1f52)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-07-21.parquet.')
+OPTION_FEATURE_ERROR 2025-07-28 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-533e1d6821d599cf4335451c;b54c2dfa-b5c3-4465-9e33-ea5dc63e2540)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-07-28.parquet.')
+OPTION_FEATURE_ERROR 2025-08-04 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-645a654d531227ff35a705c8;53ab8753-af4c-4373-b646-ffdc9e2a619d)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-08-04.parquet.')
+OPTION_FEATURE_ERROR 2025-08-11 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f99-2199851b6fe9ca1e3f975aca;6e4d4d51-3553-4baa-bcae-b399f309a3ac)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-08-11.parquet.')
+OPTION_FEATURE_ERROR 2025-08-18 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f9a-47decd097079f9b1578aa75e;55309cb6-a48b-4775-9b11-21b9994d5e32)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-08-18.parquet.')
+OPTION_FEATURE_ERROR 2025-08-25 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f9a-7b96245a0b2620475eebeeea;a309cdf3-989c-4a27-9f76-c296878439f9)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-08-25.parquet.')
+OPTION_FEATURE_ERROR 2025-10-21 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48f9e-58eafe8e3ae7a36c7225a608;067e2bd4-df54-4e9c-a736-1b76005b54d6)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2025-10-21.parquet.')
+OPTION_FEATURE_ERROR 2026-06-16 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48fb4-3f0b279305d70e1b69196e36;82475005-c404-4bd2-b7cc-9592709cb942)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2026-06-16.parquet.')
+OPTION_FEATURE_ERROR 2026-06-23 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48fb4-4c2333414b723c17767a02be;562824bf-4e40-48d8-8d11-236e93a861d7)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2026-06-23.parquet.')
+OPTION_FEATURE_ERROR 2026-06-30 RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6ac48fb4-02b6af8e67432cc551f15897;004a2b05-79a0-48c8-b8d8-804818ca29ff)\n\nEntry Not Found for url: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/resolve/main/options/NIFTY/2026-06-30.parquet.')
+LSTM_ERROR ValueError('Found array with 0 feature(s) (shape=(128, 0)) while a minimum of 1 is required by StandardScaler.')
+{
+  "reference_rule": "expiry minus 6 calendar days at exactly 10:00 IST",
+  "target_rule": "expiry-day latest complete NIFTY close at or before 15:29 IST",
+  "events_total": 245,
+  "train_events": 128,
+  "validation_events": 95,
+  "holdout_events": 22,
+  "feature_count": 67,
+  "sentiment_feature_count": 5,
+  "events_with_sentiment": 124,
+  "events_with_fii_dii": 20,
+  "models": [
+    "LSTM",
+    "GARCH",
+    "EGARCH",
+    "GJR-GARCH",
+    "SOFNN-inspired",
+    "Random Forest",
+    "equal-weight ensemble"
+  ],
+  "garch_stats": {
+    "garch_sigma_mae": 0.010203463720514195,
+    "garch_sigma_rmse": 0.012310516519222964,
+    "garch_direction_accuracy": 0.49572649572649574
+  },
+  "data_note": "D-6 reference events with missing exact 10:00 observations are excluded, not shifted."
+}
+ n  accuracy  balanced_accuracy    brier  log_loss  roc_auc  hit_rate      split                 model
+95  0.547368           0.543922 0.246087  0.685089 0.581189  0.547368 validation                    rf
+95  0.515789           0.500000 0.252770  0.698781 0.516859  0.515789 validation                 sofnn
+95  0.515789           0.500000 0.252770  0.698781 0.516859  0.515789 validation            sofnn_sent
+95  0.515789           0.500000 0.250000  0.693147 0.500000  0.515789 validation                  lstm
+95  0.494737           0.484250 0.247388  0.687885 0.577640  0.494737 validation              ensemble
+22  0.545455           0.455357 0.232618  0.656238 0.580357  0.545455    holdout                    rf
+22  0.363636           0.500000 0.269992  0.734311 0.669643  0.363636    holdout                 sofnn
+22  0.363636           0.500000 0.278515  0.751475 0.750000  0.363636    holdout            sofnn_sent
+22  0.363636           0.500000 0.250000  0.693147 0.500000  0.363636    holdout                  lstm
+22  0.590909           0.651786 0.246275  0.685721 0.660714  0.590909    holdout              ensemble
+95  0.568421           0.566327 0.247189  0.687628 0.563886  0.568421 validation RF_price_only_control
+22  0.545455           0.455357 0.231888  0.655375 0.598214  0.545455    holdout RF_price_only_control
