@@ -1,5 +1,5 @@
 {
-  "feature_count": 105,
+  "feature_count": 103,
   "features": [
     "dte_days",
     "entry_hour",
@@ -103,9 +103,7 @@
     "global_CRUDE_ret1",
     "sent_sent_mean",
     "sent_sent_pos",
-    "sent_sent_neg",
-    "call_net_rupees",
-    "put_net_rupees"
+    "sent_sent_neg"
   ],
   "eligibility": "development missingness <=50% and >=5 unique non-missing values"
 }
