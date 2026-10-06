@@ -223,14 +223,14 @@ def run_model(name,fit_fn,df,features):
 
 def main():
     df=pd.read_csv(DATA)
-    ledger=pd.read_csv(LEDGER,usecols=["entry_ts","expiry","split","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"])
+    ledger=pd.read_csv(LEDGER,usecols=["entry_ts","expiry","split","call_net_rupees","put_net_rupees"])
     df["entry_ts"]=pd.to_datetime(df["entry_ts"])
     ledger["entry_ts"]=pd.to_datetime(ledger["entry_ts"])
     if len(df)!=477 or len(ledger)!=477 or df["entry_ts"].nunique()!=477 or ledger["entry_ts"].nunique()!=477:
         raise AssertionError("Expected 477 unique feature rows and 477 unique fixed-opportunity rows")
     df=df.merge(ledger,on=["entry_ts","expiry","split"],how="inner",validate="one_to_one")
-    if len(df)!=477:
-        raise AssertionError("Feature/ledger join lost fixed opportunities")
+    if len(df)!=477 or df["delta_pnl_call_minus_put"].isna().any() or df["control_direction"].isna().any():
+        raise AssertionError("Feature/ledger join lost required target/control fields")
     df=df.sort_values("entry_ts").reset_index(drop=True)
     features=select_features(df)
     if len(features)<100:
