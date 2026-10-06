@@ -275,3 +275,17 @@ Evidence status: Non-evidence feature-pipeline failure. No model fitting or hold
 Correction: Normalize every point-in-time timestamp/join key to timezone-aware Asia/Kolkata nanosecond resolution before any merge_asof operation.
 
 Prevention: Add timestamp-resolution normalization to the shared feature-pipeline boundary and retain the exact source timestamps separately for audit.
+
+
+### Error F39-016 — Step 2b schema audit compared list and set incorrectly
+Run: 37439897984.
+
+Symptom: The schema audit rejected the four known fully-missing columns even though they exactly matched the registered exclusion set.
+
+Cause: The assertion compared a list to a sorted set, causing a type/ordering mismatch.
+
+Evidence status: audit-only failure; no feature evidence changed.
+
+Correction: Compare the two exclusion collections as sets.
+
+Prevention: Schema invariants will use set equality for unordered feature collections.
