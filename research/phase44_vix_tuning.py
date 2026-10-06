@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from huggingface_hub import HfApi, hf_hub_download
+import pyarrow.parquet as pq
 
 TZ = "Asia/Kolkata"
 HF_REPO = "thetrademarkk/india-index-options-1m"
@@ -62,6 +63,35 @@ def load_parquet(name):
     ts = pd.to_datetime(df["timestamp"])
     df["timestamp"] = ts.dt.tz_localize(TZ) if ts.dt.tz is None else ts.dt.tz_convert(TZ)
     return df
+
+def load_option_expiry(expiry, entry_days):
+    name = f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet"
+    path = hf_hub_download(repo_id=HF_REPO, filename=name, repo_type="dataset", token=os.getenv("HF_TOKEN") or None)
+    ranges = []
+    for d in sorted(set(entry_days)):
+        d0 = pd.Timestamp(d).tz_localize(TZ) if pd.Timestamp(d).tz is None else pd.Timestamp(d).tz_convert(TZ)
+        ranges.append((d0 + pd.Timedelta(hours=9, minutes=30), d0 + pd.Timedelta(hours=11)))
+    ranges.append((expiry.normalize(), expiry.normalize() + pd.Timedelta(hours=15, minutes=29)))
+    tables = []
+    for lo, hi in ranges:
+        try:
+            tab = pq.read_table(path, columns=["timestamp","option_type","strike","close"],
+                                filters=[("timestamp", ">=", lo.to_pydatetime()),
+                                         ("timestamp", "<=", hi.to_pydatetime())])
+            if tab.num_rows:
+                tables.append(tab)
+        except Exception:
+            # Fallback to the complete parquet only if timestamp filtering is unsupported.
+            return prepare(pd.read_parquet(path, columns=["timestamp","option_type","strike","close"]))
+    if not tables:
+        return pd.DataFrame(columns=["timestamp","option_type","strike","close"])
+    df = pd.concat([t.to_pandas() for t in tables], ignore_index=True)
+    ts = pd.to_datetime(df["timestamp"])
+    df["timestamp"] = ts.dt.tz_localize(TZ) if ts.dt.tz is None else ts.dt.tz_convert(TZ)
+    df["option_type"] = df["option_type"].astype(str).str.upper()
+    df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
+    df["close"] = pd.to_numeric(df["close"], errors="coerce")
+    return df.dropna(subset=["timestamp","option_type","strike","close"]).drop_duplicates(["timestamp","option_type","strike"]).sort_values(["timestamp","option_type","strike"], kind="stable")
 
 def load_index():
     x = load_parquet("index/NIFTY.parquet")
@@ -264,9 +294,9 @@ def main():
 
     for oi, ex in enumerate(expiries):
         try:
-            # Process one expiry at a time; HF cache prevents repeated network downloads
-            # while releasing the dataframe after each expiry keeps RAM bounded.
-            cur = prepare(load_parquet(f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"))
+            # Read only the four registered entry timestamps and expiry-day data.
+            entry_days = [entry_ts_for(idx, ex, tm).normalize() for tm in ENTRY_TIMES if entry_ts_for(idx, ex, tm) is not None]
+            cur = load_option_expiry(ex, entry_days)
             split = split_for(ex)
             lot = lot_size_for_expiry(ex)
             cutoff = ex.normalize() + pd.Timedelta(hours=15, minutes=29)
