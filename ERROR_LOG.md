@@ -1030,3 +1030,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Evidence status:** No repository file was changed by the failed call; no numerical run occurred.
 - **Correction:** Reissued the write with safe string construction. Phase43 plan, pre-registration, status and literature review were successfully committed.
 - **Prevention:** Use payload-safe string generation for repository writes and validate syntax before issuing GitHub mutations.
+
+
+## F43-002 — 2026-10-06 — Workflow expression escaping incident
+- **Symptom:** The first workflow/bridge registration used a raw JavaScript template string, so GitHub Actions expressions were persisted with a literal backslash before `${{ ... }}`.
+- **Evidence status:** No numerical execution was accepted; no strategy result was produced.
+- **Correction:** The workflow files were rewritten with the intended GitHub expression syntax and a new bridge trigger will be issued.
+- **Prevention:** Treat GitHub workflow expression syntax as a separate validation target from JavaScript string escaping and inspect the committed YAML before triggering.
