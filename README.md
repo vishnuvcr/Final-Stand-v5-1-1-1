@@ -390,3 +390,18 @@ A control-reproducibility discrepancy was detected and logged as F38-001: a fres
 - [Phase 38 pull request #12](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/12)
 
 **Next research priority:** Phase 39 robustness of the canonical stateful strategy with broker-realistic bid/ask, latency, fill probability, and expanded cost/slippage stress.
+
+### Phase 38 secondary risk-adjusted diagnostic
+
+The cumulative net-P&L / maximum-drawdown ranking is:
+
+1. **MARKOV_REGIME_TREE: 1.309**
+2. **CATBOOST: 1.173**
+3. **STATEFUL_CONTROL: 1.028**
+4. **WAVELET_TREE: 0.579**
+5. **OOF_STACK: 0.399**
+6. **DART: 0.368**
+
+Markov has the strongest cumulative return-to-drawdown efficiency, but this is only a secondary diagnostic; it does not overturn the preregistered control-relative rejection of all five model selectors.
+
+- [Risk-adjusted summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/results/phase38_corrected_model_robustness/risk_adjusted_summary.csv)
