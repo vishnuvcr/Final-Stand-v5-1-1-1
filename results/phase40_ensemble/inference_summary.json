@@ -1,0 +1,16 @@
+{
+  "status": "INFERENCE_COMPLETE",
+  "grid_candidates": 1764,
+  "unique_validation_policies": 306,
+  "top10_unique": 10,
+  "validation_positive_candidate_count": 555,
+  "validation_best_uplift": 21262.8280064,
+  "validation_best_candidate_id": 3,
+  "vix_thresholds": {
+    "ret_q67": 0.039880184945773944,
+    "level_q33": 14.747399940490723,
+    "level_q67": 20.43000030517578
+  },
+  "n_bootstrap": 10000,
+  "results_file": "results/phase40_ensemble/inference_top10.csv"
+}
