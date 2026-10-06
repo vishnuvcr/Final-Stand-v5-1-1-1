@@ -167,14 +167,23 @@ def manuscript(pre,summary,fr,vs,par,ann,hc,scores):
         desc.append(f"- **{r.family} / {r.state}:** {geom}; entry {int(d['entry_h']):02d}:{int(d['entry_m']):02d} IST; DTE={int(d['dte'])}.")
     bp=vs[(vs.family=="bear_put")&(vs.state=="LOW")].iloc[0] if len(vs[(vs.family=="bear_put")&(vs.state=="LOW")]) else None
     bw=vs[(vs.family=="put_bwb")&(vs.state=="LOW")].iloc[0] if len(vs[(vs.family=="put_bwb")&(vs.state=="LOW")]) else None
+    econ=vs[(vs.trades>=20)&(vs.net>0)&(vs.net50>0)&(vs.active_vs_complement_mean>0)]
+    holdout_rows=[]
+    for _,r in hc.iterrows():
+        holdout_rows.append(f"{r.family} / {r.state}: {int(r.trades)} trades, {money(r.net)} net, {money(r.net50)} at +50% costs, win rate {pct(r.win_rate)}.")
+    frozen_count=len(fr)
     lines=[
         "# Phase 49 Manuscript — VIX Leader Parameter Tuning","",
         "## Abstract","",
         f"Phase 49 screened {pre['grid']} registered geometries, expanded to {pre['regime_candidates']} parameter×VIX-regime candidates across LOW and NORMAL India-VIX states. The study used {pre['dev']} development expiries (2021–2023), {pre['validation']} validation expiries (2024–2025), and {pre['holdout']} protected holdout expiries.",
         "",
-        f"Two LOW-VIX candidates survived development. The frozen Bear Put was a 5-DTE, 09:30 IST four-step PE credit spread; the frozen Put Broken-Wing Butterfly was a 3-DTE, 11:00 IST asymmetric PE BWB. Only the Bear Put met the validation economic gate: {money(bp.net)} net and {money(bp.net50)} at +50% costs across {int(bp.trades)} active LOW-VIX trades. Its active-vs-complement inference was not statistically conclusive (p={bp.p:.4f}; Holm p={bp.p_holm:.4f}; 95% bootstrap CI crossed zero). The Put BWB was negative in validation.",
+        f"{frozen_count} candidates survived development. The frozen set is defined by the persisted development_frozen_parameters.csv artifact and is summarized below. {len(econ)} candidate(s) met the validation economic gate.",
         "",
-        "The Bear Put generated a positive protected-holdout confirmation on five LOW-VIX trades, but the sample is too small to override the preregistered inferential gate. Phase 49 therefore closes with NO PROMOTION.",
+        (f"The Bear Put LOW candidate met the validation economic gate with {money(bp.net)} net and {money(bp.net50)} at +50% costs across {int(bp.trades)} active LOW-VIX trades; its inference remained non-confirmatory (p={bp.p:.4f}; Holm p={bp.p_holm:.4f}; 95% bootstrap CI crossed zero)." if bp is not None else "No Bear Put LOW candidate was present in the frozen validation set."),
+        "",
+        (f"Protected holdout confirmations: {'; '.join(holdout_rows)}" if holdout_rows else "No holdout confirmation passed the registered economic gate."),
+        "",
+        "The preregistered promotion gate therefore remains NO PROMOTION unless a Holm-adjusted confirmatory comparison survives.",
         "",
         "## Research question","",
         "Can the strongest previously validated LOW/NORMAL-VIX NIFTY defined-risk structures be improved by tuning strike geometry, spread width, entry time and DTE without sacrificing out-of-sample robustness?","",
@@ -219,15 +228,17 @@ def manuscript(pre,summary,fr,vs,par,ann,hc,scores):
         lines.append(f"| {r.family} / {r.state} | {int(r.trades)} | {money(r.net)} | {money(r.net50)} | {pct(r.win_rate)} |")
     lines += [
         "",
-        "The Bear Put LOW holdout result was +₹27,278.50 net and +₹27,051.63 under +50% cost stress on five active LOW-VIX observations. Four of five trades were profitable. This is encouraging but not sufficiently powered for deployment-grade confirmation.",
+        (f"The strongest holdout confirmation is {holdout_rows[0]}" if holdout_rows else "No holdout confirmation survived the validation economic gate."),
         "",
         "## Statistical inference",
         "",
-        "No Holm-adjusted comparison survived the pre-registered 0.05 threshold. The Bear Put's 95% bootstrap interval spans zero and permutation p=0.226. The absence of statistical confirmation is decisive under the Phase-49 promotion gate.",
+        (f"No Holm-adjusted comparison survived the pre-registered 0.05 threshold. The Bear Put's 95% bootstrap interval spans zero with permutation p={bp.p:.4f} and Holm-adjusted p={bp.p_holm:.4f}." if bp is not None and bp.p_holm >= 0.05 else f"Holm-adjusted survivors: {int((vs.p_holm < 0.05).sum())}."),
         "",
         "## Economic interpretation",
         "",
-        "The tuned Bear Put is economically promising: earlier entry (09:30), five-session entry horizon, wider four-step spread, and the +1/-3 strike geometry materially improved validation P&L versus the registered baseline. However, the search involved 1,440 candidate-regime combinations; development ranking therefore carries selection risk. The protected holdout is positive but only five trades.",
+        (f"The tuned Bear Put is economically promising: its frozen parameter is persisted in the candidate table, and its paired baseline uplift was {money(bp.paired_uplift_net)} net / {money(bp.paired_uplift_net50)} at +50% costs across {int(bp.paired_common)} common validation expiries." if bp is not None else "No Bear Put LOW candidate was frozen."),
+        "",
+        f"The search involved {int(pre['regime_candidates'])} candidate-regime combinations; development ranking therefore carries selection risk. Holdout evidence must be interpreted using the persisted trade count rather than a point estimate alone.",
         "",
         "## Strengths","",
         "- Finite pre-registration with explicit cardinality and chronological separation.",
@@ -242,7 +253,7 @@ def manuscript(pre,summary,fr,vs,par,ann,hc,scores):
         "- Historical quote data do not provide full order-book queue/fill information; the project-standard one-tick adverse model is used.",
         "",
         "## Conclusion","",
-        "**NO PROMOTION.** The best tuned research candidate is the LOW-VIX Bear Put: buy PE one modal strike step above ATM, sell PE three modal strike steps below ATM, four-step width, entered at 09:30 IST five trading sessions before expiry. It is an economically promising candidate but fails the statistical gate. The canonical strategy remains unchanged.",
+        f"**{('NO PROMOTION' if int(summary['holm_survivors']) == 0 else 'PROMOTION GATE REVIEW REQUIRED')}**. Frozen candidates and their exact rules are in development_frozen_parameters.csv. The canonical strategy remains unchanged unless the persisted final_decision.json states otherwise.",
         "",
         "## Future research","",
         "The next bounded test should prospectively evaluate this frozen Bear Put on a substantially larger independent post-2025 sample, with a minimum active-trade count set in advance. A later phase can add independent controls for trend, realized volatility, VIX term structure/skew, global market crossings, major news/event days and corporate-action windows without reopening the Phase-49 parameter surface.",
