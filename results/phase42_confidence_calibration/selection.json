@@ -1,0 +1,37 @@
+{
+  "declared_variants": 72,
+  "eligible_count": 2,
+  "fallback_reason": "",
+  "top3_frozen_before_holdout": [
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "calibration": "RAW",
+      "margin": 500.0,
+      "gate": "ALL",
+      "development_uplift": 14051.196443399967,
+      "validation_uplift": 32805.75740769,
+      "development_overrides": 53,
+      "validation_overrides": 39,
+      "validation_override_rate": 0.22674418604651161,
+      "validation_policy_dd": 29365.01083502501,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "EXTRATREES_VIX",
+      "calibration": "RAW",
+      "margin": 250.0,
+      "gate": "ALL",
+      "development_uplift": 12647.177759399972,
+      "validation_uplift": 19979.531095680046,
+      "development_overrides": 64,
+      "validation_overrides": 43,
+      "validation_override_rate": 0.25,
+      "validation_policy_dd": 27823.92384793998,
+      "validation_control_dd": 32021.645578619973
+    }
+  ],
+  "vix_thresholds": {
+    "vix_q67": 20.43000030517578,
+    "vix_absret_q67": 0.039880184945773944
+  }
+}
