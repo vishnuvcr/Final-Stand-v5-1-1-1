@@ -1,13 +1,18 @@
-## Phase 48 — Independent Multi-Expiry VIX Data Bridge — INITIALIZED
+## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
 
-Phase 48 uses an independent public NIFTY intraday dataset with multiple expiries visible on the same trade date to unlock the YouTube-derived calendar/hedged strategies that were data-infeasible in Phase 47. The study remains supplementary and retains ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING VIX states.
+Phase 48 successfully repaired the multi-expiry data limitation identified in Phase 47 by using an independent NIFTY intraday option source with multiple expiries on the same trade date. The final corrected run contains **124 accepted trade rows** across three registered baselines.
 
-Registered baselines: Double Calendar Straddle; Monthly Wide-Range Hedge static baseline; Covered Call 2.0 static proxy.
+One validation working candidate survived the economic screen: **Covered Call 2.0 option-only proxy + LOW VIX** (30 validation trades, +₹10,327 net; +₹6,786 at +50% fee/charge stress). The protected 2026 confirmation was +₹2,754 net / +₹2,114 stressed across 6 trades.
+
+However, the active-vs-rest bootstrap 95% CI crossed zero, permutation p=0.2718, Holm-adjusted p=1.0, and drawdown was very large relative to the mean trade. The other two baselines were negative in validation. **No strategy is promoted and the canonical Phase-20/42 strategy is unchanged.**
+
+Critical self-audits that materially affected validity included UTC-to-IST timestamp normalization, point-in-time spot bridging, and historical NIFTY lot-size correction. Earlier Phase-48 numerical results were explicitly rejected and only the post-correction run is accepted.
 
 - [Phase 48 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-48-multiexpiry-vix-source-bridge)
-- [Phase 48 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/PHASE48_RESEARCH_PLAN.md)
 - [Phase 48 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/PHASE48_STATUS.md)
-- [Phase 48 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/.github/workflows/phase-48-multiexpiry-vix-source-bridge.yml)
+- [Phase 48 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/PHASE48_RESEARCH_PLAN.md)
+- [Phase 48 final decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/results/phase48_multiexpiry/final_decision.json)
+- [Phase 48 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/results/phase48_multiexpiry/PHASE48_MANUSCRIPT.md)
 
 ---
 
