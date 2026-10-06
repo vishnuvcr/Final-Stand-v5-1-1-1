@@ -16,6 +16,9 @@ Development tuning uses 2021-2023. Validation is 2024-2025. The 2026 holdout rem
 The current authoritative Phase-49 status is recorded in [PHASE49_STATUS.md](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md).
 
 ---
+
+**Phase 49 performance correction (F49-009, 2026-10-07):** the engine now caches index trading days, timestamp-to-spot mappings and VIX state calculations across candidates. This is execution-only and does not alter the preregistered search or inference definitions. The optimized run is tracked as Actions run #9; all slower/superseded Phase-49 runs remain non-evidence.
+
 ---
 
 ## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
