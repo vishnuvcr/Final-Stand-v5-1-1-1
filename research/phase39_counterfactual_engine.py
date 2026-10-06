@@ -142,6 +142,10 @@ def validate_control_ledger():
     z['entry_ts']=pd.to_datetime(z.entry_ts).dt.tz_convert(TZ); z['expiry']=pd.to_datetime(z.expiry).dt.strftime('%Y-%m-%d')
     dev['split']='development'
     z['split']=np.where(pd.to_datetime(z.expiry).dt.year<=2025,'validation','holdout')
+    if (pd.to_datetime(z['expiry']).dt.strftime('%Y-%m-%d')=='2024-01-04').any():
+        raise AssertionError('Frozen comparator unexpectedly contains excluded 2024-01-04 opportunity')
+    if int((z['split']=='validation').sum())!=172 or int((z['split']=='holdout').sum())!=34:
+        raise AssertionError('Frozen comparator split counts do not match the preregistered 172/34 panel')
     panel=pd.concat([dev,z],ignore_index=True)
     return panel.sort_values(['entry_ts','expiry']).reset_index(drop=True)
 
@@ -165,7 +169,7 @@ def run_arm(option_df,spot_df,entry_ts,expiry,typ,short_k,long_k,lot):
     short_entry=q[float(short_k)]; long_entry=q[float(long_k)]
     path=option_df[(option_df.timestamp>entry_ts)&(option_df.timestamp<=expiry+pd.Timedelta(hours=15,minutes=29))&(option_df.option_type==typ)&(option_df.strike.isin([short_k,long_k]))].pivot_table(index='timestamp',columns='strike',values='close',aggfunc='last').dropna(subset=[short_k,long_k])
     if path.empty: raise RuntimeError(f'no future path {entry_ts} {typ}')
-    path=path.reset_index().merge(spot_df[['timestamp','spot']],on='timestamp',how='inner').sort_values('timestamp').reset_index(drop=True)
+    path=path.reset_index().merge(spot_df[['timestamp','spot']],on='timestamp',how='inner').sort_values('timestamp',kind='stable').reset_index(drop=True)
     tleft=np.maximum((expiry_ts-pd.to_datetime(path.timestamp)).dt.total_seconds().to_numpy(float)/31557600.0,1e-10)
     deltas=implied_delta(path[short_k].to_numpy(float),path.spot.to_numpy(float),np.full(len(path),short_k,float),tleft,typ)
     hit=(deltas>=.50)|(deltas<=.04) if typ=='CE' else (deltas<=-.50)|(deltas>=-.04)
@@ -184,6 +188,10 @@ def run_arm(option_df,spot_df,entry_ts,expiry,typ,short_k,long_k,lot):
 
 def main():
     ctl=validate_control_ledger()
+    assert int((ctl.split=='development').sum())==271
+    assert int((ctl.split=='validation').sum())==172
+    assert int((ctl.split=='holdout').sum())==34
+    assert pd.to_datetime(ctl.entry_ts).is_monotonic_increasing
     spot=load_hf('index/NIFTY.parquet')[['timestamp','close']].rename(columns={'close':'spot'}).drop_duplicates('timestamp').sort_values('timestamp')
     cache={}; rows=[]; audit=[]
     for i,r in ctl.iterrows():
