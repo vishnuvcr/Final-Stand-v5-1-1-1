@@ -1,3 +1,23 @@
+## Phase 47 — VIX source-strategy numerical backtest — INITIALIZED
+
+Phase 47 converts a finite subset of the Phase-46 YouTube discoveries into reproducible NIFTY tests while retaining **LOW, NORMAL and FALLING** VIX states alongside **RISING, HIGH, SPIKE and HIGH_RISING**.
+
+Registered candidates:
+- Double Calendar Straddle.
+- Profit Breakout Monthly Wide-Range Hedge (30-delta reconstruction with next-month ATM hedge).
+- Profit Breakout Covered Call 2.0 option-only synthetic-future proxy (diagnostic until futures equivalence is verified).
+
+The workflow is staged with compile, preflight, numerical, artifact and holdout audits. Four pre-numerical defects were already caught and corrected: timezone normalization, multi-window cache keys, variant grouping, and nondeterministic inference seeds. No numerical evidence from those superseded snapshots is accepted.
+
+- [Phase 47 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-47-vix-source-strategy-backtest)
+- [Phase 47 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/PHASE47_RESEARCH_PLAN.md)
+- [Phase 47 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/PHASE47_STATUS.md)
+- [Phase 47 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/PHASE47_LITERATURE_REVIEW.md)
+- [Phase 47 numerical engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/research/phase47_vix_source_backtest.py)
+- [Phase 47 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/.github/workflows/phase-47-vix-source-strategy-backtest.yml)
+
+---
+
 ## Phase 46 scope expansion — Profit Breakout + full VIX panel
 
 The user-designated **Profit Breakout** YouTube channel has been incorporated as a dedicated source stream. Nine directly relevant indexed videos were added to the Phase-46 source ledger, including explicit India-VIX strategy selection, Batman/VIX filtering, Iron Fly versus Iron Condor by volatility, adaptive Iron Fly→Iron Condor management, VIX-adapted monthly strategy, hedged weekly/monthly credit structures and longer-duration NIFTY income structures.
