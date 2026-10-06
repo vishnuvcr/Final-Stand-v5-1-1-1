@@ -23,3 +23,7 @@ The Phase-36 direction-selection function does not receive prior trade P&L, prio
 
 ## Final decision
 The independent-direction overlay is rejected for promotion. Every selector was net negative over the primary window and every selector was negative in the 2026 holdout. The stateful control outperformed all selectors.
+
+
+## Final reproducibility checkpoint
+Run #18 (37429748933) reproduced all seven numerical selector jobs successfully and the rebase-safe publication job succeeded. No change to the Phase-36 decision.
