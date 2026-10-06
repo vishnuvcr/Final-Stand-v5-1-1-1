@@ -64,3 +64,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - No variant passed the validation safety gate; the top three frozen diagnostics all had zero overrides across the full development/validation/2026 counterfactual panel.
 - Exact sequential replay was completed by the registered identity/no-op audit and matched the canonical control exactly: zero validation and holdout uplift, zero overrides, p=1.0000.
 - **Decision: no promotion. Canonical stateful strategy remains unchanged.**
+
+
+## 2026-10-06 — Phase 42 closeout published to main
+- Accepted numerical workflow: 37470344620.
+- 72 preregistered variants screened; 2 passed development/validation selection.
+- Primary sequential policy: SPLINE_RIDGE_VIX + RAW + ₹500 + ALL; +₹26,542.28 validation uplift and +₹20,607.09 2026 holdout uplift.
+- Holdout paired-expiry 95% CI for mean uplift crossed zero (−₹2,020.42 to +₹4,297.35); one-sided sign-flip p=0.3054.
+- Final decision: no promotion; canonical stateful strategy unchanged.
