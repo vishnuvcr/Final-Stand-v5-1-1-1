@@ -109,9 +109,10 @@ jobs:
           PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin phase-44-vix-candidate-tuning || true
+          git fetch origin phase-44-vix-candidate-tuning
+          git reset --mixed origin/phase-44-vix-candidate-tuning
           git add results/phase44_vix_tuning PHASE44_STATUS.md RESEARCH_LOG.md ERROR_LOG.md
-          git commit -m "phase44: persist development stage results" || true
+          git commit -m "phase44: persist development stage results"
           git push origin HEAD:phase-44-vix-candidate-tuning
 
       - name: Trigger next registered stage
