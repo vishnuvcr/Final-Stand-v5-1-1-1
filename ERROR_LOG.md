@@ -625,3 +625,15 @@ Evidence status: Non-evidence tooling/computation failure.
 Correction: Step 6 now fits the economic-margin model once per chronological 20-observation batch and updates Hedge weights after each realized observation. The first 100 warm-up observations remain control-only.
 
 Prevention: Chronological expert-aggregation screens will batch expensive predictive-model fits while preserving per-observation reward updates and causal ordering.
+
+
+### Error F39-034 — Step-6 expert aggregation array conversion mismatch
+Run: 37447505823 (Step-6 run #1).
+
+Symptom: The full-information expert aggregation diagnostic failed when a NumPy `where` result was treated as a pandas Series.
+
+Evidence status: Non-evidence runtime failure. No Step-6 output was accepted.
+
+Correction: Selected expert P&L is now explicitly represented as a NumPy array before aggregation.
+
+Prevention: Keep explicit array types at the expert-aggregation evaluation boundary.
