@@ -18,3 +18,6 @@ Current gate status:
 - Validation confirmation: pending.
 - Holdout confirmation: pending.
 - Final promotion: prohibited until all gates pass.
+
+## Performance correction
+The initial numerical process was superseded after a self-audit found the per-candidate DataFrame filtering path was unnecessarily expensive. The engine now caches entry/expiry quote maps per expiry-entry snapshot. No numerical result from the superseded run is accepted.
