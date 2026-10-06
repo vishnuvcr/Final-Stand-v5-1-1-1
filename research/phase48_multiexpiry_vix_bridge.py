@@ -61,6 +61,27 @@ def download_year(y):
                             repo_type="dataset",token=os.getenv("HF_TOKEN") or None)
 
 FILES={}
+INDEX_REPO='thetrademarkk/india-index-options-1m'
+INDEX_CACHE=None
+
+def load_spot_index():
+    global INDEX_CACHE
+    if INDEX_CACHE is not None: return INDEX_CACHE
+    p=hf_hub_download(repo_id=INDEX_REPO,filename='index/NIFTY.parquet',repo_type='dataset',token=os.getenv('HF_TOKEN') or None)
+    z=pd.read_parquet(p,columns=['timestamp','close'])
+    z['timestamp']=pd.to_datetime(z['timestamp'])
+    if z['timestamp'].dt.tz is None: z['timestamp']=z['timestamp'].dt.tz_localize(TZ)
+    else: z['timestamp']=z['timestamp'].dt.tz_convert(TZ)
+    z['close']=pd.to_numeric(z['close'],errors='coerce')
+    INDEX_CACHE=z.dropna(subset=['timestamp','close']).drop_duplicates('timestamp').sort_values('timestamp')
+    return INDEX_CACHE
+
+def spot_at(entry_ts):
+    z=load_spot_index()
+    t=as_tz(entry_ts)
+    q=z[z.timestamp==t]
+    if q.empty: return None
+    return float(q.iloc[-1].close)
 
 def get_file(y):
     if y not in FILES: FILES[y]=download_year(y)
@@ -273,9 +294,9 @@ def trade_b1(expiry,next_expiry,days,vix):
     entry=entry_day+pd.Timedelta(hours=10)
     cur=option_snapshot(entry_day,expiry); nxt=option_snapshot(entry_day,next_expiry)
     if cur.empty or nxt.empty:return None
-    spot=pd.concat([cur,nxt]).spot_price.dropna()
-    if spot.empty:return None
-    s=float(spot.median()); ac=choose_atm(cur,s); an=choose_atm(nxt,s)
+    s=spot_at(entry)
+    if s is None:return None
+    ac=choose_atm(cur,s); an=choose_atm(nxt,s)
     if ac is None or an is None:return None
     legs=[("CE",ac,-1),("PE",ac,-1),("CE",an,1),("PE",an,1)]
     eps=[]
@@ -295,9 +316,9 @@ def trade_b2(expiry,next_expiry,prev_month,days,vix):
     entry=entry_day+pd.Timedelta(hours=10)
     cur=option_snapshot(entry_day,expiry); nxt=option_snapshot(entry_day,next_expiry)
     if cur.empty or nxt.empty:return None
-    spot=pd.concat([cur,nxt]).spot_price.dropna()
-    if spot.empty:return None
-    s=float(spot.median()); pv=prior_vix(vix,entry)
+    s=spot_at(entry)
+    if s is None:return None
+    pv=prior_vix(vix,entry)
     if pv is None:return None
     sigma=float(pv.vix)/100
     ce=choose_delta(cur,s,sigma,expiry,entry,"CE",.30)
@@ -434,11 +455,10 @@ def diagnostic_attempts(days, monthly, vix, limit=20):
         rec['next_expiries']=int(nxt.expiry.nunique()) if len(nxt) else 0
         if cur.empty or nxt.empty:
             rec['reason']='NO_ENTRY_SNAPSHOT'; out.append(rec); continue
-        spot=pd.concat([cur,nxt]).spot_price.dropna()
-        rec['spot_rows']=len(spot)
-        if spot.empty:
-            rec['reason']='NO_SPOT'; out.append(rec); continue
-        s=float(spot.median()); rec['spot']=s
+        s=spot_at(ed+pd.Timedelta(hours=10)); rec['spot_rows']=0 if s is None else 1
+        if s is None:
+            rec['reason']='NO_INDEX_SPOT'; out.append(rec); continue
+        rec['spot']=s
         ac=choose_atm(cur,s); an=choose_atm(nxt,s); rec['atm_cur']=ac; rec['atm_next']=an
         if ac is None or an is None:
             rec['reason']='NO_ATM'; out.append(rec); continue
