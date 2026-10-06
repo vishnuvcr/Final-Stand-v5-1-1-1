@@ -289,3 +289,17 @@ Evidence status: audit-only failure; no feature evidence changed.
 Correction: Compare the two exclusion collections as sets.
 
 Prevention: Schema invariants will use set equality for unordered feature collections.
+
+
+### Error F39-018 — Step 3 model runner expected target columns inside feature matrix
+Run: 37440243604.
+
+Symptom: The economic-model runner failed at the first model because call_net_rupees and put_net_rupees were correctly absent from the point-in-time feature matrix.
+
+Cause: Step 2 explicitly separated labels/controls from predictors, but Step 3 initially assumed the outcome fields were embedded in the feature matrix.
+
+Evidence status: non-evidence model execution failure; no model result accepted.
+
+Correction: Step 3 now joins only the preregistered outcome/control columns from fixed_opportunity_ledger.csv to the point-in-time predictors by entry timestamp.
+
+Prevention: Predictor matrices and economic outcomes remain physically separated; model runners must join them explicitly.
