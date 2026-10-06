@@ -89,3 +89,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Stage 5 active-exit optimization skipped.
 - **Final decision: NO PROMOTION; canonical Phase-20/42 strategy unchanged.**
 - Final manuscript: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_MANUSCRIPT.md
+
+
+## 2026-10-06 — Phase 44 VIX candidate tuning initialized
+- Created isolated branch `phase-44-vix-candidate-tuning` from completed Phase 43.
+- Registered finite tuning of six defined-risk Phase-43 candidates using strike geometry, entry time and prior-only VIX percentile profiles.
+- The 2026 holdout remains protected until validation/inference freezing.
+- Automated branch workflow and main execution bridge registered.
+- Initial implementation audit F44-001 was logged and quarantined before evidence acceptance.
