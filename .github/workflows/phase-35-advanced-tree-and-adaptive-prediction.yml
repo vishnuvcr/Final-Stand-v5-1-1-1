@@ -45,6 +45,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase35_advanced_tree_prediction data/phase35_decomp_features.parquet phase35_run.log
           git diff --cached --quiet || git commit -m "Phase 35: persist advanced tree prediction results"
+          git pull --rebase origin phase-35-advanced-tree-and-adaptive-prediction-search
           git push
       - name: Log failure
         if: steps.run_phase35.outcome != 'success'
@@ -60,6 +61,7 @@ jobs:
           } >> ERROR_LOG.md
           git add ERROR_LOG.md
           git diff --cached --quiet || git commit -m "Phase 35: log numerical failure"
+          git pull --rebase origin phase-35-advanced-tree-and-adaptive-prediction-search
           git push
       - name: Upload artifacts
         if: always()
