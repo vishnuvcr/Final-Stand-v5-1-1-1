@@ -148,3 +148,18 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - This preserves the current-week definition even when the historical source has a missing expiry file.
 - Run #39 is reclassified as diagnostic/non-evidence.
 - Corrected commit: cb0001f0e12376d27fa40b113ca47715a15c12cc.
+
+
+## 2026-10-06 — Phase 38 final control-relative robustness
+
+- Phase 38 was initialized on branch phase-38-corrected-model-robustness to test five Phase-37 polarity-corrected direction selectors against the canonical stateful Phase-32 control.
+- GitHub Actions run 37432966945 completed successfully, but its regenerated control did not match the previously accepted canonical artifact. It produced 205 trades / 103 expiries / +₹65,945.47 instead of 206 / 102 / +₹63,672.58.
+- Error F38-001 was logged. The accepted Phase-32 control was frozen by SHA-256 artifact fingerprint and expiry-level P&L cache.
+- The corrected workflow run 37433424224 used the frozen canonical control for all primary treatment comparisons and independently retained the regenerated control as an audit result.
+- Final paired common-expiry sample: 93 expiry blocks.
+- Mean selector-minus-control differences were negative for all five selectors; bootstrap probabilities of beating control ranged from 18.11% to 37.63%.
+- All five selectors remained positive in the 2026 holdout and remained positive at +50% cost stress, but all failed the incremental-control promotion test.
+- All five selectors showed CALL-positive / PUT-negative asymmetry; OOF_STACK was especially asymmetric at 80.8% PUT trades.
+- Final decision: reject all five corrected model selectors; retain the canonical stateful direction rule.
+- Full manuscript: PHASE38_MANUSCRIPT.md.
+- Final status: PHASE38_STATUS.md.
