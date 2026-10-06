@@ -425,10 +425,13 @@ def main():
                 "dev_ci_lo": st["ci_lo"], "dev_ci_hi": st["ci_hi"],
             })
 
-    dc = pd.DataFrame(dev_candidates)
-    if dc.empty:
-        raise RuntimeError("no development candidates")
-    dc = dc[(dc.dev_net >= 0) & (dc.dev_net50 > 0) & (dc.dev_uplift > 0)].sort_values(
+    all_dc = pd.DataFrame(dev_candidates)
+    if all_dc.empty:
+        raise RuntimeError("no development profile rows")
+    all_dc.to_csv(OUT / "stage1_all_dev_profiles.csv", index=False)
+
+    # Registered development-only eligibility screen.
+    dc = all_dc[(all_dc.dev_net >= 0) & (all_dc.dev_net50 > 0) & (all_dc.dev_uplift > 0)].sort_values(
         ["dev_uplift_mean", "dev_net"], ascending=False
     )
 
@@ -441,9 +444,10 @@ def main():
         counts[r.family] = counts.get(r.family, 0) + 1
         if len(picked) >= 30:
             break
-    frozen_dev = pd.DataFrame(picked)
+    frozen_dev = pd.DataFrame(picked, columns=dc.columns)
     frozen_dev.to_csv(OUT / "frozen_dev_shortlist.csv", index=False)
     frozen_dev.to_csv(OUT / "stage1_candidates.csv", index=False)
+    frozen_dev.to_csv(OUT / "frozen_stage1.csv", index=False)
 
     # Validation confirmation after development freeze.
     val_rows = []
@@ -517,13 +521,19 @@ def main():
             (hd.hold_uplift > 0) & (hd.hold_ci_lo > 0) & (hd.hold_p_holm < 0.05)
         )
     hd.to_csv(OUT / "frozen_holdout_confirmation.csv", index=False)
+    hd.to_csv(OUT / "frozen_stage1_holdout.csv", index=False)
 
     summary = {
         "status": "COMPLETE_STAGE1",
         "families": 6,
         "structure_time_rows": int(len(base)),
+        "stage1_rows": int(len(base)),
+        "development_profile_rows": int(len(all_dc)),
+        "candidate_rows": int(len(dc)),
         "development_candidates": int(len(dc)),
+        "frozen_candidates": int(len(frozen_dev)),
         "frozen_dev_shortlist": int(len(frozen_dev)),
+        "holm_survivors": int(vd["inference_survivor"].sum()) if len(vd) else 0,
         "validation_pass": int(vd["validation_gate"].sum()) if len(vd) else 0,
         "validation_inference_survivors": int(vd["inference_survivor"].sum()) if len(vd) else 0,
         "holdout_candidates_tested": int(len(hd)),
