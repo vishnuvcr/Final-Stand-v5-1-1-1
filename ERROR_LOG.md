@@ -407,3 +407,17 @@ Evidence status: Non-evidence runtime failure. No sequential trade result was pr
 Correction: The sequential spot adapter now retains the original `close` field for feature construction and also exposes an identical `spot` field for the shared execution engine.
 
 Prevention: Shared market-data adapters will expose both semantic aliases where downstream engines use different field names.
+
+
+### Error F39-022 — Sequential replay passed NIFTY close-only frame to canonical run_arm
+Run: 37441450024.
+
+Symptom: Step-4 sequential replay failed in the canonical counterfactual arm engine with KeyError: `spot`.
+
+Cause: The sequential replay adapter loaded the NIFTY source with its historical `close` field, while `run_arm()` requires the canonical normalized `spot` field.
+
+Evidence status: non-evidence sequential implementation failure; no policy result accepted.
+
+Correction: The replay adapter now creates deterministic `spot = close` from the NIFTY index source before calling `run_arm()`.
+
+Prevention: Market-data adapters will expose the canonical engine schema (`timestamp`, `spot`) before handing data to shared execution functions.
