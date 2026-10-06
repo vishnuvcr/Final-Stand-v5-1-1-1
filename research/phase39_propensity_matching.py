@@ -14,7 +14,7 @@ OUT=ROOT/"results/phase39_propensity"
 OUT.mkdir(parents=True,exist_ok=True)
 
 EXCLUDE={"entry_ts","expiry","split","control_direction","control_net_rupees","delta_pnl_call_minus_put"}
-CALIPERS=[0.01,0.025,0.05,0.10]
+CALIPERS=[0.01,0.025,0.05,0.10,0.20,0.50,1.00]
 K=1
 
 def load():
