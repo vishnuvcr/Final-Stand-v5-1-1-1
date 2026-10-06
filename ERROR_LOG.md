@@ -421,3 +421,17 @@ Evidence status: non-evidence sequential implementation failure; no policy resul
 Correction: The replay adapter now creates deterministic `spot = close` from the NIFTY index source before calling `run_arm()`.
 
 Prevention: Market-data adapters will expose the canonical engine schema (`timestamp`, `spot`) before handing data to shared execution functions.
+
+
+### Error F39-022 — Sequential replay referenced the wrong locked-feature manifest path
+Run: 37441598449 (Step-4 run #2).
+
+Symptom: Replay failed when loading the locked feature list from `results/phase39_features/locked_feature_list.json`.
+
+Cause: The canonical Step-3 model manifest is stored under `results/phase39_models/locked_feature_list.json`, but the sequential script referenced the Step-2 feature directory.
+
+Evidence status: Non-evidence runtime failure. No sequential result was produced.
+
+Correction: Sequential replay now reads the exact locked Step-3 feature manifest, and the Step-4 workflow explicitly depends on that file.
+
+Prevention: Model-dependent workflows will reference the canonical model artifact path directly and verify its existence before execution.
