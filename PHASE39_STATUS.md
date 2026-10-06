@@ -179,6 +179,23 @@ The complete chronology/state/cost audit passes. However, this candidate is **NO
 
 The 2026 holdout remains frozen for model selection.
 
+## Step 5 — advanced analog/regime screen — COMPLETE / NO NEW WINNER
+
+Registered advanced methods tested:
+- DTW analog margin model.
+- RBF/SVR economic-margin regression.
+- BOCPD-gated Sparse-GAM economic-margin model.
+
+Accepted fixed-opportunity results:
+- DTW: no validation overrides; validation uplift ~₹0.
+- SVR: no validation overrides; validation uplift ~₹0.
+- BOCPD-GAM: 2 validation overrides and **+₹11,609.60** validation uplift, exactly matching the Sparse-GAM fixed-opportunity screen; paired-expiry 95% interval **−₹1,250.46 to +₹36,079.27**.
+
+Decision:
+- No new Step-5 method supersedes Sparse-GAM.
+- 2026 holdout was not touched.
+- The BOCPD result is treated as a redundant regime-gated representation of the same Sparse-GAM economic signal, not independent confirmation.
+
 ## Next engineering step
 
 Build the point-in-time feature matrix and leakage audit. Then fit the preregistered CROL/BCMM/Bradley-Terry/Dynamic-Bayesian and low-capacity nonlinear models chronologically, with the 2026 holdout frozen until the model family and override thresholds are locked.
