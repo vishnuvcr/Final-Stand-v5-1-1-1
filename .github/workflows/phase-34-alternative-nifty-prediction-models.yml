@@ -1,0 +1,96 @@
+name: Phase 34 - Alternative NIFTY Prediction Models
+
+on:
+  push:
+    branches: [phase-34-alternative-nifty-prediction-models]
+    paths:
+      - 'PHASE34_RESEARCH_PLAN.md'
+      - 'PHASE34_PRE_REGISTRATION.md'
+      - 'research/phase34_alternative_nifty_prediction_models.py'
+      - '.github/workflows/phase-34-alternative-nifty-prediction-models.yml'
+  workflow_dispatch:
+    inputs:
+      sample_start:
+        description: 'Sample start date (YYYY-MM-DD)'
+        required: false
+        default: '2021-05-27'
+      sample_end:
+        description: 'Sample end date (YYYY-MM-DD)'
+        required: false
+        default: '2026-09-30'
+
+concurrency:
+  group: phase34-alternative-models
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  model-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow scikit-learn xgboost hmmlearn torch
+
+      - name: Run Phase 34
+        id: run_phase34
+        continue-on-error: true
+        env:
+          SAMPLE_START: ${{ inputs.sample_start || '2021-05-27' }}
+          SAMPLE_END: ${{ inputs.sample_end || '2026-09-30' }}
+        run: |
+          set -o pipefail
+          python research/phase34_alternative_nifty_prediction_models.py 2>&1 | tee phase34_run.log
+
+      - name: Persist successful results
+        if: steps.run_phase34.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase34_alternative_prediction phase34_run.log
+          git diff --cached --quiet || git commit -m "Phase 34: persist alternative prediction results"
+          git push
+
+      - name: Log failure
+        if: steps.run_phase34.outcome != 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          {
+            echo ""
+            echo "## Phase 34 workflow failure — run ${{ github.run_id }}"
+            echo "- Date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "- Workflow: phase-34-alternative-nifty-prediction-models"
+            echo "- Status: numerical execution failed; outputs from this run are non-evidence."
+            echo "- Action: inspect phase34_run.log and correct the implementation before accepting any result."
+          } >> ERROR_LOG.md
+          git add ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 34: log workflow failure"
+          git push
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase34-alternative-prediction-results
+          path: |
+            results/phase34_alternative_prediction/**
+            phase34_run.log
+            ERROR_LOG.md
+          if-no-files-found: warn
+
+      - name: Fail workflow after logging
+        if: steps.run_phase34.outcome != 'success'
+        run: exit 1
