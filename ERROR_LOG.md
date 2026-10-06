@@ -567,3 +567,17 @@ Evidence status: Non-evidence runtime failure. No Step-5 model result was produc
 Correction: The Step-5 outcome join now imports only the missing control and realized-action P&L columns and retains the single target column already present in the feature matrix.
 
 Prevention: Advanced-family joins will explicitly import only outcome columns absent from the feature matrix.
+
+
+### Error F39-031 — Step-5 join duplicated canonical control columns
+Run: 37445960376 (Step-5 run #3).
+
+Symptom: The fixed-opportunity screen failed because `control_direction` and `control_net_rupees` were absent after the merge and therefore unavailable to the model-evaluation block.
+
+Cause: Those canonical control columns are already retained in the Step-2 feature matrix; importing them again from the ledger created pandas suffixes and removed the expected unsuffixed names.
+
+Evidence status: Non-evidence runtime failure. No Step-5 result was produced.
+
+Correction: Step 5 now joins only `call_net_rupees` and `put_net_rupees`, while retaining the feature matrix's existing control columns.
+
+Prevention: Step-5 and later joins will import only columns confirmed absent from the base feature layer.
