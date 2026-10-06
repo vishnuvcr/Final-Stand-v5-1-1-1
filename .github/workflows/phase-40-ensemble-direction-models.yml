@@ -43,10 +43,7 @@ jobs:
         run: |
           mkdir -p data/phase40_vix
           if [ ! -f data/phase40_vix/india_vix.csv ]; then
-            python -c "import pandas as pd, yfinance as yf; x=yf.download('^INDIAVIX',start='2020-01-01',end='2026-07-02',progress=False,auto_adjust=False); assert not x.empty,'India VIX download returned no rows'; x.columns=[c[0] if isinstance(c,tuple) else c for c in x.columns] if isinstance(x.columns,pd.MultiIndex) else x.columns; x=x.reset_index(); x.columns=[str(c).lower().replace(' ','_') for c in x.columns]; assert 'date' in x.columns and 'close' in x.columns, x.columns.tolist(); x[['date','close']].to_csv('data/phase40_vix/india_vix.csv',index=False)"
-            git add data/phase40_vix/india_vix.csv
-            git commit -m "phase40: cache India VIX"
-            git push origin HEAD:phase-40-ensemble-direction-models
+            python -c "import pandas as pd,yfinance as yf; x=yf.download('^INDIAVIX',start='2020-01-01',end='2026-07-02',progress=False,auto_adjust=False); assert not x.empty,'India VIX download returned no rows'; x.columns=[c[0] if isinstance(c,tuple) else c for c in x.columns] if isinstance(x.columns,pd.MultiIndex) else x.columns; x=x.reset_index(); x.columns=[str(c).lower().replace(' ','_') for c in x.columns]; assert 'date' in x.columns and 'close' in x.columns, x.columns.tolist(); x[['date','close']].to_csv('data/phase40_vix/india_vix.csv',index=False)"
           fi
 
       - name: Run exhaustive ensemble screen
@@ -64,6 +61,6 @@ jobs:
       - name: Persist results
         run: |
           git pull --rebase origin "${GITHUB_REF_NAME}"
-          git add results/phase40_ensemble
-          git commit -m "phase40: exhaustive ensemble results" || true
+          git add data/phase40_vix results/phase40_ensemble
+          git commit -m "phase40: exhaustive ensemble results and VIX cache" || true
           git push origin HEAD:"${GITHUB_REF_NAME}"
