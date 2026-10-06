@@ -21,3 +21,12 @@ Audit findings:
 - development selector stricter/different than the preregistered forward-fold rule.
 
 The affected run will be superseded by a corrected run. No historical result is being carried forward from the defective implementation.
+## 2026-10-07 — Final continuation and Phase 49 closeout
+
+Continuation in this chat completed the pending Phase 49 research rather than restarting it.
+
+The corrected #12 numerical execution completed successfully and the artifact self-audit passed. The only failures after the numerical stage were publication/packaging issues: a Git rebase conflict, an optional manuscript dependency, and a closeout reset-ordering defect. Each was treated as a tooling error, logged, and corrected without changing numerical evidence.
+
+The final reconciled artifact is now persisted on the Phase-49 branch with manuscript, tables, figures, statistical summary and final-decision JSON.
+
+Final scientific decision: **NO PROMOTION**. The best tuned configuration is the LOW-VIX Bear Put (09:30 IST; 5 trading sessions before expiry; buy PE +1 modal step; sell PE −3 modal steps; four-step width). It is economically promising but fails the Holm-adjusted confirmatory statistical gate and has only five protected holdout observations.
