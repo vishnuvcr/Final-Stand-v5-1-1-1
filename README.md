@@ -361,9 +361,11 @@ Phase 39 changes the prediction target from NIFTY expiry direction to the actual
 - [Phase 39 status](PHASE39_STATUS.md)
 - [Phase 39 workflow](.github/workflows/phase-39-advanced-direction-models.yml)
 - [Phase 39 fixed-opportunity engine](research/phase39_counterfactual_engine.py)
+- [Phase 39 Step 1 conclusion](results/phase39_counterfactual/PHASE39_STEP1_CONCLUSION.md)
+- [Phase 39 counterfactual summary](results/phase39_counterfactual/summary.json)
 
-**Step 1 is under corrected rerun:** the first 206-trade counterfactual calculation reconstructed the frozen control essentially exactly, but it was superseded before model training because the preregistered development period extends through 2023. The corrected engine now combines 271 development trades from the accepted Phase-32 artifact with the exact frozen 206-trade validation/holdout panel, while excluding the 2024-01-04 trade to preserve comparator identity. It also uses deterministic stable quote-row deduplication.
+**Step 1 — COMPLETE / ACCEPTED.** The corrected engine generated 477 fixed opportunities: 271 development trades / 135 expiries, 172 validation trades / 82 expiries, and 34 untouched 2026 holdout trades / 20 expiries. The exact frozen validation+holdout control remains **₹63,672.5753**, with maximum control reconstruction error below **2e-12 rupees**.
 
-No model training or strategy promotion is permitted until the corrected panel passes its control reconstruction audit.
+The action-aware counterfactual panel shows a strong regime shift: mean CALL-minus-PUT net P&L is **-₹320.53** in development, **+₹386.77** in validation, and **+₹3,386.31** in the untouched holdout. This does **not** constitute a model or trading-policy result; it is the fixed-opportunity target used for chronological model fitting.
 
-The canonical Phase-38 stateful strategy remains unchanged and authoritative during this phase.
+The canonical Phase-38 stateful strategy remains unchanged. Model training now proceeds; no strategy promotion is allowed until the preregistered sequential-policy and holdout gates are passed.
