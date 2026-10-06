@@ -1,0 +1,49 @@
+name: Phase 43 - Corrected Postprocess Bridge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "trigger/phase43.postprocess"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase43-corrected-postprocess
+  cancel-in-progress: true
+
+jobs:
+  postprocess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Phase 43
+        uses: actions/checkout@v4
+        with:
+          ref: phase-43-vix-all-options-strategies
+          fetch-depth: 1
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check --no-cache-dir numpy pandas tabulate
+
+      - name: Syntax audit
+        run: python -m py_compile research/phase43_postprocess.py
+
+      - name: Corrected postprocess
+        run: python research/phase43_postprocess.py
+
+      - name: Persist corrected evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase43_vix
+          git commit -m "phase43: persist corrected statistical evidence" || true
+          git push origin HEAD:phase-43-vix-all-options-strategies
