@@ -37,3 +37,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The first corrected implementation used repeated Python path loops and was too slow for efficient CI execution. It was cancelled before evidence acceptance and replaced with vectorized first-hit confirmation logic. The replacement run completed successfully.
 - The raw Phase-29 summary used the no-stop dynamic-n ledger as an internal diagnostic control. Before any promotion decision, the candidate was explicitly recomputed against the canonical Phase-20 P&L. No misleading raw full-sample uplift was used to promote the rule.
 - Cancelled-run outputs were not accepted as evidence.
+
+
+## 2026-10-06 — Phase 33 setup/process errors
+- Local container Git clone failed because outbound DNS/network access to github.com is unavailable in the container. No research evidence was affected; GitHub connector operations were used instead.
+- An intermediate GitHub file-update call omitted the required current blob SHA and was rejected before any repository write. The operation was retried correctly using the fetched SHA. No incorrect repository content was committed from that failed call.
