@@ -65,3 +65,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Date: 2026-10-06T06:23:30Z
 - Status: figure/statistical postprocessing failed; no postprocess output from this run is accepted.
 - Action: inspect workflow logs and correct the postprocess implementation.
+
+## Phase 34 postprocess failure — run 37423482541
+- Date: 2026-10-06T06:23:58Z
+- Status: figure/statistical postprocessing failed; no postprocess output from this run is accepted.
+- Action: inspect workflow logs and correct the postprocess implementation.
