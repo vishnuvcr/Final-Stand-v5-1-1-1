@@ -1,0 +1,186 @@
+name: Phase 49 - VIX Leader Parameter Tuning
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-49-vix-leader-parameter-tuning
+    paths:
+      - "research/phase49_vix_leader_tuning.py"
+      - "PHASE49_RESEARCH_PLAN.md"
+      - "PHASE49_PRE_REGISTRATION.md"
+      - "trigger/phase49.start"
+
+concurrency:
+  group: phase49-vix-tuning
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub matplotlib
+      - name: Compile
+        run: python -m py_compile research/phase49_vix_leader_tuning.py
+      - name: Cache HF dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase49-hf-${{ runner.os }}-${{ hashFiles('research/phase49_vix_leader_tuning.py') }}
+          restore-keys: |
+            phase49-hf-${{ runner.os }}-
+      - name: Run preflight
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PHASE49_PREFLIGHT_ONLY: "1"
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase49_vix_leader_tuning.py
+      - name: Validate preflight
+        run: |
+          test -s results/phase49_vix_tuning/preflight.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/phase49_vix_tuning/preflight.json"))
+          assert p["grid"] == 720
+          assert p["expiries"] >= 100
+          assert p["dev"] >= 100
+          assert p["validation"] >= 90
+          assert p["holdout"] >= 1
+          print("Phase 49 preflight PASS", p)
+          PY
+
+  numerical:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub matplotlib
+      - name: Compile
+        run: python -m py_compile research/phase49_vix_leader_tuning.py
+      - name: Cache HF dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase49-hf-${{ runner.os }}-${{ hashFiles('research/phase49_vix_leader_tuning.py') }}
+          restore-keys: |
+            phase49-hf-${{ runner.os }}-
+      - name: Run full tuning and confirmation
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase49_vix_leader_tuning.py
+      - name: Upload raw Phase 49 artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase49-raw-${{ github.run_id }}
+          path: results/phase49_vix_tuning
+          if-no-files-found: warn
+      - name: Artifact self-audit
+        run: |
+          set -euo pipefail
+          for f in \
+            results/phase49_vix_tuning/preflight.json \
+            results/phase49_vix_tuning/development_parameter_trade_matrix.csv \
+            results/phase49_vix_tuning/development_candidate_scores.csv \
+            results/phase49_vix_tuning/development_frozen_parameters.csv \
+            results/phase49_vix_tuning/validation_frozen_trade_matrix.csv \
+            results/phase49_vix_tuning/validation_baseline_trade_matrix.csv \
+            results/phase49_vix_tuning/validation_confirmatory_summary.csv \
+            results/phase49_vix_tuning/holdout_frozen_trade_matrix.csv \
+            results/phase49_vix_tuning/holdout_confirmation.csv \
+            results/phase49_vix_tuning/frozen_parameter_details.csv \
+            results/phase49_vix_tuning/summary.json \
+            results/phase49_vix_tuning/PHASE49_MANUSCRIPT.md; do
+            test -s "$f"
+          done
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase49_vix_tuning/summary.json"))
+          fr=pd.read_csv("results/phase49_vix_tuning/development_frozen_parameters.csv")
+          vs=pd.read_csv("results/phase49_vix_tuning/validation_confirmatory_summary.csv")
+          tr=pd.read_csv("results/phase49_vix_tuning/development_parameter_trade_matrix.csv")
+          assert len(fr) <= 6
+          assert set(fr["state"]).issubset({"LOW","NORMAL"})
+          assert len(vs) == len(fr)
+          assert tr["year"].isin([2021,2022,2023]).all()
+          assert d["grid_total"] == 720
+          assert d["validation_rows"] == len(vs)
+          print("Phase 49 artifact self-audit PASS")
+          print(d)
+          print(fr.to_string(index=False))
+          print(vs.to_string(index=False))
+          PY
+      - name: Publish results
+        if: success()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import date
+          d=json.load(open("results/phase49_vix_tuning/summary.json"))
+          Path("PHASE49_STATUS.md").write_text(
+            "# Phase 49 Status — VIX Leader Parameter Tuning\n\n"
+            "**NUMERICAL COMPLETE — SELF-AUDIT PASSED**\n\n"
+            f"Raw parameter configurations: {d['grid_total']}\n"
+            f"Regime-expanded candidates: {d['grid_total']*2}\n"
+            f"Frozen candidates: {d['frozen']}\n"
+            f"Validation rows: {d['validation_rows']}\n"
+            f"Validation economic passes: {d['validation_economic_passes']}\n"
+            f"Holm survivors: {d['holm_survivors']}\n"
+            f"Holdout confirmations: {d['holdout_confirmations']}\n"
+          )
+          with open("RESEARCH_LOG.md","a",encoding="utf-8") as f:
+            f.write(
+              f"\n\n## {date.today().isoformat()} — Phase 49 numerical closeout\n"
+              f"- Raw configurations={d['grid_total']}; regime-expanded candidates={d['grid_total']*2}; "
+              f"frozen={d['frozen']}; validation={d['validation_rows']}; "
+              f"validation economic passes={d['validation_economic_passes']}; Holm survivors={d['holm_survivors']}; "
+              f"holdout confirmations={d['holdout_confirmations']}.\n"
+              "- Selection was restricted to 2021-2023 development. Validation and 2026 holdout remained untouched until freeze.\n"
+            )
+          PY
+          git add results/phase49_vix_tuning PHASE49_STATUS.md RESEARCH_LOG.md
+          git diff --cached --quiet && exit 0
+          git commit -m "phase49: publish VIX leader parameter tuning"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+      - name: Log failure
+        if: failure()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cat >> ERROR_LOG.md <<'EOF'
+
+          ## F49-AUTO — Phase 49 workflow failure
+          - The affected numerical run is non-evidence until diagnosed and corrected.
+          - Phase 49 requires compile, preflight, full numerical, artifact and publication audits.
+          EOF
+          git add ERROR_LOG.md
+          git commit -m "phase49: log workflow failure"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
