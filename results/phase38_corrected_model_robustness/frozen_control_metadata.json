@@ -1,0 +1,17 @@
+{
+  "source_file": "phase32_control_2024_2026-06-30.csv",
+  "sha256": "f98fc6e38e84bdfab09aeeffc2df333da1a3060d3756b1ab12b7e8cb5f32435f",
+  "trades": 206,
+  "expiries": 102,
+  "net_rupees": 63672.57530171223,
+  "gross_rupees": 84054,
+  "cost_rupees": 20381.424698288,
+  "win_rate": 0.6553398058252428,
+  "profit_factor": 1.2025403716473224,
+  "max_drawdown_rupees": 61960.87306615288,
+  "yearly": {
+    "2024": 0,
+    "2025": 32937.5821210251,
+    "2026": -275.64680366790935
+  }
+}
