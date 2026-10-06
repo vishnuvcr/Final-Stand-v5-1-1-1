@@ -1127,3 +1127,14 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The staged development run was still spending substantial time because expiry-day parquet reads included all strikes.
 - No output from that run is accepted.
 - The staged reader is now two-pass: one narrow entry-window read determines ATM/step for the four registered entry times; the expiry-day read then filters to the exact strike union required by the preregistered geometries.
+
+
+## F44-011 — premature validation trigger
+- Validation run 37495700050 started before a valid development freeze was persisted and failed because `frozen_stage1.csv` was absent.
+- It is non-evidence.
+- Root cause: validation workflow listened to the shared runner-script path in addition to its explicit trigger file. Future validation execution is now trigger-file-only.
+
+## F44-012 — premature holdout trigger
+- Holdout run 37495700026 started without a completed validation artifact and failed because `validation_confirmation.csv` was absent.
+- It is non-evidence.
+- Root cause: holdout workflow also listened to the shared runner-script path. The holdout workflow has been changed to trigger-file-only, and holdout remains prohibited until validation inference freeze.
