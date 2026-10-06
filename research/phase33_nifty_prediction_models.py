@@ -491,7 +491,11 @@ def garch_one(train_ret, horizon, model_kind):
     else:
         am = arch_model(r, mean="AR", lags=1, vol="GARCH", p=1, o=1, q=1, dist="t")
     fit = am.fit(disp="off")
-    fc = fit.forecast(horizon=max(1, int(horizon)), reindex=False)
+    h = max(1, int(horizon))
+    if model_kind == "EGARCH" and h > 1:
+        fc = fit.forecast(horizon=h, method="simulation", simulations=2000, reindex=False)
+    else:
+        fc = fit.forecast(horizon=h, reindex=False)
     mu = float(np.nansum(fc.mean.values[-1])) / 100.0
     var = float(np.nansum(fc.variance.values[-1])) / (100.0**2)
     return mu, math.sqrt(max(var, 0.0))
