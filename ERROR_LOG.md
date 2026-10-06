@@ -449,3 +449,17 @@ Cause: The replay treated an optional next-contract term-structure input as mand
 Correction: Missing next-expiry files now produce an empty optional frame, preserving the current-expiry quote data and leaving the corresponding term-structure features unavailable/NaN. Required current-expiry files remain fatal.
 
 Prevention: Optional cross-contract features will distinguish missing historical coverage from execution-data failure; no synthetic forward fill or imputation is applied at the data-loader boundary.
+
+
+### Error F39-023 — Sequential replay attempted a missing historical option-expiry file
+Run: 37441878544 (Step-4 run #3).
+
+Symptom: Replay failed when the point-in-time feature builder requested `options/NIFTY/2021-11-04.parquet`, which is absent from the public primary dataset.
+
+Cause: The replay's expected calendar included every scheduled weekly expiry, but it did not first filter the calendar against the dataset's actually available expiry files.
+
+Evidence status: Non-evidence runtime failure. No sequential policy result was produced.
+
+Correction: Step 4 now enumerates the available NIFTY option files, processes only available expected expiries, and separately retains the complete expected calendar for contract-window anchoring. A missing option file therefore cannot enlarge a later contract's data window.
+
+Prevention: Sequential replay follows the same available-file/previous-expected-expiry boundary convention already audited in Phase 32.
