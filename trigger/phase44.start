@@ -6,3 +6,4 @@ F44-003 optimized engine retrigger; prior slow runs are non-evidence.
 F44-004 accepted Phase43 expiry cache retrigger.
 F44-005 bounded-memory engine retrigger.
 F44-006 filtered parquet I/O retrigger; prior runs are non-evidence.
+F44-007/F44-008 corrected artifact schema and audit logging retrigger.
