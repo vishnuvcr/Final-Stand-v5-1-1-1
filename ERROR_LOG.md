@@ -1409,3 +1409,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: the active optimized run #9 is now classified NON-EVIDENCE pending rerun with the corrected path. No Phase-49 conclusion is accepted from it.
 - Correction: validation now reuses the direct `phase43_vix_strategy_sweep` import path that passed preflight. The engine also has a registered clean early-stop path when no development candidate survives, so an empty freeze is a scientific outcome rather than a runtime error.
 - Prevention: all phase engines must use one validated import convention throughout the full execution path; zero-candidate branches must be explicitly tested.
+### F49-011 — Artifact self-audit rejected a zero-byte empty development error ledger
+- Affected run: 37540089501 (#11). Numerical computation completed successfully and uploaded a complete raw artifact, but the artifact self-audit failed because data_errors.csv was zero bytes when no development errors occurred.
+- Scientific evidence status: numerical values remain locked/non-final until a corrected full workflow passes the artifact and publication gates.
+- Correction: the engine now writes data_errors.csv with explicit expiry/error headers even when empty. A reproducible reconciliation script was also added for audit/provenance checks.
+- Prevention: all empty error ledgers must be valid zero-row CSVs with headers, not zero-byte files.
