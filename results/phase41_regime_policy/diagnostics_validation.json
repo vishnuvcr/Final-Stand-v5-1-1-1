@@ -1,0 +1,29 @@
+{
+  "model": "SPLINE_RIDGE_VIX",
+  "margin": 0.0,
+  "gate": "ALL",
+  "propensity_fit_period": "development",
+  "propensity": {
+    "split": "validation",
+    "treated": 0,
+    "matched": 0,
+    "att": null,
+    "common_support_fraction": 0.0
+  },
+  "ranking": {
+    "split": "validation",
+    "rows": 172,
+    "top_10_mean_delta": 2502.6131905700017,
+    "top_10_ci_lo": 425.30792675122854,
+    "top_10_ci_hi": 4688.788488404583,
+    "top_10_positive_share": 0.7777777777777778,
+    "top_20_mean_delta": 1783.829266855287,
+    "top_20_ci_lo": -22.579576907977998,
+    "top_20_ci_hi": 3543.5375761784694,
+    "top_20_positive_share": 0.7428571428571429,
+    "top_30_mean_delta": 1092.9268786234618,
+    "top_30_ci_lo": -428.7274576819757,
+    "top_30_ci_hi": 2620.233326380724,
+    "top_30_positive_share": 0.6346153846153846
+  }
+}

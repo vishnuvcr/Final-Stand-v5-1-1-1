@@ -1,0 +1,48 @@
+{
+  "declared_variants": 24,
+  "selection_gate": "development>=0, validation>0, validation_overrides>=5, validation_override_rate<=25%, validation_dd<=1.25x control",
+  "eligible_count": 0,
+  "fallback_reason": "No variant passed the registered development/validation safety screen; top three validation variants are diagnostic only.",
+  "top3_frozen_before_holdout": [
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "ALL",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX_RISING",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    }
+  ],
+  "vix_thresholds": {
+    "vix_q67": 20.43000030517578,
+    "vix_absret_q67": 0.039880184945773944
+  }
+}
