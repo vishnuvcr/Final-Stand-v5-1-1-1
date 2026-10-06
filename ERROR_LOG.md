@@ -897,3 +897,13 @@ The 1,764-candidate numerical screen and verification both succeeded. Persistenc
 **Correction:** The workflow now stages and commits generated artifacts first, then rebases that local commit onto the latest branch and pushes.
 
 **Prevention:** Generated workflow artifacts must be committed before rebasing a concurrently modified research branch.
+
+
+### Error F40-008 — VIX-gated candidates were initially implemented as no-trade rather than canonical fallback
+**Finding:** The first accepted grid implementation encoded an inactive VIX gate as signal 0, and the candidate scorer skipped that expiry. The Phase-40 pre-registration specifies that an inactive VIX gate must fall back to the canonical stateful direction, not suppress trading.
+
+**Evidence status:** The resulting 1,764-grid numerical artifacts are **superseded** and must not be used for the Phase-40 conclusion.
+
+**Correction:** The engine now reconstructs the point-in-time canonical direction from the accepted Phase-39 control ledger and uses that direction whenever the VIX gate is inactive.
+
+**Prevention:** Every series/gating architecture now has an explicit fallback-state invariant checked before screening.
