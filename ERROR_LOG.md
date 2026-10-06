@@ -825,3 +825,15 @@ The first draft of the Phase-40 engine contained a validation-grid accumulation 
 **Correction:** The engine was rewritten so all 1,764 candidates are retained, India-VIX development thresholds are used for India-VIX routing, neutral VIX votes are treated as abstentions in majority voting, and the top-10 freeze occurs only after the complete validation grid is written.
 
 **Prevention:** CI asserts exactly 1,764 grid rows and exactly 10 frozen holdout candidates before any result is accepted.
+
+
+### Error F40-002 — GitHub Actions heredoc indentation failure
+**Run:** 37454503074.
+
+The India-VIX cache step failed before numerical execution because the YAML block scalar preserved indentation before the shell heredoc terminator, so Bash did not recognize the closing `PY` marker.
+
+**Evidence status:** non-evidence CI failure; no model calculations ran.
+
+**Correction:** Replaced the inline heredoc with a deterministic `python -c` acquisition command and retained the cache-write/push step.
+
+**Prevention:** Avoid shell heredoc terminators inside indented YAML run blocks unless indentation is explicitly validated.
