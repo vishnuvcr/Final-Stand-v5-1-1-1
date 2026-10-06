@@ -1,0 +1,39 @@
+name: Phase 34 - Postprocess
+
+on:
+  push:
+    branches: [phase-34-alternative-nifty-prediction-models]
+    paths:
+      - 'results/phase34_alternative_prediction/model_metrics.csv'
+      - 'results/phase34_alternative_prediction/directional_economic_diagnostic.csv'
+      - 'research/phase34_postprocess.py'
+      - '.github/workflows/phase-34-postprocess.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase34-postprocess
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  postprocess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy matplotlib
+      - run: python research/phase34_postprocess.py
+      - name: Persist postprocess
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase34_alternative_prediction
+          git diff --cached --quiet || git commit -m "Phase 34: persist statistical postprocess and figures"
+          git push
