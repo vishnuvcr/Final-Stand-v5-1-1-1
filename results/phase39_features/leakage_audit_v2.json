@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "rows": 477,
+  "raw_numeric_columns": 124,
+  "label_or_control_columns_excluded": [
+    "split",
+    "control_direction",
+    "entry_ts",
+    "expiry",
+    "control_net_rupees",
+    "delta_pnl_call_minus_put"
+  ],
+  "fully_missing_columns_excluded": [
+    "nifty_volume_ratio_30m",
+    "nifty_volume_ratio_60m",
+    "nifty_volume_ratio_120m",
+    "nifty_gap_from_prev_close"
+  ],
+  "model_candidate_columns": 118,
+  "source_groups": [
+    "NIFTY daily",
+    "NIFTY spot/intraday",
+    "NIFTY spot/intraday or daily",
+    "contract calendar",
+    "current-week option chain",
+    "entry timestamp calendar",
+    "next-current-week option chain",
+    "option-chain derived",
+    "previous FII/DII publication",
+    "previous global session",
+    "previous sentiment date"
+  ],
+  "point_in_time_rules": {
+    "option_chain": "exact entry timestamp",
+    "intraday_nifty": "timestamp <= entry timestamp",
+    "daily_and_external": "strictly prior available session/date",
+    "interpolation": "forbidden",
+    "forward_fill": "forbidden",
+    "control_direction_as_feature": "forbidden",
+    "counterfactual_target_as_feature": "forbidden"
+  },
+  "known_unavailable_data_blocks": [
+    "NSE/BSE breadth",
+    "NIFTY futures basis/OI/volume",
+    "point-in-time corporate-action feed",
+    "timestamp-verified intraday news feed"
+  ]
+}

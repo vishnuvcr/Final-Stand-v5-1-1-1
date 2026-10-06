@@ -1,0 +1,119 @@
+feature,source,missing_pct,development_missing_pct,validation_missing_pct,holdout_missing_pct,n_unique,usable_for_primary_models
+atm_ce_delta,current-week option chain,0.0,0.0,0.0,0.0,477,True
+atm_ce_iv,current-week option chain,0.0,0.0,0.0,0.0,477,True
+atm_ce_oi,current-week option chain,0.0,0.0,0.0,0.0,395,True
+atm_ce_price,current-week option chain,0.0,0.0,0.0,0.0,446,True
+atm_ce_volume,current-week option chain,0.0,0.0,0.0,0.0,472,True
+atm_iv_skew,current-week option chain,0.0,0.0,0.0,0.0,477,True
+atm_pcr_oi,current-week option chain,0.0,0.0,0.0,0.0,396,True
+atm_pcr_volume,current-week option chain,0.0,0.0,0.0,0.0,477,True
+atm_pe_delta,current-week option chain,0.0,0.0,0.0,0.0,477,True
+atm_pe_iv,current-week option chain,0.0,0.0,0.0,0.0,477,True
+atm_pe_oi,current-week option chain,0.0,0.0,0.0,0.0,395,True
+atm_pe_price,current-week option chain,0.0,0.0,0.0,0.0,444,True
+atm_pe_volume,current-week option chain,0.0,0.0,0.0,0.0,476,True
+atm_straddle,current-week option chain,0.0,0.0,0.0,0.0,464,True
+atm_strike,current-week option chain,0.0,0.0,0.0,0.0,179,True
+call_25_delta,current-week option chain,0.0,0.0,0.0,0.0,477,True
+call_25_iv,current-week option chain,0.0,0.0,0.0,0.0,477,True
+call_25_long_iv,current-week option chain,0.0,0.0,0.0,0.0,477,True
+call_25_long_oi,current-week option chain,0.0,0.0,0.0,0.0,396,True
+call_25_long_price,current-week option chain,0.0,0.0,0.0,0.0,381,True
+call_25_long_volume,current-week option chain,0.0,0.0,0.0,0.0,473,True
+call_25_oi,current-week option chain,0.0,0.0,0.0,0.0,395,True
+call_25_price,current-week option chain,0.0,0.0,0.0,0.0,403,True
+call_25_spread_credit,current-week option chain,0.0,0.0,0.0,0.0,228,True
+call_25_strike,current-week option chain,0.0,0.0,0.0,0.0,178,True
+call_25_volume,current-week option chain,0.0,0.0,0.0,0.0,472,True
+candidate_credit_diff_call_minus_put,current-week option chain,0.0,0.0,0.0,0.0,326,True
+candidate_iv_skew_25,current-week option chain,0.0,0.0,0.0,0.0,477,True
+candidate_oi_pcr_25,current-week option chain,0.0,0.0,0.0,0.0,396,True
+dte_days,contract calendar,0.0,0.0,0.0,0.0,178,True
+entry_hour,entry timestamp calendar,0.0,0.0,0.0,0.0,7,True
+entry_minute,entry timestamp calendar,0.0,0.0,0.0,0.0,57,True
+entry_spot,NIFTY spot/intraday,0.0,0.0,0.0,0.0,476,True
+entry_weekday,entry timestamp calendar,0.0,0.0,0.0,0.0,7,True
+flow_dii_net,previous FII/DII publication,0.9433962264150944,1.0,1.0,0.20588235294117646,25,True
+flow_dii_net_z20,previous FII/DII publication,0.9538784067085954,1.0,1.0,0.35294117647058826,20,True
+flow_fii_idx_call_net,previous FII/DII publication,0.9433962264150944,1.0,1.0,0.20588235294117646,25,True
+flow_fii_idx_call_net_z20,previous FII/DII publication,0.9538784067085954,1.0,1.0,0.35294117647058826,20,True
+flow_fii_idx_fut_net,previous FII/DII publication,0.9433962264150944,1.0,1.0,0.20588235294117646,25,True
+flow_fii_idx_fut_net_z20,previous FII/DII publication,0.9538784067085954,1.0,1.0,0.35294117647058826,20,True
+flow_fii_idx_put_net,previous FII/DII publication,0.9433962264150944,1.0,1.0,0.20588235294117646,25,True
+flow_fii_idx_put_net_z20,previous FII/DII publication,0.9538784067085954,1.0,1.0,0.35294117647058826,20,True
+flow_fii_net,previous FII/DII publication,0.9433962264150944,1.0,1.0,0.20588235294117646,25,True
+flow_fii_net_z20,previous FII/DII publication,0.9538784067085954,1.0,1.0,0.35294117647058826,20,True
+flow_flow_pcr,previous FII/DII publication,0.949685534591195,1.0,1.0,0.29411764705882354,19,True
+flow_flow_sentiment,previous FII/DII publication,0.949685534591195,1.0,1.0,0.29411764705882354,13,True
+global_CRUDE,previous global session,0.033542976939203356,0.04059040590405904,0.023255813953488372,0.029411764705882353,404,True
+global_CRUDE_ret1,previous global session,0.07337526205450734,0.07380073800738007,0.06976744186046512,0.08823529411764706,408,True
+global_DOW,previous global session,0.03563941299790356,0.04059040590405904,0.029069767441860465,0.029411764705882353,425,True
+global_DOW_ret1,previous global session,0.07756813417190776,0.07380073800738007,0.08139534883720931,0.08823529411764706,407,True
+global_GOLD,previous global session,0.031446540880503145,0.03690036900369004,0.023255813953488372,0.029411764705882353,413,True
+global_GOLD_ret1,previous global session,0.07127882599580712,0.07011070110701106,0.06976744186046512,0.08823529411764706,409,True
+global_NASDAQ,previous global session,0.03563941299790356,0.04059040590405904,0.029069767441860465,0.029411764705882353,425,True
+global_NASDAQ_ret1,previous global session,0.07756813417190776,0.07380073800738007,0.08139534883720931,0.08823529411764706,407,True
+global_NIKKEI,previous global session,0.05660377358490566,0.055350553505535055,0.05232558139534884,0.08823529411764706,415,True
+global_NIKKEI_ret1,previous global session,0.09643605870020965,0.08856088560885608,0.09302325581395349,0.17647058823529413,396,True
+global_SENSEX,previous global session,0.07337526205450734,0.07380073800738007,0.06976744186046512,0.08823529411764706,408,True
+global_SENSEX_ret1,previous global session,0.14465408805031446,0.12177121771217712,0.18604651162790697,0.11764705882352941,380,True
+global_SP500,previous global session,0.03563941299790356,0.04059040590405904,0.029069767441860465,0.029411764705882353,425,True
+global_SP500_ret1,previous global session,0.07756813417190776,0.07380073800738007,0.08139534883720931,0.08823529411764706,407,True
+global_USDINR,previous global session,0.0041928721174004195,0.0,0.005813953488372093,0.029411764705882353,438,True
+global_USDINR_ret1,previous global session,0.006289308176100629,0.0,0.011627906976744186,0.029411764705882353,438,True
+global_VIX,previous global session,0.03563941299790356,0.04059040590405904,0.029069767441860465,0.029411764705882353,371,True
+global_VIX_ret1,previous global session,0.07756813417190776,0.07380073800738007,0.08139534883720931,0.08823529411764706,407,True
+iv_term_premium_ratio,option-chain derived,0.5220125786163522,0.4944649446494465,0.5290697674418605,0.7058823529411765,228,True
+near_atm_oi_pcr,current-week option chain,0.0,0.0,0.0,0.0,396,True
+near_atm_volume_pcr,current-week option chain,0.0,0.0,0.0,0.0,477,True
+next_atm_iv_skew,next-current-week option chain,0.5303983228511531,0.4981549815498155,0.5348837209302325,0.7647058823529411,224,True
+next_atm_straddle,next-current-week option chain,0.5220125786163522,0.4944649446494465,0.5290697674418605,0.7058823529411765,220,True
+nifty_daily_ret_1d,NIFTY spot/intraday or daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,440,True
+nifty_daily_ret_20d,NIFTY spot/intraday or daily,0.018867924528301886,0.033210332103321034,0.0,0.0,433,True
+nifty_daily_ret_5d,NIFTY spot/intraday or daily,0.0041928721174004195,0.007380073800738007,0.0,0.0,439,True
+nifty_daily_ret_60d,NIFTY spot/intraday or daily,0.04612159329140461,0.08118081180811808,0.0,0.0,420,True
+nifty_daily_rv_10d,NIFTY spot/intraday or daily,0.010482180293501049,0.01845018450184502,0.0,0.0,436,True
+nifty_daily_rv_20d,NIFTY spot/intraday or daily,0.018867924528301886,0.033210332103321034,0.0,0.0,433,True
+nifty_daily_rv_60d,NIFTY spot/intraday or daily,0.04612159329140461,0.08118081180811808,0.0,0.0,420,True
+nifty_drawdown_20d,NIFTY spot/intraday or daily,0.016771488469601678,0.02952029520295203,0.0,0.0,348,True
+nifty_drawdown_60d,NIFTY spot/intraday or daily,0.04612159329140461,0.08118081180811808,0.0,0.0,363,True
+nifty_ma_gap_120m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_ma_gap_15m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_ma_gap_30m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_ma_gap_60m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_range_120m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_range_15m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_range_30m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_range_60m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_ret_120m,NIFTY spot/intraday or daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,476,True
+nifty_ret_15m,NIFTY spot/intraday or daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,476,True
+nifty_ret_1m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,476,True
+nifty_ret_240m,NIFTY spot/intraday or daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,476,True
+nifty_ret_30m,NIFTY spot/intraday or daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,476,True
+nifty_ret_5m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_ret_60m,NIFTY spot/intraday or daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,476,True
+nifty_rv_120m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_rv_15m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_rv_30m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+nifty_rv_60m,NIFTY spot/intraday or daily,0.0,0.0,0.0,0.0,477,True
+prev_session_close,NIFTY daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,439,True
+prev_session_high,NIFTY daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,440,True
+prev_session_low,NIFTY daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,439,True
+prev_session_open,NIFTY daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,440,True
+prev_session_range,NIFTY daily,0.0020964360587002098,0.0036900369003690036,0.0,0.0,440,True
+put_25_delta,current-week option chain,0.0,0.0,0.0,0.0,477,True
+put_25_iv,current-week option chain,0.0,0.0,0.0,0.0,477,True
+put_25_long_iv,current-week option chain,0.0,0.0,0.0,0.0,477,True
+put_25_long_oi,current-week option chain,0.0,0.0,0.0,0.0,395,True
+put_25_long_price,current-week option chain,0.0,0.0,0.0,0.0,390,True
+put_25_long_volume,current-week option chain,0.0,0.0,0.0,0.0,471,True
+put_25_oi,current-week option chain,0.0,0.0,0.0,0.0,396,True
+put_25_price,current-week option chain,0.0,0.0,0.0,0.0,400,True
+put_25_spread_credit,current-week option chain,0.0,0.0,0.0,0.0,210,True
+put_25_strike,current-week option chain,0.0,0.0,0.0,0.0,183,True
+put_25_volume,current-week option chain,0.0,0.0,0.0,0.0,472,True
+sent_sent_count,previous sentiment date,0.0,0.0,0.0,0.0,42,True
+sent_sent_mean,previous sentiment date,0.0,0.0,0.0,0.0,156,True
+sent_sent_neg,previous sentiment date,0.0,0.0,0.0,0.0,47,True
+sent_sent_pos,previous sentiment date,0.0,0.0,0.0,0.0,47,True
+sent_sent_std,previous sentiment date,0.6729559748427673,0.7564575645756457,0.6744186046511628,0.0,79,True
