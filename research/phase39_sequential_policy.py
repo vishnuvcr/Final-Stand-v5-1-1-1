@@ -39,6 +39,7 @@ def load_spot():
     d["timestamp"]=pd.to_datetime(d["timestamp"])
     d["timestamp"]=d["timestamp"].dt.tz_localize(TZ) if d["timestamp"].dt.tz is None else d["timestamp"].dt.tz_convert(TZ)
     d=d.sort_values("timestamp").drop_duplicates("timestamp",keep="last")
+    d["spot"]=d["close"]
     return d
 
 def expected_expiries(spot):
