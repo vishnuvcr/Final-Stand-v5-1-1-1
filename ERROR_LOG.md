@@ -95,3 +95,17 @@ All seven numerical selector jobs succeeded and the rebase-safe publication job 
 **Prevention:** Future control-relative phases must compare a regenerated benchmark against a frozen canonical artifact before any treatment-versus-control result is accepted.
 
 **Research impact:** No model promotion decision is based on the mismatched-control run.
+
+
+## 2026-10-06 — Phase 38 manuscript packaging
+
+### Error F38-002 — Unescaped manuscript delimiter in tool write
+**Symptom:** The first attempt to create PHASE38_MANUSCRIPT.md failed in the tool layer with a JavaScript template-string parse error.
+
+**Cause:** Markdown inline code delimiters were embedded directly inside a JavaScript template literal.
+
+**Evidence status:** No repository file was changed and no numerical analysis was affected.
+
+**Correction:** The manuscript was rewritten without the conflicting delimiter syntax and committed successfully.
+
+**Research impact:** None.
