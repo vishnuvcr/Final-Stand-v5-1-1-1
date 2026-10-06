@@ -484,3 +484,16 @@ Additional candidate families include Bayesian dynamic models, Bradley-Terry pre
 - [Phase 39 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_STATUS.md)
 
 **Current Phase-39 status:** formulation and preregistration complete; numerical counterfactual engine construction is next. Phase-38 canonical strategy remains unchanged.
+
+
+## Phase 43 — VIX-conditioned NIFTY all-strategy sweep — REGISTERED
+
+A new isolated phase has been registered on `phase-43-vix-all-options-strategies` to test a finite universe of major NIFTY weekly option structures across India-VIX regimes. The phase uses the existing VIX cache, realistic Paytm Money brokerage/statutory costs, one-adverse-tick slippage, historical lot sizes, development/validation/untouched-2026 holdout chronology, 10,000 paired-expiry bootstrap inference and a preregistered VIX router. The canonical Phase-20/42 strategy is unchanged.
+
+- [Phase 43 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-43-vix-all-options-strategies)
+- [Phase 43 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_RESEARCH_PLAN.md)
+- [Phase 43 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_PRE_REGISTRATION.md)
+- [Phase 43 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_LITERATURE_REVIEW.md)
+- [Phase 43 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_STATUS.md)
+
+**Status: numerical execution pending.**
