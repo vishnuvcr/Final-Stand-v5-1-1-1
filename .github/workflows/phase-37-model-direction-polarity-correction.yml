@@ -10,6 +10,15 @@ on:
       - 'PHASE37_RESEARCH_PLAN.md'
       - 'PHASE37_PRE_REGISTRATION.md'
       - 'PHASE37_STRATEGY_SPEC.md'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/phase37_model_direction_polarity_correction.py'
+      - 'data/phase36_selector_predictions.csv'
+      - '.github/workflows/phase-37-model-direction-polarity-correction.yml'
+      - 'PHASE37_RESEARCH_PLAN.md'
+      - 'PHASE37_PRE_REGISTRATION.md'
+      - 'PHASE37_STRATEGY_SPEC.md'
   workflow_dispatch:
     inputs:
       sample_start:
@@ -76,7 +85,7 @@ jobs:
 
   publish:
     needs: overlay
-    if: ${{ needs.overlay.result == 'success' }}
+    if: ${{ github.event_name == 'push' && needs.overlay.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout full history
