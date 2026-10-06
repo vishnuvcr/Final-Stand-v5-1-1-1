@@ -494,28 +494,37 @@ def run_garch(events, daily):
         })
     return pd.DataFrame(rows)
 
-def lstm_fit_predict(train_events, test_events, all_events, seq_cols):
+def lstm_fit_predict(train_events, test_events, daily, seq_cols):
     ensure("torch")
     import torch
     from torch import nn
     from sklearn.impute import SimpleImputer
     from sklearn.preprocessing import StandardScaler
     torch.manual_seed(SEED); np.random.seed(SEED)
-    imp = SimpleImputer(strategy="median").fit(train_events[seq_cols])
-    sc = StandardScaler().fit(imp.transform(train_events[seq_cols]))
-    base = all_events.sort_values("ref_ts").reset_index(drop=True)
+
+    # The registered LSTM input is the 30 most recent completed trading
+    # sessions strictly before the D-6 reference date. No reference-day close
+    # or any future intraday observation is included.
+    daily_feat = build_price_features(daily).sort_values("date").copy()
+    imp = SimpleImputer(strategy="median").fit(train_events[seq_cols].copy())
+    sc = StandardScaler().fit(imp.transform(train_events[seq_cols].copy()))
+
     Xs, ys = [], []
     lookback = 30
     for _, row in train_events.sort_values("ref_ts").iterrows():
-        prior = base[base["ref_ts"] < row["ref_ts"]].tail(lookback)
+        ref_day = pd.Timestamp(row["ref_ts"]).normalize()
+        prior = daily_feat[daily_feat["date"] < ref_day].tail(lookback)
         if len(prior) < lookback:
             continue
         Xs.append(sc.transform(imp.transform(prior[seq_cols])))
         ys.append(float(row["target_return"]))
+
     if len(Xs) < 25:
-        raise RuntimeError("Insufficient LSTM sequences")
+        raise RuntimeError("Insufficient LSTM training sequences")
+
     xx = torch.tensor(np.stack(Xs), dtype=torch.float32)
     yy = torch.tensor(np.asarray(ys), dtype=torch.float32).view(-1,1)
+
     class Net(nn.Module):
         def __init__(self, n):
             super().__init__()
@@ -525,6 +534,7 @@ def lstm_fit_predict(train_events, test_events, all_events, seq_cols):
         def forward(self, x):
             z,_ = self.lstm(x)
             return self.fc(self.drop(z[:,-1,:]))
+
     net = Net(len(seq_cols))
     opt = torch.optim.Adam(net.parameters(), lr=0.003)
     loss = nn.MSELoss()
@@ -536,16 +546,21 @@ def lstm_fit_predict(train_events, test_events, all_events, seq_cols):
         l.backward()
         torch.nn.utils.clip_grad_norm_(net.parameters(), 1.0)
         opt.step()
+
     train_std = max(float(np.std(ys, ddof=1)), 1e-4)
     probs, pred_ret = [], []
     net.eval()
     for _, row in test_events.sort_values("ref_ts").iterrows():
-        prior = base[base["ref_ts"] < row["ref_ts"]].tail(lookback)
+        ref_day = pd.Timestamp(row["ref_ts"]).normalize()
+        prior = daily_feat[daily_feat["date"] < ref_day].tail(lookback)
+        if len(prior) < lookback:
+            raise RuntimeError(f"Insufficient 30-session LSTM history at {row['ref_ts']}")
         z = sc.transform(imp.transform(prior[seq_cols]))
         with torch.no_grad():
             mu = float(net(torch.tensor(z[None,:,:], dtype=torch.float32)).item())
         p = 0.5*(1 + math.erf((mu/train_std)/math.sqrt(2)))
         probs.append(p); pred_ret.append(mu)
+
     return np.asarray(probs), np.asarray(pred_ret)
 
 def bootstrap_mean(x, n=3000):
@@ -597,11 +612,11 @@ def main():
             part["sofnn_sent_prob"] = part["sofnn_prob"]
 
     try:
-        seq_cols = [c for c in cols if c.startswith(("ret","vol","range","dd")) or c in ["rsi14","macd","ma_gap20","ret_over_vol20","intraday_ret_10"]]
+        seq_cols = [c for c in cols if c.startswith(("ret","vol","range","dd")) or c in ["rsi14","macd","ma_gap20","ret_over_vol20"]]
         pred_parts = [p.reset_index(drop=True) for p in pred_parts]
         for split, test in [("validation",val),("holdout",hold)]:
             fit = train if split == "validation" else pd.concat([train,val]).sort_values("ref_ts")
-            p, mu = lstm_fit_predict(fit, test, events, seq_cols)
+            p, mu = lstm_fit_predict(fit, test, daily, seq_cols)
             for i, part in enumerate(pred_parts):
                 if part["ref_ts"].iloc[0] == test["ref_ts"].iloc[0]:
                     pred_parts[i]["lstm_prob"] = p
