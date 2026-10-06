@@ -701,3 +701,17 @@ Evidence status: No sequential evidence was produced from this version.
 Correction: The replay now fits the symbolic coefficient and residual uncertainty from the point-in-time feature matrix joined to the accepted Phase-39 fixed-opportunity counterfactual ledger.
 
 Prevention: Counterfactual-target models must train exclusively from the fixed-opportunity ledger, never the one-arm control trade CSV.
+
+
+### Error F39-041 — Sequential symbolic workflow omitted copied-script scikit-learn dependency
+Run: 37449411300 (Step-7 sequential-symbolic run #2).
+
+Symptom: The replay failed at import time with `ModuleNotFoundError: No module named 'sklearn'`.
+
+Cause: The sequential symbolic script inherits non-used sklearn imports from the audited base replay engine.
+
+Evidence status: Non-evidence dependency failure.
+
+Correction: Step-7 sequential-symbolic workflow now installs scikit-learn as part of the inherited engine dependency set.
+
+Prevention: Copied/derived replay engines will be dependency-audited against all imports before execution.
