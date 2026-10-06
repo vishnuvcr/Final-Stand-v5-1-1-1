@@ -637,3 +637,17 @@ Evidence status: Non-evidence runtime failure. No Step-6 output was accepted.
 Correction: Selected expert P&L is now explicitly represented as a NumPy array before aggregation.
 
 Prevention: Keep explicit array types at the expert-aggregation evaluation boundary.
+
+
+### Error F39-036 — Step-6 verifier incorrectly rejected a valid negative research result
+Run: 37447719614 (Step-6 run #2).
+
+Symptom: The Hedge model finished successfully with a validation result of **−₹416.82**, but the workflow verifier failed because it required `validation_uplift >= 0`.
+
+Cause: A research-outcome expectation was encoded as a CI invariant. Negative results are valid evidence and must be recorded, not treated as workflow failures.
+
+Evidence status: The numerical Hedge result is valid research evidence; the run's final verification/persistence step was the only failure.
+
+Correction: Removed the non-negative-uplift assertion. The verifier now checks only schema, completion, parameter-grid and holdout-isolation invariants.
+
+Prevention: CI verification will never encode directional expectations about numerical research outcomes.
