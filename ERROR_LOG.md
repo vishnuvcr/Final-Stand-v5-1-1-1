@@ -1165,3 +1165,14 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 
 ## F44-validation-RUN-37506989938 — numerical execution failure
 - Exit code: 1. Failed output is non-evidence.
+
+## F44-016 — incorrect development uplift definition in first persisted screen
+- The original development profile screen computed candidate uplift by subtracting the same strategy P&L from itself on the active-expiry subset, making every uplift exactly zero by construction.
+- That implementation is non-evidence.
+- Correct definition: candidate portfolio P&L is the selected strategy P&L on active expiries and zero on inactive expiries; unconditional comparator P&L is the same tuned structure on every eligible expiry. Uplift is the expiry-by-expiry difference across the full development opportunity set.
+- The persisted structural P&L matrix is reused unchanged; only the profile selection/inference layer is corrected.
+
+## F44-017 — validation must not fail when development freeze is empty
+- A validation run started before the uplift-definition defect was discovered and failed because the old development freeze was empty.
+- This is non-evidence.
+- The registered stop condition permits early Phase-44 closure when no candidates survive development. Validation must therefore close cleanly with NO_STAGE1_CANDIDATES rather than treating the absence of a development candidate as a numerical failure.
