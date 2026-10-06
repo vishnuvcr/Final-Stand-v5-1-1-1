@@ -171,3 +171,15 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Markov-regime tree ranked first at 1.309, CatBoost second at 1.173, and the stateful control third at 1.028.
 - The risk-adjusted ranking does not override the preregistered control-relative test; no selector is promoted.
 - Saved to results/phase38_corrected_model_robustness/risk_adjusted_summary.csv and added to PHASE38_MANUSCRIPT.md.
+
+
+## 2026-10-06 — Phase 39 advanced prediction-model discovery initiated
+
+- Phase 35 was audited before opening the new search. It already covered a broad tree/decomposition/probabilistic/adaptive model family, so Phase 39 deliberately changes the prediction formulation instead of repeating a generic classifier sweep.
+- Created branch phase-39-advanced-direction-models.
+- Registered the primary novel formulation: direct counterfactual CALL-versus-PUT spread P&L margin prediction.
+- Registered the Control-Relative Counterfactual Override Learner (CROL): the Phase-38 stateful control remains default and a learned model may override it only when predicted incremental spread P&L is positive with sufficient safety margin and low uncertainty.
+- Added candidate families: Bayesian counterfactual margin regression, Bradley-Terry preference learning, dynamic Bayesian logistic/DMA, Gaussian processes, sparse GAM/GA2M, kNN/DTW analogs, BOCPD gates, online Hedge/DMA, foundation-model exploratory track and constrained symbolic regression.
+- Added PHASE39_LITERATURE_REVIEW.md, PHASE39_PRE_REGISTRATION.md, PHASE39_RESEARCH_PLAN.md and the candidate-method registry.
+- Added an automated preflight workflow with manual dispatch.
+- Numerical results have not yet been accepted.
