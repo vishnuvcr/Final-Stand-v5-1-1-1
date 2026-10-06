@@ -21,7 +21,7 @@ LEDGER=ROOT/"results/phase39_counterfactual/fixed_opportunity_ledger.csv"
 OUT=ROOT/"results/phase39_models"
 OUT.mkdir(parents=True,exist_ok=True)
 
-LABELS={"control_direction","control_net_rupees","delta_pnl_call_minus_put","expiry","entry_ts","split"}
+LABELS={"control_direction","control_net_rupees","delta_pnl_call_minus_put","call_net_rupees","put_net_rupees","expiry","entry_ts","split"}
 WARMUP=100
 BATCH=20
 
