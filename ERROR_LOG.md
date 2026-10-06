@@ -861,3 +861,15 @@ The ensemble engine called `base.run_expiry()` expecting two return values, but 
 **Correction:** The Phase-40 arm-cache replay now explicitly unpacks all three values.
 
 **Prevention:** Reused research engines must be checked against their current function signature before integration.
+
+
+### Error F40-005 — Candidate arm replay reached an unavailable scheduled expiry
+**Run:** 37454846921.
+
+The canonical weekly calendar includes 07-Apr-2025, but the Hugging Face option dataset does not contain that file. The run stopped while rebuilding the arm cache.
+
+**Evidence status:** non-evidence; no ensemble grid result was written.
+
+**Correction:** Phase 40 now defines its study-expiry universe from the already accepted Phase-39 fixed-opportunity ledger, which excludes unavailable option files. The authoritative control comparison is read from the frozen Phase-38 expiry-level control rather than reconstructed during the ensemble screen.
+
+**Prevention:** Future derived phases must inherit the accepted study-expiry ledger before requesting raw option files.
