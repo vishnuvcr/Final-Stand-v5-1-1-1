@@ -1,6 +1,15 @@
 name: Phase 38 - Corrected Model Robustness
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/phase38_corrected_model_robustness.py'
+      - 'research/phase32_continuous_delta_6x6_backtest.py'
+      - 'results/phase37_model_direction_polarity_correction/**'
+      - 'PHASE38_RESEARCH_PLAN.md'
+      - 'PHASE38_PRE_REGISTRATION.md'
+      - '.github/workflows/phase-38-corrected-model-robustness.yml'
   push:
     branches: [phase-38-corrected-model-robustness]
     paths:
