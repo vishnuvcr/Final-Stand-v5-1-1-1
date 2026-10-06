@@ -2,19 +2,33 @@
 
 Systematic options-strategy research repository.
 
-## Phase 41 — Regime-conditional counterfactual policy learning — IN PROGRESS
+## Phase 41 — Regime-conditional counterfactual policy learning — COMPLETE / NO PROMOTION
 
-A new isolated branch, phase-41-regime-conditional-policy-learning, was created from the completed Phase-40 branch.
+Phase 41 completed on isolated branch phase-41-regime-conditional-policy-learning.
 
-Phase 41 registered 24 policies: two economic-margin learners × four override margins × three India-VIX routing gates. The accepted Phase-39 477-opportunity counterfactual panel is reused with a strict 271/172/34 development-validation-holdout split.
+| Metric | Result |
+|---|---:|
+| Declared variants | 24 |
+| Validation-eligible variants | 0 |
+| Fixed-panel validation uplift of frozen candidates | ₹0 |
+| Fixed-panel 2026 holdout uplift of frozen candidates | ₹0 |
+| Sequential validation uplift | ₹0 |
+| Sequential 2026 holdout uplift | ₹0 |
+| Holdout overrides | 0 |
+| Paired-expiry p-value | 1.0000 |
+| Promotion | **NO — canonical strategy unchanged** |
 
-**Interim fixed-opportunity result:** 0 of 24 variants passed the preregistered validation safety screen. The top three diagnostic candidates all produced **zero overrides in development, validation and the frozen 2026 holdout**, so their fixed-opportunity policy P&L is exactly identical to the canonical control at this stage. Exact sequential identity validation is being completed through the registered Phase-41 workflow before final closeout.
+All three frozen diagnostic candidates were proven to be exact no-op policies: zero overrides across development, validation and holdout. Their sequential replay is therefore identical to the canonical stateful benchmark.
 
-- Phase 41 branch: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-41-regime-conditional-policy-learning
-- Phase 41 plan: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_RESEARCH_PLAN.md
-- Phase 41 pre-registration: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_PRE_REGISTRATION.md
-- Phase 41 status: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_STATUS.md
-- Phase 41 workflow run 37463984884: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37463984884
+An important secondary finding is that the model score still ranked economically favorable counterfactual states. For the leading rank-1 policy, the top 10% of validation scores had mean observed CALL-minus-PUT advantage of **+₹2,502.61** (95% bootstrap CI **+₹425.31 to +₹4,688.79**). The 2026 holdout top 10% mean was **+₹7,338.85** (95% CI **+₹2,593.35 to +₹9,856.56**). This is a ranking signal, not a tradable result, because the registered uncertainty gate produced zero overrides and the independent expiry-level trading uplift remained exactly zero.
+
+India VIX is therefore retained as a regime/routing research variable, not a promoted direct directional predictor.
+
+- [Phase 41 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-41-regime-conditional-policy-learning)
+- [Phase 41 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_MANUSCRIPT.md)
+- [Phase 41 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_PRE_REGISTRATION.md)
+- [Phase 41 final decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/results/phase41_regime_policy/final_decision.json)
+- [Phase 41 workflow run 37466520042](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37466520042)
 
 ## Latest research status
 
