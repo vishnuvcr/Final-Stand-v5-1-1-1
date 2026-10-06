@@ -38,3 +38,11 @@ No promotion decision has been made.
 
 ## Step 1 — workflow-trigger preparation — 2026-10-06
 The corrected engine and manual-dispatch workflow are committed. A repository-path push trigger will be used for the numerical execution so the phase is reproducible without manual local execution.
+
+
+## Step 2 — execution registration — 2026-10-06
+- Corrected model-to-spread polarity is frozen: bullish/up probability >= 0.50 -> PUT; bearish/down probability < 0.50 -> CALL.
+- No retraining, threshold tuning, selector reweighting or execution-rule changes are permitted.
+- PR #11 is open for repository-level execution/audit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/11
+- The numerical workflow is configured for automatic push execution and manual dispatch; an audited PR-trigger path has also been registered.
+- Numerical evidence has not yet been accepted; no model is promoted.
