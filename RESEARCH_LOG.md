@@ -381,3 +381,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 - Phase 48 numerical bridge
 - Trade rows=124; validation working states=1; frozen=1; holdout confirmations=1; Holm survivors=0.
 - Independent multi-expiry source used only as supplementary evidence.
+
+
+## 2026-10-07 — Phase 48 final closeout
+- Corrected final run completed successfully: 124 trade rows, three registered source-derived baselines, zero data errors, self-audit passed.
+- Validation working candidate: Covered Call 2.0 option-only proxy + LOW VIX, 30 trades, +₹10,326.9987 net, +₹6,785.9980 under +50% monetary fee/charge stress.
+- Validation inference: active-vs-rest mean difference +₹5,325.4551; bootstrap 95% CI −₹10,856.50 to +₹5,325.46; permutation p=0.2718; Holm-adjusted p=1.0.
+- Protected 2026 confirmation: 6 trades, +₹2,753.5964 net, +₹2,113.7696 stressed, PF 1.0495, max DD ₹13,053.49.
+- Double Calendar and Monthly Wide-Range baselines were negative in validation. No statistical survivor and no promotion.
+- Canonical Phase-20/42 strategy remains unchanged.
+- Earlier Phase-48 numerical outputs were rejected after self-audits found timestamp, spot-field and historical lot-size defects; only the post-F48-008 run is accepted.
+- Phase 48 is closed. A future exact-futures/adjustment study is a separate research phase, not a live recommendation.
