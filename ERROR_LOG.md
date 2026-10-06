@@ -395,3 +395,15 @@ Evidence status: Non-evidence implementation issue caught before sequential exec
 Correction: Every lazily loaded option file now receives deterministic `expiry_ts = expiry + 15:30 IST` metadata.
 
 Prevention: Shared market-data adapters will expose the complete contract timestamp schema required by all downstream selectors.
+
+
+### Error F39-021 — Sequential replay spot-column schema mismatch
+Run: 37441450024 (Step-4 run #1).
+
+Symptom: The sequential replay failed on the first selected arm because the shared `run_arm()` execution routine expects NIFTY spot data in a `spot` column, while the sequential loader exposed only `close`.
+
+Evidence status: Non-evidence runtime failure. No sequential trade result was produced.
+
+Correction: The sequential spot adapter now retains the original `close` field for feature construction and also exposes an identical `spot` field for the shared execution engine.
+
+Prevention: Shared market-data adapters will expose both semantic aliases where downstream engines use different field names.
