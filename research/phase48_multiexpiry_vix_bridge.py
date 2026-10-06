@@ -73,29 +73,61 @@ def duck(sql):
     finally:
         con.close()
 
+
+SCHEMAS={}
+
+def get_schema(y):
+    if y in SCHEMAS: return SCHEMAS[y]
+    p=get_file(y)
+    z=duck(f"DESCRIBE SELECT * FROM read_parquet('{p}')")
+    cols=list(z['column_name'])
+    SCHEMAS[y]=cols
+    return cols
+
+def pick_col(cols,candidates):
+    low={x.lower():x for x in cols}
+    for c in candidates:
+        if c.lower() in low: return low[c.lower()]
+    return None
+
+def norm_relation(y):
+    p=get_file(y); cols=get_schema(y)
+    ts=pick_col(cols,['timestamp','datetime','date_time'])
+    expiry=pick_col(cols,['expiry','expiry_date'])
+    strike=pick_col(cols,['strike'])
+    typ=pick_col(cols,['option_type','type','side'])
+    close=pick_col(cols,['close','close_price','market_price'])
+    datec=pick_col(cols,['date','trade_date'])
+    spot=pick_col(cols,['spot_price','underlying_spot','spot','underlying_price'])
+    volume=pick_col(cols,['volume'])
+    oi=pick_col(cols,['oi','open_interest'])
+    required={'timestamp':ts,'expiry':expiry,'strike':strike,'option_type':typ,'close':close}
+    missing=[k for k,v in required.items() if v is None]
+    if missing: raise RuntimeError(f'F48-001 {y} missing required normalized columns: {missing}; actual={cols}')
+    date_expr=f'CAST({datec} AS DATE)' if datec else f'CAST({ts} AS DATE)'
+    spot_expr=f'CAST({spot} AS DOUBLE)' if spot else 'CAST(NULL AS DOUBLE)'
+    vol_expr=f'CAST({volume} AS DOUBLE)' if volume else 'CAST(NULL AS DOUBLE)'
+    oi_expr=f'CAST({oi} AS DOUBLE)' if oi else 'CAST(NULL AS DOUBLE)'
+    return f"""(SELECT CAST({ts} AS TIMESTAMP) AS timestamp, {date_expr} AS date, CAST({expiry} AS DATE) AS expiry, CAST({strike} AS DOUBLE) AS strike, UPPER(CAST({typ} AS VARCHAR)) AS option_type, CAST({close} AS DOUBLE) AS close, {spot_expr} AS spot_price, {vol_expr} AS volume, {oi_expr} AS oi FROM read_parquet('{p}'))"""
 def audit_dataset():
     out={}
     for y in YEARS:
-        p=get_file(y)
-        q=duck(f"SELECT * FROM read_parquet('{p}') LIMIT 5")
-        cols=set(q.columns)
-        req={"date","timestamp","expiry","strike","option_type","close","spot_price"}
-        out[str(y)]={"path":p,"columns":sorted(cols),"schema_ok":req.issubset(cols)}
-        if not req.issubset(cols):
-            raise RuntimeError(f"F48-001 {y} missing columns")
-        mn=duck(f"SELECT MIN(CAST(date AS DATE)) AS min_date, MAX(CAST(date AS DATE)) AS max_date, COUNT(*) AS rows FROM read_parquet('{p}')")
-        out[str(y)].update({k:mn.iloc[0][k] for k in ["min_date","max_date","rows"]})
-    (OUT/"data_audit.json").write_text(json.dumps(out,default=str,indent=2))
+        p=get_file(y); cols=get_schema(y)
+        mapping={
+            'timestamp':pick_col(cols,['timestamp','datetime','date_time']),
+            'expiry':pick_col(cols,['expiry','expiry_date']),
+            'strike':pick_col(cols,['strike']),
+            'option_type':pick_col(cols,['option_type','type','side']),
+            'close':pick_col(cols,['close','close_price','market_price']),
+            'spot_price':pick_col(cols,['spot_price','underlying_spot','spot','underlying_price']),
+            'date':pick_col(cols,['date','trade_date'])}
+        if any(mapping[k] is None for k in ['timestamp','expiry','strike','option_type','close']):
+            raise RuntimeError(f'F48-001 {y} missing required normalized columns; actual={cols}')
+        rel=norm_relation(y)
+        mn=duck(f'SELECT MIN(date) AS min_date, MAX(date) AS max_date, COUNT(*) AS rows FROM {rel}')
+        out[str(y)]={'path':p,'columns':sorted(cols),'mapping':mapping,'min_date':str(mn.iloc[0].min_date),'max_date':str(mn.iloc[0].max_date),'rows':int(mn.iloc[0].rows)}
+    (OUT/'data_audit.json').write_text(json.dumps(out,default=str,indent=2))
     return out
-
-def expiries_all():
-    rows=[]
-    for y in YEARS:
-        p=get_file(y)
-        z=duck(f"SELECT DISTINCT CAST(expiry AS DATE) AS expiry FROM read_parquet('{p}') WHERE CAST(date AS DATE)>='2024-10-01'")
-        rows.extend(z["expiry"].tolist())
-    return sorted(set(pd.Timestamp(x,tz=TZ) for x in rows))
-
 def monthly_expiries(expiries):
     z=pd.DataFrame({"expiry":sorted(expiries)})
     z["ym"]=z["expiry"].dt.tz_localize(None).dt.to_period("M").astype(str)
