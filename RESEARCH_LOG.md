@@ -97,3 +97,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The 2026 holdout remains protected until validation/inference freezing.
 - Automated branch workflow and main execution bridge registered.
 - Initial implementation audit F44-001 was logged and quarantined before evidence acceptance.
+
+
+## 2026-10-06 — Phase 44 corrected numerical execution
+- F44-002 and F44-003 were corrected before accepting any numerical evidence.
+- The active Phase-44 run now uses the optimized corrected engine with development-only candidate freeze, validation-only confirmation and 2026 holdout protection.
