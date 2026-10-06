@@ -103,6 +103,21 @@ At +50% recorded transaction costs, all five selectors remained positive:
 
 At +100% costs, DART became slightly negative (−₹522.77); the other four remained positive.
 
+### Risk-adjusted comparison
+
+A secondary **net-P&L / maximum-drawdown ratio** was calculated. This is a Calmar-style diagnostic, not a formal annualized Calmar ratio because the numerator is cumulative sample P&L rather than annualized return.
+
+| Strategy | Net P&L | Max drawdown | Net/DD |
+|---|---:|---:|---:|
+| MARKOV_REGIME_TREE | ₹53,060.31 | ₹40,547.67 | **1.309** |
+| CATBOOST | ₹57,874.80 | ₹49,337.02 | **1.173** |
+| STATEFUL_CONTROL | ₹63,672.58 | ₹61,960.87 | **1.028** |
+| WAVELET_TREE | ₹31,294.89 | ₹54,085.53 | **0.579** |
+| OOF_STACK | ₹24,765.71 | ₹62,024.82 | **0.399** |
+| DART | ₹19,372.11 | ₹52,629.57 | **0.368** |
+
+Thus Markov-regime tree has the best cumulative-return-to-drawdown efficiency, followed by CatBoost. The stateful control still has the highest absolute net P&L and highest win rate. The risk-adjusted result does not reverse the Phase-38 promotion decision because the model selectors still underperform the frozen control on the preregistered paired expiry comparison.
+
 ### Direction asymmetry
 
 | Selector | CALL trades / net | PUT trades / net |
