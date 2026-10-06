@@ -580,6 +580,9 @@ def main():
         "holdout_start":"2026-01-01",
         "all_vix_states":STATES
     },indent=2))
+    if os.getenv("PHASE47_PREFLIGHT_ONLY") == "1":
+        print(json.dumps({"preflight":"PASS", **preflight}, indent=2))
+        return
     # ---------------- NUMERICAL EXECUTION ----------------
     rows=[]
     errors=[]
