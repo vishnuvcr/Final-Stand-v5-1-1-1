@@ -1,0 +1,13 @@
+{
+  "phase35_branch": "phase-35-advanced-tree-and-adaptive-prediction-search",
+  "sources": [
+    "nifty_daily.parquet",
+    "global_daily.parquet",
+    "fii_dii_daily.parquet",
+    "sentiment_daily.parquet"
+  ],
+  "hf_repo": "thetrademarkk/india-index-options-1m",
+  "hf_token_used": true,
+  "rows": 477,
+  "numeric_features": 122
+}

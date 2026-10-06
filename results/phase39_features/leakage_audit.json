@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "rows": 477,
+  "unique_entry_timestamps": 477,
+  "max_intraday_source_lag_seconds": 0.0,
+  "daily_source_rule": "strictly previous available date",
+  "option_source_rule": "exact entry timestamp only; no forward fill/interpolation",
+  "duplicate_quote_rule": "stable timestamp/type/strike last-row selection",
+  "unavailable_sources": [
+    "NSE/BSE breadth",
+    "NIFTY futures basis/OI/volume",
+    "point-in-time corporate-action feed",
+    "timestamp-verified intraday news feed"
+  ],
+  "phase35_reused_sources": [
+    "nifty_daily.parquet",
+    "global_daily.parquet",
+    "fii_dii_daily.parquet",
+    "sentiment_daily.parquet"
+  ]
+}

@@ -1,0 +1,123 @@
+feature,source,missing_pct,n_unique
+atm_ce_delta,NIFTY option chain at entry,0.0,477
+atm_ce_iv,NIFTY option chain at entry,0.0,477
+atm_ce_oi,NIFTY option chain at entry,0.0,395
+atm_ce_price,NIFTY option chain at entry,0.0,446
+atm_ce_volume,NIFTY option chain at entry,0.0,472
+atm_iv_skew,NIFTY option chain at entry,0.0,477
+atm_pcr_oi,NIFTY option chain at entry,0.0,396
+atm_pcr_volume,NIFTY option chain at entry,0.0,477
+atm_pe_delta,NIFTY option chain at entry,0.0,477
+atm_pe_iv,NIFTY option chain at entry,0.0,477
+atm_pe_oi,NIFTY option chain at entry,0.0,395
+atm_pe_price,NIFTY option chain at entry,0.0,444
+atm_pe_volume,NIFTY option chain at entry,0.0,476
+atm_straddle,NIFTY option chain at entry,0.0,464
+atm_strike,NIFTY option chain at entry,0.0,179
+call_25_delta,NIFTY option chain at entry,0.0,477
+call_25_iv,NIFTY option chain at entry,0.0,477
+call_25_long_iv,NIFTY option chain at entry,0.0,477
+call_25_long_oi,NIFTY option chain at entry,0.0,396
+call_25_long_price,NIFTY option chain at entry,0.0,381
+call_25_long_volume,NIFTY option chain at entry,0.0,473
+call_25_oi,NIFTY option chain at entry,0.0,395
+call_25_price,NIFTY option chain at entry,0.0,403
+call_25_spread_credit,NIFTY option chain at entry,0.0,244
+call_25_strike,NIFTY option chain at entry,0.0,178
+call_25_volume,NIFTY option chain at entry,0.0,472
+candidate_credit_diff_call_minus_put,NIFTY option chain at entry,0.0,326
+candidate_iv_skew_25,NIFTY option chain at entry,0.0,477
+candidate_oi_pcr_25,NIFTY option chain at entry,0.0,396
+dte_days,derived timestamp/contract,0.0,178
+entry_hour,derived timestamp/contract,0.0,7
+entry_minute,derived timestamp/contract,0.0,57
+entry_spot,"NIFTY spot/daily, at or before entry",0.0,476
+entry_weekday,derived timestamp/contract,0.0,7
+flow_dii_net,previous FII/DII publication/cache,0.9433962264150944,25
+flow_dii_net_z20,previous FII/DII publication/cache,0.9538784067085954,20
+flow_fii_idx_call_net,previous FII/DII publication/cache,0.9433962264150944,25
+flow_fii_idx_call_net_z20,previous FII/DII publication/cache,0.9538784067085954,20
+flow_fii_idx_fut_net,previous FII/DII publication/cache,0.9433962264150944,25
+flow_fii_idx_fut_net_z20,previous FII/DII publication/cache,0.9538784067085954,20
+flow_fii_idx_put_net,previous FII/DII publication/cache,0.9433962264150944,25
+flow_fii_idx_put_net_z20,previous FII/DII publication/cache,0.9538784067085954,20
+flow_fii_net,previous FII/DII publication/cache,0.9433962264150944,25
+flow_fii_net_z20,previous FII/DII publication/cache,0.9538784067085954,20
+flow_flow_pcr,previous FII/DII publication/cache,0.949685534591195,19
+flow_flow_sentiment,previous FII/DII publication/cache,0.949685534591195,13
+global_CRUDE,previous global session/cache,0.033542976939203356,404
+global_CRUDE_ret1,previous global session/cache,0.07337526205450734,408
+global_DOW,previous global session/cache,0.03563941299790356,425
+global_DOW_ret1,previous global session/cache,0.07756813417190776,407
+global_GOLD,previous global session/cache,0.031446540880503145,413
+global_GOLD_ret1,previous global session/cache,0.07127882599580712,409
+global_NASDAQ,previous global session/cache,0.03563941299790356,425
+global_NASDAQ_ret1,previous global session/cache,0.07756813417190776,407
+global_NIKKEI,previous global session/cache,0.05660377358490566,415
+global_NIKKEI_ret1,previous global session/cache,0.09643605870020965,396
+global_SENSEX,previous global session/cache,0.07337526205450734,408
+global_SENSEX_ret1,previous global session/cache,0.14465408805031446,380
+global_SP500,previous global session/cache,0.03563941299790356,425
+global_SP500_ret1,previous global session/cache,0.07756813417190776,407
+global_USDINR,previous global session/cache,0.0041928721174004195,438
+global_USDINR_ret1,previous global session/cache,0.006289308176100629,438
+global_VIX,previous global session/cache,0.03563941299790356,371
+global_VIX_ret1,previous global session/cache,0.07756813417190776,407
+iv_term_premium_ratio,NIFTY option chain at entry,0.5220125786163522,228
+near_atm_oi_pcr,NIFTY option chain at entry,0.0,396
+near_atm_volume_pcr,NIFTY option chain at entry,0.0,477
+next_atm_iv_skew,NIFTY option chain at entry,0.5303983228511531,224
+next_atm_straddle,NIFTY option chain at entry,0.5220125786163522,221
+nifty_daily_ret_1d,"NIFTY spot/daily, at or before entry",0.0020964360587002098,440
+nifty_daily_ret_20d,"NIFTY spot/daily, at or before entry",0.018867924528301886,433
+nifty_daily_ret_5d,"NIFTY spot/daily, at or before entry",0.0041928721174004195,439
+nifty_daily_ret_60d,"NIFTY spot/daily, at or before entry",0.04612159329140461,420
+nifty_daily_rv_10d,"NIFTY spot/daily, at or before entry",0.010482180293501049,436
+nifty_daily_rv_20d,"NIFTY spot/daily, at or before entry",0.018867924528301886,433
+nifty_daily_rv_60d,"NIFTY spot/daily, at or before entry",0.04612159329140461,420
+nifty_drawdown_20d,"NIFTY spot/daily, at or before entry",0.016771488469601678,348
+nifty_drawdown_60d,"NIFTY spot/daily, at or before entry",0.04612159329140461,363
+nifty_gap_from_prev_close,"NIFTY spot/daily, at or before entry",1.0,0
+nifty_ma_gap_120m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_ma_gap_15m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_ma_gap_30m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_ma_gap_60m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_range_120m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_range_15m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_range_30m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_range_60m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_ret_120m,"NIFTY spot/daily, at or before entry",0.0020964360587002098,476
+nifty_ret_15m,"NIFTY spot/daily, at or before entry",0.0020964360587002098,476
+nifty_ret_1m,"NIFTY spot/daily, at or before entry",0.0,476
+nifty_ret_240m,"NIFTY spot/daily, at or before entry",0.0020964360587002098,476
+nifty_ret_30m,"NIFTY spot/daily, at or before entry",0.0020964360587002098,476
+nifty_ret_5m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_ret_60m,"NIFTY spot/daily, at or before entry",0.0020964360587002098,476
+nifty_rv_120m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_rv_15m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_rv_30m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_rv_60m,"NIFTY spot/daily, at or before entry",0.0,477
+nifty_volume_ratio_120m,"NIFTY spot/daily, at or before entry",1.0,0
+nifty_volume_ratio_30m,"NIFTY spot/daily, at or before entry",1.0,0
+nifty_volume_ratio_60m,"NIFTY spot/daily, at or before entry",1.0,0
+prev_session_close,"NIFTY spot/daily, at or before entry",0.0020964360587002098,439
+prev_session_high,"NIFTY spot/daily, at or before entry",0.0020964360587002098,440
+prev_session_low,"NIFTY spot/daily, at or before entry",0.0020964360587002098,439
+prev_session_open,"NIFTY spot/daily, at or before entry",0.0020964360587002098,440
+prev_session_range,"NIFTY spot/daily, at or before entry",0.0020964360587002098,440
+put_25_delta,NIFTY option chain at entry,0.0,477
+put_25_iv,NIFTY option chain at entry,0.0,477
+put_25_long_iv,NIFTY option chain at entry,0.0,477
+put_25_long_oi,NIFTY option chain at entry,0.0,395
+put_25_long_price,NIFTY option chain at entry,0.0,390
+put_25_long_volume,NIFTY option chain at entry,0.0,471
+put_25_oi,NIFTY option chain at entry,0.0,396
+put_25_price,NIFTY option chain at entry,0.0,400
+put_25_spread_credit,NIFTY option chain at entry,0.0,216
+put_25_strike,NIFTY option chain at entry,0.0,183
+put_25_volume,NIFTY option chain at entry,0.0,472
+sent_sent_count,previous sentiment date/cache,0.0,42
+sent_sent_mean,previous sentiment date/cache,0.0,156
+sent_sent_neg,previous sentiment date/cache,0.0,47
+sent_sent_pos,previous sentiment date/cache,0.0,47
+sent_sent_std,previous sentiment date/cache,0.6729559748427673,79
