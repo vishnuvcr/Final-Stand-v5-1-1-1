@@ -1,0 +1,129 @@
+name: Phase 44 - VIX Tuning Development
+
+on:
+  push:
+    branches:
+      - phase-44-vix-candidate-tuning
+    paths:
+      - "trigger/phase44.start"
+      - "research/phase44_stage_runner.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase44-stage-development
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Restore Hugging Face cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: phase44-hf-${{ runner.os }}-v2
+          restore-keys: |
+            phase43-hf-${{ runner.os }}-
+            phase44-hf-${{ runner.os }}-
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --no-cache-dir numpy pandas pyarrow scipy huggingface_hub
+      - name: Syntax audit
+        run: |
+          python -m py_compile research/phase44_vix_tuning.py
+          python -m py_compile research/phase44_stage_runner.py
+      - name: Preflight
+        run: |
+          test -s data/phase40_vix/india_vix.csv
+      - name: Run development
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PHASE44_STAGE: development
+        run: |
+          set +e
+          python research/phase44_stage_runner.py
+          code=$?
+          if [ "$code" -ne 0 ]; then
+            printf "\n## F44-development-RUN-${GITHUB_RUN_ID} — numerical execution failure\n- Exit code: %s. Failed output is non-evidence.\n" "$code" >> ERROR_LOG.md
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add ERROR_LOG.md
+            git commit -m "phase44: log development failure ${GITHUB_RUN_ID}" || true
+            git push origin HEAD:phase-44-vix-candidate-tuning || true
+            exit "$code"
+          fi
+      - name: Artifact audit
+        run: |
+          if [ "development" = "development" ]; then
+            test -s results/phase44_vix_tuning/stage1_structure_time_matrix.csv
+            test -s results/phase44_vix_tuning/stage1_all_dev_profiles.csv
+            test -s results/phase44_vix_tuning/stage1_candidates.csv
+            test -s results/phase44_vix_tuning/frozen_stage1.csv
+            test -s results/phase44_vix_tuning/stage1_summary.json
+          elif [ "development" = "validation" ]; then
+            test -s results/phase44_vix_tuning/validation_structure_time_matrix.csv
+            test -s results/phase44_vix_tuning/validation_confirmation.csv
+            test -s results/phase44_vix_tuning/validation_summary.json
+          else
+            test -s results/phase44_vix_tuning/holdout_structure_time_matrix.csv
+            test -s results/phase44_vix_tuning/frozen_holdout_confirmation.csv
+            test -s results/phase44_vix_tuning/holdout_summary.json
+          fi
+      - name: Persist and update status
+        env:
+          PHASE44_STAGE: development
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          stage=os.environ["PHASE44_STAGE"]
+          p=Path("results/phase44_vix_tuning") / f"{stage}_summary.json"
+          s=json.loads(p.read_text())
+          Path("PHASE44_STATUS.md").write_text(
+              "# Phase 44 Status — VIX Candidate Tuning\n\n"
+              f"**{s['status']}**\n\n"
+              f"Current stage: {stage}\n"
+              f"Stage rows: {s['stage1_rows']}\n"
+              f"Candidate rows: {s['candidate_rows']}\n"
+              f"Frozen/eligible candidates: {s['frozen_candidates']}\n"
+              f"Holm survivors: {s['holm_survivors']}\n"
+              f"Holdout opened after validation freeze: {s.get('holdout_opened_after_validation_freeze', False)}\n"
+              f"Decision: **{s['decision']}**\n\n"
+              "F44-001 through F44-009 remain quarantined. Only successful staged runs are accepted as evidence.\n"
+          )
+          with Path("RESEARCH_LOG.md").open("a") as f:
+              f.write(
+                  f"\n\n## 2026-10-06 — Phase 44 {stage} stage run {os.environ.get('GITHUB_RUN_ID','unknown')}\n"
+                  f"- status={s['status']}; rows={s['stage1_rows']}; candidates={s['candidate_rows']}; frozen={s['frozen_candidates']}; Holm survivors={s['holm_survivors']}; decision={s['decision']}.\n"
+              )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin phase-44-vix-candidate-tuning || true
+          git add results/phase44_vix_tuning PHASE44_STATUS.md RESEARCH_LOG.md ERROR_LOG.md
+          git commit -m "phase44: persist development stage results" || true
+          git push origin HEAD:phase-44-vix-candidate-tuning
+
+      - name: Trigger next registered stage
+        if: success()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          Path("trigger/phase44.validate").write_text("Phase 44 next stage trigger from completed development stage.\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "trigger/phase44.validate"
+          git commit -m "phase44: trigger next stage after development" || true
+          git push origin HEAD:phase-44-vix-candidate-tuning
+
