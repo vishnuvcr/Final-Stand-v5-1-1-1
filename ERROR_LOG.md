@@ -691,3 +691,13 @@ Evidence status: Non-evidence syntax failure.
 Correction: The two assignments will be emitted as separate Python lines.
 
 Prevention: Newly generated Python files will be syntax-checked structurally before workflow execution.
+
+
+### Error F39-040 — Sequential symbolic replay used the wrong training-ledger path
+Finding: After fixing the source-line syntax, the symbolic replay would still have attempted to fit its coefficient from the canonical control CSV, which does not contain `delta_pnl_call_minus_put`.
+
+Evidence status: No sequential evidence was produced from this version.
+
+Correction: The replay now fits the symbolic coefficient and residual uncertainty from the point-in-time feature matrix joined to the accepted Phase-39 fixed-opportunity counterfactual ledger.
+
+Prevention: Counterfactual-target models must train exclusively from the fixed-opportunity ledger, never the one-arm control trade CSV.
