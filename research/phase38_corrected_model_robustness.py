@@ -7,9 +7,13 @@ OUT=Path("results/phase38_corrected_model_robustness"); OUT.mkdir(parents=True,e
 SELECTORS=["CATBOOST","MARKOV_REGIME_TREE","WAVELET_TREE","OOF_STACK","DART"]
 rng=np.random.default_rng(38001)
 
-def load_net(path):
+def load_trades(path):
     z=pd.read_csv(path)
     z["expiry"]=pd.to_datetime(z["expiry"]).dt.date.astype(str)
+    z["exit_ts"]=pd.to_datetime(z["exit_ts"], errors="coerce")
+    return z
+
+def aggregate_expiry(z):
     return z.groupby("expiry",as_index=False).net_rupees.sum().rename(columns={"net_rupees":"net"})
 
 def bootstrap(a,b,n=10000):
@@ -26,6 +30,9 @@ def bootstrap(a,b,n=10000):
         "ci_97_5":float(np.quantile(means,.975)),
         "prob_selector_beats_control":float((means>0).mean()),
         "expiry_block_win_rate":float((d>0).mean()),
+        "selector_common_net":float(x.net_sel.sum()),
+        "control_common_net":float(x.net_ctl.sum()),
+        "total_difference":float(d.sum()),
     }
 
 def stress(trades):
@@ -37,30 +44,54 @@ def stress(trades):
       "plus_100pct_cost_net":float(gross-cost*2.00),
     }
 
-def main():
-    control=Path("results/dynamic_strategy_phase32/trades.csv")
-    if not control.exists(): raise FileNotFoundError(control)
-    ctl=pd.read_csv(control)
-    ctl["expiry"]=pd.to_datetime(ctl["expiry"]).dt.date.astype(str)
-    ctl_year=ctl.assign(year=pd.to_datetime(ctl.exit_ts).dt.year).groupby("year").net_rupees.sum().to_dict()
+def summary(trades, selector):
+    net=trades.net_rupees
+    gp=float(net[net>0].sum()); gl=float(-net[net<0].sum())
+    dd=float(abs(trades.drawdown.min())) if "drawdown" in trades.columns else float("nan")
+    return {
+        "selector":selector,
+        "trades":int(len(trades)),
+        "net":float(net.sum()),
+        "gross":float(trades.gross_rupees.sum()),
+        "costs":float(trades.cost_rupees.sum()),
+        "win_rate":float((net>0).mean()),
+        "profit_factor":float(gp/gl) if gl else float("inf"),
+        "max_drawdown":dd,
+    }
 
-    rows=[]; stress_rows=[]
+def main():
+    control_path=Path("results/dynamic_strategy_phase32/trades.csv")
+    if not control_path.exists():
+        raise FileNotFoundError(control_path)
+    ctl=load_trades(control_path)
+    ctl_exp=aggregate_expiry(ctl)
+    ctl_year=ctl.groupby(ctl.exit_ts.dt.year).net_rupees.sum().to_dict()
+    ctl_summary=summary(ctl,"STATEFUL_CONTROL")
+
+    rows=[]; stress_rows=[]; summary_rows=[ctl_summary]; yearly_rows=[]; direction_rows=[]
+    for y,v in ctl_year.items():
+        yearly_rows.append({"selector":"STATEFUL_CONTROL","year":int(y),"trades":int((ctl.exit_ts.dt.year==y).sum()),"net":float(v)})
+
     for s in SELECTORS:
-        p=ROOT/s/"trades.csv"
-        if not p.exists(): raise FileNotFoundError(p)
-        tr=pd.read_csv(p)
-        tr["expiry"]=pd.to_datetime(tr["expiry"]).dt.date.astype(str)
-        sel=tr.groupby("expiry",as_index=False).net_rupees.sum().rename(columns={"net_rupees":"net"})
-        ctl2=ctl.groupby("expiry",as_index=False).net_rupees.sum().rename(columns={"net_rupees":"net"})
-        boot=bootstrap(sel,ctl2)
-        boot["selector"]=s
-        rows.append(boot)
+        tr=load_trades(ROOT/s/"trades.csv")
+        sel=aggregate_expiry(tr)
+        boot=bootstrap(sel,ctl_exp); boot["selector"]=s; rows.append(boot)
         ss=stress(tr); ss["selector"]=s; stress_rows.append(ss)
-        yr=tr.assign(year=pd.to_datetime(tr.exit_ts).dt.year).groupby("year").net_rupees.sum().to_dict()
-        print(s,boot,ss,yr,flush=True)
+        summary_rows.append(summary(tr,s))
+        for y,g in tr.groupby(tr.exit_ts.dt.year):
+            yearly_rows.append({"selector":s,"year":int(y),"trades":int(len(g)),"net":float(g.net_rupees.sum())})
+        for d,g in tr.groupby("direction"):
+            yearly_rows.append({"selector":s,"year":"ALL_"+d,"trades":int(len(g)),"net":float(g.net_rupees.sum())})
+            direction_rows.append({"selector":s,"direction":d,"trades":int(len(g)),"net":float(g.net_rupees.sum()),"share_of_trades":float(len(g)/len(tr))})
+        print(s,boot,ss,flush=True)
 
     pd.DataFrame(rows).to_csv(OUT/"paired_bootstrap.csv",index=False)
     pd.DataFrame(stress_rows).to_csv(OUT/"cost_stress.csv",index=False)
-    with open(OUT/"control_yearly.json","w") as f: json.dump({str(k):float(v) for k,v in ctl_year.items()},f,indent=2)
+    pd.DataFrame(summary_rows).to_csv(OUT/"selector_summary.csv",index=False)
+    pd.DataFrame(yearly_rows).to_csv(OUT/"yearly_results.csv",index=False)
+    pd.DataFrame(direction_rows).to_csv(OUT/"direction_asymmetry.csv",index=False)
+    with open(OUT/"control_yearly.json","w") as f:
+        json.dump({str(k):float(v) for k,v in ctl_year.items()},f,indent=2)
 
-if __name__=="__main__": main()
+if __name__=="__main__":
+    main()
