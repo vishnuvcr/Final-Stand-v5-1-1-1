@@ -208,20 +208,29 @@ def expiry_diff(frame, split):
     common = p.index.intersection(c.index)
     return (p.loc[common] - c.loc[common]).to_numpy(float)
 
-def propensity_match(sc, split):
-    d = sc[sc["split"] == split].copy()
-    if d.empty or d["override"].sum() == 0:
-        return {"split":split, "treated":0, "matched":0, "att":None}
-    cols = [c for c in STATE_FEATURES if c in d.columns]
-    X = d[cols].replace([np.inf,-np.inf], np.nan)
+def _fit_propensity(train_frame):
+    cols = [c for c in STATE_FEATURES if c in train_frame.columns]
+    X = train_frame[cols].replace([np.inf,-np.inf], np.nan)
     X = X.fillna(X.median(numeric_only=True)).fillna(0.0)
-    t = d["override"].astype(int).to_numpy()
+    t = train_frame["override"].astype(int).to_numpy()
     if t.sum() < 2 or (t == 0).sum() < 5:
-        return {"split":split, "treated":int(t.sum()), "matched":0, "att":None, "common_support_fraction":0.0}
+        return None, cols
     scaler = StandardScaler().fit(X)
     lr = LogisticRegression(max_iter=2000, class_weight="balanced").fit(scaler.transform(X), t)
-    ps = lr.predict_proba(scaler.transform(X))[:,1]
-    d["ps"] = ps
+    return (scaler, lr), cols
+
+def propensity_match(sc, split, fit_frame):
+    d = sc[sc["split"] == split].copy()
+    if d.empty or d["override"].sum() == 0:
+        return {"split":split, "treated":0, "matched":0, "att":None, "common_support_fraction":0.0}
+    fitted, cols = _fit_propensity(fit_frame)
+    if fitted is None:
+        return {"split":split, "treated":int(d["override"].sum()), "matched":0, "att":None, "common_support_fraction":0.0}
+    scaler, lr = fitted
+    X = d[cols].replace([np.inf,-np.inf], np.nan)
+    X = X.fillna(fit_frame[cols].median(numeric_only=True)).fillna(0.0)
+    d["ps"] = lr.predict_proba(scaler.transform(X))[:,1]
+    t = d["override"].astype(int).to_numpy()
     high = d["india_vix_high"].astype(int).to_numpy()
     treated = np.where(t == 1)[0]
     controls = np.where(t == 0)[0]
@@ -251,11 +260,17 @@ def ranking_diag(sc, split):
     d = sc[sc["split"] == split].copy()
     d = d[np.isfinite(d["override_score"])].sort_values("override_score", ascending=False)
     out = {"split":split, "rows":int(len(d))}
+    rng = np.random.default_rng(42000 if split == "validation" else 42001)
     for frac in (0.10,0.20,0.30):
         n = max(1, int(np.ceil(frac * len(d))))
         top = d.head(n)
-        out[f"top_{int(frac*100)}_mean_delta"] = float(top["delta_pnl"].mean())
-        out[f"top_{int(frac*100)}_positive_share"] = float((top["delta_pnl"] > 0).mean())
+        x = top["delta_pnl"].to_numpy(float)
+        idx = rng.integers(0, len(x), size=(10000, len(x)))
+        means = x[idx].mean(axis=1)
+        out[f"top_{int(frac*100)}_mean_delta"] = float(x.mean())
+        out[f"top_{int(frac*100)}_ci_lo"] = float(np.quantile(means, .025))
+        out[f"top_{int(frac*100)}_ci_hi"] = float(np.quantile(means, .975))
+        out[f"top_{int(frac*100)}_positive_share"] = float((x > 0).mean())
     return out
 
 def main():
@@ -311,11 +326,14 @@ def main():
 
     if diag_frames:
         leading = diag_frames[0]
-        for split in ["validation","holdout"]:
-            pm = propensity_match(leading, split)
+        dev_fit = leading[leading["split"] == "development"].copy()
+        devval_fit = leading[leading["split"].isin(["development","validation"])].copy()
+        for split, fit_frame in [("validation", dev_fit), ("holdout", devval_fit)]:
+            pm = propensity_match(leading, split, fit_frame)
             rk = ranking_diag(leading, split)
             (OUT/f"diagnostics_{split}.json").write_text(json.dumps({
                 "model":selected[0]["model"], "margin":selected[0]["margin"], "gate":selected[0]["gate"],
+                "propensity_fit_period":"development" if split == "validation" else "development+validation",
                 "propensity":pm, "ranking":rk
             }, indent=2, default=str))
 
