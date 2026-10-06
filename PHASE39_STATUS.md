@@ -128,3 +128,15 @@ The next trigger will include explicit panel invariants:
 - no accidental 2024-01-04 opportunity in the frozen comparator;
 - deterministic timestamp ordering for first-hit exit detection;
 - exact frozen-control P&L reconstruction within 0.75 rupees per trade and the authoritative ₹63,672.5753 aggregate.
+
+
+## Step 1 numerical result checkpoint — 2026-10-06
+
+The audited engine itself completed on run 37437767581 with the corrected 271/172/34 panel:
+- Development: 271 rows / 135 expiries; control ₹17,657.15
+- Validation: 172 rows / 82 expiries; control ₹63,948.22
+- Holdout: 34 rows / 20 expiries; control -₹275.65
+- Frozen validation+holdout control: ₹63,672.5753
+- Maximum control reconstruction error: <2e-12 rupees across the accepted panel.
+
+The run is not yet accepted as Step-1 CI evidence because the workflow verification used exact float equality for one aggregate-sum assertion. The calculation itself passed its substantive checks. A verification-only workflow correction is being applied; no research parameter or dataset rule is changing.
