@@ -112,7 +112,7 @@ def norm_relation(y):
     spot_expr=f'CAST({spot} AS DOUBLE)' if spot else 'CAST(NULL AS DOUBLE)'
     vol_expr=f'CAST({volume} AS DOUBLE)' if volume else 'CAST(NULL AS DOUBLE)'
     oi_expr=f'CAST({oi} AS DOUBLE)' if oi else 'CAST(NULL AS DOUBLE)'
-    return f"""(SELECT CAST({ts} AS TIMESTAMP) + INTERVAL 5 HOURS 30 MINUTES AS timestamp, {date_expr} AS date, CAST({expiry} AS DATE) AS expiry, CAST({strike} AS DOUBLE) AS strike, UPPER(CAST({typ} AS VARCHAR)) AS option_type, CAST({close} AS DOUBLE) AS close, {spot_expr} AS spot_price, {vol_expr} AS volume, {oi_expr} AS oi FROM read_parquet('{p}'))"""
+    return f"""(SELECT CAST({ts} AS TIMESTAMP) + INTERVAL '5 hours 30 minutes' AS timestamp, {date_expr} AS date, CAST({expiry} AS DATE) AS expiry, CAST({strike} AS DOUBLE) AS strike, UPPER(CAST({typ} AS VARCHAR)) AS option_type, CAST({close} AS DOUBLE) AS close, {spot_expr} AS spot_price, {vol_expr} AS volume, {oi_expr} AS oi FROM read_parquet('{p}'))"""
 def audit_dataset():
     out={}
     for y in YEARS:
