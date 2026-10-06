@@ -1262,3 +1262,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The numerical workflow failed or an artifact self-audit failed.
 - Evidence status: affected run is non-evidence until the failure is diagnosed and corrected.
 - The workflow requires compile, preflight, numerical, artifact and holdout audits before publication.
+
+
+## F47-007 — Second numerical run rejected because state-coverage audit was too strict for sparse candidate evidence
+- Run 37521447694 produced only 20 rows and did not observe all eight VIX states.
+- The self-audit correctly stopped publication, but the audit criterion "all states must be present in the realized candidate trade matrix" is stronger than necessary for a data-sparse exploratory candidate.
+- Evidence status remains NON-EVIDENCE.
+- The underlying data-feasibility limitation is documented in Phase-47 status. Future phases will distinguish "state has zero feasible observations" from "state was not evaluated."
