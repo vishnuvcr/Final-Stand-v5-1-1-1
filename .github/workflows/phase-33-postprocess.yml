@@ -1,0 +1,43 @@
+name: Phase 33 - Postprocess and Manuscript
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Phase 33 - NIFTY D-6 Prediction Models"]
+    types: [completed]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  postprocess:
+    if: \${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: \${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.workflow_run.head_branch }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib scipy
+
+      - name: Postprocess
+        run: |
+          python research/phase33_postprocess.py
+
+      - name: Persist postprocess results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase33_nifty_prediction
+          git diff --cached --quiet || git commit -m "Phase 33: add statistical postprocessing and figures"
+          git push
