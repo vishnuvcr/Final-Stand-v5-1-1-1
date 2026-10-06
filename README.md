@@ -394,3 +394,17 @@ Phase 43 is the new isolated research phase requested on 2026-10-06. It tests a 
 - [Phase 43 status](PHASE43_STATUS.md)
 
 **Current phase state: registration complete; numerical execution pending.**
+
+
+## Phase 44 — VIX candidate tuning — INITIALIZED
+
+A new isolated research phase, branched from the completed Phase-43 VIX sweep, is registered to tune the strongest defined-risk Phase-43 candidates. The phase tunes only finite strike geometries, entry times and prior-only VIX percentile thresholds, with development/validation/untouched-2026 discipline and the same Paytm Money transaction-cost/slippage model.
+
+- [Phase 44 research plan](PHASE44_RESEARCH_PLAN.md)
+- [Phase 44 pre-registration](PHASE44_PRE_REGISTRATION.md)
+- [Phase 44 literature review](PHASE44_LITERATURE_REVIEW.md)
+- [Phase 44 status](PHASE44_STATUS.md)
+- [Phase 44 chat log](PHASE44_CHAT_LOG.md)
+- [Phase 44 workflow](.github/workflows/phase-44-vix-candidate-tuning.yml)
+
+The canonical Phase-20/42 strategy remains unchanged while Phase 44 is evaluated.
