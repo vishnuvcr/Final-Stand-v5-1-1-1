@@ -1302,3 +1302,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - This strongly suggests a timestamp timezone/encoding mismatch or granularity mismatch rather than absence of the underlying contracts.
 - Evidence status: NON-EVIDENCE.
 - Correction: added a raw timestamp/schema probe to inspect the dataset's actual timestamp type and intraday clock before changing the entry-time filter.
+
+## F48-005 — Confirmed raw timestamp timezone mismatch
+- The timestamp probe showed intraday timestamps of 03:45 through 09:59 on dates whose Indian market session should be 09:15 through 15:29 IST.
+- This establishes that the source timestamps are UTC-naive representations while the separate date field is the Indian trade date.
+- The registered 10:00 IST entry filter therefore had been incorrectly matching 10:00 UTC, yielding zero entry rows.
+- Evidence status: all prior Phase-48 numerical attempts remain NON-EVIDENCE.
+- Correction: normalized raw timestamps by adding +05:30 before any entry/exit timestamp selection.
+- Prevention: the data bridge now records and tests timestamp interpretation explicitly before numerical evidence.
