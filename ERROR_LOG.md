@@ -350,3 +350,15 @@ Evidence status: non-evidence CI wiring failure; no model result accepted.
 Correction: The canonical `phase-39-step3-economic-models.yml` workflow is now explicitly hardened and triggered; it invokes the retained `research/phase39_economic_models.py` runner.
 
 Prevention: Each phase step will maintain one workflow-to-runner mapping and the workflow verification will assert the expected output contract.
+
+
+### Error F39-018 — Counterfactual outcome columns leaked into Step-3 predictors
+Run: 37440844079 (Step-3 canonical run #6).
+
+Symptom: The persisted locked feature list contained `call_net_rupees` and `put_net_rupees`, which are realized counterfactual outcome variables and therefore prohibited predictors.
+
+Impact: The reported validation uplift from that run is **invalid/non-evidence**. The near-perfect margin fit and very large uplift are explained by direct target leakage and must not be interpreted as predictive performance.
+
+Correction: Explicitly add `call_net_rupees` and `put_net_rupees` to the model LABELS/exclusion set. The Step-3 workflow will also assert that no realized-outcome columns appear in the locked feature manifest.
+
+Prevention: Every future model workflow must perform an explicit predictor blacklist audit against all realized P&L/outcome columns before model fitting is accepted.
