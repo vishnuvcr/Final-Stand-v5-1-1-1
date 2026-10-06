@@ -803,3 +803,13 @@ Finding: The audited Sparse-GAM policy has seven sequential overrides but only f
 Evidence status: Statistical calculation completed; only the CI schema gate failed.
 
 Correction: Verification will distinguish seven audited sequential overrides from five mapped fixed-opportunity treated observations.
+
+
+### Error F39-050 — Propensity verifier row count was stale after caliper expansion
+Run: 37452962833 (propensity run #9).
+
+The statistical analysis completed successfully, but CI expected 12 rows after the caliper grid was expanded to seven values, producing 21 rows.
+
+Evidence status: valid propensity results; verification-only failure.
+
+Correction: verifier updated to expect 21 rows.
