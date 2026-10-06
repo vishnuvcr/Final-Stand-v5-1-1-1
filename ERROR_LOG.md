@@ -1420,3 +1420,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: NUMERICAL EVIDENCE VALID; publication was operationally incomplete. The raw artifact is preserved and independently reconcilable.
 - Correction: the publication step now resets to the latest remote branch before staging the results directory, and does not rebase generated status/log files over concurrent research-audit commits. A separate branch-triggered closeout workflow reconciles the latest raw artifact and publishes the structured manuscript.
 - Prevention: publication jobs must never rebase long-lived research logs after generating large artifacts. Results publication and research-log mutation are separated into a conflict-safe closeout path.
+### F49-013 — Closeout manuscript generator depended on optional tabulate package
+- Affected closeout attempt: 37544857648.
+- The raw Phase-49 artifact downloaded successfully and the source-run selection was correct. Reconciliation failed only when pandas.to_markdown required the optional `tabulate` package that the first closeout dependency list did not install.
+- Evidence status: numerical evidence remains valid; closeout packaging was incomplete.
+- Correction: the manuscript generator now uses an internal Markdown-table renderer with no optional tabulate dependency. The workflow also includes tabulate for redundancy.
+- Prevention: closeout workflows must avoid undocumented optional dependencies or install them explicitly and validate imports before processing evidence.
