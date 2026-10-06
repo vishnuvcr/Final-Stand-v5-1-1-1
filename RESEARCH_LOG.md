@@ -318,3 +318,13 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Numerical rows: new=5102, full=9699.
 - Validation freeze rows=6; holdout confirmation rows=6.
 - Holdout results are confirmation-only and cannot alter the frozen validation ranking.
+
+
+## 2026-10-07 — Phase 45 final closeout
+- Accepted workflow run 37512787150 completed successfully after the F45-001 pre-evidence definition audit.
+- Twenty previously uncovered ready-made structures were tested; 5,102 new trade rows were generated and combined with 4,597 accepted Phase-43 rows for 9,699 unified rows.
+- Seven validation defined-risk strategy×VIX states met the economic working screen; six were frozen for holdout confirmation.
+- Five of six frozen candidates were profitable in 2026 confirmation; NORMAL-VIX Call Backspread failed with −₹86,270.78 net.
+- Zero candidates survived Holm-adjusted statistical inference. Final decision: NO_PROMOTION.
+- Strongest empirical candidate: LOW-VIX Bear Call Spread; LOW-VIX Bear Put Spread was second.
+- Canonical Phase-20/42 strategy remains unchanged.
