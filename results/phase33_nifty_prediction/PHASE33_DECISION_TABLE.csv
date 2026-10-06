@@ -1,0 +1,3 @@
+split,best_log_loss_model,best_log_loss,best_accuracy_model,best_accuracy,best_economic_model,best_mean_signed_log_return
+validation,rf,0.6850888218468538,rf,0.5473684210526316,rf,0.00182922425949922
+holdout,rf,0.6562377747133555,ensemble,0.5909090909090909,ensemble,0.00414268599828438
