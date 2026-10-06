@@ -873,3 +873,15 @@ The canonical weekly calendar includes 07-Apr-2025, but the Hugging Face option 
 **Correction:** Phase 40 now defines its study-expiry universe from the already accepted Phase-39 fixed-opportunity ledger, which excludes unavailable option files. The authoritative control comparison is read from the frozen Phase-38 expiry-level control rather than reconstructed during the ensemble screen.
 
 **Prevention:** Future derived phases must inherit the accepted study-expiry ledger before requesting raw option files.
+
+
+### Error F40-006 — Frozen-control variable removed during comparator refactor
+**Run:** 37455126781.
+
+The exhaustive 1,764-candidate calculation itself completed, but final scoring failed with `NameError: frozen_control is not defined` because a prior refactor removed the comparator initialization while changing from reconstructed control to the frozen Phase-38 control.
+
+**Evidence status:** non-evidence; no grid result from this run is accepted.
+
+**Correction:** Initialize and audit the frozen expiry-level control before grid scoring, and compare each candidate only on the exact common study expiries covered by the model-probability cache.
+
+**Prevention:** Comparator initialization now occurs before candidate scoring and the workflow asserts zero missing control expiries.
