@@ -29,11 +29,33 @@ jobs:
       - run: |
           python -m pip install --upgrade pip
           pip install pandas numpy matplotlib
-      - run: python research/phase34_postprocess.py
+      - name: Run postprocess
+        id: run_post
+        continue-on-error: true
+        run: python research/phase34_postprocess.py
       - name: Persist postprocess
+        if: steps.run_post.outcome == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase34_alternative_prediction
           git diff --cached --quiet || git commit -m "Phase 34: persist statistical postprocess and figures"
           git push
+      - name: Log postprocess failure
+        if: steps.run_post.outcome != 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          {
+            echo ""
+            echo "## Phase 34 postprocess failure — run ${{ github.run_id }}"
+            echo "- Date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "- Status: figure/statistical postprocessing failed; no postprocess output from this run is accepted."
+            echo "- Action: inspect workflow logs and correct the postprocess implementation."
+          } >> ERROR_LOG.md
+          git add ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 34: log postprocess failure"
+          git push
+      - name: Fail after logging
+        if: steps.run_post.outcome != 'success'
+        run: exit 1
