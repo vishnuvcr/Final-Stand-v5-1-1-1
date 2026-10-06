@@ -34,8 +34,8 @@ NEW_STRATEGIES = {
     "long_iron_condor": [("PE", -1, 1), ("PE", -3, -1), ("CE", 1, 1), ("CE", 3, -1)],
     "long_iron_butterfly": [("PE", 0, 1), ("CE", 0, 1), ("PE", -2, -1), ("CE", 2, -1)],
     "double_plateau": [
-        ("PE", -4, 1), ("PE", -3, -1), ("PE", -2, -1), ("PE", -1, 1),
-        ("CE", 1, 1), ("CE", 2, -1), ("CE", 3, -1), ("CE", 4, 1)
+        ("PE", -1, 1), ("PE", -2, -2), ("PE", -3, 1),
+        ("CE", 1, 1), ("CE", 2, -2), ("CE", 3, 1)
     ],
     "strip": [("CE", 0, 1), ("PE", 0, 2)],
     "strap": [("CE", 0, 2), ("PE", 0, 1)],
@@ -358,7 +358,15 @@ def main():
                 "mean_net":float(z.net.mean()),"win_rate":float((z.net>0).mean()),
                 "max_dd":drawdown(z.sort_values("expiry").net.to_numpy()),
                 "profit_factor":pf(vals),
-                "defined_risk":strategy in (set(PHASE43_MAP.keys())|set(DEFINED_RISK)),
+                "defined_risk": (
+                    (strategy in DEFINED_RISK) or
+                    (strategy in {"long_straddle","long_strangle","bull_call_spread","bear_put_spread",
+                                  "bull_put_spread","bear_call_spread","long_atm_call_butterfly",
+                                  "long_atm_put_butterfly","short_iron_butterfly","short_iron_condor",
+                                  "call_broken_wing_butterfly","put_broken_wing_butterfly",
+                                  "call_backspread","put_backspread","long_call_calendar","long_put_calendar",
+                                  "reverse_call_calendar","reverse_put_calendar"})
+                ),
             })
     s=pd.DataFrame(summary)
     s.to_csv(OUT/"strategy_vix_summary.csv",index=False)
