@@ -1,0 +1,72 @@
+Sequential sampling (1 chains in 1 job)
+CompoundStep
+>PGBART: [mu]
+>NUTS: [sigma]
+Sampling 1 chain for 220 tune and 220 draw iterations (220 + 220 draws total) took 5 seconds.
+Sampling: [mu]
+Sequential sampling (1 chains in 1 job)
+CompoundStep
+>PGBART: [mu]
+>NUTS: [sigma]
+Sampling 1 chain for 220 tune and 220 draw iterations (220 + 220 draws total) took 3 seconds.
+Sampling: [mu]
+{
+  "phase": "35",
+  "events": 245,
+  "train": 128,
+  "validation": 95,
+  "holdout": 22,
+  "base_feature_count": 67,
+  "decomposition_feature_count": 23,
+  "methods": [
+    "xgb",
+    "lgbm",
+    "catboost",
+    "extra",
+    "hist",
+    "dart",
+    "tree_equal6",
+    "winsor_tree",
+    "rfe_lgbm",
+    "ngboost",
+    "quantile",
+    "bart",
+    "wavelet_tree",
+    "emd_tree",
+    "vmd_tree",
+    "adaptive52",
+    "adaptive_ew",
+    "regime_tree_gate",
+    "dynamic_pool",
+    "stack",
+    "platt",
+    "isotonic",
+    "conformal"
+  ],
+  "conformal_calibration_quantile_validation": 0.027997086829420058,
+  "conformal_calibration_quantile_holdout": 0.0281189730741105
+}
+           model  validation_accuracy  holdout_accuracy  holdout_mean_signed_log_return  holdout_ci_low  holdout_ci_high  holdout_signflip_pvalue  beats_always_down_holdout                   promotion
+             xgb             0.578947          0.636364                        0.004629       -0.003147         0.011888                 0.254812                      False NO — overlay phase required
+            lgbm             0.547368          0.636364                        0.008436        0.001323         0.015504                 0.034997                      False NO — overlay phase required
+        catboost             0.578947          0.681818                        0.006562       -0.000956         0.013585                 0.101992                       True NO — overlay phase required
+           extra             0.505263          0.681818                        0.006628       -0.000868         0.013873                 0.098825                       True NO — overlay phase required
+            hist             0.547368          0.636364                        0.008321        0.001415         0.015325                 0.035914                      False NO — overlay phase required
+            dart             0.473684          0.681818                        0.008562        0.001386         0.015614                 0.031081                       True NO — overlay phase required
+     tree_equal6             0.547368          0.590909                        0.008628        0.001858         0.015493                 0.029998                      False NO — overlay phase required
+     winsor_tree             0.547368          0.590909                        0.008628        0.001858         0.015493                 0.029998                      False NO — overlay phase required
+        rfe_lgbm             0.494737          0.500000                        0.004952       -0.002697         0.012324                 0.220065                      False NO — overlay phase required
+         ngboost             0.547368          0.545455                        0.000428       -0.007407         0.008417                 0.918757                      False NO — overlay phase required
+        quantile             0.505263          0.500000                        0.002669       -0.005084         0.010496                 0.516207                      False NO — overlay phase required
+            bart             0.557895          0.545455                        0.002360       -0.005444         0.010252                 0.565786                      False NO — overlay phase required
+    wavelet_tree             0.505263          0.681818                        0.008800        0.001642         0.015597                 0.025165                       True NO — overlay phase required
+        emd_tree             0.494737          0.454545                        0.001267       -0.006427         0.009156                 0.762353                      False NO — overlay phase required
+        vmd_tree             0.557895          0.545455                        0.007045       -0.000110         0.014397                 0.082326                      False NO — overlay phase required
+      adaptive52             0.515789          0.363636                        0.000721       -0.007033         0.008941                 0.863761                      False NO — overlay phase required
+     adaptive_ew             0.526316          0.590909                        0.004481       -0.003410         0.011891                 0.272894                      False NO — overlay phase required
+regime_tree_gate             0.505263          0.636364                        0.004629       -0.003147         0.011888                 0.254812                      False NO — overlay phase required
+    dynamic_pool             0.547368          0.636364                        0.006143       -0.001559         0.013290                 0.128156                      False NO — overlay phase required
+           stack             0.515789          0.681818                        0.009511        0.002554         0.016268                 0.013916                       True NO — overlay phase required
+           platt             0.473684          0.500000                        0.002571       -0.005083         0.010467                 0.536205                      False NO — overlay phase required
+        isotonic             0.505263          0.545455                        0.004432       -0.003258         0.011954                 0.270811                      False NO — overlay phase required
+       conformal             0.515789          0.363636                       -0.004247       -0.011583         0.003666                 0.297559                      False NO — overlay phase required

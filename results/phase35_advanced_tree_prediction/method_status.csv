@@ -1,0 +1,24 @@
+model,implementation,note
+xgb,executed,prediction retained in accepted numerical run
+lgbm,executed,prediction retained in accepted numerical run
+catboost,executed,prediction retained in accepted numerical run
+extra,executed,prediction retained in accepted numerical run
+hist,executed,prediction retained in accepted numerical run
+dart,executed,prediction retained in accepted numerical run
+tree_equal6,executed,prediction retained in accepted numerical run
+winsor_tree,executed,prediction retained in accepted numerical run
+rfe_lgbm,executed,prediction retained in accepted numerical run
+ngboost,executed,prediction retained in accepted numerical run
+quantile,executed,prediction retained in accepted numerical run
+bart,executed,prediction retained in accepted numerical run
+wavelet_tree,executed,prediction retained in accepted numerical run
+emd_tree,executed,prediction retained in accepted numerical run
+vmd_tree,executed,prediction retained in accepted numerical run
+adaptive52,executed,prediction retained in accepted numerical run
+adaptive_ew,executed,prediction retained in accepted numerical run
+regime_tree_gate,executed,prediction retained in accepted numerical run
+dynamic_pool,executed,prediction retained in accepted numerical run
+stack,executed,prediction retained in accepted numerical run
+platt,executed,prediction retained in accepted numerical run
+isotonic,executed,prediction retained in accepted numerical run
+conformal,executed,prediction retained in accepted numerical run
