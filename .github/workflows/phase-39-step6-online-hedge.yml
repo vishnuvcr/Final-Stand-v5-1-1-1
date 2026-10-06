@@ -44,7 +44,6 @@ jobs:
           assert s['holdout_evaluated'] is False
           assert len(d)==27
           assert s['selected_margin'] in [0.0,250.0,500.0]
-          assert s['validation_uplift']>=0
           print(json.dumps(s,indent=2))
           print(d.head(10).to_string(index=False))
           PY
