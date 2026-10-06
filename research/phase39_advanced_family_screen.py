@@ -26,7 +26,7 @@ LABELS={"control_direction","control_net_rupees","delta_pnl_call_minus_put","cal
 
 def load():
     x=pd.read_csv(DATA)
-    y=pd.read_csv(LEDGER,usecols=["entry_ts","expiry","split","delta_pnl_call_minus_put","control_direction","control_net_rupees","call_net_rupees","put_net_rupees"])
+    y=pd.read_csv(LEDGER,usecols=["entry_ts","expiry","split","control_direction","control_net_rupees","call_net_rupees","put_net_rupees"])
     x["entry_ts"]=pd.to_datetime(x["entry_ts"])
     y["entry_ts"]=pd.to_datetime(y["entry_ts"])
     z=x.merge(y,on=["entry_ts","expiry","split"],how="inner",validate="one_to_one").sort_values("entry_ts").reset_index(drop=True)
