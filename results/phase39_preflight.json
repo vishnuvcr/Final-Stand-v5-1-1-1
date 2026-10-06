@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "candidate_methods": 13,
+  "frozen_control_expiries": 102,
+  "frozen_control_trades": 206,
+  "frozen_control_net_rupees": 63672.57530171223,
+  "frozen_control_expiry_sha256": "aa9903b52dd5594b87107ccf3530d232f7aaf888367db603ca61865eeed4d1aa",
+  "phase35_model_cache": "not_present_on_branch"
+}
