@@ -1,0 +1,36 @@
+# Phase 37 Status — Corrected Model Direction Polarity
+
+## Current state
+**INITIALIZED — NUMERICAL EXECUTION PENDING**
+
+A post-acceptance audit of Phase 36 found that the five model selectors were mapped in the opposite direction to the strategy's intended bullish/bearish economic meaning.
+
+Phase 35 defines the prediction target as the sign of expiry-close relative to reference spot. Therefore:
+- up/bullish prediction -> PUT spread;
+- down/bearish prediction -> CALL spread.
+
+Phase 37 is a clean correction-only rerun. No model, threshold, feature set, execution parameter or cost assumption is being retuned.
+
+## Invalidated Phase-36 model interpretation
+The Phase-36 model-selector P&L is retained as an audit artifact, but it is not valid evidence for the intended bullish/up -> PUT and bearish/down -> CALL hypothesis.
+
+## Rerun selectors
+- CATBOOST
+- DART
+- WAVELET_TREE
+- OOF_STACK
+- MARKOV_REGIME_TREE
+
+## Sample
+2024-01-01 through 2026-06-30, matching Phase 36.
+
+## Acceptance
+The corrected numerical results will be accepted only after:
+1. successful GitHub Actions execution;
+2. code audit of the polarity mapping;
+3. complete trade/skip/summary/coverage artifacts;
+4. validation of 2026 holdout reporting;
+5. bootstrap comparison versus the stateful control.
+
+## Current decision
+No promotion decision has been made.
