@@ -267,3 +267,13 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Declared strategies: 22; observations: 4597; development/validation/holdout: 2398/1821/378.
 - Frozen strategy×VIX candidates: 0; frozen routers: 0.
 - Stage 5: SKIPPED_NO_ROUTER_PASSED; decision: NO_PROMOTION.
+
+
+## 2026-10-06 — Phase 43 final closeout
+- Corrected statistical inference accepted from the persisted 4,597-row strategy matrix.
+- Corrected promotion universe restricted to the registered 18 defined-risk strategies; unbounded straddles, strangles and ratio structures remain diagnostic-only.
+- Final defined-risk development benchmark: `call_backspread`, development mean approximately ₹247.08 per trade.
+- No strategy×VIX candidate passed the registered development/validation/cost-stress gate.
+- No VIX router was frozen; Stage 5 active-exit optimization was skipped.
+- Final decision: **NO PROMOTION**.
+- Canonical Phase-20/42 strategy remains unchanged.
