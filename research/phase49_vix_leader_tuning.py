@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from research.phase43_vix_strategy_sweep import (
+from phase43_vix_strategy_sweep import (
     TZ, START, END, DEV_END, VAL_END,
     load_parquet, load_vix, vix_state, active_states, modal_step,
     evaluate, lot_size_for_expiry
@@ -125,7 +125,7 @@ def preflight():
 def main():
     pf=preflight(); (OUT/"preflight.json").write_text(json.dumps(pf,indent=2))
     if os.getenv("PHASE49_PREFLIGHT_ONLY")=="1": print(json.dumps(pf,indent=2)); return
-    index=__import__("research.phase43_vix_strategy_sweep",fromlist=["load_index"]).load_index()
+    index=__import__("phase43_vix_strategy_sweep",fromlist=["load_index"]).load_index()
     vix=load_vix(); es=[e for e in expiries() if START<=e<=END]
     rows=[]; errs=[]
     for i,e in enumerate(es):
