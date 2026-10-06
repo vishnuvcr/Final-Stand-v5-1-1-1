@@ -362,3 +362,17 @@ Impact: The reported validation uplift from that run is **invalid/non-evidence**
 Correction: Explicitly add `call_net_rupees` and `put_net_rupees` to the model LABELS/exclusion set. The Step-3 workflow will also assert that no realized-outcome columns appear in the locked feature manifest.
 
 Prevention: Every future model workflow must perform an explicit predictor blacklist audit against all realized P&L/outcome columns before model fitting is accepted.
+
+
+### Error F39-021 — CRITICAL: Step-3 first model screen leaked counterfactual outcome columns
+Run: 37440844079.
+
+Symptom: The persisted locked feature list contained `call_net_rupees` and `put_net_rupees`, and the seven model results showed an impossible near-oracle validation uplift of ₹406,156.27.
+
+Cause: Step-3 joined the CALL/PUT realized outcomes from the fixed-opportunity ledger before feature selection, but the feature exclusion set did not include those two outcome columns.
+
+Evidence status: **INVALID / NON-EVIDENCE.** All Step-3 model outputs from run 37440844079 are explicitly superseded and must not be cited as model performance.
+
+Correction: Add `call_net_rupees` and `put_net_rupees` to the forbidden outcome/control set and assert that no realized outcome field can enter the locked predictor list.
+
+Prevention: A hard feature-leakage assertion now blocks model training whenever any realized action P&L or control/target column appears among predictors. The result status is invalidated until a clean rerun passes this assertion.
