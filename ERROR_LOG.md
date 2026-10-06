@@ -57,3 +57,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 - Run 37463493504 failed in sequential replay because the live feature-row constructor did not preserve three registered auxiliary flow/sentiment columns. The correction reindexed the live matrix to the frozen feature schema before imputation.
 - Run 37463984884 is the corrected sequential replay and supersedes the failed run; any failed/incomplete result is excluded from evidence.
 - A no-op identity optimization was added after the fixed screen proved zero overrides for all frozen candidates across all three splits. This is an execution optimization, not a research-parameter change.
+
+
+## 2026-10-06 — Phase 41 final closeout
+- Run 37463493504 failed before evidence acceptance due missing live sparse feature columns; superseded.
+- Run 37463984884 was superseded/cancelled during the no-op replay optimization; no result from it is used.
+- Final accepted workflow run 37466520042 completed successfully after the schema correction and identity audit.
