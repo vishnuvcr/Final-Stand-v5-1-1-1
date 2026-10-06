@@ -134,8 +134,8 @@ def fit_gam(history,test):
 from sklearn.pipeline import Pipeline
 
 def paired_bootstrap(policy_exp,control_exp,B=10000,seed=1337):
-    p=policy_exp.groupby("expiry").net.sum()
-    c=control_exp.groupby("expiry").net.sum()
+    p=policy_exp.groupby("expiry").policy_net_rupees.sum()
+    c=control_exp.groupby("expiry").net_rupees.sum()
     keys=sorted(set(p.index)&set(c.index))
     d=np.asarray([p.get(k,0.0)-c.get(k,0.0) for k in keys],float)
     if len(d)==0: return {"expiries":0,"mean":np.nan,"lo":np.nan,"hi":np.nan,"p_positive":np.nan}
