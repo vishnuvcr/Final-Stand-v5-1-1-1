@@ -66,7 +66,7 @@ def main():
             if col not in q: continue
             p=q[col].to_numpy(float); y=q["target_direction"].to_numpy(int)
             pr=(p>=.5).astype(int)
-            signed=np.where(pr==1,q["target_return"],-q["target_return"]).to_numpy(float)
+            signed=np.where(pr==1,q["target_return"].to_numpy(float),-q["target_return"].to_numpy(float))
             lo,hi=bootstrap_mean(signed)
             correct=(pr==y).astype(int)
             const_correct=(const_pred==y).astype(int)
