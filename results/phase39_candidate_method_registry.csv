@@ -1,0 +1,14 @@
+priority,method,novel_to_repo,small_sample_fit,nonstationarity,uncertainty,targets_action_PnL,difficulty,role
+1,CROL_control_relative_counterfactual_override,TRUE,high,medium,high,TRUE,medium,primary
+2,Bayesian_counterfactual_margin_regression,TRUE,high,high,high,TRUE,medium,primary
+3,Bradley_Terry_pairwise_preference,TRUE,high,medium,medium,TRUE,low,primary
+4,Dynamic_Bayesian_logistic_DMA,TRUE,high,high,high,indirect,medium,primary
+5,Gaussian_process_margin_model,TRUE,high,medium,high,TRUE,medium,secondary
+6,Sparse_GAM_GA2M,TRUE,high,medium,medium,TRUE,low,secondary
+7,Weighted_kNN_analog,TRUE,high,medium,medium,TRUE,low,secondary
+8,DTW_analog_forecast,TRUE,medium,medium,medium,indirect,medium,secondary
+9,BOCPD_regime_gate,TRUE,high,high,high,indirect,medium,secondary
+10,Online_Hedge_dynamic_model_averaging,TRUE,high,high,medium,TRUE,medium,secondary
+11,Kernel_ridge_or_RBF_SVM,TRUE,high,medium,medium,indirect,low,secondary
+12,Time_series_foundation_model_zero_shot,TRUE,low_to_medium,high,high,indirect,high,exploratory
+13,Constrained_symbolic_regression,TRUE,medium,medium,low,TRUE,high,exploratory
