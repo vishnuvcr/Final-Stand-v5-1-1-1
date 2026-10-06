@@ -249,3 +249,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 — Phase 42 closeout
 - Completed the six-variant selective rank-to-action phase with exact sequential replay, paired-expiry inference, cost stress and diagnostics.
 - Final decision is recorded in results/phase42_rank_policy/final_decision.json.
+
+
+## 2026-10-06 — Phase 43 registration
+- Created isolated branch `phase-43-vix-all-options-strategies` from the completed Phase-42 research head.
+- Registered the finite VIX-conditioned strategy universe, point-in-time India-VIX regimes, realistic execution-cost model, development/validation/untouched-2026 holdout, regime router and statistical inference.
+- Canonical Phase-20/42 strategy remains unchanged.
+
+## 2026-10-06 — Phase 43 implementation incident F43-001
+- Initial file-generation call failed before any repository write because the JavaScript payload used an invalid string delimiter around a repository identifier.
+- No numerical execution or research evidence was affected.
+- Corrected registration artifacts were persisted successfully; the error is retained only for audit and prevention.
