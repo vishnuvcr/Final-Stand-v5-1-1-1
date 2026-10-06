@@ -264,7 +264,11 @@ def main():
                           np.where(tr.entry_ts<pd.Timestamp("2026-01-01",tz=TZ),"validation","holdout"))
     tr["cum_net"]=tr.policy_net_rupees.cumsum(); tr["peak"]=tr.cum_net.cummax(); tr["drawdown"]=tr.peak-tr.cum_net
     tr.to_csv(OUT/"sequential_trades.csv",index=False)
-    control=pd.concat([DEV_CONTROL.assign(period="development"),FROZEN_CONTROL.assign(period=np.where(pd.to_datetime(FROZEN_CONTROL.expiry).dt.year<=2025,"validation","holdout"))],ignore_index=True)
+    dev_control=pd.read_csv(DEV_CONTROL)
+    frozen_control=pd.read_csv(FROZEN_CONTROL)
+    dev_control["period"]="development"
+    frozen_control["period"]=np.where(pd.to_datetime(frozen_control.expiry).dt.year<=2025,"validation","holdout")
+    control=pd.concat([dev_control,frozen_control],ignore_index=True)
     control["entry_ts"]=norm_ts(control.entry_ts); control["exit_ts"]=norm_ts(control.exit_ts)
     control["period"]=np.where(control.entry_ts<pd.Timestamp("2024-01-01",tz=TZ),"development",
                                np.where(control.entry_ts<pd.Timestamp("2026-01-01",tz=TZ),"validation","holdout"))
