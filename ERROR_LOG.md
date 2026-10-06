@@ -1251,3 +1251,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The required all-state artifact audit therefore failed and no numerical result was published as evidence.
 - Evidence status: **NON-EVIDENCE**.
 - Correction: added a focused monthly diagnostic stage and more robust common-strike selection for the double calendar before rerunning. The next run must show successful diagnostic checkpoints for both S1 and S2 before the numerical stage can proceed.
+
+
+## F47-006 — Diagnostic workflow column expectation
+- After revising the monthly diagnostic to allow separate current/next-expiry ATM strikes, the workflow still printed the removed `common_strikes` column.
+- Evidence status: tooling-only; the diagnostic result itself was not numerically accepted.
+- Correction: workflow now prints `cur_strikes` and `next_strikes`, matching the revised diagnostic artifact.
