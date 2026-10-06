@@ -97,3 +97,10 @@ Only the second dataset can support a final trading-policy claim.
 ## Next engineering step
 
 Build the fixed-opportunity counterfactual engine and validate it against the frozen control before any model is trained.
+
+
+## Step 1 — fixed-opportunity counterfactual engine
+
+**RUNNING — numerical execution in GitHub Actions.** The frozen control ledger has been reconciled to the accepted Phase-32 workflow artifact: the 2024-01-11 through 2026-06-30 slice contains exactly 206 trades across 102 expiries and sums to ₹63,672.5753, matching the Phase-38 authoritative benchmark. The Step-1 engine is now evaluating CALL and PUT counterfactual spreads at those exact entry timestamps under identical delta exits, slippage and costs.
+
+The engine will not train any model or alter the control policy until the control-arm reconstruction error is audited and the paired counterfactual ledger is committed.
