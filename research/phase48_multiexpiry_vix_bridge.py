@@ -343,9 +343,9 @@ def trade_b3(expiry,next_expiry,prev_expiry,days,vix):
     entry=entry_day+pd.Timedelta(hours=10)
     cur=option_snapshot(entry_day,expiry); nxt=option_snapshot(entry_day,next_expiry)
     if cur.empty or nxt.empty:return None
-    spot=pd.concat([cur,nxt]).spot_price.dropna()
-    if spot.empty:return None
-    s=float(spot.median()); pv=prior_vix(vix,entry)
+    s=spot_at(entry)
+    if s is None:return None
+    pv=prior_vix(vix,entry)
     if pv is None:return None
     sigma=float(pv.vix)/100
     atm=choose_atm(cur,s); p30=choose_delta(cur,s,sigma,expiry,entry,"PE",.30)
