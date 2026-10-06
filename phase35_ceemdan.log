@@ -1,0 +1,6 @@
+     split        model  n  accuracy  balanced_accuracy  roc_auc  log_loss    brier
+   holdout ceemdan_tree 22  0.500000           0.446429 0.491071  0.819278 0.292656
+validation ceemdan_tree 95  0.484211           0.477374 0.509317  0.811574 0.298441
+     split        model  hit_rate  mean_signed_log_return  sum_signed_log_return  bootstrap_ci_low  bootstrap_ci_high  signflip_pvalue
+validation ceemdan_tree  0.484211               -0.000722              -0.068634         -0.003845           0.002608         0.664361
+   holdout ceemdan_tree  0.500000                0.002813               0.061886         -0.004930           0.010552         0.495959
