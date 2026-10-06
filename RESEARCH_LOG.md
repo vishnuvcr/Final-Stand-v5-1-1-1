@@ -358,3 +358,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The artifact self-audit correctly stopped publication because the full VIX-state coverage requirement was not met.
 - The run is explicitly NON-EVIDENCE.
 - A focused monthly diagnostic stage and more robust cross-expiry common-strike handling were added before rerun.
+
+
+## 2026-10-07 — Phase 47 closeout: source-data feasibility
+- Phase 47 did not produce promotable numerical evidence because the cached option source lacks next-expiry entry-time observations for most monthly/weekly calendar candidates.
+- Two numerical runs were rejected by self-audit rather than allowing incomplete state coverage into evidence.
+- Focused diagnostics established that the limitation is data structure, not a demonstrated strategy failure.
+- Phase 47 is closed with NO PROMOTION.
+- A separate data-bridge phase is required for multi-expiry strategies.
