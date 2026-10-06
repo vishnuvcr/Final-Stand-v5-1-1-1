@@ -114,7 +114,7 @@ def holm(p):
     return out
 
 def preflight():
-    assert len(GRID)==1440
+    assert len(GRID)==720
     assert legs(baseline("bear_call"))==[("cur","CE",1,-1),("cur","CE",3,1)]
     assert legs(baseline("bear_put"))==[("cur","PE",0,1),("cur","PE",-1,-1)]
     assert legs(baseline("put_bwb"))==[("cur","PE",2,1),("cur","PE",0,-2),("cur","PE",-1,1)]
