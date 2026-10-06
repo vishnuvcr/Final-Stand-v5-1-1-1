@@ -117,3 +117,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 ## 2026-10-06 — Phase 44 implementation corrections F44-002/F44-003
 - F44-002: redundant VIX profile expansion was quarantined as non-evidence; the corrected profile mapping is used for the active run.
 - F44-003: the same registered logic was performance-optimized by caching each expiry chain, expiry-day option series and point-in-time entry prices. No P&L definition changed. Slow-run outputs are non-evidence.
+
+
+## 2026-10-06 — Phase 44 F44-005 bounded-memory correction
+- Phase-44 active engine now processes one expiry at a time; previous retained-dataframe runs are non-evidence.
+- Corrected run **37488148310** is the current numerical execution candidate.
