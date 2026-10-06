@@ -677,3 +677,17 @@ Evidence status: Non-evidence implementation failure.
 Correction: The evaluator now detects unary expressions by the inner tuple length (2 fields versus 5 for binary expressions).
 
 Prevention: Grammar nodes will use explicit expression-type tags in later structural-search code.
+
+
+### Error F39-039 — Sequential symbolic replay contained a literal newline escape
+Run: 37449008339 (Step-7 sequential-symbolic run #1).
+
+Symptom: Python raised `SyntaxError: unexpected character after line continuation character` on the combined feature-path assignment.
+
+Cause: A repository text transformation inserted the characters `\\n` literally instead of creating a new source line.
+
+Evidence status: Non-evidence syntax failure.
+
+Correction: The two assignments will be emitted as separate Python lines.
+
+Prevention: Newly generated Python files will be syntax-checked structurally before workflow execution.
