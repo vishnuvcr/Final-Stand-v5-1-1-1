@@ -20,10 +20,23 @@
 - Locked requested model families and an equal-weight ensemble.
 
 ### Numerical execution
-**NOT STARTED.**
+**GITHUB ACTIONS RUN #1 IN PROGRESS — numerical execution underway.**
 
 ### Errors
 No numerical evidence has been accepted and no failed run has been used as research evidence.
 
 ### Next step
 Build the compact point-in-time dataset, run leakage/coverage audit, then execute M1–M5 through the Phase-33 GitHub Actions workflow.
+
+
+### Step 4 — model implementation — COMPLETE
+- Added the cached point-in-time NIFTY event engine.
+- Added price/volatility, cross-market, option-chain, sentiment and FII/DII feature families with backward-only joins.
+- Added LSTM, Random Forest, SOFNN-inspired fuzzy classifier, GARCH/EGARCH/GJR-GARCH volatility models and fixed equal-weight ensemble.
+- Added explicit sentiment-model subtrack using 2024 development, 2025 validation and 2026 holdout because the selected Indian sentiment source begins in January 2024.
+- Added manual and push-triggered GitHub Actions workflow.
+
+### Step 5 — numerical run
+- Workflow run #1: 37420357853.
+- Current state at registration checkpoint: in progress.
+- Accepted evidence remains empty until the run succeeds and artifacts are persisted.
