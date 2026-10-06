@@ -1,3 +1,16 @@
+## Phase 48 — Independent Multi-Expiry VIX Data Bridge — INITIALIZED
+
+Phase 48 uses an independent public NIFTY intraday dataset with multiple expiries visible on the same trade date to unlock the YouTube-derived calendar/hedged strategies that were data-infeasible in Phase 47. The study remains supplementary and retains ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING VIX states.
+
+Registered baselines: Double Calendar Straddle; Monthly Wide-Range Hedge static baseline; Covered Call 2.0 static proxy.
+
+- [Phase 48 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-48-multiexpiry-vix-source-bridge)
+- [Phase 48 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/PHASE48_RESEARCH_PLAN.md)
+- [Phase 48 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/PHASE48_STATUS.md)
+- [Phase 48 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-48-multiexpiry-vix-source-bridge/.github/workflows/phase-48-multiexpiry-vix-source-bridge.yml)
+
+---
+
 ## Phase 47 — VIX source-strategy numerical backtest — CLOSED / DATA FEASIBILITY
 
 Phase 47's self-audited numerical work established a key data limitation: the cached thetrademarkk/india-index-options-1m source does not provide next-expiry entry-time observations for most historical dates, preventing a scientifically complete test of Calendar and Monthly Wide-Range Hedge structures. The Covered Call 2.0 option-only proxy produced only 20 rows and is not promotable.
