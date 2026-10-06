@@ -477,3 +477,17 @@ Evidence status: non-evidence; no policy result accepted.
 Correction: Sequential GAM fitting now reindexes both training and test matrices to the locked feature list before imputation, materializing unavailable predictors as NaN for the model's fitted imputer.
 
 Prevention: All sequential replay model inputs will be reindexed to the locked feature manifest before numerical transforms.
+
+
+### Error F39-024 — Sequential replay omitted optional next-expiry feature columns
+Run: 37442175504 (Step-4 run #5).
+
+Symptom: The locked GAM model requested `next_atm_straddle`, `next_atm_iv_skew` and `iv_term_premium_ratio` at an entry where the next contract had no usable quote, causing a missing-column KeyError.
+
+Cause: The point-in-time feature builder correctly treated missing next-contract observations as missing values, but the sequential replay did not materialize the locked feature columns when all next-contract values were unavailable for a row.
+
+Evidence status: Non-evidence runtime failure. No sequential policy result was produced.
+
+Correction: Every sequential feature row now materializes the complete locked feature schema and fills unavailable optional predictors with NaN, allowing the locked training-window imputer to handle them without changing model inputs.
+
+Prevention: Sequential replay will assert the exact locked feature schema before every prediction.
