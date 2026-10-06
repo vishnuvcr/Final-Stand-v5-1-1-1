@@ -50,6 +50,8 @@ jobs:
           cp -a /tmp/phase33/data/phase33/. data/phase33/
           cp -a /tmp/phase33/results/phase33_nifty_prediction/. results/phase33_nifty_prediction/
           cp /tmp/phase33/phase33_run.log phase33_run.log
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/phase33 results/phase33_nifty_prediction phase33_run.log
           git diff --cached --quiet || git commit -m "Phase 33: reconcile verified model results"
           git push origin HEAD:phase-33-nifty-prediction-models
