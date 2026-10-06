@@ -334,18 +334,16 @@ def strategy_trade_double_calendar(expiry, next_expiry, index, vix):
     snapn = nxt[nxt["timestamp"] == entry_ts]
     if snap.empty or snapn.empty:
         return None
-    common = np.intersect1d(snap["strike"].unique(), snapn["strike"].unique())
-    if len(common) == 0:
+    atm_cur = float(min(snap["strike"].unique(), key=lambda k: abs(float(k) - spot)))
+    atm_nxt = float(min(snapn["strike"].unique(), key=lambda k: abs(float(k) - spot)))
+    if exact_row(snap, "CE", atm_cur) is None or exact_row(snap, "PE", atm_cur) is None:
         return None
-    atm = float(min(common, key=lambda k: abs(float(k) - spot)))
-    if exact_row(snap, "CE", atm) is None or exact_row(snap, "PE", atm) is None:
-        return None
-    if exact_row(snapn, "CE", atm) is None or exact_row(snapn, "PE", atm) is None:
+    if exact_row(snapn, "CE", atm_nxt) is None or exact_row(snapn, "PE", atm_nxt) is None:
         return None
     files = {"cur": cur, "nxt": nxt}
     legs = [
-        ("cur", "CE", atm, -1), ("cur", "PE", atm, -1),
-        ("nxt", "CE", atm, 1), ("nxt", "PE", atm, 1),
+        ("cur", "CE", atm_cur, -1), ("cur", "PE", atm_cur, -1),
+        ("nxt", "CE", atm_nxt, 1), ("nxt", "PE", atm_nxt, 1),
     ]
     entry_prices = [exact_row(cur if k=="cur" else nxt, t, s) for k,t,s,q in legs]
     if any(x is None for x in entry_prices):
@@ -559,8 +557,16 @@ def audit_source_files(index, expiries):
 
 
 def diagnostic_monthly_sample(index, vix, monthly, n=12):
+    chosen=[]
+    for label, predicate in [
+        ("development", lambda e: e <= DEV_END),
+        ("validation", lambda e: DEV_END < e <= VAL_END),
+        ("holdout", lambda e: e > VAL_END),
+    ]:
+        candidates=[e for e in monthly if predicate(e)]
+        chosen.extend(candidates[:4])
     rows=[]
-    for e in monthly[:n]:
+    for e in chosen[:n]:
         ne=find_next_expiry(monthly,e)
         entry=entry_four_dte(index,e)
         rec={"expiry":str(e.date()),"entry":str(entry) if entry is not None else None,
@@ -577,15 +583,14 @@ def diagnostic_monthly_sample(index, vix, monthly, n=12):
         snap=cur[cur.timestamp==entry]
         snapn=nxt[nxt.timestamp==entry]
         rec["cur_entry_rows"]=int(len(snap)); rec["next_entry_rows"]=int(len(snapn))
-        common=np.intersect1d(snap["strike"].unique(),snapn["strike"].unique()) if not snap.empty and not snapn.empty else []
-        rec["common_strikes"]=int(len(common))
+        rec["cur_strikes"]=int(snap["strike"].nunique())
+        rec["next_strikes"]=int(snapn["strike"].nunique())
         if snap.empty or snapn.empty:
             rec["s1"]="NO_ENTRY_SNAPSHOT"
-        elif len(common)==0:
-            rec["s1"]="NO_COMMON_STRIKE"
         else:
-            atm=float(min(common,key=lambda k:abs(float(k)-float(spotrow.iloc[-1].spot))))
-            legs=[("cur","CE",atm,-1),("cur","PE",atm,-1),("nxt","CE",atm,1),("nxt","PE",atm,1)]
+            atm_cur=float(min(snap["strike"].unique(),key=lambda k:abs(float(k)-float(spotrow.iloc[-1].spot))))
+            atm_nxt=float(min(snapn["strike"].unique(),key=lambda k:abs(float(k)-float(spotrow.iloc[-1].spot))))
+            legs=[("cur","CE",atm_cur,-1),("cur","PE",atm_cur,-1),("nxt","CE",atm_nxt,1),("nxt","PE",atm_nxt,1)]
             ex=common_exit_price({"cur":cur,"nxt":nxt},e,legs)
             rec["s1"]="OK" if ex is not None else "NO_COMMON_EXIT"
         if snap.empty or snapn.empty:
