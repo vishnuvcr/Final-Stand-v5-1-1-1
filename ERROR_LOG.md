@@ -1038,3 +1038,9 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - No numerical replay evidence was produced.
 - Correction: replaced the minimum timestamp sentinel with a safe timezone-aware date (2000-01-01). No research parameter or outcome definition changed.
 - Status: corrected; rerun triggered.
+
+
+## F42-004 — 2026-10-06 — Phase 42 execution closeout
+- Failed runs 37466838884, 37467356019, 37469600983 and 37469101962 produced no accepted Phase-42 numerical evidence because of syntax/replay implementation failures recorded above.
+- Corrected workflow **37470344620** completed successfully through preflight, 72-variant screen, exact sequential replay, final inference/manuscript and artifact persistence.
+- Only the corrected run is accepted as Phase-42 evidence.
