@@ -77,13 +77,23 @@ def load_vix():
     return x[["date","vix"]].dropna().drop_duplicates("date").sort_values("date").assign(dvix=lambda z: z["vix"].diff())
 
 def list_expiries():
+    # Reuse the accepted Phase-43 opportunity cache so Phase-44 uses the exact
+    # audited expiry sample instead of repeatedly enumerating the HF repository.
+    cache_file = Path("results/phase43_vix/strategy_trade_matrix_all_splits.csv")
+    if cache_file.exists():
+        z = pd.read_csv(cache_file, usecols=["expiry"])
+        ds = pd.to_datetime(z["expiry"]).dt.tz_localize(TZ)
+        ds = ds[(ds >= START) & (ds <= END)]
+        return sorted(ds.drop_duplicates().tolist())
+
     api = HfApi()
     out = []
     for f in api.list_repo_files(HF_REPO, repo_type="dataset"):
         m = re.fullmatch(r"options/NIFTY/(\d{4}-\d{2}-\d{2})\.parquet", f)
         if m:
             d = pd.Timestamp(m.group(1), tz=TZ)
-            if START <= d <= END: out.append(d)
+            if START <= d <= END:
+                out.append(d)
     return sorted(set(out))
 
 def prepare(df):
