@@ -1071,3 +1071,9 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 ## Phase 44 — initialization audit
 No numerical error has occurred at registration. Any failed workflow or implementation defect will be logged before evidence acceptance.
+
+
+## F44-001 — initial Phase-44 implementation quarantined
+- The first tuning implementation was not accepted as evidence because its candidate-selection design was audited before acceptance and the workflow snapshot could select using validation outcomes; its threshold implementation also did not fully reflect the registered directional/spike grid.
+- Any run based on that snapshot is **NON-EVIDENCE**.
+- Corrected implementation now performs development-only shortlist selection, preserves validation strictly for confirmation, writes the workflow-expected `stage1_candidates.csv`, applies the registered VIX profile families, enforces validation concentration, and opens holdout only after validation/inference freezing.
