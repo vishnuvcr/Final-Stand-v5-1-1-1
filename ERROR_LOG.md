@@ -132,3 +132,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 ## 2026-10-06 — Phase 44 active run update
 - Current corrected Stage-1 execution: GitHub Actions run **37491292566**.
 - It remains in the numerical execution step; no result is accepted until artifact audit and persistence succeed.
+
+
+## 2026-10-06 — Phase 44 staged execution corrections F44-009 through F44-013
+- F44-009: monolithic execution was split into development, validation and holdout stages.
+- F44-010: strike-filtered two-pass parquet reader was added.
+- F44-011/F44-012: premature validation/holdout triggers were quarantined; validation/holdout now require explicit stage trigger files.
+- F44-013: predicate timestamp filtering produced no development rows on this dataset; the staged reader now falls back to the proven Phase-43 full-parquet reader and uses two expiry workers.
+- Current corrected development run: **37496337984**. It remains non-final until artifact audit and persistence succeed.
