@@ -79,7 +79,11 @@ def build_feature_row(entry,expiry,snap,spot_value,spot_hist,daily,global_d,flow
     row.update(option_features(snap,spot_value,expiry_ts))
     idx=expiries.index(expiry)
     if idx+1<len(expiries):
-        ne=expiries[idx+1]; ns=option_cache[ne]
+        ne=expiries[idx+1]; ns=option_cache.get(ne)
+        if ns is None:
+            ns=load_option(ne)
+            ns["expiry_ts"]=ne+pd.Timedelta(hours=15,minutes=30)
+            option_cache[ne]=ns
         nsnap=ns[ns.timestamp==entry]
         if not nsnap.empty:
             row.update(option_features(snap,spot_value,expiry_ts,nsnap,ne+pd.Timedelta(hours=15,minutes=30)))
@@ -142,8 +146,13 @@ def main():
     sentiment=load_daily_source("sentiment_daily.parquet")
     expiries=expected_expiries(spot)
     option_cache={}
-    for e in expiries:
-        option_cache[e]=load_option(e)
+    def get_option(e):
+        e=norm_scalar_ts(e).normalize()
+        if e not in option_cache:
+            d=load_option(e)
+            d["expiry_ts"]=e+pd.Timedelta(hours=15,minutes=30)
+            option_cache[e]=d
+        return option_cache[e]
     # Canonical shadow direction schedule.
     ctl=pd.concat([pd.read_csv(DEV_CONTROL),pd.read_csv(FROZEN_CONTROL)],ignore_index=True)
     ctl["entry_ts"]=norm_ts(ctl["entry_ts"])
@@ -152,7 +161,7 @@ def main():
     control_times=ctl.entry_ts.to_numpy()
     control_dirs=ctl.direction.to_numpy()
     def shadow_direction(ts):
-        i=np.searchsorted(control_times,np.datetime64(ts.tz_convert("UTC")),side="right")-1
+        i=ctl.entry_ts.searchsorted(ts,side="right")-1
         if i<0: return "CALL"
         return str(control_dirs[i])
 
@@ -163,10 +172,12 @@ def main():
 
     # Iterate expiry by expiry, preserving continuous chronological state.
     for expiry in expiries:
-        od=option_cache[expiry]
+        od=get_option(expiry)
         expiry_day=expiry.normalize()
         end_ts=expiry+pd.Timedelta(hours=15,minutes=29)
-        timeline=spot[(spot.timestamp>=START)&(spot.timestamp<=end_ts)].copy()
+        idx_exp=expiries.index(expiry)
+        window_start=(expiries[idx_exp-1]+pd.Timedelta(hours=15,minutes=30)) if idx_exp>0 else START
+        timeline=spot[(spot.timestamp>window_start)&(spot.timestamp<=end_ts)].copy()
         timeline=timeline[timeline.timestamp<expiry_day].sort_values("timestamp").reset_index(drop=True)
         # New entry is allowed any day except expiry day and after 09:20, before the final-entry cutoff.
         cursor=0
