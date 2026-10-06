@@ -1269,3 +1269,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The self-audit correctly stopped publication, but the audit criterion "all states must be present in the realized candidate trade matrix" is stronger than necessary for a data-sparse exploratory candidate.
 - Evidence status remains NON-EVIDENCE.
 - The underlying data-feasibility limitation is documented in Phase-47 status. Future phases will distinguish "state has zero feasible observations" from "state was not evaluated."
+
+
+## F48-001 — Independent dataset schema differed from published summary
+- Initial Phase-48 preflight assumed every yearly parquet file had date, timestamp, expiry, strike, option_type, close, spot_price, volume and oi with exactly those names.
+- Run 37522707039 failed preflight on the 2024 file before numerical execution.
+- Evidence status: NON-EVIDENCE; no numerical run started.
+- Correction: added schema discovery and normalization with supported aliases; spot/volume/OI are now optional, while timestamp/expiry/strike/option type/close remain required.
+- Prevention: future independent data phases must record actual schema mappings before any strategy query runs.
