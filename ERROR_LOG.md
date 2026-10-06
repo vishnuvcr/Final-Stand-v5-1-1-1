@@ -605,3 +605,9 @@ Evidence status: Non-evidence code-generation failure. No Step-5 result was acce
 Correction: The complete `evaluate()` function was replaced with a clean explicit implementation covering OOF threshold selection, BOCPD gating, validation replay and summary metrics.
 
 Prevention: For complex evaluator patches, replace the complete affected function rather than applying multiple fragile text substitutions.
+
+
+### Error F39-034 — Step-5 advanced-family runner required multiple schema and evaluator corrections
+Step-5 iterations 2-5 failed before evidence due to duplicate target/control columns, NumPy/Pandas boundary handling, and a malformed evaluator patch. All failed runs are non-evidence.
+
+Correction: The final Step-5 evaluator was replaced wholesale with deterministic OOF/validation logic. Run 37446811261 passed all verification checks and is the only accepted Step-5 result.
