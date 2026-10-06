@@ -1,0 +1,35 @@
+{
+  "benchmark": "put_ratio_1x2",
+  "maps": {
+    "mean": {
+      "LOW": "put_ratio_1x2",
+      "NORMAL": "put_backspread",
+      "HIGH": null,
+      "SPIKE": null,
+      "FALLING": null,
+      "RISING": null,
+      "HIGH_RISING": null
+    },
+    "median": {
+      "LOW": "put_ratio_1x2",
+      "NORMAL": "put_ratio_1x2",
+      "HIGH": null,
+      "SPIKE": null,
+      "FALLING": null,
+      "RISING": null,
+      "HIGH_RISING": null
+    },
+    "sharpe": {
+      "LOW": "put_ratio_1x2",
+      "NORMAL": "call_ratio_1x2",
+      "HIGH": null,
+      "SPIKE": null,
+      "FALLING": null,
+      "RISING": null,
+      "HIGH_RISING": null
+    }
+  },
+  "frozen": [
+    "median"
+  ]
+}
