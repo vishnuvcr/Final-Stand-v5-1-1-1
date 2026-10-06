@@ -376,3 +376,22 @@ Evidence status: **INVALID / NON-EVIDENCE.** All Step-3 model outputs from run 3
 Correction: Add `call_net_rupees` and `put_net_rupees` to the forbidden outcome/control set and assert that no realized outcome field can enter the locked predictor list.
 
 Prevention: A hard feature-leakage assertion now blocks model training whenever any realized action P&L or control/target column appears among predictors. The result status is invalidated until a clean rerun passes this assertion.
+
+
+### Error F39-019 — Initial sequential replay loop reused earlier-expiry timestamps
+Finding: The first draft of the sequential policy engine built each expiry's timeline from the global sample start rather than from the immediately preceding expiry boundary.
+
+Evidence status: Non-evidence implementation issue caught before sequential execution.
+
+Correction: Each expiry window is now anchored to the immediately preceding expected weekly expiry (or the global research start for the first expiry), matching the audited Phase-32 contract-window convention.
+
+Prevention: Sequential replay uses explicit per-expiry window boundaries and never derives a contract window from the last processed file or global sample start.
+
+### Error F39-020 — Sequential replay option selector required explicit expiry timestamp metadata
+Finding: The shared nearest-delta selector expects `expiry_ts` in the option snapshot, while the feature-matrix loader did not add it.
+
+Evidence status: Non-evidence implementation issue caught before sequential execution.
+
+Correction: Every lazily loaded option file now receives deterministic `expiry_ts = expiry + 15:30 IST` metadata.
+
+Prevention: Shared market-data adapters will expose the complete contract timestamp schema required by all downstream selectors.
