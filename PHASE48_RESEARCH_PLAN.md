@@ -86,3 +86,7 @@ Phase 48 closes after the three registered baselines are either numerically test
 ## Closeout amendment — point-in-time spot bridge
 
 The independent option dataset contains no spot-price field. Phase 48 therefore uses the existing canonical NIFTY 1-minute index series only for point-in-time spot at the registered entry timestamp. No option price, expiry or strike data is taken from that series. This is a source-fusion limitation and must be reported in the manuscript.
+
+## Closeout amendment — historical lot-size audit
+
+Historical NIFTY lot size is governed by contract-introduction/expiry transition dates rather than a simple expiry-year rule. Phase 48 now uses the NSE-confirmed 2024-2026 schedule and rejects the superseded run that used an incorrect 50-lot value during late 2024.
