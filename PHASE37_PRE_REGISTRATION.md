@@ -45,3 +45,5 @@ Only a successful GitHub Actions run with complete persisted artifacts is accept
 
 ## Execution trigger record — 2026-10-06
 The preregistration is now frozen and the push-triggered GitHub Actions workflow is registered for numerical execution. No further parameter changes are permitted after this record except corrections of execution defects that are independently logged.
+
+Execution invariant: Phase 37 changes only model-to-spread polarity; any other code difference is an execution defect and must be rejected and logged.
