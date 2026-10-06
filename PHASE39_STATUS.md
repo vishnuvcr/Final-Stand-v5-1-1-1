@@ -110,3 +110,8 @@ The accepted panel is therefore:
 - Intentionally excluded: the 2024-01-04 trade, preserving the exact Phase-38 benchmark
 
 The complete corrected counterfactual engine must re-run before any model training is accepted. The control arm must still reconstruct the frozen ₹63,672.5753 benchmark within the preregistered tolerance.
+
+
+## Current execution state — 2026-10-06
+
+The corrected Step-1 implementation is committed and automatically queued in GitHub Actions with serialized execution. The research is **not yet allowed to advance to model fitting**: the corrected 271/172/34 counterfactual panel must first pass the full control-reconstruction audit. The earlier 206-row counterfactual result remains exploratory only and is explicitly superseded.
