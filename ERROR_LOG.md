@@ -1277,3 +1277,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: NON-EVIDENCE; no numerical run started.
 - Correction: added schema discovery and normalization with supported aliases; spot/volume/OI are now optional, while timestamp/expiry/strike/option type/close remain required.
 - Prevention: future independent data phases must record actual schema mappings before any strategy query runs.
+
+
+## F48-002 — Monthly-entry multi-expiry feasibility check too narrow
+- Run 37523089497 passed schema compilation but found zero monthly current+next-expiry entry checks under the first feasibility criterion.
+- That criterion could not distinguish "this particular monthly entry pattern is absent" from "the entire dataset lacks multi-expiry observations."
+- Evidence status: NON-EVIDENCE; numerical stage did not start.
+- Correction: preflight now separately audits generic trade dates with more than one distinct expiry and records those dates in multi_expiry_days.csv.
+- Prevention: data-source feasibility is now tested at both the exact strategy-entry level and the generic multi-expiry-day level.
