@@ -36,3 +36,12 @@ No failed run will be used as numerical evidence. Every implementation error mus
 
 ## Current result
 Not yet run.
+
+
+## Step 1 — numerical execution audit
+- Primary workflow run #1: 37427528243.
+- CATBOOST, WAVELET_TREE and OOF_STACK reached the numerical loop and then failed during final skip-ledger DataFrame construction.
+- No numerical output from failed jobs is accepted as evidence.
+- Root cause: mixed skip-record widths: expiry-level records had 3 fields while entry-level records had 4 fields after expiry prefixing.
+- Correction registered: normalize all skip records to [expiry, timestamp, reason, detail] before DataFrame creation.
+- Remaining selector jobs were still running when the common error was identified; their output will not be accepted unless their complete artifacts pass the same audit.

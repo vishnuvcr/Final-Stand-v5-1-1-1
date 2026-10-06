@@ -128,7 +128,16 @@ def main():
         except Exception as e:
             all_skips.append([str(expiry.date()),"exception",repr(e)]); print(f"ERROR expiry={expiry.date()} {repr(e)}",flush=True)
 
-    tr=pd.DataFrame(all_trades); sk=pd.DataFrame(all_skips,columns=["expiry","reason","detail"])
+    tr=pd.DataFrame(all_trades)
+    all_skips_norm=[]
+    for row in all_skips:
+        if len(row)==4:
+            all_skips_norm.append(row)
+        elif len(row)==3:
+            all_skips_norm.append([row[0],"",row[1],row[2]])
+        else:
+            all_skips_norm.append([str(row[0]) if row else "","","malformed_skip_record",repr(row)])
+    sk=pd.DataFrame(all_skips_norm,columns=["expiry","timestamp","reason","detail"])
     if tr.empty: sk.to_csv(OUT_ROOT/"skips.csv",index=False); raise RuntimeError("Phase 36 produced zero trades")
     tr["cum_net"]=tr.net_rupees.cumsum(); tr["peak"]=tr.cum_net.cummax(); tr["drawdown"]=tr.peak-tr.cum_net
     tr["year"]=pd.to_datetime(tr.exit_ts).dt.year; tr["hold_minutes"]=(pd.to_datetime(tr.exit_ts)-pd.to_datetime(tr.entry_ts)).dt.total_seconds()/60.0
