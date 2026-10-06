@@ -1060,3 +1060,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Evidence status:** The corrected inference matrix remains valid as regime-versus-complement diagnostics; the router/benchmark outputs from that postprocess are invalid for promotion and are superseded.
 - **Correction:** Promotion/router candidates are now explicitly restricted to the registered defined-risk universe, with calendars also excluded where development coverage is below the 20-trade minimum.
 - **Prevention:** The postprocessor now applies the same promotion-universe invariant as the strategy engine before benchmark or router selection.
+
+
+## F43-006 — 2026-10-06 — Corrected postprocess publication race
+- **Symptom:** The corrected defined-risk postprocess completed successfully, but its Git push was rejected as non-fast-forward because another Phase-43 automation updated the branch concurrently.
+- **Evidence status:** Numerical output was computed successfully but the failed publication run is not the accepted persistence checkpoint.
+- **Correction:** Added fetch/rebase-before-push to the corrected postprocess workflow, matching the project’s established race-safe publication pattern.
+- **Prevention:** All Phase-43 publishing workflows now rebase onto the current branch head before pushing generated evidence.
