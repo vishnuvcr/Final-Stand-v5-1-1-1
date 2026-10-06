@@ -6,3 +6,6 @@ Optimized evaluator trigger after F49-003 performance correction.
 
 
 Corrected trigger after F49-005 family-registry audit, F49-006 active/complement validation correction, F49-007 forward-fold selection correction, and F49-008 stale-run watchdog. Execute only the corrected v3 workflow; superseded v2 numerical output remains non-evidence.
+
+
+F49-009 optimized trigger: cache index trading days, exact timestamp spot, and VIX state metadata across all candidates. This is execution-only; superseded slower runs remain non-evidence.
