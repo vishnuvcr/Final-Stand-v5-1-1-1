@@ -1395,3 +1395,7 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: NON-EVIDENCE for outputs produced by that selector.
 - Correction: eligibility and ranking now use 2022 and 2023 forward-fold performance, with a minimum of 10 trades and positive net/stressed mean per trade in each fold.
 - Prevention: persist fold-specific 2022/2023 metrics.
+### F49-008 — Superseded numerical run became a stale Actions process
+- Run 37535442553 remained in-progress without a status update while the corrected run was queued.
+- Evidence status: NON-EVIDENCE. The run head predates the corrected Phase-49 engine.
+- Operational correction: the Phase-49 workflow concurrency group is being advanced so the corrected execution is not blocked by the stale superseded run. The stale process remains excluded from all research evidence.
