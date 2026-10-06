@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "control_split": {
+    "development": 271,
+    "holdout": 34,
+    "validation": 172
+  },
+  "overrides": 1,
+  "validation_uplift": 11474.772655050001,
+  "holdout_uplift": 0.0,
+  "holdout_policy_net": -275.6468036679098,
+  "holdout_control_net": -275.6468036679098,
+  "holdout_policy_dd": 37326.62801647292,
+  "holdout_control_dd": 37326.62801647292,
+  "validation_cost_x_1_50": 11268.408982575012,
+  "holdout_cost_x_1_50": 0.0,
+  "validation_cost_x_2_00": 11062.04531010001,
+  "holdout_cost_x_2_00": 0.0,
+  "frozen_control_validation_plus_holdout": 63672.57530171223,
+  "frozen_control_target": 63672.57530171223,
+  "promotion": "REJECTED",
+  "reason": "Single override; negative development uplift; zero 2026 holdout uplift; no durable control-relative improvement."
+}

@@ -1,0 +1,2 @@
+expiry,entry_ts,exit_ts,shadow_control_direction,action,override,pred_delta,pred_unc,policy_net_rupees,policy_gross_rupees,policy_cost_rupees,call_put_delta,exit_reason,short_strike,long_strike,expiry_date,period,cum_net,peak,drawdown
+2024-06-06,2024-05-31 09:20:00+05:30,2024-06-04 12:02:00+05:30,CALL,PUT,True,-17963.77838354144,6104.834367425851,8710.893058550002,8932.500000000002,221.60694145,-12026.423183850004,DELTA_EXIT,21900.0,21850.0,2024-06-06,validation,51462.7325354002,51462.7325354002,0.0
