@@ -1115,3 +1115,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 ## F44-008 — workflow/script summary-schema mismatch
 - The finalization workflow expected `stage1_rows`, `candidate_rows`, `frozen_candidates` and `holm_survivors`, while the script summary initially exposed only lower-level names.
 - Correction: the script now emits the workflow fields plus detailed aliases.
+
+
+## F44-009 — monolithic Stage-1 runtime too long
+- The single-script Phase-44 run remained in the numerical step for an excessive duration even after I/O optimization because it processed development, validation and holdout option files in one execution before any candidate freeze.
+- No result from the long monolithic run is accepted.
+- Correction: Phase 44 is now operationally split into registered development, validation and holdout executions. Development reads only the 2021–2023 development expiries and freezes candidates before validation files are touched; validation and holdout then load only their respective date ranges.
