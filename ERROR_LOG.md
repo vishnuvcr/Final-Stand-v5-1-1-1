@@ -122,3 +122,18 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Numerical execution reached the model fit but still found duplicate `ms_p0/ms_p1/ms_entropy` columns because the cached regime table could itself contain the same fields.
 - No evidence accepted.
 - Correction: deterministically drop any existing regime columns from the event table and merge only the canonical four-column regime cache.
+
+## 2026-10-06 — Phase 35 numerical run #3 (37424742515)
+- The corrected battery still executed successfully only until its persistence/logging stage; the same source-level decomposition/trigger chain was superseded by the next hardened commit.
+- No result from run #3 is accepted as evidence.
+
+## 2026-10-06 — Phase 35 Markov addendum correction series
+- Runs 37425960853 and 37426382771 reached the addendum script but failed before producing accepted numerical output; these were superseded while correcting the duplicate regime-column handling and workflow failure semantics.
+- Run 37426474846 executed the corrected numerical addendum successfully and persisted the regime results. The final workflow-hardened rerun 37426499636 also completed successfully and is the accepted Markov-switching addendum evidence.
+
+## 2026-10-06 — Phase 35 CEEMDAN addendum
+- CEEMDAN tree addendum run 37426761476 completed successfully and persisted its results. No implementation failure occurred in the accepted CEEMDAN run.
+
+## 2026-10-06 — Phase 35 calibration diagnostic correction
+- The first calibration CSV incorrectly referenced model names without their `_prob` column suffix for most models, producing false zero ECE values.
+- The diagnostic was recomputed against the correct probability columns before final manuscript closure. No model-selection result was affected.
