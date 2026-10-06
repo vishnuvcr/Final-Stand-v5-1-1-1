@@ -53,3 +53,5 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Reconcile workflow run #1 (37422050386) first failed because its shell inherited literal backslashes before variables from the template. Reconciliation run #2 fixed that and successfully downloaded/copy-staged the verified run-13 artifact, but failed at git commit because the runner had no configured user.name/user.email. This is corrected in commit 9716f8ec18d18e9db3ad4c5501f1b6b62d22d865.
 - Postprocess run #2 (37422340652) failed on a numpy.ndarray .to_numpy() call in the signed-return diagnostic. Corrected in commit 2fc43d3db44a06743850ec6b339bd402bbecfd3c.
 - Postprocess run #3 was superseded during correction; final postprocess run #4 (37422362350) completed successfully. No failed postprocess output was accepted as evidence.
+
+- Postprocess run #2 failed because `np.where(...)` already returned an ndarray and the script called `.to_numpy()`. Corrected before the successful postprocess run #3 (37422362350).
