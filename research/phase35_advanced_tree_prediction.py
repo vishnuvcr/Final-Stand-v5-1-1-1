@@ -424,6 +424,47 @@ def main():
     pred.loc[pred.split=="validation","isotonic_prob"]=sc["val_iso"]
     pred.loc[pred.split=="holdout","isotonic_prob"]=sc["hold_iso"]
 
+    # Chronology-safe dynamic pooling and regime-gated tree selection.
+    # Train history uses OOF predictions only; holdout additionally uses realized
+    # validation predictions because those labels were known before 2026.
+    oof_hist=sc["oof"].copy()
+    oof_hist["target"]=train.loc[oof_hist.index,"target_direction"].astype(int).to_numpy()
+    volname="vol20" if "vol20" in train.columns else next((z for z in base_cols if "vol20" in z),None)
+    if volname:
+        oof_hist["regime"]=pd.qcut(train.loc[oof_hist.index,volname].rank(method="first"),3,labels=False,duplicates="drop").to_numpy()
+    else:
+        oof_hist["regime"]=1
+    dyn2=[]; gate2=[]
+    names=["xgb","lgbm","catboost","extra","hist","dart"]
+    for _,r in pred.iterrows():
+        hist=oof_hist.copy()
+        if r["split"]=="holdout":
+            qvpred=pred[pred.split=="validation"].copy()
+            if len(qvpred):
+                vv=pd.DataFrame({m:qvpred[m+"_prob"].to_numpy() for m in names})
+                vv["target"]=qvpred.target_direction.to_numpy()
+                if volname in qvpred.columns:
+                    vv["regime"]=pd.qcut(qvpred[volname].rank(method="first"),3,labels=False,duplicates="drop").to_numpy()
+                else: vv["regime"]=1
+                hist=pd.concat([hist,vv],ignore_index=True)
+        if volname in r.index and np.isfinite(r[volname]):
+            cut=np.nanquantile(train[volname].dropna(),[.33,.67])
+            reg=0 if float(r[volname])<=cut[0] else (2 if float(r[volname])>=cut[1] else 1)
+        else: reg=1
+        recent=hist.tail(40)
+        ws=[]; ps=[]
+        for m0 in names:
+            p0=np.asarray(recent[m0],float); y0=np.asarray(recent["target"],int)
+            acc=float(np.mean((p0>=.5)==y0)) if len(y0) else .5
+            wt=float(np.exp(5*(acc-.5))); ws.append(wt); ps.append(float(r[m0+"_prob"]))
+        dyn2.append(float(np.dot(ws,ps)/np.sum(ws)))
+        rg=recent[recent["regime"]==reg] if "regime" in recent.columns else recent.iloc[0:0]
+        if len(rg)<8: rg=recent
+        score={m0:float(np.mean((np.asarray(rg[m0],float)>=.5)==np.asarray(rg["target"],int))) if len(rg) else .5 for m0 in names}
+        gate2.append(float(r[max(score,key=score.get)+"_prob"]))
+    pred["dynamic_pool_prob"]=dyn2
+    pred["regime_tree_gate_prob"]=gate2
+
     # Conformal intervals and abstention.
     pv,lv,hv,ph,lh,hh,qv,qh=conformal_sequence(train,val,hold,base_cols)
     pred.loc[pred.split=="validation","conformal_mean"]=pv
