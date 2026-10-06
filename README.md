@@ -11,6 +11,11 @@ Development tuning uses 2021-2023. Validation is 2024-2025. The 2026 holdout rem
 - [Phase 49 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_LITERATURE_REVIEW.md)
 - [Phase 49 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/research/phase49_vix_leader_tuning.py)
 
+**Phase 49 correction status (2026-10-07):** the first long-running numerical attempt is explicitly NON-EVIDENCE. A pre-result code audit found an undefined family registry, an incorrect validation comparator (candidate-vs-rest instead of active-VIX-vs-complement-VIX), and a mismatch between the preregistered forward-fold selector and the implementation. These defects are being corrected before any numerical conclusion is accepted. The registered 720 geometries / 1,440 regime-expanded candidates and the protected 2026 holdout remain unchanged.
+
+The current authoritative Phase-49 status is recorded in [PHASE49_STATUS.md](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md).
+
+---
 ---
 
 ## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
