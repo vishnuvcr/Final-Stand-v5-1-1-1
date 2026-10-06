@@ -63,3 +63,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 - Run 37463493504 failed before evidence acceptance due missing live sparse feature columns; superseded.
 - Run 37463984884 was superseded/cancelled during the no-op replay optimization; no result from it is used.
 - Final accepted workflow run 37466520042 completed successfully after the schema correction and identity audit.
+
+
+## F42-004 — 2026-10-06 — Accepted Phase 42 execution
+- Corrected GitHub Actions run 37470344620 completed successfully through preflight, 72-variant screen, exact sequential replay, final inference/manuscript and artifact persistence.
+- Earlier Phase 42 failures remain logged as non-evidence.
