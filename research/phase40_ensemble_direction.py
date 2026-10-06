@@ -161,7 +161,7 @@ def replay_expiry(expiry, direction, spot, expected):
     idx = expected.index(expiry)
     window_start = expiry - pd.Timedelta(days=7) if idx == 0 else expected[idx-1] + pd.Timedelta(hours=15, minutes=30)
     sd = spot[(spot.timestamp > window_start) & (spot.timestamp <= expiry + pd.Timedelta(hours=15, minutes=29))].copy()
-    tr, _ = base.run_expiry(expiry, od, sd, int(direction), window_start)
+    tr, _, _ = base.run_expiry(expiry, od, sd, int(direction), window_start)
     return tr
 
 def build_arm_cache(expiries, spot):
