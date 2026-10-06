@@ -311,3 +311,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Stage 3 active-exit tuning was skipped; 2026 holdout remained protected.
 - Phase 44 final decision: **NO PROMOTION**.
 - Final manuscript and decision artifacts are persisted on the Phase-44 branch.
+
+
+## 2026-10-07 — Phase 45 exhaustive ready-made strategy sweep
+- Tested 20 previously-uncovered ready-made structures and reused the accepted Phase-43 matrix for 22 previously-tested families.
+- Numerical rows: new=5102, full=9699.
+- Validation freeze rows=6; holdout confirmation rows=6.
+- Holdout results are confirmation-only and cannot alter the frozen validation ranking.

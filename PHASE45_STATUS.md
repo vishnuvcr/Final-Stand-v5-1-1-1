@@ -1,11 +1,13 @@
 # Phase 45 Status — Exhaustive Ready-Made Strategy Study
 
-**REGISTERED / BUILDING**
+**NUMERICAL SWEEP COMPLETE — VALIDATION/HOLDOUT ARTIFACTS WRITTEN**
 
-Current stage: registration and engine build
-New structures registered: 20
-Phase-43 families reused: 22
-2026 holdout opened: False
-Promotion: None
+New strategies tested: 20
+Phase-43 strategies reused: 20
+New trade rows: 5102
+Full trade rows: 9699
+Validation frozen rows: 6
+Holdout confirmation rows: 6
+Validation positive defined-risk strategy×state rows: 7
 
-All strategy definitions are fixed before numerical execution. Holdout cannot influence selection.
+The holdout table contains only candidates frozen from validation. No parameters are changed from holdout results.
