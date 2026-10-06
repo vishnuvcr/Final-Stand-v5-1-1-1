@@ -763,3 +763,13 @@ Evidence status: Non-evidence source-selection failure.
 Correction: Treatment labels now come from results/phase39_sequential_policy_audit/override_audit.csv, the authoritative seven-override Sparse-GAM audit.
 
 Prevention: Candidate-specific analyses must use candidate-specific immutable result artifacts rather than generic sequential filenames.
+
+
+### Error F39-046 — Stale development-only propensity assignment remained after design change
+Run: 37452359631 (propensity run #4).
+
+Symptom: Runtime NameError for ps_dev after the model had been changed to a full-panel propensity fit.
+
+Evidence status: Non-evidence implementation cleanup failure.
+
+Correction: Removed the obsolete ps_dev/ps_val/ps_hold assignment.
