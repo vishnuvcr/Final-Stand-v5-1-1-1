@@ -929,3 +929,15 @@ The ensemble grid and unique top-10 selection completed, but inference failed wh
 **Correction:** The inference engine now checks whether the control index is timezone-naive before localizing; aware timestamps are converted to the canonical timezone.
 
 **Prevention:** All inference joins now use the same explicit timezone-normalization helper.
+
+
+### Error F40-011 — Exact sequential replay accidentally included 9 prediction-missing expiries
+**Run:** 37457649157.
+
+The exact replay reused the broader Phase-39 control study-expiry list but failed to apply the Phase-40 model-prediction-date filter used by the exhaustive grid. Nine expiries therefore entered through the default fallback direction.
+
+**Evidence status:** the sequential replay completed technically, but its statistics are **superseded and not accepted**.
+
+**Correction:** The replay now filters the study universe to the exact 93 expiry dates covered by the cached Phase-36 expert predictions and asserts the count.
+
+**Prevention:** Every downstream replay must inherit both the canonical study-expiry list and the exact model-coverage mask used by the selection stage.
