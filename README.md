@@ -501,15 +501,15 @@ Phase 43 completed the broad India-VIX-conditioned NIFTY weekly option sweep wit
 Phase 44 tuned six defined-risk VIX-conditioned candidate families across finite strike geometry, four entry times and prior-only India-VIX threshold grids. The corrected study used a 13,292-row development structural matrix, 3,500 profile evaluations, 522 development-eligible configurations and 30 frozen validation candidates.
 
 - [Phase 44 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-44-vix-candidate-tuning)
-- [Phase 44 manuscript](PHASE44_MANUSCRIPT.md)
-- [Phase 44 research plan](PHASE44_RESEARCH_PLAN.md)
-- [Phase 44 pre-registration](PHASE44_PRE_REGISTRATION.md)
-- [Phase 44 literature review](PHASE44_LITERATURE_REVIEW.md)
-- [Phase 44 status](PHASE44_STATUS.md)
-- [Phase 44 final decision](results/phase44_vix_tuning/final_decision.json)
-- [Phase 44 validation matrix](results/phase44_vix_tuning/validation_confirmation.csv)
-- [Phase 44 gate summary](results/phase44_vix_tuning/phase44_gate_summary.csv)
-- [Phase 44 candidate funnel](results/phase44_vix_tuning/figures/candidate_funnel.svg)
+- [Phase 44 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/PHASE44_MANUSCRIPT.md)
+- [Phase 44 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/PHASE44_RESEARCH_PLAN.md)
+- [Phase 44 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/PHASE44_PRE_REGISTRATION.md)
+- [Phase 44 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/PHASE44_LITERATURE_REVIEW.md)
+- [Phase 44 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/PHASE44_STATUS.md)
+- [Phase 44 final decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/results/phase44_vix_tuning/final_decision.json)
+- [Phase 44 validation matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/results/phase44_vix_tuning/validation_confirmation.csv)
+- [Phase 44 gate summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/results/phase44_vix_tuning/phase44_gate_summary.csv)
+- [Phase 44 candidate funnel](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-44-vix-candidate-tuning/results/phase44_vix_tuning/figures/candidate_funnel.svg)
 
 **Validation result:** 18/30 frozen candidates had positive net P&L; 16/30 remained positive under +50% cost stress; 9/30 had positive total uplift. Zero candidates had a strictly positive 95% CI lower bound, zero had unadjusted p<0.05, and zero survived Holm correction.
 
