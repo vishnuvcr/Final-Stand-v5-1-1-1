@@ -43,21 +43,7 @@ jobs:
         run: |
           mkdir -p data/phase40_vix
           if [ ! -f data/phase40_vix/india_vix.csv ]; then
-            python - <<'PY'
-            import pandas as pd
-            import yfinance as yf
-            x = yf.download("^INDIAVIX", start="2020-01-01", end="2026-07-02",
-                            progress=False, auto_adjust=False)
-            if x.empty:
-                raise SystemExit("India VIX download returned no rows")
-            if isinstance(x.columns, pd.MultiIndex):
-                x.columns = [c[0] for c in x.columns]
-            x = x.reset_index()
-            x.columns = [str(c).lower().replace(" ", "_") for c in x.columns]
-            if "date" not in x.columns or "close" not in x.columns:
-                raise SystemExit(f"Unexpected VIX columns: {x.columns.tolist()}")
-            x[["date","close"]].to_csv("data/phase40_vix/india_vix.csv", index=False)
-            PY
+            python -c "import pandas as pd, yfinance as yf; x=yf.download('^INDIAVIX',start='2020-01-01',end='2026-07-02',progress=False,auto_adjust=False); assert not x.empty,'India VIX download returned no rows'; x.columns=[c[0] if isinstance(c,tuple) else c for c in x.columns] if isinstance(x.columns,pd.MultiIndex) else x.columns; x=x.reset_index(); x.columns=[str(c).lower().replace(' ','_') for c in x.columns]; assert 'date' in x.columns and 'close' in x.columns, x.columns.tolist(); x[['date','close']].to_csv('data/phase40_vix/india_vix.csv',index=False)"
             git add data/phase40_vix/india_vix.csv
             git commit -m "phase40: cache India VIX"
             git push origin HEAD:phase-40-ensemble-direction-models
@@ -73,15 +59,7 @@ jobs:
           test -s results/phase40_ensemble/grid_validation.csv
           test -s results/phase40_ensemble/holdout_top10.csv
           test -s results/phase40_ensemble/selection.json
-          python - <<'PY'
-          import json, pandas as pd
-          g = pd.read_csv("results/phase40_ensemble/grid_validation.csv")
-          s = json.load(open("results/phase40_ensemble/selection.json"))
-          assert len(g) == 1764, len(g)
-          assert int(s["grid_candidates"]) == 1764, s
-          assert int(s["top10_count"]) == 10, s
-          print(s["top10"][0])
-          PY
+          python -c "import json,pandas as pd; g=pd.read_csv('results/phase40_ensemble/grid_validation.csv'); s=json.load(open('results/phase40_ensemble/selection.json')); assert len(g)==1764,len(g); assert int(s['grid_candidates'])==1764,s; assert int(s['top10_count'])==10,s; print(s['top10'][0])"
 
       - name: Persist results
         run: |
