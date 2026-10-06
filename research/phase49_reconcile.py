@@ -37,6 +37,21 @@ def pct(x):
         return "NA"
     return f"{100*x:.1f}%"
 
+def markdown_table(df):
+    if df.empty:
+        return "_No rows._"
+    cols=list(df.columns)
+    out=["| "+" | ".join(str(x) for x in cols)+" |","|"+"|".join(["---:"]*len(cols))+"|"]
+    for row in df.itertuples(index=False, name=None):
+        cells=[]
+        for x in row:
+            if isinstance(x,float):
+                cells.append("NA" if pd.isna(x) else f"{x:.6g}")
+            else:
+                cells.append(str(x).replace("|","\\|"))
+        out.append("| "+" | ".join(cells)+" |")
+    return "\n".join(out)
+
 def active_rows(val, fam, state, param_json):
     z = val[(val["family"] == fam) & (val["active_state"] == state) & (val["param_json"] == param_json)]
     return z[z["state"] == state].sort_values("entry_ts").copy()
@@ -262,10 +277,10 @@ def manuscript(pre,summary,fr,vs,par,ann,hc,scores):
         f"The numerical source was GitHub Actions run {SOURCE_RUN_ID}; raw artifact {SOURCE_ARTIFACT_ID}; digest {SOURCE_ARTIFACT_DIGEST}. The numerical step completed successfully. The initial publication gate failed because the empty development error ledger was zero bytes. This reconciliation repairs only the ledger packaging and reruns the artifact/statistical/publication gate without changing numerical values.",
         "",
         "## Appendix A — Annual breakdown","",
-        ann.to_markdown(index=False),
+        markdown_table(ann),
         "",
         "## Appendix B — Candidate parameter table","",
-        par.to_markdown(index=False),
+        markdown_table(par),
         "",
         "## Appendix C — Evidence files","",
         "See results/phase49_vix_tuning for the complete development matrix, validation matrices, holdout matrix, statistical summary, final decision JSON, reconciliation manifest and SVG figures.",
