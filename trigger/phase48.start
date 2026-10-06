@@ -9,3 +9,5 @@ Retry after F48-003 zero-trade diagnostic correction; full numerical run remains
 Retry after F48-004 timestamp probe addition; no numerical evidence accepted yet.
 
 Timestamp-normalization correction applied; restart Phase 48 with UTC-to-IST fixed.
+
+Retry after F48-006 DuckDB interval syntax fix.
