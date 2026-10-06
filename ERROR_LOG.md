@@ -813,3 +813,15 @@ The statistical analysis completed successfully, but CI expected 12 rows after t
 Evidence status: valid propensity results; verification-only failure.
 
 Correction: verifier updated to expect 21 rows.
+
+
+## 2026-10-06 — Phase 40 initialization
+
+### Error F40-001 — Initial ensemble engine required deterministic-grid corrections before execution
+The first draft of the Phase-40 engine contained a validation-grid accumulation bug and mixed global-VIX thresholds with India-VIX values. It was not executed as evidence.
+
+**Evidence status:** non-evidence implementation issue.
+
+**Correction:** The engine was rewritten so all 1,764 candidates are retained, India-VIX development thresholds are used for India-VIX routing, neutral VIX votes are treated as abstentions in majority voting, and the top-10 freeze occurs only after the complete validation grid is written.
+
+**Prevention:** CI asserts exactly 1,764 grid rows and exactly 10 frozen holdout candidates before any result is accepted.
