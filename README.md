@@ -362,6 +362,8 @@ Phase 39 changes the prediction target from NIFTY expiry direction to the actual
 - [Phase 39 workflow](.github/workflows/phase-39-advanced-direction-models.yml)
 - [Phase 39 fixed-opportunity engine](research/phase39_counterfactual_engine.py)
 
-**Step 1 is running:** the exact 206-trade / 102-expiry frozen control opportunity ledger is being evaluated counterfactually for both CALL and PUT arms with the frozen slippage/cost model. No model training or strategy promotion is permitted until this ledger reproduces the control arm within the registered audit tolerance.
+**Step 1 is under corrected rerun:** the first 206-trade counterfactual calculation reconstructed the frozen control essentially exactly, but it was superseded before model training because the preregistered development period extends through 2023. The corrected engine now combines 271 development trades from the accepted Phase-32 artifact with the exact frozen 206-trade validation/holdout panel, while excluding the 2024-01-04 trade to preserve comparator identity. It also uses deterministic stable quote-row deduplication.
+
+No model training or strategy promotion is permitted until the corrected panel passes its control reconstruction audit.
 
 The canonical Phase-38 stateful strategy remains unchanged and authoritative during this phase.
