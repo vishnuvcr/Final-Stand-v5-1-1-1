@@ -6,7 +6,7 @@
     "level_q33": 14.747399940490723,
     "level_q67": 20.43000030517578
   },
-  "sequential_control_validation_net": 30485.4577712201,
+  "sequential_control_validation_net": 76841.9631294001,
   "study_expiries": 93,
   "top10": [
     {
@@ -19,7 +19,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 428,
@@ -31,7 +31,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 435,
@@ -43,7 +43,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 436,
@@ -55,7 +55,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 442,
@@ -67,7 +67,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 477,
@@ -79,7 +79,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 484,
@@ -91,7 +91,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 498,
@@ -103,7 +103,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 722,
@@ -115,7 +115,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3518297036292461,
-      "validation_uplift_vs_sequential_control": 41609.38900285508
+      "validation_uplift_vs_sequential_control": -4747.116355324921
     },
     {
       "candidate_id": 701,
@@ -127,7 +127,7 @@
       "win_rate": 0.6580645161290323,
       "max_dd": 17682.250762565,
       "profit_factor": 1.3500701641387258,
-      "validation_uplift_vs_sequential_control": 41248.83465325509
+      "validation_uplift_vs_sequential_control": -5107.670704924909
     }
   ]
 }
