@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install --disable-pip-version-check --no-input pandas numpy scipy
+      - run: python -m pip install --disable-pip-version-check --no-input pandas numpy scipy scikit-learn
       - name: Run constrained symbolic search
         run: python research/phase39_symbolic_search.py
       - name: Verify Step 7
