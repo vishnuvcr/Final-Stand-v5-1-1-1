@@ -469,3 +469,166 @@ def main():
 
     grid = []
     tests = []
+    for strategy in STRATEGIES:
+        for mode in ["ALL", "LOW", "NORMAL", "HIGH", "SPIKE", "FALLING", "RISING", "HIGH_RISING"]:
+            zd = dev[dev["strategy"] == strategy]
+            zv = val[val["strategy"] == strategy]
+            if mode != "ALL":
+                zd = zd[zd["active_states"].apply(lambda a: mode in a)]
+                zv = zv[zv["active_states"].apply(lambda a: mode in a)]
+            if len(zd) < 10:
+                continue
+            grid.append({
+                "strategy": strategy,
+                "vix_mode": mode,
+                "development_trades": len(zd),
+                "development_net": float(zd["net_rupees"].sum()),
+                "validation_trades": len(zv),
+                "validation_net": float(zv["net_rupees"].sum()),
+                "validation_mean": float(zv["net_rupees"].mean()) if len(zv) else np.nan,
+                "validation_dd": drawdown(zv.sort_values("expiry")["net_rupees"].to_numpy()) if len(zv) else np.nan,
+                "validation_cost50_net": float(zv["net_plus50_cost_rupees"].sum()) if len(zv) else np.nan,
+            })
+            if mode != "ALL" and len(zv) >= 20:
+                base = val[val["strategy"] == strategy][["expiry", "net_rupees"]].rename(columns={"net_rupees": "base"})
+                cand = zv[["expiry", "net_rupees"]].rename(columns={"net_rupees": "cand"})
+                common = base.merge(cand, on="expiry", how="inner")
+                b = bootstrap(common["cand"] - common["base"])
+                tests.append({
+                    "strategy": strategy,
+                    "vix_mode": mode,
+                    **b,
+                })
+
+    grid_df = pd.DataFrame(grid)
+    grid_df.to_csv(OUT / "strategy_vix_validation_grid.csv", index=False)
+    inf_df = pd.DataFrame(tests)
+    if len(inf_df):
+        inf_df["p_holm"] = holm(inf_df["p"].to_numpy())
+    inf_df.to_csv(OUT / "strategy_vix_inference.csv", index=False)
+
+    eligible = grid_df[
+        grid_df["vix_mode"].ne("ALL")
+        & grid_df["development_net"].ge(0)
+        & grid_df["validation_net"].gt(0)
+        & grid_df["validation_trades"].ge(20)
+        & grid_df["strategy"].isin(DEFINED_RISK)
+    ].sort_values(["validation_net", "validation_mean"], ascending=False).head(10)
+    eligible.to_csv(OUT / "frozen_top10_strategy_vix_candidates.csv", index=False)
+
+    router_devval = []
+    router_maps = {}
+    for criterion in ["mean", "median", "sharpe"]:
+        mapping = build_router(dev, criterion)
+        router_maps[criterion] = mapping
+        for split_name, frame in [("development", dev), ("validation", val)]:
+            picked = []
+            for _, z in frame.groupby(["expiry", "entry_ts"], sort=True):
+                strategy = pick_strategy(z["active_states"].iloc[0], mapping)
+                zz = z[z["strategy"] == strategy]
+                if len(zz):
+                    picked.append(zz.iloc[0])
+            rt = pd.DataFrame(picked)
+            router_devval.append({
+                "router": criterion,
+                "split": split_name,
+                "trades": len(rt),
+                "net_rupees": float(rt["net_rupees"].sum()) if len(rt) else np.nan,
+                "mean_net": float(rt["net_rupees"].mean()) if len(rt) else np.nan,
+                "max_dd": drawdown(rt.sort_values("expiry")["net_rupees"].to_numpy()) if len(rt) else np.nan,
+                "cost50_net": float(rt["net_plus50_cost_rupees"].sum()) if len(rt) else np.nan,
+            })
+
+    rv = pd.DataFrame(router_devval)
+    rv.to_csv(OUT / "router_dev_validation.csv", index=False)
+    frozen = []
+    for criterion in ["mean", "median", "sharpe"]:
+        d = rv[(rv["router"] == criterion) & (rv["split"] == "development")].iloc[0]
+        v = rv[(rv["router"] == criterion) & (rv["split"] == "validation")].iloc[0]
+        if d["net_rupees"] >= 0 and v["net_rupees"] > 0 and v["trades"] >= 20 and v["cost50_net"] > 0:
+            frozen.append((criterion, v["net_rupees"]))
+    frozen = [x[0] for x in sorted(frozen, key=lambda x: x[1], reverse=True)[:3]]
+
+    best_all = dev[dev["strategy"].isin(DEFINED_RISK)].groupby("strategy")["net_rupees"].mean().sort_values(ascending=False).index[0]
+    hold_rows = []
+    for criterion in frozen:
+        mapping = router_maps[criterion]
+        picked = []
+        for _, z in hold.groupby(["expiry", "entry_ts"], sort=True):
+            strategy = pick_strategy(z["active_states"].iloc[0], mapping)
+            zz = z[z["strategy"] == strategy]
+            if len(zz):
+                picked.append(zz.iloc[0])
+        rt = pd.DataFrame(picked)
+        bench = hold[hold["strategy"] == best_all][["expiry", "net_rupees"]].rename(columns={"net_rupees": "base"})
+        cand = rt[["expiry", "net_rupees"]].rename(columns={"net_rupees": "cand"}) if len(rt) else pd.DataFrame(columns=["expiry", "cand"])
+        common = bench.merge(cand, on="expiry", how="left").fillna({"cand": 0.0})
+        b = bootstrap(common["cand"] - common["base"])
+        hold_rows.append({
+            "router": criterion,
+            "holdout_trades": len(rt),
+            "holdout_net_rupees": float(rt["net_rupees"].sum()) if len(rt) else 0.0,
+            "holdout_cost50_net": float(rt["net_plus50_cost_rupees"].sum()) if len(rt) else 0.0,
+            "holdout_dd": drawdown(rt.sort_values("expiry")["net_rupees"].to_numpy()) if len(rt) else 0.0,
+            "benchmark_strategy": best_all,
+            "benchmark_holdout_net": float(hold[hold["strategy"] == best_all]["net_rupees"].sum()),
+            "mean_uplift_vs_benchmark": b["mean"],
+            "ci_lo": b["ci_lo"],
+            "ci_hi": b["ci_hi"],
+            "p_signflip": b["p"],
+        })
+
+    hold_df = pd.DataFrame(hold_rows)
+    if len(hold_df):
+        hold_df["p_holm"] = holm(hold_df["p_signflip"].to_numpy())
+    hold_df.to_csv(OUT / "frozen_router_holdout.csv", index=False)
+
+    hold_candidates = []
+    for _, c in eligible.iterrows():
+        z = hold[hold["strategy"] == c["strategy"]]
+        if c["vix_mode"] != "ALL":
+            z = z[z["active_states"].apply(lambda a: c["vix_mode"] in a)]
+        base = hold[hold["strategy"] == c["strategy"]]
+        hold_candidates.append({
+            "strategy": c["strategy"],
+            "vix_mode": c["vix_mode"],
+            "holdout_trades": len(z),
+            "holdout_net": float(z["net_rupees"].sum()) if len(z) else 0.0,
+            "holdout_cost50_net": float(z["net_plus50_cost_rupees"].sum()) if len(z) else 0.0,
+            "benchmark_all_net": float(base["net_rupees"].sum()),
+            "holdout_dd": drawdown(z.sort_values("expiry")["net_rupees"].to_numpy()) if len(z) else 0.0,
+        })
+    hold_candidates_df = pd.DataFrame(hold_candidates)
+    hold_candidates_df.to_csv(OUT / "frozen_top10_holdout.csv", index=False)
+
+    make_figures(trades)
+
+    stage5 = "REQUIRED" if len(frozen) else "SKIPPED_NO_ROUTER_PASSED"
+    decision = "PENDING_STAGE5_ACTIVE_EXIT" if frozen else "NO_PROMOTION"
+
+    summary = {
+        "phase": 43,
+        "status": "STRUCTURAL_COMPLETE_STAGE5_PENDING" if frozen else "COMPLETE_NO_ROUTER_PROMOTED",
+        "strategies_declared": len(STRATEGIES),
+        "defined_risk_strategies": len(DEFINED_RISK),
+        "expiry_files": len(expiry_files),
+        "opportunities": int(len(opportunities)),
+        "trade_rows": int(len(trades)),
+        "development_rows": int(len(dev)),
+        "validation_rows": int(len(val)),
+        "holdout_rows": int(len(hold)),
+        "frozen_top10_count": int(len(eligible)),
+        "frozen_router_count": int(len(frozen)),
+        "best_defined_risk_development_benchmark": str(best_all),
+        "data_errors": int(len(errors)),
+        "stage5": stage5,
+        "decision": decision,
+    }
+
+    (OUT / "frozen_router_maps.json").write_text(json.dumps({"benchmark": best_all, "maps": router_maps, "frozen": frozen}, indent=2))
+    (OUT / "summary.json").write_text(json.dumps(summary, indent=2))
+    print(json.dumps(summary, indent=2))
+
+
+if __name__ == "__main__":
+    main()
