@@ -1193,3 +1193,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: the currently running Phase-45 run is superseded/non-evidence because its head predates these corrections.
 - Correction: Double Plateau is fixed as two three-leg butterflies; the defined-risk classification explicitly excludes short straddles, short strangles and ratio spreads.
 - Prevention: strategy definitions and promotion-risk classes are now validated against a frozen explicit allowlist before execution.
+
+
+## F45-002 — workflow log endpoint unavailable while numerical job is running
+- Run 37512787150 remains in the numerical step, but the temporary GitHub Actions job-log blob returns 404/BlobNotFound while the job is still executing.
+- Evidence status: tooling-only; no numerical conclusion is inferred from missing live logs.
+- Correction: monitor authoritative workflow/job status and inspect full logs only after completion, matching the established project convention.
