@@ -298,3 +298,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# publication-race-safe rerun trigger v3
