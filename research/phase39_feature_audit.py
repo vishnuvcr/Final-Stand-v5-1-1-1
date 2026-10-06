@@ -42,7 +42,7 @@ label_numeric=[c for c in numeric if c in LABELS]
 unexpected=[c for c in numeric if c not in LABELS and c in {"delta_pnl_call_minus_put"}]
 if any(c in model_candidates for c in LABELS):
     raise AssertionError("label leaked into model candidate schema")
-if fully_missing != sorted(EXCLUDE_EXACT.intersection(fully_missing)):
+if set(fully_missing) != set(EXCLUDE_EXACT):
     raise AssertionError(f"unexpected fully missing numeric columns: {fully_missing}")
 rows=[]
 for c in model_candidates:
