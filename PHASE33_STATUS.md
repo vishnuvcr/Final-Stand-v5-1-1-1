@@ -47,3 +47,12 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 - No numerical result from runs before this correction is accepted.
 - Corrected the LSTM to use the 30 most recent completed NIFTY trading sessions strictly before each D−6 reference date.
 - Corrected commit: 6bb06e263b0c46da9510d40c7effc5d93c2c0f1e.
+
+### Step 7 — corrected numerical run #11 — COMPUTATION SUCCESS / EVIDENCE PROVISIONAL
+- Run #11 completed model computation successfully after the exact-timestamp correction.
+- 245 events: 128 development, 95 validation, 22 2026 holdout.
+- Preliminary direction results: RF validation accuracy 54.74%; RF 2026 holdout 54.55%; equal-weight ensemble 2026 holdout 59.09%.
+- The 2026 holdout always-down baseline is 63.64%, so the preliminary models did not beat the simple downside baseline on accuracy.
+- The preliminary GARCH run is not final because EGARCH multi-step analytic forecasts were unsupported and therefore omitted from the family average.
+- The artifact is retained, but final conclusions await the corrected EGARCH simulation run.
+- Run #11 numerical artifact: 11392817248.
