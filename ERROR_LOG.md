@@ -1257,3 +1257,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - After revising the monthly diagnostic to allow separate current/next-expiry ATM strikes, the workflow still printed the removed `common_strikes` column.
 - Evidence status: tooling-only; the diagnostic result itself was not numerically accepted.
 - Correction: workflow now prints `cur_strikes` and `next_strikes`, matching the revised diagnostic artifact.
+
+## F47-AUTO — Phase 47 workflow failure
+- The numerical workflow failed or an artifact self-audit failed.
+- Evidence status: affected run is non-evidence until the failure is diagnosed and corrected.
+- The workflow requires compile, preflight, numerical, artifact and holdout audits before publication.
