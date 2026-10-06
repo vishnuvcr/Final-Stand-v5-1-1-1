@@ -1023,3 +1023,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 ## 2026-10-06 — Phase 42 closeout
 - Accepted evidence is limited to the successful Phase-42 workflow after preflight, syntax audit, fixed-opportunity selection, sequential replay and closeout.
+
+
+## F43-001 — 2026-10-06 — Registration payload syntax incident
+- **Symptom:** Initial Phase-43 registration write failed with a JavaScript `SyntaxError` caused by an unescaped content delimiter in the orchestration payload.
+- **Evidence status:** No repository file was changed by the failed call; no numerical run occurred.
+- **Correction:** Reissued the write with safe string construction. Phase43 plan, pre-registration, status and literature review were successfully committed.
+- **Prevention:** Use payload-safe string generation for repository writes and validate syntax before issuing GitHub mutations.
