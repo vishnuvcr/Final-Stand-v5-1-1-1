@@ -84,6 +84,10 @@ def get_schema(y):
     SCHEMAS[y]=cols
     return cols
 
+def get_schema_detail(y):
+    p=get_file(y)
+    return duck(f"DESCRIBE SELECT * FROM read_parquet('{p}')")
+
 def pick_col(cols,candidates):
     low={x.lower():x for x in cols}
     for c in candidates:
@@ -405,6 +409,16 @@ def run_preflight():
     if len(md)==0:
         raise RuntimeError('F48-007 independent dataset has no trade dates with multiple expiries')
     return result
+def timestamp_probe(days, monthly):
+    rows=[]
+    for e in monthly[:3]:
+        ed=fourth_before(days,e)
+        if ed is None: continue
+        rel=norm_relation(ed.year)
+        ds=ed.date().isoformat()
+        q=duck(f"SELECT MIN(timestamp) AS min_ts, MAX(timestamp) AS max_ts, MIN(EXTRACT(HOUR FROM timestamp)*60+EXTRACT(MINUTE FROM timestamp)) AS min_min, MAX(EXTRACT(HOUR FROM timestamp)*60+EXTRACT(MINUTE FROM timestamp)) AS max_min FROM {rel} WHERE date='{ds}'")
+        rows.append({'expiry':str(e.date()),'entry_day':ds,'min_ts':str(q.iloc[0].min_ts),'max_ts':str(q.iloc[0].max_ts),'min_min':q.iloc[0].min_min,'max_min':q.iloc[0].max_min})
+    d=pd.DataFrame(rows); d.to_csv(OUT/'timestamp_probe.csv',index=False); return d
 def diagnostic_attempts(days, monthly, vix, limit=20):
     out=[]
     for e in monthly:
@@ -444,8 +458,9 @@ def diagnostic_attempts(days, monthly, vix, limit=20):
 def main():
     if os.getenv("PHASE48_DIAGNOSTIC_ONLY")=="1":
         days=all_trade_days(); exps=expiries_all(); monthly=monthly_expiries(exps); vix=load_vix()
-        d=diagnostic_attempts(days,monthly,vix,limit=24)
-        print(d.to_string(index=False))
+        print(get_schema_detail(2024).to_string(index=False))
+        tp=timestamp_probe(days,monthly); print(tp.to_string(index=False))
+        d=diagnostic_attempts(days,monthly,vix,limit=24); print(d.to_string(index=False))
         return
     if os.getenv("PHASE48_PREFLIGHT_ONLY")=="1":
         print(json.dumps(run_preflight(),indent=2,default=str))
