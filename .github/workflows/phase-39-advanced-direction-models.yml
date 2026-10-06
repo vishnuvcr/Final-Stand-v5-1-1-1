@@ -1,4 +1,4 @@
-name: Phase 39 - Advanced Direction Model Preflight
+name: Phase 39 - Advanced Counterfactual Direction Models
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
       - 'results/phase39_candidate_method_registry.csv'
       - 'results/phase38_corrected_model_robustness/frozen_control_*'
       - 'research/phase39_preflight.py'
+      - 'research/phase39_counterfactual_engine.py'
       - '.github/workflows/phase-39-advanced-direction-models.yml'
   workflow_dispatch:
 
@@ -17,24 +18,54 @@ permissions:
   contents: write
 
 jobs:
-  preflight:
+  counterfactual_step_1:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase39-hf-${{ runner.os }}-${{ hashFiles('research/phase39_counterfactual_engine.py') }}
+          restore-keys: |
+            phase39-hf-${{ runner.os }}-
       - run: |
           python -m pip install --upgrade pip
-          pip install pandas pyarrow
+          pip install pandas pyarrow requests huggingface_hub
       - name: Validate preregistration and frozen benchmark
         run: python research/phase39_preflight.py
-      - name: Persist preflight
+      - name: Build fixed-opportunity CALL/PUT counterfactual ledger
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python research/phase39_counterfactual_engine.py
+      - name: Verify critical outputs
+        run: |
+          test -f results/phase39_data/frozen_control_trades_2024_2026-06-30.csv
+          test -f results/phase39_data/frozen_control_provenance.json
+          test -f results/phase39_counterfactual/fixed_opportunity_ledger.csv
+          test -f results/phase39_counterfactual/summary.json
+          python - <<'PY'
+          import json, pandas as pd
+          z=pd.read_csv('results/phase39_counterfactual/fixed_opportunity_ledger.csv')
+          s=json.load(open('results/phase39_counterfactual/summary.json'))
+          assert len(z)==206 and z.expiry.nunique()==102
+          assert abs(z.control_net_rupees.sum()-63672.57530171223)<1e-6
+          assert s['control_reconstruction_max_abs_error'] <= 0.75
+          print(json.dumps(s,indent=2))
+          PY
+      - name: Persist Phase 39 Step 1 evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/phase39_preflight.json
-          git commit -m 'Phase 39: persist research preflight' || true
-          git pull --rebase origin ${GITHUB_REF_NAME}
-          git push origin 'HEAD:'${GITHUB_REF_NAME}
+          git add results/phase39_preflight.json results/phase39_data results/phase39_counterfactual
+          git commit -m 'Phase 39: persist fixed-opportunity counterfactual evidence' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
