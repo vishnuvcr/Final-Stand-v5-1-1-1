@@ -320,3 +320,32 @@ Phase 37 reruns only CATBOOST, DART, WAVELET_TREE, OOF_STACK and MARKOV_REGIME_T
 - [Workflow](.github/workflows/phase-37-model-direction-polarity-correction.yml)
 
 Phase 36 model-selector P&L remains retained as an audit artifact but is not treated as a valid test of the intended polarity hypothesis.
+
+
+## Phase 38 — corrected model robustness vs stateful control — COMPLETE / REJECTED
+
+Phase 38 tested the five Phase-37 polarity-corrected model direction selectors against the frozen canonical Phase-32 stateful control. The phase used 10,000 deterministic paired expiry bootstrap resamples, 2024/2025/2026 splits, +25/+50/+100% cost stress, and CALL/PUT asymmetry analysis.
+
+**Final result: none of the five selectors is promoted. The canonical stateful direction rule remains unchanged.**
+
+| Selector | Net P&L | 2026 holdout | Mean Δ vs control / expiry | P(selector > control) |
+|---|---:|---:|---:|---:|
+| CATBOOST | ₹57,874.80 | ₹49,054.33 | -₹200.98 | 37.63% |
+| MARKOV_REGIME_TREE | ₹53,060.31 | ₹41,969.35 | -₹252.75 | 34.37% |
+| WAVELET_TREE | ₹31,294.89 | ₹50,776.68 | -₹486.79 | 23.19% |
+| OOF_STACK | ₹24,765.71 | ₹48,345.59 | -₹557.00 | 20.18% |
+| DART | ₹19,372.11 | ₹39,053.96 | -₹614.99 | 18.11% |
+
+All five selectors were positive in the 2026 holdout and at +50% transaction-cost stress, but every paired point estimate favored the control and every bootstrap interval crossed zero. Every selector also showed positive CALL-side P&L and negative PUT-side P&L.
+
+A control-reproducibility discrepancy was detected and logged as F38-001: a fresh Phase-32 reconstruction produced 205 trades / 103 expiries / ₹65,945.47 rather than the frozen canonical 206 / 102 / ₹63,672.58. The frozen canonical artifact is therefore authoritative for Phase-38 treatment comparisons.
+
+- [Phase 38 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-38-corrected-model-robustness)
+- [Phase 38 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/PHASE38_STATUS.md)
+- [Phase 38 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/PHASE38_MANUSCRIPT.md)
+- [Phase 38 paired bootstrap](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/results/phase38_corrected_model_robustness/paired_bootstrap.csv)
+- [Phase 38 cost stress](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/results/phase38_corrected_model_robustness/cost_stress.csv)
+- [Phase 38 control audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/results/phase38_corrected_model_robustness/control_validation.json)
+- [Phase 38 pull request #12](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/12)
+
+**Next research priority:** Phase 39 robustness of the canonical stateful strategy with broker-realistic bid/ask, latency, fill probability, and expanded cost/slippage stress.
