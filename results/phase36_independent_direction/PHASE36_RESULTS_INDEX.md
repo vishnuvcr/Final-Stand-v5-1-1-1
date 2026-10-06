@@ -1,9 +1,29 @@
-selector,period,trades,net_pnl_rupees,win_rate,profit_factor,mean_net_rupees
-STATEFUL_CONTROL,2024-2025,172,63948.222105,0.6569767441860465,1.277,371.791989
-OTM789_FRESH,2024-2025,170,37147.018331,0.6352941176470588,1.256,218.511872
-OTM678_FRESH,2024-2025,169,26413.075578,0.6390532544378699,1.183,156.290388
-OOF_STACK,2024-2025,150,18277.275666,0.5866666666666667,1.197,121.848504
-DART,2024-2025,153,14379.252057,0.6013071895424836,1.260,93.982040
-WAVELET_TREE,2024-2025,151,14179.196839,0.5894039735099338,1.187,93.901966
-CATBOOST,2024-2025,143,-14123.064278,0.5804195804195804,0.978,-98.762687
-MARKOV_REGIME_TREE,2024-2025,152,-16393.554833,0.5789473684210527,0.957,-107.852334
+# Phase 36 Results Index — Independent Per-Trade Direction Selector Overlay
+
+**Final decision: REJECTED — NO LIVE-TRADING PROMOTION**
+
+## Final accepted evidence
+- GitHub Actions run: 37428502722 (#4)
+- corrected code revision: c8963bcded49ae15cf5b059394f3471ec1c3f2a4
+- all seven selector jobs: success
+- publication job: success
+- final artifact commit: produced by the publication job on the Phase-36 branch
+
+## Primary window
+2024-01-01 through 2026-06-30.
+128 expected expiries; 104 expiry files available; one later file incomplete; 103 processed expiry files in the final treatments.
+
+## State-dependent control
+206 trades; net ₹63,672.58; gross ₹84,054.00; costs ₹20,381.42; win rate 65.53%; PF 1.203; max drawdown ₹61,960.87.
+
+## Independent selectors
+OTM789_FRESH -₹39,122.38; OTM678_FRESH -₹62,665.27; DART -₹54,475.24; OOF_STACK -₹59,868.85; WAVELET_TREE -₹66,398.02; MARKOV_REGIME_TREE -₹88,163.44; CATBOOST -₹92,977.93.
+
+## 2026 holdout
+All seven selectors lost money; the stateful control was approximately flat at -₹275.65.
+
+## Statistical comparison
+Per-expiry bootstrap mean differences versus the control were negative for every selector; every 95% interval was entirely below zero.
+
+## Artifacts
+Each selector folder contains trades.csv, skips.csv, summary.csv, yearly_statistics.csv, direction_statistics.csv, selector_usage.csv, coverage.json and run.log.
