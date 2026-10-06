@@ -75,7 +75,7 @@ def policy(z, pred, rank_name, gate):
         "alt_net_rupees":alt,"delta_pnl":z["delta_pnl_call_minus_put"],
         "pred_delta":pred,"rank_score":sc,"rank_threshold":threshold,
         "rank_percentile":pct,"override":override,"policy_net_rupees":net,
-        "india_vix_level":z["india_vix_level"],"india_vix_high":z["india_vix_high"],
+        "india_vix_level":z["india_vix_level"],"india_vix_ret1":z["india_vix_ret1"],"india_vix_high":z["india_vix_high"],
         "india_vix_rising":z["india_vix_rising"],"india_vix_high_rising":z["india_vix_high_rising"],
         "global_VIX":z["global_VIX"],"global_VIX_ret1":z["global_VIX_ret1"],
         "nifty_daily_rv_20d":z["nifty_daily_rv_20d"],"nifty_gap_from_prev_close":z["nifty_gap_from_prev_close"],
