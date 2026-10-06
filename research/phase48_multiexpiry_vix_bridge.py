@@ -340,7 +340,41 @@ def deterministic_p(a,b):
         p=rng.permutation(pooled); perms.append(p[:n].mean()-p[n:].mean())
     return obs,float(np.quantile(boots,.025)),float(np.mean(np.asarray(perms)>=obs))
 
+
+def run_preflight():
+    audit=audit_dataset()
+    days=all_trade_days()
+    exps=expiries_all()
+    monthly=monthly_expiries(exps)
+    if len(days)<30 or len(exps)<20 or len(monthly)<6:
+        raise RuntimeError("F48-006 insufficient independent dataset universe")
+    checks=[]
+    for e in monthly:
+        if e < START: continue
+        ne=next((x for x in monthly if x>e),None)
+        if ne is None: continue
+        entry_day=fourth_before(days,e)
+        if entry_day is None: continue
+        cur=option_snapshot(entry_day,e); nxt=option_snapshot(entry_day,ne)
+        checks.append({"expiry":str(e.date()),"entry_day":str(entry_day.date()),
+                       "current_rows":int(len(cur)),"next_rows":int(len(nxt)),
+                       "current_spot":bool(cur.spot_price.notna().any()),
+                       "next_spot":bool(nxt.spot_price.notna().any())})
+    z=pd.DataFrame(checks)
+    multi=int(((z.current_rows>0)&(z.next_rows>0)).sum())
+    result={"audit":audit,"trade_days":len(days),"expiries":len(exps),
+            "monthly_expiries":len(monthly),"monthly_checks":len(z),
+            "multi_expiry_entry_checks":multi}
+    z.to_csv(OUT/"preflight_monthly_checks.csv",index=False)
+    (OUT/"preflight.json").write_text(json.dumps(result,indent=2,default=str))
+    if multi<3:
+        raise RuntimeError("F48-007 independent dataset did not demonstrate multi-expiry entry coverage")
+    return result
+
 def main():
+    if os.getenv("PHASE48_PREFLIGHT_ONLY")=="1":
+        print(json.dumps(run_preflight(),indent=2,default=str))
+        return
     audit=audit_dataset()
     days=all_trade_days()
     exps=expiries_all()
