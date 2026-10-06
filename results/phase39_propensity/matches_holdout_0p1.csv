@@ -1,0 +1,2 @@
+treated_entry_ts,treated_ps,control_entry_ts,control_ps,abs_ps_distance,treated_effect,matched_control_effect,effect_difference,treated_split,control_split,caliper,period
+2026-03-18 09:20:00+05:30,0.9108409816160634,2026-03-25 09:20:00+05:30,0.9573020316330976,0.046461050017034156,9439.851847647005,14294.319473499003,-4854.467625851998,holdout,holdout,0.1,holdout

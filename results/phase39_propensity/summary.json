@@ -1,0 +1,34 @@
+{
+  "status": "COMPLETE",
+  "total_rows": 477,
+  "development_treated": 3,
+  "validation_treated": 1,
+  "holdout_treated": 1,
+  "audited_override_count": 7,
+  "mapped_fixed_opportunity_overrides": 5,
+  "feature_count": 103,
+  "primary_estimand": "ATT of Sparse-GAM override versus matched no-override opportunities, measured by alternative-minus-control net P&L",
+  "calipers": [
+    0.01,
+    0.025,
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1.0
+  ],
+  "development_att_caliper_0.05": {
+    "sample": "development",
+    "treated": 3,
+    "controls": 268,
+    "matched": 0,
+    "att": null,
+    "ci_lo": null,
+    "ci_hi": null,
+    "period": "development",
+    "caliper": 0.05
+  },
+  "validation_att_identifiable": true,
+  "holdout_att_identifiable": true,
+  "warning": "Treatment is policy-generated and extremely sparse; propensity matching cannot establish causal efficacy with seven overrides."
+}

@@ -1,0 +1,2 @@
+treated_entry_ts,treated_ps,control_entry_ts,control_ps,abs_ps_distance,treated_effect,matched_control_effect,effect_difference,treated_split,control_split,caliper,period
+2024-05-31 09:20:00+05:30,0.9962056990684132,2024-01-29 09:20:00+05:30,0.5310763100650104,0.4651293890034027,12026.423183850005,1598.555685900003,10427.867497950003,validation,validation,1.0,validation
