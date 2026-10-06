@@ -49,7 +49,7 @@ def main():
     q=float(v[v.date<pd.Timestamp("2024-01-01")].close.quantile(.67)); rq=float(v[v.date<pd.Timestamp("2024-01-01")].ret1.abs().quantile(.67))
     vals=[]
     for ts in z.entry_ts:
-        x=v[v.date<pd.Timestamp(ts).normalize()]
+        d=pd.Timestamp(ts); d=d.tz_localize(None) if d.tzinfo is not None else d; x=v[v.date<d.normalize()]
         if x.empty: vals.append((np.nan,np.nan))
         else: vals.append((float(x.iloc[-1].close),float(x.iloc[-1].ret1) if pd.notna(x.iloc[-1].ret1) else np.nan))
     z["india_vix_level"]=[a for a,b in vals]; z["india_vix_ret1"]=[b for a,b in vals]
