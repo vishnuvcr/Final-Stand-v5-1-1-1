@@ -140,3 +140,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 - F44-011/F44-012: premature validation/holdout triggers were quarantined; validation/holdout now require explicit stage trigger files.
 - F44-013: predicate timestamp filtering produced no development rows on this dataset; the staged reader now falls back to the proven Phase-43 full-parquet reader and uses two expiry workers.
 - Current corrected development run: **37496337984**. It remains non-final until artifact audit and persistence succeed.
+
+
+## 2026-10-06 — Phase 44 F44-014/F44-015
+- Development numerical stage 37496337984 completed with 13,292 rows and 3,500 profile rows, but persistence failed on a summary filename mismatch; output was not accepted.
+- F44-015 increases staged expiry workers from 2 to 4. Current run 37500626261 is the active retry.
