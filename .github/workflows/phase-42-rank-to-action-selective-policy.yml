@@ -1,0 +1,94 @@
+name: Phase 42 - Rank to Action Selective Policy
+
+on:
+  push:
+    branches:
+      - phase-42-rank-to-action-selective-policy
+    paths:
+      - 'PHASE42_TRIGGER.md'
+      - 'PHASE42_RESEARCH_PLAN.md'
+      - 'PHASE42_PRE_REGISTRATION.md'
+      - 'PHASE42_LITERATURE_REVIEW.md'
+      - 'research/phase42_*.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase42-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phase42:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-42-rank-to-action-selective-policy
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase42-hf-${{ runner.os }}-${{ hashFiles('research/phase42_*.py') }}
+          restore-keys: |
+            phase42-hf-${{ runner.os }}-
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --no-input             numpy pandas pyarrow scikit-learn matplotlib huggingface_hub requests
+      - name: Preflight
+        run: |
+          test -f PHASE42_RESEARCH_PLAN.md
+          test -f PHASE42_PRE_REGISTRATION.md
+          test -f PHASE42_LITERATURE_REVIEW.md
+          test -f results/phase39_counterfactual/fixed_opportunity_ledger.csv
+          test -f results/phase39_features/point_in_time_features.csv
+          test -f data/phase40_vix/india_vix.csv
+          python - <<'PY'
+          import pandas as pd
+          z=pd.read_csv('results/phase39_counterfactual/fixed_opportunity_ledger.csv')
+          f=pd.read_csv('results/phase39_features/point_in_time_features.csv')
+          assert len(z)==477 and len(f)==477
+          assert set(z['split'])=={'development','validation','holdout'}
+          assert int((z['split']=='development').sum())==271
+          assert int((z['split']=='validation').sum())==172
+          assert int((z['split']=='holdout').sum())==34
+          print('Phase-42 preflight PASS')
+          PY
+      - name: Syntax audit
+        run: |
+          python -m py_compile research/phase42_rank_policy_screen.py
+          python -m py_compile research/phase42_sequential_replay.py
+          python -m py_compile research/phase42_finalize.py
+      - name: Step 1 - chronological six-variant selective screen
+        run: python research/phase42_rank_policy_screen.py
+      - name: Persist Step 1 artifacts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add PHASE42_STATUS.md results/phase42_rank_policy
+          git commit -m 'Phase 42: persist selective ranking screen' || true
+          git pull --rebase origin phase-42-rank-to-action-selective-policy
+          git push origin HEAD:phase-42-rank-to-action-selective-policy
+      - name: Step 2 - exact sequential replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase42_sequential_replay.py
+      - name: Persist Step 2 artifacts
+        run: |
+          git add PHASE42_STATUS.md results/phase42_rank_policy
+          git commit -m 'Phase 42: persist exact selective sequential replay' || true
+          git pull --rebase origin phase-42-rank-to-action-selective-policy
+          git push origin HEAD:phase-42-rank-to-action-selective-policy
+      - name: Step 3 - final inference, manuscript and promotion gate
+        run: python research/phase42_finalize.py
+      - name: Persist final Phase 42 closeout
+        run: |
+          git add PHASE42_STATUS.md PHASE42_MANUSCRIPT.md RESEARCH_LOG.md ERROR_LOG.md results/phase42_rank_policy
+          git commit -m 'Phase 42: finalize manuscript and promotion decision' || true
+          git pull --rebase origin phase-42-rank-to-action-selective-policy
+          git push origin HEAD:phase-42-rank-to-action-selective-policy
