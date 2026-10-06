@@ -55,8 +55,12 @@ Same-day global values are forbidden when their market has not closed by 10:00 I
 
 Sentiment:
 - daily aggregate positive/negative/neutral sentiment from the cached Indian financial-news dataset;
+- the primary sentiment-augmented SOFNN subtrack uses 2024 as development, 2025 as validation and 2026 as holdout because the selected source begins in January 2024.
 - 1/3/5/7-day sentiment means and breadth;
 - no forward-return or target columns from any sentiment dataset may be used as features.
+
+Institutional flow:
+- FII/FPI and DII net equity flow plus selected index futures/options positioning from the cached open-source history; joins are strictly backward-looking and missing periods remain missing.
 
 Options/market microstructure (event-level diagnostic where coverage is available):
 - reference-time ATM/near-ATM call/put volume and open interest;
