@@ -1,0 +1,70 @@
+name: Phase 33 - NIFTY D-6 Prediction Models
+
+on:
+  push:
+    branches: [phase-33-nifty-prediction-models]
+    paths:
+      - 'PHASE33_*.md'
+      - 'results/phase33_nifty_prediction/**'
+      - 'research/phase33_nifty_prediction_models.py'
+      - '.github/workflows/phase-33-nifty-prediction-models.yml'
+  workflow_dispatch:
+    inputs:
+      sample_start:
+        description: 'Sample start date (YYYY-MM-DD)'
+        required: false
+        default: '2021-05-27'
+      sample_end:
+        description: 'Sample end date (YYYY-MM-DD)'
+        required: false
+        default: '2026-09-30'
+
+permissions:
+  contents: write
+
+jobs:
+  model-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow huggingface_hub datasets scikit-learn arch yfinance torch
+
+      - name: Run Phase 33
+        env:
+          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          SAMPLE_START: \${{ inputs.sample_start }}
+          SAMPLE_END: \${{ inputs.sample_end }}
+        run: |
+          set -o pipefail
+          python research/phase33_nifty_prediction_models.py 2>&1 | tee phase33_run.log
+
+      - name: Persist cache and results
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/phase33 results/phase33_nifty_prediction phase33_run.log
+          git diff --cached --quiet || git commit -m "Phase 33: persist prediction cache and results"
+          git push
+
+      - name: Upload Phase 33 artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase33-nifty-prediction-results
+          path: |
+            results/phase33_nifty_prediction/**
+            data/phase33/**
+            phase33_run.log
+          if-no-files-found: warn
