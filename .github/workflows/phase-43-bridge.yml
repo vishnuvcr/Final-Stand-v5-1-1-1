@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - "trigger/phase43.bridge"
+  pull_request:
+    paths:
+      - "trigger/phase43.start"
+      - "research/phase43_vix_strategy_sweep.py"
   workflow_dispatch:
 
 permissions:
