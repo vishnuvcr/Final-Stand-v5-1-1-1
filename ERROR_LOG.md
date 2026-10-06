@@ -729,3 +729,15 @@ Evidence status: Non-evidence runtime failure.
 Correction: The replay now retains the target from the feature matrix and imports the ledger target under an explicit suffix only for a numerical equality audit; a hard <1e-8 rupee target-match assertion is applied.
 
 Prevention: Any dual-source target cross-check will use explicit suffixes and an equality invariant rather than relying on pandas's default column retention.
+
+
+### Error F39-043 — Sequential/fixed propensity-treatment count mismatch
+Run: 37451770011 (propensity run #1).
+
+Symptom: The propensity runner asserted seven mapped overrides, but the sequential replay contains 479 trades versus 477 fixed opportunities; not every sequential entry is necessarily represented in the fixed panel.
+
+Evidence status: Non-evidence data-mapping failure.
+
+Correction: Propensity matching now explicitly distinguishes total sequential overrides from overrides mapped to the fixed-opportunity panel and reports any unmapped overrides. No treatment is inferred for an unmatched timestamp.
+
+Prevention: All causal/observational analyses will audit exact row-level mapping before statistical estimation.
