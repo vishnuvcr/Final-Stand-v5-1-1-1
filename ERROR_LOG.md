@@ -1367,3 +1367,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: non-final; no numerical result is accepted from the long-running process.
 - Correction: candidate evaluation now caches entry quotes and expiry-day quote series per expiry/entry snapshot and performs dictionary/index operations instead of repeated full-DataFrame scans for each candidate.
 - Prevention: performance gates are now treated as part of scientific reproducibility; a search must complete deterministically within the registered CI timeout rather than relying on an opaque long-running job.
+
+
+## F49-004 — Second performance audit found cache construction still repeated per candidate
+- Self-audit of the optimized engine showed the quote-map cache was being built inside `one()`, so it was reconstructed for every parameter configuration sharing the same expiry and entry time.
+- Evidence status: no result from the affected run is accepted.
+- Correction: cache is now keyed by expiry-entry timestamp and reused across the complete 720-configuration family for that snapshot.
+- Prevention: performance reviews now explicitly check cache lifetime and reuse at the candidate-family level.
