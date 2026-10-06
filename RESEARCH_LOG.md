@@ -119,3 +119,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Current corrected development run: **37496337984** after F44-013.
 - Premature validation/holdout attempts were classified as failures/non-evidence and logged.
 - 2026 holdout remains protected.
+
+
+## 2026-10-06 — Phase 44 final closeout
+- Completed corrected VIX candidate tuning and validation under the registered chronological and cost model.
+- No candidate survived the validation inference gate.
+- Final decision: **NO PROMOTION**.
