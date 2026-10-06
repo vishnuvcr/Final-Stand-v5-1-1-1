@@ -66,7 +66,7 @@ jobs:
           assert (z.split=='holdout').sum()==34
           assert abs(z[z.split!='development'].control_net_rupees.sum()-63672.57530171223)<1e-6
           assert s['development']['rows']==271 and s['validation']['rows']==172 and s['holdout']['rows']==34
-          assert s['validation']['control_net_rupees'] + s['holdout']['control_net_rupees'] == s['frozen_control_net_rupees']
+          assert abs((s['validation']['control_net_rupees'] + s['holdout']['control_net_rupees']) - s['frozen_control_net_rupees']) < 1e-6
           assert s['validation']['control_reconstruction_max_abs_error'] <= 0.75
           assert s['holdout']['control_reconstruction_max_abs_error'] <= 0.75
           print(json.dumps(s,indent=2))
