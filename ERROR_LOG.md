@@ -964,3 +964,16 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 **Prevention:** All future sequential feature builders must preserve the exact registered matrix schema at the engine boundary before model prediction.
 
+
+
+## 2026-10-06 — Phase 41 Run 37463984884 runtime optimization
+
+### Error F41-002 — Sequential replay unnecessarily refit a policy proven to be an exact no-op
+
+**Finding:** The fixed-opportunity screen showed zero overrides for all three frozen candidates across development, validation and holdout. The first corrected sequential runner still refit the model at every historical entry before discovering that no action change could occur.
+
+**Evidence status:** The run produced no accepted sequential evidence and is superseded.
+
+**Correction:** Sequential replay now checks the frozen full-panel override counts first. When all three splits have zero overrides, the candidate is represented by the exact canonical stateful ledger because action, exit path, future availability and state are unchanged. This is an identity proof, not a parameter relaxation. Workflow concurrency was changed to cancel a superseded expensive run when the corrected runner is pushed.
+
+**Prevention:** Future phases must use a pre-replay identity invariant to avoid recomputing a policy already proven to be exactly identical to the control.
