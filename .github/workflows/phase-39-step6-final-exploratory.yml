@@ -1,0 +1,55 @@
+name: Phase 39 - Step 6 Final Exploratory Families
+
+on:
+  push:
+    branches: [phase-39-advanced-direction-models]
+    paths:
+      - 'research/phase39_final_exploratory.py'
+      - 'results/phase39_features/point_in_time_features.csv'
+      - 'results/phase39_counterfactual/fixed_opportunity_ledger.csv'
+      - '.github/workflows/phase-39-step6-final-exploratory.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase39-step6-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  final_exploratory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check --no-input pandas numpy scipy scikit-learn
+      - name: Run final exploratory screen
+        run: python research/phase39_final_exploratory.py
+      - name: Verify final exploratory screen
+        run: |
+          test -f results/phase39_final_exploratory/summary.json
+          test -f results/phase39_final_exploratory/status.json
+          python - <<'PY'
+          import json
+          s=json.load(open('results/phase39_final_exploratory/summary.json'))
+          assert s['status']=='COMPLETE'
+          assert s['holdout_evaluated'] is False
+          assert s['expert_aggregation_diagnostic_only'] is True
+          assert s['decision']=='NO_HOLDOUT_OR_PROMOTION'
+          print(json.dumps(s,indent=2))
+          PY
+      - name: Persist Step 6 evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase39_final_exploratory
+          git commit -m 'Phase 39: persist final exploratory family screen' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
