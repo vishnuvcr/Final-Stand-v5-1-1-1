@@ -79,3 +79,13 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Registered the finite VIX-conditioned NIFTY strategy universe, point-in-time VIX regimes, Paytm Money cost model, development/validation/untouched-2026 holdout design, router selection and 10,000-resample inference.
 - Canonical Phase-20/42 strategy remains unchanged pending a separately accepted Phase-43 result.
 - Initial implementation-writing incident F43-001 was logged on the Phase-43 branch; no numerical evidence was affected.
+
+
+## 2026-10-06 — Phase 43 final closeout published
+- Phase 43 completed on isolated branch `phase-43-vix-all-options-strategies`.
+- 22 strategy families / 4,597 observations / 262 expiry opportunities evaluated under point-in-time India VIX and realistic execution costs.
+- Corrected regime inference found no Holm-adjusted significant VIX advantage.
+- Corrected promotion universe restricted to defined-risk strategies; zero strategy×VIX candidates and zero routers passed the full gate.
+- Stage 5 active-exit optimization skipped.
+- **Final decision: NO PROMOTION; canonical Phase-20/42 strategy unchanged.**
+- Final manuscript: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_MANUSCRIPT.md
