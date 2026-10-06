@@ -1,6 +1,11 @@
 {
   "step": "fixed_opportunity_counterfactual_engine",
   "status": "COMPLETE",
-  "rows": 206,
-  "control_reconstruction_max_abs_error": 1.8189894035458565e-12
+  "panel_rows": 477,
+  "development_rows": 271,
+  "validation_rows": 172,
+  "holdout_rows": 34,
+  "validation_holdout_frozen_net_rupees": 63672.57530171223,
+  "control_reconstruction_max_abs_error": 1.8189894035458565e-12,
+  "deterministic_quote_dedup": "stable timestamp/type/strike last-row selection"
 }

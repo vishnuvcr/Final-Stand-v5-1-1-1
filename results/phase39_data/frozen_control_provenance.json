@@ -3,8 +3,26 @@
   "source_run_id": 37388261915,
   "source_repo": "vishnuvcr/Final-Stand-v5-1-1-1",
   "source_member": "results/dynamic_strategy_phase32/trades.csv",
-  "derived_sha256": "39a64226427d394d3b52efdf12478e9e464a4a261804bf0aa2a165c7c97951b1",
-  "trades": 206,
-  "expiries": 102,
-  "net_rupees": 63672.57530171223
+  "development": {
+    "derived_sha256": "21507c095bd8762dbfbb73d434d7ec6fd4819a85faa32aabcfe68e59345f9b97",
+    "trades": 271,
+    "expiries": 135,
+    "net_rupees": 17657.14692755023,
+    "first_expiry": "2021-05-27",
+    "last_expiry": "2023-12-28"
+  },
+  "frozen": {
+    "derived_sha256": "39a64226427d394d3b52efdf12478e9e464a4a261804bf0aa2a165c7c97951b1",
+    "trades": 206,
+    "expiries": 102,
+    "net_rupees": 63672.57530171223,
+    "first_expiry": "2024-01-11",
+    "last_expiry": "2026-05-19"
+  },
+  "excluded_between_dev_and_frozen": {
+    "trades": 1,
+    "expiries": 1,
+    "net_rupees": 2490.758071100004,
+    "reason": "2024-01-04 trade intentionally excluded so validation uses the frozen Phase-38 comparator exactly"
+  }
 }
