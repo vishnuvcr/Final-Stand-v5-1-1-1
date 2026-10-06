@@ -14,12 +14,13 @@ Do the corrected model selectors improve post-cost performance relative to the c
 - DART
 
 ## Canonical control
-Exact Phase-32 state machine:
-- initial direction = CALL;
-- win -> retain direction;
-- loss -> flip direction;
-- zero -> retain direction.
-No model input or future information.
+The accepted Phase-32 stateful result is treated as a **frozen comparator artifact** for Phase 38:
+- 206 trades;
+- net +₹63,672.58;
+- 102 expiry blocks;
+- source artifact SHA-256 `f98fc6e38e84bdfab09aeeffc2df333da1a3060d3756b1ab12b7e8cb5f32435f`;
+- expiry-level P&L is cached in `results/phase38_corrected_model_robustness/frozen_control_expiry.csv`.
+The Phase-32 state machine remains the scientific definition of the control. A fresh reconstruction is run for audit, but any mismatch with the frozen artifact is logged and the frozen comparator is retained for treatment comparison.
 
 ## Frozen execution
 Same Phase-32/37 NIFTY 50 6x6 strategy:
