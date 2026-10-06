@@ -543,3 +543,13 @@ Evidence status: Step-3 threshold/model-selection results from runs before this 
 Correction: Development OOF now recomputes feature eligibility from the current chronological training window before every OOF batch. Validation retains a feature lock selected from the complete development period, which is permitted by the preregistered train/validation design.
 
 Prevention: Any future OOF selection step must derive feature eligibility, imputation, scaling and hyperparameters solely from observations preceding the prediction timestamp.
+
+
+### Error F39-029 — Initial Step-5 BOCPD gate did not apply threshold consistently
+Finding: The initial Step-5 draft stored only a binary gate generated at one fixed 0.35 threshold, while the selection loop nominally evaluated multiple change-point thresholds.
+
+Evidence status: Step-5 run(s) using that draft are non-evidence and must not be used for conclusions.
+
+Correction: The revised runner persists the actual BOCPD posterior change probability and selects the registered threshold from the development OOF stream, then applies the same frozen threshold to validation.
+
+Prevention: Regime-gate hyperparameters must be represented explicitly in the saved prediction artifact and applied identically across development selection and validation replay.
