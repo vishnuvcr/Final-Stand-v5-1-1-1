@@ -2,3 +2,4 @@ Phase 44 start — VIX candidate tuning approved by user. Execute registered num
 Rerun after Phase-44 bridge registration.
 Corrected implementation retrigger: F44-001 quarantined; run only corrected code.
 F44-002 corrected profile mapping retrigger.
+F44-003 optimized engine retrigger; prior slow runs are non-evidence.
