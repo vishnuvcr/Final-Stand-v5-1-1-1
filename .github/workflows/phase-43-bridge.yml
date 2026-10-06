@@ -1,0 +1,101 @@
+name: Phase 43 - Bridge Runner
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "trigger/phase43.bridge"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase43-bridge
+  cancel-in-progress: true
+
+jobs:
+  run-phase43:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout Phase 43 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-43-vix-all-options-strategies
+          fetch-depth: 0
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Restore Hugging Face cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: phase43-hf-\${{ runner.os }}-v1
+          restore-keys: |
+            phase43-hf-\${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --no-cache-dir numpy pandas pyarrow scipy matplotlib huggingface_hub
+
+      - name: Syntax audit
+        run: |
+          python -m py_compile research/phase43_vix_strategy_sweep.py
+
+      - name: Execute Phase 43
+        env:
+          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+        run: |
+          set +e
+          python research/phase43_vix_strategy_sweep.py
+          code=$?
+          if [ "$code" -ne 0 ]; then
+            printf "\\n## F43-BRIDGE-%s — numerical execution failure\\n- Exit code: %s. Failed output is non-evidence.\\n" "\${GITHUB_RUN_ID}" "$code" >> ERROR_LOG.md
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add ERROR_LOG.md
+            git commit -m "phase43: log bridge failure \${GITHUB_RUN_ID}" || true
+            git push origin HEAD:phase-43-vix-all-options-strategies || true
+            exit "$code"
+          fi
+
+      - name: Audit artifacts
+        run: |
+          test -s results/phase43_vix/strategy_trade_matrix_all_splits.csv
+          test -s results/phase43_vix/strategy_vix_validation_grid.csv
+          test -s results/phase43_vix/strategy_vix_inference.csv
+          test -s results/phase43_vix/router_dev_validation.csv
+          test -s results/phase43_vix/frozen_router_holdout.csv
+          test -s results/phase43_vix/summary.json
+          test -s results/phase43_vix/strategy_vix_heatmap.png
+
+      - name: Update Phase 43 status
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("results/phase43_vix/summary.json").read_text())
+          Path("PHASE43_STATUS.md").write_text(
+              "# Phase 43 Status — VIX-Conditioned NIFTY All-Strategy Sweep\n\n"
+              f"**{s['status']}**\n\n"
+              f"Strategies declared: {s['strategies_declared']}\n"
+              f"Defined-risk strategies: {s['defined_risk_strategies']}\n"
+              f"Expiry opportunities: {s['opportunities']}\n"
+              f"Strategy observations: {s['trade_rows']}\n"
+              f"Development / validation / holdout observations: {s['development_rows']} / {s['validation_rows']} / {s['holdout_rows']}\n"
+              f"Frozen strategy×VIX candidates: {s['frozen_top10_count']}\n"
+              f"Frozen routers: {s['frozen_router_count']}\n"
+              f"Stage 5: {s['stage5']}\n"
+              f"Decision: **{s['decision']}**\n"
+          )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase43_vix PHASE43_STATUS.md
+          git commit -m "phase43: persist bridge results" || true
+          git push origin HEAD:phase-43-vix-all-options-strategies
