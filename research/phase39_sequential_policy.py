@@ -108,6 +108,8 @@ def build_feature_row(entry,expiry,snap,spot_value,spot_hist,daily,global_d,flow
     for prefix,frame in [("global_",global_d),("flow_",flows),("sent_",sentiment)]:
         for c,v in prior_values(frame).items():
             row[prefix+c]=v
+    for feature in locked_features():
+        row.setdefault(feature, np.nan)
     return row
 
 def fit_gam(history,test):
