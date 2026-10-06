@@ -42,3 +42,10 @@ The per-expiry selector-minus-control bootstrap comparison was negative for ever
 
 ## Final recommendation
 Retain the Phase-32 stateful direction rule. Do not promote any Phase-36 independent selector. The next research priority is forward/paper validation of the canonical stateful strategy with full execution realism, including bid/ask, latency, fill probability and broker-specific Paytm Money charges.
+
+
+## Final reproducibility checkpoint
+- GitHub Actions **37429748933 / #18**: all seven selector jobs succeeded.
+- Rebase-safe publication job succeeded.
+- The Phase-36 numerical conclusion is unchanged from accepted run #4.
+- Run #18 validates that the finalized workflow can reproduce and publish the selector artifacts without the earlier branch-race failure.
