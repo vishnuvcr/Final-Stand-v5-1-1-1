@@ -941,3 +941,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 **Correction:** The replay now filters the study universe to the exact 93 expiry dates covered by the cached Phase-36 expert predictions and asserts the count.
 
 **Prevention:** Every downstream replay must inherit both the canonical study-expiry list and the exact model-coverage mask used by the selection stage.
+
+
+## 2026-10-06 — Phase 41 initialization
+- No numerical evidence has been accepted yet.
+- The phase begins only after auditing the completed Phase-40 closeout and the Phase-39 counterfactual/feature artifacts.
+- An implementation correction was made before execution: propensity-score fitting will use only pre-evaluation history (development for validation diagnostics; development+validation for holdout diagnostics), matching the pre-registration's chronology.
+- This correction changes no research parameter, outcome definition or candidate universe.
