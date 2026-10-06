@@ -17,13 +17,20 @@ def main():
     vix = load_vix()
     rows = []
 
+    # Precompute each VIX profile's active status by exact registered entry timestamp.
+    unique_entries = pd.unique(base["entry_ts"])
+    activity = {}
+    for pid, mode, par in profile_defs():
+        for ets in unique_entries:
+            activity[(pid, mode, str(ets))] = profile_active(vix, pd.Timestamp(ets), par, mode)
+
     for pid, mode, par in profile_defs():
         for (family, geom, entry_time), g in base.groupby(["family", "geom", "entry_time"], sort=False):
             g = g.copy()
             if len(g) < 15:
                 continue
             active = np.array(
-                [profile_active(vix, pd.Timestamp(x), par, mode) for x in g["entry_ts"]],
+                [activity.get((pid, mode, str(x)), False) for x in g["entry_ts"]],
                 dtype=bool,
             )
             if int(active.sum()) < 10:
@@ -31,7 +38,7 @@ def main():
 
             g = g.sort_values("expiry").reset_index(drop=True)
             active = np.array(
-                [profile_active(vix, pd.Timestamp(x), par, mode) for x in g["entry_ts"]],
+                [activity.get((pid, mode, str(x)), False) for x in g["entry_ts"]],
                 dtype=bool,
             )
 
