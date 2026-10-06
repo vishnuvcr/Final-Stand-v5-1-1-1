@@ -57,3 +57,17 @@ The first final-research commit mapped several prepared content blobs to the wro
 **Correction:** Restored the executable Phase-36 workflow and narrowed push triggers to the research source/cache/workflow and preregistration files only.
 
 **Prevention:** Verify workflow file type/content before making any commit that can trigger Actions; do not use broad documentation globs for numerical research workflows.
+
+
+## Error F36-005 — Publish non-fast-forward race
+**Run:** 37429502607 (#17), publish job only.
+
+**Symptom:** All seven numerical jobs succeeded. The publication job downloaded all seven artifacts and created the expected commit, but `git push` was rejected as non-fast-forward because the branch advanced after the workflow checkout.
+
+**Cause:** A repository error-log update landed while the workflow was running.
+
+**Evidence status:** CI/publish-only; all seven numerical selector jobs were successful and no research calculation was invalidated.
+
+**Correction:** The publish step is hardened to `git pull --rebase origin "$GITHUB_REF_NAME"` immediately before pushing the artifact commit.
+
+**Prevention:** Keep publish writes conflict-safe and keep result paths outside the workflow's push-trigger path filter.
