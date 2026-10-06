@@ -11,6 +11,7 @@ from phase43_vix_strategy_sweep import (
 
 OUT=Path("results/phase49_vix_tuning"); OUT.mkdir(parents=True,exist_ok=True)
 STATES=["LOW","NORMAL"]
+FAMILIES=["bear_call","bear_put","put_bwb"]
 TIMES=[(9,30),(10,0),(10,30),(11,0)]
 DTES=[3,4,5]
 
@@ -147,14 +148,20 @@ def neighborhood(sel):
 
 def choose(tr):
     rows=[]
+    scoring_years=[2022,2023]
     for (f,s,pj),g in tr.groupby(["family","state","param_json"]):
         m=annual(g)
-        if not all(y in m for y in [2021,2022,2023]):continue
-        if any(m[y]["trades"]<6 or m[y]["mean_net"]<=0 or m[y]["mean_net50"]<=0 for y in [2021,2022,2023]):continue
-        rows.append(dict(family=f,state=s,param_json=pj,trades_dev=len(g),
-                         med_net50=float(np.median([m[y]["mean_net50"] for y in [2021,2022,2023]])),
-                         avg_net50=float(np.mean([m[y]["mean_net50"] for y in [2021,2022,2023]])),
-                         med_pf=float(np.median([m[y]["pf"] for y in [2021,2022,2023] if np.isfinite(m[y]["pf"])]))))
+        if not all(y in m for y in scoring_years):continue
+        if any(m[y]["trades"]<10 or m[y]["mean_net"]<=0 or m[y]["mean_net50"]<=0 for y in scoring_years):continue
+        rows.append(dict(
+            family=f,state=s,param_json=pj,trades_dev=len(g),
+            fold_2022_mean_net=float(m[2022]["mean_net"]),
+            fold_2022_mean_net50=float(m[2022]["mean_net50"]),
+            fold_2023_mean_net=float(m[2023]["mean_net"]),
+            fold_2023_mean_net50=float(m[2023]["mean_net50"]),
+            med_net50=float(np.median([m[y]["mean_net50"] for y in scoring_years])),
+            avg_net50=float(np.mean([m[y]["mean_net50"] for y in scoring_years])),
+            med_pf=float(np.median([m[y]["pf"] for y in scoring_years if np.isfinite(m[y]["pf"])]))))
     return neighborhood(pd.DataFrame(rows))
 
 def boot(a,b,seed):
@@ -177,7 +184,9 @@ def preflight():
     assert legs(baseline("bear_put"))==[("cur","PE",0,1),("cur","PE",-1,-1)]
     assert legs(baseline("put_bwb"))==[("cur","PE",2,1),("cur","PE",0,-2),("cur","PE",-1,1)]
     es=expiries(); assert len(es)>=100
-    return {"grid":len(GRID),"expiries":len(es),"dev":sum(e<=DEV_END for e in es),
+    regime_candidates=len(GRID)*len(STATES)
+    assert regime_candidates==1440
+    return {"grid":len(GRID),"regime_candidates":regime_candidates,"expiries":len(es),"dev":sum(e<=DEV_END for e in es),
             "validation":sum(DEV_END<e<=VAL_END for e in es),"holdout":sum(e>VAL_END for e in es)}
 
 def main():
@@ -206,42 +215,53 @@ def main():
 
     index=__import__("research.phase43_vix_strategy_sweep",fromlist=["load_index"]).load_index()
     fmap={(r.family,r.state):json.loads(r.param_json) for _,r in fr.iterrows()}
-    val=[]; hold=[]; base=[]
+    val=[]; hold=[]; base=[]; val_errs=[]; hold_errs=[]
     for e in es:
         if e<=DEV_END: continue
         try:
             data=load_parquet(f"options/NIFTY/{e.strftime('%Y-%m-%d')}.parquet")
-            for (f,s),c in fmap.items():
-                r=one(index,vix,e,data,c)
-                if not r or r["state"]!=s: continue
-                (val if e<=VAL_END else hold).append(r)
-                b=baseline(f); rb=one(index,vix,e,data,b)
-                if rb and rb["state"]==s: base.append(rb)
-        except Exception: pass
+            target=val if e<=VAL_END else hold
+            for (f,s),cand in fmap.items():
+                r=one(index,vix,e,data,cand)
+                if not r: continue
+                r["active_state"]=s
+                target.append(r)
+            if e<=VAL_END:
+                for f in FAMILIES:
+                    rb=one(index,vix,e,data,baseline(f))
+                    if rb: base.append(rb)
+        except Exception as ex:
+            (val_errs if e<=VAL_END else hold_errs).append({"expiry":str(e.date()),"error":repr(ex)})
     val=pd.DataFrame(val); hold=pd.DataFrame(hold); base=pd.DataFrame(base)
     val.to_csv(OUT/"validation_frozen_trade_matrix.csv",index=False); hold.to_csv(OUT/"holdout_frozen_trade_matrix.csv",index=False); base.to_csv(OUT/"validation_baseline_trade_matrix.csv",index=False)
+    pd.DataFrame(val_errs,columns=["expiry","error"]).to_csv(OUT/"validation_data_errors.csv",index=False)
+    pd.DataFrame(hold_errs,columns=["expiry","error"]).to_csv(OUT/"holdout_data_errors.csv",index=False)
     rows2=[]
     for f,s in fmap:
-        z=val[(val.family==f)&(val.state==s)]; b=base[(base.family==f)&(base.state==s)]
-        a=z.net.to_numpy(float); rest=val[~((val.family==f)&(val.state==s))].net.to_numpy(float)
+        pj=key(fmap[(f,s)])
+        z=val[(val.family==f)&(val.param_json==pj)&(val.active_state==s)]
+        active=z[z.state==s]; comp=z[z.state!=s]
+        b=base[(base.family==f)&(base.state==s)]
+        a=active.net.to_numpy(float); rest=comp.net.to_numpy(float)
         diff,lo,hi,p=boot(a,rest,4901+sum(map(ord,f+s)))
-        c={"family":f,"state":s,"trades":len(z),"net":float(z.net.sum()) if len(z) else 0,
-           "net50":float(z.net50.sum()) if len(z) else 0,"mean_net":float(z.net.mean()) if len(z) else np.nan,
+        c={"family":f,"state":s,"trades":len(active),"complement_trades":len(comp),"net":float(active.net.sum()) if len(active) else 0,
+           "net50":float(active.net50.sum()) if len(active) else 0,"complement_net":float(comp.net.sum()) if len(comp) else 0,
+           "mean_net":float(active.net.mean()) if len(active) else np.nan,
            "win_rate":float((a>0).mean()) if len(a) else np.nan,
-           "active_vs_rest_mean":diff,"ci_lo":lo,"ci_hi":hi,"p":p}
+           "active_vs_complement_mean":diff,"ci_lo":lo,"ci_hi":hi,"p":p}
         if len(b):
-            m=z[["expiry","net","net50"]].merge(b[["expiry","net","net50"]],on="expiry",suffixes=("_t","_b"))
+            m=active[["expiry","net","net50"]].merge(b[["expiry","net","net50"]],on="expiry",suffixes=("_t","_b"))
             c["paired_common"]=len(m); c["paired_uplift_net"]=float((m.net_t-m.net_b).sum()) if len(m) else np.nan; c["paired_uplift_net50"]=float((m.net50_t-m.net50_b).sum()) if len(m) else np.nan
         rows2.append(c)
     vs=pd.DataFrame(rows2); vs["p_holm"]=holm(vs.p.to_numpy()); vs.to_csv(OUT/"validation_confirmatory_summary.csv",index=False)
     hs=[]
     for r in vs.itertuples(index=False):
-        if r.trades>=20 and r.net>0 and r.net50>0 and r.active_vs_rest_mean>0:
-            z=hold[(hold.family==r.family)&(hold.state==r.state)]
+        if r.trades>=20 and r.net>0 and r.net50>0 and r.active_vs_complement_mean>0:
+            z=hold[(hold.family==r.family)&(hold.active_state==r.state)&(hold.state==r.state)]
             if len(z): hs.append({"family":r.family,"state":r.state,"trades":len(z),"net":float(z.net.sum()),"net50":float(z.net50.sum()),"mean_net":float(z.net.mean()),"win_rate":float((z.net>0).mean())})
     hc=pd.DataFrame(hs); hc.to_csv(OUT/"holdout_confirmation.csv",index=False)
-    decision={"phase":49,"grid_total":len(GRID),"frozen":len(fr),"validation_rows":len(vs),
-              "validation_economic_passes":int(((vs.trades>=20)&(vs.net>0)&(vs.net50>0)&(vs.active_vs_rest_mean>0)).sum()),
+    decision={"phase":49,"grid_total":len(GRID),"regime_expanded_candidates":len(GRID)*len(STATES),"frozen":len(fr),"validation_rows":len(vs),
+              "validation_economic_passes":int(((vs.trades>=20)&(vs.net>0)&(vs.net50>0)&(vs.active_vs_complement_mean>0)).sum()),
               "holm_survivors":int((vs.p_holm<0.05).sum()),"holdout_confirmations":len(hc)}
     (OUT/"summary.json").write_text(json.dumps(decision,indent=2))
     fr.to_csv(OUT/"frozen_parameter_details.csv",index=False)
