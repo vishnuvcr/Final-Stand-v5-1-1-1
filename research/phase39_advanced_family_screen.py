@@ -153,73 +153,112 @@ def fit_gam_gate(train,test,threshold):
     return mu,unc,current_cp,len(feats)
 
 def evaluate(method_name):
-    z=load(); dev=z[z.split=="development"].reset_index(drop=True); val=z[z.split=="validation"].reset_index(drop=True)
-    preds=[]
+    z=load()
+    dev=z[z.split=="development"].reset_index(drop=True)
+    val=z[z.split=="validation"].reset_index(drop=True)
+
+    def append_predictions(store,test,mu,unc,cp=None):
+        tmp=test[["entry_ts","expiry","control_direction","control_net_rupees",
+                  "call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"]].copy()
+        tmp["mu"]=mu
+        tmp["unc"]=unc
+        tmp["cp_prob"]=cp if cp is not None else np.nan
+        store.append(tmp)
+
+    oof_parts=[]
     for start in range(WARMUP,len(dev),BATCH):
-        end=min(start+BATCH,len(dev)); train=dev.iloc[:start]; test=dev.iloc[start:end]
+        end=min(start+BATCH,len(dev))
+        train=dev.iloc[:start]
+        test=dev.iloc[start:end]
         if method_name=="SVR":
-            mu,unc,nf=fit_svr(train,test)
-            gate=np.ones(len(test))
+            mu,unc,_=fit_svr(train,test); cp=None
         elif method_name=="DTW":
-            mu,unc,nf=fit_dtw(train,test)
-            gate=np.ones(len(test))
+            mu,unc,_=fit_dtw(train,test); cp=None
         else:
-            mu,unc,cp,nf=fit_gam_gate(train,test,0.35)
-            gate=(cp<=0.35).astype(float)
-        tmp=test[["entry_ts","expiry","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"]].copy()
-        tmp["mu"]=mu; tmp["unc"]=unc; tmp["gate"]=gate; tmp["cp_prob"]=cp if method_name=="BOCPD_GAM" else np.nan; tmp["method"]=method_name
-        preds.append(tmp)
-    oof=pd.concat(preds,ignore_index=True)
+            mu,unc,cp,_=fit_gam_gate(train,test,0.35)
+        append_predictions(oof_parts,test,mu,unc,cp)
+    oof=pd.concat(oof_parts,ignore_index=True)
 
     if method_name in ["SVR","DTW"]:
-        threshold_grid=MARGINS
         best=None
-        for m in threshold_grid:
-            a,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),m)
-            u=np.asarray(np.where(a=="CALL",oof.call_net_rupees,oof.put_net_rupees))-oof.control_net_rupees.to_numpy()
-            score=float(u.sum()-0.10*np.std(u)*math.sqrt(len(u)))
-            key=(score,float(u.sum()),-int(ov.sum()))
-            if best is None or key>best[0]: best=(key,m)
-        margin=float(best[1]); cp_threshold=None
+        for margin in MARGINS:
+            aa,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),margin)
+            chosen=np.asarray(np.where(aa=="CALL",oof.call_net_rupees,oof.put_net_rupees))
+            uplift=chosen-oof.control_net_rupees.to_numpy()
+            score=float(uplift.sum()-0.10*np.std(uplift)*math.sqrt(len(uplift)))
+            key=(score,float(uplift.sum()),-int(ov.sum()))
+            if best is None or key>best[0]:
+                best=(key,margin)
+        margin=float(best[1])
+        cp_threshold=None
     else:
         best=None
         for cpt in CP_THRESHOLDS:
-            for m in MARGINS:
-                a,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),m)
+            for margin in MARGINS:
+                aa,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),margin)
                 ov=ov & (oof.cp_prob.to_numpy()<=cpt)
-                aa=oof.control_direction.to_numpy().copy(); aa[ov]=np.asarray(np.where(aa[ov]=="CALL","PUT","CALL")
-                u=np.where(aa=="CALL",oof.call_net_rupees,oof.put_net_rupees))-oof.control_net_rupees.to_numpy()
-                score=float(u.sum()-0.10*np.std(u)*math.sqrt(len(u)))
-                key=(score,float(u.sum()),-int(ov.sum()))
-                if best is None or key>best[0]: best=(key,m,cpt)
-        margin=float(best[1]); cp_threshold=float(best[2])
+                chosen_action=oof.control_direction.to_numpy().copy()
+                chosen_action[ov]=np.where(chosen_action[ov]=="CALL","PUT","CALL")
+                chosen=np.asarray(np.where(chosen_action=="CALL",oof.call_net_rupees,oof.put_net_rupees))
+                uplift=chosen-oof.control_net_rupees.to_numpy()
+                score=float(uplift.sum()-0.10*np.std(uplift)*math.sqrt(len(uplift)))
+                key=(score,float(uplift.sum()),-int(ov.sum()))
+                if best is None or key>best[0]:
+                    best=(key,margin,cpt)
+        margin=float(best[1])
+        cp_threshold=float(best[2])
 
-    vp=[]; train=dev
+    vp_parts=[]
     for start in range(0,len(val),BATCH):
-        end=min(start+BATCH,len(val)); test=val.iloc[start:end]
-        if method_name=="SVR": mu,unc,nf=fit_svr(dev,test); gate=np.ones(len(test))
-        elif method_name=="DTW": mu,unc,nf=fit_dtw(dev,test); gate=np.ones(len(test))
-        else: mu,unc,cp,nf=fit_gam_gate(dev,test,cp_threshold); gate=(cp<=cp_threshold).astype(float)
-        tmp=test[["entry_ts","expiry","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"]].copy()
-        tmp["mu"]=mu; tmp["unc"]=unc; tmp["gate"]=gate; vp.append(tmp)
-    vp=pd.concat(vp,ignore_index=True)
-    aa,ov,imp,score=action(vp.control_direction.to_numpy(),vp.mu.to_numpy(),vp.unc.to_numpy(),margin)
-    ov=ov&(vp.cp_prob.to_numpy()<=cp_threshold)
-    a=vp.control_direction.to_numpy().copy(); a[ov]=np.asarray(np.asarray(np.where(a[ov]=="CALL","PUT","CALL")
-    u=np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees))-vp.control_net_rupees.to_numpy()
-    boot=bootstrap(u,vp.expiry)
+        end=min(start+BATCH,len(val))
+        test=val.iloc[start:end]
+        if method_name=="SVR":
+            mu,unc,_=fit_svr(dev,test); cp=None
+        elif method_name=="DTW":
+            mu,unc,_=fit_dtw(dev,test); cp=None
+        else:
+            mu,unc,cp,_=fit_gam_gate(dev,test,cp_threshold)
+        append_predictions(vp_parts,test,mu,unc,cp)
+    vp=pd.concat(vp_parts,ignore_index=True)
+
+    aa,ov,_,_=action(vp.control_direction.to_numpy(),vp.mu.to_numpy(),vp.unc.to_numpy(),margin)
+    if cp_threshold is not None:
+        ov=ov & (vp.cp_prob.to_numpy()<=cp_threshold)
+    chosen_action=vp.control_direction.to_numpy().copy()
+    chosen_action[ov]=np.where(chosen_action[ov]=="CALL","PUT","CALL")
+    chosen=np.asarray(np.where(chosen_action=="CALL",vp.call_net_rupees,vp.put_net_rupees))
+    uplift=chosen-vp.control_net_rupees.to_numpy()
+    boot=bootstrap(uplift,vp.expiry)
+
+    oof_action, oof_ov, _, _=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),margin)
+    if cp_threshold is not None:
+        oof_ov=oof_ov & (oof.cp_prob.to_numpy()<=cp_threshold)
+    oof_selected=oof.control_direction.to_numpy().copy()
+    oof_selected[oof_ov]=np.where(oof_selected[oof_ov]=="CALL","PUT","CALL")
+    oof_pnl=np.asarray(np.where(oof_selected=="CALL",oof.call_net_rupees,oof.put_net_rupees))
+    oof_uplift=oof_pnl-oof.control_net_rupees.to_numpy()
+
     return {
-        "method":method_name,"margin":margin,"cp_threshold":cp_threshold,
-        "dev_oof_rows":len(oof),"dev_oof_uplift_rupees":float((np.asarray(np.where(action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),margin)[0]=="CALL",oof.call_net_rupees,oof.put_net_rupees))-oof.control_net_rupees.to_numpy())).sum()),
-        "validation_uplift_rupees":float(u.sum()),"validation_override_share":float(ov.mean()),
-        "validation_net_rupees":float(np.asarray(np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees)).sum()),
+        "method":method_name,
+        "margin":margin,
+        "cp_threshold":cp_threshold,
+        "dev_oof_rows":len(oof),
+        "dev_oof_uplift_rupees":float(oof_uplift.sum()),
+        "dev_oof_override_share":float(oof_ov.mean()),
+        "validation_uplift_rupees":float(uplift.sum()),
+        "validation_override_share":float(ov.mean()),
+        "validation_net_rupees":float(chosen.sum()),
         "validation_control_rupees":float(vp.control_net_rupees.sum()),
-        "validation_drawdown":dd(np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees).to_numpy()),
+        "validation_drawdown":dd(chosen),
         "validation_mae":float(np.mean(np.abs(vp.mu-vp.delta_pnl_call_minus_put))),
         "validation_spearman":float(pd.Series(vp.mu).corr(vp.delta_pnl_call_minus_put,method="spearman")),
-        "paired_expiry_bootstrap_uplift":boot[0],"bootstrap_lo":boot[1],"bootstrap_hi":boot[2],"bootstrap_p_positive":boot[3],
+        "paired_expiry_bootstrap_uplift":boot[0],
+        "bootstrap_lo":boot[1],
+        "bootstrap_hi":boot[2],
+        "bootstrap_p_positive":boot[3],
         "holdout_evaluated":False
     }
+
 
 def main():
     results=[evaluate(x) for x in ["DTW","SVR","BOCPD_GAM"]]
