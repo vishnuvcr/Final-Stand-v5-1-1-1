@@ -54,3 +54,6 @@ After F49-010, GitHub Actions **run 37540089501 (#11)** is the current authorita
 ## 2026-10-07 — F49-011 artifact-audit correction
 
 Run #11 completed the numerical computation successfully but failed only at the artifact self-audit because the empty development error ledger was zero bytes. The numerical result is therefore not yet accepted. Run #12 is the authoritative corrected full rerun with the error-ledger header fix; parameter values and scientific definitions are unchanged.
+## 2026-10-07 — F49-012 publication conflict
+
+Run #12 passed the numerical and artifact self-audits. The only failure was the final Git publication step: concurrent repository audit updates to PHASE49_STATUS.md and RESEARCH_LOG.md conflicted with the workflow's rebase. The numerical evidence is therefore valid but not yet the canonical published closeout. A branch-triggered automatic reconciliation workflow has been started to publish the preserved artifact without rerunning the science.
