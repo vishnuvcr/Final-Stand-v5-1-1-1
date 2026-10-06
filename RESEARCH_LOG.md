@@ -350,3 +350,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Registered full eight-state VIX evaluation so LOW/NORMAL/FALLING remain in scope together with RISING/HIGH/SPIKE/HIGH_RISING.
 - Added staged compile/preflight/numerical/artifact/holdout audits and a GitHub Actions workflow with manual dispatch.
 - Corrected and logged four pre-numerical implementation issues before evidence acceptance: timezone normalization, multi-window cache keys, variant grouping, and deterministic inference seeds.
+
+
+## 2026-10-07 — Phase 47 first numerical run rejected by audit
+- Workflow 37520391271 completed numerical execution but generated only 14 rows, all for the Covered Call 2 option-only proxy.
+- Double Calendar Straddle and Monthly Wide-Range Hedge generated zero accepted rows.
+- The artifact self-audit correctly stopped publication because the full VIX-state coverage requirement was not met.
+- The run is explicitly NON-EVIDENCE.
+- A focused monthly diagnostic stage and more robust cross-expiry common-strike handling were added before rerun.
