@@ -366,8 +366,9 @@ def main():
         bp,bmu,bq=bart_reg(f,td,base_cols); row["bart_prob"]=bp; row["bart_mu"]=bmu; row["bart_q10"]=bq[0]; row["bart_q90"]=bq[1]
         # Decomposition pathways.
         for name in ["wavelet","emd","vmd"]:
-            colsx=[c for c in decomp_cols if c.startswith(name) or c in base_cols]
-            if not any(c.startswith(name) for c in colsx):
+            prefix={"wavelet":"wav","emd":"emd","vmd":"vmd"}[name]
+            colsx=[c for c in decomp_cols if c.startswith(prefix) or c in base_cols]
+            if not any(c.startswith(prefix) for c in colsx):
                 row[name+"_tree_prob"]=row["lgbm_prob"].to_numpy()
             else:
                 row[name+"_tree_prob"]=lgbm_classifier(f,tdd,colsx)
