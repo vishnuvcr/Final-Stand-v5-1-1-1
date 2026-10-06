@@ -519,3 +519,15 @@ Evidence status: Non-evidence statistical-postprocessing failure. The completed 
 Correction: The bootstrap helper now explicitly aggregates `policy_net_rupees` for the policy stream and `net_rupees` for the control stream.
 
 Prevention: Paired statistical helpers will use explicit schema names rather than implicit aliases.
+
+
+### Error F39-027 — Step-4 period labeling used entry date instead of registered expiry split
+Finding: The first completed sequential replay assigned development/validation/holdout using `entry_ts`. This produced an apparent 173/33 validation/holdout control split even though the authoritative Phase-39 fixed-opportunity ledger is 172/34.
+
+Cause: Some late-2025 entries belong to contracts expiring in 2026 and therefore must be holdout observations under the registered expiry-based split.
+
+Evidence status: The underlying sequential trade simulation from run 37443885462 remains valid, but its period-level comparative summary is rejected for conclusions until relabeled.
+
+Correction: Periods are now assigned by expiry year: <=2023 development, 2024-2025 validation, 2026 holdout. The workflow now asserts the authoritative 271/172/34 control counts.
+
+Prevention: All Phase-39 split logic uses the preregistered expiry-period boundary where a trade can span calendar years.
