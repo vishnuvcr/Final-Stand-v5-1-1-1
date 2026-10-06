@@ -139,6 +139,7 @@ def main():
             if not mt.empty:
                 mt=mt[mt.abs_ps_distance<=cal].copy()
             sm=summarize(per,df,mt)
+            sm["period"]=per
             sm["caliper"]=cal
             allrows.append(sm)
             if not mt.empty:
