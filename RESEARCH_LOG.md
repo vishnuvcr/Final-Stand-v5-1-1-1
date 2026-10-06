@@ -296,3 +296,18 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-06 — Phase 44 validation stage run 37509023680
 - status=COMPLETE_STAGE2_VALIDATION; rows=10130; candidates=30; frozen=0; Holm survivors=0; decision=NO_STAGE2_SURVIVOR.
+
+
+## 2026-10-06 — Phase 44 corrected Stage-1 selection accepted
+- Corrected VIX-filter uplift definition applied to the persisted 13,292-row development structural matrix.
+- Development: 3,500 profile evaluations; 522 eligible configurations; 30 frozen validation candidates.
+- Superseded zero-uplift profile results remain quarantined.
+
+## 2026-10-06 — Phase 44 validation closeout
+- Validation run 37509023680 completed successfully.
+- 10,130 validation structural observations and 30 frozen candidates were tested.
+- 18/30 had positive net P&L; 16/30 remained positive under +50% cost stress; 9/30 had positive total uplift.
+- 0/30 had a strictly positive 95% CI lower bound; 0/30 had unadjusted p<0.05; 0 survived Holm correction.
+- Stage 3 active-exit tuning was skipped; 2026 holdout remained protected.
+- Phase 44 final decision: **NO PROMOTION**.
+- Final manuscript and decision artifacts are persisted on the Phase-44 branch.
