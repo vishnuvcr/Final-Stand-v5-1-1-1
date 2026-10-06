@@ -297,3 +297,17 @@ The correct next phase is a **frozen trading-overlay validation**, not another u
 - [Accepted CEEMDAN addendum Actions run #1](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37426761476)
 
 **Phase 20 remains canonical until a separate overlay phase demonstrates improvement after full Paytm Money brokerage/statutory charges, slippage, execution/fill constraints and expiry-gap handling.**
+
+
+## Phase 36 — Independent per-trade direction selector overlay
+
+**Status: NUMERICAL EXECUTION IN PROGRESS.** A new isolated phase is testing the Continuous Delta 6x6 strategy with **direction selected independently before every new trade**. The prior trade's win/loss/P&L and direction are not inputs to the next trade. All other Phase-32 execution, delta-exit, expiry and cost rules remain frozen.
+
+- [Phase 36 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-36-independent-direction-selector-overlay)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_RESEARCH_PLAN.md)
+- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_PRE_REGISTRATION.md)
+- [Strategy specification](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_STRATEGY_SPEC.md)
+- [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_STATUS.md)
+- [Phase 36 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase-36-independent-direction-selector-overlay.yml)
+
+Registered selectors: OTM678 fresh, OTM789 fresh, CatBoost, LightGBM-DART, Wavelet-tree, OOF stack, and Markov-regime tree. No Phase-36 result is being treated as accepted evidence until the primary workflow completes successfully.
