@@ -43,3 +43,7 @@ The second self-audit found one more execution-only bottleneck: per-candidate re
 ## 2026-10-07 — Optimized numerical execution
 
 GitHub Actions **run 37538954063 (#9)** is the current accepted execution candidate. Its preflight has passed; the numerical step is active. It uses the F49-009 metadata-cache correction. No result is accepted until the numerical, artifact, statistical and publication audits all pass.
+
+## 2026-10-07 — F49-010 runtime-path correction
+
+A final static audit found a remaining validation-stage import-path defect plus an unhandled zero-candidate development branch. The active optimized run #9 is therefore classified NON-EVIDENCE and will be superseded by a corrected execution. No result has been accepted.
