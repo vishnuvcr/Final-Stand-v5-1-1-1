@@ -1,11 +1,10 @@
 {
-  "status": "COMPLETE_STAGE1_DEVELOPMENT_CORRECTED",
+  "status": "COMPLETE_STAGE1_DEVELOPMENT",
   "stage1_rows": 13292,
   "development_profile_rows": 3500,
-  "candidate_rows": 522,
-  "frozen_candidates": 30,
+  "candidate_rows": 0,
+  "frozen_candidates": 0,
   "holm_survivors": 0,
   "holdout_opened_after_validation_freeze": false,
-  "decision": "DEVELOPMENT_FROZEN_VALIDATION_PENDING",
-  "correction": "F44-016_zero_uplift_control_comparison"
+  "decision": "DEVELOPMENT_FROZEN_VALIDATION_PENDING"
 }
