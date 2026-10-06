@@ -131,7 +131,6 @@ def main():
     val=z[z.split=="validation"].copy()
     hold=z[z.split=="holdout"].copy()
     dev=dev.copy(); val=val.copy(); hold=hold.copy()
-    dev["ps"]=ps_dev; val["ps"]=ps_val; hold["ps"]=ps_hold
 
     allrows=[]
     for per,df in [("development",dev),("validation",val),("holdout",hold)]:
