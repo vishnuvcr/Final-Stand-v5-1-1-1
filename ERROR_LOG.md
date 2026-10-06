@@ -315,3 +315,26 @@ Evidence status: non-evidence model execution failure; no model result accepted.
 Correction: The Step-3 runner now joins only call_net_rupees and put_net_rupees from the fixed-opportunity ledger and uses the already-audited control/target columns from the feature matrix.
 
 Prevention: Outcome/control joins will add only fields physically absent from the predictor file.
+
+
+### Error F39-016 — Duplicate Step-3 model runner/workflow definitions
+Finding: The Phase-39 branch contained two competing Step-3 economic-margin implementations: the established `research/phase39_economic_models.py` + `phase-39-step3-economic-models.yml`, and a later duplicate `phase39_economic_margin_models.py` + `phase-39-step3-economic-margin-models.yml`.
+
+Evidence status: No duplicate-run numerical evidence was accepted. The duplicate path was still at workflow/implementation level and was not used for conclusions.
+
+Correction: The duplicate runner and workflow were removed. The established Step-3 runner remains canonical and has been aligned to the locked Phase-39 model specification.
+
+Prevention: One executable workflow and one executable runner are retained for each Phase-39 research step.
+
+### Error F39-017 — Step-3 ledger join duplicated the economic target column
+Run: 37440404612 (Step-3 run #1).
+
+Symptom: The model runner failed with `delta_pnl_call_minus_put_x`/missing target access after joining the feature matrix to a ledger that already contained the target.
+
+Cause: The join reintroduced a column already present in the feature matrix, creating pandas suffixes.
+
+Evidence status: Non-evidence model-pipeline failure. No model result was produced.
+
+Correction: The model runner now joins only the counterfactual outcome columns needed for realized action P&L, while retaining the feature matrix's locked target/control columns.
+
+Prevention: Model-input joins will explicitly list only absent outcome columns and assert one-to-one row identity after merging.
