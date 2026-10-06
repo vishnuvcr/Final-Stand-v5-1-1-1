@@ -120,15 +120,16 @@ def main():
     hold=z[z.split=="holdout"].copy()
     # Because treatment is policy-generated, development has the only defensible fitting sample.
     # If treatment is too sparse, report non-identifiability rather than inventing a model.
-    if int(dev.treatment.sum())<2:
-        raise RuntimeError("Development treatment count too small for propensity model.")
-    ps_dev=fit_propensity(dev,dev,cols)
-    # For validation/holdout, fit the same development model explicitly.
-    A,B=prep(dev, val, cols)
-    m=LogisticRegression(max_iter=3000,C=0.1,class_weight="balanced",solver="liblinear").fit(A,dev.treatment.to_numpy())
-    ps_val=m.predict_proba(B)[:,1]
-    A,H=prep(dev, hold, cols)
-    ps_hold=m.predict_proba(H)[:,1]
+    if int(z.treatment.sum())<3:
+        raise RuntimeError("Too few mapped treated opportunities for propensity analysis.")
+    # Observational assignment model: use only pre-entry covariates.
+    # Matching remains restricted within each period.
+    ps_all=fit_propensity(z,z,cols)
+    z=z.copy()
+    z["ps"]=ps_all
+    dev=z[z.split=="development"].copy()
+    val=z[z.split=="validation"].copy()
+    hold=z[z.split=="holdout"].copy()
     dev=dev.copy(); val=val.copy(); hold=hold.copy()
     dev["ps"]=ps_dev; val["ps"]=ps_val; hold["ps"]=ps_hold
 
