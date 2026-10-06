@@ -948,3 +948,19 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - The phase begins only after auditing the completed Phase-40 closeout and the Phase-39 counterfactual/feature artifacts.
 - An implementation correction was made before execution: propensity-score fitting will use only pre-evaluation history (development for validation diagnostics; development+validation for holdout diagnostics), matching the pre-registration's chronology.
 - This correction changes no research parameter, outcome definition or candidate universe.
+
+
+## 2026-10-06 — Phase 41 Run 37463493504
+
+### Error F41-001 — Sequential replay missing sparse live feature columns
+
+**Symptom:** Step 1 completed, but Step 2 failed when the live point-in-time feature row lacked the three flow/sentiment columns `flow_fii_net_z20`, `flow_dii_net_z20` and `flow_flow_sentiment`. The model matrix constructor indexed those columns directly and raised a KeyError.
+
+**Evidence status:** The Step-2 run produced no accepted sequential evidence. Step-1 fixed-opportunity artifacts are valid and persisted, but the phase remains open.
+
+**Cause:** The fixed feature matrix contains the registered columns, while live source reconstruction can legitimately yield an entirely unavailable auxiliary source for a particular timestamp. The replay constructor did not preserve the full fixed feature schema before imputation.
+
+**Correction:** `Xify()` now uses explicit reindexing to the frozen feature schema and fills unavailable columns with NaN so the pre-registered imputer handles them. No candidate, feature definition, threshold, split or trading rule changed.
+
+**Prevention:** All future sequential feature builders must preserve the exact registered matrix schema at the engine boundary before model prediction.
+
