@@ -336,3 +336,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Persisted 10 directly relevant video/public-source leads in `PHASE46_YOUTUBE_SOURCE_LEDGER.md` with direct links and an explicit search-coverage limitation.
 - Registered a finite discovery set for possible follow-up numerical testing, with priority on Put Ratio Backspread, Calendar Trap, long-volatility convex structures, post-spike VIX-reversal short-volatility structures, skew routing and IV/VIX divergence.
 - No numerical evidence was generated in Phase 46 and no strategy was promoted.
+
+
+## 2026-10-07 — Phase 46 scope expansion: Profit Breakout channel
+- User designated `https://youtube.com/@profitbreakout` as an additional source stream because the channel contains multiple usable option-strategy videos.
+- Indexed review identified nine directly relevant Profit Breakout videos, including explicit India-VIX strategy selection, Batman/VIX filtering, Iron Fly versus Iron Condor by volatility, adaptive Iron Fly→Iron Condor management, VIX-adapted monthly strategy, weekly/monthly credit structures and longer-duration NIFTY income structures.
+- Phase-46 scope was expanded so new candidates are **not** treated as high-VIX-only. Subsequent testing must evaluate them across ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING.
+- No numerical evidence or promotion decision changed.
