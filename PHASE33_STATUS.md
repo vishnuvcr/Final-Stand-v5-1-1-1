@@ -40,3 +40,10 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 - Workflow run #1: 37420357853.
 - Current state at registration checkpoint: in progress.
 - Accepted evidence remains empty until the run succeeds and artifacts are persisted.
+
+
+### Step 6 — LSTM lookback audit — CORRECTED
+- Code review found the first implementation used prior D−6 expiry events rather than 30 completed NIFTY trading sessions.
+- No numerical result from runs before this correction is accepted.
+- Corrected the LSTM to use the 30 most recent completed NIFTY trading sessions strictly before each D−6 reference date.
+- Corrected commit: 6bb06e263b0c46da9510d40c7effc5d93c2c0f1e.
