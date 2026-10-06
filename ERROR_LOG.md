@@ -1006,3 +1006,16 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 **Correction:** Replaced the expression with explicit parenthesized boolean `or` logic. Research parameters, candidate universe, data and decision gates are unchanged.
 
 **Prevention:** Keep preflight syntax compilation mandatory before any expensive phase execution.
+
+
+## 2026-10-06 — Phase 42 Run 37467624298
+
+### Error F42-002 — Propensity diagnostic state schema omitted India VIX return
+
+**Symptom:** Step 1 numerical screen reached the diagnostic stage but failed because the preregistered propensity state vector requested `india_vix_ret1`, while the policy frame written by the screen omitted that column.
+
+**Evidence status:** No Phase-42 numerical evidence is accepted from this run because the registered workflow did not complete.
+
+**Correction:** Added `india_vix_ret1` to the policy output frame. This preserves the preregistered state vector and does not change the candidate universe, model, thresholds, split, outcome or trading rule.
+
+**Prevention:** Add an explicit schema assertion for all propensity state features before executing propensity diagnostics.
