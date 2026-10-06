@@ -53,10 +53,14 @@ jobs:
       - name: Validate strategy diagnostic
         run: |
           test -s results/phase48_multiexpiry/diagnostic_attempts.csv
+          test -s results/phase48_multiexpiry/timestamp_probe.csv
           python - <<'PY'
           import pandas as pd
           d=pd.read_csv('results/phase48_multiexpiry/diagnostic_attempts.csv')
+          tp=pd.read_csv('results/phase48_multiexpiry/timestamp_probe.csv')
           assert len(d)>=6
+          print('Timestamp probe')
+          print(tp.to_string(index=False))
           print(d.to_string(index=False))
           print('Strategy diagnostic PASS')
           PY
