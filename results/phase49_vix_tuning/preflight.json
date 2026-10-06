@@ -1,0 +1,8 @@
+{
+  "grid": 720,
+  "regime_candidates": 1440,
+  "expiries": 256,
+  "dev": 133,
+  "validation": 102,
+  "holdout": 21
+}

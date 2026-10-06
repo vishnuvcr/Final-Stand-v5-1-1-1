@@ -1,0 +1,8 @@
+{
+  "source_run_id": "37542636969",
+  "source_artifact_id": "11450545178",
+  "source_artifact_digest": "sha256:84c171b3ea8312405cc231b8fc8c528259898fc0ec9c5a85eba13fe9d5f6b558",
+  "reconciliation_type": "publication_and_audit_gate",
+  "numerical_values_modified": false,
+  "zero_byte_error_ledger_repaired": true
+}

@@ -1,0 +1,10 @@
+{
+  "phase": 49,
+  "grid_total": 720,
+  "regime_expanded_candidates": 1440,
+  "frozen": 2,
+  "validation_rows": 2,
+  "validation_economic_passes": 1,
+  "holm_survivors": 0,
+  "holdout_confirmations": 1
+}

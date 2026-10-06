@@ -1,0 +1,24 @@
+{
+  "phase": 49,
+  "status": "NO_PROMOTION",
+  "canonical_strategy_changed": false,
+  "source_run_id": "37542636969",
+  "source_artifact_id": "11450545178",
+  "source_artifact_digest": "sha256:84c171b3ea8312405cc231b8fc8c528259898fc0ec9c5a85eba13fe9d5f6b558",
+  "numerical_step_success": true,
+  "artifact_reconciliation_success": true,
+  "raw_geometries": 720,
+  "regime_expanded_candidates": 1440,
+  "frozen_candidates": 2,
+  "validation_economic_passes": 1,
+  "holm_survivors": 0,
+  "holdout_confirmations": 1,
+  "working_candidates": [
+    {
+      "family": "bear_put",
+      "state": "LOW"
+    }
+  ],
+  "promotion_rule_met": false,
+  "reason": "No frozen candidate survived the Holm-adjusted confirmatory inference gate."
+}
