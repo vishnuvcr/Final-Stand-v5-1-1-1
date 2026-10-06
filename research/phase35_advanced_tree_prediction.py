@@ -417,7 +417,7 @@ def main():
     pred["dynamic_pool_prob"]=dyn
 
     # OOF stacking and calibration.
-    sc=stacking_and_calibration(train,val,base_cols)
+    sc=stacking_and_calibration(train,val,hold,base_cols)
     nv,nl=len(val),len(hold)
     pred.loc[pred.split=="validation","stack_prob"]=sc["val_stack"]
     pred.loc[pred.split=="holdout","stack_prob"]=sc["hold_stack"]
