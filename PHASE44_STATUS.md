@@ -1,6 +1,6 @@
 # Phase 44 Status — VIX Candidate Tuning
 
-**STAGE 1 NUMERICAL EXECUTION IN PROGRESS — ACTIVE STAGED DEVELOPMENT RUN 37496337984**
+**STAGE 1 NUMERICAL EXECUTION IN PROGRESS — ACTIVE STAGED DEVELOPMENT RUN 37500626261**
 
 ## Registered scope
 - 6 defined-risk Phase-43 candidate families.
@@ -16,7 +16,7 @@
 - Literature review: COMPLETE.
 - F44-001: initial candidate-freeze implementation quarantined as non-evidence; corrected.
 - F44-002: redundant VIX profile mapping quarantined as non-evidence; corrected.
-- Current numerical path is the staged F44-013 development runner.
+- Current numerical path is the staged F44-015 development runner.
 - 2026 holdout: **PROTECTED** until validation/inference freeze.
 
 ## Current execution
