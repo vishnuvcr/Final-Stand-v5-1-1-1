@@ -176,7 +176,7 @@ def evaluate(method_name):
         best=None
         for m in threshold_grid:
             a,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),m)
-            u=np.where(a=="CALL",oof.call_net_rupees,oof.put_net_rupees).to_numpy()-oof.control_net_rupees.to_numpy()
+            u=np.asarray(np.where(a=="CALL",oof.call_net_rupees,oof.put_net_rupees))-oof.control_net_rupees.to_numpy()
             score=float(u.sum()-0.10*np.std(u)*math.sqrt(len(u)))
             key=(score,float(u.sum()),-int(ov.sum()))
             if best is None or key>best[0]: best=(key,m)
@@ -187,8 +187,8 @@ def evaluate(method_name):
             for m in MARGINS:
                 a,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),m)
                 ov=ov & (oof.cp_prob.to_numpy()<=cpt)
-                aa=oof.control_direction.to_numpy().copy(); aa[ov]=np.where(aa[ov]=="CALL","PUT","CALL")
-                u=np.where(aa=="CALL",oof.call_net_rupees,oof.put_net_rupees).to_numpy()-oof.control_net_rupees.to_numpy()
+                aa=oof.control_direction.to_numpy().copy(); aa[ov]=np.asarray(np.where(aa[ov]=="CALL","PUT","CALL")
+                u=np.where(aa=="CALL",oof.call_net_rupees,oof.put_net_rupees))-oof.control_net_rupees.to_numpy()
                 score=float(u.sum()-0.10*np.std(u)*math.sqrt(len(u)))
                 key=(score,float(u.sum()),-int(ov.sum()))
                 if best is None or key>best[0]: best=(key,m,cpt)
@@ -205,14 +205,14 @@ def evaluate(method_name):
     vp=pd.concat(vp,ignore_index=True)
     aa,ov,imp,score=action(vp.control_direction.to_numpy(),vp.mu.to_numpy(),vp.unc.to_numpy(),margin)
     ov=ov&(vp.cp_prob.to_numpy()<=cp_threshold)
-    a=vp.control_direction.to_numpy().copy(); a[ov]=np.where(a[ov]=="CALL","PUT","CALL")
-    u=np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees).to_numpy()-vp.control_net_rupees.to_numpy()
+    a=vp.control_direction.to_numpy().copy(); a[ov]=np.asarray(np.asarray(np.where(a[ov]=="CALL","PUT","CALL")
+    u=np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees))-vp.control_net_rupees.to_numpy()
     boot=bootstrap(u,vp.expiry)
     return {
         "method":method_name,"margin":margin,"cp_threshold":cp_threshold,
-        "dev_oof_rows":len(oof),"dev_oof_uplift_rupees":float((np.where(action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),margin)[0]=="CALL",oof.call_net_rupees,oof.put_net_rupees).to_numpy()-oof.control_net_rupees.to_numpy()).sum()),
+        "dev_oof_rows":len(oof),"dev_oof_uplift_rupees":float((np.asarray(np.where(action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),margin)[0]=="CALL",oof.call_net_rupees,oof.put_net_rupees))-oof.control_net_rupees.to_numpy())).sum()),
         "validation_uplift_rupees":float(u.sum()),"validation_override_share":float(ov.mean()),
-        "validation_net_rupees":float(np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees).sum()),
+        "validation_net_rupees":float(np.asarray(np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees)).sum()),
         "validation_control_rupees":float(vp.control_net_rupees.sum()),
         "validation_drawdown":dd(np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees).to_numpy()),
         "validation_mae":float(np.mean(np.abs(vp.mu-vp.delta_pnl_call_minus_put))),
