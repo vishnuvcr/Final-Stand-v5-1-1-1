@@ -1,8 +1,8 @@
 Traceback (most recent call last):
-  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 87, in <module>
+  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 86, in <module>
     if __name__=="__main__":main()
                             ^^^^^^
-  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 77, in main
+  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 76, in main
     p=fit_lgb(fit,test,ms); q=test[["expiry","ref_ts","target_return","target_direction"]].copy(); q["ms_regime_tree_prob"]=p; q["split"]=split; rows.append(q)
       ^^^^^^^^^^^^^^^^^^^^
   File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 54, in fit_lgb
