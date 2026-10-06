@@ -1,3 +1,18 @@
+## Phase 49 — VIX Leader Parameter Tuning — INITIALIZED
+
+Phase 49 tunes only the empirical VIX leaders rather than reopening the full strategy universe. The registered search covers Bear Call, Bear Put and Put Broken-Wing Butterfly in LOW and NORMAL VIX, with different strike geometry/hedge widths, entry times and entry distances. Total search universe: **1,440 parameter×regime candidates**.
+
+Development tuning uses 2021-2023. Validation is 2024-2025. The 2026 holdout remains protected. Candidate selection requires year-by-year development consistency and neighborhood support. No parameter is changed after the validation freeze.
+
+- [Phase 49 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-49-vix-leader-parameter-tuning)
+- [Phase 49 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_RESEARCH_PLAN.md)
+- [Phase 49 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_PRE_REGISTRATION.md)
+- [Phase 49 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md)
+- [Phase 49 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_LITERATURE_REVIEW.md)
+- [Phase 49 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/research/phase49_vix_leader_tuning.py)
+
+---
+
 ## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
 
 Phase 48 successfully repaired the multi-expiry data limitation identified in Phase 47 by using an independent NIFTY intraday option source with multiple expiries on the same trade date. The final corrected run contains **124 accepted trade rows** across three registered baselines.
