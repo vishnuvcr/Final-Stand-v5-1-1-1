@@ -85,3 +85,24 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 ## F43-007 — 2026-10-06 — Corrected postprocess bridge race-hardening
 - The main-branch Phase-43 postprocess bridge is now rebase-safe before publishing corrected artifacts to the isolated phase branch.
 - This change is infrastructure-only; no research parameter or data definition changed.
+
+
+## 2026-10-06 — Phase 43 final correction log
+
+### F43-004 — Invalid first VIX inference implementation
+- The first regime inference compared a regime subset with the identical ALL rows, mechanically producing zero differences.
+- Non-evidence output was superseded by regime-versus-complement inference.
+
+### F43-005 — Unbounded benchmark contamination
+- The first corrected postprocessor allowed `put_ratio_1x2` into the promotion benchmark even though unbounded ratio structures are diagnostic-only under the preregistration.
+- Corrected promotion universe is now strictly defined-risk; final benchmark is `call_backspread`.
+
+### F43-006 — Corrected postprocess publication race
+- The corrected postprocess completed but its first artifact push was rejected non-fast-forward.
+- Publication was hardened with fetch/rebase-before-push and rerun successfully.
+
+### F43-007 — Main-bridge publication hardening
+- The main-branch Phase-43 postprocess bridge was made rebase-safe before publishing to the isolated phase branch.
+- Infrastructure-only; no research parameter changed.
+
+**Phase-43 evidence rule:** only the final corrected/persisted branch artifacts support the conclusion; superseded inference and failed publication runs are audit-only.
