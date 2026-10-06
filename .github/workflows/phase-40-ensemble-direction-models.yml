@@ -10,6 +10,7 @@ on:
       - '.github/workflows/phase-40-ensemble-direction-models.yml'
       - 'data/phase36_selector_predictions.csv'
       - 'results/phase39_features/point_in_time_features.csv'
+      - 'research/phase40_inference.py'
   workflow_dispatch:
 
 permissions:
@@ -32,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --disable-pip-version-check --no-cache-dir numpy pandas pyarrow huggingface_hub yfinance
+          python -m pip install --disable-pip-version-check --no-cache-dir numpy pandas pyarrow huggingface_hub yfinance matplotlib
 
       - name: Configure git
         run: |
@@ -51,12 +52,21 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python research/phase40_ensemble_direction.py
 
+      - name: Run paired statistical inference and figures
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase40_inference.py
+
       - name: Verify grid and artifacts
         run: |
           test -s results/phase40_ensemble/grid_validation.csv
           test -s results/phase40_ensemble/holdout_top10.csv
           test -s results/phase40_ensemble/selection.json
-          python -c "import json,pandas as pd; g=pd.read_csv('results/phase40_ensemble/grid_validation.csv'); s=json.load(open('results/phase40_ensemble/selection.json')); assert len(g)==1764,len(g); assert int(s['grid_candidates'])==1764,s; assert int(s['top10_count'])==10,s; print(s['top10'][0])"
+          test -s results/phase40_ensemble/inference_top10.csv
+          test -s results/phase40_ensemble/inference_summary.json
+          test -s results/phase40_ensemble/vix_mode_summary.csv
+          test -s results/phase40_ensemble/validation_uplift_by_vix_mode.png
+          python -c "import json,pandas as pd; g=pd.read_csv('results/phase40_ensemble/grid_validation.csv'); s=json.load(open('results/phase40_ensemble/selection.json')); assert len(g)==1764,len(g); assert int(s['grid_candidates'])==1764,s; assert int(s['top10_count'])==10,s; assert g['signal_signature'].nunique()==int(s['unique_validation_policies']),s; print(s['top10'][0])"
 
       - name: Persist results
         run: |
