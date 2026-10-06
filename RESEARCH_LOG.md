@@ -194,3 +194,24 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Added automatic GitHub Actions workflow with manual dispatch and India VIX caching.
 - India VIX is aligned point-in-time using the previous session's close/change; validation freezes the top 10 before untouched 2026 holdout replay.
 - Initial engine construction correction F40-001 was logged before numerical evidence.
+
+
+## 2026-10-06 — Phase 40 exhaustive grid completed
+
+- Completed the full pre-registered **1,764-candidate** ensemble/VIX grid.
+- India VIX was cached point-in-time; development thresholds were frozen before validation.
+- 306 unique expiry-level direction policies remained after deduplicating equivalent signal sequences.
+- High-VIX routing dominated the validation screen. The strongest raw candidate was CATBOOST + HIGH-VIX with +₹21,262.83 validation uplift versus the common-expiry control.
+- A fixed-opportunity paired bootstrap/sign-flip analysis was completed on the frozen top 10.
+
+## 2026-10-06 — Phase 40 exact stateful replay and closeout
+
+- Replayed the frozen top 10 through the exact Phase-32 chronological state machine with realistic slippage, brokerage, statutory charges and delta exits.
+- Primary pre-selected policy: CATBOOST + HIGH India VIX gate with canonical fallback.
+- Exact sequential validation uplift: **+₹20,691.98** over the frozen control; one-sided sign-flip p = **0.2185**.
+- Exact untouched 2026 holdout uplift: **+₹13,072.75**; one-sided sign-flip p = **0.4006**; 95% bootstrap CI for mean uplift crosses zero.
+- VIX-only/RISING candidate had the highest holdout point estimate among the frozen top 10 (+₹14,294.32), but it was not the validation-selected policy and therefore cannot be promoted after observing holdout.
+- No candidate passed the statistical and selection-discipline gates.
+- Phase 40 final decision: **PROMISING / INCONCLUSIVE — NOT PROMOTED**.
+- Canonical stateful strategy remains unchanged.
+- Complete manuscript saved as `PHASE40_MANUSCRIPT.md`.
