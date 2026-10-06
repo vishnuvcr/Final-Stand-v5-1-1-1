@@ -1,0 +1,65 @@
+name: Phase 36 - Independent Direction Selector Overlay
+
+on:
+  push:
+    branches: [phase-36-independent-direction-selector-overlay]
+  workflow_dispatch:
+    inputs:
+      sample_start:
+        description: 'Primary sample start date (YYYY-MM-DD)'
+        required: false
+        default: '2024-01-01'
+      sample_end:
+        description: 'Primary sample end date (YYYY-MM-DD)'
+        required: false
+        default: '2026-06-30'
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        selector: [OTM678_FRESH, OTM789_FRESH, CATBOOST, DART, WAVELET_TREE, OOF_STACK, MARKOV_REGIME_TREE]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: phase36-hf-${{ runner.os }}-${{ hashFiles('data/phase36_selector_predictions.csv') }}
+          restore-keys: |
+            phase36-hf-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow huggingface_hub
+
+      - name: Run independent selector
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SAMPLE_START: ${{ inputs.sample_start || '2024-01-01' }}
+          SAMPLE_END: ${{ inputs.sample_end || '2026-06-30' }}
+          SELECTOR: ${{ matrix.selector }}
+        run: |
+          set -euo pipefail
+          mkdir -p "results/phase36_independent_direction/${SELECTOR}"
+          python research/phase36_independent_direction_overlay.py 2>&1 | tee "results/phase36_independent_direction/${SELECTOR}/run.log"
+
+      - name: Upload selector artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase36-${{ matrix.selector }}
+          path: results/phase36_independent_direction/${{ matrix.selector }}/**
+          if-no-files-found: error
