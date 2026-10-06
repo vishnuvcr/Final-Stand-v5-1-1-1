@@ -89,3 +89,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Numerical execution did not start because a source patch inserted literal \\n characters into `phase35_advanced_tree_prediction.py`, causing a Python SyntaxError at the decomposition fit-frame setup line.
 - No numerical evidence was produced by this run.
 - Correction: restored real line breaks and rerun the unchanged preregistered model battery.
+
+
+## 2026-10-06 — Phase 35 numerical run #4 (37424989356)
+- The full advanced battery reached and completed the BART fits for validation and holdout.
+- Numerical execution then failed at the OOF stacking call because `stacking_and_calibration` was defined with `train, val, hold, cols` but was called with only `train, val, cols`.
+- No Phase-35 result from this run is accepted as evidence.
+- Correction: pass the holdout frame to the stacking/calibration function and rerun the frozen battery.
