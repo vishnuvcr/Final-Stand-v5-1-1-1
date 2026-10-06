@@ -1209,3 +1209,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The web interface exposes indexed/search-ranked YouTube results rather than a complete authoritative corpus.
 - Evidence status: no numerical impact; this is a source-coverage limitation, not a strategy-test error.
 - Correction/prevention: Phase 46 labels the scan as a broad reproducible indexed search, records the query families and direct sources, and avoids claiming that every YouTube video was retrieved.
+
+
+## F46-002 — Initial discovery framing was too high-VIX focused
+- The first Phase-46 framing prioritized RISING/HIGH/SPIKE/HIGH_RISING because those regimes were empty, but could have unintentionally excluded LOW/NORMAL candidates from the newly discovered source material.
+- Evidence status: no numerical test was run under the restricted framing, so no backtest evidence is contaminated.
+- Correction: the registered Phase-46 plan now requires all discovered candidates, including Profit Breakout-derived strategies, to be evaluated across the complete eight-state VIX panel. LOW/NORMAL remain active comparator and opportunity regimes.
