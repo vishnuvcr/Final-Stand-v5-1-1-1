@@ -1,3 +1,5 @@
 Phase 47 start trigger — generated after preflight code audit. Numerical evidence must come only from a workflow run that passes compile, preflight, artifact and holdout gates.
 
 Rerun after F47-005 audit correction: focused S1/S2 diagnostics and common-strike fix.
+
+2026-10-07 retry after F47-006 diagnostic workflow schema correction and warning cleanup.
