@@ -1345,3 +1345,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: tooling-only; no numerical analysis or repository evidence was affected.
 - Correction: the engine was reduced to a compact implementation that reuses the accepted Phase-43 execution/cost primitives instead of duplicating them.
 - Prevention: future phase engines should reuse accepted audited primitives whenever possible and keep new code narrowly scoped to the novel research question.
+
+
+## F49-001 — Parameter-grid cardinality audit
+- Initial engine preflight asserted 1,440 raw geometries, but the registered geometry universe is 720: Bear Call 192 + Bear Put 144 + Put BWB 384.
+- The 1,440 figure is the total strategy×VIX-regime candidate family after crossing 720 geometries with LOW and NORMAL.
+- Evidence status: pre-numerical only.
+- Correction: engine preflight now asserts 720 raw parameter configurations and the phase plan retains 1,440 parameter×regime candidates.
+- Prevention: cardinality is now separately recorded for geometry candidates and regime-expanded candidates.
