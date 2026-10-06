@@ -1,10 +1,12 @@
 name: Phase 49 - Automatic Closeout Reconciliation
 
 on:
-  workflow_run:
-    workflows:
-      - "Phase 49 - VIX Leader Parameter Tuning"
-    types: [completed]
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-49-vix-leader-parameter-tuning
+    paths:
+      - trigger/phase49.closeout
 
 permissions:
   actions: read
@@ -16,113 +18,127 @@ concurrency:
 
 jobs:
   reconcile:
-    if: github.event.workflow_run.head_branch == 'phase-49-vix-leader-parameter-tuning'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Locate source artifact
-        id: artifact
+      - name: Locate latest Phase 49 raw artifact
+        id: source
         uses: actions/github-script@v7
         with:
           script: |
-            const runId = context.payload.workflow_run.id;
-            const { data } = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: runId,
-              per_page: 100
+            const { owner, repo } = context.repo;
+            const branch = 'phase-49-vix-leader-parameter-tuning';
+            const runs = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, {
+              owner, repo, branch, per_page: 100
             });
-            const target = data.artifacts.find(a => a.name === `phase49-raw-${runId}`);
-            core.setOutput('artifact_id', target ? String(target.id) : '');
-            core.setOutput('digest', target ? String(target.digest || '') : '');
-            core.setOutput('found', target ? 'true' : 'false');
+            const candidates = runs
+              .filter(r => r.name === 'Phase 49 - VIX Leader Parameter Tuning' && r.status === 'completed')
+              .sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+            let chosen = null;
+            for (const run of candidates) {
+              const { data } = await github.rest.actions.listWorkflowRunArtifacts({ owner, repo, run_id: run.id, per_page: 100 });
+              const artifact = data.artifacts.find(a => a.name === `phase49-raw-${run.id}` && !a.expired);
+              if (artifact) { chosen = { run, artifact }; break; }
+            }
+            core.setOutput('found', chosen ? 'true' : 'false');
+            core.setOutput('run_id', chosen ? String(chosen.run.id) : '');
+            core.setOutput('artifact_id', chosen ? String(chosen.artifact.id) : '');
+            core.setOutput('digest', chosen ? String(chosen.artifact.digest || '') : '');
+            if (chosen) core.info(`Using source run ${chosen.run.id}, artifact ${chosen.artifact.id}`);
 
-      - name: Checkout current branch
+      - name: Checkout branch
         uses: actions/checkout@v4
         with:
           ref: phase-49-vix-leader-parameter-tuning
           fetch-depth: 0
 
-      - name: Stop cleanly when no numerical artifact exists
-        if: steps.artifact.outputs.found != 'true'
-        run: echo "No Phase 49 raw artifact exists for this workflow run; numerical work did not reach artifact publication."
+      - name: Stop when no artifact exists
+        if: steps.source.outputs.found != 'true'
+        run: echo "No completed Phase 49 raw artifact was found."
 
       - name: Download source artifact
-        if: steps.artifact.outputs.found == 'true'
+        if: steps.source.outputs.found == 'true'
         uses: actions/download-artifact@v4
         with:
-          name: phase49-raw-${{ github.event.workflow_run.id }}
+          name: phase49-raw-${{ steps.source.outputs.run_id }}
           path: results/phase49_vix_tuning
           repository: ${{ github.repository }}
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: ${{ steps.source.outputs.run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           merge-multiple: true
 
       - name: Install dependencies
-        if: steps.artifact.outputs.found == 'true'
+        if: steps.source.outputs.found == 'true'
         run: python -m pip install --no-input numpy pandas matplotlib
 
-      - name: Run independent reconciliation
-        if: steps.artifact.outputs.found == 'true'
+      - name: Reconcile artifact and generate manuscript
+        if: steps.source.outputs.found == 'true'
         env:
-          PHASE49_SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
-          PHASE49_SOURCE_ARTIFACT_ID: ${{ steps.artifact.outputs.artifact_id }}
-          PHASE49_SOURCE_ARTIFACT_DIGEST: ${{ steps.artifact.outputs.digest }}
+          PHASE49_SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
+          PHASE49_SOURCE_ARTIFACT_ID: ${{ steps.source.outputs.artifact_id }}
+          PHASE49_SOURCE_ARTIFACT_DIGEST: ${{ steps.source.outputs.digest }}
         run: python research/phase49_reconcile.py
 
-      - name: Update status and research log
-        if: steps.artifact.outputs.found == 'true'
+      - name: Update status, README and research log
+        if: steps.source.outputs.found == 'true'
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          decision=json.load(open('results/phase49_vix_tuning/phase49_final_decision.json'))
+          d=json.load(open('results/phase49_vix_tuning/phase49_final_decision.json'))
           status=[
             '# Phase 49 Status — VIX Leader Parameter Tuning',
             '',
-            f"**{decision['status']} — AUTOMATIC CLOSEOUT RECONCILIATION PASSED**",
+            f"**{d['status']} — CLOSEOUT RECONCILIATION PASSED**",
             '',
-            f"Source numerical run: {decision['source_run_id']}",
-            f"Raw geometries: {decision['raw_geometries']}",
-            f"Regime-expanded candidates: {decision['regime_expanded_candidates']}",
-            f"Frozen candidates: {decision['frozen_candidates']}",
-            f"Validation economic passes: {decision['validation_economic_passes']}",
-            f"Holm survivors: {decision['holm_survivors']}",
-            f"Holdout confirmations: {decision['holdout_confirmations']}",
+            f"Source numerical run: {d['source_run_id']}",
+            f"Raw geometries: {d['raw_geometries']}",
+            f"Regime-expanded candidates: {d['regime_expanded_candidates']}",
+            f"Frozen candidates: {d['frozen_candidates']}",
+            f"Validation economic passes: {d['validation_economic_passes']}",
+            f"Holm survivors: {d['holm_survivors']}",
+            f"Holdout confirmations: {d['holdout_confirmations']}",
             '',
-            'No numerical values were changed during reconciliation. The reconciliation regenerated the structured manuscript and figures from the persisted evidence.',
+            'Reconciliation modified no numerical P&L values. It repaired/validated packaging and generated the structured manuscript and figures from the persisted artifact.',
             '',
-            'Promotion: NO PROMOTION. The canonical strategy remains unchanged unless the final decision artifact explicitly states otherwise.',
+            'Promotion: NO PROMOTION. The canonical strategy remains unchanged.',
           ]
           Path('PHASE49_STATUS.md').write_text('\n'.join(status)+'\n',encoding='utf-8')
-          with open('RESEARCH_LOG.md','a',encoding='utf-8') as f:
+          rp=Path('RESEARCH_LOG.md')
+          with rp.open('a',encoding='utf-8') as f:
             f.write(
-              f"\n\n## Phase 49 automatic closeout — source run {decision['source_run_id']}\n"
-              f"- Status={decision['status']}; frozen={decision['frozen_candidates']}; validation economic passes={decision['validation_economic_passes']}; Holm survivors={decision['holm_survivors']}; holdout confirmations={decision['holdout_confirmations']}.\n"
+              f"\n\n## Phase 49 automatic closeout — source run {d['source_run_id']}\n"
+              f"- Status={d['status']}; frozen={d['frozen_candidates']}; validation economic passes={d['validation_economic_passes']}; Holm survivors={d['holm_survivors']}; holdout confirmations={d['holdout_confirmations']}.\n"
               '- Reconciliation was independent of numerical generation and did not modify trade P&L values.\n'
             )
+          readme=Path('README.md')
+          text=readme.read_text(encoding='utf-8')
+          note=(f"\n\n## Phase 49 final closeout\n\n"
+                f"Automatic artifact reconciliation completed from source run {d['source_run_id']}. "
+                f"Final decision: **{d['status']}**; frozen candidates={d['frozen_candidates']}; "
+                f"validation economic passes={d['validation_economic_passes']}; Holm survivors={d['holm_survivors']}; "
+                f"holdout confirmations={d['holdout_confirmations']}. "
+                "See `results/phase49_vix_tuning/PHASE49_MANUSCRIPT.md` and `results/phase49_vix_tuning/phase49_final_decision.json`.\n")
+          if '## Phase 49 final closeout' not in text:
+            readme.write_text(text.rstrip()+note,encoding='utf-8')
           PY
 
       - name: Commit reconciled evidence
-        if: steps.artifact.outputs.found == 'true'
-        env:
-          BRANCH: phase-49-vix-leader-parameter-tuning
+        if: steps.source.outputs.found == 'true'
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@github.com'
-          git fetch origin "$BRANCH"
-          git checkout -B "$BRANCH" "origin/$BRANCH"
-          git add results/phase49_vix_tuning PHASE49_STATUS.md RESEARCH_LOG.md
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch origin phase-49-vix-leader-parameter-tuning
+          git reset --hard origin/phase-49-vix-leader-parameter-tuning
+          git add results/phase49_vix_tuning PHASE49_STATUS.md RESEARCH_LOG.md README.md
           git diff --cached --quiet && exit 0
-          git commit -m 'phase49: automatic closeout reconciliation'
-          git fetch origin "$BRANCH"
-          git rebase "origin/$BRANCH"
-          git push origin "HEAD:$BRANCH"
+          git commit -m 'phase49: closeout reconciliation and manuscript'
+          git push origin HEAD:phase-49-vix-leader-parameter-tuning
 
       - name: Upload reconciled package
-        if: steps.artifact.outputs.found == 'true'
+        if: steps.source.outputs.found == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: phase49-reconciled-${{ github.event.workflow_run.id }}
+          name: phase49-reconciled-${{ steps.source.outputs.run_id }}
           path: results/phase49_vix_tuning
           if-no-files-found: error
