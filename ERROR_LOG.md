@@ -1,36 +1,36 @@
-# Phase 36 Error Log — Independent Per-Trade Direction Selector Overlay
+# Phase 36 Status — Independent Per-Trade Direction Selector Overlay
 
-## 2026-10-06 — Run 37427528243
+## Final state
+**COMPLETE — REJECTED — NO LIVE-TRADING PROMOTION**
 
-### Error F36-001 — Mixed skip-ledger row widths
-**Affected jobs:** CATBOOST, WAVELET_TREE, OOF_STACK.
+The previous trade's status/P&L/direction remains part of the Continuous Delta 6x6 direction mechanism. Removing that state and using an independent selector before every new trade worsened net performance and holdout robustness.
 
-**Symptom:** The numerical loop completed many expiry calculations, then Pandas failed constructing the skip DataFrame with:
-\`ValueError: 3 columns passed, passed data had 4 columns\`.
+### Accepted final evidence
+- GitHub Actions run: 37428502722 (#4)
+- corrected source revision: c8963bcded49ae15cf5b059394f3471ec1c3f2a4
+- all seven selector jobs: success
+- publish job: success
+- per-selector numerical artifacts persisted in the repository
 
-**Cause:** Missing/incomplete expiry skips were stored as three fields, while \`run_expiry()\` returned three fields that were prefixed with expiry, producing four fields.
+### Primary sample
+2024-01-01 through 2026-06-30; 128 expected expiries, 104 available files, 1 incomplete file, 103 processed expiries.
 
-**Evidence status:** The affected jobs are non-evidence. No conclusion or promotion decision uses them.
+### Final result
+Stateful control: +₹63,672.58 net, PF 1.203, max DD ₹61,960.87.
 
-**Correction:** Normalize all skip records to the fixed schema \`expiry, timestamp, reason, detail\` before constructing the DataFrame.
+Best independent selector: OTM789_FRESH at -₹39,122.38 net, PF 0.898, max DD ₹102,707.29.
 
-**Prevention:** Enforce a single audit-record schema at the engine boundary and validate row widths before serialization.
+All seven independent selectors were negative over the primary sample and all seven were negative in the 2026 holdout.
 
-**Research impact:** None on accepted evidence; failure occurred after the trade calculation loop and before final artifact creation.
+### Control-relative bootstrap
+All seven selector-minus-control mean expiry-P&L intervals were entirely below zero.
 
+### Error history
+- F36-001: mixed skip-record widths; corrected.
+- F36-002: duplicate quote rows in fresh selectors; corrected.
+- Final corrective run #4: successful.
 
-## 2026-10-06 — Run 37428195471
+### Final recommendation
+Retain the Phase-32 stateful direction rule. Do not promote any Phase-36 selector.
 
-### Error F36-002 — Duplicate quote rows in fresh premium selector
-**Affected selectors:** OTM678_FRESH, OTM789_FRESH.
-
-**Symptom:** Eight expiry-level loops terminated with:
-\`TypeError("float() argument must be a string or a real number, not 'Series'")\`.
-
-**Cause:** At some timestamps the option snapshot contained duplicate rows for the same option type and strike. Pandas \`loc\` returned a Series instead of a scalar close.
-
-**Evidence status:** Fresh-selector results from run #3 are non-final and are not used for phase conclusions.
-
-**Correction:** Group each option type/strike pair in the snapshot and use the last observed close deterministically before evaluating OTM678/OTM789 premium expressions.
-
-**Research impact:** No accepted model-selector results are affected. Fresh-selector results require rerun after correction.
+Next priority: forward/paper validation of the canonical stateful strategy with full execution realism, not additional selector hunting.
