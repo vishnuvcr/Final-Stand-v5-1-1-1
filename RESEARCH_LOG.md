@@ -50,3 +50,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Versus canonical Phase 20: +₹18,251.49 training, −₹1,092.14 validation, −₹6,879.84 2026 holdout, +₹10,279.51 full.
 - **Decision: no promotion; Phase 20 remains canonical.**
 - Artifacts persisted on the Phase-29 branch.
+
+
+## 2026-10-06 — Phase 41 active interim status
+- Isolated branch phase-41-regime-conditional-policy-learning created from Phase 40.
+- The registered fixed-opportunity screen completed successfully: 24 variants evaluated; zero passed the validation safety screen.
+- The top three diagnostic policies produced zero overrides across development, validation and the frozen 2026 fixed panel.
+- Exact sequential identity validation remains the registered closing step.
