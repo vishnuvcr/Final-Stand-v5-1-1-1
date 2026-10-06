@@ -1414,3 +1414,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Scientific evidence status: numerical values remain locked/non-final until a corrected full workflow passes the artifact and publication gates.
 - Correction: the engine now writes data_errors.csv with explicit expiry/error headers even when empty. A reproducible reconciliation script was also added for audit/provenance checks.
 - Prevention: all empty error ledgers must be valid zero-row CSVs with headers, not zero-byte files.
+### F49-012 — Numerical and artifact audits passed, publication commit conflicted
+- Affected run: 37542636969 (#12). Numerical computation completed successfully and the artifact self-audit passed.
+- Publication failure: the workflow created a results commit, then rebased onto newer repository commits that had updated PHASE49_STATUS.md and RESEARCH_LOG.md, producing merge conflicts.
+- Evidence status: NUMERICAL EVIDENCE VALID; publication was operationally incomplete. The raw artifact is preserved and independently reconcilable.
+- Correction: the publication step now resets to the latest remote branch before staging the results directory, and does not rebase generated status/log files over concurrent research-audit commits. A separate branch-triggered closeout workflow reconciles the latest raw artifact and publishes the structured manuscript.
+- Prevention: publication jobs must never rebase long-lived research logs after generating large artifacts. Results publication and research-log mutation are separated into a conflict-safe closeout path.
