@@ -1,6 +1,11 @@
 name: Phase 44 - VIX Candidate Tuning Bridge
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "trigger/phase44.bridge"
   pull_request:
     paths:
       - "trigger/phase44.start"
