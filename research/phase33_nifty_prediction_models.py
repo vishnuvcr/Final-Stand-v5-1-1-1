@@ -335,7 +335,7 @@ def build_events():
     events = pd.DataFrame(event_rows).sort_values("ref_ts")
     if events.empty:
         raise RuntimeError("No D-6 10:00 events available")
-    price_cols = [c for c in price.columns if c != "close"]
+    price_cols = [c for c in price.columns if c not in ["date","close","open","high","low","volume"]]
     events = events.merge(price[["date"] + price_cols], left_on="ref_ts", right_on="date", how="left").drop(columns=["date"])
     # Current-session 10:00 return uses the prior trading day's close only.
     prior = daily[["date", "close"]].copy()
@@ -358,8 +358,6 @@ def build_events():
     gc = g.copy()
     # Previous global session only; avoids using values that may still be trading at Indian 10:00.
     for c in [x for x in gc.columns if x != "date"]:
-        if c.endswith("_ret1"):
-            continue
         gc[c] = gc[c].shift(1)
     gcols = [c for c in gc.columns if c != "date"]
     events = pd.merge_asof(
@@ -703,11 +701,11 @@ def main():
         "status":"NUMERICAL RUN COMPLETE",
         "reference":"D-6 calendar days, 10:00 IST",
         "validation_best_model": min(
-            [x for x in metrics if x["split"]=="validation" and x["model"] in ["rf","sofnn","lstm","ensemble"]],
+            [x for x in metrics if x["split"]=="validation" and x["model"] in ["rf","sofnn","sofnn_sent","lstm","ensemble"]],
             key=lambda x:x["log_loss"]
         )["model"],
         "holdout_best_model": min(
-            [x for x in metrics if x["split"]=="holdout" and x["model"] in ["rf","sofnn","lstm","ensemble"]],
+            [x for x in metrics if x["split"]=="holdout" and x["model"] in ["rf","sofnn","sofnn_sent","lstm","ensemble"]],
             key=lambda x:x["log_loss"]
         )["model"],
     }
