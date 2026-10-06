@@ -128,16 +128,22 @@ def audit_dataset():
         out[str(y)]={'path':p,'columns':sorted(cols),'mapping':mapping,'min_date':str(mn.iloc[0].min_date),'max_date':str(mn.iloc[0].max_date),'rows':int(mn.iloc[0].rows)}
     (OUT/'data_audit.json').write_text(json.dumps(out,default=str,indent=2))
     return out
+def expiries_all():
+    rows=[]
+    for y in YEARS:
+        rel=norm_relation(y)
+        z=duck(f"SELECT DISTINCT expiry FROM {rel} WHERE date>='2024-10-01'")
+        rows.extend(z['expiry'].tolist())
+    return sorted(set(pd.Timestamp(x,tz=TZ) for x in rows))
 def monthly_expiries(expiries):
     z=pd.DataFrame({"expiry":sorted(expiries)})
     z["ym"]=z["expiry"].dt.tz_localize(None).dt.to_period("M").astype(str)
     return list(z.groupby("ym").expiry.max().sort_values())
 
 def trade_days_for_year(y):
-    p=get_file(y)
-    z=duck(f"SELECT DISTINCT CAST(date AS DATE) AS d FROM read_parquet('{p}') ORDER BY 1")
-    return [pd.Timestamp(x,tz=TZ) for x in z["d"].tolist()]
-
+    rel=norm_relation(y)
+    z=duck(f"SELECT DISTINCT date AS d FROM {rel} ORDER BY 1")
+    return [pd.Timestamp(x,tz=TZ) for x in z['d'].tolist()]
 def all_trade_days():
     a=[]
     for y in YEARS: a.extend(trade_days_for_year(y))
@@ -184,47 +190,33 @@ def load_vix():
     return x[["date","vix","dvix"]].dropna().sort_values("date")
 
 def sql_day(y,day,expiry=None,time=None):
-    p=get_file(y); ds=day.date().isoformat()
-    wh=[f"CAST(date AS DATE)='{ds}'"]
-    if expiry is not None: wh.append(f"CAST(expiry AS DATE)='{as_tz(expiry).date().isoformat()}'")
-    if time is not None: wh.append(f"strftime(CAST(timestamp AS TIMESTAMP),'%H:%M')='{time}'")
-    where=" AND ".join(wh)
-    return duck(f"""SELECT CAST(timestamp AS TIMESTAMP) AS timestamp, CAST(expiry AS DATE) AS expiry,
-        CAST(strike AS DOUBLE) AS strike, UPPER(option_type) AS option_type,
-        CAST(close AS DOUBLE) AS close, CAST(spot_price AS DOUBLE) AS spot_price,
-        CAST(volume AS DOUBLE) AS volume, CAST(oi AS DOUBLE) AS oi
-        FROM read_parquet('{p}') WHERE {where} AND close IS NOT NULL""")
-
+    rel=norm_relation(y); ds=day.date().isoformat()
+    wh=[f"date='{ds}'"]
+    if expiry is not None: wh.append(f"expiry='{as_tz(expiry).date().isoformat()}'")
+    if time is not None: wh.append(f"strftime(timestamp,'%H:%M')='{time}'")
+    where=' AND '.join(wh)
+    return duck(f"SELECT timestamp, expiry, strike, option_type, close, spot_price, volume, oi FROM {rel} WHERE {where} AND close IS NOT NULL")
 def option_snapshot(day,expiry,time="10:00"):
     return sql_day(day.year,day,expiry,time)
 
 def latest_exit(expiry,legs):
-    y=as_tz(expiry).year
-    p=get_file(y); ds=as_tz(expiry).date().isoformat()
-    strikes=",".join(str(float(s)) for _,s,_ in legs)
+    y=as_tz(expiry).year; rel=norm_relation(y); ds=as_tz(expiry).date().isoformat()
     cond=[]
     for typ,strike,_ in legs:
-        cond.append(f"(UPPER(option_type)='{typ}' AND strike={float(strike)})")
-    where=" OR ".join(cond)
-    z=duck(f"""SELECT CAST(timestamp AS TIMESTAMP) AS timestamp, UPPER(option_type) AS option_type,
-               CAST(strike AS DOUBLE) AS strike, CAST(close AS DOUBLE) AS close
-               FROM read_parquet('{p}')
-               WHERE CAST(date AS DATE)='{ds}' AND timestamp>=TIMESTAMPTZ '{ds} 15:00:00+05:30'
-                 AND timestamp<=TIMESTAMPTZ '{ds} 15:29:59+05:30' AND ({where}) AND close IS NOT NULL
-               ORDER BY timestamp""")
-    if z.empty: return None
+        cond.append(f"(option_type='{typ}' AND abs(strike-{float(strike)})<1e-9)")
+    where=' OR '.join(cond)
+    z=duck(f"SELECT timestamp, option_type, strike, close FROM {rel} WHERE date='{ds}' AND timestamp>='{ds} 15:00:00' AND timestamp<='{ds} 15:29:59' AND ({where}) AND close IS NOT NULL ORDER BY timestamp")
+    if z.empty:return None
     by={}
     for typ,strike,_ in legs:
         q=z[(z.option_type==typ)&np.isclose(z.strike,float(strike))]
-        if q.empty: return None
-        by[(typ,float(strike))]=q.set_index("timestamp").close
+        if q.empty:return None
+        by[(typ,float(strike))]=q.set_index('timestamp').close
     common=None
-    for s in by.values():
-        common=s.index if common is None else common.intersection(s.index)
-    if common is None or len(common)==0: return None
+    for s in by.values(): common=s.index if common is None else common.intersection(s.index)
+    if common is None or len(common)==0:return None
     ts=max(common)
     return ts,[float(by[(typ,float(strike))].loc[ts]) for typ,strike,_ in legs]
-
 def norm_cdf(x): return 0.5*(1+math.erf(x/math.sqrt(2)))
 
 def bs_delta(spot,strike,T,sigma,typ):
