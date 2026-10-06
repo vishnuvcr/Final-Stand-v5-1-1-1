@@ -1031,3 +1031,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - Replay failed on a timezone-naive cached India VIX date versus timezone-aware opportunity timestamps.
 - Non-evidence; no sequential result accepted.
 - Corrected by normalizing the opportunity timestamp to a timezone-naive calendar date before the VIX join.
+
+
+## F42-003 — 2026-10-06 — Replay datetime sentinel underflow
+- Workflow 37469600983 failed in exact sequential replay before any candidate trade because `pd.Timestamp.min.tz_localize("Asia/Kolkata")` underflowed in the installed pandas version.
+- No numerical replay evidence was produced.
+- Correction: replaced the minimum timestamp sentinel with a safe timezone-aware date (2000-01-01). No research parameter or outcome definition changed.
+- Status: corrected; rerun triggered.
