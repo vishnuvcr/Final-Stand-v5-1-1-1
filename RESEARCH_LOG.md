@@ -392,3 +392,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Canonical Phase-20/42 strategy remains unchanged.
 - Earlier Phase-48 numerical outputs were rejected after self-audits found timestamp, spot-field and historical lot-size defects; only the post-F48-008 run is accepted.
 - Phase 48 is closed. A future exact-futures/adjustment study is a separate research phase, not a live recommendation.
+
+
+## 2026-10-07 — Phase 49 initialized
+- Created isolated branch phase-49-vix-leader-parameter-tuning from Phase 48 closeout.
+- Registered a finite 1,440-candidate parameter universe covering LOW/NORMAL Bear Call, Bear Put and Put BWB leaders.
+- Registered development tuning on 2021-2023, validation on 2024-2025 and protected 2026 holdout.
+- Added development robustness constraints and neighborhood/plateau support to reduce isolated-peak overfitting.
+- Reused audited Phase-43 execution/cost primitives rather than introducing a second independent fee/slippage implementation.
