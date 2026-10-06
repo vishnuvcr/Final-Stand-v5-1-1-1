@@ -69,7 +69,7 @@ def sf(x,n=12000):
 def main():
     ev,d=load(); z=prep_states(ev,d)
     ev=ev.drop(columns=["ms_p0","ms_p1","ms_entropy"],errors="ignore").merge(z[["ref_ts","ms_p0","ms_p1","ms_entropy"]],on="ref_ts",how="left")
-    base=cols(ev); ms=base+["ms_p0","ms_p1","ms_entropy"]
+    base=[c for c in cols(ev) if c not in {"ms_p0","ms_p1","ms_entropy"}]; ms=base+["ms_p0","ms_p1","ms_entropy"]
     tr=ev[ev.split=="train"].copy(); va=ev[ev.split=="validation"].copy(); ho=ev[ev.split=="holdout"].copy()
     rows=[]; econ=[]
     for split,fit,test in [("validation",tr,va),("holdout",pd.concat([tr,va]).sort_values("ref_ts"),ho)]:
