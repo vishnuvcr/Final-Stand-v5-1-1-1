@@ -1099,3 +1099,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The active optimized engine retained every loaded expiry dataframe in memory, risking RAM pressure on the GitHub-hosted runner.
 - No result from that run is accepted.
 - The corrected engine now processes one expiry at a time and relies on the Hugging Face cache for persistence, preserving numerical definitions while bounding memory usage.
+
+
+## F44-006 — filtered parquet I/O optimization
+- The bounded-memory engine still read each complete expiry parquet before discarding most timestamps.
+- No numerical output from that implementation is accepted.
+- The corrected engine now uses pyarrow predicate filtering and reads only the registered entry-day windows plus expiry-day window for each expiry, with a complete-file fallback only when timestamp filtering is unsupported.
