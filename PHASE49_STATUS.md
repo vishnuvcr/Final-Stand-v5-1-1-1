@@ -47,3 +47,6 @@ GitHub Actions **run 37538954063 (#9)** is the current accepted execution candid
 ## 2026-10-07 — F49-010 runtime-path correction
 
 A final static audit found a remaining validation-stage import-path defect plus an unhandled zero-candidate development branch. The active optimized run #9 is therefore classified NON-EVIDENCE and will be superseded by a corrected execution. No result has been accepted.
+## 2026-10-07 — Corrected rerun #11 active
+
+After F49-010, GitHub Actions **run 37540089501 (#11)** is the current authoritative numerical execution. Its preflight has passed and the full tuning/confirmation step is running. Runs #9 and #10 are superseded/non-evidence.
