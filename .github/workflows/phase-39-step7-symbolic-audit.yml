@@ -1,0 +1,53 @@
+name: Phase 39 - Step 7 Symbolic Final Audit
+
+on:
+  push:
+    branches: [phase-39-advanced-direction-models]
+    paths:
+      - 'research/phase39_symbolic_audit.py'
+      - 'results/phase39_sequential_policy/sequential_trades.csv'
+      - 'results/phase39_data/development_control_trades_2021_2023.csv'
+      - 'results/phase39_data/frozen_control_trades_2024_2026-06-30.csv'
+      - '.github/workflows/phase-39-step7-symbolic-audit.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase39-step7-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check --no-input pandas numpy
+      - run: python research/phase39_symbolic_audit.py
+      - run: |
+          test -f results/phase39_symbolic_audit/audit.json
+          python - <<'PY'
+          import json
+          s=json.load(open('results/phase39_symbolic_audit/audit.json'))
+          assert s['status']=='PASS'
+          assert s['control_split']=={'development':271,'validation':172,'holdout':34}
+          assert s['frozen_control_validation_plus_holdout']==63672.57530171223
+          assert s['promotion']=='REJECTED'
+          print(json.dumps(s,indent=2))
+          PY
+      - name: Persist final symbolic audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase39_symbolic_audit
+          git commit -m 'Phase 39: persist final symbolic audit' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
