@@ -1,3 +1,9 @@
+## Phase 41 — COMPLETE / NO PROMOTION
+
+Phase 41 tested 24 pre-registered regime-conditional economic-margin policies. Zero candidates passed the development/validation selection gate. The three frozen diagnostics produced zero overrides across the entire 477-opportunity development/validation/2026 counterfactual panel, so exact sequential replay was identical to the canonical control. The canonical strategy remains unchanged.
+
+See PHASE41_MANUSCRIPT.md and results/phase41_regime_policy/final_decision.json.
+
 # Final Stand v5 1-1-1-1
 
 Systematic options-strategy research repository.
