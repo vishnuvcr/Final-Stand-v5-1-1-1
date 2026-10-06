@@ -1,27 +1,30 @@
 # Phase 44 Status — VIX Candidate Tuning
 
-**INITIALIZED — NUMERICAL EXECUTION PENDING**
-
-Phase 44 is a new isolated research phase created from the completed Phase-43 branch.
+**STAGE 1 NUMERICAL EXECUTION IN PROGRESS**
 
 ## Registered scope
-
 - 6 defined-risk Phase-43 candidate families.
 - Fixed strike-geometry grids.
 - 4 entry times.
-- Finite India-VIX percentile threshold grid.
+- Prior-only India-VIX percentile threshold profiles.
 - Development / validation / untouched-2026 holdout.
-- Stage-2 active-exit tuning only after first-stage survival.
+- Active-exit tuning only after first-stage survival.
 
-## Current state
-
+## Governance and implementation state
 - Governance audit: COMPLETE.
 - Repository registration: COMPLETE.
 - Literature review: COMPLETE.
-- Numerical Stage 1: PENDING.
-- Stage 2 validation: PENDING.
-- Active-exit Stage 3: PENDING.
-- 2026 holdout: FROZEN / NOT OPENED.
-- Final decision: PENDING.
+- F44-001: initial candidate-freeze implementation quarantined as non-evidence; corrected.
+- F44-002: redundant VIX profile mapping quarantined as non-evidence; corrected.
+- Current numerical code is the corrected F44-002 implementation.
+- 2026 holdout: **PROTECTED** until validation/inference freeze.
 
-The Phase-20/42 canonical strategy is untouched.
+## Current execution
+- Branch workflow and main bridge have both been started against the corrected implementation.
+- Only artifacts persisted after a successful corrected run will be accepted as evidence.
+- No strategy change is permitted from in-progress results.
+
+## Next registered step
+Complete Stage 1, audit artifacts, then perform validation confirmation and open 2026 only for frozen statistical survivors.
+
+The Phase-20/42 canonical strategy remains untouched.
