@@ -1,0 +1,44 @@
+{
+  "declared_variants": 6,
+  "eligible_count": 0,
+  "fallback_reason": "No candidate passed the preregistered development/validation gate; top three are diagnostic only.",
+  "top3_frozen_before_holdout": [
+    {
+      "rank_cutoff": "TOP_5",
+      "gate": "ALL",
+      "development_uplift": 0.0,
+      "validation_uplift": 17391.959233575013,
+      "development_overrides": 0,
+      "validation_overrides": 3,
+      "validation_override_rate": 0.01744186046511628,
+      "validation_policy_dd": 32021.64557861998,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "rank_cutoff": "TOP_5",
+      "gate": "HIGH_VIX",
+      "development_uplift": 0.0,
+      "validation_uplift": 12026.423183850005,
+      "development_overrides": 0,
+      "validation_overrides": 1,
+      "validation_override_rate": 0.005813953488372093,
+      "validation_policy_dd": 32021.64557861998,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "rank_cutoff": "TOP_10",
+      "gate": "HIGH_VIX",
+      "development_uplift": 0.0,
+      "validation_uplift": 12026.423183850005,
+      "development_overrides": 0,
+      "validation_overrides": 1,
+      "validation_override_rate": 0.005813953488372093,
+      "validation_policy_dd": 32021.64557861998,
+      "validation_control_dd": 32021.645578619973
+    }
+  ],
+  "vix_thresholds": {
+    "vix_q67": 20.43000030517578,
+    "vix_absret_q67": 0.039880184945773944
+  }
+}

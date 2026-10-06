@@ -1,0 +1,24 @@
+{
+  "rank_cutoff": "TOP_5",
+  "gate": "ALL",
+  "propensity_fit_period": "development+validation",
+  "propensity": {
+    "split": "holdout",
+    "treated": 1,
+    "matched": 1,
+    "att": 243.88226358601423,
+    "ci_lo": 243.88226358601423,
+    "ci_hi": 243.88226358601423,
+    "common_support_fraction": 1.0
+  },
+  "ranking": {
+    "split": "holdout",
+    "rows": 34,
+    "top_5_mean_delta": 9693.449275321509,
+    "top_5_positive_share": 1.0,
+    "top_10_mean_delta": 2610.6024235687646,
+    "top_10_positive_share": 0.75,
+    "top_20_mean_delta": 3792.5036252721525,
+    "top_20_positive_share": 0.7142857142857143
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "rank_cutoff": "TOP_5",
+  "gate": "ALL",
+  "propensity_fit_period": "development",
+  "propensity": {
+    "split": "validation",
+    "treated": 3,
+    "matched": 0,
+    "att": null
+  },
+  "ranking": {
+    "split": "validation",
+    "rows": 172,
+    "top_5_mean_delta": -11.506440116666504,
+    "top_5_positive_share": 0.5555555555555556,
+    "top_10_mean_delta": -114.96176381416551,
+    "top_10_positive_share": 0.5555555555555556,
+    "top_20_mean_delta": 684.2680276422867,
+    "top_20_positive_share": 0.6285714285714286
+  }
+}

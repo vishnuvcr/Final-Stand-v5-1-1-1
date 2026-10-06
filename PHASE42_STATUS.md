@@ -1,24 +1,9 @@
 # Phase 42 Status — Rank-to-Action Selective Policy
 
-**INITIALIZED — NUMERICAL EXECUTION NOT YET ACCEPTED**
+**STEP 1 COMPLETE — TOP 3 FROZEN; EXACT SEQUENTIAL REPLAY NEXT**
 
-Branch: phase-42-rank-to-action-selective-policy
+Declared variants: 6. Validation-eligible variants: 0.
 
-## Motivation from Phase 41
+No candidate passed the preregistered development/validation gate; top three are diagnostic only.
 
-The leading Phase-41 model had useful ranking signal but generated zero overrides after uncertainty penalization. Phase 42 removes only that uncertainty subtraction and replaces the absolute action threshold with three pre-registered historical score-coverage controls.
-
-## Registered universe
-
-- 1 model;
-- 3 rank cutoffs;
-- 2 VIX routing gates;
-- 6 total variants.
-
-## Current decision
-
-Canonical strategy unchanged.
-
-## Next step
-
-Run the chronological fixed-opportunity six-variant screen. The 2026 holdout remains untouched until the top three are frozen.
+The 2026 holdout is frozen from selection.
