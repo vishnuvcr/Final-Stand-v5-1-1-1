@@ -15,7 +15,9 @@ from phase39_feature_matrix import (
 from phase39_counterfactual_engine import nearest_delta_strike, run_arm
 
 ROOT=Path(".")
-FEATURE_FILE=ROOT/"results/phase39_models/locked_feature_list.json"\nSYMBOLIC_FEATURES=ROOT/"results/phase39_features/point_in_time_features.csv"
+FEATURE_FILE=ROOT/"results/phase39_models/locked_feature_list.json"
+SYMBOLIC_FEATURES=ROOT/"results/phase39_features/point_in_time_features.csv"
+CF_LEDGER=ROOT/"results/phase39_counterfactual/fixed_opportunity_ledger.csv"
 FEATURE_MATRIX=ROOT/"results/phase39_features/point_in_time_features.csv"
 DEV_CONTROL=ROOT/"results/phase39_data/development_control_trades_2021_2023.csv"
 FROZEN_CONTROL=ROOT/"results/phase39_data/frozen_control_trades_2024_2026-06-30.csv"
@@ -170,7 +172,7 @@ def main():
         return option_cache[e]
     # Canonical shadow direction schedule.
     ctl=pd.concat([pd.read_csv(DEV_CONTROL),pd.read_csv(FROZEN_CONTROL)],ignore_index=True)
-    symbolic_params=fit_symbolic_params(SYMBOLIC_FEATURES,DEV_CONTROL)
+    symbolic_params=fit_symbolic_params(SYMBOLIC_FEATURES,CF_LEDGER)
     ctl["entry_ts"]=norm_ts(ctl["entry_ts"])
     ctl=ctl.sort_values("entry_ts").reset_index(drop=True)
     ctl=ctl[(ctl.entry_ts>=START)&(ctl.entry_ts<=END)]
