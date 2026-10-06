@@ -8,3 +8,4 @@ F44-005 bounded-memory engine retrigger.
 F44-006 filtered parquet I/O retrigger; prior runs are non-evidence.
 F44-007/F44-008 corrected artifact schema and audit logging retrigger.
 F44-009 staged development workflow retrigger; prior monolithic runs are non-evidence.
+F44-010 strike-filtered staged reader retrigger.
