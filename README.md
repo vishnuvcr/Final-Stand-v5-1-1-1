@@ -513,5 +513,7 @@ A statistical implementation defect and a promotion-universe contamination defec
 
 
 ## Phase 44 — VIX candidate tuning — ACTIVE
+
+Corrected bounded-memory execution is active in GitHub Actions run **37488148310**; prior Phase-44 runs are quarantined as non-evidence until this run completes its artifact audit.
 A new isolated branch `phase-44-vix-candidate-tuning` is testing finite strike-geometry, entry-time and prior-only VIX-threshold tuning for the strongest Phase-43 defined-risk candidates. The 2026 holdout remains protected until rules are frozen.
 - [Phase 44 bridge workflow](.github/workflows/phase-44-bridge.yml)
