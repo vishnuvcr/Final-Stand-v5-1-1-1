@@ -83,3 +83,9 @@ Formal promotion additionally requires the registered statistical gate and uncha
 
 Phase 47 closes after all three registered candidates are tested where data permits; validation ranking and statistical inference are complete; frozen validation candidates are confirmed on protected 2026; and source/proxy limitations are documented.
 Adaptive management systems, futures-exact implementation of Covered Call 2.0, skew/IV-divergence routers and broader VIX state transitions become separate follow-up phases rather than being added opportunistically.
+
+## Phase-47 closeout amendment
+
+The numerical objective could not be completed with the cached source because multi-expiry entry-time observations are absent for most candidate dates. This is recorded as a data-feasibility result, not evidence that the source-derived strategies fail.
+
+No changed strategy definition is accepted. A follow-up data-bridge phase is required before multi-expiry strategies can be evaluated scientifically.
