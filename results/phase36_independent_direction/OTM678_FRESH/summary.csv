@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries
+OTM678_FRESH,2024-01-01,2026-06-30,192,-43153.18415694885,-22747.499999999858,20405.684156949002,0.6145833333333334,0.8741704957479307,120108.87220383796,36,156,191,1,-224.7561674841086,1157.0739738500006,4148.083333333333,95,117

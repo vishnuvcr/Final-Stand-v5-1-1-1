@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries
+WAVELET_TREE,2024-01-01,2026-06-30,192,-66398.01727732486,-45926.99999999984,20471.017277325,0.5572916666666666,0.8249393400977698,97508.24398341493,102,90,191,1,-345.8230066527337,1131.3924045500007,4204.671875,103,117

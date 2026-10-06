@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries
+OOF_STACK,2024-01-01,2026-06-30,189,-59868.84505436983,-39749.99999999984,20118.845054370002,0.5555555555555556,0.8451178096359885,91212.83835465496,150,39,188,1,-316.76637594904673,1355.40212903,4272.0952380952385,103,117

@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries
+DART,2024-01-01,2026-06-30,189,-54475.24434174283,-34888.499999999854,19586.744341743004,0.5714285714285714,0.8533535863593003,78949.87362474896,109,80,188,1,-288.22880604096736,1148.338344049999,4268.68253968254,103,117

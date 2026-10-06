@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries
+MARKOV_REGIME_TREE,2024-01-01,2026-06-30,190,-88163.43995996786,-67763.99999999988,20399.439959968004,0.5526315789473685,0.7732347506453007,106087.37007455788,93,97,189,1,-464.01810505246243,1094.5682140400008,4251.5,103,117
