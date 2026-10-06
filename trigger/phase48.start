@@ -15,3 +15,5 @@ Retry after F48-006 DuckDB interval syntax fix.
 Rerun after F48-007 point-in-time canonical NIFTY spot bridge correction.
 
 Retry after F48-008 duplicate timestamp correction.
+
+Rerun after F48-008 historical NIFTY lot-size correction; prior numerical results rejected.
