@@ -261,3 +261,17 @@ Cause: PyArrow preserved Parquet timestamp columns at microsecond resolution whi
 Correction: Normalize all point-in-time feature join keys to timezone-aware datetime64[ns, Asia/Kolkata] before merge_asof.
 
 Prevention: All future Phase-39 feature joins will explicitly coerce both sides to the same timestamp resolution and timezone before any as-of merge.
+
+
+### Error F39-015 — Phase-39 feature join timestamp-resolution mismatch
+Run: 37439047106 (Step-2 run #1).
+
+Symptom: Feature construction failed at the first cached global-data backward join with Pandas MergeError: `datetime64[us, Asia/Kolkata]` versus `datetime64[ns, Asia/Kolkata]`.
+
+Cause: Cached Phase-35 Parquet files preserved microsecond-resolution timestamps while the newly generated entry keys used nanosecond resolution.
+
+Evidence status: Non-evidence feature-pipeline failure. No model fitting or holdout evaluation occurred.
+
+Correction: Normalize every point-in-time timestamp/join key to timezone-aware Asia/Kolkata nanosecond resolution before any merge_asof operation.
+
+Prevention: Add timestamp-resolution normalization to the shared feature-pipeline boundary and retain the exact source timestamps separately for audit.
