@@ -338,6 +338,21 @@ A control-reproducibility discrepancy was detected and logged as F38-001: a fres
 **Next research priority:** Phase 39 robustness of the canonical stateful strategy with broker-realistic bid/ask, latency, fill probability, and expanded cost/slippage stress.
 
 
+## Phase 40 — exhaustive ensemble direction selection with VIX — ACTIVE
+
+Phase 40 tests whether the five previously rejected direction selectors contain complementary information when combined rather than used individually. It exhaustively screens **1,764 pre-registered combinations**: all 63 non-empty subsets of five model selectors plus India VIX, four aggregation rules, and seven VIX routing modes.
+
+- [Phase 40 research plan](PHASE40_RESEARCH_PLAN.md)
+- [Phase 40 pre-registration](PHASE40_PRE_REGISTRATION.md)
+- [Phase 40 literature review](PHASE40_LITERATURE_REVIEW.md)
+- [Phase 40 status](PHASE40_STATUS.md)
+- [Phase 40 automated workflow](.github/workflows/phase-40-ensemble-direction-models.yml)
+- [Phase 40 engine](research/phase40_ensemble_direction.py)
+
+India VIX is acquired once and cached in `data/phase40_vix/india_vix.csv`; point-in-time alignment uses the previous session's VIX close/change. Validation is used to freeze the top-10 candidates before untouched 2026 holdout replay.
+
+**Current status: initialized; numerical screening pending.**
+
 ## Phase 39 — advanced counterfactual direction models — ACTIVE
 
 Phase 39 changes the prediction target from NIFTY expiry direction to the actual economic decision: the post-cost P&L difference between CALL and PUT Continuous Delta 6x6 spreads at the same entry opportunity.
