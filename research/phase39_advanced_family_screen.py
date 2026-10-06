@@ -94,7 +94,6 @@ def fit_dtw(train,test):
     ys=train.delta_pnl_call_minus_put.to_numpy(float)
     mu=[]; unc=[]
     for row in te:
-        ds=np.array([dtw_distance(row[i:i+1],cand[i:i+1]) for i in range(len(cols)) for cand in []])
         # Scalar sequence DTW; each element is one scalar observation.
         d=np.array([dtw_distance(row.reshape(-1,1),cand.reshape(-1,1)) for cand in tr])
         k=min(20,len(tr))
@@ -168,7 +167,7 @@ def evaluate(method_name):
             mu,unc,cp,nf=fit_gam_gate(train,test,0.35)
             gate=(cp<=0.35).astype(float)
         tmp=test[["entry_ts","expiry","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"]].copy()
-        tmp["mu"]=mu; tmp["unc"]=unc; tmp["gate"]=gate; tmp["method"]=method_name
+        tmp["mu"]=mu; tmp["unc"]=unc; tmp["gate"]=gate; tmp["cp_prob"]=cp if method_name=="BOCPD_GAM" else np.nan; tmp["method"]=method_name
         preds.append(tmp)
     oof=pd.concat(preds,ignore_index=True)
 
@@ -185,10 +184,9 @@ def evaluate(method_name):
     else:
         best=None
         for cpt in CP_THRESHOLDS:
-            # Recompute the gate approximation from stored raw OOF cp unavailable here; use gate <= original 0.35 as conservative fixed gate.
             for m in MARGINS:
                 a,ov,_,_=action(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.unc.to_numpy(),m)
-                ov=ov & (oof.gate.to_numpy()>0.5)
+                ov=ov & (oof.cp_prob.to_numpy()<=cpt)
                 aa=oof.control_direction.to_numpy().copy(); aa[ov]=np.where(aa[ov]=="CALL","PUT","CALL")
                 u=np.where(aa=="CALL",oof.call_net_rupees,oof.put_net_rupees).to_numpy()-oof.control_net_rupees.to_numpy()
                 score=float(u.sum()-0.10*np.std(u)*math.sqrt(len(u)))
@@ -206,7 +204,7 @@ def evaluate(method_name):
         tmp["mu"]=mu; tmp["unc"]=unc; tmp["gate"]=gate; vp.append(tmp)
     vp=pd.concat(vp,ignore_index=True)
     aa,ov,imp,score=action(vp.control_direction.to_numpy(),vp.mu.to_numpy(),vp.unc.to_numpy(),margin)
-    ov=ov&(vp.gate.to_numpy()>0.5)
+    ov=ov&(vp.cp_prob.to_numpy()<=cp_threshold)
     a=vp.control_direction.to_numpy().copy(); a[ov]=np.where(a[ov]=="CALL","PUT","CALL")
     u=np.where(a=="CALL",vp.call_net_rupees,vp.put_net_rupees).to_numpy()-vp.control_net_rupees.to_numpy()
     boot=bootstrap(u,vp.expiry)
