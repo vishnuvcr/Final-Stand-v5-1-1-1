@@ -1353,3 +1353,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: pre-numerical only.
 - Correction: engine preflight now asserts 720 raw parameter configurations and the phase plan retains 1,440 parameter×regime candidates.
 - Prevention: cardinality is now separately recorded for geometry candidates and regime-expanded candidates.
+
+
+## F49-002 — GitHub Actions import-path defect
+- First Phase-49 workflow run 37532278551 passed compilation but failed preflight because `research` is not a Python package in the Actions runtime.
+- Evidence status: non-evidence; preflight stopped before any data access or numerical calculation.
+- Correction: the tuning engine now adds its own `research/` directory to `sys.path` and imports the accepted Phase-43 module directly.
+- Prevention: future isolated Python phase scripts must not assume the repository directory is an importable package unless an `__init__.py` is present.
