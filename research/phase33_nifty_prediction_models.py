@@ -28,6 +28,15 @@ def ensure(pkg, import_name=None):
     except ImportError:
         subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
 
+
+def normalize_ist_series(x):
+    y = pd.to_datetime(x, errors="coerce")
+    if getattr(y.dt, "tz", None) is None:
+        y = y.dt.tz_localize(TZ)
+    else:
+        y = y.dt.tz_convert(TZ)
+    return y.astype(f"datetime64[ns, {TZ}]")
+
 def as_ist(x):
     x = pd.to_datetime(x)
     if getattr(x.dt, "tz", None) is None:
@@ -56,7 +65,7 @@ def load_nifty_batches():
         else:
             ts = ts.dt.tz_convert(TZ)
         d["timestamp"] = ts
-        d["date"] = ts.dt.normalize()
+        d["date"] = ts.dt.normalize().astype(f"datetime64[ns, {TZ}]")
         day_parts.append(
             d.groupby("date", as_index=False).agg(
                 open=("open", "first"),
@@ -88,6 +97,9 @@ def load_nifty_batches():
         .drop_duplicates("ref_ts")
         .sort_values("ref_ts")
     )
+    daily["date"] = normalize_ist_series(daily["date"]).dt.normalize()
+    refs["ref_ts"] = normalize_ist_series(refs["ref_ts"])
+    refs["date"] = normalize_ist_series(refs["date"]).dt.normalize()
     daily.to_parquet(DATA / "nifty_daily.parquet", index=False)
     refs.to_parquet(DATA / "nifty_10am.parquet", index=False)
     return daily, refs
@@ -95,7 +107,11 @@ def load_nifty_batches():
 def load_or_build_nifty():
     dpath, rpath = DATA / "nifty_daily.parquet", DATA / "nifty_10am.parquet"
     if dpath.exists() and rpath.exists():
-        return pd.read_parquet(dpath), pd.read_parquet(rpath)
+        d = pd.read_parquet(dpath); r = pd.read_parquet(rpath)
+        d["date"] = normalize_ist_series(d["date"]).dt.normalize()
+        r["ref_ts"] = normalize_ist_series(r["ref_ts"])
+        r["date"] = normalize_ist_series(r["date"]).dt.normalize() if "date" in r else r["ref_ts"].dt.normalize()
+        return d, r
     return load_nifty_batches()
 
 def expected_expiries(daily):
@@ -128,7 +144,9 @@ def expected_expiries(daily):
 def load_or_build_sentiment():
     path = DATA / "sentiment_daily.parquet"
     if path.exists():
-        return pd.read_parquet(path)
+        out = pd.read_parquet(path)
+        out["date"] = normalize_ist_series(out["date"]).dt.normalize()
+        return out
     ensure("datasets")
     from datasets import load_dataset
     ds = load_dataset(SENTIMENT_REPO, split="train").to_pandas()
@@ -136,7 +154,7 @@ def load_or_build_sentiment():
         return pd.DataFrame(columns=["date", "sent_mean", "sent_std", "sent_count", "sent_pos", "sent_neg"])
     ds["date"] = pd.to_datetime(ds["date"], errors="coerce")
     ds = ds.dropna(subset=["date"])
-    ds["date"] = ds["date"].dt.tz_localize(TZ)
+    ds["date"] = ds["date"].dt.tz_localize(TZ) if ds["date"].dt.tz is None else ds["date"].dt.tz_convert(TZ)
     # forward-return columns are intentionally ignored.
     p = pd.to_numeric(ds["sentiment_positive"], errors="coerce")
     n = pd.to_numeric(ds["sentiment_negative"], errors="coerce")
@@ -152,9 +170,7 @@ def load_or_build_sentiment():
         )
         .rename(columns={"date": "date"})
     )
-    out["date"] = pd.to_datetime(out["date"])
-    if out["date"].dt.tz is None:
-        out["date"] = out["date"].dt.tz_localize(TZ)
+    out["date"] = normalize_ist_series(out["date"]).dt.normalize()
     out.to_parquet(path, index=False)
     return out
 
@@ -163,7 +179,9 @@ def load_or_build_sentiment():
 def load_or_build_fii_dii():
     path = DATA / "fii_dii_daily.parquet"
     if path.exists():
-        return pd.read_parquet(path)
+        out = pd.read_parquet(path)
+        out["date"] = normalize_ist_series(out["date"]).dt.normalize()
+        return out
     import urllib.request
     url = "https://raw.githubusercontent.com/MrChartist/fii-dii-data/main/data/history.json"
     raw_path = DATA / "fii_dii_history.json"
@@ -186,6 +204,8 @@ def load_or_build_fii_dii():
             "flow_sentiment": pd.to_numeric(r.get("sentiment_score"), errors="coerce"),
         })
     out = pd.DataFrame(rows).drop_duplicates("date").sort_values("date")
+    if not out.empty:
+        out["date"] = normalize_ist_series(out["date"]).dt.normalize()
     if not out.empty:
         for c in ["fii_net","dii_net","fii_idx_fut_net","fii_idx_call_net","fii_idx_put_net"]:
             out[c + "_z20"] = (out[c] - out[c].rolling(20).mean()) / out[c].rolling(20).std()
@@ -217,10 +237,7 @@ def load_or_build_global():
             if isinstance(close, pd.DataFrame):
                 close = close.iloc[:, 0]
             dd = pd.DataFrame({"date": pd.to_datetime(close.index), name: pd.to_numeric(close, errors="coerce")}).dropna()
-            if dd["date"].dt.tz is None:
-                dd["date"] = dd["date"].dt.tz_localize(TZ)
-            else:
-                dd["date"] = dd["date"].dt.tz_convert(TZ)
+            dd["date"] = normalize_ist_series(dd["date"])
             pieces.append(dd)
         except Exception as exc:
             print("GLOBAL_SOURCE_ERROR", name, repr(exc), flush=True)
@@ -314,7 +331,10 @@ def add_option_event_features(events):
 def build_events():
     ep = DATA / "events.parquet"
     if ep.exists():
-        return pd.read_parquet(ep)
+        ev = pd.read_parquet(ep)
+        ev["expiry"] = normalize_ist_series(ev["expiry"]).dt.normalize()
+        ev["ref_ts"] = normalize_ist_series(ev["ref_ts"])
+        return ev
     daily, refs = load_or_build_nifty()
     price = build_price_features(daily)
     exps = expected_expiries(daily)
@@ -345,8 +365,8 @@ def build_events():
     events["intraday_ret_10"] = np.log(events["ref_spot"] / events["prev_close"])
     sent = load_or_build_sentiment().sort_values("date")
     # Conservative: use only sentiment dates strictly before the reference date.
-    sent["join_date"] = sent["date"]
-    events["join_date"] = events["ref_ts"].dt.normalize() - pd.Timedelta(seconds=1)
+    sent["join_date"] = normalize_ist_series(sent["date"]).dt.normalize().astype(f"datetime64[ns, {TZ}]")
+    events["join_date"] = (normalize_ist_series(events["ref_ts"]).dt.normalize() - pd.Timedelta(seconds=1)).astype(f"datetime64[ns, {TZ}]")
     events = pd.merge_asof(
         events.sort_values("join_date"),
         sent.sort_values("join_date"),
@@ -355,11 +375,14 @@ def build_events():
         tolerance=pd.Timedelta(days=7),
     ).drop(columns=["join_date"], errors="ignore")
     g = load_or_build_global().sort_values("date")
+    g["date"] = normalize_ist_series(g["date"]).dt.normalize()
     gc = g.copy()
     # Previous global session only; avoids using values that may still be trading at Indian 10:00.
     for c in [x for x in gc.columns if x != "date"]:
         gc[c] = gc[c].shift(1)
     gcols = [c for c in gc.columns if c != "date"]
+    events["ref_ts"] = normalize_ist_series(events["ref_ts"])
+    gc["date"] = normalize_ist_series(gc["date"]).dt.normalize()
     events = pd.merge_asof(
         events.sort_values("ref_ts"),
         gc[["date"] + gcols].sort_values("date"),
@@ -371,7 +394,7 @@ def build_events():
 
     flows = load_or_build_fii_dii().sort_values("date")
     fc = flows.copy()
-    events["flow_join_date"] = events["ref_ts"].dt.normalize() - pd.Timedelta(seconds=1)
+    events["flow_join_date"] = (normalize_ist_series(events["ref_ts"]).dt.normalize() - pd.Timedelta(seconds=1)).astype(f"datetime64[ns, {TZ}]")
     events = pd.merge_asof(
         events.sort_values("flow_join_date"),
         fc[["date"] + [c for c in fc.columns if c != "date"]].sort_values("date"),
@@ -383,6 +406,8 @@ def build_events():
     events = events.merge(opt, on=["expiry", "ref_ts"], how="left")
     events["target_return"] = np.log(events["expiry_close"] / events["ref_spot"])
     events["target_direction"] = (events["target_return"] > 0).astype(int)
+    events["expiry"] = normalize_ist_series(events["expiry"]).dt.normalize()
+    events["ref_ts"] = normalize_ist_series(events["ref_ts"])
     events.to_parquet(ep, index=False)
     return events
 
