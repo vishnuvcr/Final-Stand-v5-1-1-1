@@ -1,0 +1,11 @@
+model,validation_accuracy,holdout_accuracy,validation_beats_simple_baseline,holdout_beats_always_down,holdout_signed_return_ci_excludes_zero,promotion
+xgb,0.5789473684210527,0.6363636363636364,True,False,False,NO — separate trading overlay phase required
+extra_trees,0.5052631578947369,0.6818181818181818,False,True,False,NO — separate trading overlay phase required
+hist_gb,0.5473684210526316,0.6363636363636364,True,False,True,NO — separate trading overlay phase required
+svm_rbf,0.5157894736842106,0.3636363636363636,False,False,False,NO — separate trading overlay phase required
+elastic_net,0.5157894736842106,0.6363636363636364,False,False,False,NO — separate trading overlay phase required
+hmm_regime,0.5157894736842106,0.3636363636363636,False,False,False,NO — separate trading overlay phase required
+transformer,0.5157894736842106,0.4090909090909091,False,False,False,NO — separate trading overlay phase required
+tcn,0.5157894736842106,0.3636363636363636,False,False,True,NO — separate trading overlay phase required
+new_equal_8,0.5368421052631579,0.6818181818181818,True,True,False,NO — separate trading overlay phase required
+tree_equal_3,0.5473684210526316,0.6363636363636364,True,False,False,NO — separate trading overlay phase required

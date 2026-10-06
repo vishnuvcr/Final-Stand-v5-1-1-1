@@ -1,0 +1,23 @@
+{
+  "phase": "34",
+  "reference": "D-6 calendar days at exactly 10:00 IST",
+  "events_total": 245,
+  "train_events": 128,
+  "validation_events": 95,
+  "holdout_events": 22,
+  "feature_count": 67,
+  "models_tested": [
+    "XGBoost",
+    "ExtraTrees",
+    "HistGradientBoosting",
+    "RBF-SVM",
+    "Elastic-Net Logistic",
+    "HMM-Regime",
+    "Tiny Transformer",
+    "TCN-lite",
+    "NEW_EQUAL_8",
+    "TREE_EQUAL_3"
+  ],
+  "control": "Phase-33 Random Forest",
+  "note": "Predictive research only; no option P&L overlay was executed in Phase 34."
+}

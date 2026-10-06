@@ -1,0 +1,52 @@
+{
+  "phase": "34",
+  "reference": "D-6 calendar days at exactly 10:00 IST",
+  "events_total": 245,
+  "train_events": 128,
+  "validation_events": 95,
+  "holdout_events": 22,
+  "feature_count": 67,
+  "models_tested": [
+    "XGBoost",
+    "ExtraTrees",
+    "HistGradientBoosting",
+    "RBF-SVM",
+    "Elastic-Net Logistic",
+    "HMM-Regime",
+    "Tiny Transformer",
+    "TCN-lite",
+    "NEW_EQUAL_8",
+    "TREE_EQUAL_3"
+  ],
+  "control": "Phase-33 Random Forest",
+  "note": "Predictive research only; no option P&L overlay was executed in Phase 34."
+}
+     split              model  n  accuracy  balanced_accuracy  roc_auc  log_loss    brier
+validation                xgb 95  0.578947           0.582520 0.619787  0.676883 0.242417
+validation        extra_trees 95  0.505263           0.508429 0.568323  0.686686 0.246833
+validation            hist_gb 95  0.547368           0.544587 0.569210  0.811770 0.290157
+validation            svm_rbf 95  0.515789           0.500000 0.417702  0.702695 0.254689
+validation        elastic_net 95  0.515789           0.525954 0.543478  0.818103 0.291637
+validation         hmm_regime 95  0.515789           0.500000 0.526398  0.702760 0.254674
+validation        transformer 95  0.515789           0.500000 0.500000  0.693147 0.250000
+validation                tcn 95  0.515789           0.500000 0.500000  0.693147 0.250000
+validation        new_equal_8 95  0.536842           0.537045 0.584738  0.682613 0.244761
+validation       tree_equal_3 95  0.547368           0.547915 0.593168  0.686570 0.246377
+   holdout                xgb 22  0.636364           0.580357 0.580357  0.684281 0.241382
+   holdout        extra_trees 22  0.681818           0.562500 0.607143  0.643515 0.225863
+   holdout            hist_gb 22  0.636364           0.607143 0.705357  0.664912 0.229282
+   holdout            svm_rbf 22  0.363636           0.500000 0.678571  0.720475 0.263609
+   holdout        elastic_net 22  0.636364           0.607143 0.589286  0.675055 0.238767
+   holdout         hmm_regime 22  0.363636           0.500000 0.571429  0.740198 0.273274
+   holdout        transformer 22  0.409091           0.375000 0.375000  0.939511 0.339632
+   holdout                tcn 22  0.363636           0.392857 0.375000  0.719399 0.263035
+   holdout        new_equal_8 22  0.681818           0.616071 0.616071  0.667215 0.237118
+   holdout       tree_equal_3 22  0.636364           0.553571 0.678571  0.634977 0.221405
+validation rf_phase33_control 95  0.547368           0.543922 0.581189  0.685089 0.246087
+   holdout rf_phase33_control 22  0.545455           0.455357 0.580357  0.656238 0.232618
+validation           constant 95  0.515789           0.500000 0.500000  0.702658 0.254671
+validation          always_up 95  0.515789           0.500000 0.500000  6.689616 0.484210
+validation        always_down 95  0.484211           0.500000 0.500000  7.125895 0.515788
+   holdout           constant 22  0.363636           0.500000 0.500000  0.730175 0.268429
+   holdout          always_up 22  0.363636           0.500000 0.500000  8.791689 0.636362
+   holdout        always_down 22  0.636364           0.500000 0.500000  5.023823 0.363636
