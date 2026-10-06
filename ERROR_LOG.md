@@ -1082,3 +1082,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 ## F44-002 — redundant VIX profile expansion quarantined
 - The running Stage-1 attempt used a profile mapping that redundantly evaluated LOW/NORMAL/HIGH under the combined HIGH+RISING threshold profile. This is an implementation design defect because the rising quantile is irrelevant to those level states and would create duplicate hypothesis labels.
 - That run is classified **NON-EVIDENCE** and is being cancelled/replaced by the corrected profile mapping.
+
+
+## F44-003 — performance optimization before evidence acceptance
+- The corrected engine was still unnecessarily slow because it repeatedly scanned the full expiry option dataframe for each family/geometry/time combination.
+- No output from the slow implementation is accepted as evidence.
+- The registered logic is unchanged. The engine now loads each expiry once, caches expiry-day option series and exact entry prices, and performs the same strategy calculations from those cached objects.
