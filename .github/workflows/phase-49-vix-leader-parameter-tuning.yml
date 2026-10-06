@@ -167,11 +167,11 @@ jobs:
               "- Selection was restricted to 2021-2023 development. Validation and 2026 holdout remained untouched until freeze.\n"
             )
           PY
-          git add results/phase49_vix_tuning PHASE49_STATUS.md RESEARCH_LOG.md
+          git fetch origin "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+          git add results/phase49_vix_tuning
           git diff --cached --quiet && exit 0
           git commit -m "phase49: publish VIX leader parameter tuning"
-          git fetch origin "${GITHUB_REF_NAME}"
-          git rebase "origin/${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
       - name: Log failure
         if: failure()
@@ -185,8 +185,9 @@ jobs:
           - The affected numerical run is non-evidence until diagnosed and corrected.
           - Phase 49 requires compile, preflight, full numerical, artifact and publication audits.
           EOF
-          git add ERROR_LOG.md
-          git commit -m "phase49: log workflow failure"
           git fetch origin "${GITHUB_REF_NAME}"
-          git rebase "origin/${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+          git add ERROR_LOG.md
+          git diff --cached --quiet && exit 0
+          git commit -m "phase49: log workflow failure"
           git push origin "HEAD:${GITHUB_REF_NAME}"
