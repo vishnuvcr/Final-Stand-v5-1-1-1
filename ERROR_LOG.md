@@ -1239,3 +1239,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: pre-numerical only.
 - Correction: deterministic character-sum seed derived from strategy, variant and VIX state.
 - Prevention: inference seeds are fixed by source strings and are recorded by the workflow outputs.
+
+## F47-AUTO — Phase 47 workflow failure
+- The numerical workflow failed or an artifact self-audit failed.
+- Evidence status: affected run is non-evidence until the failure is diagnosed and corrected.
+- The workflow requires compile, preflight, numerical, artifact and holdout audits before publication.
