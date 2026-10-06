@@ -48,6 +48,7 @@ jobs:
         run: python research/phase39_counterfactual_engine.py
       - name: Verify critical outputs
         run: |
+          test -f results/phase39_data/development_control_trades_2021_2023.csv
           test -f results/phase39_data/frozen_control_trades_2024_2026-06-30.csv
           test -f results/phase39_data/frozen_control_provenance.json
           test -f results/phase39_counterfactual/fixed_opportunity_ledger.csv
@@ -56,9 +57,15 @@ jobs:
           import json, pandas as pd
           z=pd.read_csv('results/phase39_counterfactual/fixed_opportunity_ledger.csv')
           s=json.load(open('results/phase39_counterfactual/summary.json'))
-          assert len(z)==206 and z.expiry.nunique()==102
-          assert abs(z.control_net_rupees.sum()-63672.57530171223)<1e-6
-          assert s['control_reconstruction_max_abs_error'] <= 0.75
+          assert len(z)==477
+          assert (z.split=='development').sum()==271
+          assert (z.split=='validation').sum()==172
+          assert (z.split=='holdout').sum()==34
+          assert abs(z[z.split!='development'].control_net_rupees.sum()-63672.57530171223)<1e-6
+          assert s['development']['rows']==271 and s['validation']['rows']==172 and s['holdout']['rows']==34
+          assert s['validation']['control_net_rupees'] + s['holdout']['control_net_rupees'] == s['frozen_control_net_rupees']
+          assert s['validation']['control_reconstruction_max_abs_error'] <= 0.75
+          assert s['holdout']['control_reconstruction_max_abs_error'] <= 0.75
           print(json.dumps(s,indent=2))
           PY
       - name: Persist Phase 39 Step 1 evidence
