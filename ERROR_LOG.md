@@ -1150,3 +1150,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Numerical development run 37496337984 completed successfully with 13,292 structure/time rows, 3,500 development-profile rows, zero eligible candidate rows, and a passed artifact audit.
 - Persistence then failed because the workflow looked for development_summary.json; the runner emits stage1_summary.json.
 - The numerical output remains non-evidence until a clean persistence run succeeds.
+
+
+## F44-014 — development persistence filename mismatch
+- Run 37496337984 completed the numerical development stage with 13,292 structure/time rows and 3,500 profile rows.
+- Artifact audit passed, but persistence failed because the workflow referenced the wrong summary filename.
+- Correct file: stage1_summary.json.
