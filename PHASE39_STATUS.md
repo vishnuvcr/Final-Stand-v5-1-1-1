@@ -1,6 +1,6 @@
 # Phase 39 Status — Advanced and Counterfactual Direction Prediction
 
-**INITIALIZED — LITERATURE/FORMULATION COMPLETE; NUMERICAL ENGINEERING IN PROGRESS**
+**STEP 1 COMPLETE — FIXED-OPPORTUNITY COUNTERFACTUAL PANEL ACCEPTED; MODEL FITTING NEXT**
 
 ## Why Phase 39 exists
 
@@ -86,17 +86,38 @@ Only the second dataset can support a final trading-policy claim.
 
 ## Current status
 
-- Branch created: phase-39-advanced-direction-models
-- Research plan: committed
+- Branch: phase-39-advanced-direction-models
+- Research plan: committed and unchanged
 - Literature review: committed
 - Pre-registration: committed
 - Candidate-method registry: committed
-- Numerical results: **none accepted yet**
-- Phase-38 canonical strategy remains unchanged
+- **Step 1: COMPLETE / ACCEPTED**
+- Fixed-opportunity panel: 477 trades / 237 expiry observations
+- Development: 271 trades / 135 expiries
+- Validation: 172 trades / 82 expiries
+- Untouched holdout: 34 trades / 20 expiries
+- Frozen validation + holdout control: **₹63,672.5753**
+- Maximum per-trade control reconstruction error: **< 2e-12 rupees**
+- Numerical result: **both CALL and PUT outcomes are now available for every accepted opportunity**
+- Strategy promotion: **not permitted yet**
+- Phase-38 canonical stateful strategy remains unchanged and authoritative
+
+## Step 1 conclusion
+
+The fixed-opportunity dataset provides a valid economic target for model training: `DeltaP&L = CALL_net - PUT_net`.
+
+A useful new finding is visible before any model fitting, but it is **not a model result**:
+- development mean DeltaP&L = **-₹320.53**;
+- validation mean DeltaP&L = **+₹386.77**;
+- 2026 holdout mean DeltaP&L = **+₹3,386.31**;
+- CALL beats PUT on **270/477** opportunities (56.6%);
+- the holdout alone has CALL beating PUT on **27/34** opportunities (79.4%).
+
+The control reconstruction is effectively exact, so these are counterfactual opportunity-level observations rather than control-rebuild artifacts. The regime reversal between development and 2024–2026 strengthens the preregistered case for adaptive/uncertainty-aware models rather than a static direction classifier.
 
 ## Next engineering step
 
-Build the fixed-opportunity counterfactual engine and validate it against the frozen control before any model is trained.
+Build the point-in-time feature matrix and leakage audit. Then fit the preregistered CROL/BCMM/Bradley-Terry/Dynamic-Bayesian and low-capacity nonlinear models chronologically, with the 2026 holdout frozen until the model family and override thresholds are locked.
 
 
 ## Step 1 — fixed-opportunity counterfactual engine
