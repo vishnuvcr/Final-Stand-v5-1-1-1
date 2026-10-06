@@ -12,7 +12,7 @@ on:
       - "trigger/phase49.start"
 
 concurrency:
-  group: phase49-vix-tuning
+  group: phase49-vix-tuning-v2
   cancel-in-progress: true
 
 permissions:
