@@ -221,3 +221,17 @@ Evidence status: No numerical evidence was produced or accepted from this run st
 Correction: The counterfactual engine is being given explicit invariant checks and a new engine-path commit will be used to trigger a clean serialized Step-1 run from the current branch head.
 
 Prevention: Treat the engine/workflow source commit as the explicit execution trigger for Step-1; do not infer execution from documentation-only commits.
+
+
+### Error F39-013 — CI verification used exact equality on floating-point aggregate P&L
+Run: 37437767581 (run #9).
+
+Symptom: The corrected counterfactual engine completed successfully and produced 477 rows, but the verification step failed on exact equality between validation-plus-holdout control P&L and the frozen aggregate.
+
+Cause: Binary floating-point addition can differ from the separately accumulated frozen aggregate at the final machine-precision digits even when both values are economically and numerically identical.
+
+Evidence status: Non-evidence CI failure only. The engine output passed the substantive control-reconstruction checks: validation max absolute error ~9.1e-13 rupees and holdout max absolute error ~1.8e-12 rupees.
+
+Correction: Replace exact equality in the workflow with a 1e-6 rupee absolute tolerance, consistent with the authoritative frozen-control benchmark check.
+
+Prevention: Aggregate monetary verification in research CI will use explicit deterministic tolerances rather than raw float equality.
