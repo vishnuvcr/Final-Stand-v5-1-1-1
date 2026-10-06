@@ -1,11 +1,11 @@
-import json, math, os
+import json, math, os, re
 from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, SplineTransformer
 from sklearn.linear_model import Ridge
-from huggingface_hub import hf_hub_download
+from huggingface_hub import HfApi, hf_hub_download
 from huggingface_hub.errors import RemoteEntryNotFoundError
 
 from phase39_feature_matrix import (
@@ -151,7 +151,10 @@ def main():
     global_d=load_daily_source("global_daily.parquet")
     flows=load_daily_source("fii_dii_daily.parquet")
     sentiment=load_daily_source("sentiment_daily.parquet")
-    expiries=expected_expiries(spot)
+    expected_all=expected_expiries(spot)
+    api=HfApi(token=os.getenv("HF_TOKEN") or None)
+    repo_files=set(api.list_repo_files(HF_REPO,repo_type="dataset"))
+    expiries=[e for e in expected_all if f"options/NIFTY/{e.strftime('%Y-%m-%d')}.parquet" in repo_files]
     option_cache={}
     def get_option(e):
         e=norm_scalar_ts(e).normalize()
@@ -182,8 +185,8 @@ def main():
         od=get_option(expiry)
         expiry_day=expiry.normalize()
         end_ts=expiry+pd.Timedelta(hours=15,minutes=29)
-        idx_exp=expiries.index(expiry)
-        window_start=(expiries[idx_exp-1]+pd.Timedelta(hours=15,minutes=30)) if idx_exp>0 else START
+        idx_exp=expected_all.index(expiry)
+        window_start=(expected_all[idx_exp-1]+pd.Timedelta(hours=15,minutes=30)) if idx_exp>0 else START
         timeline=spot[(spot.timestamp>window_start)&(spot.timestamp<=end_ts)].copy()
         timeline=timeline[timeline.timestamp<expiry_day].sort_values("timestamp").reset_index(drop=True)
         # New entry is allowed any day except expiry day and after 09:20, before the final-entry cutoff.
