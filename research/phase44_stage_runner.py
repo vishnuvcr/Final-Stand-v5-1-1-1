@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from huggingface_hub import hf_hub_download
 
 from phase44_vix_tuning import (
@@ -27,105 +28,118 @@ def _read_filtered(path, filters):
         ["timestamp","option_type","strike"]
     ).sort_values(["timestamp","option_type","strike"], kind="stable")
 
-def process_expiries(idx, expiries, stage):
-    rows=[]; errors=[]; specs=family_specs()
-    needed_offsets={(typ,int(off)) for fam,g in specs for typ,off,_q in make_legs(fam,g)}
-    for oi,ex in enumerate(expiries):
-        try:
-            entry_map_ts={tm:entry_ts_for(idx,ex,tm) for tm in ENTRY_TIMES}
-            ets_valid={tm:ets for tm,ets in entry_map_ts.items() if ets is not None}
-            if not ets_valid:
-                continue
+def _process_one_expiry(idx, ex, stage, specs, needed_offsets):
+    rows=[]; errors=[]
+    try:
+        entry_map_ts={tm:entry_ts_for(idx,ex,tm) for tm in ENTRY_TIMES}
+        ets_valid={tm:ets for tm,ets in entry_map_ts.items() if ets is not None}
+        if not ets_valid: return rows,errors
+        name=f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"
+        path=hf_hub_download(repo_id="thetrademarkk", filename="", repo_type="dataset", token=os.getenv("HF_TOKEN") or None) if False else None
+        entry_day=min(ets_valid.values()).normalize()
+        entry_end=entry_day+pd.Timedelta(hours=11)
 
-            name=f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"
+        # Fast path: predicate filtering. Fallback: accepted full-parquet reader if
+        # the dataset timestamp physical type does not support predicate comparison.
+        try:
+            from huggingface_hub import hf_hub_download
             path=hf_hub_download(repo_id="thetrademarkk/india-index-options-1m",filename=name,
                                  repo_type="dataset",token=os.getenv("HF_TOKEN") or None)
-            entry_day=min(ets_valid.values()).normalize()
-            entry_end=entry_day+pd.Timedelta(hours=11)
             entry_df=_read_filtered(path,[("timestamp",">=",entry_day+pd.Timedelta(hours=9,minutes=30)),
                                            ("timestamp","<=",entry_end)])
-            if entry_df.empty:
-                errors.append({"expiry":str(ex.date()),"reason":"missing_entry_window"}); continue
+        except Exception:
+            entry_df=pd.DataFrame()
+            path=None
+        if entry_df.empty:
+            from phase44_vix_tuning import load_parquet
+            cur=load_parquet(name)
+            entry_df=cur[(cur.timestamp>=entry_day+pd.Timedelta(hours=9,minutes=30))&(cur.timestamp<=entry_end)].copy()
+            full_day=cur[(cur.timestamp>=ex.normalize())&(cur.timestamp<=ex.normalize()+pd.Timedelta(hours=15,minutes=29))]
+        else:
+            full_day=None
 
-            entry_specs={}
-            strike_union=set()
-            step_by_tm={}
-            atm_by_tm={}
-            for tm,ets in ets_valid.items():
-                snap=entry_df[entry_df.timestamp==ets]
-                if snap.empty: continue
-                spotrow=idx[idx.timestamp==ets]
-                if spotrow.empty: continue
-                step=modal_step(snap)
-                if step is None or step<=0:
-                    errors.append({"expiry":str(ex.date()),"entry_time":tm,"reason":"missing_modal_step"}); continue
-                spot=float(spotrow.iloc[-1].spot)
-                strikes=snap.strike.unique()
-                atm=float(min(strikes,key=lambda k:abs(float(k)-spot)))
-                step_by_tm[tm]=step; atm_by_tm[tm]=atm
-                for typ,off in needed_offsets:
-                    strike_union.add(float(atm+off*step))
+        step_by_tm={}; atm_by_tm={}; strike_union=set()
+        for tm,ets in ets_valid.items():
+            snap=entry_df[entry_df.timestamp==ets]
+            if snap.empty: continue
+            spotrow=idx[idx.timestamp==ets]
+            if spotrow.empty: continue
+            step=modal_step(snap)
+            if step is None or step<=0:
+                errors.append({"expiry":str(ex.date()),"entry_time":tm,"reason":"missing_modal_step"}); continue
+            spot=float(spotrow.iloc[-1].spot)
+            strikes=snap.strike.unique()
+            atm=float(min(strikes,key=lambda k:abs(float(k)-spot)))
+            step_by_tm[tm]=step; atm_by_tm[tm]=atm
+            for typ,off in needed_offsets: strike_union.add(float(atm+off*step))
+        if not step_by_tm:
+            return rows,errors
 
-            if not step_by_tm:
-                continue
-
-            # Read only expiry-day rows at the strikes actually used by the registered geometries.
+        if full_day is None:
             ex_end=ex.normalize()+pd.Timedelta(hours=15,minutes=29)
-            expiry_df=_read_filtered(path,[
-                ("timestamp",">=",ex.normalize()),
-                ("timestamp","<=",ex_end),
-                ("strike","in",sorted(strike_union))
-            ])
-            lot=lot_size_for_expiry(ex)
+            try:
+                expiry_df=_read_filtered(path,[("timestamp",">=",ex.normalize()),("timestamp","<=",ex_end),
+                                               ("strike","in",sorted(strike_union))])
+            except Exception:
+                expiry_df=pd.DataFrame()
+            if expiry_df.empty:
+                from phase44_vix_tuning import load_parquet
+                cur=load_parquet(name)
+                expiry_df=cur[(cur.timestamp>=ex.normalize())&(cur.timestamp<=ex_end)].copy()
+        else:
+            expiry_df=full_day
 
-            for tm,ets in ets_valid.items():
-                if tm not in step_by_tm: continue
-                step=step_by_tm[tm]; atm=atm_by_tm[tm]
-                snap=entry_df[entry_df.timestamp==ets]
-                day=expiry_df
-                entry={}
-                for typ,off in needed_offsets:
-                    k=float(atm+off*step)
-                    x=snap[(snap.option_type==typ)&(snap.strike==k)]
-                    if not x.empty: entry[(typ,off)]=float(x.iloc[-1].close)
-                day_series={}
-                for (typ,strike),z in day.groupby(["option_type","strike"],sort=False):
-                    day_series[(str(typ).upper(),float(strike))]=z.drop_duplicates("timestamp").set_index("timestamp")["close"]
+        lot=lot_size_for_expiry(ex)
+        day_series={}
+        for (typ,strike),z in expiry_df.groupby(["option_type","strike"],sort=False):
+            day_series[(str(typ).upper(),float(strike))]=z.drop_duplicates("timestamp").set_index("timestamp")["close"]
 
-                for fam,g in specs:
-                    legs=make_legs(fam,g)
-                    if any((typ,int(off)) not in entry for typ,off,_q in legs): continue
-                    series=[]; bad=False
-                    for typ,off,_q in legs:
-                        ss=day_series.get((typ,float(atm+off*step)))
-                        if ss is None or ss.empty: bad=True; break
-                        series.append(ss)
-                    if bad: continue
-                    common=series[0].index
-                    for ss in series[1:]:
-                        common=common.intersection(ss.index)
-                        if len(common)==0: break
-                    if len(common)==0: continue
-                    exit_ts=common.max(); gross=0.; orders=[]
-                    for (typ,off,q),ss in zip(legs,series):
-                        ep=entry[(typ,int(off))]; xp=float(ss.loc[exit_ts])
-                        epx=exec_px(ep,"buy" if q>0 else "sell")
-                        xpx=exec_px(xp,"buy" if q<0 else "sell")
-                        gross += q*(xpx-epx)*lot
-                        orders += [(ets,"buy" if q>0 else "sell",epx*abs(q)),
-                                   (exit_ts,"buy" if q<0 else "sell",xpx*abs(q))]
-                    rows.append({
-                        "expiry":str(ex.date()),"entry_time":tm,"entry_ts":str(ets),
-                        "split":stage,"family":fam,
-                        "geom":json.dumps(g,sort_keys=True,separators=(",",":")),
-                        "net":gross-charges(orders,lot,1.0),
-                        "net50":gross-charges(orders,lot,1.5)
-                    })
-        except Exception as exc:
-            errors.append({"expiry":str(ex.date()),"reason":repr(exc)})
-        if oi%10==0:
-            pd.DataFrame(rows).to_csv(OUT/f"progress_{stage}.csv",index=False)
-    return pd.DataFrame(rows),pd.DataFrame(errors)
+        for tm,ets in ets_valid.items():
+            if tm not in step_by_tm: continue
+            step=step_by_tm[tm]; atm=atm_by_tm[tm]; snap=entry_df[entry_df.timestamp==ets]
+            entry={}
+            for typ,off in needed_offsets:
+                k=float(atm+off*step); x=snap[(snap.option_type==typ)&(snap.strike==k)]
+                if not x.empty: entry[(typ,off)]=float(x.iloc[-1].close)
+            for fam,g in specs:
+                legs=make_legs(fam,g)
+                if any((typ,int(off)) not in entry for typ,off,_q in legs): continue
+                series=[]; bad=False
+                for typ,off,_q in legs:
+                    ss=day_series.get((typ,float(atm+off*step)))
+                    if ss is None or ss.empty: bad=True; break
+                    series.append(ss)
+                if bad: continue
+                common=series[0].index
+                for ss in series[1:]:
+                    common=common.intersection(ss.index)
+                    if len(common)==0: break
+                if len(common)==0: continue
+                exit_ts=common.max(); gross=0.; orders=[]
+                for (typ,off,q),ss in zip(legs,series):
+                    ep=entry[(typ,int(off))]; xp=float(ss.loc[exit_ts])
+                    epx=exec_px(ep,"buy" if q>0 else "sell"); xpx=exec_px(xp,"buy" if q<0 else "sell")
+                    gross += q*(xpx-epx)*lot
+                    orders += [(ets,"buy" if q>0 else "sell",epx*abs(q)),(exit_ts,"buy" if q<0 else "sell",xpx*abs(q))]
+                rows.append({"expiry":str(ex.date()),"entry_time":tm,"entry_ts":str(ets),"split":stage,
+                             "family":fam,"geom":json.dumps(g,sort_keys=True,separators=(",",":")),
+                             "net":gross-charges(orders,lot,1.0),"net50":gross-charges(orders,lot,1.5)})
+    except Exception as exc:
+        errors.append({"expiry":str(ex.date()),"reason":repr(exc)})
+    return rows,errors
+
+def process_expiries(idx, expiries, stage):
+    all_rows=[]; all_errors=[]; specs=family_specs()
+    needed_offsets={(typ,int(off)) for fam,g in specs for typ,off,_q in make_legs(fam,g)}
+    # Two workers keeps runner memory bounded while allowing cached local parquet reads to overlap.
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futs={pool.submit(_process_one_expiry,idx,ex,stage,specs,needed_offsets):ex for ex in expiries}
+        for i,f in enumerate(as_completed(futs),1):
+            rows,errors=f.result()
+            all_rows.extend(rows); all_errors.extend(errors)
+            if i%10==0:
+                pd.DataFrame(all_rows).to_csv(OUT/f"progress_{stage}.csv",index=False)
+    return pd.DataFrame(all_rows),pd.DataFrame(all_errors)
 
 def development_stage():
     idx=load_index(); vix=load_vix()
