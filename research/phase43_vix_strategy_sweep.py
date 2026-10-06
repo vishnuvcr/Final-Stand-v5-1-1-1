@@ -300,3 +300,172 @@ def drawdown(vals):
         return 0.0
     c = np.cumsum(vals)
     return float(np.max(np.maximum.accumulate(c) - c))
+
+
+def bootstrap(x, seed=4301):
+    a = np.asarray(x, dtype=float)
+    a = a[np.isfinite(a)]
+    if len(a) < 5:
+        return {"n": len(a), "mean": np.nan, "ci_lo": np.nan, "ci_hi": np.nan, "p": np.nan}
+    rng = np.random.default_rng(seed)
+    sample = a[rng.integers(0, len(a), size=(10000, len(a)))]
+    means = sample.mean(axis=1)
+    signs = rng.choice([-1.0, 1.0], size=(10000, len(a)))
+    p = float(np.mean((a * signs).mean(axis=1) >= a.mean()))
+    return {
+        "n": int(len(a)),
+        "mean": float(a.mean()),
+        "ci_lo": float(np.quantile(means, 0.025)),
+        "ci_hi": float(np.quantile(means, 0.975)),
+        "p": p,
+    }
+
+
+def holm(p):
+    p = np.asarray(p, float)
+    order = np.argsort(np.nan_to_num(p, nan=1.0))
+    out = np.empty(len(p), float)
+    run = 0.0
+    m = len(p)
+    for rank, i in enumerate(order):
+        run = max(run, min(1.0, (m - rank) * (p[i] if np.isfinite(p[i]) else 1.0)))
+        out[i] = run
+    return out
+
+
+def summarize_strategy(trades):
+    rows = []
+    for (strategy, split), z in trades.groupby(["strategy", "split"]):
+        rows.append({
+            "strategy": strategy,
+            "split": split,
+            "trades": len(z),
+            "net_rupees": float(z["net_rupees"].sum()),
+            "mean_net": float(z["net_rupees"].mean()),
+            "win_rate": float((z["net_rupees"] > 0).mean()),
+            "max_dd": drawdown(z.sort_values("expiry")["net_rupees"].to_numpy()),
+            "cost_rupees": float(z["cost_rupees"].sum()),
+        })
+    return pd.DataFrame(rows)
+
+
+def build_router(dev, criterion):
+    regimes = ["LOW", "NORMAL", "HIGH", "SPIKE", "FALLING", "RISING", "HIGH_RISING"]
+    mapping = {}
+    eligible_all = dev[dev["strategy"].isin(DEFINED_RISK)]
+    fallback = eligible_all.groupby("strategy")["net_rupees"].mean().sort_values(ascending=False).index[0]
+    for mode in regimes:
+        z = eligible_all[eligible_all["active_states"].apply(lambda a: mode in a)]
+        counts = z.groupby("strategy").size()
+        valid = counts[counts >= 15].index
+        z = z[z["strategy"].isin(valid)]
+        if z.empty:
+            mapping[mode] = fallback
+            continue
+        if criterion == "mean":
+            scores = z.groupby("strategy")["net_rupees"].mean()
+        elif criterion == "median":
+            scores = z.groupby("strategy")["net_rupees"].median()
+        else:
+            scores = z.groupby("strategy")["net_rupees"].agg(lambda x: x.mean() / x.std(ddof=1) if x.std(ddof=1) > 0 else -np.inf)
+        mapping[mode] = scores.sort_values(ascending=False).index[0]
+    return mapping
+
+
+def pick_strategy(active, mapping):
+    for mode in ["HIGH_RISING", "SPIKE", "RISING", "FALLING", "HIGH", "LOW", "NORMAL"]:
+        if mode in active:
+            return mapping.get(mode)
+    return None
+
+
+def make_figures(trades):
+    heat = trades.pivot_table(index="strategy", columns="vix_mode", values="net_rupees", aggfunc="mean")
+    plt.figure(figsize=(13, 9))
+    plt.imshow(heat.fillna(0).to_numpy(), aspect="auto")
+    plt.yticks(range(len(heat.index)), heat.index)
+    plt.xticks(range(len(heat.columns)), heat.columns, rotation=45, ha="right")
+    plt.title("Phase 43 mean net P&L by strategy and India VIX state")
+    plt.colorbar(label="Mean net P&L")
+    plt.tight_layout()
+    plt.savefig(OUT / "strategy_vix_heatmap.png", dpi=160)
+    plt.close()
+
+
+def main():
+    expiry_files = list_expiry_files()
+    index = load_index()
+    opportunities = make_opportunities(index, expiry_files)
+    vix = load_vix()
+    cache = {}
+    rows = []
+    errors = []
+
+    for i, op in opportunities.iterrows():
+        expiry = pd.Timestamp(op["expiry"])
+        entry_ts = pd.Timestamp(op["entry_ts"])
+        entry_spot = float(op["entry_spot"])
+        state = vix_state(vix, entry_ts)
+        if state is None:
+            errors.append({"expiry": str(expiry.date()), "stage": "vix", "reason": "insufficient_history"})
+            continue
+        try:
+            if expiry not in cache:
+                cache[expiry] = prepare_chain(load_parquet(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet"))
+            cur = cache[expiry]
+            pos = expiry_files.index(expiry)
+            nxt = None
+            if pos + 1 < len(expiry_files):
+                ne = expiry_files[pos + 1]
+                if ne not in cache:
+                    cache[ne] = prepare_chain(load_parquet(f"options/NIFTY/{ne.strftime('%Y-%m-%d')}.parquet"))
+                nxt = cache.get(ne)
+        except Exception as exc:
+            errors.append({"expiry": str(expiry.date()), "stage": "load", "reason": repr(exc)})
+            continue
+
+        snap = cur[cur["timestamp"] == entry_ts]
+        step = modal_step(snap)
+        if step is None or step <= 0:
+            errors.append({"expiry": str(expiry.date()), "stage": "strike_step", "reason": "missing"})
+            continue
+        strikes = snap["strike"].unique()
+        atm = float(min(strikes, key=lambda k: abs(k - entry_spot)))
+        lot = lot_size_for_expiry(expiry)
+        split = "development" if expiry <= DEV_END else "validation" if expiry <= VAL_END else "holdout"
+        active = active_states(state)
+
+        for strategy, legs in STRATEGIES.items():
+            r = evaluate(strategy, legs, cur, nxt, entry_ts, expiry, atm, step, lot)
+            if r is None:
+                continue
+            rows.append({
+                "expiry": str(expiry.date()),
+                "entry_ts": str(entry_ts),
+                "split": split,
+                "strategy": strategy,
+                "entry_spot": entry_spot,
+                "lot_size": lot,
+                "step": step,
+                "vix": state["vix"],
+                "dvix": state["dvix"],
+                "active_states": active,
+                **r,
+                "return_on_risk": r["net_rupees"] / r["risk_proxy_rupees"] if np.isfinite(r["risk_proxy_rupees"]) and r["risk_proxy_rupees"] > 0 else np.nan,
+            })
+        if i % 10 == 0:
+            pd.DataFrame(rows).to_csv(OUT / "progress_trade_matrix.csv", index=False)
+
+    trades = pd.DataFrame(rows)
+    if trades.empty:
+        raise RuntimeError("No strategy observations were produced")
+    trades.to_csv(OUT / "strategy_trade_matrix_all_splits.csv", index=False)
+    pd.DataFrame(errors).to_csv(OUT / "data_errors.csv", index=False)
+    summarize_strategy(trades).to_csv(OUT / "strategy_summary_by_split.csv", index=False)
+
+    dev = trades[trades["split"] == "development"].copy()
+    val = trades[trades["split"] == "validation"].copy()
+    hold = trades[trades["split"] == "holdout"].copy()
+
+    grid = []
+    tests = []
