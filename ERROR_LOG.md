@@ -1093,3 +1093,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 ## F44-004 — Phase-43 expiry cache reuse
 - The active numerical run spent excessive time in HF repository file enumeration before loading the option sample.
 - The accepted Phase-43 expiry-level trade matrix is now used as the primary cached expiry list, preserving the exact audited opportunity sample and eliminating repeated HF repository metadata enumeration. The fallback HF enumeration remains only for cache absence.
+
+
+## F44-005 — bounded-memory expiry processing
+- The active optimized engine retained every loaded expiry dataframe in memory, risking RAM pressure on the GitHub-hosted runner.
+- No result from that run is accepted.
+- The corrected engine now processes one expiry at a time and relies on the Hugging Face cache for persistence, preserving numerical definitions while bounding memory usage.
