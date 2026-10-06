@@ -1322,3 +1322,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: all affected numerical attempts remain NON-EVIDENCE.
 - Correction: the engine now uses the project's canonical NIFTY 1-minute index series only for the point-in-time spot required for ATM/Black-Scholes strike selection; option prices, expiries and legs remain sourced from the independent multi-expiry dataset.
 - This source-fusion rule is registered and will be documented in the final manuscript as a limitation rather than hidden.
+
+## F48-008 — Repeated timestamps created Series values at expiry exit
+- Phase-48 diagnostic reached the exit stage after timezone and spot corrections, then failed because some option-leg timestamps were duplicated; selecting .loc[timestamp] returned a Series rather than a scalar.
+- Evidence status: NON-EVIDENCE.
+- Correction: exit prices are now deduplicated by timestamp using the last observed quote, and entry quote selection uses the last duplicate row consistently.
+- Prevention: the artifact audit must include duplicate timestamp handling before numerical evidence is accepted.
