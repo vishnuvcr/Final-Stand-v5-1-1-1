@@ -505,3 +505,17 @@ Evidence status: Non-evidence summary-stage runtime failure. The sequential repl
 Correction: The summary stage now explicitly reads both control CSVs into DataFrames before adding period labels and computing the policy-versus-control comparison.
 
 Prevention: Repository file paths will remain distinct from loaded DataFrames throughout sequential analysis code.
+
+
+### Error F39-026 — Sequential paired-bootstrap column name mismatch
+Run: 37443241411 (Step-4 run #8).
+
+Symptom: The complete sequential replay reached the paired-bootstrap stage, then failed with `AttributeError: DataFrameGroupBy has no attribute net`.
+
+Cause: The policy replay stores realized P&L as `policy_net_rupees`, while the control ledger stores `net_rupees`; the bootstrap helper assumed a shared `net` alias.
+
+Evidence status: Non-evidence statistical-postprocessing failure. The completed replay was not accepted because CI verification/persistence did not run.
+
+Correction: The bootstrap helper now explicitly aggregates `policy_net_rupees` for the policy stream and `net_rupees` for the control stream.
+
+Prevention: Paired statistical helpers will use explicit schema names rather than implicit aliases.
