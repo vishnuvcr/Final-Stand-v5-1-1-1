@@ -82,6 +82,8 @@ No policy passed the required combination of:
 - protection against holdout re-selection.
 
 ### Step 8 — Manuscript/closeout — COMPLETE
+
+Final corrected workflow run **37458310284** completed successfully, including verification and persistence. The accepted sequential artifact uses the exact 93 prediction-covered expiry blocks.
 - [Phase 40 manuscript](PHASE40_MANUSCRIPT.md)
 - [Research plan](PHASE40_RESEARCH_PLAN.md)
 - [Pre-registration](PHASE40_PRE_REGISTRATION.md)
