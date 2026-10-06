@@ -510,3 +510,8 @@ A statistical implementation defect and a promotion-universe contamination defec
 - [Phase 43 corrected router validation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/results/phase43_vix/corrected_router_dev_validation.csv)
 
 **Final Phase-43 status: CLOSED — NO PROMOTION.**
+
+
+## Phase 44 — VIX candidate tuning — ACTIVE
+A new isolated branch `phase-44-vix-candidate-tuning` is testing finite strike-geometry, entry-time and prior-only VIX-threshold tuning for the strongest Phase-43 defined-risk candidates. The 2026 holdout remains protected until rules are frozen.
+- [Phase 44 bridge workflow](.github/workflows/phase-44-bridge.yml)
