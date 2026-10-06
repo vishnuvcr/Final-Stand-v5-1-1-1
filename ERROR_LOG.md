@@ -1138,3 +1138,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Holdout run 37495700026 started without a completed validation artifact and failed because `validation_confirmation.csv` was absent.
 - It is non-evidence.
 - Root cause: holdout workflow also listened to the shared runner-script path. The holdout workflow has been changed to trigger-file-only, and holdout remains prohibited until validation inference freeze.
+
+
+## F44-013 — predicate-filter timestamp incompatibility
+- The first strike-filtered staged development run produced zero development rows because the parquet timestamp physical type did not return rows through the predicate-filter path.
+- No evidence was accepted.
+- Correction: the stage runner now detects empty predicate reads and falls back to the known-good Phase-43 full-parquet reader for that expiry. Two expiry workers are used to shorten elapsed time while keeping memory bounded.
