@@ -247,3 +247,17 @@ Evidence status: tooling-only; authoritative job status continued to report the 
 Correction: Use workflow job state/step state while a job is running; inspect full decoded logs only after the job completes.
 
 Prevention: Do not treat temporary log-unavailability as a numerical failure.
+
+
+### Error F39-015 — Step 2 feature merge timestamp resolution mismatch
+Run: 37439047106.
+
+Symptom: The exact-entry feature builder completed source recovery and option/spot processing, then failed at the backward daily-source merge with Pandas MergeError: incompatible datetime64[us, Asia/Kolkata] and datetime64[ns, Asia/Kolkata].
+
+Evidence status: non-evidence; no feature matrix was accepted.
+
+Cause: PyArrow preserved Parquet timestamp columns at microsecond resolution while the constructed event timestamps were nanosecond resolution.
+
+Correction: Normalize all point-in-time feature join keys to timezone-aware datetime64[ns, Asia/Kolkata] before merge_asof.
+
+Prevention: All future Phase-39 feature joins will explicitly coerce both sides to the same timestamp resolution and timezone before any as-of merge.
