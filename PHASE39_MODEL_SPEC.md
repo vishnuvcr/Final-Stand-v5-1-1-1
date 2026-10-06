@@ -62,13 +62,22 @@ Step 4 will cover DTW analogue, BOCPD regime gating, online Hedge/model averagin
 
 ## Action rule
 
-For an estimated margin m_hat:
+For an estimated margin m_hat and uncertainty s_hat, use the fixed conservative score:
 
-- if the control is CALL, switch to PUT only when m_hat < -M and confidence is acceptable;
-- if the control is PUT, switch to CALL only when m_hat > M and confidence is acceptable;
-- otherwise retain the canonical control direction.
+`score = alternative_expected_improvement - 1.0 × uncertainty`.
 
-The safety margin M and confidence rule are locked using development OOF only.
+The uncertainty multiplier is fixed at 1.0 and is not tuned.
+
+The only permitted safety margins are exactly:
+- ₹0
+- ₹250
+- ₹500
+
+The selected margin is chosen from development walk-forward OOF only. Validation and holdout cannot change it.
+
+For a CALL control, alternative_expected_improvement = -m_hat.
+For a PUT control, alternative_expected_improvement = +m_hat.
+Override only when score > M; otherwise retain the canonical control.
 
 ## Primary selection metrics
 
