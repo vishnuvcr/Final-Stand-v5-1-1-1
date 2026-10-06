@@ -1,0 +1,179 @@
+name: Phase 47 - VIX Source Strategy Backtest
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-47-vix-source-strategy-backtest
+    paths:
+      - "trigger/phase47.start"
+
+concurrency:
+  group: phase47-vix-source
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub tabulate
+      - name: Compile engine
+        run: python -m py_compile research/phase47_vix_source_backtest.py
+      - name: Cache Hugging Face dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase47-hf-${{ runner.os }}-${{ hashFiles('research/phase47_vix_source_backtest.py') }}
+          restore-keys: |
+            phase47-hf-${{ runner.os }}-
+      - name: Run preflight only
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          PHASE47_PREFLIGHT_ONLY: "1"
+        run: python research/phase47_vix_source_backtest.py
+      - name: Validate preflight artifacts
+        run: |
+          test -s results/phase47_vix_source/preflight.json
+          test -s results/phase47_vix_source/definition_audit.json
+          python - <<'PY'
+          import json
+          p=json.loads(open("results/phase47_vix_source/preflight.json").read())
+          assert p["sample_files_checked"] >= 4
+          assert p["monthly_expiries"] >= 20
+          print("Preflight PASS:", p)
+          PY
+
+  numerical:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub tabulate
+      - name: Cache Hugging Face dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase47-hf-${{ runner.os }}-${{ hashFiles('research/phase47_vix_source_backtest.py') }}
+          restore-keys: |
+            phase47-hf-${{ runner.os }}-
+      - name: Compile engine again
+        run: python -m py_compile research/phase47_vix_source_backtest.py
+      - name: Run numerical phase
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase47_vix_source_backtest.py
+      - name: Validate numerical artifacts
+        run: |
+          set -euo pipefail
+          for f in \
+            results/phase47_vix_source/source_strategy_trade_matrix.csv \
+            results/phase47_vix_source/data_errors.csv \
+            results/phase47_vix_source/artifact_audit.json \
+            results/phase47_vix_source/strategy_vix_summary.csv \
+            results/phase47_vix_source/validation_regime_inference.csv \
+            results/phase47_vix_source/validation_freeze.csv \
+            results/phase47_vix_source/holdout_confirmation.csv \
+            results/phase47_vix_source/summary.json \
+            results/phase47_vix_source/PHASE47_MANUSCRIPT.md; do
+            test -s "$f"
+          done
+      - name: Self-audit numerical outputs
+        run: |
+          python - <<'PY'
+          import json, pandas as pd
+          from pathlib import Path
+          a=json.loads(Path("results/phase47_vix_source/artifact_audit.json").read_text())
+          s=json.loads(Path("results/phase47_vix_source/summary.json").read_text())
+          t=pd.read_csv("results/phase47_vix_source/source_strategy_trade_matrix.csv")
+          assert a["duplicate_keys"] == 0
+          assert s["rows"] == len(t)
+          states=set()
+          for x in t["active_states"]:
+              states.update(json.loads(x))
+          required={"ALL","LOW","NORMAL","FALLING","RISING","HIGH","SPIKE","HIGH_RISING"}
+          assert required.issubset(states)
+          print("Numerical artifact audit PASS")
+          print(a)
+          print(s)
+          PY
+      - name: Publish accepted numerical results
+        if: success()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot].noreply.github.com"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import date
+          s=json.loads(Path("results/phase47_vix_source/summary.json").read_text())
+          Path("PHASE47_STATUS.md").write_text(
+              "# Phase 47 Status — VIX Source-Strategy Numerical Backtest\n\n"
+              "**NUMERICAL EXECUTION COMPLETE — SELF-AUDIT ARTIFACTS PASSED**\n\n"
+              f"Trade rows: {s['rows']}\n"
+              f"Strategies: {', '.join(s['strategies'])}\n"
+              f"Validation working states: {s['validation_working_states']}\n"
+              f"Frozen validation rows: {s['frozen_rows']}\n"
+              f"Holdout confirmation rows: {s['holdout_rows']}\n"
+              f"Holdout positive confirmations: {s['holdout_positive']}\n"
+              f"Holm-adjusted survivors: {s['holm_survivors']}\n"
+              f"Recorded data errors: {s['errors']}\n\n"
+              "Selection was frozen from validation before reading the 2026 confirmation table.\n"
+          )
+          with open("RESEARCH_LOG.md","a",encoding="utf-8") as f:
+              f.write(
+                  f"\n\n## {date.today().isoformat()} — Phase 47 numerical VIX source-strategy backtest\n"
+                  f"- Trade rows={s['rows']}; validation working states={s['validation_working_states']}; frozen={s['frozen_rows']}; holdout confirmations={s['holdout_rows']}.\n"
+                  f"- Holm-adjusted statistical survivors={s['holm_survivors']}.\n"
+                  "- LOW/NORMAL/FALLING and RISING/HIGH/SPIKE/HIGH_RISING were all retained in the state panel.\n"
+                  "- Holdout results are confirmation-only and cannot alter validation ranking.\n"
+              )
+          PY
+          git add results/phase47_vix_source PHASE47_STATUS.md RESEARCH_LOG.md
+          git diff --cached --quiet && exit 0
+          git commit -m "phase47: publish self-audited VIX source strategy results"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+      - name: Log numerical failure
+        if: failure()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot].noreply.github.com"
+          cat >> ERROR_LOG.md <<'EOF'
+
+          ## F47-AUTO — Phase 47 workflow failure
+          - The numerical workflow failed or an artifact self-audit failed.
+          - Evidence status: affected run is non-evidence until the failure is diagnosed and corrected.
+          - The workflow requires compile, preflight, numerical, artifact and holdout audits before publication.
+          EOF
+          git add ERROR_LOG.md
+          git commit -m "phase47: log workflow failure"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
