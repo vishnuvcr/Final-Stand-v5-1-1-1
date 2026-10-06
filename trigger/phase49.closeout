@@ -1,1 +1,2 @@
 Phase 49 closeout trigger — automatically reconcile the latest completed Phase 49 raw artifact, regenerate the full manuscript/figures, audit the final decision, and publish results/status without modifying numerical P&L.
+Retrigger after F49-013: dependency-independent manuscript table rendering. Reconcile latest Phase 49 raw artifact without rerunning numerical research.
