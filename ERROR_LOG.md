@@ -96,3 +96,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Numerical execution then failed at the OOF stacking call because `stacking_and_calibration` was defined with `train, val, hold, cols` but was called with only `train, val, cols`.
 - No Phase-35 result from this run is accepted as evidence.
 - Correction: pass the holdout frame to the stacking/calibration function and rerun the frozen battery.
+
+
+## 2026-10-06 — Phase 35 Markov-switching addendum run #1 (37425571102)
+- The reproducible Markov-switching volatility gate failed before scoring because the cached regime-feature merge produced duplicate `ms_p0`, `ms_p1` and `ms_entropy` columns.
+- The workflow also incorrectly treated the failed addendum as successful because the conditional used the step outcome with `continue-on-error`; only cache/log files were persisted, not numerical results.
+- No Markov-switching result from this run is accepted.
+- Correction: drop any existing regime columns before merging the canonical cached regime table and gate persistence on the actual step conclusion.
