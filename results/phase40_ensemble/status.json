@@ -1,0 +1,10 @@
+{
+  "status": "GRID_COMPLETE",
+  "grid_candidates": 1764,
+  "holdout_candidates": 10,
+  "vix_cache_rows": 1589,
+  "validation_start": "2024-01-11",
+  "validation_end": "2025-12-30",
+  "holdout_start": "2026-01-06",
+  "holdout_end": "2026-05-19"
+}

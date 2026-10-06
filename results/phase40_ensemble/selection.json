@@ -1,0 +1,133 @@
+{
+  "grid_candidates": 1764,
+  "top10_count": 10,
+  "vix_thresholds": {
+    "ret_q67": 0.039880184945773944,
+    "level_q33": 14.747399940490723,
+    "level_q67": 20.43000030517578
+  },
+  "sequential_control_validation_net": 30485.4577712201,
+  "study_expiries": 93,
+  "top10": [
+    {
+      "candidate_id": 421,
+      "combo": "MARKOV_REGIME_TREE",
+      "aggregator": "mean",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 428,
+      "combo": "MARKOV_REGIME_TREE",
+      "aggregator": "median",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 435,
+      "combo": "MARKOV_REGIME_TREE",
+      "aggregator": "majority",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 436,
+      "combo": "MARKOV_REGIME_TREE",
+      "aggregator": "majority",
+      "vix_mode": "EXPERT",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 442,
+      "combo": "MARKOV_REGIME_TREE",
+      "aggregator": "confidence_weighted",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 477,
+      "combo": "DART+MARKOV_REGIME_TREE",
+      "aggregator": "mean",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 484,
+      "combo": "DART+MARKOV_REGIME_TREE",
+      "aggregator": "median",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 498,
+      "combo": "DART+MARKOV_REGIME_TREE",
+      "aggregator": "confidence_weighted",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 722,
+      "combo": "DART+OOF_STACK+MARKOV_REGIME_TREE",
+      "aggregator": "confidence_weighted",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 72094.84677407518,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3518297036292461,
+      "validation_uplift_vs_sequential_control": 41609.38900285508
+    },
+    {
+      "candidate_id": 701,
+      "combo": "DART+OOF_STACK+MARKOV_REGIME_TREE",
+      "aggregator": "mean",
+      "vix_mode": "OFF",
+      "trades": 155,
+      "net": 71734.29242447519,
+      "win_rate": 0.6580645161290323,
+      "max_dd": 17682.250762565,
+      "profit_factor": 1.3500701641387258,
+      "validation_uplift_vs_sequential_control": 41248.83465325509
+    }
+  ]
+}
