@@ -35,7 +35,7 @@ def select_features(train):
 def fit_margin(train,test):
     feats=select_features(train)
     imp=SimpleImputer(strategy="median").fit(train[feats])
-    sc=StandardScaler().fit(imp.transform(imp.transform(train[feats]) if False else imp.transform(train[feats])))
+    sc=StandardScaler().fit(imp.transform(train[feats]))
     A=sc.transform(imp.transform(train[feats]))
     B=sc.transform(imp.transform(test[feats]))
     sp=SplineTransformer(n_knots=4,degree=2,include_bias=False)
@@ -78,22 +78,30 @@ def simulate_fixed(z,split,margin,eta,decay):
     # Chronological expanding-window GAM rewards.
     rewards=[]; rows=[]
     if split=="development":
-        pred_start=WARMUP
-        for i in range(len(d)):
-            ctl=d.control_direction.iloc[i]
-            control_r=float(d.control_net_rupees.iloc[i])
-            if i<pred_start:
-                gam_r=control_r
-                ov=False
+        # Fit only once per chronological batch; Hedge weights still update after every observation.
+        for start in range(0,len(d),BATCH):
+            end=min(start+BATCH,len(d))
+            if start < WARMUP:
+                warm=min(end,WARMUP)
+                for i in range(start,warm):
+                    cr=float(d.control_net_rupees.iloc[i])
+                    rewards.append((cr,cr))
+                    rows.append((d.entry_ts.iloc[i],cr,cr,False))
+                if end<=WARMUP:
+                    continue
+                start_pred=WARMUP
             else:
-                train=d.iloc[:i]
-                test=d.iloc[i:i+1]
-                mu,unc=fit_margin(train,test)
-                act,ov_arr=gam_actions(np.array([ctl]),mu,unc,margin)
-                gam_r=float(d.put_net_rupees.iloc[i] if act[0]=="PUT" else d.call_net_rupees.iloc[i])
-                ov=bool(ov_arr[0])
-            rewards.append((control_r,gam_r))
-            rows.append((d.entry_ts.iloc[i],control_r,gam_r,ov))
+                start_pred=start
+            train=d.iloc[:start_pred]
+            test=d.iloc[start_pred:end]
+            mu,unc=fit_margin(train,test)
+            act,ov_arr=gam_actions(test.control_direction.to_numpy(),mu,unc,margin)
+            for j in range(len(test)):
+                i=start_pred+j
+                cr=float(test.control_net_rupees.iloc[j])
+                gr=float(test.put_net_rupees.iloc[j] if act[j]=="PUT" else test.call_net_rupees.iloc[j])
+                rewards.append((cr,gr))
+                rows.append((test.entry_ts.iloc[j],cr,gr,bool(ov_arr[j])))
     else:
         # Validation uses all development data to fit a model at each batch, but Hedge only updates online.
         dev=z[z.split=="development"].reset_index(drop=True)
