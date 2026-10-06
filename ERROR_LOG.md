@@ -1017,3 +1017,11 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Correction:** replay now records unavailable execution/counterfactual legs as explicit skipped observations and compares the control only on the same executable entry timestamps. No candidate score, feature, threshold, holdout observation or cost rule was changed.
 - **Scientific safeguard:** skipped observations are reported by period; they are not silently treated as profitable or loss-making trades.
 - **Status:** corrected; rerun required.
+
+
+## F42-002 — 2026-10-06 — Replay identity defect
+- Workflow 37467356019 failed in exact sequential replay because the first implementation recomputed control legs instead of preserving the authoritative canonical opportunity legs; one selected 50-point pair was unavailable.
+- No numerical result from that replay is accepted.
+- Corrected replay now uses the authoritative 477-opportunity ledger: non-overrides execute the exact canonical control trade; overrides use the precomputed opposite-direction legs for the same opportunity; chronology remains stateful.
+- Registered 72-policy universe and holdout-selection rules are unchanged.
+- Status: corrected; rerun required.
