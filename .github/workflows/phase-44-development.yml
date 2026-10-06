@@ -87,7 +87,7 @@ jobs:
           import json, os
           from pathlib import Path
           stage=os.environ["PHASE44_STAGE"]
-          p=Path("results/phase44_vix_tuning") / f"{stage}_summary.json"
+          p=Path("results/phase44_vix_tuning") / ("stage1_summary.json" if stage=="development" else f"{stage}_summary.json")
           s=json.loads(p.read_text())
           Path("PHASE44_STATUS.md").write_text(
               "# Phase 44 Status — VIX Candidate Tuning\n\n"
