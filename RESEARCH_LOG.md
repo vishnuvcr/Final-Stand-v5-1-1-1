@@ -57,3 +57,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The registered fixed-opportunity screen completed successfully: 24 variants evaluated; zero passed the validation safety screen.
 - The top three diagnostic policies produced zero overrides across development, validation and the frozen 2026 fixed panel.
 - Exact sequential identity validation remains the registered closing step.
+
+
+## 2026-10-06 — Phase 41 final closeout
+- Phase 41 completed with 24 pre-registered regime-conditional economic-margin variants.
+- No variant passed the validation safety gate; the top three frozen diagnostics all had zero overrides across the full development/validation/2026 counterfactual panel.
+- Exact sequential replay was completed by the registered identity/no-op audit and matched the canonical control exactly: zero validation and holdout uplift, zero overrides, p=1.0000.
+- **Decision: no promotion. Canonical stateful strategy remains unchanged.**
