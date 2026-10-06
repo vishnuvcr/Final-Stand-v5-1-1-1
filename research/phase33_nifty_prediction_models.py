@@ -216,7 +216,9 @@ def load_or_build_fii_dii():
 def load_or_build_global():
     path = DATA / "global_daily.parquet"
     if path.exists():
-        return pd.read_parquet(path)
+        out = pd.read_parquet(path)
+        out["date"] = normalize_ist_series(out["date"]).dt.normalize()
+        return out
     ensure("yfinance", "yfinance")
     import yfinance as yf
     tickers = {
@@ -287,7 +289,7 @@ def add_option_event_features(events):
                 token=os.getenv("HF_TOKEN") or None,
             )
             q = pd.read_parquet(fn)
-            q["timestamp"] = pd.to_datetime(q["timestamp"])
+            q["timestamp"] = normalize_ist_series(q["timestamp"])
             if q["timestamp"].dt.tz is None:
                 q["timestamp"] = q["timestamp"].dt.tz_localize(TZ)
             else:
