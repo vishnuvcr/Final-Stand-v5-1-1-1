@@ -23,9 +23,9 @@ def as_tz(x):
 
 def lot_size_for_expiry(expiry):
     e=as_tz(expiry)
-    if e < pd.Timestamp("2024-05-02",tz=TZ): return 75
-    if e < pd.Timestamp("2024-12-26",tz=TZ): return 50
-    if e <= pd.Timestamp("2024-12-26",tz=TZ): return 25
+    # NIFTY lot-size transition used for the 2024-2026 sample.
+    if e < pd.Timestamp("2024-05-02",tz=TZ): return 50
+    if e < pd.Timestamp("2024-12-26",tz=TZ): return 25
     if e <= pd.Timestamp("2025-01-23",tz=TZ): return 75
     if e == pd.Timestamp("2025-01-30",tz=TZ): return 25
     if e < pd.Timestamp("2026-01-06",tz=TZ): return 75
