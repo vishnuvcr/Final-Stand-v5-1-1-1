@@ -364,3 +364,15 @@ Phase 39 therefore closes with the **canonical Phase-32 stateful strategy unchan
 
 The complete manuscript is stored at:
 `manuscript/PHASE39_RESEARCH_MANUSCRIPT.md`
+
+
+## Step 6 — online Hedge expert aggregation — COMPLETE / REJECTED
+
+- Experts: canonical control vs economic-margin GAM override policy.
+- Development-selected parameters: margin ₹0, learning rate 1e-5, no discounting.
+- Development uplift: **+₹2,598.30**.
+- 2024–2025 validation uplift: **−₹416.82**.
+- 2024–2025 validation expert-1 (GAM) selection share: **73.84%**.
+- 2026 holdout: untouched.
+
+Decision: **REJECT**. The online aggregation did not improve frozen validation, so no sequential replay or holdout test is justified for this family.
