@@ -1285,3 +1285,6 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: NON-EVIDENCE; numerical stage did not start.
 - Correction: preflight now separately audits generic trade dates with more than one distinct expiry and records those dates in multi_expiry_days.csv.
 - Prevention: data-source feasibility is now tested at both the exact strategy-entry level and the generic multi-expiry-day level.
+
+## F48-AUTO - Phase 48 workflow or audit failure
+- The affected run is non-evidence until diagnosed and corrected.
