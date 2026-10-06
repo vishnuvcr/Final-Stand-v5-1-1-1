@@ -65,3 +65,17 @@ All seven numerical jobs succeeded, but artifact publication created a commit fr
 **Run:** 37429748933 (#18).
 
 All seven numerical selector jobs succeeded and the rebase-safe publication job also succeeded. This is the final workflow validation checkpoint.
+
+
+## 2026-10-06 — Phase 37 registration
+
+### Error F36-006 — Model direction polarity mismatch discovered after Phase-36 acceptance
+**Affected Phase-36 treatments:** CATBOOST, DART, WAVELET_TREE, OOF_STACK, MARKOV_REGIME_TREE.
+
+**Finding:** Phase 35 defines the target as the sign of `log(expiry_close / reference_spot)`, so the cached probabilities represent an up/bullish expiry move probability. Phase 36 mapped `p >= 0.50` to CALL and `p < 0.50` to PUT, which is opposite to the intended Continuous Delta 6x6 economic mapping.
+
+**Correct mapping registered for Phase 37:** bullish/up -> PUT spread; bearish/down -> CALL spread.
+
+**Evidence status:** Phase-36 numerical artifacts are retained for audit, but its model-selector P&L is not valid evidence for the intended polarity hypothesis.
+
+**Prevention:** All future model-to-strategy overlays must explicitly document the prediction target, probability semantics and economic position mapping in the pre-registration before numerical execution.
