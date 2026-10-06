@@ -405,7 +405,48 @@ def run_preflight():
     if len(md)==0:
         raise RuntimeError('F48-007 independent dataset has no trade dates with multiple expiries')
     return result
+def diagnostic_attempts(days, monthly, vix, limit=20):
+    out=[]
+    for e in monthly:
+        if e<=START: continue
+        ne=next((x for x in monthly if x>e),None)
+        if ne is None: continue
+        ed=fourth_before(days,e)
+        if ed is None: continue
+        rec={'expiry':str(e.date()),'next_expiry':str(ne.date()),'entry_day':str(ed.date()),'entry_ts':str(ed+pd.Timedelta(hours=10))}
+        cur=option_snapshot(ed,e); nxt=option_snapshot(ed,ne)
+        rec['cur_rows']=len(cur); rec['next_rows']=len(nxt)
+        rec['cur_expiries']=int(cur.expiry.nunique()) if len(cur) else 0
+        rec['next_expiries']=int(nxt.expiry.nunique()) if len(nxt) else 0
+        if cur.empty or nxt.empty:
+            rec['reason']='NO_ENTRY_SNAPSHOT'; out.append(rec); continue
+        spot=pd.concat([cur,nxt]).spot_price.dropna()
+        rec['spot_rows']=len(spot)
+        if spot.empty:
+            rec['reason']='NO_SPOT'; out.append(rec); continue
+        s=float(spot.median()); rec['spot']=s
+        ac=choose_atm(cur,s); an=choose_atm(nxt,s); rec['atm_cur']=ac; rec['atm_next']=an
+        if ac is None or an is None:
+            rec['reason']='NO_ATM'; out.append(rec); continue
+        b1legs=[('CE',ac,-1),('PE',ac,-1),('CE',an,1),('PE',an,1)]
+        b1ex=latest_exit(e,b1legs); rec['b1_exit']=b1ex is not None
+        pv=prior_vix(vix,ed+pd.Timedelta(hours=10))
+        if pv is None: rec['b2_reason']='NO_VIX'
+        else:
+            sig=float(pv.vix)/100; ce=choose_delta(cur,s,sig,e,ed+pd.Timedelta(hours=10),'CE',.30); pe=choose_delta(cur,s,sig,e,ed+pd.Timedelta(hours=10),'PE',.30); h=choose_parity(nxt,s)
+            rec.update({'b2_ce':ce,'b2_pe':pe,'b2_h':h})
+            if any(x is None for x in [ce,pe,h]): rec['b2_reason']='NO_STRIKE_SELECTION'
+            else: rec['b2_exit']=latest_exit(e,[('CE',ce,-1),('PE',pe,-1),('CE',h,1),('PE',h,1)]) is not None
+        if rec.get('b1_exit') or rec.get('b2_exit') or len(out)<limit:
+            out.append(rec)
+        if len(out)>=limit: break
+    d=pd.DataFrame(out); d.to_csv(OUT/'diagnostic_attempts.csv',index=False); return d
 def main():
+    if os.getenv("PHASE48_DIAGNOSTIC_ONLY")=="1":
+        days=all_trade_days(); exps=expiries_all(); monthly=monthly_expiries(exps); vix=load_vix()
+        d=diagnostic_attempts(days,monthly,vix,limit=24)
+        print(d.to_string(index=False))
+        return
     if os.getenv("PHASE48_PREFLIGHT_ONLY")=="1":
         print(json.dumps(run_preflight(),indent=2,default=str))
         return
