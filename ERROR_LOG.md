@@ -917,3 +917,15 @@ The validation grid contained many parameterizations (different aggregators/subs
 **Correction:** Phase 40 now hashes the validation expiry-level direction sequence and selects the top 10 **unique policies** for holdout evaluation. All 1,764 raw combinations remain reported.
 
 **Prevention:** Future ensemble phases will distinguish specification count from unique decision-policy count.
+
+
+### Error F40-010 — Paired-inference control index timezone handling
+**Run:** 37456994909.
+
+The ensemble grid and unique top-10 selection completed, but inference failed when attempting to localize an already timezone-aware frozen-control expiry index.
+
+**Evidence status:** non-evidence inference failure; no statistical conclusion was written.
+
+**Correction:** The inference engine now checks whether the control index is timezone-naive before localizing; aware timestamps are converted to the canonical timezone.
+
+**Prevention:** All inference joins now use the same explicit timezone-normalization helper.
