@@ -1,0 +1,9 @@
+{
+  "status": "COMPLETE",
+  "holdout_evaluated": false,
+  "methods": [
+    "DTW",
+    "SVR",
+    "BOCPD_GAM"
+  ]
+}
