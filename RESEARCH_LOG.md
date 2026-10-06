@@ -234,3 +234,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Reused the accepted Phase-39 477-opportunity fixed counterfactual ledger and point-in-time feature matrix; the 2026 holdout remains frozen for selection.
 - Added literature review, research plan, pre-registration, status, manuscript scaffold and automated/manual GitHub Actions design.
 - Next numerical step: chronological fixed-opportunity screen, followed by frozen top-three sequential replay and final promotion gate.
+
+
+## 2026-10-06 — Phase 41 closeout
+- Completed the preregistered 24-variant regime-conditional economic-margin screen, top-three freeze, exact sequential replay, paired-expiry inference, cost stress, propensity-overlap and ranking diagnostics.
+- Promotion decision is recorded in results/phase41_regime_policy/final_decision.json; no change is made to the canonical strategy unless every registered gate passes.

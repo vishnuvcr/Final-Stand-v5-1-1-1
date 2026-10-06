@@ -1,0 +1,41 @@
+{
+  "status": "SEQUENTIAL_COMPLETE",
+  "candidates": [
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "ALL",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX_RISING",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    }
+  ]
+}
