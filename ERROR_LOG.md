@@ -463,3 +463,17 @@ Evidence status: Non-evidence runtime failure. No sequential policy result was p
 Correction: Step 4 now enumerates the available NIFTY option files, processes only available expected expiries, and separately retains the complete expected calendar for contract-window anchoring. A missing option file therefore cannot enlarge a later contract's data window.
 
 Prevention: Sequential replay follows the same available-file/previous-expected-expiry boundary convention already audited in Phase 32.
+
+
+### Error F39-025 — Sequential replay omitted unavailable optional feature columns instead of materializing NaN
+Run: 37442175504.
+
+Symptom: GAM prediction failed because `next_atm_straddle`, `next_atm_iv_skew`, and `iv_term_premium_ratio` were absent from a test-row DataFrame when the next-expiry contract was unavailable.
+
+Cause: The point-in-time feature schema defines those columns as valid optional predictors, but the sequential row builder omitted the columns entirely when no next-expiry source existed.
+
+Evidence status: non-evidence; no policy result accepted.
+
+Correction: Sequential GAM fitting now reindexes both training and test matrices to the locked feature list before imputation, materializing unavailable predictors as NaN for the model's fitted imputer.
+
+Prevention: All sequential replay model inputs will be reindexed to the locked feature manifest before numerical transforms.
