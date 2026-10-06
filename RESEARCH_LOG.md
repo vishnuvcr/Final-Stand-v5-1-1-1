@@ -107,3 +107,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 — Phase 44 active corrected run
 - Current numerical run: **37488148310** after F44-005 bounded-memory correction.
 - No Phase-44 numerical result has been accepted yet; holdout protection remains active until validation/inference freeze.
+
+
+## 2026-10-06 — Phase 44 active run update
+- Current corrected Stage-1 execution is run **37491292566**.
+- No Phase-44 result is accepted yet; 2026 holdout protection remains in force.
