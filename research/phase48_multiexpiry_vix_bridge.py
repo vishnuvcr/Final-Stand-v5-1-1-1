@@ -236,7 +236,7 @@ def latest_exit(expiry,legs):
     for typ,strike,_ in legs:
         q=z[(z.option_type==typ)&np.isclose(z.strike,float(strike))]
         if q.empty:return None
-        by[(typ,float(strike))]=q.set_index('timestamp').close
+        by[(typ,float(strike))]=q.groupby('timestamp',sort=True).close.last()
     common=None
     for s in by.values(): common=s.index if common is None else common.intersection(s.index)
     if common is None or len(common)==0:return None
