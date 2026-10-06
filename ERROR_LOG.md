@@ -37,3 +37,11 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The first corrected implementation used repeated Python path loops and was too slow for efficient CI execution. It was cancelled before evidence acceptance and replaced with vectorized first-hit confirmation logic. The replacement run completed successfully.
 - The raw Phase-29 summary used the no-stop dynamic-n ledger as an internal diagnostic control. Before any promotion decision, the candidate was explicitly recomputed against the canonical Phase-20 P&L. No misleading raw full-sample uplift was used to promote the rule.
 - Cancelled-run outputs were not accepted as evidence.
+
+
+## 2026-10-06 — Phase 34 alternative prediction models
+- Phase-34 numerical run #1 (37422843285) completed model computation but failed only at persistence because a newer code-touch run advanced the same branch. Its artifact was retained but not accepted as final evidence.
+- Phase-34 numerical run #2 (37422865721) recomputed the frozen model set and successfully persisted the accepted evidence.
+- Postprocess runs #1–#6 failed before producing accepted reporting output. The final diagnosis was a naming mismatch between `rf_phase33_control` in the model-metrics table and `rf_phase33` in the economic diagnostic. The mapping was corrected.
+- Postprocess run #7 (37423631294) completed successfully. Earlier postprocess outputs are non-evidence.
+- No numerical conclusion or promotion decision uses a failed or superseded run.
