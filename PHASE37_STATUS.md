@@ -1,7 +1,7 @@
 # Phase 37 Status — Corrected Model Direction Polarity
 
 ## Current state
-**INITIALIZED — NUMERICAL EXECUTION PENDING**
+**COMPLETE — CORRECTION VALIDATED — NO LIVE-TRADING PROMOTION**
 
 A post-acceptance audit of Phase 36 found that the five model selectors were mapped in the opposite direction to the strategy's intended bullish/bearish economic meaning.
 
@@ -46,3 +46,12 @@ The corrected engine and manual-dispatch workflow are committed. A repository-pa
 - PR #11 is open for repository-level execution/audit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/11
 - The numerical workflow is configured for automatic push execution and manual dispatch; an audited PR-trigger path has also been registered.
 - Numerical evidence has not yet been accepted; no model is promoted.
+
+
+## Final numerical results — 2026-10-06
+
+All five corrected selectors are post-cost profitable and positive on the 2026 holdout. CatBoost: ₹57,874.80 net / ₹49,054.33 holdout; Markov-regime tree: ₹53,060.31 / ₹41,969.35; Wavelet-tree: ₹31,294.89 / ₹50,776.68; OOF stack: ₹24,765.71 / ₹48,345.59; DART: ₹19,372.11 / ₹39,053.96.
+
+The common-expiry bootstrap against the stateful control has not yet been regenerated, so no superiority claim or live promotion is made.
+
+Final manuscript: PHASE37_MANUSCRIPT.md
