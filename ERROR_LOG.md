@@ -783,3 +783,13 @@ Symptom: NameError for variable s after switching treatment labels to the audite
 Evidence status: Non-evidence summary-stage failure; matching calculations had already executed.
 
 Correction: Final summary now reports the audited override count and mapped fixed-opportunity count directly.
+
+
+### Error F39-048 — Propensity result rows lacked period field
+Run: 37452652520 (propensity run #6).
+
+Symptom: Final summary lookup raised KeyError for period after matching had completed.
+
+Evidence status: Non-evidence reporting failure.
+
+Correction: Each propensity result row now stores its period explicitly.
