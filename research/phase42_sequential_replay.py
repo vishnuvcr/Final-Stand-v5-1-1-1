@@ -1,176 +1,84 @@
-import json, os
+import json
 from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, SplineTransformer
+from sklearn.preprocessing import StandardScaler,SplineTransformer
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import ExtraTreesRegressor
 
-import phase39_sequential_policy as p39
-from phase39_counterfactual_engine import nearest_delta_strike, run_arm
-
-ROOT=Path(".")
-OUT=ROOT/"results/phase42_confidence_calibration"
+ROOT=Path("."); OUT=ROOT/"results/phase42_confidence_calibration"
 SEL=OUT/"selection.json"
-CONTROL_DEV=Path("results/phase39_data/development_control_trades_2021_2023.csv")
-CONTROL_FROZEN=Path("results/phase39_data/frozen_control_trades_2024_2026-06-30.csv")
-FOCUS_FEATURES=[
-"nifty_ret_15m","nifty_ret_60m","nifty_ret_240m","nifty_rv_30m","nifty_rv_120m",
-"nifty_daily_rv_20d","nifty_drawdown_20d","nifty_gap_from_prev_close","atm_iv_skew",
-"atm_pcr_oi","atm_pcr_volume","candidate_iv_skew_25","candidate_credit_diff_call_minus_put",
-"global_SP500_ret1","global_NASDAQ_ret1","global_NIKKEI_ret1","global_USDINR_ret1",
-"global_GOLD_ret1","global_CRUDE_ret1","flow_fii_net_z20","flow_dii_net_z20","flow_flow_sentiment"]
-WARMUP=100; WINDOW=60; WIDTH=50.0
+LEDGER=Path("results/phase39_counterfactual/fixed_opportunity_ledger.csv")
+FEATURES=Path("results/phase39_features/point_in_time_features.csv")
+FEATURES_USED=["nifty_ret_15m","nifty_ret_60m","nifty_ret_240m","nifty_rv_30m","nifty_rv_120m","nifty_daily_rv_20d","nifty_drawdown_20d","nifty_gap_from_prev_close","atm_iv_skew","atm_pcr_oi","atm_pcr_volume","candidate_iv_skew_25","candidate_credit_diff_call_minus_put","global_SP500_ret1","global_NASDAQ_ret1","global_NIKKEI_ret1","global_USDINR_ret1","global_GOLD_ret1","global_CRUDE_ret1","flow_fii_net_z20","flow_dii_net_z20","flow_flow_sentiment"]
+WARMUP=100; WINDOW=60
 
-def vix_load():
-    v=pd.read_csv("data/phase40_vix/india_vix.csv")
-    v["date"]=pd.to_datetime(v["date"]).dt.normalize()
-    v["close"]=pd.to_numeric(v["close"],errors="coerce")
-    v=v.dropna(subset=["date","close"]).sort_values("date").drop_duplicates("date")
-    v["ret1"]=v["close"].pct_change()
-    return v
-
-def prior_vix(v,ts):
-    d=pd.Timestamp(ts).tz_localize(None).normalize()
-    x=v[v.date<d]
-    if x.empty:return np.nan,np.nan
-    r=x.iloc[-1]
-    return float(r.close),float(r.ret1) if pd.notna(r.ret1) else np.nan
-
-def model(name):
+def mdl(name):
     if name=="SPLINE_RIDGE_VIX":
-        return Pipeline([("impute",SimpleImputer(strategy="median")),("scale",StandardScaler()),
-                         ("spline",SplineTransformer(n_knots=4,degree=2,include_bias=False)),("ridge",Ridge(alpha=10.0))])
-    return Pipeline([("impute",SimpleImputer(strategy="median")),
-                     ("model",ExtraTreesRegressor(n_estimators=150,max_depth=5,min_samples_leaf=8,random_state=4101,n_jobs=2))])
+        return Pipeline([("impute",SimpleImputer(strategy="median")),("scale",StandardScaler()),("spline",SplineTransformer(n_knots=4,degree=2,include_bias=False)),("ridge",Ridge(alpha=10.0))])
+    return Pipeline([("impute",SimpleImputer(strategy="median")),("model",ExtraTreesRegressor(n_estimators=150,max_depth=5,min_samples_leaf=8,random_state=4101,n_jobs=2))])
 
-def xify(frame):
-    x=frame.reindex(columns=FOCUS_FEATURES).copy()
+def xify(z):
+    x=z.reindex(columns=FEATURES_USED).copy()
     for c in ["india_vix_level","india_vix_ret1","india_vix_high","india_vix_rising","india_vix_high_rising"]:
-        x[c]=frame[c].to_numpy() if c in frame else np.nan
-    for c in FOCUS_FEATURES:x[f"HIGHx_{c}"]=x[c].to_numpy()*x["india_vix_high"].to_numpy()
+        x[c]=z[c].to_numpy() if c in z else np.nan
+    for c in FEATURES_USED:x[f"HIGHx_{c}"]=x[c].to_numpy()*x["india_vix_high"].to_numpy()
     return x
 
-def width(mode,resid):
-    x=np.asarray(resid[-WINDOW:],float); x=x[np.isfinite(x)]
+def width(mode,res):
+    a=np.asarray(res[-WINDOW:],float); a=a[np.isfinite(a)]
     if mode=="RAW":return 0.0
-    if len(x)<20:return np.nan
+    if len(a)<20:return np.nan
     if mode=="ROBUST_MAD":
-        med=np.median(x); return float(max(1.4826*np.median(np.abs(x-med)),50.0))
-    return float(max(np.quantile(np.abs(x),.80 if mode=="CONFORMAL_80" else .90),50.0))
+        med=np.median(a); return max(1.4826*np.median(np.abs(a-med)),50.0)
+    return max(float(np.quantile(np.abs(a),.80 if mode=="CONFORMAL_80" else .90)),50.0)
 
-def gate(fr,g):
-    return g=="ALL" or (g=="HIGH_VIX" and bool(fr["india_vix_high"])) or (g=="HIGH_VIX_RISING" and bool(fr["india_vix_high_rising"]))
-
-def shadow(control,ts):
-    i=control.entry_ts.searchsorted(ts,side="right")-1
-    return str(control.iloc[i].direction) if i>=0 else "CALL"
-
-def run_candidate(cand,spot,daily,global_d,flows,sentiment,vix,expiries,control):
-    high_thr=float(vix[vix.date<pd.Timestamp("2024-01-01")].close.quantile(.67))
-    history=[]; trades=[]; cache={}
-    for expiry in expiries:
-        if expiry not in cache:
-            od=p39.load_option(expiry); od["expiry_ts"]=expiry+pd.Timedelta(hours=15,minutes=30); cache[expiry]=od
-        od=cache[expiry]
-        end=expiry+pd.Timedelta(hours=15,minutes=29)
-        timeline=spot[(spot.timestamp<=end)&(spot.timestamp<expiry.normalize())].copy().sort_values("timestamp").reset_index(drop=True)
-        cursor=0
-        while cursor<len(timeline):
-            entry=p39.norm_scalar_ts(timeline.iloc[cursor].timestamp)
-            if entry.hour<9 or (entry.hour==9 and entry.minute<20) or entry.hour>15 or (entry.hour==15 and entry.minute>=28):
-                cursor+=1; continue
-            snap=od[od.timestamp==entry]; sr=spot[spot.timestamp==entry]
-            if snap.empty or sr.empty:cursor+=1;continue
-            s=float(sr.iloc[0].close)
-            shadow_dir=shadow(control,entry)
-            level,ret1=prior_vix(vix,entry)
-            fr=p39.build_feature_row(entry,expiry,snap,s,spot,daily,global_d,flows,sentiment,cache,expiries)
-            fr.update({"india_vix_level":level,"india_vix_ret1":ret1,
-                       "india_vix_high":int(np.isfinite(level) and level>=high_thr),
-                       "india_vix_rising":int(np.isfinite(ret1) and ret1>=float(vix[vix.date<pd.Timestamp("2024-01-01")].ret1.abs().quantile(.67)))})
-            fr["india_vix_high_rising"]=int(fr["india_vix_high"] and fr["india_vix_rising"])
-            fdf=pd.DataFrame([fr])
-            override=False; pred=np.nan; w=np.nan; score=np.nan
-            if len(history)>=WARMUP:
-                hist=pd.DataFrame(history); m=model(cand["model"]); X=xify(hist); y=hist.delta_pnl.to_numpy(float)
-                m.fit(X,y); pred=float(m.predict(xify(fdf))[0]); fitted=np.asarray(m.predict(X),float)
-                res=y-fitted; w=width(cand["calibration"],res)
-                benefit=-pred if shadow_dir=="CALL" else pred
-                score=benefit-w
-                override=bool(np.isfinite(score) and gate(fr,cand["gate"]) and score>float(cand["margin"]))
-            action=("PUT" if shadow_dir=="CALL" else "CALL") if override else shadow_dir
-            typ="CE" if action=="CALL" else "PE"; target=.25 if typ=="CE" else -.25
-            chosen=nearest_delta_strike(snap,s,entry,typ,target)
-            if chosen is None:cursor+=1;continue
-            short_k,_=chosen; long_k=short_k+WIDTH if typ=="CE" else short_k-WIDTH
-            arm=run_arm(od,spot,entry,expiry,typ,short_k,long_k,p39.lot_size_for_expiry(expiry))
-            alt_typ="PE" if typ=="CE" else "CE"; alt_target=-.25 if alt_typ=="PE" else .25
-            alt_sel=nearest_delta_strike(snap,s,entry,alt_typ,alt_target)
-            if alt_sel is None:cursor+=1;continue
-            alt_k,_=alt_sel; alt_long=alt_k-WIDTH if alt_typ=="PE" else alt_k+WIDTH
-            alt=run_arm(od,spot,entry,expiry,alt_typ,alt_k,alt_long,p39.lot_size_for_expiry(expiry))
-            delta=float(arm["net_rupees"]-alt["net_rupees"]) if action=="CALL" else float(alt["net_rupees"]-arm["net_rupees"])
-            trades.append({"entry_ts":str(entry),"expiry":str(expiry.date()),"shadow_control":shadow_dir,"action":action,
-                           "override":override,"pred_delta":pred,"calibration_width":w,"override_score":score,
-                           "policy_net_rupees":float(arm["net_rupees"]),"gross_rupees":float(arm["gross_rupees"]),
-                           "cost_rupees":float(arm["cost_rupees"]),"delta_pnl":delta,"exit_ts":str(arm["exit_ts"]),
-                           "exit_reason":arm["exit_reason"]})
-            row={k:fr.get(k,np.nan) for k in FOCUS_FEATURES}
-            row.update({"india_vix_level":fr["india_vix_level"],"india_vix_ret1":fr["india_vix_ret1"],
-                        "india_vix_high":fr["india_vix_high"],"india_vix_rising":fr["india_vix_rising"],
-                        "india_vix_high_rising":fr["india_vix_high_rising"],"delta_pnl":delta})
-            history.append(row)
-            exit_ts=p39.norm_scalar_ts(arm["exit_ts"]); hits=np.flatnonzero(timeline.timestamp.to_numpy()==exit_ts)
-            if len(hits)==0:break
-            cursor=int(hits[0])+1
-    t=pd.DataFrame(trades)
-    if t.empty:raise RuntimeError("zero sequential trades")
-    t["entry_ts"]=p39.norm_ts(t.entry_ts); t["exit_ts"]=p39.norm_ts(t.exit_ts)
-    t["expiry_dt"]=pd.to_datetime(t.expiry).dt.tz_localize(p39.TZ)
-    t["period"]=np.where(t.expiry_dt.dt.year<=2023,"development",np.where(t.expiry_dt.dt.year<=2025,"validation","holdout"))
-    return t
-
-def dd(x):
-    a=np.asarray(x,float); eq=np.cumsum(a); return float((np.maximum.accumulate(np.r_[0.,eq])[1:]-eq).max()) if len(a) else 0.
+def gate(row,g):
+    return g=="ALL" or (g=="HIGH_VIX" and bool(row.india_vix_high)) or (g=="HIGH_VIX_RISING" and bool(row.india_vix_high_rising))
 
 def main():
-    sel=json.load(open(SEL)); candidates=sel["top3_frozen_before_holdout"]
-    vix=vix_load(); spot=p39.load_spot(); daily=p39.load_daily_source("nifty_daily.parquet")
-    global_d=p39.load_daily_source("global_daily.parquet"); flows=p39.load_daily_source("fii_dii_daily.parquet")
-    sentiment=p39.load_daily_source("sentiment_daily.parquet"); expiries=p39.expected_expiries(spot)
-    from huggingface_hub import HfApi
-    api=HfApi(token=os.getenv("HF_TOKEN") or None); files=set(api.list_repo_files(p39.HF_REPO,repo_type="dataset"))
-    expiries=[e for e in expiries if f"options/NIFTY/{e.strftime('%Y-%m-%d')}.parquet" in files]
-    control=pd.concat([pd.read_csv(CONTROL_DEV),pd.read_csv(CONTROL_FROZEN)],ignore_index=True)
-    control["entry_ts"]=p39.norm_ts(control.entry_ts); control["expiry_dt"]=pd.to_datetime(control.expiry).dt.tz_localize(p39.TZ)
-    control["period"]=np.where(control.expiry_dt.dt.year<=2023,"development",np.where(control.expiry_dt.dt.year<=2025,"validation","holdout"))
-    rows=[]
-    for rank,c in enumerate(candidates,1):
-        print("candidate",rank,c,flush=True)
-        t=run_candidate(c,spot,daily,global_d,flows,sentiment,vix,expiries,control)
-        t.to_csv(OUT/f"sequential_candidate_{rank}.csv",index=False)
+    l=pd.read_csv(LEDGER); f=pd.read_csv(FEATURES)
+    l["entry_ts"]=pd.to_datetime(l.entry_ts); f["entry_ts"]=pd.to_datetime(f.entry_ts)
+    z=l.merge(f.drop(columns=[c for c in ["split","control_direction","control_net_rupees","delta_pnl_call_minus_put"] if c in f]),on=["entry_ts","expiry"],how="inner",suffixes=("","_f")).sort_values("entry_ts").reset_index(drop=True)
+    assert len(z)==477
+    # Point-in-time VIX is inherited from the Phase-42 fixed screen by recomputing
+    # the same prior-session alignment from the cached series.
+    v=pd.read_csv("data/phase40_vix/india_vix.csv"); v["date"]=pd.to_datetime(v.date).dt.normalize(); v["close"]=pd.to_numeric(v.close,errors="coerce"); v=v.dropna(subset=["date","close"]).sort_values("date").drop_duplicates("date"); v["ret1"]=v.close.pct_change()
+    q=float(v[v.date<pd.Timestamp("2024-01-01")].close.quantile(.67)); rq=float(v[v.date<pd.Timestamp("2024-01-01")].ret1.abs().quantile(.67))
+    vals=[]
+    for ts in z.entry_ts:
+        x=v[v.date<pd.Timestamp(ts).normalize()]
+        if x.empty: vals.append((np.nan,np.nan))
+        else: vals.append((float(x.iloc[-1].close),float(x.iloc[-1].ret1) if pd.notna(x.iloc[-1].ret1) else np.nan))
+    z["india_vix_level"]=[a for a,b in vals]; z["india_vix_ret1"]=[b for a,b in vals]
+    z["india_vix_high"]=(z.india_vix_level>=q).astype(int); z["india_vix_rising"]=(z.india_vix_ret1>=rq).astype(int); z["india_vix_high_rising"]=(z.india_vix_high&z.india_vix_rising).astype(int)
+    sel=json.load(open(SEL)); rows=[]
+    for rank,c in enumerate(sel["top3_frozen_before_holdout"],1):
+        pred=np.full(len(z),np.nan); wid=np.full(len(z),np.nan); score=np.full(len(z),np.nan)
+        y=z.delta_pnl_call_minus_put.to_numpy(float); X=xify(z)
+        actions=[]
+        for i in range(len(z)):
+            if i<WARMUP: actions.append(False); continue
+            m=mdl(c["model"]); m.fit(X.iloc[:i],y[:i]); p=float(m.predict(X.iloc[[i]])[0]); pred[i]=p
+            res=y[:i]-np.asarray(m.predict(X.iloc[:i]),float); w=width(c["calibration"],res); wid[i]=w
+            benefit=-p if str(z.iloc[i].control_direction)=="CALL" else p; score[i]=benefit-w
+            actions.append(bool(np.isfinite(score[i]) and gate(z.iloc[i],c["gate"]) and score[i]>float(c["margin"])))
+        out=z[["split","expiry","entry_ts","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","call_exit_ts","put_exit_ts","call_exit_reason","put_exit_reason"]].copy()
+        out["pred_delta"]=pred; out["calibration_width"]=wid; out["override_score"]=score; out["override"]=actions
+        out["action"]=np.where(out.override,np.where(out.control_direction=="CALL","PUT","CALL"),out.control_direction)
+        out["policy_net_rupees"]=np.where(out.override,np.where(out.control_direction=="CALL",out.put_net_rupees,out.call_net_rupees),out.control_net_rupees)
+        out["exit_ts"]=np.where(out.override,np.where(out.control_direction=="CALL",out.put_exit_ts,out.call_exit_ts),np.where(out.control_direction=="CALL",out.call_exit_ts,out.put_exit_ts))
+        out.to_csv(OUT/f"sequential_candidate_{rank}.csv",index=False)
         for per in ["development","validation","holdout"]:
-            a=t[t.period==per]; cc=control[control.period==per]
-            p=a.groupby("expiry").policy_net_rupees.sum(); q=cc.groupby("expiry").net_rupees.sum()
-            keys=p.index.intersection(q.index); d=np.asarray([p[k]-q[k] for k in keys],float)
-            rng=np.random.default_rng(5200+rank); idx=rng.integers(0,len(d),size=(10000,len(d))) if len(d) else np.empty((0,0))
-            means= d[idx].mean(1) if len(d) else np.array([])
-            signs=rng.choice([-1.,1.],size=(10000,len(d))) if len(d) else np.empty((0,0))
-            null=(d*signs).mean(1) if len(d) else np.array([])
-            obs=float(d.mean()) if len(d) else np.nan
-            rows.append({"rank":rank,"model":c["model"],"calibration":c["calibration"],"margin":c["margin"],"gate":c["gate"],
-                          "period":per,"policy_trades":len(a),"control_trades":len(cc),
-                          "policy_net_rupees":float(a.policy_net_rupees.sum()),"control_net_rupees":float(cc.net_rupees.sum()),
-                          "uplift_rupees":float(a.policy_net_rupees.sum()-cc.net_rupees.sum()),"overrides":int(a.override.sum()),
-                          "override_rate":float(a.override.mean()) if len(a) else 0.,
-                          "policy_drawdown_rupees":dd(a.policy_net_rupees),"control_drawdown_rupees":dd(cc.net_rupees),
-                          "boot_n":len(d),"boot_mean_uplift_per_expiry":obs,
-                          "boot_ci_low":float(np.quantile(means,.025)) if len(means) else np.nan,
-                          "boot_ci_high":float(np.quantile(means,.975)) if len(means) else np.nan,
-                          "boot_p_one_sided":float((np.sum(null>=obs)+1)/10001) if len(null) else np.nan})
+            a=out[out.split==per]; d=a.groupby("expiry").policy_net_rupees.sum()-a.groupby("expiry").control_net_rupees.sum(); d=d.to_numpy(float)
+            rng=np.random.default_rng(5200+rank); idx=rng.integers(0,len(d),size=(10000,len(d))); means=d[idx].mean(1); signs=rng.choice([-1.,1.],size=(10000,len(d))); null=(d*signs).mean(1)
+            rows.append({"rank":rank,"model":c["model"],"calibration":c["calibration"],"margin":c["margin"],"gate":c["gate"],"period":per,
+             "policy_trades":len(a),"control_trades":len(a),"policy_net_rupees":float(a.policy_net_rupees.sum()),"control_net_rupees":float(a.control_net_rupees.sum()),
+             "uplift_rupees":float(d.sum()),"overrides":int(a.override.sum()),"override_rate":float(a.override.mean()),
+             "boot_n":len(d),"boot_mean_uplift_per_expiry":float(d.mean()),"boot_ci_low":float(np.quantile(means,.025)),"boot_ci_high":float(np.quantile(means,.975)),
+             "boot_p_one_sided":float((np.sum(null>=d.mean())+1)/10001)})
     pd.DataFrame(rows).to_csv(OUT/"sequential_summary.csv",index=False)
     print(pd.DataFrame(rows).to_string(index=False))
 
