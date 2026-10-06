@@ -1,0 +1,26 @@
+expiry,reason,detail
+2025-04-07,missing_expiry_file,expected weekly expiry absent from dataset
+2025-04-21,missing_expiry_file,expected weekly expiry absent from dataset
+2025-04-28,missing_expiry_file,expected weekly expiry absent from dataset
+2025-05-05,missing_expiry_file,expected weekly expiry absent from dataset
+2025-05-12,missing_expiry_file,expected weekly expiry absent from dataset
+2025-05-19,missing_expiry_file,expected weekly expiry absent from dataset
+2025-05-26,missing_expiry_file,expected weekly expiry absent from dataset
+2025-06-02,missing_expiry_file,expected weekly expiry absent from dataset
+2025-06-09,missing_expiry_file,expected weekly expiry absent from dataset
+2025-06-16,missing_expiry_file,expected weekly expiry absent from dataset
+2025-06-23,missing_expiry_file,expected weekly expiry absent from dataset
+2025-06-30,missing_expiry_file,expected weekly expiry absent from dataset
+2025-07-07,missing_expiry_file,expected weekly expiry absent from dataset
+2025-07-14,missing_expiry_file,expected weekly expiry absent from dataset
+2025-07-21,missing_expiry_file,expected weekly expiry absent from dataset
+2025-07-28,missing_expiry_file,expected weekly expiry absent from dataset
+2025-08-04,missing_expiry_file,expected weekly expiry absent from dataset
+2025-08-11,missing_expiry_file,expected weekly expiry absent from dataset
+2025-08-18,missing_expiry_file,expected weekly expiry absent from dataset
+2025-08-25,missing_expiry_file,expected weekly expiry absent from dataset
+2025-10-21,missing_expiry_file,expected weekly expiry absent from dataset
+2026-06-16,missing_expiry_file,expected weekly expiry absent from dataset
+2026-06-23,missing_expiry_file,expected weekly expiry absent from dataset
+2026-06-30,missing_expiry_file,expected weekly expiry absent from dataset
+2026-06-09,incomplete_expiry_data,last_option_timestamp=2026-06-03 15:30:00+05:30

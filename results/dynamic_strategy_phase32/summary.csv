@@ -1,0 +1,2 @@
+trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,slippage_ticks,lots_per_leg,width
+205,65945.47096521224,86139.00000000023,20193.529034788,0.6585365853658537,1.2107160471509666,61960.87306615288,106,99,204,1,1.0,6,50.0
