@@ -41,3 +41,7 @@ Compare each corrected selector with the Phase-32 stateful control using:
 
 ## Evidence rule
 Only a successful GitHub Actions run with complete persisted artifacts is accepted.
+
+
+## Execution trigger record — 2026-10-06
+The preregistration is now frozen and the push-triggered GitHub Actions workflow is registered for numerical execution. No further parameter changes are permitted after this record except corrections of execution defects that are independently logged.
