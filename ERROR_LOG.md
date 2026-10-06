@@ -55,3 +55,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Postprocess run #3 was superseded during correction; final postprocess run #4 (37422362350) completed successfully. No failed postprocess output was accepted as evidence.
 
 - Postprocess run #2 failed because `np.where(...)` already returned an ndarray and the script called `.to_numpy()`. Corrected before the successful postprocess run #3 (37422362350).
+
+## 2026-10-06 — Phase 34 persistence race
+- GitHub Actions run #1 (37422843285) completed the Phase-34 numerical computation successfully and produced artifact 11393642768.
+- The numerical job failed only at the repository persistence step because run #2 was queued from the latest code-touch commit and advanced the branch concurrently. No numerical result from run #1 was used as final evidence.
+- Run #2 (37422865721) recomputed the same registered model set and successfully persisted the final evidence set to the branch. Run #2 is the accepted Phase-34 numerical evidence.
