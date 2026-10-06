@@ -68,8 +68,7 @@ def sf(x,n=12000):
     return float((1+(z>=obs).sum())/(n+1))
 def main():
     ev,d=load(); z=prep_states(ev,d)
-    if not {"ms_p0","ms_p1","ms_entropy"}.issubset(ev.columns):
-        ev=ev.merge(z,on="ref_ts",how="left")
+    ev=ev.drop(columns=["ms_p0","ms_p1","ms_entropy"],errors="ignore").merge(z[["ref_ts","ms_p0","ms_p1","ms_entropy"]],on="ref_ts",how="left")
     base=cols(ev); ms=base+["ms_p0","ms_p1","ms_entropy"]
     tr=ev[ev.split=="train"].copy(); va=ev[ev.split=="validation"].copy(); ho=ev[ev.split=="holdout"].copy()
     rows=[]; econ=[]
