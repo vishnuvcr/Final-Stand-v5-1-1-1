@@ -1046,3 +1046,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - Initial attempt to persist the Phase-43 post-run manuscript finalizer failed before repository write because a JavaScript template string contained Markdown backtick delimiters from the Python manuscript template.
 - No numerical workflow or research artifact was affected.
 - Correction: remove embedded Markdown backticks from the generator payload and persist the finalizer separately.
+
+
+## F43-004 — 2026-10-06 — Invalid regime inference implementation
+- The first Phase-43 inference table compared a VIX-regime subset against the same rows from the ALL sample, making every paired difference identically zero.
+- **Classification:** statistical implementation defect; the raw strategy trade matrix and gross/net P&L calculations are retained as valid raw evidence, but the first inference table is invalid and must not support conclusions.
+- **Correction:** a new postprocessor compares each VIX regime against the complementary non-regime expiry observations within the same strategy and recomputes 10,000-resample confidence intervals, permutation p-values and Holm-adjusted values.
+- The corrected postprocess also reapplies the preregistered validation/cost/drawdown gates before any router or holdout promotion.
