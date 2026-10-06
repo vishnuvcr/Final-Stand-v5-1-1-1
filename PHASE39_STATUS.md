@@ -316,3 +316,51 @@ The audited engine itself completed on run 37437767581 with the corrected 271/17
 - Maximum control reconstruction error: <2e-12 rupees across the accepted panel.
 
 The run is not yet accepted as Step-1 CI evidence because the workflow verification used exact float equality for one aggregate-sum assertion. The calculation itself passed its substantive checks. A verification-only workflow correction is being applied; no research parameter or dataset rule is changing.
+
+
+## Phase 39 — FINAL CLOSEOUT / NO PROMOTION
+
+Phase 39 completed its registered advanced-direction research program on the phase-39-advanced-direction-models branch.
+
+### Final accepted evidence
+
+- Fixed opportunity panel: **477** opportunities, with **271 development / 172 validation / 34 untouched holdout**.
+- Point-in-time feature layer: **leakage audit passed**; development OOF feature selection was corrected to be strictly chronological.
+- Best fixed-opportunity model: **Sparse-GAM economic-margin learner**, 103 locked features, ₹500 safety margin, uncertainty multiplier 1.0.
+- Sequential policy replay: **479 trades, 7 overrides**.
+- Validation incremental P&L: **+₹17,983.53** versus the frozen stateful control.
+- 2026 holdout incremental P&L: **+₹7,390.39**.
+- Validation drawdown: **₹32,021.65**, equal to control.
+- 2026 holdout drawdown: **₹29,936.24** versus control **₹37,326.63**.
+- +50% cost-stress uplift: **+₹17,799.05 validation / +₹7,546.34 holdout**.
+- +100% cost-stress uplift: **+₹17,614.56 validation / +₹7,702.28 holdout**.
+- Development incremental P&L: **−₹18,175.07**.
+
+### Final decision
+
+**DO NOT PROMOTE Sparse-GAM/CROL as the new canonical direction rule.**
+
+Reason:
+1. The development-period incremental result is materially negative.
+2. Only seven overrides generate the entire positive OOS increment, making the effect fragile.
+3. The paired-expiry validation interval crosses zero.
+4. Step 5 produced no new independent winner.
+5. Step 6 symbolic regression was negative; expert aggregation did not beat control.
+6. The registered promotion gate requires a durable control-relative improvement, not merely positive validation/holdout increments.
+
+### Research candidate retained for future forward/paper validation
+
+The strongest new idea from Phase 39 is retained as a **research candidate**:
+
+> Keep the canonical stateful direction by default. Override only when the Sparse-GAM economic-margin model predicts that switching to the alternative spread has sufficiently large expected post-cost advantage after a 1.0× uncertainty penalty, exceeding a ₹500 safety margin.
+
+This candidate must **not** replace the canonical strategy in the repository's final trading specification without a new phase and fresh forward/paper evidence.
+
+### Phase 39 scientific conclusion
+
+The main result is methodological: **learning the economic counterfactual margin is more promising than another generic direction classifier**, but the present evidence is insufficient to establish a stable production edge. The positive 2024–2026 contribution is concentrated in a small number of overrides and is not supported by the development period.
+
+Phase 39 therefore closes with the **canonical Phase-32 stateful strategy unchanged**.
+
+The complete manuscript is stored at:
+`manuscript/PHASE39_RESEARCH_MANUSCRIPT.md`
