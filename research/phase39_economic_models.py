@@ -154,8 +154,8 @@ def expiry_bootstrap(uplift,expiries,seed=SEED,n=5000):
 
 def tune_threshold(oof):
     best=None
-    for margin in [0.0,100.0,250.0,500.0,750.0,1000.0]:
-        for z in [0.0,0.5,1.0,1.28,1.64]:
+    for margin in [0.0,250.0,500.0]:
+        for z in [1.0]:
             a=action_from_margin(oof.control_direction.to_numpy(),oof.mu.to_numpy(),oof.sd.to_numpy(),margin,z)
             net=action_net(a,oof)
             uplift=net-oof.control_net_rupees.to_numpy(float)
@@ -168,7 +168,7 @@ def tune_threshold(oof):
                 best=(key,margin,z,overrides,float(uplift.sum()))
     if best is None:
         return 500.0,1.0
-    return float(best[1]),float(best[2])
+    return float(best[1]),1.0
 
 def run_model(name,fit_fn,df,features):
     dev=df[df.split=="development"].sort_values("entry_ts").reset_index(drop=True)
