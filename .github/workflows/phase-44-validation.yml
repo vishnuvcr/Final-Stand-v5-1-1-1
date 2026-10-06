@@ -98,7 +98,7 @@ jobs:
               f"Holm survivors: {s['holm_survivors']}\n"
               f"Holdout opened after validation freeze: {s.get('holdout_opened_after_validation_freeze', False)}\n"
               f"Decision: **{s['decision']}**\n\n"
-              "F44-001 through F44-009 remain quarantined. Only successful staged runs are accepted as evidence.\n"
+              "F44-001 through F44-019 remain quarantined/corrected as logged. Only successful staged runs are accepted as evidence.\n"
           )
           with Path("RESEARCH_LOG.md").open("a") as f:
               f.write(
@@ -110,19 +110,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin phase-44-vix-candidate-tuning || true
           git add results/phase44_vix_tuning PHASE44_STATUS.md RESEARCH_LOG.md ERROR_LOG.md
+          printf "\n## F44-019 — validation uses full-opportunity VIX filter uplift\n- Candidate P&L is zero on inactive expiries and the unconditional comparator trades every eligible expiry. Uplift is computed across the full validation opportunity set.\n" >> ERROR_LOG.md
           git commit -m "phase44: persist validation stage results" || true
-          git push origin HEAD:phase-44-vix-candidate-tuning
-
-      - name: Trigger next registered stage
-        if: success()
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          Path("trigger/phase44.holdout").write_text("Phase 44 next stage trigger from completed validation stage.\n")
-          PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "trigger/phase44.holdout"
-          git commit -m "phase44: trigger next stage after validation" || true
           git push origin HEAD:phase-44-vix-candidate-tuning
 
