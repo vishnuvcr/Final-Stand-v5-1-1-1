@@ -60,7 +60,7 @@ jobs:
 
       - name: Persist results
         run: |
-          git pull --rebase origin "${GITHUB_REF_NAME}"
           git add data/phase40_vix results/phase40_ensemble
           git commit -m "phase40: exhaustive ensemble results and VIX cache" || true
+          git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin HEAD:"${GITHUB_REF_NAME}"
