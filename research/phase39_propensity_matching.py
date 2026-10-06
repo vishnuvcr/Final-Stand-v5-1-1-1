@@ -9,7 +9,7 @@ from sklearn.neighbors import NearestNeighbors
 ROOT=Path(".")
 F=ROOT/"results/phase39_features/point_in_time_features.csv"
 L=ROOT/"results/phase39_counterfactual/fixed_opportunity_ledger.csv"
-S=ROOT/"results/phase39_sequential_policy/sequential_trades.csv"
+S=ROOT/"results/phase39_sequential_policy_audit/override_audit.csv"
 OUT=ROOT/"results/phase39_propensity"
 OUT.mkdir(parents=True,exist_ok=True)
 
