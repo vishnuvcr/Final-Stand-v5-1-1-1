@@ -773,3 +773,13 @@ Symptom: Runtime NameError for ps_dev after the model had been changed to a full
 Evidence status: Non-evidence implementation cleanup failure.
 
 Correction: Removed the obsolete ps_dev/ps_val/ps_hold assignment.
+
+
+### Error F39-047 — Propensity summary retained obsolete sequential-source variable
+Run: 37452505360 (propensity run #5).
+
+Symptom: NameError for variable s after switching treatment labels to the audited Sparse-GAM override file.
+
+Evidence status: Non-evidence summary-stage failure; matching calculations had already executed.
+
+Correction: Final summary now reports the audited override count and mapped fixed-opportunity count directly.
