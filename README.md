@@ -304,3 +304,19 @@ Phase-32 artifacts:
 - Run #39 was rejected because missing expiry files could enlarge the next contract's historical window.
 - Corrected engine: every contract window is anchored to the immediately preceding expected expiry date, not the last processed file.
 - Corrected commit: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/cb0001f0e12376d27fa40b113ca47715a15c12cc
+
+## Phase 37 — corrected model direction polarity
+
+**Initialized — numerical execution pending.** A post-acceptance audit found that Phase 36 mapped model probability of an NIFTY up/bullish expiry move to the CALL spread. The corrected mapping is **bullish/up -> PUT spread; bearish/down -> CALL spread**.
+
+Phase 37 reruns only CATBOOST, DART, WAVELET_TREE, OOF_STACK and MARKOV_REGIME_TREE with the cached Phase-35 forecasts. No model, threshold, feature, execution rule, cost assumption or holdout definition is changed.
+
+- [Phase 37 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direction-polarity-correction)
+- [Research plan](PHASE37_RESEARCH_PLAN.md)
+- [Pre-registration](PHASE37_PRE_REGISTRATION.md)
+- [Strategy specification](PHASE37_STRATEGY_SPEC.md)
+- [Status](PHASE37_STATUS.md)
+- [Corrected engine](research/phase37_model_direction_polarity_correction.py)
+- [Workflow](.github/workflows/phase-37-model-direction-polarity-correction.yml)
+
+Phase 36 model-selector P&L remains retained as an audit artifact but is not treated as a valid test of the intended polarity hypothesis.
