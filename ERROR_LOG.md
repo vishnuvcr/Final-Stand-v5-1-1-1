@@ -715,3 +715,17 @@ Evidence status: Non-evidence dependency failure.
 Correction: Step-7 sequential-symbolic workflow now installs scikit-learn as part of the inherited engine dependency set.
 
 Prevention: Copied/derived replay engines will be dependency-audited against all imports before execution.
+
+
+### Error F39-042 — Sequential symbolic training duplicated the economic target during ledger cross-check
+Run: 37449790870 (Step-7 sequential-symbolic run #3).
+
+Symptom: Training failed with missing `delta_pnl_call_minus_put` after the feature/ledger merge because the target had been suffixed.
+
+Cause: The accepted point-in-time feature matrix already carries the economic target for audit, while the fixed ledger contains the same target.
+
+Evidence status: Non-evidence runtime failure.
+
+Correction: The replay now retains the target from the feature matrix and imports the ledger target under an explicit suffix only for a numerical equality audit; a hard <1e-8 rupee target-match assertion is applied.
+
+Prevention: Any dual-source target cross-check will use explicit suffixes and an equality invariant rather than relying on pandas's default column retention.
