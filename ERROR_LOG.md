@@ -110,3 +110,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Log diagnosis: the cached Markov regime table was merged into an event table that already contained `ms_p0/ms_p1/ms_entropy`, creating duplicate columns and a LightGBM/Sklearn dataframe validation failure.
 - No Markov addendum result is accepted as evidence.
 - Corrections: make the merge idempotent and enable shell `pipefail` so future Python failures cannot be masked.
+
+
+## 2026-10-06 — Phase 35 Markov addendum run #4 (37425960853)
+- The corrected merge logic was committed with literal \\n characters, producing another SyntaxError before numerical execution.
+- No Markov evidence was produced.
+- Correction: restore actual Python line breaks and rerun with the newly hardened `pipefail` workflow.
