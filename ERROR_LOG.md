@@ -849,3 +849,15 @@ The India-VIX download itself succeeded and produced 1,590 cached rows locally, 
 **Correction:** The workflow no longer pushes from the acquisition step. The cache is kept in the working tree and is committed together with research results only after a fresh `git pull --rebase` in the final persistence step.
 
 **Prevention:** All workflow-generated artifacts are now persisted in one race-safe final commit.
+
+
+### Error F40-004 — Phase-32 replay return-arity mismatch
+**Run:** 37454752168.
+
+The ensemble engine called `base.run_expiry()` expecting two return values, but the canonical function returns three: trades, skips and updated direction state.
+
+**Evidence status:** non-evidence runtime failure; no ensemble candidate was evaluated.
+
+**Correction:** The Phase-40 arm-cache replay now explicitly unpacks all three values.
+
+**Prevention:** Reused research engines must be checked against their current function signature before integration.
