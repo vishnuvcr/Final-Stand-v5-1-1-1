@@ -101,6 +101,12 @@ Build the fixed-opportunity counterfactual engine and validate it against the fr
 
 ## Step 1 — fixed-opportunity counterfactual engine
 
-**RUNNING — numerical execution in GitHub Actions.** The frozen control ledger has been reconciled to the accepted Phase-32 workflow artifact: the 2024-01-11 through 2026-06-30 slice contains exactly 206 trades across 102 expiries and sums to ₹63,672.5753, matching the Phase-38 authoritative benchmark. The Step-1 engine is now evaluating CALL and PUT counterfactual spreads at those exact entry timestamps under identical delta exits, slippage and costs.
+**CORRECTED IMPLEMENTATION — rerun required before model training.** The first 206-opportunity calculation reproduced the frozen control essentially exactly, but it was correctly rejected as insufficient for the preregistered 2021–2023 development split. The engine has now been corrected to use 271 development trades from the accepted Phase-32 artifact plus the exact frozen 206-trade validation/holdout panel, and to apply deterministic stable duplicate-quote handling.
 
-The engine will not train any model or alter the control policy until the control-arm reconstruction error is audited and the paired counterfactual ledger is committed.
+The accepted panel is therefore:
+- Development: 271 trades / 135 expiries (2021-05-27 through 2023-12-28)
+- Validation: 172 trades (2024-01-11 through 2025-12-30)
+- Holdout: 34 trades (2026-01-06 through 2026-05-19)
+- Intentionally excluded: the 2024-01-04 trade, preserving the exact Phase-38 benchmark
+
+The complete corrected counterfactual engine must re-run before any model training is accepted. The control arm must still reconstruct the frozen ₹63,672.5753 benchmark within the preregistered tolerance.
