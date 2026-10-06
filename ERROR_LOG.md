@@ -123,3 +123,34 @@ All seven numerical selector jobs succeeded and the rebase-safe publication job 
 **Correction:** The workflow was rebuilt using string concatenation so the GitHub Actions shell variable is emitted literally.
 
 **Research impact:** None.
+
+
+## 2026-10-06 — Phase 39 tool/automation audit
+
+### Error F39-002 — Branch search argument mismatch
+The first branch lookup supplied `repository_full_name` to a connector operation that requires separate `owner` and `repo_name` fields.
+
+**Evidence status:** tooling-only; no repository or numerical evidence changed.
+
+**Correction:** Re-ran the lookup with `owner=vishnuvcr` and `repo_name=Final-Stand-v5-1-1-1` and confirmed branch `phase-39-advanced-direction-models`.
+
+### Error F39-003 — Workflow-artifact lookup argument mismatch
+The first workflow-artifact lookup supplied `repository_full_name` instead of the required `repo_full_name` field.
+
+**Evidence status:** tooling-only; no numerical evidence changed.
+
+**Correction:** Re-ran with the correct field and recovered the Phase-32 final artifact ID `11380124540`.
+
+### Error F39-004 — Unsupported JavaScript filesystem import attempt
+A tool-orchestration attempt tried to import `child_process` inside the restricted JavaScript runtime.
+
+**Evidence status:** tooling-only; no repository or numerical evidence changed.
+
+**Correction:** Used the container-backed runtime for local artifact inspection instead.
+
+### Error F39-005 — Tool-orchestration syntax error during research-log update
+A multi-file repository update script failed with a JavaScript syntax error before any GitHub write occurred.
+
+**Evidence status:** tooling-only; no repository or numerical evidence changed.
+
+**Correction:** The updates are being applied as separate deterministic file operations.
