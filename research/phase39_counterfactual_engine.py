@@ -1,3 +1,4 @@
+# Phase 39 Step 1 — fixed-opportunity economic counterfactual engine
 import json, os, io, zipfile, hashlib
 from pathlib import Path
 import numpy as np
