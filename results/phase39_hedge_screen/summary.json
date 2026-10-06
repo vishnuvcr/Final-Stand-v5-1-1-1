@@ -1,0 +1,14 @@
+{
+  "status": "COMPLETE",
+  "selected_margin": 0.0,
+  "selected_eta": 1e-05,
+  "selected_decay": 1.0,
+  "development_hedge_net": 20255.45117435025,
+  "development_control_net": 17657.14692755023,
+  "development_uplift": 2598.3042468000203,
+  "validation_hedge_net": 63531.40070963015,
+  "validation_control_net": 63948.222105380155,
+  "validation_uplift": -416.82139575000474,
+  "validation_expert1_share": 0.7383720930232558,
+  "holdout_evaluated": false
+}
