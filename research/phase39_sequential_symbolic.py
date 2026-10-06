@@ -116,8 +116,14 @@ def build_feature_row(entry,expiry,snap,spot_value,spot_hist,daily,global_d,flow
 
 def fit_symbolic_params(dev_feature_file, dev_ledger_file):
     x=pd.read_csv(dev_feature_file)
-    y=pd.read_csv(dev_ledger_file,usecols=["entry_ts","delta_pnl_call_minus_put"])
-    z=x.merge(y,on="entry_ts",how="inner",validate="one_to_one")
+    x=x[x["split"]=="development"].copy()
+    y=pd.read_csv(dev_ledger_file,usecols=["entry_ts","split","delta_pnl_call_minus_put"])
+    y=y[y["split"]=="development"].copy()
+    z=x[["entry_ts","split","candidate_credit_diff_call_minus_put","delta_pnl_call_minus_put"]].merge(
+        y[["entry_ts","split","delta_pnl_call_minus_put"]],
+        on=["entry_ts","split"],how="inner",validate="one_to_one",suffixes=("","_ledger")
+    )
+    assert np.max(np.abs(z["delta_pnl_call_minus_put"].to_numpy(float)-z["delta_pnl_call_minus_put_ledger"].to_numpy(float)))<1e-8
     v=z["candidate_credit_diff_call_minus_put"].to_numpy(float)
     target=z["delta_pnl_call_minus_put"].to_numpy(float)
     m=np.isfinite(v)&np.isfinite(target)
