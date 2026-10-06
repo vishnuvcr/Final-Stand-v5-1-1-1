@@ -277,3 +277,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - No VIX router was frozen; Stage 5 active-exit optimization was skipped.
 - Final decision: **NO PROMOTION**.
 - Canonical Phase-20/42 strategy remains unchanged.
+
+
+## 2026-10-06 — Phase 44 initialized: VIX candidate tuning
+- Created isolated branch `phase-44-vix-candidate-tuning` from completed Phase 43.
+- Registered finite tuning of six defined-risk VIX candidates: strike geometry, entry time and prior-only VIX percentile thresholds.
+- 2026 holdout remains unopened for selection.
+- Added Phase-44 research plan, pre-registration, literature review, status, chat summary and tuning engine.
