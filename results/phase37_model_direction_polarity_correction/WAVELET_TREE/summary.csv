@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries,corrected_mapping
+WAVELET_TREE,2024-01-01,2026-06-30,195,31294.887171660193,50305.50000000019,19010.61282834,0.6358974358974359,1.0996339908853907,54085.53167159892,86,109,195,0,160.48660088030869,1399.98918035,4108.871794871795,103,117,bullish_up_to_put_bearish_down_to_call

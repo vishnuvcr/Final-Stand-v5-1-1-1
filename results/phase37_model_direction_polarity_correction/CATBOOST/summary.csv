@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries,corrected_mapping
+CATBOOST,2024-01-01,2026-06-30,203,57874.80093317225,76950.00000000026,19075.199066827998,0.6403940886699507,1.186465132080157,49337.01796659389,95,108,203,0,285.0975415427204,1382.8714920499997,3954.295566502463,103,117,bullish_up_to_put_bearish_down_to_call

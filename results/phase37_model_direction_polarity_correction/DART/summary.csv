@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries,corrected_mapping
+DART,2024-01-01,2026-06-30,198,19372.11423607818,39267.000000000175,19894.885763922,0.6212121212121212,1.0601785058290436,52629.56777945491,79,119,198,0,97.83896078827364,1396.5540606950008,4049.222222222222,103,117,bullish_up_to_put_bearish_down_to_call

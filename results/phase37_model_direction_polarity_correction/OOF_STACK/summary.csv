@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries,corrected_mapping
+OOF_STACK,2024-01-01,2026-06-30,198,24765.714948705176,44128.50000000018,19362.785051295,0.6363636363636364,1.0807121829666804,62024.8235049699,38,160,198,0,125.07936842780391,1253.1355018550003,4045.9646464646466,103,117,bullish_up_to_put_bearish_down_to_call

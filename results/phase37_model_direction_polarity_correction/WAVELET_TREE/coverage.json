@@ -1,0 +1,11 @@
+{
+  "selector": "WAVELET_TREE",
+  "requested_start": "2024-01-01",
+  "requested_end": "2026-06-30",
+  "expected_expiries": 128,
+  "available_expected_expiries": 104,
+  "processed_expiries": 103,
+  "selector_cache_expiries": 117,
+  "model_selector_cache_min": "2024-01-11",
+  "model_selector_cache_max": "2026-06-30"
+}

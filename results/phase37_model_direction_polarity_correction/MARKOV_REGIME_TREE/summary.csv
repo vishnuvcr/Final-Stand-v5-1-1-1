@@ -1,0 +1,2 @@
+selector,sample_start,sample_end,trades,net_pnl,gross_pnl,costs,win_rate,profit_factor,max_drawdown,call_trades,put_trades,delta_exit_trades,expiry_termination_trades,mean_net,median_net,mean_hold_minutes,processed_expiries,selector_cache_expiries,corrected_mapping
+MARKOV_REGIME_TREE,2024-01-01,2026-06-30,197,53060.3098543032,72142.50000000019,19082.190145697,0.6395939086294417,1.1741983928722237,40547.67041172492,95,102,197,0,269.3416743873259,1505.779204700002,4064.680203045685,103,117,bullish_up_to_put_bearish_down_to_call
