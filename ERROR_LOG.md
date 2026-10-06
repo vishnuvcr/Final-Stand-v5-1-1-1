@@ -581,3 +581,15 @@ Evidence status: Non-evidence runtime failure. No Step-5 result was produced.
 Correction: Step 5 now joins only `call_net_rupees` and `put_net_rupees`, while retaining the feature matrix's existing control columns.
 
 Prevention: Step-5 and later joins will import only columns confirmed absent from the base feature layer.
+
+
+### Error F39-032 — Step-5 NumPy/Pandas array conversion mismatch
+Run: 37446241028 (Step-5 run #4).
+
+Symptom: The fixed-opportunity screen failed when `np.where(...)` returned an ndarray and the code attempted to call pandas `to_numpy()` on it.
+
+Evidence status: Non-evidence implementation failure. No Step-5 results were accepted.
+
+Correction: Realized action P&L arrays are now normalized with `np.asarray` before arithmetic and aggregation.
+
+Prevention: Advanced model evaluation will keep explicit NumPy/Pandas type boundaries.
