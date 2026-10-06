@@ -49,10 +49,12 @@ jobs:
           import json, pathlib, pandas as pd
           p=json.loads(pathlib.Path("results/phase48_multiexpiry/preflight.json").read_text())
           d=pd.read_csv("results/phase48_multiexpiry/preflight_monthly_checks.csv")
-          assert p["multi_expiry_entry_checks"] >= 3
+          md=pd.read_csv("results/phase48_multiexpiry/multi_expiry_days.csv")
+          assert p["generic_multi_expiry_days"] >= 3
           assert len(d) >= 6
           print(p)
           print(d.head(20).to_string(index=False))
+          print("Multi-expiry dates:", md.head(20).to_string(index=False))
           PY
 
   numerical:
