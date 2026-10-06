@@ -1,73 +1,67 @@
-# Phase 36 Status — Independent Per-Trade Direction Selector Overlay
+# Phase 36 Error Log — Independent Per-Trade Direction Selector Overlay
 
-## Final state
-**COMPLETE — REJECTED — NO LIVE-TRADING PROMOTION**
+## 2026-10-06 — Run 37427528243
 
-The previous trade's status/P&L/direction remains part of the Continuous Delta 6x6 direction mechanism. Removing that state and using an independent selector before every new trade worsened net performance and holdout robustness.
+### Error F36-001 — Mixed skip-ledger row widths
+**Affected jobs:** CATBOOST, WAVELET_TREE, OOF_STACK.
 
-### Accepted final evidence
-- GitHub Actions run: 37428502722 (#4)
-- corrected source revision: c8963bcded49ae15cf5b059394f3471ec1c3f2a4
-- all seven selector jobs: success
-- publish job: success
-- per-selector numerical artifacts persisted in the repository
+**Symptom:** The numerical loop completed many expiry calculations, then Pandas failed constructing the skip DataFrame with:
+\`ValueError: 3 columns passed, passed data had 4 columns\`.
 
-### Primary sample
-2024-01-01 through 2026-06-30; 128 expected expiries, 104 available files, 1 incomplete file, 103 processed expiries.
+**Cause:** Missing/incomplete expiry skips were stored as three fields, while \`run_expiry()\` returned three fields that were prefixed with expiry, producing four fields.
 
-### Final result
-Stateful control: +₹63,672.58 net, PF 1.203, max DD ₹61,960.87.
+**Evidence status:** The affected jobs are non-evidence. No conclusion or promotion decision uses them.
 
-Best independent selector: OTM789_FRESH at -₹39,122.38 net, PF 0.898, max DD ₹102,707.29.
+**Correction:** Normalize all skip records to the fixed schema \`expiry, timestamp, reason, detail\` before constructing the DataFrame.
 
-All seven independent selectors were negative over the primary sample and all seven were negative in the 2026 holdout.
+**Prevention:** Enforce a single audit-record schema at the engine boundary and validate row widths before serialization.
 
-### Control-relative bootstrap
-All seven selector-minus-control mean expiry-P&L intervals were entirely below zero.
-
-### Error history
-- F36-001: mixed skip-record widths; corrected.
-- F36-002: duplicate quote rows in fresh selectors; corrected.
-- Final corrective run #4: successful.
-
-### Final recommendation
-Retain the Phase-32 stateful direction rule. Do not promote any Phase-36 selector.
-
-Next priority: forward/paper validation of the canonical stateful strategy with full execution realism, not additional selector hunting.
+**Research impact:** None on accepted evidence; failure occurred after the trade calculation loop and before final artifact creation.
 
 
-## Final accepted run — 37428502722
-All seven selector jobs and the artifact-publication job completed successfully. No numerical implementation error remained in the accepted evidence.
+## 2026-10-06 — Run 37428195471
+
+### Error F36-002 — Duplicate quote rows in fresh premium selector
+**Affected selectors:** OTM678_FRESH, OTM789_FRESH.
+
+**Symptom:** Eight expiry-level loops terminated with:
+\`TypeError("float() argument must be a string or a real number, not 'Series'")\`.
+
+**Cause:** At some timestamps the option snapshot contained duplicate rows for the same option type and strike. Pandas \`loc\` returned a Series instead of a scalar close.
+
+**Evidence status:** Fresh-selector results from run #3 are non-final and are not used for phase conclusions.
+
+**Correction:** Group each option type/strike pair in the snapshot and use the last observed close deterministically before evaluating OTM678/OTM789 premium expressions.
+
+**Research impact:** No accepted model-selector results are affected. Fresh-selector results require rerun after correction.
+
 
 ## Error F36-003 — Final artifact-manifest blob mapping
-The first final-research commit mapped several prepared content blobs to the wrong filenames. The numerical evidence was unaffected, but the repository manifest was incorrect. The files are being repaired and verified individually.
+The first final-research packaging commit mapped several prepared content blobs to the wrong filenames. Numerical evidence was unaffected, but the repository manifest was incorrect.
 
 **Evidence status:** packaging-only, non-evidence.
 
-**Prevention:** verify file headers/content against expected artifact type before closing a research phase.
-
+**Correction:** Each affected file was re-read, remapped and verified individually.
 
 ## Error F36-004 — Invalid workflow content during artifact-manifest repair
 **Runs:** 37429445210, 37429450459, 37429454606, 37429458477, 37429477965, 37429482697, 37429486634.
 
-**Cause:** During repair of the final artifact-manifest mapping, the workflow file temporarily contained the error-log content. Documentation/result-file update commits triggered the broad `PHASE36_**` path filter, and GitHub therefore attempted several invalid workflow runs.
+During the manifest repair, the workflow file temporarily contained the error-log content. Because the workflow still had a broad `PHASE36_**` push filter at that moment, documentation commits triggered invalid workflow runs.
 
-**Evidence status:** CI/packaging-only. No numerical evidence was produced or accepted by these runs.
+**Evidence status:** CI/packaging-only; no numerical output was accepted.
 
-**Correction:** Restored the executable Phase-36 workflow and narrowed push triggers to the research source/cache/workflow and preregistration files only.
-
-**Prevention:** Verify workflow file type/content before making any commit that can trigger Actions; do not use broad documentation globs for numerical research workflows.
-
+**Correction:** The executable workflow was restored and push triggers were narrowed to research source/cache/workflow and preregistration files.
 
 ## Error F36-005 — Publish non-fast-forward race
 **Run:** 37429502607 (#17), publish job only.
 
-**Symptom:** All seven numerical jobs succeeded. The publication job downloaded all seven artifacts and created the expected commit, but `git push` was rejected as non-fast-forward because the branch advanced after the workflow checkout.
+All seven numerical jobs succeeded, but artifact publication created a commit from a stale checkout and `git push` was rejected as non-fast-forward after the branch advanced.
 
-**Cause:** A repository error-log update landed while the workflow was running.
+**Evidence status:** CI/publish-only; numerical evidence was valid.
 
-**Evidence status:** CI/publish-only; all seven numerical selector jobs were successful and no research calculation was invalidated.
+**Correction:** The publish step was hardened with `git pull --rebase origin "$GITHUB_REF_NAME"` immediately before pushing.
 
-**Correction:** The publish step is hardened to `git pull --rebase origin "$GITHUB_REF_NAME"` immediately before pushing the artifact commit.
+## Final reproducibility checkpoint
+**Run:** 37429748933 (#18).
 
-**Prevention:** Keep publish writes conflict-safe and keep result paths outside the workflow's push-trigger path filter.
+All seven numerical selector jobs succeeded and the rebase-safe publication job also succeeded. This is the final workflow validation checkpoint.
