@@ -1053,3 +1053,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Classification:** statistical implementation defect; the raw strategy trade matrix and gross/net P&L calculations are retained as valid raw evidence, but the first inference table is invalid and must not support conclusions.
 - **Correction:** a new postprocessor compares each VIX regime against the complementary non-regime expiry observations within the same strategy and recomputes 10,000-resample confidence intervals, permutation p-values and Holm-adjusted values.
 - The corrected postprocess also reapplies the preregistered validation/cost/drawdown gates before any router or holdout promotion.
+
+
+## F43-005 — 2026-10-06 — Unbounded benchmark entered corrected postprocess
+- **Finding:** The first corrected postprocessor excluded calendars but did not exclude the four preregistered unbounded structures from the promotion benchmark universe. This caused `put_ratio_1x2` to become the unconditional benchmark even though unbounded structures are diagnostic-only under the Phase-43 plan.
+- **Evidence status:** The corrected inference matrix remains valid as regime-versus-complement diagnostics; the router/benchmark outputs from that postprocess are invalid for promotion and are superseded.
+- **Correction:** Promotion/router candidates are now explicitly restricted to the registered defined-risk universe, with calendars also excluded where development coverage is below the 20-trade minimum.
+- **Prevention:** The postprocessor now applies the same promotion-universe invariant as the strategy engine before benchmark or router selection.
