@@ -21,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase43-vix-\${{ github.ref }}
+  group: phase43-vix-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -41,9 +41,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
-          key: phase43-hf-\${{ runner.os }}-v1
+          key: phase43-hf-${{ runner.os }}-v1
           restore-keys: |
-            phase43-hf-\${{ runner.os }}-
+            phase43-hf-${{ runner.os }}-
 
       - name: Install dependencies
         run: |
@@ -55,7 +55,7 @@ jobs:
 
       - name: Preflight
         env:
-          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           test -s data/phase40_vix/india_vix.csv
           python - <<'PY'
@@ -67,18 +67,18 @@ jobs:
 
       - name: Run Phase 43
         env:
-          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           set +e
           python research/phase43_vix_strategy_sweep.py
           code=$?
           if [ "$code" -ne 0 ]; then
-            printf "\\n## F43-RUN-%s — numerical execution failure\\n- Exit code: %s. Failed output is non-evidence.\\n" "\${GITHUB_RUN_ID}" "$code" >> ERROR_LOG.md
+            printf "\\n## F43-RUN-%s — numerical execution failure\\n- Exit code: %s. Failed output is non-evidence.\\n" "${GITHUB_RUN_ID}" "$code" >> ERROR_LOG.md
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add ERROR_LOG.md
-            git commit -m "phase43: log failed numerical run \${GITHUB_RUN_ID}" || true
-            git push origin "HEAD:\${GITHUB_HEAD_REF:-\${GITHUB_REF_NAME}}" || true
+            git commit -m "phase43: log failed numerical run ${GITHUB_RUN_ID}" || true
+            git push origin "HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" || true
             exit "$code"
           fi
 
@@ -132,4 +132,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase43_vix PHASE43_STATUS.md RESEARCH_LOG.md
           git commit -m "phase43: persist VIX strategy sweep results" || true
-          git push origin "HEAD:\${GITHUB_HEAD_REF:-\${GITHUB_REF_NAME}}"
+          git push origin "HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
