@@ -531,3 +531,15 @@ Evidence status: The underlying sequential trade simulation from run 37443885462
 Correction: Periods are now assigned by expiry year: <=2023 development, 2024-2025 validation, 2026 holdout. The workflow now asserts the authoritative 271/172/34 control counts.
 
 Prevention: All Phase-39 split logic uses the preregistered expiry-period boundary where a trade can span calendar years.
+
+
+### Error F39-028 — Step-3 development OOF feature selection used future development observations
+Finding: The original Step-3 screen selected the feature list from the complete development period before generating chronological development OOF predictions.
+
+Cause: The threshold-selection OOF loop reused a development-wide feature list rather than re-selecting eligible predictors from each expanding training window.
+
+Evidence status: Step-3 threshold/model-selection results from runs before this correction are **superseded**. The validation/holdout feature lock itself did not use holdout data, but the development OOF threshold-selection evidence was not strictly point-in-time.
+
+Correction: Development OOF now recomputes feature eligibility from the current chronological training window before every OOF batch. Validation retains a feature lock selected from the complete development period, which is permitted by the preregistered train/validation design.
+
+Prevention: Any future OOF selection step must derive feature eligibility, imputation, scaling and hyperparameters solely from observations preceding the prediction timestamp.
