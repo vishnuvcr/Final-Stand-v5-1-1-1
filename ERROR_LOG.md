@@ -80,3 +80,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 ## F43-002 — 2026-10-06 — Phase 43 workflow expression escaping
 - The initial Phase-43 workflow/bridge persistence retained literal backslashes before GitHub Actions expression markers.
 - No numerical evidence was accepted. The workflows were corrected before the next execution trigger.
+
+
+## F43-007 — 2026-10-06 — Corrected postprocess bridge race-hardening
+- The main-branch Phase-43 postprocess bridge is now rebase-safe before publishing corrected artifacts to the isolated phase branch.
+- This change is infrastructure-only; no research parameter or data definition changed.
