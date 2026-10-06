@@ -611,3 +611,17 @@ Prevention: For complex evaluator patches, replace the complete affected functio
 Step-5 iterations 2-5 failed before evidence due to duplicate target/control columns, NumPy/Pandas boundary handling, and a malformed evaluator patch. All failed runs are non-evidence.
 
 Correction: The final Step-5 evaluator was replaced wholesale with deterministic OOF/validation logic. Run 37446811261 passed all verification checks and is the only accepted Step-5 result.
+
+
+### Error F39-035 — Initial Step-6 Hedge implementation was computationally excessive
+Run: 37447433376 (Step-6 run #1).
+
+Symptom: The workflow was cancelled while fitting the model one observation at a time across the full development history; no result was produced.
+
+Cause: Repeated spline-model fits multiplied the development computation unnecessarily for an online expert-aggregation screen.
+
+Evidence status: Non-evidence tooling/computation failure.
+
+Correction: Step 6 now fits the economic-margin model once per chronological 20-observation batch and updates Hedge weights after each realized observation. The first 100 warm-up observations remain control-only.
+
+Prevention: Chronological expert-aggregation screens will batch expensive predictive-model fits while preserving per-observation reward updates and causal ordering.
