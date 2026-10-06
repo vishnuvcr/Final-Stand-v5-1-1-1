@@ -405,3 +405,29 @@ The cumulative net-P&L / maximum-drawdown ranking is:
 Markov has the strongest cumulative return-to-drawdown efficiency, but this is only a secondary diagnostic; it does not overturn the preregistered control-relative rejection of all five model selectors.
 
 - [Risk-adjusted summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-38-corrected-model-robustness/results/phase38_corrected_model_robustness/risk_adjusted_summary.csv)
+
+
+## Phase 39 — advanced and counterfactual direction prediction — INITIALIZED
+
+The previous prediction search was deeper than the Phase-38 summary alone suggests. Phase 35 already tested XGBoost, LightGBM, CatBoost, ExtraTrees, HistGradientBoosting, DART, NGBoost, BART, quantile trees, wavelet/EMD/VMD/CEEMDAN hybrids, adaptive trees, dynamic pools, OOF stacking, calibration, conformal methods and regime-gated trees. Phase 38 then rejected the corrected model selectors relative to the canonical stateful control.
+
+Phase 39 therefore changes the **problem formulation**, not merely the classifier.
+
+### New primary research idea
+
+Instead of predicting NIFTY expiry direction, predict the **counterfactual economic margin between the actual tradable CALL and PUT spreads** at the same entry opportunity:
+
+**DeltaP&L = CALL net P&L − PUT net P&L**
+
+The main invented method is the **Control-Relative Counterfactual Override Learner (CROL)**. The canonical stateful control remains the default action; the model is allowed to override only when predicted incremental P&L and uncertainty satisfy preregistered conditions.
+
+Additional candidate families include Bayesian dynamic models, Bradley-Terry preference learning, Gaussian processes, sparse GAM/GA2M, weighted analog/kNN/DTW methods, Bayesian online change-point gates, online expert aggregation, constrained symbolic regression and a lower-priority time-series foundation-model track.
+
+- [Phase 39 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-39-advanced-direction-models)
+- [Phase 39 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_RESEARCH_PLAN.md)
+- [Phase 39 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_PRE_REGISTRATION.md)
+- [Phase 39 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_LITERATURE_REVIEW.md)
+- [Phase 39 candidate method registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/results/phase39_candidate_method_registry.csv)
+- [Phase 39 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_STATUS.md)
+
+**Current Phase-39 status:** formulation and preregistration complete; numerical counterfactual engine construction is next. Phase-38 canonical strategy remains unchanged.
