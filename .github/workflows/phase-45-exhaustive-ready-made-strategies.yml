@@ -1,0 +1,94 @@
+name: Phase 45 - Exhaustive Ready-Made Strategies
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-45-exhaustive-ready-made-strategies
+    paths:
+      - "trigger/phase45.start"
+
+concurrency:
+  group: phase45-exhaustive
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  exhaustive-sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+        run: |
+          python -m pip install --no-input numpy pandas pyarrow huggingface_hub
+
+      - name: Run Phase 45 sweep
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase45_ready_made_sweep.py
+
+      - name: Validate artifacts
+        run: |
+          test -s results/phase45_ready_made/new_strategy_trade_matrix.csv
+          test -s results/phase45_ready_made/full_ready_made_trade_matrix.csv
+          test -s results/phase45_ready_made/strategy_vix_summary.csv
+          test -s results/phase45_ready_made/validation_regime_inference.csv
+          test -s results/phase45_ready_made/validation_freeze_top3.csv
+          test -s results/phase45_ready_made/holdout_frozen_top3_confirmation.csv
+          test -s results/phase45_ready_made/summary.json
+
+      - name: Update status and research log
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("results/phase45_ready_made/summary.json").read_text())
+          Path("PHASE45_STATUS.md").write_text(
+              "# Phase 45 Status — Exhaustive Ready-Made Strategy Study\n\n"
+              "**NUMERICAL SWEEP COMPLETE — VALIDATION/HOLDOUT ARTIFACTS WRITTEN**\n\n"
+              f"New strategies tested: {s['new_strategies']}\n"
+              f"Phase-43 strategies reused: {s['reused_phase43_strategies']}\n"
+              f"New trade rows: {s['new_trade_rows']}\n"
+              f"Full trade rows: {s['full_trade_rows']}\n"
+              f"Validation frozen rows: {s['validation_freeze_rows']}\n"
+              f"Holdout confirmation rows: {s['holdout_confirmation_rows']}\n"
+              f"Validation positive defined-risk strategy×state rows: {s['validation_positive_defined_risk_states']}\n\n"
+              "The holdout table contains only candidates frozen from validation. No parameters are changed from holdout results.\n"
+          )
+          with open("RESEARCH_LOG.md","a",encoding="utf-8") as f:
+              f.write(
+                  "\n\n## 2026-10-07 — Phase 45 exhaustive ready-made strategy sweep\n"
+                  f"- Tested 20 previously-uncovered ready-made structures and reused the accepted Phase-43 matrix for 22 previously-tested families.\n"
+                  f"- Numerical rows: new={s['new_trade_rows']}, full={s['full_trade_rows']}.\n"
+                  f"- Validation freeze rows={s['validation_freeze_rows']}; holdout confirmation rows={s['holdout_confirmation_rows']}.\n"
+                  "- Holdout results are confirmation-only and cannot alter the frozen validation ranking.\n"
+              )
+          PY
+
+      - name: Publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase45_ready_made PHASE45_STATUS.md RESEARCH_LOG.md
+          git diff --cached --quiet && exit 0
+          git commit -m "phase45: publish exhaustive ready-made strategy results"
+          git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
