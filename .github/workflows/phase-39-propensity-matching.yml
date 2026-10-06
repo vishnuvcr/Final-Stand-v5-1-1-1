@@ -41,7 +41,7 @@ jobs:
           s=json.load(open('results/phase39_propensity/summary.json'))
           r=pd.read_csv('results/phase39_propensity/propensity_results.csv')
           assert s['status']=='COMPLETE'
-          assert len(r)==12
+          assert len(r)==21
           assert s['total_rows']==477
           assert s['development_treated']+s['validation_treated']+s['holdout_treated']==5
           assert s['audited_override_count']==7
