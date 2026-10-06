@@ -260,8 +260,9 @@ def main():
     tr=pd.DataFrame(trades)
     if tr.empty: raise RuntimeError("Sequential policy produced zero trades")
     tr["entry_ts"]=norm_ts(tr["entry_ts"]); tr["exit_ts"]=norm_ts(tr["exit_ts"])
-    tr["period"]=np.where(tr.entry_ts<pd.Timestamp("2024-01-01",tz=TZ),"development",
-                          np.where(tr.entry_ts<pd.Timestamp("2026-01-01",tz=TZ),"validation","holdout"))
+    tr["expiry_date"]=pd.to_datetime(tr["expiry"])
+    tr["period"]=np.where(tr.expiry_date.dt.year<=2023,"development",
+                          np.where(tr.expiry_date.dt.year<=2025,"validation","holdout"))
     tr["cum_net"]=tr.policy_net_rupees.cumsum(); tr["peak"]=tr.cum_net.cummax(); tr["drawdown"]=tr.peak-tr.cum_net
     tr.to_csv(OUT/"sequential_trades.csv",index=False)
     dev_control=pd.read_csv(DEV_CONTROL)
@@ -270,8 +271,8 @@ def main():
     frozen_control["period"]=np.where(pd.to_datetime(frozen_control.expiry).dt.year<=2025,"validation","holdout")
     control=pd.concat([dev_control,frozen_control],ignore_index=True)
     control["entry_ts"]=norm_ts(control.entry_ts); control["exit_ts"]=norm_ts(control.exit_ts)
-    control["period"]=np.where(control.entry_ts<pd.Timestamp("2024-01-01",tz=TZ),"development",
-                               np.where(control.entry_ts<pd.Timestamp("2026-01-01",tz=TZ),"validation","holdout"))
+    control["period"]=np.where(pd.to_datetime(control.expiry).dt.year<=2023,"development",
+                               np.where(pd.to_datetime(control.expiry).dt.year<=2025,"validation","holdout"))
     # Compare complete calendar-period P&L, and common-expiry paired uplift.
     summaries=[]
     for period in ["development","validation","holdout"]:
@@ -287,6 +288,9 @@ def main():
     hold=paired_bootstrap(tr[tr.period=="holdout"],control[control.period=="holdout"])
     summary={"status":"COMPLETE","model":"Sparse_GAM_margin","margin":MARGIN,"uncertainty_z":UNCERTAINTY_Z,
              "warmup_policy_trades":WARMUP,"trades":len(tr),"overrides":int(tr.override.sum()),
+             "control_period_counts":{"development":int((control.period=="development").sum()),
+                                      "validation":int((control.period=="validation").sum()),
+                                      "holdout":int((control.period=="holdout").sum())},
              "validation_paired_expiry_bootstrap":boot,"holdout_paired_expiry_bootstrap":hold,
              "validation_uplift_rupees":float(sm.loc[sm.period=="validation","uplift_rupees"].iloc[0]),
              "holdout_uplift_rupees":float(sm.loc[sm.period=="holdout","uplift_rupees"].iloc[0]),
