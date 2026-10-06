@@ -92,6 +92,15 @@ jobs:
           test -s results/phase44_vix_tuning/data_errors.csv
           test -s results/phase44_vix_tuning/stage1_all_dev_profiles.csv
 
+      - name: Log artifact audit failure
+        if: failure()
+        run: |
+          printf "\n## F44-AUDIT-${GITHUB_RUN_ID} — artifact audit failure\n- Artifact audit did not pass; numerical output is non-evidence until a corrected run passes all audits.\n" >> ERROR_LOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ERROR_LOG.md
+          git commit -m "phase44: log artifact audit failure ${GITHUB_RUN_ID}" || true
+          git push origin "HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" || true
       - name: Finalize status and research log
         run: |
           python - <<'PY'
