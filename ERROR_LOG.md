@@ -1310,3 +1310,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: all prior Phase-48 numerical attempts remain NON-EVIDENCE.
 - Correction: normalized raw timestamps by adding +05:30 before any entry/exit timestamp selection.
 - Prevention: the data bridge now records and tests timestamp interpretation explicitly before numerical evidence.
+
+## F48-006 — DuckDB interval syntax error during timestamp correction
+- The UTC-to-IST correction initially used SQL syntax `INTERVAL 5 HOURS 30 MINUTES`, which DuckDB rejected.
+- The run failed in preflight before any numerical work.
+- Evidence status: NON-EVIDENCE.
+- Correction: changed to DuckDB-compatible `INTERVAL '5 hours 30 minutes'`.
