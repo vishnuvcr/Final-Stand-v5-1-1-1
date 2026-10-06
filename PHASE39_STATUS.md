@@ -115,6 +115,70 @@ A useful new finding is visible before any model fitting, but it is **not a mode
 
 The control reconstruction is effectively exact, so these are counterfactual opportunity-level observations rather than control-rebuild artifacts. The regime reversal between development and 2024–2026 strengthens the preregistered case for adaptive/uncertainty-aware models rather than a static direction classifier.
 
+## Step 2 — point-in-time feature matrix — COMPLETE / ACCEPTED
+
+- 477 unique entry opportunities.
+- 122 numeric feature columns in the Step-2 matrix.
+- Leakage audit PASS.
+- Exact-entry option data used without forward fill/interpolation.
+- Global/daily sources use strictly previous available session/date.
+- Development-only feature eligibility is enforced in the Step-3 model runner.
+- Known unavailable supplemental sources remain documented: NSE/BSE breadth, NIFTY futures basis/OI/volume, point-in-time corporate-action feed, timestamp-verified intraday news.
+
+## Step 3 — economic-margin fixed-opportunity model screen — COMPLETE / CORRECTED
+
+The first Step-3 run was rejected because realized CALL/PUT P&L columns leaked into the predictor set. The leak-free rerun is the only accepted evidence.
+
+Accepted models:
+- CROL / Bayesian margin
+- Bayesian counterfactual margin
+- Bradley-Terry
+- Dynamic Bayesian-style logistic
+- Gaussian process
+- Sparse GAM
+- weighted kNN
+
+Accepted leak-free validation result:
+- Sparse GAM, ₹500 override margin, uncertainty multiplier 1.0.
+- Validation fixed-opportunity uplift: **+₹11,609.60**.
+- Paired-expiry bootstrap 95% interval for total uplift: approximately **−₹1,250 to +₹36,079**.
+- Only 2 validation overrides.
+- Other registered models produced zero validation overrides at their selected safety margins.
+
+The Step-3 model results are screening evidence only. No holdout was used to select the model.
+
+## Step 4 — sequential policy replay — COMPLETE / AUDITED
+
+Selected fixed-opportunity candidate:
+- Sparse GAM economic-margin model.
+- Safety margin = ₹500.
+- Uncertainty penalty = 1.0 × predictive uncertainty.
+- Canonical stateful control remains the default action.
+
+Corrected sequential results:
+- Total policy trades: **479**.
+- Overrides: **7**.
+- Validation uplift: **+₹17,983.53**.
+- 2026 holdout uplift: **+₹7,390.39**.
+- Validation maximum drawdown: **₹32,021.65**, identical to control ₹32,021.65.
+- 2026 holdout maximum drawdown: **₹29,936.24**, versus control ₹37,326.63.
+- +50% cost-stress uplift: **+₹17,799.05 validation / +₹7,546.34 holdout**.
+- +100% cost-stress uplift: **+₹17,614.56 validation / +₹7,702.28 holdout**.
+
+Override concentration:
+- 2022 development: 3 overrides, net negative contribution.
+- June 2024 validation: 3 overrides, all profitable.
+- March 2026 holdout: 1 override, profitable.
+
+The complete chronology/state/cost audit passes. However, this candidate is **NOT PROMOTED**:
+1. development-period incremental P&L is **−₹18,175.07**;
+2. only 7 overrides exist, so the positive OOS effect is fragile;
+3. the paired-expiry evidence is positive but not strong enough to establish a durable effect;
+4. other preregistered Phase-39 model families remain untested;
+5. final promotion still requires the complete family comparison and stress screen.
+
+The 2026 holdout remains frozen for model selection.
+
 ## Next engineering step
 
 Build the point-in-time feature matrix and leakage audit. Then fit the preregistered CROL/BCMM/Bradley-Terry/Dynamic-Bayesian and low-capacity nonlinear models chronologically, with the 2026 holdout frozen until the model family and override thresholds are locked.
