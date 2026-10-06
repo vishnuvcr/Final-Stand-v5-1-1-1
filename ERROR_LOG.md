@@ -553,3 +553,17 @@ Evidence status: Step-5 run(s) using that draft are non-evidence and must not be
 Correction: The revised runner persists the actual BOCPD posterior change probability and selects the registered threshold from the development OOF stream, then applies the same frozen threshold to validation.
 
 Prevention: Regime-gate hyperparameters must be represented explicitly in the saved prediction artifact and applied identically across development selection and validation replay.
+
+
+### Error F39-030 — Step-5 fixed-opportunity join duplicated the economic target
+Run: 37445670495 (Step-5 run #2).
+
+Symptom: DTW execution failed because `delta_pnl_call_minus_put` had been suffixed to `_x/_y` after the feature/outcome merge.
+
+Cause: The Step-2 feature matrix already retains the fixed-opportunity target for audit, so Step 5 re-imported the same target from the ledger unnecessarily.
+
+Evidence status: Non-evidence runtime failure. No Step-5 model result was produced.
+
+Correction: The Step-5 outcome join now imports only the missing control and realized-action P&L columns and retains the single target column already present in the feature matrix.
+
+Prevention: Advanced-family joins will explicitly import only outcome columns absent from the feature matrix.
