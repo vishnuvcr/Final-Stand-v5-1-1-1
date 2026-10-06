@@ -1185,3 +1185,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 ## F44-019 — corrected validation uplift and holdout gating
 - Validation now evaluates filtered candidate P&L with zero P&L on inactive expiries against the unconditional tuned structure across the complete validation opportunity set.
 - Automatic holdout triggering was removed. 2026 remains protected until validation and any registered active-exit stage both pass.
+
+
+## F45-001 — ready-made definition audit before evidence acceptance
+- The first Phase-45 engine snapshot used a Double Plateau construction as two four-leg condors and therefore did not match the registered six-leg two-butterfly definition used by the strategy references.
+- The same snapshot classified all Phase-43 strategy names as defined-risk when computing the validation freeze, which would have admitted Phase-43 unbounded diagnostic structures into the promotion-ranking flag.
+- Evidence status: the currently running Phase-45 run is superseded/non-evidence because its head predates these corrections.
+- Correction: Double Plateau is fixed as two three-leg butterflies; the defined-risk classification explicitly excludes short straddles, short strangles and ratio spreads.
+- Prevention: strategy definitions and promotion-risk classes are now validated against a frozen explicit allowlist before execution.
