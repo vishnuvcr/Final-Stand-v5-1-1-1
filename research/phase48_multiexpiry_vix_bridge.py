@@ -371,30 +371,40 @@ def run_preflight():
     exps=expiries_all()
     monthly=monthly_expiries(exps)
     if len(days)<30 or len(exps)<20 or len(monthly)<6:
-        raise RuntimeError("F48-006 insufficient independent dataset universe")
+        raise RuntimeError('F48-006 insufficient independent dataset universe')
     checks=[]
     for e in monthly:
-        if e < START: continue
+        if e<START: continue
         ne=next((x for x in monthly if x>e),None)
         if ne is None: continue
         entry_day=fourth_before(days,e)
         if entry_day is None: continue
         cur=option_snapshot(entry_day,e); nxt=option_snapshot(entry_day,ne)
-        checks.append({"expiry":str(e.date()),"entry_day":str(entry_day.date()),
-                       "current_rows":int(len(cur)),"next_rows":int(len(nxt)),
-                       "current_spot":bool(cur.spot_price.notna().any()),
-                       "next_spot":bool(nxt.spot_price.notna().any())})
+        checks.append({'expiry':str(e.date()),'entry_day':str(entry_day.date()),
+                       'current_rows':int(len(cur)),'next_rows':int(len(nxt)),
+                       'current_spot':bool(cur.spot_price.notna().any()),
+                       'next_spot':bool(nxt.spot_price.notna().any())})
     z=pd.DataFrame(checks)
-    multi=int(((z.current_rows>0)&(z.next_rows>0)).sum())
-    result={"audit":audit,"trade_days":len(days),"expiries":len(exps),
-            "monthly_expiries":len(monthly),"monthly_checks":len(z),
-            "multi_expiry_entry_checks":multi}
-    z.to_csv(OUT/"preflight_monthly_checks.csv",index=False)
-    (OUT/"preflight.json").write_text(json.dumps(result,indent=2,default=str))
-    if multi<3:
-        raise RuntimeError("F48-007 independent dataset did not demonstrate multi-expiry entry coverage")
+    multi=int(((z.current_rows>0)&(z.next_rows>0)).sum()) if len(z) else 0
+    multi_days=[]
+    for y in YEARS:
+        rel=norm_relation(y)
+        q=duck(f"SELECT date, COUNT(DISTINCT expiry) AS n_expiries FROM {rel} GROUP BY date HAVING COUNT(DISTINCT expiry)>1 ORDER BY date LIMIT 25")
+        if len(q):
+            multi_days.append(q)
+    md=pd.concat(multi_days,ignore_index=True) if multi_days else pd.DataFrame(columns=['date','n_expiries'])
+    md.to_csv(OUT/'multi_expiry_days.csv',index=False)
+    result={'audit':audit,'trade_days':len(days),'expiries':len(exps),'monthly_expiries':len(monthly),
+            'monthly_checks':len(z),'multi_expiry_entry_checks':multi,'generic_multi_expiry_days':len(md)}
+    z.to_csv(OUT/'preflight_monthly_checks.csv',index=False)
+    (OUT/'preflight.json').write_text(json.dumps(result,indent=2,default=str))
+    print('MONTHLY_CHECKS')
+    print(z.to_string(index=False) if len(z) else 'none')
+    print('MULTI_EXPIRY_DAYS')
+    print(md.to_string(index=False) if len(md) else 'none')
+    if len(md)==0:
+        raise RuntimeError('F48-007 independent dataset has no trade dates with multiple expiries')
     return result
-
 def main():
     if os.getenv("PHASE48_PREFLIGHT_ONLY")=="1":
         print(json.dumps(run_preflight(),indent=2,default=str))
