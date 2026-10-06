@@ -328,3 +328,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Zero candidates survived Holm-adjusted statistical inference. Final decision: NO_PROMOTION.
 - Strongest empirical candidate: LOW-VIX Bear Call Spread; LOW-VIX Bear Put Spread was second.
 - Canonical Phase-20/42 strategy remains unchanged.
+
+## 2026-10-07 — Phase 46 VIX YouTube strategy discovery
+- Created isolated branch `phase-46-vix-youtube-strategy-discovery` from completed Phase 45.
+- Audited Phase-45 plan, status, research log and error log before discovery work.
+- Performed a broad indexed YouTube/web search across India VIX, high/rising VIX, high IV, VIX spike, backspread, calendar, iron condor, straddle/strangle, skew and term-structure query families.
+- Persisted 10 directly relevant video/public-source leads in `PHASE46_YOUTUBE_SOURCE_LEDGER.md` with direct links and an explicit search-coverage limitation.
+- Registered a finite discovery set for possible follow-up numerical testing, with priority on Put Ratio Backspread, Calendar Trap, long-volatility convex structures, post-spike VIX-reversal short-volatility structures, skew routing and IV/VIX divergence.
+- No numerical evidence was generated in Phase 46 and no strategy was promoted.
