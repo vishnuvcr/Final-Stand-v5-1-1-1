@@ -340,18 +340,24 @@ A control-reproducibility discrepancy was detected and logged as F38-001: a fres
 
 ## Phase 40 — exhaustive ensemble direction selection with VIX — ACTIVE
 
-Phase 40 tests whether the five previously rejected direction selectors contain complementary information when combined rather than used individually. It exhaustively screens **1,764 pre-registered combinations**: all 63 non-empty subsets of five model selectors plus India VIX, four aggregation rules, and seven VIX routing modes.
+Phase 40 screens the five previously tested direction selectors plus India VIX across **1,764 pre-registered combinations**: 63 expert subsets × 4 aggregators × 7 VIX routing modes. Equivalent expiry-level decision sequences are deduplicated before the untouched holdout.
 
 - [Phase 40 research plan](PHASE40_RESEARCH_PLAN.md)
 - [Phase 40 pre-registration](PHASE40_PRE_REGISTRATION.md)
 - [Phase 40 literature review](PHASE40_LITERATURE_REVIEW.md)
 - [Phase 40 status](PHASE40_STATUS.md)
 - [Phase 40 automated workflow](.github/workflows/phase-40-ensemble-direction-models.yml)
-- [Phase 40 engine](research/phase40_ensemble_direction.py)
+- [Phase 40 ensemble engine](research/phase40_ensemble_direction.py)
+- [Phase 40 exact stateful replay](research/phase40_sequential_replay.py)
+- [Phase 40 inference](research/phase40_inference.py)
+- [Phase 40 validation grid](results/phase40_ensemble/grid_validation.csv)
+- [Phase 40 inference results](results/phase40_ensemble/inference_top10.csv)
+- [Phase 40 sequential replay results](results/phase40_ensemble/sequential_top10.csv)
 
-India VIX is acquired once and cached in `data/phase40_vix/india_vix.csv`; point-in-time alignment uses the previous session's VIX close/change. Validation is used to freeze the top-10 candidates before untouched 2026 holdout replay.
+**Latest finding:** 1,764 raw candidates reduced to 306 unique validation policies. The best validation policy is **CATBOOST + HIGH India-VIX gate with canonical fallback**, with ₹98,104.79 validation net P&L and +₹21,262.83 versus the common-expiry frozen control. Its fixed-opportunity 2026 holdout uplift is +₹13,072.75, but the 95% bootstrap CI crosses zero (approximately -₹3,665 to +₹42,883 total) and the one-sided sign-flip p-value is about 0.407. It is therefore **promising but not yet promotable**.
 
-**Current status: initialized; numerical screening pending.**
+The exact stateful Phase-32 replay of the frozen top-10 is now the decisive next gate; it preserves the chronological direction state, delta exits, one-tick adverse slippage, brokerage and all statutory charges.
+
 
 ## Phase 39 — advanced counterfactual direction models — ACTIVE
 
