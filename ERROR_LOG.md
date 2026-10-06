@@ -1244,3 +1244,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The numerical workflow failed or an artifact self-audit failed.
 - Evidence status: affected run is non-evidence until the failure is diagnosed and corrected.
 - The workflow requires compile, preflight, numerical, artifact and holdout audits before publication.
+
+
+## F47-005 — First numerical run blocked by artifact self-audit
+- Accepted numerical execution did complete, but it produced only 14 trade rows, all for covered_call_2_proxy; Double Calendar Straddle and Monthly Wide-Range Hedge produced no accepted rows.
+- The required all-state artifact audit therefore failed and no numerical result was published as evidence.
+- Evidence status: **NON-EVIDENCE**.
+- Correction: added a focused monthly diagnostic stage and more robust common-strike selection for the double calendar before rerunning. The next run must show successful diagnostic checkpoints for both S1 and S2 before the numerical stage can proceed.
