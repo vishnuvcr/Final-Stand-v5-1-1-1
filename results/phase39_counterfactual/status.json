@@ -1,0 +1,6 @@
+{
+  "step": "fixed_opportunity_counterfactual_engine",
+  "status": "COMPLETE",
+  "rows": 206,
+  "control_reconstruction_max_abs_error": 1.8189894035458565e-12
+}

@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "rows": 206,
+  "expiries": 102,
+  "control_net_rupees": 63672.57530171223,
+  "call_net_rupees": 120688.65246085326,
+  "put_net_rupees": -60970.98933408182,
+  "mean_delta_pnl_rupees": 881.8429213346361,
+  "median_delta_pnl_rupees": 606.2838737400009,
+  "positive_delta_share": 0.6262135922330098,
+  "oracle_net_rupees": 601241.1736588753,
+  "oracle_uplift_vs_control_rupees": 537568.598357163,
+  "control_reconstruction_max_abs_error": 1.8189894035458565e-12,
+  "control_reconstruction_mean_abs_error": 1.0237334173475619e-13,
+  "control_direction_counts": {
+    "CALL": 106,
+    "PUT": 100
+  },
+  "counterfactual_arm_win_counts": {
+    "CALL": 129,
+    "PUT": 77,
+    "TIE": 0
+  }
+}

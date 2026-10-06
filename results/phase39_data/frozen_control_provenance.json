@@ -1,0 +1,10 @@
+{
+  "source_artifact_id": 11380124540,
+  "source_run_id": 37388261915,
+  "source_repo": "vishnuvcr/Final-Stand-v5-1-1-1",
+  "source_member": "results/dynamic_strategy_phase32/trades.csv",
+  "derived_sha256": "39a64226427d394d3b52efdf12478e9e464a4a261804bf0aa2a165c7c97951b1",
+  "trades": 206,
+  "expiries": 102,
+  "net_rupees": 63672.57530171223
+}
