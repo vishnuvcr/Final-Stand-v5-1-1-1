@@ -422,3 +422,40 @@ All registered Phase-39 model families were screened to the extent specified by 
 - results/phase39_advanced_screen/advanced_model_comparison.csv
 - results/phase39_hedge_screen/summary.json
 - ERROR_LOG.md
+
+
+## Supplemental propensity-matched scoring — COMPLETE
+
+A post-hoc observational robustness analysis was performed for the Sparse-GAM override policy.
+
+Treatment definition:
+- treatment = exact Sparse-GAM override at the fixed entry timestamp;
+- outcome = alternative-arm net P&L minus canonical-control net P&L.
+
+Important mapping result:
+- audited sequential Sparse-GAM overrides = 7;
+- exact fixed-opportunity mappings = 5;
+- unmatched sequential overrides = 2 and were not imputed.
+
+Propensity model:
+- 103 pre-entry numeric covariates;
+- strongly regularized logistic assignment model;
+- matching restricted within development, validation and holdout periods;
+- calipers = 0.01, 0.025, 0.05, 0.10, 0.20, 0.50, 1.00.
+
+Results:
+
+| Period | Treated mapped | Matching at ≤0.20 | ATT at 0.50/available caliper |
+|---|---:|---:|---:|
+| Development | 3 | 0 matches | **−₹11,339.12** |
+| Validation | 1 | 0 matches | **+₹10,427.87** |
+| Holdout | 1 | 1 match at 0.05 | **−₹4,854.47** |
+
+Interpretation:
+- conventional propensity overlap is poor;
+- validation matching requires a very wide 0.50 caliper;
+- holdout matching is negative;
+- only five of seven sequential overrides are represented in the fixed panel;
+- the treatment is deterministic and extremely sparse.
+
+Decision: **INCONCLUSIVE / NOT PROMOTABLE**. The propensity analysis neither establishes a causal benefit nor statistically disproves one. It provides additional evidence that much larger prospective data are required.
