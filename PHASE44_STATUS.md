@@ -1,6 +1,6 @@
 # Phase 44 Status — VIX Candidate Tuning
 
-**STAGE 1 NUMERICAL EXECUTION IN PROGRESS**
+**STAGE 1 NUMERICAL EXECUTION IN PROGRESS — ACTIVE CORRECTED RUN 37488148310**
 
 ## Registered scope
 - 6 defined-risk Phase-43 candidate families.
