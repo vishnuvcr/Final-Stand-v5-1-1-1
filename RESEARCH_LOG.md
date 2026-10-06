@@ -400,3 +400,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Registered development tuning on 2021-2023, validation on 2024-2025 and protected 2026 holdout.
 - Added development robustness constraints and neighborhood/plateau support to reduce isolated-peak overfitting.
 - Reused audited Phase-43 execution/cost primitives rather than introducing a second independent fee/slippage implementation.
+
+
+## 2026-10-07 — Phase 49 F49-011 audit correction
+- Run #11 numerical computation completed successfully and produced a complete raw artifact.
+- Artifact self-audit failed only because an empty development error ledger was stored as a zero-byte CSV.
+- The numerical result was embargoed; no candidate was promoted.
+- Corrected the engine to emit a headered zero-row error ledger and started full rerun #12.
+- Run #11 provisional numerical observation: 2 frozen LOW-VIX candidates; 1 validation economic pass; 0 Holm survivors; 1 holdout confirmation. These values remain non-final until run #12 passes the complete artifact/publication gate.
