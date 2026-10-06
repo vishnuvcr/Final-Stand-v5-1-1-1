@@ -150,8 +150,37 @@ def build_ref_directions(z, combo, agg, vm, thr):
     sub["bullish_signal"] = routed
     return sub[["expiry","ref_ts","ensemble_prob","bullish_signal"]]
 
-def expected_expiries(spot):
-    return [e for e in base.expected_weekly_expiries(spot) if START <= e <= HOLD_END]
+def study_expiries():
+    # Reuse the accepted Phase-39 opportunity slice so this phase cannot
+    # accidentally introduce expiries absent from the frozen study universe.
+    p = Path("results/phase39_counterfactual/fixed_opportunity_ledger.csv")
+    if not p.exists():
+        raise FileNotFoundError(p)
+    x = pd.read_csv(p, usecols=["split","expiry"])
+    x["expiry"] = pd.to_datetime(x["expiry"], errors="coerce").dt.tz_localize(base.TZ)
+    x = x[x["expiry"].between(START, HOLD_END)]
+    return sorted(x["expiry"].dropna().drop_duplicates().tolist())
+
+def canonical_control_trades(expiries, spot):
+    # Exact Phase-32 state machine control, carried sequentially across expiries.
+    target_dir = 1
+    out = []
+    expected = base.expected_weekly_expiries(spot)
+    for i, expiry in enumerate(expiries, 1):
+        if expiry not in expected:
+            raise RuntimeError(f"study expiry missing from canonical calendar: {expiry}")
+        od = base.load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
+        od["option_type"] = od.option_type.astype(str).str.upper()
+        od["strike"] = pd.to_numeric(od.strike, errors="coerce")
+        od = od.dropna(subset=["timestamp","strike","close"])
+        idx = expected.index(expiry)
+        window_start = expiry - pd.Timedelta(days=7) if idx == 0 else expected[idx-1] + pd.Timedelta(hours=15, minutes=30)
+        sd = spot[(spot.timestamp > window_start) & (spot.timestamp <= expiry + pd.Timedelta(hours=15, minutes=29))].copy()
+        tr, _, target_dir = base.run_expiry(expiry, od, sd, int(target_dir), window_start)
+        out.extend(tr)
+        if i % 25 == 0:
+            print(f"control replay {i}/{len(expiries)}", flush=True)
+    return pd.DataFrame(out)
 
 def replay_expiry(expiry, direction, spot, expected):
     od = base.load(f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet")
@@ -164,12 +193,31 @@ def replay_expiry(expiry, direction, spot, expected):
     tr, _, _ = base.run_expiry(expiry, od, sd, int(direction), window_start)
     return tr
 
-def build_arm_cache(expiries, spot):
+def build_arm_cache(expiries, spot, expected):
+    cache_path = ROOT / "arm_cache.parquet"
+    if cache_path.exists():
+        q = pd.read_parquet(cache_path)
+        cache = {}
+        for (d, direction), g in q.groupby(["expiry","direction_arm"], sort=False):
+            cache[(pd.Timestamp(d).date(), int(direction))] = g.drop(columns=["expiry","direction_arm"]).to_dict("records")
+        print(f"loaded cached arm streams: {len(cache)} arms", flush=True)
+        return cache
+
     cache = {}
+    all_rows = []
     for i, expiry in enumerate(expiries, 1):
-        cache[(expiry.date(), 1)] = replay_expiry(expiry, 1, spot, expiries)
-        cache[(expiry.date(), -1)] = replay_expiry(expiry, -1, spot, expiries)
+        for direction in (1, -1):
+            tr = replay_expiry(expiry, direction, spot, expected)
+            cache[(expiry.date(), direction)] = tr
+            for row in tr:
+                x = dict(row)
+                x["expiry"] = pd.Timestamp(expiry).date()
+                x["direction_arm"] = direction
+                all_rows.append(x)
         print(f"precomputed expiry {i}/{len(expiries)} {expiry.date()}", flush=True)
+
+    if all_rows:
+        pd.DataFrame(all_rows).to_parquet(cache_path, index=False)
     return cache
 
 def metrics(t):
@@ -215,11 +263,20 @@ def main():
         raise AssertionError(len(grid))
 
     spot = base.load("index/NIFTY.parquet")[["timestamp","close"]].rename(columns={"close":"spot"})
-    expiries = expected_expiries(spot)
-    # Only expiries for which an expert prediction exists are required.
+    expiries = study_expiries()
+    expected = base.expected_weekly_expiries(spot)
     pred_dates = set(z["expiry"].dt.date.dropna())
     expiries = [e for e in expiries if e.date() in pred_dates]
-    arm_cache = build_arm_cache(expiries, spot)
+    arm_cache = build_arm_cache(expiries, spot, expected)
+
+    control_path = ROOT / "control_trades.parquet"
+    if control_path.exists():
+        control = pd.read_parquet(control_path)
+    else:
+        control = canonical_control_trades(expiries, spot)
+        control.to_parquet(control_path, index=False)
+    control["exit_ts"] = pd.to_datetime(control["exit_ts"])
+    control["entry_ts"] = pd.to_datetime(control["entry_ts"])
 
     validation_rows = []
     for k, (combo, agg, vm) in enumerate(grid, 1):
@@ -236,16 +293,17 @@ def main():
             print(f"screened {k}/{len(grid)}", flush=True)
 
     full_grid = pd.DataFrame(validation_rows)
-    control_net = 63948.222105380155
-    full_grid["validation_uplift_vs_frozen_control"] = full_grid["net"] - control_net
-    full_grid = full_grid.sort_values(["validation_uplift_vs_frozen_control","profit_factor"], ascending=[False,False]).reset_index(drop=True)
+    control_val = control[(control["exit_ts"] >= START) & (control["exit_ts"] <= VAL_END)]
+    control_net = float(control_val["net_rupees"].sum())
+    full_grid["validation_uplift_vs_sequential_control"] = full_grid["net"] - control_net
+    full_grid = full_grid.sort_values(["validation_uplift_vs_sequential_control","profit_factor"], ascending=[False,False]).reset_index(drop=True)
     full_grid.to_csv(ROOT / "grid_validation.csv", index=False)
 
     # Freeze top 10 only on validation.
     top = full_grid.head(10).copy()
     top10 = top.to_dict(orient="records")
     with open(ROOT / "selection.json","w") as fh:
-        json.dump({"grid_candidates":len(full_grid),"top10_count":len(top10),"vix_thresholds":thr,"frozen_control_validation_net":control_net,"top10":top10},fh,indent=2)
+        json.dump({"grid_candidates":len(full_grid),"top10_count":len(top10),"vix_thresholds":thr,"sequential_control_validation_net":control_net,"study_expiries":len(expiries),"top10":top10},fh,indent=2)
 
     holdout_rows = []
     for row in top10:
@@ -258,7 +316,7 @@ def main():
             "aggregator": row["aggregator"],
             "vix_mode": row["vix_mode"],
             "validation_net": float(row["net"]),
-            "validation_uplift": float(row["validation_uplift_vs_frozen_control"]),
+            "validation_uplift": float(row["validation_uplift_vs_sequential_control"]),
             **{f"holdout_{k}":v for k,v in m.items()},
         })
     pd.DataFrame(holdout_rows).to_csv(ROOT / "holdout_top10.csv", index=False)
