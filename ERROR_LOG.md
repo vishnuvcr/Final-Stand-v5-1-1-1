@@ -435,3 +435,17 @@ Evidence status: Non-evidence runtime failure. No sequential result was produced
 Correction: Sequential replay now reads the exact locked Step-3 feature manifest, and the Step-4 workflow explicitly depends on that file.
 
 Prevention: Model-dependent workflows will reference the canonical model artifact path directly and verify its existence before execution.
+
+
+### Error F39-024 — Optional next-expiry quote file absent
+Run: 37441878544.
+
+Symptom: Sequential replay failed when constructing point-in-time features because the optional next-expiry file `options/NIFTY/2021-11-04.parquet` does not exist in the Hugging Face dataset.
+
+Evidence status: non-evidence feature-loading failure; no sequential result accepted.
+
+Cause: The replay treated an optional next-contract term-structure input as mandatory.
+
+Correction: Missing next-expiry files now produce an empty optional frame, preserving the current-expiry quote data and leaving the corresponding term-structure features unavailable/NaN. Required current-expiry files remain fatal.
+
+Prevention: Optional cross-contract features will distinguish missing historical coverage from execution-data failure; no synthetic forward fill or imputation is applied at the data-loader boundary.
