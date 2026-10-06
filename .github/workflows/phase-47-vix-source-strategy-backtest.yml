@@ -67,7 +67,7 @@ jobs:
           assert "OK" in set(d["s2"].dropna())
           print("Preflight PASS:", p)
           print("Monthly diagnostic PASS")
-          print(d[["expiry","entry","s1","s2","common_strikes"]].to_string(index=False))
+          print(d[["expiry","entry","s1","s2","cur_strikes","next_strikes"]].to_string(index=False))
           PY
 
   numerical:
