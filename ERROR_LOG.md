@@ -1088,3 +1088,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The corrected engine was still unnecessarily slow because it repeatedly scanned the full expiry option dataframe for each family/geometry/time combination.
 - No output from the slow implementation is accepted as evidence.
 - The registered logic is unchanged. The engine now loads each expiry once, caches expiry-day option series and exact entry prices, and performs the same strategy calculations from those cached objects.
+
+
+## F44-004 — Phase-43 expiry cache reuse
+- The active numerical run spent excessive time in HF repository file enumeration before loading the option sample.
+- The accepted Phase-43 expiry-level trade matrix is now used as the primary cached expiry list, preserving the exact audited opportunity sample and eliminating repeated HF repository metadata enumeration. The fallback HF enumeration remains only for cache absence.
