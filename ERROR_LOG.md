@@ -837,3 +837,15 @@ The India-VIX cache step failed before numerical execution because the YAML bloc
 **Correction:** Replaced the inline heredoc with a deterministic `python -c` acquisition command and retained the cache-write/push step.
 
 **Prevention:** Avoid shell heredoc terminators inside indented YAML run blocks unless indentation is explicitly validated.
+
+
+### Error F40-003 — India-VIX cache push race
+**Run:** 37454627680.
+
+The India-VIX download itself succeeded and produced 1,590 cached rows locally, but the workflow attempted to push that cache from a stale checkout. Connector-side documentation commits had advanced the remote branch, so GitHub rejected the cache push as non-fast-forward.
+
+**Evidence status:** non-evidence CI persistence failure; the numerical screen did not start.
+
+**Correction:** The workflow no longer pushes from the acquisition step. The cache is kept in the working tree and is committed together with research results only after a fresh `git pull --rebase` in the final persistence step.
+
+**Prevention:** All workflow-generated artifacts are now persisted in one race-safe final commit.
