@@ -1,3 +1,17 @@
+## Phase 46 scope expansion — Profit Breakout + full VIX panel
+
+The user-designated **Profit Breakout** YouTube channel has been incorporated as a dedicated source stream. Nine directly relevant indexed videos were added to the Phase-46 source ledger, including explicit India-VIX strategy selection, Batman/VIX filtering, Iron Fly versus Iron Condor by volatility, adaptive Iron Fly→Iron Condor management, VIX-adapted monthly strategy, hedged weekly/monthly credit structures and longer-duration NIFTY income structures.
+
+**Research scope correction:** the new search will **not abandon LOW/NORMAL VIX**. Every reconstructable candidate from Profit Breakout and the broader video search will be evaluated across **ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING**, with routing/transition rules tested only after the cross-regime baseline is established. This avoids assuming in advance that a strategy belongs only to a high-VIX regime.
+
+Key new hypotheses include Put Ratio Backspread, Calendar Trap/Calendar Spread, Long Straddle/Strangle, Reverse Iron Condor/Long Iron Butterfly, post-spike VIX-reversal short-volatility structures, Batman with VIX filter, Iron Fly↔Iron Condor adaptive switching, VIX-adapted monthly option structures, and skew/IV-VIX divergence routing.
+
+- [Updated Phase 46 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_RESEARCH_PLAN.md)
+- [Profit Breakout + video source ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_YOUTUBE_SOURCE_LEDGER.md)
+- [Phase 46 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_STATUS.md)
+
+---
+
 # Phase 46 — YouTube/Public-Video VIX Strategy Discovery — COMPLETE (Discovery Only)
 
 Phase 46 was opened to address the remaining **RISING, HIGH, SPIKE and HIGH_RISING** India-VIX gaps after Phases 43–45 found their strongest evidence in LOW/NORMAL VIX.
