@@ -1215,3 +1215,27 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The first Phase-46 framing prioritized RISING/HIGH/SPIKE/HIGH_RISING because those regimes were empty, but could have unintentionally excluded LOW/NORMAL candidates from the newly discovered source material.
 - Evidence status: no numerical test was run under the restricted framing, so no backtest evidence is contaminated.
 - Correction: the registered Phase-46 plan now requires all discovered candidates, including Profit Breakout-derived strategies, to be evaluated across the complete eight-state VIX panel. LOW/NORMAL remain active comparator and opportunity regimes.
+
+## F47-001 — timezone-aware Timestamp construction
+- Initial Phase-47 engine snapshot mixed timezone-aware timestamps with pd.Timestamp(..., tz=TZ), which can raise on already-aware values.
+- Evidence status: pre-numerical only; no accepted numerical output was produced from the affected snapshot.
+- Correction: added a single as_tz() normalization helper and applied it to expiry/date conversion paths.
+- Prevention: workflow compiles the engine before any data access and the preflight stage must pass before numerical execution.
+
+## F47-002 — multi-window option-file cache key
+- Initial load_expiry() cache used only the contract expiry date, even though the same contract file can be needed for different entry/exit windows when it is a next-month hedge in one trade and the current-month contract in another.
+- Evidence status: pre-numerical only.
+- Correction: cache key now includes contract date plus entry and extra-day windows.
+- Prevention: windowed cache keys are part of the numerical engine audit.
+
+## F47-003 — variant accounting dropped S1/S3 rows
+- Initial summary/inference grouping used delta_target as a grouping dimension, and NaN values would be dropped for strategies without a delta parameter.
+- Evidence status: pre-numerical only.
+- Correction: S1 is assigned variant 0.0 and S3 variant 0.30; only S2 varies across 0.25/0.30/0.35.
+- Prevention: artifact audit verifies total summary rows against the trade matrix and deterministic inference grouping.
+
+## F47-004 — nondeterministic inference seed
+- Initial inference seed used Python's built-in hash(), which can vary between interpreter processes.
+- Evidence status: pre-numerical only.
+- Correction: deterministic character-sum seed derived from strategy, variant and VIX state.
+- Prevention: inference seeds are fixed by source strings and are recorded by the workflow outputs.
