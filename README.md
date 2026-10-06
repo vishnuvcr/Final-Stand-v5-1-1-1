@@ -214,27 +214,24 @@ Headline result: **478 trades, ₹83,820.48 net P&L, 63.60% win rate, 1.112 prof
 
 
 
-## Phase 33 — NIFTY D−6 prediction-model research — OPEN / NUMERICAL RUN IN PROGRESS
 
-Phase 33 tests whether the NIFTY spot observed at exactly **10:00 IST on 6 calendar days before expiry** contains enough point-in-time information to forecast the expiry-day close direction/magnitude.
+## Phase 33 — NIFTY D−6 prediction models — COMPLETE / NO PROMOTION
 
-Registered model families:
-- LSTM sequence model
-- GARCH / EGARCH / GJR-GARCH volatility models
-- sentiment-augmented SOFNN-inspired fuzzy classifier
-- Random Forest
-- fixed equal-weight ensemble
+Phase 33 tested LSTM, GARCH/EGARCH/GJR-GARCH, sentiment-augmented SOFNN-inspired fuzzy learning, Random Forest and a fixed equal-weight ensemble using the exact **10:00 IST / six-calendar-days-before-expiry** reference.
 
-The feature audit includes NIFTY price/volatility, global cross-market variables, NIFTY option-chain diagnostics, sentiment, and cached FII/DII institutional-flow data, with backward-only joins to prevent look-ahead.
-
-The sentiment source begins in January 2024, so the primary sentiment-SOFNN track uses **2024 development → 2025 validation → 2026 holdout** rather than fabricating pre-2024 sentiment history.
+**Final result: no model is promoted to trading.** There were 245 eligible events: 128 development, 95 validation and 22 untouched 2026 holdout. Random Forest was strongest on validation (54.74% accuracy; 0.6851 log loss). The 2026 ensemble reached 59.09% accuracy, but the simple always-down baseline reached 63.64%; all model signed-return bootstrap intervals included zero. GARCH-family volatility correlation with realized absolute return was only 0.066, with QLIKE 66,548.975. **Phase 20 remains canonical.**
 
 - [Phase 33 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-33-nifty-prediction-models)
-- [Phase 33 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_RESEARCH_PLAN.md)
-- [Phase 33 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_PRE_REGISTRATION.md)
-- [Phase 33 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_STATUS.md)
-- [Phase 33 data dictionary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_DATA_DICTIONARY.md)
-- [Phase 33 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/PHASE33_LITERATURE_REVIEW.md)
-- [Phase 33 GitHub Actions run #1](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37420357853)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_RESEARCH_PLAN.md)
+- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_PRE_REGISTRATION.md)
+- [Final status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_STATUS.md)
+- [Data dictionary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/PHASE33_DATA_DICTIONARY.md)
+- [Literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/PHASE33_LITERATURE_REVIEW.md)
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/PHASE33_NIFTY_PREDICTION_MANUSCRIPT.md)
+- [Statistical summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/PHASE33_STATISTICAL_SUMMARY.csv)
+- [Decision table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/PHASE33_DECISION_TABLE.csv)
+- [GARCH summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/PHASE33_GARCH_SUMMARY.json)
+- [Final figures](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-33-nifty-prediction-models/results/phase33_nifty_prediction/figures)
+- [Final postprocess Actions run #4](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37422362350)
 
-**No model is promoted from Phase 33 until the preregistered validation/holdout metrics and economic robustness tests are complete. Phase-20 remains canonical pending evidence.**
+The full manuscript records methodology, leakage controls, statistical tests, strengths, limitations and future research. Any future use of RF/ensemble as a direction chooser requires a new registered phase with the established Paytm Money transaction-cost and slippage model.
