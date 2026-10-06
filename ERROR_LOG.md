@@ -985,3 +985,8 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 ## 2026-10-06 — Phase 41 accepted execution status
 - Numerical evidence is accepted only from the GitHub Actions run that completes preflight, the frozen 24-variant screen, exact sequential replay and closeout without protocol changes.
+
+
+## 2026-10-06 — Phase 42 initialization
+- No Phase-42 numerical evidence has yet been accepted.
+- The phase is intentionally bounded and directly motivated by Phase-41's zero-override/positive-ranking split.
