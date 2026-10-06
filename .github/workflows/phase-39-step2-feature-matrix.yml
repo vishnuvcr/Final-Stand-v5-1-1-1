@@ -1,0 +1,77 @@
+name: Phase 39 - Step 2 Point-in-Time Feature Matrix
+
+on:
+  push:
+    branches: [phase-39-advanced-direction-models]
+    paths:
+      - 'research/phase39_feature_matrix.py'
+      - 'results/phase39_counterfactual/fixed_opportunity_ledger.csv'
+      - '.github/workflows/phase-39-step2-feature-matrix.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase39-step2-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  feature_matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
+      - name: Recover Phase-35 cached daily sources
+        run: |
+          git fetch origin phase-35-advanced-tree-and-adaptive-prediction-search --depth=1
+          mkdir -p results/phase39_feature_source
+          git show FETCH_HEAD:data/phase33/nifty_daily.parquet > results/phase39_feature_source/nifty_daily.parquet
+          git show FETCH_HEAD:data/phase33/global_daily.parquet > results/phase39_feature_source/global_daily.parquet
+          git show FETCH_HEAD:data/phase33/fii_dii_daily.parquet > results/phase39_feature_source/fii_dii_daily.parquet
+          git show FETCH_HEAD:data/phase33/sentiment_daily.parquet > results/phase39_feature_source/sentiment_daily.parquet
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase39-hf-feature-${{ runner.os }}-${{ hashFiles('research/phase39_feature_matrix.py') }}
+          restore-keys: |
+            phase39-hf-feature-${{ runner.os }}-
+            phase39-hf-${{ runner.os }}-
+      - run: |
+          python -m pip install --disable-pip-version-check --no-input pandas pyarrow requests huggingface_hub
+      - name: Build exact-entry feature matrix
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase39_feature_matrix.py
+      - name: Verify feature matrix and leakage audit
+        run: |
+          test -f results/phase39_features/point_in_time_features.csv
+          test -f results/phase39_features/point_in_time_features.parquet
+          test -f results/phase39_features/feature_dictionary.csv
+          test -f results/phase39_features/leakage_audit.json
+          python - <<'PY'
+          import json, pandas as pd
+          z=pd.read_csv('results/phase39_features/point_in_time_features.csv')
+          a=json.load(open('results/phase39_features/leakage_audit.json'))
+          d=pd.read_csv('results/phase39_counterfactual/fixed_opportunity_ledger.csv',usecols=['entry_ts','split'])
+          assert len(z)==477 and z.entry_ts.nunique()==477
+          assert set(z.split)=={'development','validation','holdout'}
+          assert len(d)==477 and set(d.entry_ts)==set(z.entry_ts)
+          assert a['status']=='PASS'
+          print('rows',len(z),'numeric_columns',len(z.select_dtypes('number').columns))
+          print('mean_missing_pct',z.select_dtypes('number').isna().mean().mean())
+          PY
+      - name: Persist Step 2 feature evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase39_feature_source results/phase39_features
+          git commit -m 'Phase 39: persist point-in-time feature matrix' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
