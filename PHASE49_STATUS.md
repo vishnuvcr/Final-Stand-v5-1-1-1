@@ -37,3 +37,6 @@ Gate status:
 ## 2026-10-07 — Execution watchdog correction
 
 The superseded run 37535442553 stopped updating while the corrected run entered the Actions queue. Because the old run is already classified as NON-EVIDENCE, the workflow concurrency group is being advanced for the corrected execution rather than waiting indefinitely for a defective process.
+## 2026-10-07 — Performance correction F49-009
+
+The second self-audit found one more execution-only bottleneck: per-candidate recalculation of the full index day set, spot lookup and VIX historical quantiles. The engine has now been corrected to cache these metadata objects across candidates. No scientific definition changed and no numerical output from the slower runs is accepted.
