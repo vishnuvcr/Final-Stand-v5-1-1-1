@@ -45,16 +45,29 @@ jobs:
           HF_HUB_DISABLE_TELEMETRY: "1"
           PHASE47_PREFLIGHT_ONLY: "1"
         run: python research/phase47_vix_source_backtest.py
-      - name: Validate preflight artifacts
+      - name: Run focused monthly diagnostic
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          PHASE47_DIAGNOSTIC_ONLY: "1"
+        run: python research/phase47_vix_source_backtest.py
+
+      - name: Validate preflight and diagnostic artifacts
         run: |
           test -s results/phase47_vix_source/preflight.json
           test -s results/phase47_vix_source/definition_audit.json
+          test -s results/phase47_vix_source/diagnostic_monthly_sample.csv
           python - <<'PY'
-          import json
+          import json, pandas as pd
           p=json.loads(open("results/phase47_vix_source/preflight.json").read())
+          d=pd.read_csv("results/phase47_vix_source/diagnostic_monthly_sample.csv")
           assert p["sample_files_checked"] >= 4
           assert p["monthly_expiries"] >= 20
+          assert "OK" in set(d["s1"].dropna())
+          assert "OK" in set(d["s2"].dropna())
           print("Preflight PASS:", p)
+          print("Monthly diagnostic PASS")
+          print(d[["expiry","entry","s1","s2","common_strikes"]].to_string(index=False))
           PY
 
   numerical:
