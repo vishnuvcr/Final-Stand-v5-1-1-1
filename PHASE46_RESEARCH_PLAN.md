@@ -20,7 +20,7 @@ The discovery scan uses multiple keyword families covering:
 - volatility skew, IV/VIX divergence and term structure
 - option-chain/OI/volume-profile confirmation
 
-The search includes Indian and global options educators where the underlying strategy is structurally transferable to NIFTY. Global videos are treated as hypothesis sources only; they are not evidence that the same structure works on NIFTY.
+The search includes Indian and global options educators where the underlying strategy is structurally transferable to NIFTY. The user-designated **Profit Breakout** channel is now a dedicated source stream because it contains multiple NIFTY/India-VIX strategy videos, including explicit low-vs-high VIX comparisons and adaptive structure-management ideas. Global videos are treated as hypothesis sources only; they are not evidence that the same structure works on NIFTY.
 
 This scan is **not claimed to be literally every YouTube video**. Public search indexing is incomplete and ranking is dynamic. The audit goal is a reproducible, broad keyword sweep that records all relevant indexed results found through the selected queries.
 
@@ -39,6 +39,21 @@ Exclude:
 - strategies requiring unavailable proprietary signals unless a public proxy can be defined;
 - naked/undefined-risk structures from the promoted-strategy universe unless explicitly marked diagnostic;
 - claims treated as factual performance evidence without independent backtesting.
+
+## Dedicated Profit Breakout source stream
+
+The Profit Breakout channel is incorporated as a first-class hypothesis source. Indexed videos located in this phase include:
+- India VIX & Options Strategies: Calendar, Iron Fly, Iron Condor, Straddle, Strangle.
+- Batman Strategy / Double Ratio Spread with VIX-based entry filter.
+- Iron Fly vs Iron Condor across high/low volatility.
+- Iron Fly → Iron Condor adaptive shift using premium imbalance and market-structure change.
+- Weekly Call Credit Spread + Monthly Put Credit Spread with adjustment rules.
+- Covered Call 2.0 using current-week and next-week call selling plus protective put/future.
+- 1-Year NIFTY options income structure with weekly/monthly call selling.
+- Monthly Option Strategy with explicit India-VIX adaptation and strike selection.
+- Weekly option framework emphasizing hedging and structural risk control.
+
+These sources expand both **high-volatility** and **low/normal-volatility** hypotheses; no video performance claim is accepted without independent testing.
 
 ## Discovery-only candidate families
 
@@ -96,3 +111,13 @@ No strategy discovered in Phase 46 is numerically accepted yet. A subsequent num
 ## Phase stop condition
 
 Phase 46 closes after the source scan, candidate classification, deduplication, literature/source ledger and a finite candidate registry are persisted. Numerical strategy testing is a subsequent phase and must not be silently added to Phase 46.
+
+
+## Regime-complete evaluation requirement
+
+For the subsequent numerical phase, each candidate family must initially be evaluated across the full eight-state VIX panel rather than pre-assigned to only HIGH/RISING. Strategy-specific routing may be tested after the baseline matrix is complete. This prevents selection bias from assuming in advance that a structure belongs only to one VIX state.
+
+Profit Breakout-derived candidates must therefore be compared in at least three broad volatility contexts:
+1. **LOW/NORMAL** — baseline/comparator opportunity set.
+2. **FALLING** — volatility-normalisation context, including the previously promising Iron Butterfly finding.
+3. **HIGH/SPIKE/RISING/HIGH_RISING** — volatility-expansion and post-spike research gap.
