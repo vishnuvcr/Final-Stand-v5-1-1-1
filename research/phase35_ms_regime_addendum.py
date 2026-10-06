@@ -67,7 +67,7 @@ def sf(x,n=12000):
     rng=np.random.default_rng(SEED); obs=abs(np.mean(x)); s=rng.choice([-1,1],size=(n,len(x))); z=np.abs((s*x).mean(axis=1))
     return float((1+(z>=obs).sum())/(n+1))
 def main():
-    ev,d=load(); z=prep_states(ev,d); ev=ev.merge(z,on="ref_ts",how="left")
+    ev,d=load(); z=prep_states(ev,d); \n    if not {"ms_p0","ms_p1","ms_entropy"}.issubset(ev.columns):\n        ev=ev.merge(z,on="ref_ts",how="left")
     base=cols(ev); ms=base+["ms_p0","ms_p1","ms_entropy"]
     tr=ev[ev.split=="train"].copy(); va=ev[ev.split=="validation"].copy(); ho=ev[ev.split=="holdout"].copy()
     rows=[]; econ=[]
