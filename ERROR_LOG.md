@@ -1426,3 +1426,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: numerical evidence remains valid; closeout packaging was incomplete.
 - Correction: the manuscript generator now uses an internal Markdown-table renderer with no optional tabulate dependency. The workflow also includes tabulate for redundancy.
 - Prevention: closeout workflows must avoid undocumented optional dependencies or install them explicitly and validate imports before processing evidence.
+### F49-014 — Closeout reset ordering discarded generated status/log updates
+- Affected closeout run: 37544951498.
+- Numerical artifact generation and reconciliation succeeded and the full result package was published, but the commit stage reset the branch to origin after generating PHASE49_STATUS.md, RESEARCH_LOG.md and README.md. Those tracked generated updates were therefore discarded before commit, while untracked result files survived.
+- Evidence status: numerical evidence and reconciled result package remain valid; publication of the status/log narrative was incomplete.
+- Correction: closeout workflow now synchronizes the branch before artifact generation and commits the generated status/log/README changes afterward.
+- Prevention: no workflow may reset/rebase the working tree after generating tracked research-status artifacts.
