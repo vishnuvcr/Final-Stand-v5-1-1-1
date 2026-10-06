@@ -14,6 +14,10 @@ on:
       - '.github/workflows/phase-39-advanced-direction-models.yml'
   workflow_dispatch:
 
+concurrency:
+  group: phase39-step1-\${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
