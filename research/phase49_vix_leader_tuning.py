@@ -5,8 +5,8 @@ import pandas as pd
 
 from phase43_vix_strategy_sweep import (
     TZ, START, END, DEV_END, VAL_END,
-    load_parquet, load_vix, vix_state, active_states, modal_step,
-    evaluate, lot_size_for_expiry
+    load_parquet, load_vix, vix_state, modal_step,
+    charges, exec_px, lot_size_for_expiry
 )
 
 OUT=Path("results/phase49_vix_tuning"); OUT.mkdir(parents=True,exist_ok=True)
@@ -47,6 +47,55 @@ def entry_ts(index,expiry,dte,h,m):
 
 def key(c): return json.dumps(c,sort_keys=True,separators=(",",":"))
 
+
+def fast_cache(data, expiry, entry_ts, spot):
+    snap=data[data.timestamp==entry_ts]
+    if snap.empty:return None
+    step=modal_step(snap)
+    if step is None:return None
+    atm=float(min(snap.strike.unique(),key=lambda k:abs(float(k)-spot)))
+    entry={}
+    for typ in ("CE","PE"):
+        for off in range(-4,9):
+            strike=float(round(atm+off*step,8))
+            q=snap[(snap.option_type==typ)&np.isclose(snap.strike,strike,rtol=0,atol=1e-8)]
+            if not q.empty: entry[(typ,off)]=float(q.iloc[-1].close)
+    ex=data[(data.timestamp>=expiry.normalize())&(data.timestamp<=expiry.normalize()+pd.Timedelta(hours=15,minutes=29))]
+    series={}
+    for typ in ("CE","PE"):
+        sub=ex[ex.option_type==typ]
+        for off in range(-4,9):
+            strike=float(round(atm+off*step,8))
+            q=sub[np.isclose(sub.strike,strike,rtol=0,atol=1e-8)]
+            if not q.empty:
+                series[(typ,off)]=q.drop_duplicates("timestamp").set_index("timestamp").close
+    return {"step":step,"atm":atm,"entry":entry,"series":series,"lot":lot_size_for_expiry(expiry)}
+
+def eval_fast(cache, expiry, entry_ts, cand):
+    legs0=legs(cand)
+    entry=cache["entry"]; series=cache["series"]
+    keys=[(typ,off) for _,typ,off,q in legs0]
+    if any(k not in entry or k not in series for k in keys):return None
+    idx=None
+    for k in keys:
+        z=series[k].index
+        idx=z if idx is None else idx.intersection(z)
+        if len(idx)==0:return None
+    exit_ts=idx.max()
+    gross=0.0; orders=[]
+    for leg,k in zip(legs0,keys):
+        typ,off,q=leg[1],leg[2],leg[3]
+        ep=float(entry[k]); xp=float(series[k].loc[exit_ts])
+        epx=exec_px(ep,"buy" if q>0 else "sell")
+        xpx=exec_px(xp,"buy" if q<0 else "sell")
+        gross += q*(xpx-epx)*cache["lot"]
+        orders.append((entry_ts,"buy" if q>0 else "sell",epx*abs(q)))
+        orders.append((exit_ts,"buy" if q<0 else "sell",xpx*abs(q)))
+    cost=charges(orders,cache["lot"],1.0)
+    cost50=charges(orders,cache["lot"],1.5)
+    return {"expiry":str(expiry.date()),"entry_ts":str(entry_ts),"year":entry_ts.year,"family":cand["family"],
+            "param_json":key(cand),"state":None,"net":gross-cost,"net50":gross-cost50,"exit_ts":str(exit_ts)}
+
 def one(index,vix,expiry,data,c):
     ts=entry_ts(index,expiry,c["dte"],c["entry_h"],c["entry_m"])
     if ts is None:return None
@@ -54,15 +103,13 @@ def one(index,vix,expiry,data,c):
     if sr.empty:return None
     vs=vix_state(vix,ts)
     if vs is None:return None
-    snap=data[data.timestamp==ts]; step=modal_step(snap)
-    if step is None:return None
     spot=float(sr.iloc[-1].spot)
-    atm=float(min(snap.strike.unique(),key=lambda k:abs(float(k)-spot)))
-    r=evaluate(c["family"],legs(c),data,data,ts,expiry,atm,step,lot_size_for_expiry(expiry))
+    cache=fast_cache(data,expiry,ts,spot)
+    if cache is None:return None
+    r=eval_fast(cache,expiry,ts,c)
     if r is None:return None
-    return dict(expiry=str(expiry.date()),entry_ts=str(ts),year=ts.year,family=c["family"],
-                param_json=key(c),state=vs["level_state"],net=r["net_rupees"],net50=r["net_plus50_cost_rupees"],
-                exit_ts=r["exit_ts"])
+    r["state"]=vs["level_state"]
+    return r
 
 def annual(g):
     out={}
