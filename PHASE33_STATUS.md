@@ -66,3 +66,5 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 ### Step 9 — postprocess automation correction — IN PROGRESS
 - Postprocess checkout failed because the action constructed an invalid wildcard refspec.
 - The checkout step is now pinned directly to phase-33-nifty-prediction-models with fetch-depth 1.
+
+- Postprocess run #2 failed inside statistics code because numpy.where already returned an ndarray and the script called .to_numpy(). Corrected in 2fc43d3db44a06743850ec6b339bd402bbecfd3c.
