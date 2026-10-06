@@ -51,3 +51,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 Phase 36 model-selector direction polarity was found to be inverted relative to the Phase-35 up/down target semantics. The valid economic mapping is bullish/up -> PUT spread and bearish/down -> CALL spread. Phase 37 is registered to rerun the five model selectors with this correction. Phase-36 model-selector P&L is audit-only for this hypothesis.
 
 See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direction-polarity-correction
+
+
+## 2026-10-06 — Phase 41 interim implementation corrections
+- Run 37463493504 failed in sequential replay because the live feature-row constructor did not preserve three registered auxiliary flow/sentiment columns. The correction reindexed the live matrix to the frozen feature schema before imputation.
+- Run 37463984884 is the corrected sequential replay and supersedes the failed run; any failed/incomplete result is excluded from evidence.
+- A no-op identity optimization was added after the fixed screen proved zero overrides for all frozen candidates across all three splits. This is an execution optimization, not a research-parameter change.
