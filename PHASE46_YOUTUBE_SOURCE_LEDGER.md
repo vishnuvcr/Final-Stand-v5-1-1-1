@@ -35,3 +35,21 @@ A public YouTube-derived source linked from Cashparency describes an India-VIX s
 ## Important methodological warning
 
 YouTube descriptions are strategy-discovery sources, not peer-reviewed evidence. No claimed win rate, “best strategy” label, or anecdotal success is accepted without the project's independent development/validation/holdout process.
+
+
+## Direct video links
+
+- YT-001: https://www.youtube.com/watch?v=tUXls22PGBk
+- YT-002: https://www.youtube.com/watch?v=b4FGNAIPCS8
+- YT-003: https://www.youtube.com/watch?v=AUDWzocTGvY
+- YT-004: https://www.youtube.com/watch?v=492ZfUBRNw0
+- YT-005: https://www.youtube.com/watch?v=85d7J4URbMA
+- YT-006: https://www.youtube.com/watch?v=cPzFxHZHaNM
+- YT-007: https://www.youtube.com/watch?v=DHuaakCWfpM
+- YT-008: https://www.youtube.com/watch?v=CAQRNWR2JCY
+- YT-009: https://www.youtube.com/watch?v=P3EbwULnRXg
+- YT-010: https://www.youtube.com/watch?v=U2DLXKIFNaY
+
+## Search limitation
+
+The web search layer exposes indexed YouTube results rather than an authoritative complete YouTube corpus. Therefore “all available” cannot be guaranteed literally. The scan is reproducible at the keyword-family level and records the relevant indexed sources found in this run. Future discovery runs should add new query families rather than assume this ledger is exhaustive.
