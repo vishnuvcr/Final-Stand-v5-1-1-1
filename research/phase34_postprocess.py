@@ -2,7 +2,10 @@
 from pathlib import Path
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 
 OUT=Path("results/phase34_alternative_prediction")
 OUT.mkdir(parents=True,exist_ok=True)
