@@ -75,3 +75,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 - No repository file was modified by the failed call and no numerical execution occurred.
 - The payload was corrected; the Phase-43 research plan, pre-registration, status and literature review were then persisted successfully.
 - This was an orchestration error only and is not research evidence.
+
+
+## F43-002 — 2026-10-06 — Phase 43 workflow expression escaping
+- The initial Phase-43 workflow/bridge persistence retained literal backslashes before GitHub Actions expression markers.
+- No numerical evidence was accepted. The workflows were corrected before the next execution trigger.
