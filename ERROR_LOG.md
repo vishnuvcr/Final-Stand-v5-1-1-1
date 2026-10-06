@@ -44,3 +44,4 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - An intermediate GitHub file-update call omitted the required current blob SHA and was rejected before any repository write. The operation was retried correctly using the fetched SHA. No incorrect repository content was committed from that failed call.
 
 - Pre-run code review identified three issues before accepting any numerical result: push-trigger workflow inputs could override Python defaults with empty strings; the price-feature merge selected duplicate date/derived columns; and non-price global return columns were not shifted with their source levels. All were corrected before accepting Phase-33 evidence.
+- LSTM lookback audit: pre-evidence review found the first implementation used prior expiry events rather than 30 completed trading sessions. Those runs are superseded. Corrected in commit 6bb06e263b0c46da9510d40c7effc5d93c2c0f1e.
