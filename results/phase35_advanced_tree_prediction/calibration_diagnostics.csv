@@ -8,9 +8,9 @@ validation,dart,0
 validation,tree_equal6,0
 validation,winsor_tree,0
 validation,rfe_lgbm,0
-validation,ngboost,0
-validation,quantile,0
-validation,bart,0
+validation,ngboost_prob,0.23137001377721464
+validation,quantile_prob,0.04220129817471595
+validation,bart_prob,0.30263052631578946
 validation,wavelet_tree,0
 validation,emd_tree,0
 validation,vmd_tree,0
@@ -21,7 +21,7 @@ validation,dynamic_pool,0
 validation,stack,0
 validation,platt,0
 validation,isotonic,0
-validation,conformal_prob,0
+validation,conformal_prob,0.015789473684210575
 holdout,xgb,0
 holdout,lgbm,0
 holdout,catboost,0
@@ -31,9 +31,9 @@ holdout,dart,0
 holdout,tree_equal6,0
 holdout,winsor_tree,0
 holdout,rfe_lgbm,0
-holdout,ngboost,0
-holdout,quantile,0
-holdout,bart,0
+holdout,ngboost_prob,0.17591378838077096
+holdout,quantile_prob,0.1565012467842361
+holdout,bart_prob,0.40268595041322314
 holdout,wavelet_tree,0
 holdout,emd_tree,0
 holdout,vmd_tree,0
@@ -44,4 +44,4 @@ holdout,dynamic_pool,0
 holdout,stack,0
 holdout,platt,0
 holdout,isotonic,0
-holdout,conformal_prob,0
+holdout,conformal_prob,0.13636363636363635
