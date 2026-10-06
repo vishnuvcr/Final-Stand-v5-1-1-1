@@ -296,6 +296,7 @@ def main():
         if len(picked)>=30: break
     frozen_dev=pd.DataFrame(picked)
     frozen_dev.to_csv(OUT/"frozen_dev_shortlist.csv",index=False)
+    frozen_dev.to_csv(OUT/"stage1_candidates.csv",index=False)
 
     # Validation confirmation only after the development freeze.
     val_rows=[]
@@ -307,16 +308,20 @@ def main():
                 a.append(ex)
         gz=g[g.expiry.isin(a)]
         common=g[["expiry","net","net50"]].merge(gz[["expiry","net"]],on="expiry",suffixes=("_base","_cand"))
-        st=paired_stats(common["net_cand"]-common["net_base"])
+        uplift_vec=(common["net_cand"]-common["net_base"]).to_numpy(float)
+        st=paired_stats(uplift_vec)
+        pos=uplift_vec[uplift_vec>0]
+        concentration=(float(pos.max()/pos.sum()) if len(pos) and pos.sum()>0 else np.nan)
         base_dd=max_dd(g.sort_values("expiry").net.to_numpy()) if len(g) else np.nan
         val_rows.append({**r._asdict(),"val_n":len(gz),"val_net":float(gz.net.sum()) if len(gz) else np.nan,
                          "val_net50":float(gz.net50.sum()) if len(gz) else np.nan,"val_dd":max_dd(gz.sort_values("expiry").net.to_numpy()) if len(gz) else np.nan,
                          "base_val_net":float(g.net.sum()) if len(g) else np.nan,"base_val_dd":base_dd,
                          "val_uplift":float(common.net_cand.sum()-common.net_base.sum()) if len(common) else np.nan,
-                         "val_uplift_mean":st["mean"],"val_ci_lo":st["ci_lo"],"val_ci_hi":st["ci_hi"],"val_p":st["p"],"common_n":len(common)})
+                         "val_uplift_mean":st["mean"],"val_ci_lo":st["ci_lo"],"val_ci_hi":st["ci_hi"],"val_p":st["p"],"common_n":len(common),
+                         "max_positive_uplift_share":concentration})
     vd=pd.DataFrame(val_rows)
     if len(vd):
-        vd["validation_gate"]=(vd.val_n>=20)&(vd.val_net>0)&(vd.val_net50>0)&(vd.val_uplift>0)&(vd.val_ci_lo>0)&(vd.val_dd<=1.25*vd.base_val_dd)
+        vd["validation_gate"]=(vd.val_n>=20)&(vd.val_net>0)&(vd.val_net50>0)&(vd.val_uplift>0)&(vd.val_ci_lo>0)&(vd.val_dd<=1.25*vd.base_val_dd)&(vd.max_positive_uplift_share<=0.40)
         vd["val_p_holm"]=holm(vd.val_p.fillna(1).to_numpy())
         vd["inference_survivor"]=vd["validation_gate"]&(vd.val_p_holm<0.05)
     vd.to_csv(OUT/"validation_confirmation.csv",index=False)
