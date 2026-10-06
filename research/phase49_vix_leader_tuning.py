@@ -28,6 +28,9 @@ def grid():
         g.append(dict(family="put_bwb",body=b,upper=u,lower=lo,entry_h=t[0],entry_m=t[1],dte=d))
     return g
 GRID=grid()
+FAST_CACHE={}
+FAST_CACHE_EXPIRY=None
+
 
 def baseline(f):
     return (dict(family=f,short_offset=1,width=2,long_offset=3,entry_h=10,entry_m=0,dte=4) if f=="bear_call"
@@ -97,15 +100,23 @@ def eval_fast(cache, expiry, entry_ts, cand):
             "param_json":key(cand),"state":None,"net":gross-cost,"net50":gross-cost50,"exit_ts":str(exit_ts)}
 
 def one(index,vix,expiry,data,c):
+    global FAST_CACHE, FAST_CACHE_EXPIRY
     ts=entry_ts(index,expiry,c["dte"],c["entry_h"],c["entry_m"])
     if ts is None:return None
     sr=index[index.timestamp==ts]
     if sr.empty:return None
     vs=vix_state(vix,ts)
     if vs is None:return None
-    spot=float(sr.iloc[-1].spot)
-    cache=fast_cache(data,expiry,ts,spot)
-    if cache is None:return None
+    if FAST_CACHE_EXPIRY != str(expiry.date()):
+        FAST_CACHE={}
+        FAST_CACHE_EXPIRY=str(expiry.date())
+    ck=str(ts)
+    cache=FAST_CACHE.get(ck)
+    if cache is None:
+        spot=float(sr.iloc[-1].spot)
+        cache=fast_cache(data,expiry,ts,spot)
+        if cache is None:return None
+        FAST_CACHE[ck]=cache
     r=eval_fast(cache,expiry,ts,c)
     if r is None:return None
     r["state"]=vs["level_state"]
