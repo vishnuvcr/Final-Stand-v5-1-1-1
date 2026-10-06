@@ -50,3 +50,7 @@ A final static audit found a remaining validation-stage import-path defect plus 
 ## 2026-10-07 — Corrected rerun #11 active
 
 After F49-010, GitHub Actions **run 37540089501 (#11)** is the current authoritative numerical execution. Its preflight has passed and the full tuning/confirmation step is running. Runs #9 and #10 are superseded/non-evidence.
+
+## 2026-10-07 — F49-011 artifact-audit correction
+
+Run #11 completed the numerical computation successfully but failed only at the artifact self-audit because the empty development error ledger was zero bytes. The numerical result is therefore not yet accepted. Run #12 is the authoritative corrected full rerun with the error-ledger header fix; parameter values and scientific definitions are unchanged.
