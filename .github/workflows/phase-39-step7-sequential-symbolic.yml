@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             phase39-hf-seq-${{ runner.os }}-
             phase39-hf-${{ runner.os }}-
-      - run: python -m pip install --disable-pip-version-check --no-input pandas pyarrow numpy scipy requests huggingface_hub
+      - run: python -m pip install --disable-pip-version-check --no-input pandas pyarrow numpy scipy scikit-learn requests huggingface_hub
       - name: Run sequential symbolic replay
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
