@@ -1,62 +1,74 @@
 # Phase 49 Status — VIX Leader Parameter Tuning
 
-**CORRECTION IN PROGRESS — PRIOR NUMERICAL ATTEMPT NON-EVIDENCE**
+**CLOSED — NO PROMOTION**
 
-Primary tuning families: Bear Call, Bear Put, Put BWB.
-Primary regimes: LOW and NORMAL.
-Raw geometry universe: 720.
-Regime-expanded search universe: 1,440.
+## Final evidence gate
 
-Development: 2021-2023.
-Validation: 2024-2025.
-Protected holdout: 2026.
+- Authoritative numerical run: **37542636969 (#12)**.
+- Numerical calculation: **PASS**.
+- Artifact self-audit: **PASS**.
+- Automatic artifact reconciliation: **PASS** — closeout run **37544951498**.
+- Raw geometries: **720**.
+- Regime-expanded candidates: **1,440** (720 × LOW/NORMAL VIX).
+- Development expiry blocks: **133** (2021–2023).
+- Validation expiry blocks: **102** (2024–2025).
+- Protected holdout expiry blocks: **21**.
+- Frozen candidates: **2**.
+- Validation economic passes: **1**.
+- Holm-adjusted statistical survivors: **0**.
+- Holdout confirmations: **1**.
+- Canonical strategy changed: **No**.
+- Promotion decision: **NO PROMOTION**.
 
-The long-running GitHub Actions attempt 37535442553 is not evidence. A code audit found two scientific implementation defects before completion:
-- the frozen-selection path referenced an undefined FAMILIES constant;
-- validation was comparing active candidate trades against a pooled set of other candidate trades rather than the preregistered active-VIX versus complement-VIX opportunity set.
+## Frozen candidates
 
-A further implementation mismatch was found between the preregistered forward-fold rule and the selector: the selector was requiring positive results in 2021/2022/2023 instead of using 2022 and 2023 as the registered forward scoring folds.
+1. **Bear Put / LOW VIX**
+   - Entry: **09:30 IST**
+   - Entry horizon: **5 trading sessions before expiry**
+   - Buy PE: **+1 modal strike step relative to point-in-time ATM**
+   - Sell PE: **−3 modal strike steps**
+   - Spread width: **4 modal strike steps**
+   - Development trades: 79
+   - Validation: 42 active LOW-VIX trades; +₹28,848.48 net; +₹27,246.47 at +50% cost stress.
+   - Active-vs-complement bootstrap mean difference: +₹780.86; 95% CI [−₹1,369.81, +₹2,909.48].
+   - One-sided permutation p=0.2260; Holm-adjusted p=0.4520.
+   - Paired uplift vs registered Bear Put LOW baseline on 41 common validation expiries: +₹21,521.89 net; +₹21,469.09 at +50% costs.
+   - Protected holdout confirmation: 5 active LOW-VIX trades, +₹27,278.50 net; +₹27,051.63 at +50% costs; 80% win rate.
+   - **Status: research candidate only.**
 
-These corrections do not change the registered research question or parameter universe. The corrected run will:
-1. select parameters using 2022 and 2023 forward-fold consistency, with 2021 retained as development context;
-2. evaluate each frozen parameter on both its active VIX state and the complement states during validation;
-3. use active-vs-complement bootstrap/permutation inference;
-4. keep the 2026 holdout inaccessible to selection;
-5. fail publication if development, validation or holdout data-error ledgers are non-empty.
+2. **Put BWB / LOW VIX**
+   - Entry: **11:00 IST**
+   - Entry horizon: **3 trading sessions before expiry**
+   - Body: 1 modal strike step
+   - Upper wing: 1 step
+   - Lower wing: 4 steps
+   - Development trades: 85
+   - Validation: 50 active LOW-VIX trades; −₹43,963.84 net; −₹47,238.89 at +50% cost stress.
+   - Active-vs-complement mean difference: −₹254.48; permutation p=0.6162; Holm p=0.6162.
+   - **Status: rejected as a tuned candidate.**
 
-No numerical conclusion, promotion, or holdout result from the superseded run is accepted.
+## VIX routing definition
 
-Gate status:
-- Definition audit: corrected, awaiting rerun.
-- Data/lot-size audit: preflight passed on superseded run; corrected run must pass again.
-- Development forward-fold sweep: pending.
-- Parameter freeze: pending.
-- Validation confirmation: pending.
-- Holdout confirmation: pending.
-- Final promotion: prohibited until all gates pass.
-## 2026-10-07 — Execution watchdog correction
+For each entry date, the prior available India VIX close is compared with the historical distribution available before that date. **LOW** means the prior close is at or below the historical 25th percentile; **NORMAL** lies between the 25th and 75th percentiles. The state is determined point-in-time and is not recalculated using future observations.
 
-The superseded run 37535442553 stopped updating while the corrected run entered the Actions queue. Because the old run is already classified as NON-EVIDENCE, the workflow concurrency group is being advanced for the corrected execution rather than waiting indefinitely for a defective process.
-## 2026-10-07 — Performance correction F49-009
+## Cost and execution realism
 
-The second self-audit found one more execution-only bottleneck: per-candidate recalculation of the full index day set, spot lookup and VIX historical quantiles. The engine has now been corrected to cache these metadata objects across candidates. No scientific definition changed and no numerical output from the slower runs is accepted.
-## 2026-10-07 — Optimized numerical execution
+The accepted engine uses historical NIFTY lot sizes, brokerage of ₹10 per order, historical STT/exchange/SEBI/IPFT/stamp/GST components, one adverse ₹0.05 option tick per leg on execution, and a +50% charge-stress P&L. The protected holdout was not used for parameter selection or validation.
 
-GitHub Actions **run 37538954063 (#9)** is the current accepted execution candidate. Its preflight has passed; the numerical step is active. It uses the F49-009 metadata-cache correction. No result is accepted until the numerical, artifact, statistical and publication audits all pass.
+## Scientific conclusion
 
-## 2026-10-07 — F49-010 runtime-path correction
+The tuning exercise found an economically attractive LOW-VIX Bear Put configuration, but it did **not** produce statistically confirmatory evidence after the frozen active-vs-complement test and Holm correction. The positive five-trade holdout is encouraging but underpowered.
 
-A final static audit found a remaining validation-stage import-path defect plus an unhandled zero-candidate development branch. The active optimized run #9 is therefore classified NON-EVIDENCE and will be superseded by a corrected execution. No result has been accepted.
-## 2026-10-07 — Corrected rerun #11 active
+**Phase 49 therefore closes with NO PROMOTION. The canonical strategy remains unchanged.**
 
-After F49-010, GitHub Actions **run 37540089501 (#11)** is the current authoritative numerical execution. Its preflight has passed and the full tuning/confirmation step is running. Runs #9 and #10 are superseded/non-evidence.
+## Final files
 
-## 2026-10-07 — F49-011 artifact-audit correction
-
-Run #11 completed the numerical computation successfully but failed only at the artifact self-audit because the empty development error ledger was zero bytes. The numerical result is therefore not yet accepted. Run #12 is the authoritative corrected full rerun with the error-ledger header fix; parameter values and scientific definitions are unchanged.
-## 2026-10-07 — F49-012 publication conflict
-
-Run #12 passed the numerical and artifact self-audits. The only failure was the final Git publication step: concurrent repository audit updates to PHASE49_STATUS.md and RESEARCH_LOG.md conflicted with the workflow's rebase. The numerical evidence is therefore valid but not yet the canonical published closeout. A branch-triggered automatic reconciliation workflow has been started to publish the preserved artifact without rerunning the science.
-## 2026-10-07 — F49-013 closeout packaging correction
-
-Automatic closeout located the correct run #12 artifact and downloaded it successfully. The reconciliation failed only at manuscript table rendering because `tabulate` was not installed. This does not affect numerical evidence. The manuscript generator has been made dependency-independent and the closeout trigger will be rerun.
+- results/phase49_vix_tuning/PHASE49_MANUSCRIPT.md
+- results/phase49_vix_tuning/phase49_final_decision.json
+- results/phase49_vix_tuning/phase49_parameter_summary.csv
+- results/phase49_vix_tuning/phase49_paired_baseline_comparison.csv
+- results/phase49_vix_tuning/phase49_annual_breakdown.csv
+- results/phase49_vix_tuning/development_parameter_trade_matrix.csv
+- results/phase49_vix_tuning/validation_frozen_trade_matrix.csv
+- results/phase49_vix_tuning/holdout_frozen_trade_matrix.csv
+- results/phase49_vix_tuning/*.svg
