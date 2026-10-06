@@ -76,9 +76,12 @@ def model(name):
     raise ValueError(name)
 
 def Xify(frame):
-    x = frame[FOCUS_FEATURES].copy()
+    # Live point-in-time feature construction can legitimately leave some
+    # auxiliary sources unavailable. Reindexing preserves the fixed feature
+    # schema and lets the registered imputer handle missing values.
+    x = frame.reindex(columns=FOCUS_FEATURES).copy()
     for c in ["india_vix_level","india_vix_ret1","india_vix_high","india_vix_rising","india_vix_high_rising"]:
-        x[c] = frame[c].to_numpy()
+        x[c] = frame[c].to_numpy() if c in frame.columns else np.nan
     for c in FOCUS_FEATURES:
         x[f"HIGHx_{c}"] = x[c].to_numpy() * x["india_vix_high"].to_numpy()
     return x
