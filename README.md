@@ -19,6 +19,9 @@ The current authoritative Phase-49 status is recorded in [PHASE49_STATUS.md](htt
 
 **Phase 49 performance correction (F49-009, 2026-10-07):** the engine now caches index trading days, timestamp-to-spot mappings and VIX state calculations across candidates. This is execution-only and does not alter the preregistered search or inference definitions. The optimized run is tracked as Actions run #9; all slower/superseded Phase-49 runs remain non-evidence.
 
+
+**Phase 49 F49-010 correction (2026-10-07):** a final static audit found a remaining validation-stage import-path defect and an unhandled zero-candidate freeze branch. The active run #9 is NON-EVIDENCE. The corrected engine is on run #11 and no numerical conclusion is accepted until its full artifact/statistical audits pass.
+
 ---
 
 ## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
