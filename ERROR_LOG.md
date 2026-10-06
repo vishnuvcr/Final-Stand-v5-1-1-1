@@ -189,3 +189,13 @@ Evidence status: The prior Step-1 result is superseded and is not used for model
 Correction: Option snapshots are now sorted stably and deduplicated by timestamp/option type/strike, retaining the last observed row, matching the historical engine last-observation aggregation convention.
 
 Prevention: The workflow now reruns the complete counterfactual engine after this correction and blocks progression unless the control arm still reconstructs within the registered tolerance.
+
+
+### Error F39-010 — Counterfactual summary dictionary syntax regression
+Run: 37436818874.
+
+Symptom: The corrected counterfactual engine failed immediately before numerical execution with a Python SyntaxError because the generated summary dictionary lacked its final closing brace.
+
+Evidence status: non-evidence; no numerical calculations were produced by the failed run.
+
+Correction: The summary construction was repaired. The next automatic run must pass syntax, split-count and control-reconstruction assertions before its output is accepted.
