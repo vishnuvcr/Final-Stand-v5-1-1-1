@@ -235,3 +235,26 @@ Phase 33 tested LSTM, GARCH/EGARCH/GJR-GARCH, sentiment-augmented SOFNN-inspired
 - [Final postprocess Actions run #4](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37422362350)
 
 The full manuscript records methodology, leakage controls, statistical tests, strengths, limitations and future research. Any future use of RF/ensemble as a direction chooser requires a new registered phase with the established Paytm Money transaction-cost and slippage model.
+
+
+## Phase 34 — Alternative NIFTY D−6 prediction models — COMPLETE / NO PROMOTION
+
+Phase 34 tested eight additional forecasting families beyond Phase 33: **XGBoost, ExtraTrees, HistGradientBoosting, RBF-SVM, Elastic-Net Logistic Regression, a point-in-time HMM regime model, a compact Transformer and a compact temporal-convolution model**, plus fixed equal-weight ensembles. The reference remained exactly **10:00 IST on six calendar days before NIFTY expiry**, with the same 245-event point-in-time universe used in Phase 33.
+
+**Final decision: no Phase-34 model is promoted to trading. Phase 20 remains canonical.** The strongest raw 2026 holdout accuracy was **68.18%** from ExtraTrees and the equal-weight-8 ensemble, but the holdout contains only 22 events and the uncertainty/promotion gates were not all passed. XGBoost was the strongest new model on validation at **57.89% accuracy**. Tree-equal-3 achieved the strongest new-family holdout log loss at **0.6350**. HistGradientBoosting produced the most notable signed-return diagnostic (**0.00832; 95% bootstrap CI 0.00138–0.01534; sign-flip p=0.0363**) but only tied the always-down baseline on directional accuracy. No candidate passed all preregistered gates.
+
+- [Phase 34 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-34-alternative-nifty-prediction-models)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/PHASE34_RESEARCH_PLAN.md)
+- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/PHASE34_PRE_REGISTRATION.md)
+- [Final status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/PHASE34_STATUS.md)
+- [Literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/PHASE34_LITERATURE_REVIEW.md)
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/PHASE34_ALTERNATIVE_PREDICTION_MANUSCRIPT.md)
+- [Statistical summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/PHASE34_STATISTICAL_SUMMARY.csv)
+- [Decision table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/PHASE34_DECISION_TABLE.csv)
+- [Results index](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/PHASE34_RESULTS_INDEX.md)
+- [Accuracy figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/phase34_accuracy_comparison.svg)
+- [Signed-return figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-34-alternative-nifty-prediction-models/results/phase34_alternative_prediction/phase34_holdout_signed_return_ci.svg)
+- [Accepted numerical Actions run #2](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37422865721)
+- [Accepted postprocess Actions run #7](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37423631294)
+
+Any future use of HistGradientBoosting, ExtraTrees or an ensemble as a direction chooser requires a new registered overlay phase with complete Paytm Money brokerage/statutory charges, slippage, execution/fill constraints and expiry-gap handling.
