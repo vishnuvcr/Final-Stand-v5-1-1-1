@@ -3,3 +3,6 @@ Phase 49 trigger — VIX leader parameter tuning; run preflight, exhaustive deve
 Retry after F49-002 import-path correction.
 
 Optimized evaluator trigger after F49-003 performance correction.
+
+
+Corrected trigger after F49-005 family-registry audit, F49-006 active/complement validation correction, F49-007 forward-fold selection correction, and F49-008 stale-run watchdog. Execute only the corrected v3 workflow; superseded v2 numerical output remains non-evidence.
