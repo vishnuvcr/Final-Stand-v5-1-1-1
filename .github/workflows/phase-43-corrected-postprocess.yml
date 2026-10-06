@@ -44,6 +44,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase43_vix PHASE43_STATUS.md RESEARCH_LOG.md ERROR_LOG.md
           git commit -m "phase43: persist corrected statistical postprocess" || true
+          git fetch origin phase-43-vix-all-options-strategies
+          git rebase origin/phase-43-vix-all-options-strategies
           git push origin HEAD:phase-43-vix-all-options-strategies
 
 # corrected statistical postprocess workflow v2
