@@ -1374,3 +1374,24 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: no result from the affected run is accepted.
 - Correction: cache is now keyed by expiry-entry timestamp and reused across the complete 720-configuration family for that snapshot.
 - Prevention: performance reviews now explicitly check cache lifetime and reuse at the candidate-family level.
+
+## 2026-10-07 — Phase 49 scientific implementation audit
+
+### F49-005 — Undefined family registry in frozen-selection path
+- Affected run: 37535442553.
+- Symptom: the numerical script referenced FAMILIES while the constant was not defined.
+- Evidence status: NON-EVIDENCE. No Phase-49 numerical result from that implementation may be used.
+- Correction: add the explicit primary family registry bear_call, bear_put, put_bwb.
+- Prevention: preflight and artifact audits validate the expected family×regime space.
+
+### F49-006 — Validation comparator did not implement the registered VIX complement test
+- Finding: the previous code evaluated the frozen candidate only when realized VIX matched its target state, then compared those rows against a pooled set of rows belonging to other candidates. This is not the preregistered active-VIX versus complement-VIX comparison.
+- Evidence status: NON-EVIDENCE.
+- Correction: evaluate each frozen parameter across the full validation opportunity set. Inference uses its active-VIX rows versus the same parameter's complement-VIX rows. The 2026 holdout uses the same frozen definition.
+- Prevention: validation artifacts require explicit complement_trades and active_vs_complement_mean fields.
+
+### F49-007 — Development selector did not match the preregistered forward-fold rule
+- Finding: the selector required positive net and stressed mean/trade in all of 2021, 2022 and 2023. The registered forward-fold scoring rule is based on 2022 and 2023, with 2021 serving as the earliest development history.
+- Evidence status: NON-EVIDENCE for outputs produced by that selector.
+- Correction: eligibility and ranking now use 2022 and 2023 forward-fold performance, with a minimum of 10 trades and positive net/stressed mean per trade in each fold.
+- Prevention: persist fold-specific 2022/2023 metrics.
