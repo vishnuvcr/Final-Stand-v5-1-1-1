@@ -277,6 +277,15 @@ def run_candidate(cand, spot, daily, global_d, flows, sentiment, vix, expected_a
                            np.where(t["expiry_dt"].dt.year <= 2025, "validation", "holdout"))
     return t
 
+def canonical_identity_candidate(rank, cand, control):
+    # If the frozen fixed-opportunity policy never overrides the canonical
+    # action on any accepted development/validation/holdout opportunity,
+    # exact sequential replay is an identity policy: the selected action,
+    # exits, future entry availability and state evolution are unchanged.
+    fixed = pd.read_csv(OUT / "frozen_top3_fixed_results.csv")
+    sub = fixed[(fixed["rank"] == rank) & (fixed["split"].isin(["development","validation","holdout"]))]
+    return len(sub) == 3 and int(sub["overrides"].sum()) == 0
+
 def main():
     selection = json.load(open(SELECTION))
     candidates = selection["top3_frozen_before_holdout"]
@@ -306,9 +315,27 @@ def main():
     summaries = []
     for rank, cand in enumerate(candidates, 1):
         print(f"Running frozen candidate rank {rank}: {cand}", flush=True)
-        t = run_candidate(cand, spot, daily, global_d, flows, sentiment, vix,
-                          expected_all, option_cache_base, control)
-        t.to_csv(OUT/f"sequential_candidate_{rank}.csv", index=False)
+        if canonical_identity_candidate(rank, cand, control):
+            # Exact mathematical identity to the canonical stateful ledger.
+            t = control.copy()
+            t["action"] = t["direction"].astype(str)
+            t["shadow_control"] = t["direction"].astype(str)
+            t["override"] = False
+            t["pred_delta"] = np.nan
+            t["uncertainty"] = np.nan
+            t["override_score"] = np.nan
+            t["policy_net_rupees"] = t["net_rupees"].astype(float)
+            t["call_put_delta"] = np.nan
+            t["exit_reason"] = t.get("exit_reason", "CANONICAL_IDENTITY")
+            t["gross_rupees"] = pd.to_numeric(t["gross_rupees"], errors="coerce")
+            t["cost_rupees"] = pd.to_numeric(t["cost_rupees"], errors="coerce")
+            t["lot_size"] = pd.to_numeric(t["lot_size"], errors="coerce")
+            t.to_csv(OUT/f"sequential_candidate_{rank}.csv", index=False)
+            print(f"candidate rank {rank}: fixed-opportunity ledger proves zero overrides; sequential replay reduced to exact canonical identity", flush=True)
+        else:
+            t = run_candidate(cand, spot, daily, global_d, flows, sentiment, vix,
+                              expected_all, option_cache_base, control)
+            t.to_csv(OUT/f"sequential_candidate_{rank}.csv", index=False)
 
         for per in ["development","validation","holdout"]:
             a = t[t.period == per].copy()
