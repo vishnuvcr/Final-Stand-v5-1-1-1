@@ -63,7 +63,7 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 - Postprocessing automation is being triggered from this status update after its branch-expression correction.
 
 
-### Step 9 — postprocess automation correction — IN PROGRESS
+### Step 9 — postprocess automation correction — COMPLETE
 - Postprocess checkout failed because the action constructed an invalid wildcard refspec.
 - The checkout step is now pinned directly to phase-33-nifty-prediction-models with fetch-depth 1.
 
@@ -80,17 +80,3 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 - GARCH-family forecast correlation with realized absolute return is only 0.0658; QLIKE is 66,548.975.
 - Decision: **do not promote any Phase-33 model to trading.** Phase 20 remains canonical.
 - A future direction-overlay test, if desired, must be a separately registered phase with full Paytm Money brokerage/statutory-cost/slippage/execution modeling.
-
-
-### Step 10 — final statistical postprocessing — COMPLETE
-- Final postprocess workflow run: 37422362350 — success.
-- Final manuscript generated at results/phase33_nifty_prediction/PHASE33_NIFTY_PREDICTION_MANUSCRIPT.md.
-- Statistical summary, yearly stability, decision table, GARCH summary, figures and postprocess summary generated.
-- Final decision: **NO MODEL PROMOTED TO TRADING USE.**
-- Best validation/holdout log-loss model: Random Forest.
-- Best 2026 holdout accuracy among full models: equal-weight ensemble at 59.09%, below the always-down baseline at 63.64%.
-- All model signed-return bootstrap intervals include zero.
-- Phase 33 is now **CLOSED — REJECTED FOR TRADING PROMOTION; Phase 20 remains canonical.**
-
-## Final conclusion
-The requested LSTM, GARCH-family, sentiment-SOFNN and Random Forest/ensemble families were tested under the locked D-6/10:00 IST definition with chronological out-of-sample evaluation. The experiment does not establish a sufficiently stable predictive edge for live strategy direction selection. Future model-directed option testing requires a new preregistered phase with full Paytm Money brokerage, statutory costs, slippage, fills and expiry-gap handling.
