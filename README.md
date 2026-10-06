@@ -305,7 +305,7 @@ The correct next phase is a **frozen trading-overlay validation**, not another u
 
 This phase tested the requested rule change: **the previous trade's status, P&L, win/loss result and prior direction do not determine the next trade's direction**. Every eligible new trade receives a fresh direction decision. All other Continuous Delta 6x6 entry, exit, spread, slippage, brokerage and statutory-cost rules were frozen.
 
-Final accepted run: **GitHub Actions 37428502722 (#4)**. All seven selector jobs and the artifact publication job succeeded.
+Final numerical evidence: **GitHub Actions 37428502722 (#4)**. A final reproducibility checkpoint, **37429748933 (#18)**, also completed all seven selector jobs and the rebase-safe artifact publication successfully.
 
 Primary window: **2024-01-01 to 2026-06-30**.
 
