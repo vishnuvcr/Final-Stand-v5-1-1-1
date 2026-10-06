@@ -209,3 +209,15 @@ Symptom: The numerical job remained in the pip-upgrade step with no progress upd
 Evidence status: CI-only; no numerical evidence changed.
 
 Correction: The workflow no longer upgrades pip; it installs only the required packages with pip's version-check disabled. A single-run concurrency guard is enabled so stale runs cannot race on evidence files.
+
+
+### Error F39-012 — Corrected Step-1 workflow was not retriggered by a status-only commit
+Run: 37437005837 and subsequent branch state.
+
+Symptom: The last known Phase-39 Step-1 Actions run was cancelled during serialized execution, while the later documentation/status commit did not match the workflow's path filter. Therefore the corrected 271/172/34 engine had not yet produced a fresh accepted CI result.
+
+Evidence status: No numerical evidence was produced or accepted from this run state.
+
+Correction: The counterfactual engine is being given explicit invariant checks and a new engine-path commit will be used to trigger a clean serialized Step-1 run from the current branch head.
+
+Prevention: Treat the engine/workflow source commit as the explicit execution trigger for Step-1; do not infer execution from documentation-only commits.
