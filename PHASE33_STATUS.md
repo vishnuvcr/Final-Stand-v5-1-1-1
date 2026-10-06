@@ -1,7 +1,7 @@
 # Phase 33 Status — NIFTY Prediction Models
 
 ## Current state
-**INITIALIZED — implementation and numerical testing pending.**
+**COMPLETE — NO PROMOTION.**
 
 ### Step 1 — repository audit — COMPLETE
 - Audited main README, research log, error log and dynamic-n research plan.
@@ -68,3 +68,15 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 - The checkout step is now pinned directly to phase-33-nifty-prediction-models with fetch-depth 1.
 
 - Postprocess run #2 failed inside statistics code because numpy.where already returned an ndarray and the script called .to_numpy(). Corrected in 2fc43d3db44a06743850ec6b339bd402bbecfd3c.
+
+### Step 10 — corrected postprocessing — COMPLETE
+- Final postprocessing run succeeded: GitHub Actions run #4 (37422362350).
+- Final statistical tables, yearly stability, decision table, GARCH summary, figures and manuscript were generated and persisted.
+- Final evidence set = corrected run #13 artifact + successful postprocessing; superseded runs are not used.
+- Sample: 245 eligible events = 128 development, 95 validation, 22 untouched 2026 holdout.
+- Validation: Random Forest is best among full models by accuracy/log loss (54.74% accuracy; 0.6851 log loss).
+- 2026 holdout: equal-weight ensemble has highest full-model accuracy at 59.09%, but the always-down baseline is 63.64%; RF has best holdout log loss at 0.6562.
+- All model signed-return bootstrap 95% intervals include zero.
+- GARCH-family forecast correlation with realized absolute return is only 0.0658; QLIKE is 66,548.975.
+- Decision: **do not promote any Phase-33 model to trading.** Phase 20 remains canonical.
+- A future direction-overlay test, if desired, must be a separately registered phase with full Paytm Money brokerage/statutory-cost/slippage/execution modeling.
