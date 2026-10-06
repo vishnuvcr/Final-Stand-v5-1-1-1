@@ -163,3 +163,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Final decision: reject all five corrected model selectors; retain the canonical stateful direction rule.
 - Full manuscript: PHASE38_MANUSCRIPT.md.
 - Final status: PHASE38_STATUS.md.
+
+
+## 2026-10-06 — Phase 38 secondary risk-adjusted comparison
+
+- Calculated cumulative net P&L divided by maximum drawdown for the six strategies.
+- Markov-regime tree ranked first at 1.309, CatBoost second at 1.173, and the stateful control third at 1.028.
+- The risk-adjusted ranking does not override the preregistered control-relative test; no selector is promoted.
+- Saved to results/phase38_corrected_model_robustness/risk_adjusted_summary.csv and added to PHASE38_MANUSCRIPT.md.
