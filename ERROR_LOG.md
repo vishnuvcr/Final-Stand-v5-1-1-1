@@ -1007,3 +1007,13 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - Evidence status: non-evidence; no sequential result accepted.
 - Correction: replay now inherits the accepted 477 fixed-opportunity ledger and its audited CALL/PUT counterfactual arms and exit timestamps.
 - Prevention: downstream policy phases must inherit the accepted opportunity ledger rather than create a new entry universe.
+
+
+## F42-002 — 2026-10-06 — Historical option-leg availability blocked replay
+- **Workflow:** run 37467356019
+- **Step:** exact sequential replay
+- **Failure:** the first frozen candidate reached 2021-05-28 09:20 and the delta-selected CE 15400/15450 pair was not simultaneously present in the cached option snapshot, causing the Phase-39 execution engine to raise `missing entry legs`.
+- **Impact:** replay stopped before producing inference.
+- **Correction:** replay now records unavailable execution/counterfactual legs as explicit skipped observations and compares the control only on the same executable entry timestamps. No candidate score, feature, threshold, holdout observation or cost rule was changed.
+- **Scientific safeguard:** skipped observations are reported by period; they are not silently treated as profitable or loss-making trades.
+- **Status:** corrected; rerun required.
