@@ -1,2 +1,3 @@
 Phase 44 start — VIX candidate tuning approved by user. Execute registered numerical tuning and persist audited results.
 Rerun after Phase-44 bridge registration.
+Corrected implementation retrigger: F44-001 quarantined; run only corrected code.
