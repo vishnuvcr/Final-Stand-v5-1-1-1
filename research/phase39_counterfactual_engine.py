@@ -11,8 +11,11 @@ TZ = 'Asia/Kolkata'
 ROOT = Path('.')
 DATA_DIR = ROOT / 'results/phase39_data'
 OUT = ROOT / 'results/phase39_counterfactual'
+DEV_CONTROL = DATA_DIR / 'development_control_trades_2021_2023.csv'
 CONTROL = DATA_DIR / 'frozen_control_trades_2024_2026-06-30.csv'
 PROVENANCE = DATA_DIR / 'frozen_control_provenance.json'
+DEV_START = pd.Timestamp('2021-05-27', tz=TZ)
+DEV_END = pd.Timestamp('2023-12-31', tz=TZ)
 OUT.mkdir(parents=True, exist_ok=True)
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 ARTIFACT_ID = 11380124540
@@ -98,7 +101,7 @@ def charges(orders,lot):
     return brokerage+exchange+sebi+ipft+stt+stamp+gst
 
 def bootstrap_control_ledger():
-    if CONTROL.exists() and PROVENANCE.exists():
+    if DEV_CONTROL.exists() and CONTROL.exists() and PROVENANCE.exists():
         return
     token=os.getenv('GITHUB_TOKEN')
     repo=os.getenv('GITHUB_REPOSITORY','vishnuvcr/Final-Stand-v5-1-1-1')
@@ -112,23 +115,35 @@ def bootstrap_control_ledger():
         raw=z.read(match[0])
     all_trades=pd.read_csv(io.BytesIO(raw))
     exp=pd.to_datetime(all_trades['expiry'],errors='coerce').dt.tz_localize(TZ)
-    keep=(exp>=CONTROL_START)&(exp<=CONTROL_END)
-    frozen=all_trades.loc[keep].copy()
+    dev=all_trades.loc[(exp>=DEV_START)&(exp<=DEV_END)].copy()
+    frozen=all_trades.loc[(exp>=CONTROL_START)&(exp<=CONTROL_END)].copy()
+    excluded=all_trades.loc[(exp>DEV_END)&(exp<CONTROL_START)].copy()
+    dev.to_csv(DEV_CONTROL,index=False)
     frozen.to_csv(CONTROL,index=False)
     digest=hashlib.sha256(CONTROL.read_bytes()).hexdigest()
-    prov={'source_artifact_id':ARTIFACT_ID,'source_run_id':ARTIFACT_RUN,'source_repo':repo,'source_member':match[0],'derived_sha256':digest,'trades':int(len(frozen)),'expiries':int(frozen['expiry'].nunique()),'net_rupees':float(frozen['net_rupees'].sum())}
+    dev_digest=hashlib.sha256(DEV_CONTROL.read_bytes()).hexdigest()
+    prov={'source_artifact_id':ARTIFACT_ID,'source_run_id':ARTIFACT_RUN,'source_repo':repo,'source_member':match[0],
+          'development':{'derived_sha256':dev_digest,'trades':int(len(dev)),'expiries':int(dev['expiry'].nunique()),'net_rupees':float(dev['net_rupees'].sum()),'first_expiry':str(dev['expiry'].min()),'last_expiry':str(dev['expiry'].max())},
+          'frozen':{'derived_sha256':digest,'trades':int(len(frozen)),'expiries':int(frozen['expiry'].nunique()),'net_rupees':float(frozen['net_rupees'].sum()),'first_expiry':str(frozen['expiry'].min()),'last_expiry':str(frozen['expiry'].max())},
+          'excluded_between_dev_and_frozen':{'trades':int(len(excluded)),'expiries':int(excluded['expiry'].nunique()),'net_rupees':float(excluded['net_rupees'].sum()),'reason':'2024-01-04 trade intentionally excluded so validation uses the frozen Phase-38 comparator exactly'}}
     PROVENANCE.write_text(json.dumps(prov,indent=2))
 
 def validate_control_ledger():
     bootstrap_control_ledger()
-    z=pd.read_csv(CONTROL)
+    dev=pd.read_csv(DEV_CONTROL); z=pd.read_csv(CONTROL)
     required={'expiry','entry_ts','exit_ts','direction','short_strike','long_strike','lot_size','net_rupees'}
-    missing=required-set(z.columns)
-    if missing: raise AssertionError(f'Frozen control ledger missing columns: {sorted(missing)}')
+    for name,frame in [('development',dev),('frozen',z)]:
+        missing=required-set(frame.columns)
+        if missing: raise AssertionError(f'{name} control ledger missing columns: {sorted(missing)}')
+    if len(dev)!=271 or dev['expiry'].nunique()!=135: raise AssertionError(f'Development control shape mismatch: {len(dev)} trades / {dev.expiry.nunique()} expiries')
     if len(z)!=206 or z['expiry'].nunique()!=102: raise AssertionError(f'Frozen control ledger shape mismatch: {len(z)} trades / {z.expiry.nunique()} expiries')
     if abs(float(z.net_rupees.sum())-63672.57530171223)>1e-6: raise AssertionError('Frozen control P&L does not match authoritative benchmark')
+    dev['entry_ts']=pd.to_datetime(dev.entry_ts).dt.tz_convert(TZ); dev['expiry']=pd.to_datetime(dev.expiry).dt.strftime('%Y-%m-%d')
     z['entry_ts']=pd.to_datetime(z.entry_ts).dt.tz_convert(TZ); z['expiry']=pd.to_datetime(z.expiry).dt.strftime('%Y-%m-%d')
-    return z.sort_values(['entry_ts','expiry']).reset_index(drop=True)
+    dev['split']='development'
+    z['split']=np.where(pd.to_datetime(z.expiry).dt.year<=2025,'validation','holdout')
+    panel=pd.concat([dev,z],ignore_index=True)
+    return panel.sort_values(['entry_ts','expiry']).reset_index(drop=True)
 
 def nearest_delta_strike(snap,spot,ts,typ,target):
     sub=snap[snap.option_type==typ].copy()
@@ -175,7 +190,7 @@ def main():
         expiry=pd.Timestamp(r.expiry,tz=TZ); entry_ts=pd.Timestamp(r.entry_ts)
         if expiry not in cache:
             od=load_hf(f'options/NIFTY/{expiry.strftime("%Y-%m-%d")}.parquet')
-            od['option_type']=od.option_type.astype(str).str.upper(); od['strike']=pd.to_numeric(od.strike,errors='coerce'); od=od.dropna(subset=['timestamp','strike','close']); od['expiry_ts']=expiry+pd.Timedelta(hours=15,minutes=30); cache[expiry]=od
+            od['option_type']=od.option_type.astype(str).str.upper(); od['strike']=pd.to_numeric(od.strike,errors='coerce'); od=od.dropna(subset=['timestamp','strike','close']); od=od.sort_values(['timestamp','option_type','strike'],kind='stable').drop_duplicates(['timestamp','option_type','strike'],keep='last'); od['expiry_ts']=expiry+pd.Timedelta(hours=15,minutes=30); cache[expiry]=od
         od=cache[expiry]; srow=spot[spot.timestamp==entry_ts]
         if srow.empty: raise RuntimeError(f'missing spot at {entry_ts}')
         s=float(srow.iloc[0].spot)
@@ -192,7 +207,7 @@ def main():
         recon_err=control_arm-control_net
         if abs(recon_err)>0.75: raise AssertionError(f'Control arm P&L mismatch at row {i}: recalculated={control_arm}, frozen={control_net}, err={recon_err}')
         rows.append({
-            'expiry':str(expiry.date()),'entry_ts':str(entry_ts),'control_direction':r.direction,'entry_spot':s,'lot_size':int(r.lot_size),
+            'split':str(r.split),'expiry':str(expiry.date()),'entry_ts':str(entry_ts),'control_direction':r.direction,'entry_spot':s,'lot_size':int(r.lot_size),
             'call_net_rupees':out['CE']['net_rupees'],'put_net_rupees':out['PE']['net_rupees'],
             'delta_pnl_call_minus_put':out['CE']['net_rupees']-out['PE']['net_rupees'],
             'control_net_rupees':control_net,'recalculated_control_net_rupees':control_arm,'control_reconstruction_error':recon_err,
@@ -205,19 +220,13 @@ def main():
         })
     df=pd.DataFrame(rows).sort_values('entry_ts').reset_index(drop=True)
     df.to_csv(OUT/'fixed_opportunity_ledger.csv',index=False)
-    exp=df.groupby('expiry',as_index=False).agg(control_net_rupees=('control_net_rupees','sum'),call_net_rupees=('call_net_rupees','sum'),put_net_rupees=('put_net_rupees','sum'),delta_pnl_call_minus_put=('delta_pnl_call_minus_put','sum'),control_regret_rupees=('control_regret_rupees','sum'))
+    exp=df.groupby(['split','expiry'],as_index=False).agg(control_net_rupees=('control_net_rupees','sum'),call_net_rupees=('call_net_rupees','sum'),put_net_rupees=('put_net_rupees','sum'),delta_pnl_call_minus_put=('delta_pnl_call_minus_put','sum'),control_regret_rupees=('control_regret_rupees','sum'))
     exp.to_csv(OUT/'fixed_opportunity_expiry_summary.csv',index=False)
-    stats={
-      'status':'PASS','rows':int(len(df)),'expiries':int(df.expiry.nunique()),'control_net_rupees':float(df.control_net_rupees.sum()),
-      'call_net_rupees':float(df.call_net_rupees.sum()),'put_net_rupees':float(df.put_net_rupees.sum()),'mean_delta_pnl_rupees':float(df.delta_pnl_call_minus_put.mean()),
-      'median_delta_pnl_rupees':float(df.delta_pnl_call_minus_put.median()),'positive_delta_share':float((df.delta_pnl_call_minus_put>0).mean()),
-      'oracle_net_rupees':float(df.oracle_net_rupees.sum()),'oracle_uplift_vs_control_rupees':float(df.control_regret_rupees.sum()),
-      'control_reconstruction_max_abs_error':float(df.control_reconstruction_error.abs().max()),'control_reconstruction_mean_abs_error':float(df.control_reconstruction_error.abs().mean()),
-      'control_direction_counts':{k:int(v) for k,v in df.control_direction.value_counts().to_dict().items()},
-      'counterfactual_arm_win_counts':{'CALL':int((df.call_net_rupees>df.put_net_rupees).sum()),'PUT':int((df.put_net_rupees>df.call_net_rupees).sum()),'TIE':int((df.put_net_rupees==df.call_net_rupees).sum())}
-    }
+    def split_summary(g):
+        return {'rows':int(len(g)),'expiries':int(g.expiry.nunique()),'control_net_rupees':float(g.control_net_rupees.sum()),'call_net_rupees':float(g.call_net_rupees.sum()),'put_net_rupees':float(g.put_net_rupees.sum()),'mean_delta_pnl_rupees':float(g.delta_pnl_call_minus_put.mean()),'median_delta_pnl_rupees':float(g.delta_pnl_call_minus_put.median()),'positive_delta_share':float((g.delta_pnl_call_minus_put>0).mean()),'oracle_net_rupees':float(g.oracle_net_rupees.sum()),'oracle_uplift_vs_control_rupees':float(g.control_regret_rupees.sum()),'control_reconstruction_max_abs_error':float(g.control_reconstruction_error.abs().max()),'control_reconstruction_mean_abs_error':float(g.control_reconstruction_error.abs().mean())}
+    stats={'status':'PASS','panel_rows':int(len(df)),'development':split_summary(df[df.split=='development']),'validation':split_summary(df[df.split=='validation']),'holdout':split_summary(df[df.split=='holdout']),'frozen_control_net_rupees':float(df[df.split!='development'].control_net_rupees.sum()),'control_direction_counts':{k:int(v) for k,v in df.control_direction.value_counts().to_dict().items()},'counterfactual_arm_win_counts':{'CALL':int((df.call_net_rupees>df.put_net_rupees).sum()),'PUT':int((df.put_net_rupees>df.call_net_rupees).sum()),'TIE':int((df.put_net_rupees==df.call_net_rupees).sum())}
     (OUT/'summary.json').write_text(json.dumps(stats,indent=2))
-    (OUT/'status.json').write_text(json.dumps({'step':'fixed_opportunity_counterfactual_engine','status':'COMPLETE','rows':len(df),'control_reconstruction_max_abs_error':stats['control_reconstruction_max_abs_error']},indent=2))
+    (OUT/'status.json').write_text(json.dumps({'step':'fixed_opportunity_counterfactual_engine','status':'COMPLETE','panel_rows':len(df),'development_rows':int((df.split=='development').sum()),'validation_rows':int((df.split=='validation').sum()),'holdout_rows':int((df.split=='holdout').sum()),'validation_holdout_frozen_net_rupees':float(df[df.split!='development'].control_net_rupees.sum()),'control_reconstruction_max_abs_error':float(df.control_reconstruction_error.abs().max()),'deterministic_quote_dedup':'stable timestamp/type/strike last-row selection'},indent=2))
     print(json.dumps(stats,indent=2))
 
 if __name__=='__main__': main()
