@@ -1144,3 +1144,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The first strike-filtered staged development run produced zero development rows because the parquet timestamp physical type did not return rows through the predicate-filter path.
 - No evidence was accepted.
 - Correction: the stage runner now detects empty predicate reads and falls back to the known-good Phase-43 full-parquet reader for that expiry. Two expiry workers are used to shorten elapsed time while keeping memory bounded.
+
+
+## F44-014 — development persistence filename mismatch
+- Numerical development run 37496337984 completed successfully with 13,292 structure/time rows, 3,500 development-profile rows, zero eligible candidate rows, and a passed artifact audit.
+- Persistence then failed because the workflow looked for development_summary.json; the runner emits stage1_summary.json.
+- The numerical output remains non-evidence until a clean persistence run succeeds.
