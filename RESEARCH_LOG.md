@@ -247,3 +247,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Registered exactly 72 variants: 2 frozen learners × 4 calibration modes × 3 margins × 3 VIX routing gates.
 - Registered RAW, robust-MAD and rolling conformal-style 80/90% calibration modes.
 - Holdout remains untouched until validation freeze; exact sequential replay and realistic costs remain mandatory.
+
+
+## 2026-10-06 — Phase 42 final closeout
+- Completed the preregistered **72-variant** confidence-calibration/abstention screen.
+- Two variants passed the development/validation selection gate; both used the RAW economic-margin score. All ROBUST_MAD and CONFORMAL_80/90 variants produced zero overrides.
+- Frozen rank-1 policy: SPLINE_RIDGE_VIX + RAW + ₹500 + ALL routing.
+- Exact stateful sequential replay: **+₹26,542.28 validation uplift** and **+₹20,607.09 2026 holdout uplift**, with 43 validation and 8 holdout overrides.
+- Holdout paired-expiry 95% CI for mean uplift: **−₹2,020.42 to +₹4,297.35**; one-sided sign-flip p = **0.3054**.
+- Rank-2 policy was unstable: −₹23,919.81 validation uplift versus +₹42,514.83 holdout uplift.
+- Final decision: **NO PROMOTION — canonical stateful strategy unchanged**.
+- Main research inference: ranking information remains potentially useful, but the preregistered uncertainty/calibration layer was too conservative to act; raw-score action remains statistically inconclusive.
