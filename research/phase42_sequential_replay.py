@@ -90,7 +90,7 @@ def run_candidate(cand,spot,daily,global_d,flows,sentiment,vix,expected_all,cont
             snap=od[od.timestamp==entry];sr=spot[spot.timestamp==entry]
             if snap.empty or sr.empty:cursor+=1;continue
             s=float(sr.iloc[0]["close"]);shadow=shadow_direction(control,entry)
-            fr=enrich(entry,expiry,s,s,spot,daily,global_d,flows,sentiment,option_cache,expected_all,vix,high_thr,0.0)
+            fr=enrich(entry,expiry,snap,s,spot,daily,global_d,flows,sentiment,option_cache,expected_all,vix,high_thr,0.0)
             # rising threshold is not needed for Phase-42 gates
             pred=np.nan;score=np.nan;threshold=np.nan;percentile=np.nan;override=False
             if len(history)>=WARMUP:
