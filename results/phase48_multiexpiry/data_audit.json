@@ -1,0 +1,101 @@
+{
+  "2024": {
+    "path": "/home/runner/.cache/huggingface/hub/datasets--rissin--nse-options-intraday/snapshots/8f7739cab3f38abdcbc6332a6d0a83e1341326e3/upstox_intraday/NIFTY/NIFTY_2024.parquet",
+    "columns": [
+      "close",
+      "date",
+      "exercise_style",
+      "expiry",
+      "granularity",
+      "high",
+      "low",
+      "oi",
+      "open",
+      "option_type",
+      "settle_price",
+      "source",
+      "strike",
+      "timestamp",
+      "underlying",
+      "volume"
+    ],
+    "mapping": {
+      "timestamp": "timestamp",
+      "expiry": "expiry",
+      "strike": "strike",
+      "option_type": "option_type",
+      "close": "close",
+      "spot_price": null,
+      "date": "date"
+    },
+    "min_date": "2024-10-01 00:00:00",
+    "max_date": "2024-12-31 00:00:00",
+    "rows": 14592609
+  },
+  "2025": {
+    "path": "/home/runner/.cache/huggingface/hub/datasets--rissin--nse-options-intraday/snapshots/8f7739cab3f38abdcbc6332a6d0a83e1341326e3/upstox_intraday/NIFTY/NIFTY_2025.parquet",
+    "columns": [
+      "close",
+      "date",
+      "exercise_style",
+      "expiry",
+      "granularity",
+      "high",
+      "low",
+      "oi",
+      "open",
+      "option_type",
+      "settle_price",
+      "source",
+      "strike",
+      "timestamp",
+      "underlying",
+      "volume"
+    ],
+    "mapping": {
+      "timestamp": "timestamp",
+      "expiry": "expiry",
+      "strike": "strike",
+      "option_type": "option_type",
+      "close": "close",
+      "spot_price": null,
+      "date": "date"
+    },
+    "min_date": "2025-01-01 00:00:00",
+    "max_date": "2025-12-31 00:00:00",
+    "rows": 69687860
+  },
+  "2026": {
+    "path": "/home/runner/.cache/huggingface/hub/datasets--rissin--nse-options-intraday/snapshots/8f7739cab3f38abdcbc6332a6d0a83e1341326e3/upstox_intraday/NIFTY/NIFTY_2026.parquet",
+    "columns": [
+      "close",
+      "date",
+      "exercise_style",
+      "expiry",
+      "granularity",
+      "high",
+      "low",
+      "oi",
+      "open",
+      "option_type",
+      "settle_price",
+      "source",
+      "strike",
+      "timestamp",
+      "underlying",
+      "volume"
+    ],
+    "mapping": {
+      "timestamp": "timestamp",
+      "expiry": "expiry",
+      "strike": "strike",
+      "option_type": "option_type",
+      "close": "close",
+      "spot_price": null,
+      "date": "date"
+    },
+    "min_date": "2026-01-01 00:00:00",
+    "max_date": "2026-07-21 00:00:00",
+    "rows": 40177780
+  }
+}

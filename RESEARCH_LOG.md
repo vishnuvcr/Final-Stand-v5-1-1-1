@@ -371,3 +371,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Focused diagnostics established that the limitation is data structure, not a demonstrated strategy failure.
 - Phase 47 is closed with NO PROMOTION.
 - A separate data-bridge phase is required for multi-expiry strategies.
+
+
+## 2026-10-06 - Phase 48 numerical bridge
+- Trade rows=124; validation working states=0; frozen=0; holdout confirmations=0; Holm survivors=0.
+- Independent multi-expiry source used only as supplementary evidence.
