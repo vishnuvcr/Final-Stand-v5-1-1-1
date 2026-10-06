@@ -993,3 +993,16 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 ## 2026-10-06 — Phase 41 accepted execution status
 - Numerical evidence is accepted only from the GitHub Actions run that completes preflight, the frozen 24-variant screen, exact sequential replay and closeout without protocol changes.
+
+
+## 2026-10-06 — Phase 42 Run 37467480459
+
+### Error F42-001 — Cost-stress guard syntax error
+
+**Symptom:** The syntax audit failed before any Phase-42 numerical screen. The cost-stress column check used an invalid boolean expression combining `not` and bitwise OR.
+
+**Evidence status:** No numerical evidence was produced; the run is rejected and superseded.
+
+**Correction:** Replaced the expression with explicit parenthesized boolean `or` logic. Research parameters, candidate universe, data and decision gates are unchanged.
+
+**Prevention:** Keep preflight syntax compilation mandatory before any expensive phase execution.
