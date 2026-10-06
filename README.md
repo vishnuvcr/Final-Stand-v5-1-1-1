@@ -78,6 +78,31 @@ The no-stop dynamic-n strategy remains the locked primary until the stop candida
 - Stop-loss manuscript supplement: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-19-stop-walk-forward-confirmation/manuscript/STOP_LOSS_EXTENSION_SUPPLEMENT.md
 - Walk-forward report: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-19-stop-walk-forward-confirmation/results/dynamic_n_corrected/phase19_walk_forward/WALK_FORWARD_SUMMARY.md
 
+
+
+## Phase 42 — Confidence Calibration and Selective Counterfactual Routing — COMPLETE
+
+Accepted workflow: **37470344620**.
+
+Phase 42 screened **72 preregistered** combinations of two frozen economic-margin learners, four calibration modes, three economic margins and three India-VIX routing gates.
+
+Only two policies passed the development/validation selection gate. The primary frozen policy was **SPLINE_RIDGE_VIX + RAW score + ₹500 margin + ALL routing**.
+
+| Metric | Validation | 2026 holdout |
+|---|---:|---:|
+| Sequential uplift vs canonical control | **+₹26,542.28** | **+₹20,607.09** |
+| Overrides | 43 | 8 |
+| 95% paired-expiry CI for mean uplift | **−₹634.82 to +₹1,335.41** | **−₹2,020.42 to +₹4,297.35** |
+| One-sided sign-flip p | **0.2654** | **0.3054** |
+
+The second frozen policy, **EXTRATREES_VIX + RAW + ₹250 + ALL**, produced **−₹23,919.81 validation uplift** and **+₹42,514.83 holdout uplift**, indicating substantial policy instability.
+
+All ROBUST_MAD and CONFORMAL_80/90 variants produced zero overrides. This suggests the uncertainty/calibration layer can suppress a potentially informative ranking signal, but the RAW score remains statistically inconclusive.
+
+**Decision: NO PROMOTION. The canonical stateful strategy remains unchanged.**
+
+The complete Phase-42 branch, manuscript, grid, sequential replay and error log are retained on branch `phase-42-confidence-calibration-abstention`.
+
 ## Research governance
 
 All previous superseded dynamic-n numerical results remain marked as obsolete. Execution errors and corrections are logged in `ERROR_LOG.md`; research-phase progress is tracked in `RESEARCH_LOG.md`; the research protocol is maintained in `DYNAMIC_N_RESEARCH_PLAN.md`.
