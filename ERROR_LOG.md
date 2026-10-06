@@ -17,3 +17,20 @@
 **Prevention:** Enforce a single audit-record schema at the engine boundary and validate row widths before serialization.
 
 **Research impact:** None on accepted evidence; failure occurred after the trade calculation loop and before final artifact creation.
+
+
+## 2026-10-06 — Run 37428195471
+
+### Error F36-002 — Duplicate quote rows in fresh premium selector
+**Affected selectors:** OTM678_FRESH, OTM789_FRESH.
+
+**Symptom:** Eight expiry-level loops terminated with:
+\`TypeError("float() argument must be a string or a real number, not 'Series'")\`.
+
+**Cause:** At some timestamps the option snapshot contained duplicate rows for the same option type and strike. Pandas \`loc\` returned a Series instead of a scalar close.
+
+**Evidence status:** Fresh-selector results from run #3 are non-final and are not used for phase conclusions.
+
+**Correction:** Group each option type/strike pair in the snapshot and use the last observed close deterministically before evaluating OTM678/OTM789 premium expressions.
+
+**Research impact:** No accepted model-selector results are affected. Fresh-selector results require rerun after correction.

@@ -35,7 +35,7 @@ data/phase36_selector_predictions.csv contains the accepted Phase-35 event-level
 No failed run will be used as numerical evidence. Every implementation error must be appended to ERROR_LOG.md, and the status is updated after each accepted workflow step.
 
 ## Current result
-Not yet run.
+Model-selector treatments are reproducibly complete and net-negative on the primary sample. OTM678_FRESH and OTM789_FRESH are undergoing a corrective rerun because eight expiry files were skipped by a duplicate-quote parsing exception in run #3. No final phase decision is made until the corrected fresh-selector run completes.
 
 
 ## Step 1 — numerical execution audit
@@ -45,3 +45,11 @@ Not yet run.
 - Root cause: mixed skip-record widths: expiry-level records had 3 fields while entry-level records had 4 fields after expiry prefixing.
 - Correction registered: normalize all skip records to [expiry, timestamp, reason, detail] before DataFrame creation.
 - Remaining selector jobs were still running when the common error was identified; their output will not be accepted unless their complete artifacts pass the same audit.
+
+
+## Step 2 — fresh-selector audit
+- Run #3 (37428195471) reproduced all seven treatments successfully at the workflow level and persisted artifacts.
+- CATBOOST, DART, WAVELET_TREE, OOF_STACK and MARKOV_REGIME_TREE artifacts are accepted evidence.
+- OTM678_FRESH and OTM789_FRESH had eight expiry-level exceptions caused by duplicate strike rows producing a Pandas Series where a scalar premium was expected.
+- Correction: collapse duplicate same-timestamp strike rows deterministically using the last observed close per option type/strike.
+- The fresh-selector results from run #3 are non-final and will be replaced by the corrected rerun.

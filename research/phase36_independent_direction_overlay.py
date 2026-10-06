@@ -33,11 +33,17 @@ def selector_direction_from_snapshot(snap,spot,k):
     atm=float(strikes[np.argmin(np.abs(strikes-float(spot)))])
     out={}
     for typ in ("CE","PE"):
-        q=snap[snap.option_type==typ].set_index("strike")
+        # Duplicate quote rows can occur at one timestamp. Collapse them
+        # deterministically to the last observed close for each strike, rather
+        # than letting a duplicate index turn q.loc[...] into a Series.
+        q=(snap[snap.option_type==typ][["strike","close"]]
+           .dropna()
+           .groupby("strike",sort=True)["close"]
+           .last())
         for n in range(k,k+3):
             strike=atm+n*50.0 if typ=="CE" else atm-n*50.0
             if strike not in q.index: return np.nan
-            out[f"{typ}{n}"]=float(q.loc[strike,"close"])
+            out[f"{typ}{n}"]=float(q.loc[strike])
     x_call=out[f"CE{k+2}"]+out[f"CE{k+1}"]-out[f"CE{k}"]
     x_put=out[f"PE{k+2}"]+out[f"PE{k+1}"]-out[f"PE{k}"]
     if not np.isfinite(x_call) or not np.isfinite(x_put) or x_call==x_put: return np.nan
