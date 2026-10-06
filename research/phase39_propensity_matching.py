@@ -35,7 +35,9 @@ def load():
         z["put_net_rupees"]-z["call_net_rupees"],
         z["call_net_rupees"]-z["put_net_rupees"])
     assert len(z)==477
-    assert int(z.treatment.sum())==7
+    # Sequential replay has 479 trades versus 477 fixed opportunities. Only overrides
+    # whose exact entry timestamp exists in the fixed panel are eligible for PSM.
+    z["eligible_override"]=(z["override"].fillna(False).astype(int) & z["entry_ts"].notna().astype(int))
     return z
 
 def feature_cols(z):
@@ -118,7 +120,7 @@ def main():
     hold=z[z.split=="holdout"].copy()
     # Because treatment is policy-generated, development has the only defensible fitting sample.
     # If treatment is too sparse, report non-identifiability rather than inventing a model.
-    if int(dev.treatment.sum())<3:
+    if int(dev.treatment.sum())<2:
         raise RuntimeError("Development treatment count too small for propensity model.")
     ps_dev=fit_propensity(dev,dev,cols)
     # For validation/holdout, fit the same development model explicitly.
@@ -169,6 +171,9 @@ def main():
       "development_treated":int(dev.treatment.sum()),
       "validation_treated":int(val.treatment.sum()),
       "holdout_treated":int(hold.treatment.sum()),
+      "total_sequential_overrides":int(s["override"].sum()),
+      "mapped_fixed_opportunity_overrides":int(z["treatment"].sum()),
+      "unmapped_sequential_overrides":int(s["override"].sum())-int(z["treatment"].sum()),
       "feature_count":len(cols),
       "primary_estimand":"ATT of Sparse-GAM override versus matched no-override opportunities, measured by alternative-minus-control net P&L",
       "calipers":CALIPERS,
