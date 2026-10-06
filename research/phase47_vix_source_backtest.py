@@ -196,7 +196,7 @@ def split_for(expiry):
 
 def monthly_expiries(expiries):
     d = pd.DataFrame({"expiry": sorted(as_tz(x) for x in expiries)})
-    d["ym"] = d.expiry.dt.to_period("M").astype(str)
+    d["ym"] = d.expiry.dt.tz_localize(None).dt.to_period("M").astype(str)
     return list(d.groupby("ym")["expiry"].max().sort_values())
 
 def entry_four_dte(index, expiry):
