@@ -1,0 +1,45 @@
+{
+  "phase": 48,
+  "decision": "NO_PROMOTION",
+  "evidence_status": "SUPPLEMENTARY / INCONCLUSIVE",
+  "trade_rows": 124,
+  "validation_working_state": {
+    "strategy": "covered_call_2_static_proxy",
+    "state": "LOW",
+    "trades": 30,
+    "net": 10326.998665398092,
+    "net50": 6785.997998097049,
+    "mean_net": 344.2332888466031,
+    "win_rate": 0.5333333333333333,
+    "max_dd": 137155.80139701,
+    "profit_factor": 1.0272985670872135,
+    "active_vs_rest_mean_diff": 5325.455108868339,
+    "bootstrap_ci_lower": -10856.504344410267,
+    "permutation_p": 0.2718,
+    "holm_p": 1.0
+  },
+  "holdout_confirmation": {
+    "strategy": "covered_call_2_static_proxy",
+    "state": "LOW",
+    "trades": 6,
+    "net": 2753.596373558701,
+    "net50": 2113.7695603380507,
+    "mean_net": 458.9327289264502,
+    "win_rate": 0.3333333333333333,
+    "max_dd": 13053.493628135007,
+    "profit_factor": 1.0495330980661488
+  },
+  "other_registered_baselines": {
+    "double_calendar_straddle": "negative_validation; not a working candidate",
+    "monthly_wide_range_static": "negative_validation; not a working candidate"
+  },
+  "holm_survivors": 0,
+  "promotion": false,
+  "canonical_strategy_changed": false,
+  "important_limitations": [
+    "Independent option dataset starts in late 2024; development is short.",
+    "Covered Call 2.0 is an option-only synthetic-future proxy, not exact futures replication.",
+    "Point-in-time NIFTY spot for strike selection is bridged from the project's canonical NIFTY index series.",
+    "High/RISING/SPIKE/HIGH_RISING states are sparse in validation for the registered baselines."
+  ]
+}
