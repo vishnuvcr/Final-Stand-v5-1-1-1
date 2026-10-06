@@ -1,0 +1,13 @@
+{
+  "status": "COMPLETE",
+  "holdout_evaluated": false,
+  "symbolic_margin": 250.0,
+  "symbolic_validation_uplift": -8760.830306714995,
+  "symbolic_bootstrap_lo": -49287.932502292875,
+  "symbolic_bootstrap_hi": 31854.66728832788,
+  "symbolic_bootstrap_p_positive": 0.3308,
+  "expert_aggregation_eta": 1e-05,
+  "expert_aggregation_validation_net": 63948.22210538013,
+  "expert_aggregation_diagnostic_only": true,
+  "decision": "NO_HOLDOUT_OR_PROMOTION"
+}
