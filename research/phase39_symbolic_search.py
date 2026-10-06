@@ -59,7 +59,7 @@ def build_exprs(cols):
     return out
 
 def fit_expr(train,expr):
-    if len(expr)==1:
+    if len(expr)==1 and len(expr[0])==2:
         c,op=expr[0]
         a=transform(train[c],op).astype(float)
     else:
@@ -81,7 +81,7 @@ def fit_expr(train,expr):
     return {"imp":imp,"sc_mean":float(sc.mean_[0]),"sc_scale":float(sc.scale_[0]),"coef0":float(coef[0]),"coef1":float(coef[1]),"unc":unc}
 
 def predict(df,expr,fit):
-    if len(expr)==1:
+    if len(expr)==1 and len(expr[0])==2:
         c,op=expr[0]; a=transform(df[c],op).astype(float)
     else:
         c1,o1,c2,o2,bop=expr[0]; x1=transform(df[c1],o1); x2=transform(df[c2],o2)
