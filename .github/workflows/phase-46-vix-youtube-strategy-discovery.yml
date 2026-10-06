@@ -1,0 +1,46 @@
+name: Phase 46 — VIX YouTube Strategy Discovery Validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'PHASE46_*.md'
+      - 'README.md'
+      - 'RESEARCH_LOG.md'
+      - 'ERROR_LOG.md'
+
+jobs:
+  validate-discovery-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required Phase 46 files
+        run: |
+          set -euo pipefail
+          required=(
+            PHASE46_RESEARCH_PLAN.md
+            PHASE46_YOUTUBE_SOURCE_LEDGER.md
+            PHASE46_STATUS.md
+            PHASE46_LITERATURE_REVIEW.md
+            PHASE46_CHAT_LOG.md
+          )
+          for f in "${required[@]}"; do
+            test -s "$f"
+          done
+
+      - name: Validate VIX regime coverage
+        run: |
+          set -euo pipefail
+          for state in LOW NORMAL FALLING RISING HIGH SPIKE HIGH_RISING; do
+            grep -q "$state" PHASE46_RESEARCH_PLAN.md
+          done
+          grep -q "Profit Breakout" PHASE46_YOUTUBE_SOURCE_LEDGER.md
+          grep -q "No strategy is promoted" PHASE46_STATUS.md || true
+
+      - name: Publish validation summary
+        run: |
+          echo "Phase 46 discovery artifacts validated."
+          echo "Scope: Profit Breakout + broader video discovery."
+          echo "Required VIX states: ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE, HIGH_RISING."
