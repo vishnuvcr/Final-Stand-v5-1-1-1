@@ -651,3 +651,15 @@ Evidence status: The numerical Hedge result is valid research evidence; the run'
 Correction: Removed the non-negative-uplift assertion. The verifier now checks only schema, completion, parameter-grid and holdout-isolation invariants.
 
 Prevention: CI verification will never encode directional expectations about numerical research outcomes.
+
+
+### Error F39-037 — Step-7 workflow omitted required scikit-learn dependency
+Run: 37448200891 (Step-7 run #1).
+
+Symptom: The symbolic runner failed immediately with `ModuleNotFoundError: No module named 'sklearn'`.
+
+Evidence status: Non-evidence dependency failure.
+
+Correction: Step-7 workflow now installs `scikit-learn`, matching the script's SimpleImputer and StandardScaler imports.
+
+Prevention: Each workflow dependency list will be checked against the runner imports before execution.
