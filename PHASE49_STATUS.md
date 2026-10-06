@@ -34,3 +34,6 @@ Gate status:
 - Validation confirmation: pending.
 - Holdout confirmation: pending.
 - Final promotion: prohibited until all gates pass.
+## 2026-10-07 — Execution watchdog correction
+
+The superseded run 37535442553 stopped updating while the corrected run entered the Actions queue. Because the old run is already classified as NON-EVIDENCE, the workflow concurrency group is being advanced for the corrected execution rather than waiting indefinitely for a defective process.
