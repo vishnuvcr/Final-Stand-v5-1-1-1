@@ -273,18 +273,27 @@ The immediate numerical priority is LightGBM + CatBoost + DART, followed by prob
 - [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_STATUS.md)
 
 
-## Phase 35 — Advanced NIFTY Prediction Model Search
+## Phase 35 — Advanced NIFTY Prediction Model Search — COMPLETE / NO PROMOTION
 
-**Status: COMPLETE — NO MODEL PROMOTED.** Phase 35 tested an expanded battery of tree, probabilistic, decomposition, adaptive, stacking, calibration, conformal and Markov-regime models using the frozen D-6 10:00 IST design. The accepted evidence contains 245 events: 128 development, 95 validation and 22 untouched 2026 holdout events.
+Phase 35 exhaustively expanded the D−6 / 10:00 IST NIFTY prediction search while **keeping tree models as the core family**. It tested LightGBM, CatBoost, DART, XGBoost, ExtraTrees, HistGradientBoosting, equal/winsorized tree pooling, RFE-LightGBM, NGBoost, quantile trees, BART, wavelet/EMD/VMD/CEEMDAN tree models, adaptive rolling/weighted trees, dynamic pooling, chronological OOF stacking, probability calibration, conformal uncertainty, and a reproducible Markov-switching volatility-gate proxy.
 
-Key 2026 holdout result: 68.18% accuracy was reached by CatBoost, ExtraTrees, LightGBM-DART, Wavelet-tree, OOF stacking and the Markov-switching regime + tree proxy. OOF stacking had the strongest holdout signed-return diagnostic (+0.00951; bootstrap 95% CI +0.00255 to +0.01627), but the holdout is only 22 events and the diagnostic is not executable option P&L. **No model is promoted to live trading.**
+**Final decision: no model is promoted to live trading.** There were 245 eligible events: 128 development, 95 validation and 22 untouched 2026 holdout. The strongest Phase-34 validation benchmark was 57.89% accuracy; no Phase-35 method exceeded it. Several models reached 68.18% holdout accuracy, and OOF stacking produced the strongest holdout signed-return diagnostic (+0.00951; 95% bootstrap CI +0.00255 to +0.01627; sign-flip p=0.0139), but the holdout contains only 22 observations and the signed-return diagnostic is not executable option P&L.
+
+The correct next phase is a **frozen trading-overlay validation**, not another unrestricted model search.
 
 - [Phase 35 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-35-advanced-tree-and-adaptive-prediction-search)
 - [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_RESEARCH_PLAN.md)
 - [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_PRE_REGISTRATION.md)
 - [Final status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_STATUS.md)
-- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_MANUSCRIPT.md)
-- [Model metrics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/model_metrics.csv)
-- [Economic diagnostic](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/directional_economic_diagnostic.csv)
-- [Decision table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_DECISION_TABLE.csv)
-- [Markov regime results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/ms_regime_tree_metrics.csv)
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_FINAL_MANUSCRIPT.md)
+- [Final statistical summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_FINAL_STATISTICAL_SUMMARY.csv)
+- [Final decision table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_FINAL_DECISION_TABLE.csv)
+- [Calibration diagnostics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/calibration_diagnostics.csv)
+- [Uncertainty summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/uncertainty_summary.csv)
+- [Accuracy figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/phase35_holdout_accuracy.svg)
+- [Signed-return figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/phase35_holdout_signed_return.svg)
+- [Accepted principal Actions run #5](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37425240176)
+- [Accepted Markov addendum Actions run #8](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37426499636)
+- [Accepted CEEMDAN addendum Actions run #1](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37426761476)
+
+**Phase 20 remains canonical until a separate overlay phase demonstrates improvement after full Paytm Money brokerage/statutory charges, slippage, execution/fill constraints and expiry-gap handling.**
