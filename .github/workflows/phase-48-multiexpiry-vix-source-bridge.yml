@@ -43,6 +43,23 @@ jobs:
           HF_HUB_DISABLE_TELEMETRY: "1"
           PHASE48_PREFLIGHT_ONLY: "1"
         run: python research/phase48_multiexpiry_vix_bridge.py
+      - name: Run strategy feasibility diagnostic
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          PHASE48_DIAGNOSTIC_ONLY: "1"
+        run: python research/phase48_multiexpiry_vix_bridge.py
+
+      - name: Validate strategy diagnostic
+        run: |
+          test -s results/phase48_multiexpiry/diagnostic_attempts.csv
+          python - <<'PY'
+          import pandas as pd
+          d=pd.read_csv('results/phase48_multiexpiry/diagnostic_attempts.csv')
+          assert len(d)>=6
+          print(d.to_string(index=False))
+          print('Strategy diagnostic PASS')
+          PY
       - name: Validate preflight
         run: |
           python - <<'PY'
@@ -84,6 +101,14 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_HUB_DISABLE_TELEMETRY: "1"
         run: python research/phase48_multiexpiry_vix_bridge.py
+      - name: Upload raw numerical artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase48-raw-${{ github.run_id }}
+          path: results/phase48_multiexpiry
+          if-no-files-found: warn
+
       - name: Validate artifacts
         run: |
           set -euo pipefail
