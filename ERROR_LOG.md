@@ -109,3 +109,17 @@ All seven numerical selector jobs succeeded and the rebase-safe publication job 
 **Correction:** The manuscript was rewritten without the conflicting delimiter syntax and committed successfully.
 
 **Research impact:** None.
+
+
+## 2026-10-06 — Phase 39 workflow packaging
+
+### Error F39-001 — JavaScript interpolation of GitHub Actions shell variable
+**Symptom:** The first two attempts to create the Phase 39 workflow failed in the tool layer with ReferenceError: GITHUB_REF_NAME is not defined.
+
+**Cause:** The workflow text was constructed as a JavaScript template literal, so the GitHub Actions shell expression ${GITHUB_REF_NAME} was interpreted by the tool runtime instead of emitted literally.
+
+**Evidence status:** No numerical evidence or repository file was changed by the failed attempts.
+
+**Correction:** The workflow was rebuilt using string concatenation so the GitHub Actions shell variable is emitted literally.
+
+**Research impact:** None.
