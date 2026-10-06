@@ -154,3 +154,38 @@ A multi-file repository update script failed with a JavaScript syntax error befo
 **Evidence status:** tooling-only; no repository or numerical evidence changed.
 
 **Correction:** The updates are being applied as separate deterministic file operations.
+
+
+## 2026-10-06 — Phase 39 data-split correction before model training
+
+### Error F39-006 — Workflow job-log lookup unavailable while job was running
+Symptom: The Actions job-log endpoint returned a 404/blob-not-found response while the numerical job was still executing.
+
+Evidence status: tooling-only; no numerical evidence changed.
+
+Correction: Job status and step state were read from the workflow-run/job APIs instead; no inference was made from the missing log.
+
+### Error F39-007 — Local wait command exceeded the container timeout
+Symptom: A long blocking wait was requested from the container runtime and timed out.
+
+Evidence status: tooling-only; no repository or numerical evidence changed.
+
+Correction: Progress was checked through the GitHub Actions run-state API instead of blocking the runtime.
+
+### Error F39-008 — Frozen-control-only dataset did not satisfy the preregistered development split
+Finding: The first fixed-opportunity ledger contained only the 206 frozen Phase-38 opportunities beginning in 2024, but the Phase-39 preregistration specifies development through 2023, validation 2024–2025, and untouched 2026 holdout.
+
+Evidence status: The first 206-row counterfactual result is superseded and is not used for model-training evidence.
+
+Correction: The accepted Phase-32 workflow artifact is now used to construct a separate 2021–2023 development ledger (271 trades / 135 expiries), while the exact frozen 2024-01-11 through 2026-06-30 comparator remains authoritative for validation/holdout. The single 2024-01-04 trade is intentionally excluded so the Phase-38 comparator remains exact.
+
+Prevention: Every future Phase-39 model run must assert the registered 271/172/34 development-validation-holdout row counts before training.
+
+### Error F39-009 — Deterministic duplicate-quote handling required an explicit audit correction
+Finding: Earlier repository phases recorded duplicate option quote rows at identical timestamp/type/strike combinations. The initial Phase-39 engine relied on implicit row ordering for entry quotes and therefore required an explicit deterministic rule.
+
+Evidence status: The prior Step-1 result is superseded and is not used for model-training evidence.
+
+Correction: Option snapshots are now sorted stably and deduplicated by timestamp/option type/strike, retaining the last observed row, matching the historical engine last-observation aggregation convention.
+
+Prevention: The workflow now reruns the complete counterfactual engine after this correction and blocks progression unless the control arm still reconstructs within the registered tolerance.
