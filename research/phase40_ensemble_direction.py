@@ -1,4 +1,4 @@
-import json, os, sys
+import hashlib, json, os, sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -325,14 +325,35 @@ def main():
     val_expiries = [x for x in expiries if x <= VAL_END]
     control_net = float(frozen_control.loc[val_expiries, "net_rupees"].sum())
     full_grid["validation_uplift_vs_sequential_control"] = full_grid["net"] - control_net
-    full_grid = full_grid.sort_values(["validation_uplift_vs_sequential_control","profit_factor"], ascending=[False,False]).reset_index(drop=True)
+
+    # Identify duplicate policy aliases. Different aggregators/subsets can
+    # produce exactly the same expiry-level signal sequence. They are not
+    # independent evidence and should not consume multiple holdout slots.
+    signatures = []
+    for _, row in full_grid.iterrows():
+        combo = tuple(str(row["combo"]).split("+"))
+        refs = build_ref_directions(z, combo, row["aggregator"], row["vix_mode"], thr)
+        refs = refs[(refs["expiry"] >= START) & (refs["expiry"] <= VAL_END)].sort_values("expiry")
+        key = "|".join(f"{pd.Timestamp(x.expiry).date()}:{int(x.bullish_signal)}" for _, x in refs.iterrows())
+        signatures.append(hashlib.sha256(key.encode("utf-8")).hexdigest())
+    full_grid["signal_signature"] = signatures
+    full_grid = full_grid.sort_values(
+        ["validation_uplift_vs_sequential_control","profit_factor","max_dd"],
+        ascending=[False,False,True]
+    ).reset_index(drop=True)
     full_grid.to_csv(ROOT / "grid_validation.csv", index=False)
 
-    # Freeze top 10 only on validation.
-    top = full_grid.head(10).copy()
+    # Freeze the top 10 UNIQUE signal policies using validation only.
+    top = (
+        full_grid.drop_duplicates("signal_signature", keep="first")
+        .head(10)
+        .copy()
+    )
+    if len(top) < 10:
+        raise RuntimeError(f"only {len(top)} unique validation policies available; expected at least 10")
     top10 = top.to_dict(orient="records")
     with open(ROOT / "selection.json","w") as fh:
-        json.dump({"grid_candidates":len(full_grid),"top10_count":len(top10),"vix_thresholds":thr,"sequential_control_validation_net":control_net,"study_expiries":len(expiries),"top10":top10},fh,indent=2)
+        json.dump({"grid_candidates":len(full_grid),"unique_validation_policies":int(full_grid["signal_signature"].nunique()),"top10_count":len(top10),"vix_thresholds":thr,"sequential_control_validation_net":control_net,"study_expiries":len(expiries),"top10":top10},fh,indent=2)
 
     holdout_rows = []
     for row in top10:
