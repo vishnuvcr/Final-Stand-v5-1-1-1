@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase44-bridge
+  group: phase44-bridge-v2
   cancel-in-progress: true
 
 jobs:
