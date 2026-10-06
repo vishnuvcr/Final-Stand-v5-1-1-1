@@ -90,6 +90,7 @@ jobs:
           test -s results/phase44_vix_tuning/frozen_stage1_holdout.csv
           test -s results/phase44_vix_tuning/summary.json
           test -s results/phase44_vix_tuning/data_errors.csv
+          test -s results/phase44_vix_tuning/stage1_all_dev_profiles.csv
 
       - name: Finalize status and research log
         run: |
