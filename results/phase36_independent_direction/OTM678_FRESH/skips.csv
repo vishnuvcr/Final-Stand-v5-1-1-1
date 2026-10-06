@@ -1,12 +1,4 @@
 expiry,timestamp,reason,detail
-2024-01-04,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-01-02,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-01-09,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-01-16,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-01-23,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-01-30,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-02-06,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
-2025-02-13,,exception,"TypeError(""float() argument must be a string or a real number, not 'Series'"")"
 2025-04-07,,missing_expiry_file,
 2025-04-21,,missing_expiry_file,
 2025-04-28,,missing_expiry_file,

@@ -1,4 +1,4 @@
-ERROR expiry=2024-01-04 TypeError("float() argument must be a string or a real number, not 'Series'")
+expiry=2024-01-04 trades=2 selector=OTM678_FRESH
 expiry=2024-01-11 trades=2 selector=OTM678_FRESH
 expiry=2024-01-18 trades=1 selector=OTM678_FRESH
 expiry=2024-01-25 trades=3 selector=OTM678_FRESH
@@ -50,13 +50,13 @@ expiry=2024-12-05 trades=2 selector=OTM678_FRESH
 expiry=2024-12-12 trades=1 selector=OTM678_FRESH
 expiry=2024-12-19 trades=1 selector=OTM678_FRESH
 expiry=2024-12-26 trades=2 selector=OTM678_FRESH
-ERROR expiry=2025-01-02 TypeError("float() argument must be a string or a real number, not 'Series'")
-ERROR expiry=2025-01-09 TypeError("float() argument must be a string or a real number, not 'Series'")
-ERROR expiry=2025-01-16 TypeError("float() argument must be a string or a real number, not 'Series'")
-ERROR expiry=2025-01-23 TypeError("float() argument must be a string or a real number, not 'Series'")
-ERROR expiry=2025-01-30 TypeError("float() argument must be a string or a real number, not 'Series'")
-ERROR expiry=2025-02-06 TypeError("float() argument must be a string or a real number, not 'Series'")
-ERROR expiry=2025-02-13 TypeError("float() argument must be a string or a real number, not 'Series'")
+expiry=2025-01-02 trades=3 selector=OTM678_FRESH
+expiry=2025-01-09 trades=3 selector=OTM678_FRESH
+expiry=2025-01-16 trades=2 selector=OTM678_FRESH
+expiry=2025-01-23 trades=1 selector=OTM678_FRESH
+expiry=2025-01-30 trades=2 selector=OTM678_FRESH
+expiry=2025-02-06 trades=1 selector=OTM678_FRESH
+expiry=2025-02-13 trades=4 selector=OTM678_FRESH
 expiry=2025-02-20 trades=2 selector=OTM678_FRESH
 expiry=2025-02-27 trades=2 selector=OTM678_FRESH
 expiry=2025-03-06 trades=3 selector=OTM678_FRESH
@@ -105,20 +105,20 @@ expiry=2026-05-19 trades=1 selector=OTM678_FRESH
   "selector": "OTM678_FRESH",
   "sample_start": "2024-01-01",
   "sample_end": "2026-06-30",
-  "trades": 192,
-  "net_pnl": -43153.18415694885,
-  "gross_pnl": -22747.499999999858,
-  "costs": 20405.684156949002,
-  "win_rate": 0.6145833333333334,
-  "profit_factor": 0.8741704957479307,
+  "trades": 210,
+  "net_pnl": -62665.27187444381,
+  "gross_pnl": -39779.99999999981,
+  "costs": 22885.271874444,
+  "win_rate": 0.6,
+  "profit_factor": 0.8414990457756316,
   "max_drawdown": 120108.87220383796,
-  "call_trades": 36,
-  "put_trades": 156,
-  "delta_exit_trades": 191,
+  "call_trades": 44,
+  "put_trades": 166,
+  "delta_exit_trades": 209,
   "expiry_termination_trades": 1,
-  "mean_net": -224.7561674841086,
-  "median_net": 1157.0739738500006,
-  "mean_hold_minutes": 4148.083333333333,
-  "processed_expiries": 95,
+  "mean_net": -298.4060565449705,
+  "median_net": 1146.0292387249995,
+  "mean_hold_minutes": 4133.385714285714,
+  "processed_expiries": 103,
   "selector_cache_expiries": 117
 }
