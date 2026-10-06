@@ -21,6 +21,10 @@ on:
         required: false
         default: '2026-09-30'
 
+concurrency:
+  group: phase33-nifty-model-run
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
