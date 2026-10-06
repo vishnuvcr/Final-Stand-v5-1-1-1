@@ -1162,3 +1162,6 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Run 37500626261 completed the registered development calculation and artifact audit successfully, but the persistence step failed because the runner attempted `git pull --rebase` while generated files were already staged as local changes; the local commit was then rejected as non-fast-forward.
 - No numerical result is accepted because the artifacts were not persisted to the branch.
 - Correction: the development workflow now fetches the branch, resets the worktree to the current remote branch, then stages the generated results/status/log files and pushes a new commit. This preserves the generated numerical artifacts while making publication race-safe.
+
+## F44-validation-RUN-37506989938 — numerical execution failure
+- Exit code: 1. Failed output is non-evidence.
