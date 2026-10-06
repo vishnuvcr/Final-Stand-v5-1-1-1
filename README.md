@@ -4,6 +4,37 @@ Systematic options-strategy research repository.
 
 ## Latest research status
 
+### Phase 39 — Advanced / Counterfactual Direction Research — ACTIVE
+
+Phase 39 moved beyond conventional NIFTY-direction classifiers to learn the **post-cost economic margin between CALL and PUT Continuous Delta 6x6 spreads**.
+
+Current accepted checkpoints:
+
+| Step | Status | Key result |
+|---|---|---|
+| Fixed counterfactual panel | Accepted | 477 opportunities; 271/172/34 development/validation/holdout |
+| Point-in-time feature matrix | Accepted | Leakage audit PASS; 122 numeric features |
+| Economic-margin model screen | Accepted | Sparse GAM best fixed-opportunity validation uplift +₹11,609.60 |
+| Sequential replay | Audited | +₹17,983.53 validation; +₹7,390.39 2026 holdout; 7 overrides |
+| Cost stress | Passed | Positive uplift at +50% and +100% aggregate cost stress |
+| Promotion | **Not yet** | Negative development uplift and remaining Phase-39 model families still under test |
+
+The accepted sequential result keeps the canonical stateful direction as default and overrides only with the locked Sparse-GAM rule (₹500 safety margin, uncertainty multiplier 1.0). The 2026 holdout remains frozen for model selection.
+
+Phase-39 research branch:
+https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-39-advanced-direction-models
+
+Phase-39 status:
+https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_STATUS.md
+
+Phase-39 pre-registration:
+https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/PHASE39_PRE_REGISTRATION.md
+
+Phase-39 error log:
+https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-39-advanced-direction-models/ERROR_LOG.md
+
+
+
 **Dynamic-n corrected primary research is complete. Stop-loss research is complete through Phase 19.**
 
 ### Locked dynamic-n primary
