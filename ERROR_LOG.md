@@ -1077,3 +1077,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The first tuning implementation was not accepted as evidence because its candidate-selection design was audited before acceptance and the workflow snapshot could select using validation outcomes; its threshold implementation also did not fully reflect the registered directional/spike grid.
 - Any run based on that snapshot is **NON-EVIDENCE**.
 - Corrected implementation now performs development-only shortlist selection, preserves validation strictly for confirmation, writes the workflow-expected `stage1_candidates.csv`, applies the registered VIX profile families, enforces validation concentration, and opens holdout only after validation/inference freezing.
+
+
+## F44-002 — redundant VIX profile expansion quarantined
+- The running Stage-1 attempt used a profile mapping that redundantly evaluated LOW/NORMAL/HIGH under the combined HIGH+RISING threshold profile. This is an implementation design defect because the rising quantile is irrelevant to those level states and would create duplicate hypothesis labels.
+- That run is classified **NON-EVIDENCE** and is being cancelled/replaced by the corrected profile mapping.
