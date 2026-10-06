@@ -215,3 +215,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Phase 40 final decision: **PROMISING / INCONCLUSIVE — NOT PROMOTED**.
 - Canonical stateful strategy remains unchanged.
 - Complete manuscript saved as `PHASE40_MANUSCRIPT.md`.
+
+
+## 2026-10-06 — Phase 40 repository closeout verified
+
+- Corrected exact sequential replay run **37458310284** completed successfully after restricting the replay universe to the exact **93 prediction-covered expiry blocks** used by the Phase-40 model screen.
+- Verification and artifact persistence both passed.
+- Final sequential evidence is therefore the corrected 93-expiry artifact, not the superseded 102-expiry replay.
+- Final primary policy remains Candidate 3: CATBOOST + HIGH India VIX gate + canonical fallback.
+- Final decision remains **PROMISING / INCONCLUSIVE — NOT PROMOTED**.
+- Complete manuscript, status, grid, inference, sequential replay and error log are persisted on the Phase-40 branch.
+- No change was made to the canonical trading strategy.
