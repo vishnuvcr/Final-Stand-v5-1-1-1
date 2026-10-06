@@ -491,3 +491,17 @@ Evidence status: Non-evidence runtime failure. No sequential policy result was p
 Correction: Every sequential feature row now materializes the complete locked feature schema and fills unavailable optional predictors with NaN, allowing the locked training-window imputer to handle them without changing model inputs.
 
 Prevention: Sequential replay will assert the exact locked feature schema before every prediction.
+
+
+### Error F39-025 — Sequential replay summary treated control file paths as DataFrames
+Run: 37442475815 (Step-4 run #7).
+
+Symptom: The full sequential simulation reached the post-replay aggregation stage, then failed with `AttributeError: 'PosixPath' object has no attribute 'assign'`.
+
+Cause: `DEV_CONTROL` and `FROZEN_CONTROL` were defined as pathlib paths and were passed directly to pandas `concat/assign` operations instead of being loaded into DataFrames.
+
+Evidence status: Non-evidence summary-stage runtime failure. The sequential replay result was not accepted because the workflow failed before producing the final verified summary.
+
+Correction: The summary stage now explicitly reads both control CSVs into DataFrames before adding period labels and computing the policy-versus-control comparison.
+
+Prevention: Repository file paths will remain distinct from loaded DataFrames throughout sequential analysis code.
