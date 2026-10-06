@@ -303,3 +303,15 @@ Evidence status: non-evidence model execution failure; no model result accepted.
 Correction: Step 3 now joins only the preregistered outcome/control columns from fixed_opportunity_ledger.csv to the point-in-time predictors by entry timestamp.
 
 Prevention: Predictor matrices and economic outcomes remain physically separated; model runners must join them explicitly.
+
+
+### Error F39-019 — Step 3 ledger join duplicated fields already retained as audit columns
+Run: 37440404612.
+
+Symptom: Joining the complete outcome/control schema created pandas suffix columns such as delta_pnl_call_minus_put_x because Step 2 intentionally retained audit copies of those fields.
+
+Evidence status: non-evidence model execution failure; no model result accepted.
+
+Correction: The Step-3 runner now joins only call_net_rupees and put_net_rupees from the fixed-opportunity ledger and uses the already-audited control/target columns from the feature matrix.
+
+Prevention: Outcome/control joins will add only fields physically absent from the predictor file.
