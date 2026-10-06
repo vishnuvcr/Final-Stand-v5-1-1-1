@@ -885,3 +885,15 @@ The exhaustive 1,764-candidate calculation itself completed, but final scoring f
 **Correction:** Initialize and audit the frozen expiry-level control before grid scoring, and compare each candidate only on the exact common study expiries covered by the model-probability cache.
 
 **Prevention:** Comparator initialization now occurs before candidate scoring and the workflow asserts zero missing control expiries.
+
+
+### Error F40-007 — Final artifact persistence attempted rebase before staging generated files
+**Run:** 37455920220.
+
+The 1,764-candidate numerical screen and verification both succeeded. Persistence failed because the workflow ran `git pull --rebase` while the India-VIX cache and result files were unstaged.
+
+**Evidence status:** numerical evidence was calculated successfully but was not persisted by this run; it is not treated as repository-accepted evidence until the corrected persistence run succeeds.
+
+**Correction:** The workflow now stages and commits generated artifacts first, then rebases that local commit onto the latest branch and pushes.
+
+**Prevention:** Generated workflow artifacts must be committed before rebasing a concurrently modified research branch.
