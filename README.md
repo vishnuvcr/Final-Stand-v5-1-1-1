@@ -553,3 +553,17 @@ Six validation candidates were frozen and checked on the untouched 2026 data. Fi
 - [2026 holdout confirmation](results/phase45_ready_made/holdout_frozen_top3_confirmation.csv)
 
 The canonical Phase-20/42 strategy remains unchanged.
+
+## Phase 49 — FINAL CLOSEOUT
+
+**Decision: NO PROMOTION.** The corrected numerical run #12 completed successfully; artifact self-audit passed; the raw artifact was independently reconciled and the complete manuscript/evidence package is persisted.
+
+- Source numerical run: `37542636969`.
+- 720 raw geometries → 1,440 LOW/NORMAL-VIX candidates.
+- 2 frozen candidates; 1 validation economic pass; 0 Holm-adjusted statistical survivors; 1 small holdout confirmation.
+- Best research candidate: LOW-VIX Bear Put — 09:30 IST, 5 trading sessions before expiry, buy PE +1 modal step and sell PE −3 modal steps, four-step width.
+- Validation: +₹28,848.48 net / +₹27,246.47 at +50% cost stress on 42 active LOW-VIX trades; permutation p=0.2260; Holm p=0.4520.
+- Holdout: +₹27,278.50 net / +₹27,051.63 stressed on 5 active LOW-VIX observations.
+- Canonical strategy remains unchanged.
+
+Key evidence: [Phase 49 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/PHASE49_MANUSCRIPT.md), [final decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/phase49_final_decision.json), [parameter summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/phase49_parameter_summary.csv), [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md), [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/ERROR_LOG.md).
