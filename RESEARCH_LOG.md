@@ -72,3 +72,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Primary sequential policy: SPLINE_RIDGE_VIX + RAW + ₹500 + ALL; +₹26,542.28 validation uplift and +₹20,607.09 2026 holdout uplift.
 - Holdout paired-expiry 95% CI for mean uplift crossed zero (−₹2,020.42 to +₹4,297.35); one-sided sign-flip p=0.3054.
 - Final decision: no promotion; canonical stateful strategy unchanged.
+
+
+## 2026-10-06 — Phase 43 registered
+- Created isolated branch `phase-43-vix-all-options-strategies` from the Phase-42 research head.
+- Registered the finite VIX-conditioned NIFTY strategy universe, point-in-time VIX regimes, Paytm Money cost model, development/validation/untouched-2026 holdout design, router selection and 10,000-resample inference.
+- Canonical Phase-20/42 strategy remains unchanged pending a separately accepted Phase-43 result.
+- Initial implementation-writing incident F43-001 was logged on the Phase-43 branch; no numerical evidence was affected.
