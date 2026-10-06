@@ -1,2 +1,3 @@
 Phase 44 bridge start — execute the phase-44 branch tuning workflow.
 Corrected Phase 44 bridge rerun after F44-002; prior bridge run is non-evidence.
+F44-003 optimized v2 concurrency bridge retrigger.
