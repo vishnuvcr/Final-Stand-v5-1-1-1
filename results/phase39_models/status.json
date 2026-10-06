@@ -1,15 +1,6 @@
 {
-  "status": "COMPLETE",
-  "models": [
-    "CROL_bayesian_margin",
-    "Bayesian_counterfactual_margin",
-    "Bradley_Terry_preference",
-    "Dynamic_Bayesian_logistic",
-    "Gaussian_process_margin",
-    "Sparse_GAM_margin",
-    "Weighted_kNN_analog"
-  ],
-  "features": 105,
-  "holdout_evaluated": false,
-  "validation_control_rupees": 63948.222105380155
+  "status": "INVALID_NON_EVIDENCE",
+  "reason": "Step-3 run leaked call_net_rupees and put_net_rupees into predictors; superseded.",
+  "invalidated_run_id": 37440844079,
+  "holdout_evaluated": false
 }
