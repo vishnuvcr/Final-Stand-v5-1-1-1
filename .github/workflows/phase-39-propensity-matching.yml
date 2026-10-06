@@ -43,7 +43,9 @@ jobs:
           assert s['status']=='COMPLETE'
           assert len(r)==12
           assert s['total_rows']==477
-          assert s['development_treated']+s['validation_treated']+s['holdout_treated']==7
+          assert s['development_treated']+s['validation_treated']+s['holdout_treated']==5
+          assert s['audited_override_count']==7
+          assert s['mapped_fixed_opportunity_overrides']==5
           print(json.dumps(s,indent=2))
           print(r.to_string(index=False))
           PY
