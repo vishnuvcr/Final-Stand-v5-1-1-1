@@ -119,7 +119,7 @@ def main():
             p= w/w.sum()
             score=expert_actions.dot(p)
             selected=(score>=0.5).astype(int)
-            selected_pnl=np.where(selected==1,te.call_net_rupees,te.put_net_rupees).to_numpy()
+            selected_pnl=np.asarray(np.where(selected==1,te.call_net_rupees,te.put_net_rupees))
             total+=float(selected_pnl.sum())
             # Full-information historical expert reward update; diagnostic only.
             avg=np.mean(expert_pnl,axis=0)
