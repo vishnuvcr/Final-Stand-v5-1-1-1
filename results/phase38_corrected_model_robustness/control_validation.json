@@ -1,0 +1,13 @@
+{
+  "available": true,
+  "matches_frozen": false,
+  "actual_trades": 205,
+  "actual_expiries": 103,
+  "actual_net": 65945.47096521224,
+  "actual_gross": 86139.00000000023,
+  "actual_costs": 20193.529034788,
+  "frozen_source_file": "phase32_control_2024_2026-06-30.csv",
+  "frozen_sha256": "f98fc6e38e84bdfab09aeeffc2df333da1a3060d3756b1ab12b7e8cb5f32435f",
+  "frozen_trades": 206,
+  "frozen_expiries": 102
+}
