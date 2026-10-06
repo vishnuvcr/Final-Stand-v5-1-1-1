@@ -57,3 +57,6 @@ Run #11 completed the numerical computation successfully but failed only at the 
 ## 2026-10-07 — F49-012 publication conflict
 
 Run #12 passed the numerical and artifact self-audits. The only failure was the final Git publication step: concurrent repository audit updates to PHASE49_STATUS.md and RESEARCH_LOG.md conflicted with the workflow's rebase. The numerical evidence is therefore valid but not yet the canonical published closeout. A branch-triggered automatic reconciliation workflow has been started to publish the preserved artifact without rerunning the science.
+## 2026-10-07 — F49-013 closeout packaging correction
+
+Automatic closeout located the correct run #12 artifact and downloaded it successfully. The reconciliation failed only at manuscript table rendering because `tabulate` was not installed. This does not affect numerical evidence. The manuscript generator has been made dependency-independent and the closeout trigger will be rerun.
