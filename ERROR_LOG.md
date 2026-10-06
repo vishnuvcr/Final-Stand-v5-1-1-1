@@ -199,3 +199,13 @@ Symptom: The corrected counterfactual engine failed immediately before numerical
 Evidence status: non-evidence; no numerical calculations were produced by the failed run.
 
 Correction: The summary construction was repaired. The next automatic run must pass syntax, split-count and control-reconstruction assertions before its output is accepted.
+
+
+### Error F39-011 — Phase 39 CI package-install stall
+Runs: 37436916926 and related serialized runs.
+
+Symptom: The numerical job remained in the pip-upgrade step with no progress update, blocking the corrected counterfactual calculation from starting.
+
+Evidence status: CI-only; no numerical evidence changed.
+
+Correction: The workflow no longer upgrades pip; it installs only the required packages with pip's version-check disabled. A single-run concurrency guard is enabled so stale runs cannot race on evidence files.
