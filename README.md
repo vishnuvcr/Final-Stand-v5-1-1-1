@@ -408,3 +408,27 @@ A new isolated research phase, branched from the completed Phase-43 VIX sweep, i
 - [Phase 44 workflow](.github/workflows/phase-44-vix-candidate-tuning.yml)
 
 The canonical Phase-20/42 strategy remains unchanged while Phase 44 is evaluated.
+
+## Phase 45 — exhaustive ready-made strategy comparison — COMPLETE / NO PROMOTION
+
+Phase 45 completed the requested broad comparison of the option-builder structures shown in the supplied screenshots. Twenty structures required new numerical execution; twenty corresponding Phase-43 families were reused from accepted evidence, giving 5,102 new trade rows and 9,699 unified rows.
+
+**Key finding:** LOW-VIX Bear Call Spread was the strongest validation candidate (49 trades, ₹24,742.59 net, ₹23,082.00 at +50% cost stress, 63.3% win rate). LOW-VIX Bear Put Spread and Put Broken-Wing Butterfly were next. In NORMAL VIX, Bear Call Spread and Bear Put Spread were positive in validation. None of the twenty newly added families produced a positive defined-risk validation state meeting the minimum-20-trade/+50%-cost screen.
+
+Six validation candidates were frozen and checked on the untouched 2026 data. Five were profitable; NORMAL-VIX Call Backspread failed the holdout with −₹86,270.78 net. No strategy/state survived Holm-adjusted inference, so **no VIX-conditioned ready-made strategy is promoted**.
+
+- [Phase 45 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-45-exhaustive-ready-made-strategies)
+- [Research plan](PHASE45_RESEARCH_PLAN.md)
+- [Pre-registration](PHASE45_PRE_REGISTRATION.md)
+- [Literature review](PHASE45_LITERATURE_REVIEW.md)
+- [Status](PHASE45_STATUS.md)
+- [Chat log](PHASE45_CHAT_LOG.md)
+- [Workflow](.github/workflows/phase-45-exhaustive-ready-made-strategies.yml)
+- [Manuscript](results/phase45_ready_made/PHASE45_MANUSCRIPT.md)
+- [Final decision](results/phase45_ready_made/final_decision.json)
+- [Strategy × VIX summary](results/phase45_ready_made/strategy_vix_summary.csv)
+- [Validation inference](results/phase45_ready_made/validation_regime_inference.csv)
+- [Frozen candidates](results/phase45_ready_made/validation_freeze_top3.csv)
+- [2026 holdout confirmation](results/phase45_ready_made/holdout_frozen_top3_confirmation.csv)
+
+The canonical Phase-20/42 strategy remains unchanged.
