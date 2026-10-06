@@ -1176,3 +1176,12 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - A validation run started before the uplift-definition defect was discovered and failed because the old development freeze was empty.
 - This is non-evidence.
 - The registered stop condition permits early Phase-44 closure when no candidates survive development. Validation must therefore close cleanly with NO_STAGE1_CANDIDATES rather than treating the absence of a development candidate as a numerical failure.
+
+
+## F44-018 — corrected selection runtime optimization
+- Profile activation was cached by exact entry timestamp for the corrected development selection layer.
+- No numerical definition changed.
+
+## F44-019 — corrected validation uplift and holdout gating
+- Validation now evaluates filtered candidate P&L with zero P&L on inactive expiries against the unconditional tuned structure across the complete validation opportunity set.
+- Automatic holdout triggering was removed. 2026 remains protected until validation and any registered active-exit stage both pass.
