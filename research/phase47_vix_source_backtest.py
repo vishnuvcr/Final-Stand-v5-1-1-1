@@ -365,7 +365,7 @@ def strategy_trade_double_calendar(expiry, next_expiry, index, vix):
     c50=charges(orders, lot, 1.5)
     return {"strategy":"double_calendar_straddle","expiry":str(expiry.date()),"entry_ts":str(entry_ts),
             "exit_ts":str(exit_ts),"net":gross-c,"net50":gross-c50,"gross":gross,"cost":c,
-            "lot":lot,"legs":4,"source_exactness":"mechanical_proxy"}
+            "lot":lot,"legs":4,"source_exactness":"mechanical_proxy","delta_target":0.0}
 
 def strategy_trade_mwh(expiry, next_expiry, index, vix, target_delta):
     entry_ts = entry_after_expiry(index, pd.Timestamp(expiry) - pd.offsets.MonthBegin(1))
@@ -471,7 +471,7 @@ def strategy_trade_cc2(expiry, next_expiry, index, vix):
     c50=charges(orders,lot,1.5)
     return {"strategy":"covered_call_2_proxy","expiry":str(expiry.date()),"entry_ts":str(entry_ts),
             "exit_ts":str(exit_ts),"net":gross-c,"net50":gross-c50,"gross":gross,"cost":c,
-            "lot":lot,"legs":5,"source_exactness":"synthetic_future_proxy",
+            "lot":lot,"legs":5,"source_exactness":"synthetic_future_proxy","delta_target":0.30,
             "put_delta_target":0.30,"call_delta_target":0.30}
 
 def drawdown(vals):
@@ -720,7 +720,8 @@ def main():
     for (strategy,variant),g in val.groupby(["strategy","delta_target"]):
         if len(g)==0: continue
         for state in STATES[1:]:
-            t=regime_test(g,state,seed=4701+hash((strategy,variant,state))%100000)
+            seed = 4701 + sum(ord(ch) for ch in f"{strategy}|{variant}|{state}")
+            t=regime_test(g,state,seed=seed)
             tests.append({"strategy":strategy,"variant":variant,"state":state,**t})
     tt=pd.DataFrame(tests)
     if len(tt):
