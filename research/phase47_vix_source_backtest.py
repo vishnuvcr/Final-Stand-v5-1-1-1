@@ -144,7 +144,8 @@ def load_expiry(expiry, entry_ts=None, extra_day=None):
     key = (expiry.date().isoformat(), str(entry_ts) if entry_ts is not None else None, str(extra_day) if extra_day is not None else None)
     if key in _FILE_CACHE:
         return _FILE_CACHE[key]
-    name = f"options/NIFTY/{key}.parquet"
+    file_key = expiry.date().isoformat()
+    name = f"options/NIFTY/{file_key}.parquet"
     path = hf_hub_download(repo_id=HF_REPO, filename=name,
                            repo_type="dataset", token=os.getenv("HF_TOKEN") or None)
     # Exact observed data only. Read just entry/exit windows when possible.
@@ -207,7 +208,7 @@ def entry_four_dte(index, expiry):
     return as_tz(prior[-4]) + pd.Timedelta(hours=10)
 
 def entry_after_expiry(index, expiry):
-    e = pd.Timestamp(expiry, tz=TZ).normalize()
+    e = as_tz(expiry).normalize()
     days = sorted(pd.Series(index["timestamp"].dt.normalize().unique()).tolist())
     nxt = [d for d in days if d > e]
     if not nxt:
