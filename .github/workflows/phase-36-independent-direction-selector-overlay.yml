@@ -111,4 +111,5 @@ jobs:
             exit 0
           fi
           git commit -m "Phase 36: persist numerical selector results"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
