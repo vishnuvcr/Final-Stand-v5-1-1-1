@@ -1295,3 +1295,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: NON-EVIDENCE; no validation result was published.
 - Cause was not yet assumed. A strategy-level feasibility diagnostic was added to distinguish entry snapshot availability, spot availability, strike selection and common exit availability for B1/B2 before rerunning the full numerical phase.
 - Raw artifacts are now uploaded even when later numerical validation fails, improving post-mortem visibility.
+
+
+## F48-004 — Exact 10:00 entry window was zero across monthly diagnostics
+- Phase 48 diagnostic showed current and next expiry rows were both zero when filtering normalized timestamps to 10:00, despite 75 generic multi-expiry trade dates.
+- This strongly suggests a timestamp timezone/encoding mismatch or granularity mismatch rather than absence of the underlying contracts.
+- Evidence status: NON-EVIDENCE.
+- Correction: added a raw timestamp/schema probe to inspect the dataset's actual timestamp type and intraday clock before changing the entry-time filter.
