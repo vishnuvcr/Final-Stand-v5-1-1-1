@@ -1105,3 +1105,13 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The bounded-memory engine still read each complete expiry parquet before discarding most timestamps.
 - No numerical output from that implementation is accepted.
 - The corrected engine now uses pyarrow predicate filtering and reads only the registered entry-day windows plus expiry-day window for each expiry, with a complete-file fallback only when timestamp filtering is unsupported.
+
+
+## F44-007 — bridge artifact-audit failure (run 37484989565)
+- Numerical execution completed successfully with 25,522 structure/time observations, but the bridge artifact audit failed because the workflow expected `frozen_stage1_holdout.csv` while the script produced `frozen_holdout_confirmation.csv`.
+- The run is NON-EVIDENCE because artifact persistence did not pass.
+- Correction: the script now writes both canonical audit filenames; the workflow also requires the complete development diagnostic file.
+
+## F44-008 — workflow/script summary-schema mismatch
+- The finalization workflow expected `stage1_rows`, `candidate_rows`, `frozen_candidates` and `holm_survivors`, while the script summary initially exposed only lower-level names.
+- Correction: the script now emits the workflow fields plus detailed aliases.
