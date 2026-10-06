@@ -42,3 +42,5 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 ## 2026-10-06 — Phase 33 setup/process errors
 - Local container Git clone failed because outbound DNS/network access to github.com is unavailable in the container. No research evidence was affected; GitHub connector operations were used instead.
 - An intermediate GitHub file-update call omitted the required current blob SHA and was rejected before any repository write. The operation was retried correctly using the fetched SHA. No incorrect repository content was committed from that failed call.
+
+- Pre-run code review identified three issues before accepting any numerical result: push-trigger workflow inputs could override Python defaults with empty strings; the price-feature merge selected duplicate date/derived columns; and non-price global return columns were not shifted with their source levels. All were corrected before accepting Phase-33 evidence.
