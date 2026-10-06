@@ -1316,3 +1316,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The run failed in preflight before any numerical work.
 - Evidence status: NON-EVIDENCE.
 - Correction: changed to DuckDB-compatible `INTERVAL '5 hours 30 minutes'`.
+
+## F48-007 — Independent option source has no NIFTY spot-price field
+- After timestamp correction, multi-expiry option rows were present at 10:00 IST, but the independent dataset's canonical schema has no spot_price or underlying index-price column.
+- Evidence status: all affected numerical attempts remain NON-EVIDENCE.
+- Correction: the engine now uses the project's canonical NIFTY 1-minute index series only for the point-in-time spot required for ATM/Black-Scholes strike selection; option prices, expiries and legs remain sourced from the independent multi-expiry dataset.
+- This source-fusion rule is registered and will be documented in the final manuscript as a limitation rather than hidden.
