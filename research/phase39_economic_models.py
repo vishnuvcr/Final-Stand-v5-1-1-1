@@ -37,6 +37,19 @@ def select_features(df):
             cols.append(c)
     return cols
 
+
+
+def select_features_from_train(train):
+    cols=[]
+    for c in train.columns:
+        if c in LABELS or not pd.api.types.is_numeric_dtype(train[c]):
+            continue
+        miss=float(train[c].isna().mean())
+        nun=int(train[c].nunique(dropna=True))
+        if miss <= 0.50 and nun >= 5:
+            cols.append(c)
+    return cols
+
 def prep_fit_predict(train, test, features):
     imp=SimpleImputer(strategy="median", add_indicator=False)
     A=imp.fit_transform(train[features])
@@ -178,7 +191,8 @@ def run_model(name,fit_fn,df,features):
         end=min(start+BATCH,len(dev))
         train=dev.iloc[:start]
         test=dev.iloc[start:end]
-        mu,sd=fit_fn(train,test,features)
+        oof_features=select_features_from_train(train)
+        mu,sd=fit_fn(train,test,oof_features)
         tmp=test[["entry_ts","expiry","split","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"]].copy()
         tmp["model"]=name; tmp["mu"]=mu; tmp["sd"]=sd
         preds.append(tmp)
