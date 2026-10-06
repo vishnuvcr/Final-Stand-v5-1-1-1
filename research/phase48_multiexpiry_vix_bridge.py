@@ -304,7 +304,7 @@ def trade_b1(expiry,next_expiry,days,vix):
         z=cur if strike==ac and typ in ("CE","PE") and q<0 else nxt
         row=z[(z.option_type==typ)&np.isclose(z.strike,strike)]
         if row.empty:return None
-        eps.append(float(row.iloc[0].close))
+        eps.append(float(row.iloc[-1].close))
     ex=latest_exit(expiry,legs)
     if ex is None:return None
     ts,xps=ex
