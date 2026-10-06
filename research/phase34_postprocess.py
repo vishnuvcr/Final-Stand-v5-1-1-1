@@ -14,7 +14,7 @@ labels={"xgb":"XGB","extra_trees":"ExtraTrees","hist_gb":"HistGB","svm_rbf":"SVM
 mm={(r["split"],r["model"]):r for r in m}; ee={(r["split"],r["model"]):r for r in e}
 summary=[]
 for name in models:
-    v=mm[("validation",name)]; h=mm[("holdout",name)]; z=ee[("holdout",name)]
+    v=mm[("validation",name)]; h=mm[("holdout",name)]; econ_name="rf_phase33" if name=="rf_phase33_control" else name; z=ee[("holdout",econ_name)]
     summary.append([name,v["accuracy"],v["log_loss"],h["accuracy"],h["log_loss"],h["roc_auc"],z["mean_signed_log_return"],z["bootstrap_ci_low"],z["bootstrap_ci_high"],z["signflip_pvalue"]])
 
 fields=["model","validation_accuracy","validation_log_loss","holdout_accuracy","holdout_log_loss","holdout_auc","holdout_mean_signed_log_return","holdout_ci_low","holdout_ci_high","holdout_signflip_pvalue"]
