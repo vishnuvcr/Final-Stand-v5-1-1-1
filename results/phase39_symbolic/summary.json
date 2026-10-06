@@ -1,0 +1,14 @@
+{
+  "status": "COMPLETE",
+  "selected_expression": "x(candidate_credit_diff_call_minus_put)",
+  "selected_margin": 0.0,
+  "inner_train_rows": 216,
+  "inner_validation_rows": 55,
+  "validation_rows": 172,
+  "validation_uplift_rupees": 12026.423183850005,
+  "validation_override_share": 0.005813953488372093,
+  "validation_net_rupees": 75974.64528923016,
+  "validation_control_rupees": 63948.222105380155,
+  "holdout_evaluated": false,
+  "expression_complexity": 1
+}
