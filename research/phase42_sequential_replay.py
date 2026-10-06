@@ -49,7 +49,7 @@ def boot(policy,control,seed):
             "positive_expiry_share":float(np.mean(d>0))}
 
 def cost_stress(a,c,m):
-    if not {"gross_rupees","cost_rupees"}.issubset(a.columns)|not {"gross_rupees","cost_rupees"}.issubset(c.columns):
+    if (not {"gross_rupees","cost_rupees"}.issubset(a.columns)) or (not {"gross_rupees","cost_rupees"}.issubset(c.columns)):
         return float("nan")
     return float((a.gross_rupees.sum()-m*a.cost_rupees.sum())-(c.gross_rupees.sum()-m*c.cost_rupees.sum()))
 
