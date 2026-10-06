@@ -39,6 +39,29 @@ def load_experts():
     z["ref_ts"] = tz_series(z["ref_ts"])
     for m, c in MODEL_COLS.items():
         z[m] = pd.to_numeric(z[c], errors="coerce")
+
+    # Point-in-time canonical fallback direction. For each model reference,
+    # use the latest canonical control direction already observed on/before
+    # the reference timestamp; if none exists inside that expiry, use the
+    # first observed control direction for the expiry (the initial state).
+    led = pd.read_csv(
+        "results/phase39_counterfactual/fixed_opportunity_ledger.csv",
+        usecols=["expiry","entry_ts","control_direction"],
+    )
+    led["expiry"] = pd.to_datetime(led["expiry"], errors="coerce").dt.date
+    led["entry_ts"] = tz_series(led["entry_ts"])
+    led = led.dropna(subset=["expiry","entry_ts","control_direction"]).sort_values(["expiry","entry_ts"])
+    grouped = {d:g.reset_index(drop=True) for d,g in led.groupby("expiry")}
+    canonical = []
+    for _, row in z.iterrows():
+        g = grouped.get(row["expiry"].date())
+        if g is None:
+            canonical.append(0)
+            continue
+        q = g[g["entry_ts"] <= row["ref_ts"]]
+        direction = q.iloc[-1]["control_direction"] if len(q) else g.iloc[0]["control_direction"]
+        canonical.append(1 if str(direction).upper() == "PUT" else -1)
+    z["canonical_bullish_signal"] = canonical
     return z
 
 def load_vix():
@@ -142,7 +165,11 @@ def route_vix(prob, sub, combo, mode, thr):
         allow = high & rising
     else:
         allow = np.zeros(len(sub), dtype=bool)
-    return np.where(allow, base_dir, 0)
+    # VIX gates are series architectures: trade the ensemble only when the
+    # regime condition is satisfied; otherwise fall back to the canonical
+    # stateful direction rather than silently skipping the expiry.
+    fallback = sub["canonical_bullish_signal"].to_numpy(int)
+    return np.where(allow, base_dir, fallback)
 
 def build_ref_directions(z, combo, agg, vm, thr):
     sub = z[(z["ref_ts"] >= START) & (z["ref_ts"] <= HOLD_END)].copy()
