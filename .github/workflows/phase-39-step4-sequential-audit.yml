@@ -1,0 +1,62 @@
+name: Phase 39 - Step 4 Sequential Policy Audit
+
+on:
+  push:
+    branches: [phase-39-advanced-direction-models]
+    paths:
+      - 'research/phase39_sequential_policy_audit.py'
+      - 'results/phase39_sequential_policy/sequential_trades.csv'
+      - 'results/phase39_sequential_policy/summary.json'
+      - 'results/phase39_data/development_control_trades_2021_2023.csv'
+      - 'results/phase39_data/frozen_control_trades_2024_2026-06-30.csv'
+      - '.github/workflows/phase-39-step4-sequential-audit.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase39-step4-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  sequential_audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check --no-input pandas numpy
+      - name: Run sequential audit
+        run: python research/phase39_sequential_policy_audit.py
+      - name: Verify audit
+        run: |
+          test -f results/phase39_sequential_policy_audit/audit.json
+          test -f results/phase39_sequential_policy_audit/audit_periods.csv
+          test -f results/phase39_sequential_policy_audit/override_audit.csv
+          python - <<'PY'
+          import json, pandas as pd
+          s=json.load(open('results/phase39_sequential_policy_audit/audit.json'))
+          q=pd.read_csv('results/phase39_sequential_policy_audit/audit_periods.csv')
+          assert s['status']=='PASS'
+          assert s['control_counts']=={'development':271,'validation':172,'holdout':34}
+          assert s['overrides']==7
+          assert s['validation_uplift_cost_x_1_50']>0
+          assert s['holdout_uplift_cost_x_1_50']>0
+          assert set(q.period)=={'development','validation','holdout','all'}
+          print(json.dumps(s,indent=2))
+          print(q.to_string(index=False))
+          PY
+      - name: Persist Step 4 audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase39_sequential_policy_audit
+          git commit -m 'Phase 39: persist sequential policy audit' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
