@@ -21,3 +21,7 @@ Current gate status:
 
 ## Performance correction
 The initial numerical process was superseded after a self-audit found the per-candidate DataFrame filtering path was unnecessarily expensive. The engine now caches entry/expiry quote maps per expiry-entry snapshot. No numerical result from the superseded run is accepted.
+
+
+## Performance audit F49-004
+The optimized engine was further corrected so quote-map construction occurs once per expiry-entry snapshot rather than once per parameter candidate. No affected numerical output is accepted.
