@@ -1,0 +1,114 @@
+name: Phase 37 - Corrected Model Direction Polarity
+
+on:
+  push:
+    branches: [phase-37-model-direction-polarity-correction]
+    paths:
+      - 'research/phase37_model_direction_polarity_correction.py'
+      - 'data/phase36_selector_predictions.csv'
+      - '.github/workflows/phase-37-model-direction-polarity-correction.yml'
+      - 'PHASE37_RESEARCH_PLAN.md'
+      - 'PHASE37_PRE_REGISTRATION.md'
+      - 'PHASE37_STRATEGY_SPEC.md'
+  workflow_dispatch:
+    inputs:
+      sample_start:
+        description: 'Primary sample start date (YYYY-MM-DD)'
+        required: false
+        default: '2024-01-01'
+      sample_end:
+        description: 'Primary sample end date (YYYY-MM-DD)'
+        required: false
+        default: '2026-06-30'
+
+permissions:
+  contents: write
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        selector: [CATBOOST, DART, WAVELET_TREE, OOF_STACK, MARKOV_REGIME_TREE]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore data/dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: phase37-hf-${{ runner.os }}-${{ hashFiles('data/phase36_selector_predictions.csv') }}
+          restore-keys: |
+            phase37-hf-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow huggingface_hub
+
+      - name: Run corrected model selector
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SAMPLE_START: ${{ inputs.sample_start || '2024-01-01' }}
+          SAMPLE_END: ${{ inputs.sample_end || '2026-06-30' }}
+          SELECTOR: ${{ matrix.selector }}
+        run: |
+          set -euo pipefail
+          mkdir -p "results/phase37_model_direction_polarity_correction/${SELECTOR}"
+          python research/phase37_model_direction_polarity_correction.py 2>&1 | tee "results/phase37_model_direction_polarity_correction/${SELECTOR}/run.log"
+
+      - name: Upload selector artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase37-${{ matrix.selector }}
+          path: results/phase37_model_direction_polarity_correction/${{ matrix.selector }}/**
+          if-no-files-found: error
+
+  publish:
+    needs: overlay
+    if: ${{ needs.overlay.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download selector artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: phase37-*
+          path: /tmp/phase37-artifacts
+          merge-multiple: false
+
+      - name: Persist numerical artifacts
+        run: |
+          set -euo pipefail
+          mkdir -p results/phase37_model_direction_polarity_correction
+          for d in /tmp/phase37-artifacts/phase37-*; do
+            [ -d "$d" ] || continue
+            selector="${d##*/}"
+            selector="${selector#phase37-}"
+            mkdir -p "results/phase37_model_direction_polarity_correction/${selector}"
+            cp -a "$d/." "results/phase37_model_direction_polarity_correction/${selector}/"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase37_model_direction_polarity_correction
+          if git diff --cached --quiet; then
+            echo "No numerical artifact changes to commit."
+            exit 0
+          fi
+          git commit -m "Phase 37: persist corrected polarity results"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
