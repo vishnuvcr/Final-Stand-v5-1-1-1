@@ -34,3 +34,14 @@ All seven selector-minus-control mean expiry-P&L intervals were entirely below z
 Retain the Phase-32 stateful direction rule. Do not promote any Phase-36 selector.
 
 Next priority: forward/paper validation of the canonical stateful strategy with full execution realism, not additional selector hunting.
+
+
+## Final accepted run — 37428502722
+All seven selector jobs and the artifact-publication job completed successfully. No numerical implementation error remained in the accepted evidence.
+
+## Error F36-003 — Final artifact-manifest blob mapping
+The first final-research commit mapped several prepared content blobs to the wrong filenames. The numerical evidence was unaffected, but the repository manifest was incorrect. The files are being repaired and verified individually.
+
+**Evidence status:** packaging-only, non-evidence.
+
+**Prevention:** verify file headers/content against expected artifact type before closing a research phase.
