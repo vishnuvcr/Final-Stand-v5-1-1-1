@@ -244,3 +244,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-06 — Phase 41 closeout
 - Completed the preregistered 24-variant regime-conditional economic-margin screen, top-three freeze, exact sequential replay, paired-expiry inference, cost stress, propensity-overlap and ranking diagnostics.
 - Promotion decision is recorded in results/phase41_regime_policy/final_decision.json; no change is made to the canonical strategy unless every registered gate passes.
+
+
+## 2026-10-06 — Phase 42 closeout
+- Completed the six-variant selective rank-to-action phase with exact sequential replay, paired-expiry inference, cost stress and diagnostics.
+- Final decision is recorded in results/phase42_rank_policy/final_decision.json.

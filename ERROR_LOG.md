@@ -1019,3 +1019,7 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 **Correction:** Added `india_vix_ret1` to the policy output frame. This preserves the preregistered state vector and does not change the candidate universe, model, thresholds, split, outcome or trading rule.
 
 **Prevention:** Add an explicit schema assertion for all propensity state features before executing propensity diagnostics.
+
+
+## 2026-10-06 — Phase 42 closeout
+- Accepted evidence is limited to the successful Phase-42 workflow after preflight, syntax audit, fixed-opportunity selection, sequential replay and closeout.
