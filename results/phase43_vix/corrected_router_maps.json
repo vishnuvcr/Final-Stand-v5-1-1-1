@@ -1,8 +1,8 @@
 {
-  "benchmark": "put_ratio_1x2",
+  "benchmark": "call_backspread",
   "maps": {
     "mean": {
-      "LOW": "put_ratio_1x2",
+      "LOW": "call_backspread",
       "NORMAL": "put_backspread",
       "HIGH": null,
       "SPIKE": null,
@@ -11,8 +11,8 @@
       "HIGH_RISING": null
     },
     "median": {
-      "LOW": "put_ratio_1x2",
-      "NORMAL": "put_ratio_1x2",
+      "LOW": "bull_put_credit",
+      "NORMAL": "bear_call_credit",
       "HIGH": null,
       "SPIKE": null,
       "FALLING": null,
@@ -20,8 +20,8 @@
       "HIGH_RISING": null
     },
     "sharpe": {
-      "LOW": "put_ratio_1x2",
-      "NORMAL": "call_ratio_1x2",
+      "LOW": "call_backspread",
+      "NORMAL": "put_backspread",
       "HIGH": null,
       "SPIKE": null,
       "FALLING": null,
@@ -29,7 +29,5 @@
       "HIGH_RISING": null
     }
   },
-  "frozen": [
-    "median"
-  ]
+  "frozen": []
 }

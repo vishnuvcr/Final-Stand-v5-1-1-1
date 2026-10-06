@@ -10,11 +10,11 @@
   "validation_rows": 1821,
   "holdout_rows": 378,
   "frozen_top10_count": 0,
-  "frozen_router_count": 1,
-  "development_unconditional_benchmark": "put_ratio_1x2",
-  "development_benchmark_mean": 762.6810080075186,
-  "benchmark_validation_dd": 64409.56661213253,
+  "frozen_router_count": 0,
+  "development_unconditional_benchmark": "call_backspread",
+  "development_benchmark_mean": 247.0781914387214,
+  "benchmark_validation_dd": 112975.51312923503,
   "data_errors": 2,
-  "decision": "PENDING_HOLDOUT_AUDIT",
+  "decision": "NO_PROMOTION",
   "inference_fix": "regime versus non-regime validation expiry groups; previous same-row paired inference invalidated"
 }
