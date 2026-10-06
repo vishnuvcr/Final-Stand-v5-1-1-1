@@ -293,8 +293,8 @@ def main():
             print(f"screened {k}/{len(grid)}", flush=True)
 
     full_grid = pd.DataFrame(validation_rows)
-    control_val = control[(control["exit_ts"] >= START) & (control["exit_ts"] <= VAL_END)]
-    control_net = float(control_val["net_rupees"].sum())
+    control_val = frozen_control.loc[(frozen_control.index >= START) & (frozen_control.index <= VAL_END), "net_rupees"]
+    control_net = float(control_val.sum())
     full_grid["validation_uplift_vs_sequential_control"] = full_grid["net"] - control_net
     full_grid = full_grid.sort_values(["validation_uplift_vs_sequential_control","profit_factor"], ascending=[False,False]).reset_index(drop=True)
     full_grid.to_csv(ROOT / "grid_validation.csv", index=False)
