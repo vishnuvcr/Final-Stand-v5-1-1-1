@@ -46,6 +46,9 @@ jobs:
           assert s['status']=='COMPLETE'
           assert s['holdout_evaluated'] is False
           assert len(z)==7 and z.model.is_unique
+          locked=json.load(open('results/phase39_models/locked_feature_list.json'))
+          forbidden={'call_net_rupees','put_net_rupees','control_net_rupees','delta_pnl_call_minus_put'}
+          assert forbidden.isdisjoint(set(locked['features']))
           assert not s.get('holdout_evaluated', True)
           assert z['validation_uplift_rupees'].notna().all()
           print(z[['model','validation_uplift_rupees','validation_override_share']].to_string(index=False))
