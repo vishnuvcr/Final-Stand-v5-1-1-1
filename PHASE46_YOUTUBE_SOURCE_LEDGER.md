@@ -53,3 +53,40 @@ YouTube descriptions are strategy-discovery sources, not peer-reviewed evidence.
 ## Search limitation
 
 The web search layer exposes indexed YouTube results rather than an authoritative complete YouTube corpus. Therefore “all available” cannot be guaranteed literally. The scan is reproducible at the keyword-family level and records the relevant indexed sources found in this run. Future discovery runs should add new query families rather than assume this ledger is exhaustive.
+
+
+## User-designated channel: Profit Breakout
+
+The channel `@profitbreakout` is now a dedicated source stream for this project. The indexed search located the following directly relevant videos:
+
+| PB-ID | Video | Research use |
+|---|---|---|
+| PB-001 | India VIX & Options Strategies: When to Use Calendar, Iron Fly, Condor, Straddle, Strangle | Explicit low/high VIX comparison; maps VIX states to calendar, iron fly, iron condor, straddle and strangle families |
+| PB-002 | Batman Strategy in Options Trading — Double Ratio Spread with Smart Adjustments | Batman/double-ratio structure plus an explicit VIX-based entry filter |
+| PB-003 | IRON FLY vs IRON CONDOR — Same Margin, Different Mindset | High-vs-low volatility comparison and regime-dependent structure choice |
+| PB-004 | Iron Fly to Iron Condor: When and Why This Shift Works Better | Adaptive transition from iron fly to iron condor using premium imbalance, market structure and changing volatility |
+| PB-005 | This Credit Spread Strategy Adapts to Every Market Move | Weekly call credit spread + monthly put credit spread, with explicit adjustment logic and market-condition discussion |
+| PB-006 | Covered Call 2.0: Double Premium Strategy with Adjustments | Current-week + next-week call selling, protective put and delta rebalancing; useful as a longer-horizon low/normal-vol candidate |
+| PB-007 | This 1-Year NIFTY Strategy Generates Regular Options Income | Long-duration NIFTY structure combined with weekly/monthly call selling and defined-risk management |
+| PB-008 | Monthly Option Strategy for Working People — How VIX Changes the Trade | Explicit India-VIX adaptation, strike selection by VIX and changes for low vs high VIX |
+| PB-009 | Weekly Option Strategy Done The Right Way — Discipline Over Prediction | Hedged weekly structure and risk-control framework; candidate for cross-regime baseline testing |
+
+### Direct links
+
+- PB-001: https://www.youtube.com/watch?v=vVkAw2G93as
+- PB-002: https://www.youtube.com/watch?v=Lt3FX1ce-FA
+- PB-003: https://www.youtube.com/watch?v=TE4p9tOz6XE
+- PB-004: https://www.youtube.com/watch?v=gfot9-Iumn8
+- PB-005: https://www.youtube.com/watch?v=XEMWdenneZ4
+- PB-006: https://www.youtube.com/watch?v=DiCY_w93O3M
+- PB-007: https://www.youtube.com/watch?v=s_3Z8YKHGc4
+- PB-008: https://www.youtube.com/watch?v=n3FK3eaUqpU
+- PB-009: https://www.youtube.com/watch?v=pqWJwPArmek
+
+### Why PB-008 is especially important
+
+PB-008 explicitly asks how a monthly options strategy changes when India VIX is low versus high. It is therefore a direct source for the project's central question rather than merely a generic options-strategy video. However, source claims remain hypotheses until independently reconstructed and tested.
+
+### Expanded cross-regime rule
+
+Profit Breakout strategies are **not** being tagged as HIGH-VIX-only. The source material explicitly spans low/high VIX and changing-volatility conditions. Every mechanically reconstructable candidate from this channel must therefore enter the subsequent test matrix across **ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING**, with regime-specific routing tested only after the baseline cross-regime matrix exists.
