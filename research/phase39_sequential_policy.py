@@ -6,6 +6,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, SplineTransformer
 from sklearn.linear_model import Ridge
 from huggingface_hub import hf_hub_download
+from huggingface_hub.errors import RemoteEntryNotFoundError
 
 from phase39_feature_matrix import (
     TZ, HF_REPO, norm_ts, norm_scalar_ts, load_option, intraday_features,
@@ -82,12 +83,17 @@ def build_feature_row(entry,expiry,snap,spot_value,spot_hist,daily,global_d,flow
     if idx+1<len(expiries):
         ne=expiries[idx+1]; ns=option_cache.get(ne)
         if ns is None:
-            ns=load_option(ne)
-            ns["expiry_ts"]=ne+pd.Timedelta(hours=15,minutes=30)
+            try:
+                ns=load_option(ne)
+            except RemoteEntryNotFoundError:
+                ns=pd.DataFrame()
+            if not ns.empty:
+                ns["expiry_ts"]=ne+pd.Timedelta(hours=15,minutes=30)
             option_cache[ne]=ns
-        nsnap=ns[ns.timestamp==entry]
-        if not nsnap.empty:
-            row.update(option_features(snap,spot_value,expiry_ts,nsnap,ne+pd.Timedelta(hours=15,minutes=30)))
+        if not ns.empty:
+            nsnap=ns[ns.timestamp==entry]
+            if not nsnap.empty:
+                row.update(option_features(snap,spot_value,expiry_ts,nsnap,ne+pd.Timedelta(hours=15,minutes=30)))
     # Previous available source date only.
     def prior_values(frame):
         if frame is None or frame.empty or "date" not in frame.columns: return {}
