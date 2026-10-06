@@ -985,3 +985,11 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 ## 2026-10-06 — Phase 41 accepted execution status
 - Numerical evidence is accepted only from the GitHub Actions run that completes preflight, the frozen 24-variant screen, exact sequential replay and closeout without protocol changes.
+
+
+## 2026-10-06 — Phase 41 implementation correction before numerical execution
+- Propensity-score fitting in the first draft was incorrectly fit inside each evaluation split. The code was corrected before any accepted numerical run: validation matching now fits propensity on development history only; holdout matching fits on development+validation history only.
+- This was a methodology-chronology correction only; no research parameter, outcome definition or trading rule changed.
+
+## 2026-10-06 — Phase 41 accepted execution status
+- Numerical evidence is accepted only from the GitHub Actions run that completes preflight, the frozen 24-variant screen, exact sequential replay and closeout without protocol changes.
