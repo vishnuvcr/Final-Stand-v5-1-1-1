@@ -109,7 +109,9 @@ def score_prob(sub, combo, agg):
     w = np.abs(a - 0.5)
     num = np.nansum(w * a, axis=1)
     den = np.nansum(w, axis=1)
-    return np.where(den > 0, num / den, 0.5)
+    out = np.full(len(sub), 0.5, dtype=float)
+    np.divide(num, den, out=out, where=den > 0)
+    return out
 
 def route_vix(prob, sub, combo, mode, thr):
     r = sub["vix_ret1"].to_numpy(float)
@@ -269,14 +271,14 @@ def main():
     expiries = [e for e in expiries if e.date() in pred_dates]
     arm_cache = build_arm_cache(expiries, spot, expected)
 
-    control_path = ROOT / "control_trades.parquet"
-    if control_path.exists():
-        control = pd.read_parquet(control_path)
-    else:
-        control = canonical_control_trades(expiries, spot)
-        control.to_parquet(control_path, index=False)
-    control["exit_ts"] = pd.to_datetime(control["exit_ts"])
-    control["entry_ts"] = pd.to_datetime(control["entry_ts"])
+    frozen_control = pd.read_csv("results/phase38_corrected_model_robustness/frozen_control_expiry.csv")
+    frozen_control["expiry"] = pd.to_datetime(frozen_control["expiry"], errors="coerce").dt.tz_localize(base.TZ)
+    frozen_control["net_rupees"] = pd.to_numeric(frozen_control["net_rupees"], errors="coerce")
+    frozen_control = frozen_control.dropna(subset=["expiry","net_rupees"]).set_index("expiry")
+    study_idx = pd.DatetimeIndex(expiries)
+    missing_control = [str(x.date()) for x in study_idx if x not in frozen_control.index]
+    if missing_control:
+        raise RuntimeError(f"frozen control missing study expiries: {missing_control}")
 
     validation_rows = []
     for k, (combo, agg, vm) in enumerate(grid, 1):
@@ -293,8 +295,8 @@ def main():
             print(f"screened {k}/{len(grid)}", flush=True)
 
     full_grid = pd.DataFrame(validation_rows)
-    control_val = frozen_control.loc[(frozen_control.index >= START) & (frozen_control.index <= VAL_END), "net_rupees"]
-    control_net = float(control_val.sum())
+    val_expiries = [x for x in expiries if x <= VAL_END]
+    control_net = float(frozen_control.loc[val_expiries, "net_rupees"].sum())
     full_grid["validation_uplift_vs_sequential_control"] = full_grid["net"] - control_net
     full_grid = full_grid.sort_values(["validation_uplift_vs_sequential_control","profit_factor"], ascending=[False,False]).reset_index(drop=True)
     full_grid.to_csv(ROOT / "grid_validation.csv", index=False)
