@@ -45,3 +45,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - Postprocess runs #1–#6 failed before producing accepted reporting output. The final diagnosis was a naming mismatch between `rf_phase33_control` in the model-metrics table and `rf_phase33` in the economic diagnostic. The mapping was corrected.
 - Postprocess run #7 (37423631294) completed successfully. Earlier postprocess outputs are non-evidence.
 - No numerical conclusion or promotion decision uses a failed or superseded run.
+
+
+## Phase 37 correction record — 2026-10-06
+Phase 36 model-selector direction polarity was found to be inverted relative to the Phase-35 up/down target semantics. The valid economic mapping is bullish/up -> PUT spread and bearish/down -> CALL spread. Phase 37 is registered to rerun the five model selectors with this correction. Phase-36 model-selector P&L is audit-only for this hypothesis.
+
+See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direction-polarity-correction
