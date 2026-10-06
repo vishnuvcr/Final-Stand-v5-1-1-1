@@ -1,7 +1,7 @@
 # Phase 35 Status — Advanced Tree and Adaptive Prediction Search
 
 ## Current state
-**LITERATURE/RESEARCH DESIGN COMPLETE — NUMERICAL TESTING NOT STARTED**
+**NUMERICAL EXECUTION STARTED — ACCEPTED EVIDENCE PENDING**
 
 ### Why this phase exists
 Phase 34 showed that tree-based models are currently the most promising model family. Phase 35 therefore keeps trees central instead of expanding generic deep-learning architectures.
@@ -24,9 +24,9 @@ Reviewed:
 - temporal conformal prediction
 
 ### Numerical evidence
-None from Phase 35 has been accepted.
+None from Phase 35 has been accepted. The full preregistered battery is executing in GitHub Actions; failed/incomplete runs will not be accepted.
 
-### Proposed numerical order
+### Execution order
 1. LightGBM + CatBoost + DART.
 2. NGBoost + quantile tree forecasts.
 3. BART.
