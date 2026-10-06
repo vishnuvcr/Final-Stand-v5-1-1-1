@@ -227,7 +227,7 @@ def main():
         except Exception as ex: errs.append({"expiry":str(e.date()),"error":repr(ex)})
         if i%10==0: pd.DataFrame(rows).to_csv(OUT/"progress_development.csv",index=False)
     tr=pd.DataFrame(rows); assert not tr.empty
-    tr.to_csv(OUT/"development_parameter_trade_matrix.csv",index=False); pd.DataFrame(errs).to_csv(OUT/"data_errors.csv",index=False)
+    tr.to_csv(OUT/"development_parameter_trade_matrix.csv",index=False); pd.DataFrame(errs,columns=["expiry","error"]).to_csv(OUT/"data_errors.csv",index=False)
     sel=choose(tr); sel.to_csv(OUT/"development_candidate_scores.csv",index=False)
     frozen=[]
     for f,s in itertools.product(FAMILIES,STATES):
