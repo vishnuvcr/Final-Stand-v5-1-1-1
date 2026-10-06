@@ -793,3 +793,13 @@ Symptom: Final summary lookup raised KeyError for period after matching had comp
 Evidence status: Non-evidence reporting failure.
 
 Correction: Each propensity result row now stores its period explicitly.
+
+
+### Error F39-049 — CI still expected seven mapped fixed-opportunity overrides
+Run: 37452805894 (propensity run #7).
+
+Finding: The audited Sparse-GAM policy has seven sequential overrides but only five exact timestamp matches in the 477-row fixed-opportunity panel. The other two cannot be used in fixed-opportunity propensity matching.
+
+Evidence status: Statistical calculation completed; only the CI schema gate failed.
+
+Correction: Verification will distinguish seven audited sequential overrides from five mapped fixed-opportunity treated observations.
