@@ -1037,3 +1037,6 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Evidence status:** No numerical execution was accepted; no strategy result was produced.
 - **Correction:** The workflow files were rewritten with the intended GitHub expression syntax and a new bridge trigger will be issued.
 - **Prevention:** Treat GitHub workflow expression syntax as a separate validation target from JavaScript string escaping and inspect the committed YAML before triggering.
+
+## F43-RUN-37474661050 — numerical execution failure
+- Exit code: 1. Failed output is non-evidence.
