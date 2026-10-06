@@ -17,3 +17,13 @@ The new source evidence suggests separating two high-volatility mechanisms:
 2. Post-spike volatility reversal — potentially favouring defined-risk short-volatility structures.
 
 No video claim was treated as numerical proof and no strategy was promoted in this phase.
+
+
+## 2026-10-07 — User scope correction
+User supplied the Profit Breakout YouTube channel and requested that its strategy material be included. User also explicitly requested that the expanding search not abandon LOW/NORMAL VIX.
+
+## Response / action
+- Added a dedicated Profit Breakout source stream to Phase 46.
+- Indexed nine directly relevant Profit Breakout videos.
+- Expanded the registered numerical-testing scope so every candidate is initially evaluated across ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING.
+- Logged the initial high-VIX-only framing as F46-002 and corrected the plan before any numerical test.
