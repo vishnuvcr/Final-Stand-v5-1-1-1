@@ -53,6 +53,7 @@ jobs:
           import json
           p=json.load(open("results/phase49_vix_tuning/preflight.json"))
           assert p["grid"] == 720
+          assert p["regime_candidates"] == 1440
           assert p["expiries"] >= 100
           assert p["dev"] >= 100
           assert p["validation"] >= 90
@@ -123,10 +124,15 @@ jobs:
           assert len(vs) == len(fr)
           assert tr["year"].isin([2021,2022,2023]).all()
           assert d["grid_total"] == 720
+          assert d["regime_expanded_candidates"] == 1440
           assert d["validation_rows"] == len(vs)
+          assert {"complement_trades","active_vs_complement_mean"}.issubset(vs.columns)
           print("Phase 49 artifact self-audit PASS")
           print(d)
           print(fr.to_string(index=False))
+          assert pd.read_csv("results/phase49_vix_tuning/data_errors.csv").empty
+          assert pd.read_csv("results/phase49_vix_tuning/validation_data_errors.csv").empty
+          assert pd.read_csv("results/phase49_vix_tuning/holdout_data_errors.csv").empty
           print(vs.to_string(index=False))
           PY
       - name: Publish results
