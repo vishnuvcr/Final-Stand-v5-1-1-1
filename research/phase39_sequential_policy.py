@@ -14,7 +14,7 @@ from phase39_feature_matrix import (
 from phase39_counterfactual_engine import nearest_delta_strike, run_arm
 
 ROOT=Path(".")
-FEATURE_FILE=ROOT/"results/phase39_features/locked_feature_list.json"
+FEATURE_FILE=ROOT/"results/phase39_models/locked_feature_list.json"
 FEATURE_MATRIX=ROOT/"results/phase39_features/point_in_time_features.csv"
 DEV_CONTROL=ROOT/"results/phase39_data/development_control_trades_2021_2023.csv"
 FROZEN_CONTROL=ROOT/"results/phase39_data/frozen_control_trades_2024_2026-06-30.csv"
