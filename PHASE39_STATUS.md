@@ -115,3 +115,16 @@ The complete corrected counterfactual engine must re-run before any model traini
 ## Current execution state — 2026-10-06
 
 The corrected Step-1 implementation is committed and automatically queued in GitHub Actions with serialized execution. The research is **not yet allowed to advance to model fitting**: the corrected 271/172/34 counterfactual panel must first pass the full control-reconstruction audit. The earlier 206-row counterfactual result remains exploratory only and is explicitly superseded.
+
+
+## Step 1 audit checkpoint — 2026-10-06
+
+The frozen Phase-32 strategy specification confirms that the Phase-39 fixed-opportunity engine uses the correct state-independent spread mechanics for both arms: +0.25/-0.25 entry delta selection, 50-point vertical width, six lots per leg, and first short-leg delta hit at 0.50 or 0.04 magnitude, followed by contract termination when no delta exit occurs.
+
+The latest known Step-1 run was cancelled before producing accepted evidence. A status-only commit also did not match the workflow path filter. No model training is permitted yet.
+
+The next trigger will include explicit panel invariants:
+- exactly 271 development, 172 validation and 34 holdout rows;
+- no accidental 2024-01-04 opportunity in the frozen comparator;
+- deterministic timestamp ordering for first-hit exit detection;
+- exact frozen-control P&L reconstruction within 0.75 rupees per trade and the authoritative ₹63,672.5753 aggregate.
