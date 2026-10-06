@@ -178,7 +178,10 @@ def main():
     strategy_summary.to_csv(OUT / "corrected_strategy_summary_by_split.csv", index=False)
 
     dev_counts = dev.groupby("strategy").size()
-    candidates = sorted(set(dev_counts[dev_counts >= 20].index) - CALENDAR)
+    # Promotion universe is strictly defined-risk and excludes calendars that do not
+    # have sufficient development coverage. Unbounded ratio/straddle/strangle
+    # structures remain diagnostic-only and can never become the benchmark/router arm.
+    candidates = sorted(set(dev_counts[dev_counts >= 20].index) - UNBOUNDED - CALENDAR)
     benchmark_scores = dev[dev["strategy"].isin(candidates)].groupby("strategy")["net_rupees"].mean().sort_values(ascending=False)
     benchmark = str(benchmark_scores.index[0]) if len(benchmark_scores) else None
     bench_val = val[val["strategy"] == benchmark]
