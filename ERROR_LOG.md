@@ -45,3 +45,15 @@ The first final-research commit mapped several prepared content blobs to the wro
 **Evidence status:** packaging-only, non-evidence.
 
 **Prevention:** verify file headers/content against expected artifact type before closing a research phase.
+
+
+## Error F36-004 — Invalid workflow content during artifact-manifest repair
+**Runs:** 37429445210, 37429450459, 37429454606, 37429458477, 37429477965, 37429482697, 37429486634.
+
+**Cause:** During repair of the final artifact-manifest mapping, the workflow file temporarily contained the error-log content. Documentation/result-file update commits triggered the broad `PHASE36_**` path filter, and GitHub therefore attempted several invalid workflow runs.
+
+**Evidence status:** CI/packaging-only. No numerical evidence was produced or accepted by these runs.
+
+**Correction:** Restored the executable Phase-36 workflow and narrowed push triggers to the research source/cache/workflow and preregistration files only.
+
+**Prevention:** Verify workflow file type/content before making any commit that can trigger Actions; do not use broad documentation globs for numerical research workflows.
