@@ -1025,3 +1025,9 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - Corrected replay now uses the authoritative 477-opportunity ledger: non-overrides execute the exact canonical control trade; overrides use the precomputed opposite-direction legs for the same opportunity; chronology remains stateful.
 - Registered 72-policy universe and holdout-selection rules are unchanged.
 - Status: corrected; rerun required.
+
+
+## 2026-10-06 — Phase 42 F42-002
+- Replay failed on a timezone-naive cached India VIX date versus timezone-aware opportunity timestamps.
+- Non-evidence; no sequential result accepted.
+- Corrected by normalizing the opportunity timestamp to a timezone-naive calendar date before the VIX join.
