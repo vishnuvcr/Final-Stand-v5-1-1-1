@@ -1,0 +1,77 @@
+name: Phase 35 - Advanced Tree and Adaptive Prediction
+
+on:
+  push:
+    branches: [phase-35-advanced-tree-and-adaptive-prediction-search]
+    paths:
+      - 'PHASE35_RESEARCH_PLAN.md'
+      - 'PHASE35_PRE_REGISTRATION.md'
+      - 'research/phase35_advanced_tree_prediction.py'
+      - '.github/workflows/phase-35-advanced-tree-and-adaptive-prediction.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase35-advanced-prediction
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow scikit-learn scipy lightgbm catboost xgboost ngboost PyWavelets EMD-signal vmdpy pymc pymc-bart arviz
+      - name: Run Phase 35
+        id: run_phase35
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python research/phase35_advanced_tree_prediction.py 2>&1 | tee phase35_run.log
+      - name: Persist successful research
+        if: steps.run_phase35.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase35_advanced_tree_prediction data/phase35_decomp_features.parquet phase35_run.log
+          git diff --cached --quiet || git commit -m "Phase 35: persist advanced tree prediction results"
+          git push
+      - name: Log failure
+        if: steps.run_phase35.outcome != 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          {
+            echo ""
+            echo "## Phase 35 numerical run failure — run ${{ github.run_id }}"
+            echo "- Date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "- Status: numerical run failed; outputs from this run are non-evidence."
+            echo "- Action: inspect phase35_run.log, correct the implementation, and rerun."
+          } >> ERROR_LOG.md
+          git add ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 35: log numerical failure"
+          git push
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase35-advanced-tree-prediction-results
+          path: |
+            results/phase35_advanced_tree_prediction/**
+            data/phase35_decomp_features.parquet
+            phase35_run.log
+            ERROR_LOG.md
+          if-no-files-found: warn
+      - name: Fail after logging
+        if: steps.run_phase35.outcome != 'success'
+        run: exit 1
