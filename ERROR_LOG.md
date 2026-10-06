@@ -1067,3 +1067,7 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Evidence status:** Numerical output was computed successfully but the failed publication run is not the accepted persistence checkpoint.
 - **Correction:** Added fetch/rebase-before-push to the corrected postprocess workflow, matching the project’s established race-safe publication pattern.
 - **Prevention:** All Phase-43 publishing workflows now rebase onto the current branch head before pushing generated evidence.
+
+
+## Phase 44 — initialization audit
+No numerical error has occurred at registration. Any failed workflow or implementation defect will be logged before evidence acceptance.
