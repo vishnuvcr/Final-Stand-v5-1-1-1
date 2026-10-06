@@ -122,3 +122,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 ## 2026-10-06 — Phase 44 F44-005 bounded-memory correction
 - Phase-44 active engine now processes one expiry at a time; previous retained-dataframe runs are non-evidence.
 - Corrected run **37488148310** is the current numerical execution candidate.
+
+
+## 2026-10-06 — Phase 44 F44-007/F44-008 audit corrections
+- Bridge run 37484989565 completed numerical execution but failed artifact audit due to a script/workflow filename mismatch; classified non-evidence.
+- The Phase-44 summary schema was aligned with workflow finalization fields before the next accepted run.
