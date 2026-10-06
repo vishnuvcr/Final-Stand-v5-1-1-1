@@ -1360,3 +1360,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: non-evidence; preflight stopped before any data access or numerical calculation.
 - Correction: the tuning engine now adds its own `research/` directory to `sys.path` and imports the accepted Phase-43 module directly.
 - Prevention: future isolated Python phase scripts must not assume the repository directory is an importable package unless an `__init__.py` is present.
+
+
+## F49-003 — Numerical performance self-audit
+- The first corrected run reached preflight but the numerical step remained in progress without a refreshed step log, indicating the original candidate evaluator was too expensive for the 720-configuration × multi-entry search.
+- Evidence status: non-final; no numerical result is accepted from the long-running process.
+- Correction: candidate evaluation now caches entry quotes and expiry-day quote series per expiry/entry snapshot and performs dictionary/index operations instead of repeated full-DataFrame scans for each candidate.
+- Prevention: performance gates are now treated as part of scientific reproducibility; a search must complete deterministically within the registered CI timeout rather than relying on an opaque long-running job.
