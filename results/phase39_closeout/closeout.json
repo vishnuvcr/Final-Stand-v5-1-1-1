@@ -10,7 +10,7 @@
   "validation_uplift_rupees": 17983.530680549993,
   "holdout_uplift_rupees": 7390.390842637005,
   "development_uplift_rupees": -18175.068968249994,
-  "overrides": 7,
+  "overrides": 1,
   "cost_stress_plus_50_validation": 17799.046020825015,
   "cost_stress_plus_50_holdout": 7546.336263955505,
   "manuscript": "manuscript/PHASE39_RESEARCH_MANUSCRIPT.md",
