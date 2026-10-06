@@ -1,3 +1,16 @@
+## Phase 47 — VIX source-strategy numerical backtest — CLOSED / DATA FEASIBILITY
+
+Phase 47's self-audited numerical work established a key data limitation: the cached thetrademarkk/india-index-options-1m source does not provide next-expiry entry-time observations for most historical dates, preventing a scientifically complete test of Calendar and Monthly Wide-Range Hedge structures. The Covered Call 2.0 option-only proxy produced only 20 rows and is not promotable.
+
+Two attempted numerical runs were explicitly rejected by self-audit; no incomplete result entered the evidence base.
+
+Phase 47 therefore closes with **NO PROMOTION**. The next phase uses an independent multi-expiry intraday dataset for a supplementary 2024Q4/2025/2026 study.
+
+- [Phase 47 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-47-vix-source-strategy-backtest)
+- [Phase 47 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/PHASE47_STATUS.md)
+- [Phase 47 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-47-vix-source-strategy-backtest/PHASE47_RESEARCH_PLAN.md)
+
+---
 ## Phase 47 — VIX source-strategy numerical backtest — INITIALIZED
 
 Phase 47 converts a finite subset of the Phase-46 YouTube discoveries into reproducible NIFTY tests while retaining **LOW, NORMAL and FALLING** VIX states alongside **RISING, HIGH, SPIKE and HIGH_RISING**.
