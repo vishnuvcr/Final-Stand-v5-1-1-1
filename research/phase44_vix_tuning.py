@@ -239,124 +239,261 @@ def profile_defs():
     return list(dict((f"{pid}|{mode}",(pid,mode,par)) for pid,mode,par in out).values())
 
 def main():
-    if not Path("data/phase40_vix/india_vix.csv").exists(): raise FileNotFoundError("missing India VIX cache")
-    idx=load_index(); vix=load_vix(); expiries=list_expiries(); cache={}
-    base_rows=[]; errors=[]; specs=family_specs()
-    ops=[]
-    for ex in expiries:
-        for tm in ENTRY_TIMES:
-            ets=entry_ts_for(idx,ex,tm)
-            if ets is None: continue
-            z=idx[idx["timestamp"]==ets]
-            if not z.empty: ops.append((ex,tm,ets,float(z.iloc[-1]["spot"])))
-    for oi,(ex,tm,ets,spot) in enumerate(ops):
+    if not Path("data/phase40_vix/india_vix.csv").exists():
+        raise FileNotFoundError("missing India VIX cache")
+    idx = load_index()
+    vix = load_vix()
+    expiries = list_expiries()
+    cache = {}
+    base_rows = []
+    errors = []
+    specs = family_specs()
+    needed_offsets = {}
+    for family, geom in specs:
+        for typ, off, _q in make_legs(family, geom):
+            needed_offsets.setdefault((typ, int(off)), None)
+
+    for oi, ex in enumerate(expiries):
         try:
-            if ex not in cache: cache[ex]=prepare(load_parquet(f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"))
-            cur=cache[ex]; snap=cur[cur["timestamp"]==ets]; step=modal_step(snap)
-            if step is None or step<=0:
-                errors.append({"expiry":str(ex.date()),"entry_time":tm,"reason":"missing_modal_step"}); continue
-            strikes=snap["strike"].unique(); atm=float(min(strikes,key=lambda k:abs(float(k)-spot))); lot=lot_size_for_expiry(ex); split=split_for(ex)
-            for family,geom in specs:
-                r=evaluate(cur,ets,ex,atm,step,lot,family,geom)
-                if r is not None:
-                    base_rows.append({"expiry":str(ex.date()),"entry_time":tm,"entry_ts":str(ets),"split":split,
-                                      "family":family,"geom":json.dumps(geom,sort_keys=True,separators=(",",":")),
-                                      "net":r["net"],"net50":r["net50"]})
+            if ex not in cache:
+                cache[ex] = prepare(load_parquet(f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"))
+            cur = cache[ex]
+            split = split_for(ex)
+            lot = lot_size_for_expiry(ex)
+            cutoff = ex.normalize() + pd.Timedelta(hours=15, minutes=29)
+            day = cur[(cur["timestamp"] >= ex.normalize()) & (cur["timestamp"] <= cutoff)].copy()
+
+            # Cache expiry-day series once for every type/strike that is used.
+            day_series = {}
+            for (typ, strike), z in day.groupby(["option_type", "strike"], sort=False):
+                day_series[(str(typ).upper(), float(strike))] = (
+                    z.drop_duplicates("timestamp").set_index("timestamp")["close"]
+                )
+
+            for tm in ENTRY_TIMES:
+                ets = entry_ts_for(idx, ex, tm)
+                if ets is None:
+                    continue
+                spot_row = idx[idx["timestamp"] == ets]
+                if spot_row.empty:
+                    continue
+                spot = float(spot_row.iloc[-1]["spot"])
+                snap = cur[cur["timestamp"] == ets]
+                step = modal_step(snap)
+                if step is None or step <= 0:
+                    errors.append({"expiry": str(ex.date()), "entry_time": tm, "reason": "missing_modal_step"})
+                    continue
+
+                strikes = snap["strike"].unique()
+                atm = float(min(strikes, key=lambda k: abs(float(k) - spot)))
+
+                # Exact point-in-time entry prices for all possible offsets.
+                entry_map = {}
+                for typ, off in needed_offsets:
+                    k = float(atm + off * step)
+                    x = snap[(snap["option_type"] == typ) & (snap["strike"] == k)]
+                    if not x.empty:
+                        entry_map[(typ, off)] = float(x.iloc[-1]["close"])
+
+                for family, geom in specs:
+                    legs = make_legs(family, geom)
+                    if any((typ, int(off)) not in entry_map for typ, off, _q in legs):
+                        continue
+
+                    series = []
+                    missing = False
+                    for typ, off, _q in legs:
+                        k = float(atm + off * step)
+                        ss = day_series.get((typ, k))
+                        if ss is None or ss.empty:
+                            missing = True
+                            break
+                        series.append(ss)
+                    if missing:
+                        continue
+
+                    common = series[0].index
+                    for ss in series[1:]:
+                        common = common.intersection(ss.index)
+                        if len(common) == 0:
+                            break
+                    if len(common) == 0:
+                        continue
+                    exit_ts = common.max()
+                    exits = [float(ss.loc[exit_ts]) for ss in series]
+
+                    gross = 0.0
+                    orders = []
+                    for (typ, off, q), xp in zip(legs, exits):
+                        ep = float(entry_map[(typ, int(off))])
+                        epx = exec_px(ep, "buy" if q > 0 else "sell")
+                        xpx = exec_px(xp, "buy" if q < 0 else "sell")
+                        gross += q * (xpx - epx) * lot
+                        orders.append((ets, "buy" if q > 0 else "sell", epx * abs(q)))
+                        orders.append((exit_ts, "buy" if q < 0 else "sell", xpx * abs(q)))
+                    cost = charges(orders, lot, 1.0)
+                    cost50 = charges(orders, lot, 1.5)
+
+                    base_rows.append({
+                        "expiry": str(ex.date()),
+                        "entry_time": tm,
+                        "entry_ts": str(ets),
+                        "split": split,
+                        "family": family,
+                        "geom": json.dumps(geom, sort_keys=True, separators=(",", ":")),
+                        "net": gross - cost,
+                        "net50": gross - cost50,
+                    })
         except Exception as e:
-            errors.append({"expiry":str(ex.date()),"entry_time":tm,"reason":repr(e)})
-        if oi%40==0: pd.DataFrame(base_rows).to_csv(OUT/"progress_structure_matrix.csv",index=False)
-    base=pd.DataFrame(base_rows)
-    if base.empty: raise RuntimeError("no structure/time rows")
-    base.to_csv(OUT/"stage1_structure_time_matrix.csv",index=False); pd.DataFrame(errors).to_csv(OUT/"data_errors.csv",index=False)
+            errors.append({"expiry": str(ex.date()), "reason": repr(e)})
+        if oi % 5 == 0:
+            pd.DataFrame(base_rows).to_csv(OUT / "progress_structure_matrix.csv", index=False)
 
-    defs=profile_defs(); dev=base[base.split=="development"]; val=base[base.split=="validation"]; hold=base[base.split=="holdout"]
-    # Candidate search is strictly development-only. Validation is not used to rank or freeze.
-    dev_candidates=[]
-    for pid,mode,par in defs:
-        for (family,geom,tm),g in dev.groupby(["family","geom","entry_time"]):
-            if len(g)<15: continue
-            active=[]
-            for ex,ets in zip(g["expiry"],g["entry_ts"]):
-                if profile_active(vix,pd.Timestamp(ets),par,mode): active.append(ex)
-            if len(active)<10: continue
-            gz=g[g["expiry"].isin(active)]
-            common=g[["expiry","net","net50"]].merge(gz[["expiry","net"]],on="expiry",suffixes=("_base","_cand"))
-            upl=common["net_cand"]-common["net_base"]
-            st=paired_stats(upl)
-            dev_candidates.append({"family":family,"geom":geom,"entry_time":int(tm),"profile_id":pid,"mode":mode,
-                                  "dev_n":len(gz),"dev_net":float(gz.net.sum()),"dev_net50":float(gz.net50.sum()),
-                                  "dev_dd":max_dd(gz.sort_values("expiry").net.to_numpy()),"dev_uplift":float(upl.sum()),
-                                  "dev_uplift_mean":st["mean"],"dev_ci_lo":st["ci_lo"],"dev_ci_hi":st["ci_hi"]})
-    dc=pd.DataFrame(dev_candidates)
-    if dc.empty: raise RuntimeError("no development candidates")
-    dc=dc[(dc.dev_net>=0)&(dc.dev_net50>0)&(dc.dev_uplift>0)].sort_values(["dev_uplift_mean","dev_net"],ascending=False)
-    # Diversify the frozen development shortlist: max 5 per family, max 30 total.
-    picked=[]
-    counts={}
+    base = pd.DataFrame(base_rows)
+    if base.empty:
+        raise RuntimeError("no structure/time rows")
+    base.to_csv(OUT / "stage1_structure_time_matrix.csv", index=False)
+    pd.DataFrame(errors).to_csv(OUT / "data_errors.csv", index=False)
+
+    profiles = profile_defs()
+    dev = base[base.split == "development"]
+    val = base[base.split == "validation"]
+    hold = base[base.split == "holdout"]
+
+    # Development-only candidate search.
+    dev_candidates = []
+    for pid, mode, par in profiles:
+        for (family, geom, tm), g in dev.groupby(["family", "geom", "entry_time"]):
+            if len(g) < 15:
+                continue
+            mask = [profile_active(vix, pd.Timestamp(ets), par, mode) for ets in g.entry_ts]
+            gz = g.loc[mask]
+            if len(gz) < 10:
+                continue
+            common = g[["expiry", "net"]].merge(
+                gz[["expiry", "net"]], on="expiry", suffixes=("_base", "_cand")
+            )
+            upl = common["net_cand"] - common["net_base"]
+            st = paired_stats(upl)
+            dev_candidates.append({
+                "family": family, "geom": geom, "entry_time": int(tm),
+                "profile_id": pid, "mode": mode,
+                "dev_n": len(gz), "dev_net": float(gz.net.sum()),
+                "dev_net50": float(gz.net50.sum()),
+                "dev_dd": max_dd(gz.sort_values("expiry").net.to_numpy()),
+                "dev_uplift": float(upl.sum()),
+                "dev_uplift_mean": st["mean"],
+                "dev_ci_lo": st["ci_lo"], "dev_ci_hi": st["ci_hi"],
+            })
+
+    dc = pd.DataFrame(dev_candidates)
+    if dc.empty:
+        raise RuntimeError("no development candidates")
+    dc = dc[(dc.dev_net >= 0) & (dc.dev_net50 > 0) & (dc.dev_uplift > 0)].sort_values(
+        ["dev_uplift_mean", "dev_net"], ascending=False
+    )
+
+    picked = []
+    counts = {}
     for r in dc.itertuples(index=False):
-        if counts.get(r.family,0)>=5: continue
-        picked.append(r._asdict()); counts[r.family]=counts.get(r.family,0)+1
-        if len(picked)>=30: break
-    frozen_dev=pd.DataFrame(picked)
-    frozen_dev.to_csv(OUT/"frozen_dev_shortlist.csv",index=False)
-    frozen_dev.to_csv(OUT/"stage1_candidates.csv",index=False)
+        if counts.get(r.family, 0) >= 5:
+            continue
+        picked.append(r._asdict())
+        counts[r.family] = counts.get(r.family, 0) + 1
+        if len(picked) >= 30:
+            break
+    frozen_dev = pd.DataFrame(picked)
+    frozen_dev.to_csv(OUT / "frozen_dev_shortlist.csv", index=False)
+    frozen_dev.to_csv(OUT / "stage1_candidates.csv", index=False)
 
-    # Validation confirmation only after the development freeze.
-    val_rows=[]
+    # Validation confirmation after development freeze.
+    val_rows = []
     for r in frozen_dev.itertuples(index=False):
-        g=val[(val.family==r.family)&(val.geom==r.geom)&(val.entry_time==r.entry_time)]
-        a=[]
-        for ex,ets in zip(g["expiry"],g["entry_ts"]):
-            if profile_active(vix,pd.Timestamp(ets),build_profiles()[-1][1] if False else next(par for pid,mm,par in defs if pid==r.profile_id and mm==r.mode),r.mode):
-                a.append(ex)
-        gz=g[g.expiry.isin(a)]
-        common=g[["expiry","net","net50"]].merge(gz[["expiry","net"]],on="expiry",suffixes=("_base","_cand"))
-        uplift_vec=(common["net_cand"]-common["net_base"]).to_numpy(float)
-        st=paired_stats(uplift_vec)
-        pos=uplift_vec[uplift_vec>0]
-        concentration=(float(pos.max()/pos.sum()) if len(pos) and pos.sum()>0 else np.nan)
-        base_dd=max_dd(g.sort_values("expiry").net.to_numpy()) if len(g) else np.nan
-        val_rows.append({**r._asdict(),"val_n":len(gz),"val_net":float(gz.net.sum()) if len(gz) else np.nan,
-                         "val_net50":float(gz.net50.sum()) if len(gz) else np.nan,"val_dd":max_dd(gz.sort_values("expiry").net.to_numpy()) if len(gz) else np.nan,
-                         "base_val_net":float(g.net.sum()) if len(g) else np.nan,"base_val_dd":base_dd,
-                         "val_uplift":float(common.net_cand.sum()-common.net_base.sum()) if len(common) else np.nan,
-                         "val_uplift_mean":st["mean"],"val_ci_lo":st["ci_lo"],"val_ci_hi":st["ci_hi"],"val_p":st["p"],"common_n":len(common),
-                         "max_positive_uplift_share":concentration})
-    vd=pd.DataFrame(val_rows)
+        g = val[(val.family == r.family) & (val.geom == r.geom) & (val.entry_time == r.entry_time)]
+        par = next(par for pid, mm, par in profiles if pid == r.profile_id and mm == r.mode)
+        mask = [profile_active(vix, pd.Timestamp(ets), par, r.mode) for ets in g.entry_ts]
+        gz = g.loc[mask]
+        common = g[["expiry", "net", "net50"]].merge(
+            gz[["expiry", "net"]], on="expiry", suffixes=("_base", "_cand")
+        )
+        uplift_vec = (common["net_cand"] - common["net_base"]).to_numpy(float)
+        st = paired_stats(uplift_vec)
+        pos = uplift_vec[uplift_vec > 0]
+        concentration = float(pos.max() / pos.sum()) if len(pos) and pos.sum() > 0 else np.nan
+        base_dd = max_dd(g.sort_values("expiry").net.to_numpy()) if len(g) else np.nan
+        val_rows.append({
+            **r._asdict(),
+            "val_n": len(gz),
+            "val_net": float(gz.net.sum()) if len(gz) else np.nan,
+            "val_net50": float(gz.net50.sum()) if len(gz) else np.nan,
+            "val_dd": max_dd(gz.sort_values("expiry").net.to_numpy()) if len(gz) else np.nan,
+            "base_val_net": float(g.net.sum()) if len(g) else np.nan,
+            "base_val_dd": base_dd,
+            "val_uplift": float(uplift_vec.sum()) if len(uplift_vec) else np.nan,
+            "val_uplift_mean": st["mean"], "val_ci_lo": st["ci_lo"], "val_ci_hi": st["ci_hi"],
+            "val_p": st["p"], "common_n": len(common),
+            "max_positive_uplift_share": concentration,
+        })
+
+    vd = pd.DataFrame(val_rows)
     if len(vd):
-        vd["validation_gate"]=(vd.val_n>=20)&(vd.val_net>0)&(vd.val_net50>0)&(vd.val_uplift>0)&(vd.val_ci_lo>0)&(vd.val_dd<=1.25*vd.base_val_dd)&(vd.max_positive_uplift_share<=0.40)
-        vd["val_p_holm"]=holm(vd.val_p.fillna(1).to_numpy())
-        vd["inference_survivor"]=vd["validation_gate"]&(vd.val_p_holm<0.05)
-    vd.to_csv(OUT/"validation_confirmation.csv",index=False)
+        vd["validation_gate"] = (
+            (vd.val_n >= 20) & (vd.val_net > 0) & (vd.val_net50 > 0) &
+            (vd.val_uplift > 0) & (vd.val_ci_lo > 0) &
+            (vd.val_dd <= 1.25 * vd.base_val_dd) &
+            (vd.max_positive_uplift_share <= 0.40)
+        )
+        vd["val_p_holm"] = holm(vd.val_p.fillna(1).to_numpy())
+        vd["inference_survivor"] = vd["validation_gate"] & (vd.val_p_holm < 0.05)
+    vd.to_csv(OUT / "validation_confirmation.csv", index=False)
 
-    # Open 2026 only for candidates that passed the frozen validation gate and Holm test.
-    hs=vd[vd["inference_survivor"]].copy() if len(vd) else pd.DataFrame()
-    hold_rows=[]
+    # Open 2026 only after validation + inference freeze.
+    hs = vd[vd["inference_survivor"]].copy() if len(vd) else pd.DataFrame()
+    hold_rows = []
     for r in hs.itertuples(index=False):
-        g=hold[(hold.family==r.family)&(hold.geom==r.geom)&(hold.entry_time==r.entry_time)]
-        par=next(par for pid,mm,par in defs if pid==r.profile_id and mm==r.mode)
-        hz=g[[profile_active(vix,pd.Timestamp(ets),par,r.mode) for ets in g.entry_ts]]
-        if hz.empty: continue
-        common=g[["expiry","net","net50"]].merge(hz[["expiry","net"]],on="expiry",suffixes=("_base","_cand"))
-        st=paired_stats(common.net_cand-common.net_base)
-        hold_rows.append({**r._asdict(),"hold_n":len(hz),"hold_net":float(hz.net.sum()),"hold_net50":float(hz.net50.sum()),
-                          "hold_dd":max_dd(hz.sort_values("expiry").net.to_numpy()),"hold_uplift":float(common.net_cand.sum()-common.net_base.sum()),
-                          "hold_uplift_mean":st["mean"],"hold_ci_lo":st["ci_lo"],"hold_ci_hi":st["ci_hi"],"hold_p":st["p"],"hold_common_n":len(common)})
-    hd=pd.DataFrame(hold_rows)
+        g = hold[(hold.family == r.family) & (hold.geom == r.geom) & (hold.entry_time == r.entry_time)]
+        par = next(par for pid, mm, par in profiles if pid == r.profile_id and mm == r.mode)
+        mask = [profile_active(vix, pd.Timestamp(ets), par, r.mode) for ets in g.entry_ts]
+        hz = g.loc[mask]
+        if hz.empty:
+            continue
+        common = g[["expiry", "net", "net50"]].merge(
+            hz[["expiry", "net"]], on="expiry", suffixes=("_base", "_cand")
+        )
+        st = paired_stats(common.net_cand - common.net_base)
+        hold_rows.append({
+            **r._asdict(),
+            "hold_n": len(hz), "hold_net": float(hz.net.sum()), "hold_net50": float(hz.net50.sum()),
+            "hold_dd": max_dd(hz.sort_values("expiry").net.to_numpy()),
+            "hold_uplift": float(common.net_cand.sum() - common.net_base.sum()) if len(common) else np.nan,
+            "hold_uplift_mean": st["mean"], "hold_ci_lo": st["ci_lo"], "hold_ci_hi": st["ci_hi"],
+            "hold_p": st["p"], "hold_common_n": len(common),
+        })
+
+    hd = pd.DataFrame(hold_rows)
     if len(hd):
-        hd["hold_p_holm"]=holm(hd.hold_p.fillna(1).to_numpy())
-        hd["promotion_gate"]=(hd.hold_n>=10)&(hd.hold_net>0)&(hd.hold_net50>0)&(hd.hold_uplift>0)&(hd.hold_ci_lo>0)&(hd.hold_p_holm<0.05)
-    hd.to_csv(OUT/"frozen_holdout_confirmation.csv",index=False)
+        hd["hold_p_holm"] = holm(hd.hold_p.fillna(1).to_numpy())
+        hd["promotion_gate"] = (
+            (hd.hold_n >= 10) & (hd.hold_net > 0) & (hd.hold_net50 > 0) &
+            (hd.hold_uplift > 0) & (hd.hold_ci_lo > 0) & (hd.hold_p_holm < 0.05)
+        )
+    hd.to_csv(OUT / "frozen_holdout_confirmation.csv", index=False)
 
-    summary={"status":"COMPLETE_STAGE1","families":6,"structure_time_rows":int(len(base)),
-             "development_candidates":int(len(dc)),"frozen_dev_shortlist":int(len(frozen_dev)),
-             "validation_pass":int(vd["validation_gate"].sum()) if len(vd) else 0,
-             "validation_inference_survivors":int(vd["inference_survivor"].sum()) if len(vd) else 0,
-             "holdout_candidates_tested":int(len(hd)),
-             "holdout_promotion_survivors":int(hd["promotion_gate"].sum()) if len(hd) else 0,
-             "holdout_opened_after_validation_freeze":bool(len(hd)),
-             "decision":"PROMISING_STAGE2_REQUIRED" if len(hd) and hd["promotion_gate"].any() else "NO_STAGE1_PROMOTION"}
-    (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
-    print(json.dumps(summary,indent=2))
+    summary = {
+        "status": "COMPLETE_STAGE1",
+        "families": 6,
+        "structure_time_rows": int(len(base)),
+        "development_candidates": int(len(dc)),
+        "frozen_dev_shortlist": int(len(frozen_dev)),
+        "validation_pass": int(vd["validation_gate"].sum()) if len(vd) else 0,
+        "validation_inference_survivors": int(vd["inference_survivor"].sum()) if len(vd) else 0,
+        "holdout_candidates_tested": int(len(hd)),
+        "holdout_promotion_survivors": int(hd["promotion_gate"].sum()) if len(hd) else 0,
+        "holdout_opened_after_validation_freeze": bool(len(hd)),
+        "decision": "PROMISING_STAGE2_REQUIRED" if len(hd) and hd["promotion_gate"].any() else "NO_STAGE1_PROMOTION",
+    }
+    (OUT / "summary.json").write_text(json.dumps(summary, indent=2))
+    print(json.dumps(summary, indent=2))
 
-if __name__=="__main__": main()
+if __name__ == "__main__":
+    main()
