@@ -486,38 +486,31 @@ Additional candidate families include Bayesian dynamic models, Bradley-Terry pre
 **Current Phase-39 status:** formulation and preregistration complete; numerical counterfactual engine construction is next. Phase-38 canonical strategy remains unchanged.
 
 
-## Phase 43 — VIX-conditioned NIFTY all-strategy sweep — COMPLETE, NO PROMOTION
+## Phase 43 — VIX-conditioned NIFTY all-strategy sweep — COMPLETE / NO PROMOTION
 
-Phase 43 tested 22 preregistered NIFTY weekly option strategy families across India-VIX states on 262 expiry opportunities, producing 4,597 strategy observations with realistic Paytm Money costs, adverse slippage, historical lot sizes, development/validation/untouched-2026 chronology and corrected multiple-testing inference.
-
-Final findings:
-- 18 strategies were eligible for defined-risk promotion.
-- 0 strategy×VIX candidates passed the full development/validation/cost-stress gate.
-- 0 VIX routers were frozen for holdout.
-- Corrected VIX regime inference found no Holm-adjusted significant regime advantage; all corrected 95% bootstrap intervals crossed zero.
-- Stage-5 active-exit extension was skipped because the structural VIX router gate was not passed.
-- **Decision: NO PROMOTION. Canonical Phase-20/42 strategy remains unchanged.**
-
-A statistical implementation defect and a promotion-universe contamination defect were both caught and corrected before final closure; their failed outputs are retained as audit/non-evidence.
+Phase 43 completed the broad India-VIX-conditioned NIFTY weekly option sweep with realistic costs, chronological validation, multiple-testing correction and protected 2026 holdout. No VIX router passed the registered promotion gates.
 
 - [Phase 43 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-43-vix-all-options-strategies)
-- [Phase 43 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_RESEARCH_PLAN.md)
-- [Phase 43 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_PRE_REGISTRATION.md)
-- [Phase 43 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_LITERATURE_REVIEW.md)
-- [Phase 43 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_STATUS.md)
-- [Phase 43 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_MANUSCRIPT.md)
-- [Phase 43 corrected inference](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/results/phase43_vix/corrected_strategy_vix_inference.csv)
-- [Phase 43 corrected router validation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/results/phase43_vix/corrected_router_dev_validation.csv)
+- [Phase 43 status](PHASE43_STATUS.md)
+- [Phase 43 manuscript](PHASE43_MANUSCRIPT.md)
 
-**Final Phase-43 status: CLOSED — NO PROMOTION.**
+**Final Phase 43 decision: NO PROMOTION.**
 
+## Phase 44 — VIX candidate tuning — COMPLETE / NO PROMOTION
 
-## Phase 44 — VIX candidate tuning — ACTIVE
+Phase 44 tuned six defined-risk VIX-conditioned candidate families across finite strike geometry, four entry times and prior-only India-VIX threshold grids. The corrected study used a 13,292-row development structural matrix, 3,500 profile evaluations, 522 development-eligible configurations and 30 frozen validation candidates.
 
-Corrected bounded-memory execution is active in GitHub Actions run **37488148310**; prior Phase-44 runs are quarantined as non-evidence until this run completes its artifact audit.
-A new isolated branch `phase-44-vix-candidate-tuning` is testing finite strike-geometry, entry-time and prior-only VIX-threshold tuning for the strongest Phase-43 defined-risk candidates. The 2026 holdout remains protected until rules are frozen.
-- [Phase 44 bridge workflow](.github/workflows/phase-44-bridge.yml)
+- [Phase 44 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-44-vix-candidate-tuning)
+- [Phase 44 manuscript](PHASE44_MANUSCRIPT.md)
+- [Phase 44 research plan](PHASE44_RESEARCH_PLAN.md)
+- [Phase 44 pre-registration](PHASE44_PRE_REGISTRATION.md)
+- [Phase 44 literature review](PHASE44_LITERATURE_REVIEW.md)
+- [Phase 44 status](PHASE44_STATUS.md)
+- [Phase 44 final decision](results/phase44_vix_tuning/final_decision.json)
+- [Phase 44 validation matrix](results/phase44_vix_tuning/validation_confirmation.csv)
+- [Phase 44 gate summary](results/phase44_vix_tuning/phase44_gate_summary.csv)
+- [Phase 44 candidate funnel](results/phase44_vix_tuning/figures/candidate_funnel.svg)
 
+**Validation result:** 18/30 frozen candidates had positive net P&L; 16/30 remained positive under +50% cost stress; 9/30 had positive total uplift. Zero candidates had a strictly positive 95% CI lower bound, zero had unadjusted p<0.05, and zero survived Holm correction.
 
-### Phase 44 current execution
-Current corrected development run: **37496337984**. Staged execution is active; validation and 2026 holdout remain locked until development artifacts pass audit.
+**Phase 44 decision: NO PROMOTION.** Stage 3 active-exit tuning was skipped and the 2026 holdout remained protected. The Phase-20/42 canonical strategy remains unchanged.
