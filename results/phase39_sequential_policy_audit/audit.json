@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "control_counts": {
+    "development": 271,
+    "validation": 172,
+    "holdout": 34
+  },
+  "policy_trades": 479,
+  "policy_unique_entries": 479,
+  "overrides": 7,
+  "warmup_rows": 100,
+  "validation_uplift_rupees": 17983.530680549993,
+  "holdout_uplift_rupees": 7390.390842637005,
+  "validation_policy_drawdown": 32021.64557861998,
+  "validation_control_drawdown": 32021.645578619973,
+  "holdout_policy_drawdown": 29936.237173835914,
+  "holdout_control_drawdown": 37326.62801647292,
+  "validation_uplift_cost_x_1_50": 17799.046020825015,
+  "holdout_uplift_cost_x_1_50": 7546.336263955505,
+  "validation_uplift_cost_x_2_00": 17614.5613611,
+  "holdout_uplift_cost_x_2_00": 7702.281685274003,
+  "frozen_control_validation_plus_holdout": 63672.57530171223,
+  "frozen_control_target": 63672.57530171223,
+  "promotion_gate_status": "NOT_YET_PROMOTABLE",
+  "reason": "Development uplift is negative and a sequential model-family comparison is still required; this audit only establishes data/chronology/cost-stress validity."
+}
