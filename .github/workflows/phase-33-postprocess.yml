@@ -2,6 +2,13 @@ name: Phase 33 - Postprocess and Manuscript
 
 on:
   workflow_dispatch:
+  push:
+    branches: [phase-33-nifty-prediction-models]
+    paths:
+      - 'results/phase33_nifty_prediction/model_predictions.csv'
+      - 'results/phase33_nifty_prediction/garch_predictions.csv'
+      - 'results/phase33_nifty_prediction/model_metrics.csv'
+      - 'results/phase33_nifty_prediction/coverage_and_metadata.json'
   workflow_run:
     workflows: ["Phase 33 - NIFTY D-6 Prediction Models"]
     types: [completed]
@@ -12,7 +19,7 @@ permissions:
 
 jobs:
   postprocess:
-    if: \${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout phase branch
