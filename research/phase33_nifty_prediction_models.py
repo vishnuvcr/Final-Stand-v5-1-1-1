@@ -158,6 +158,41 @@ def load_or_build_sentiment():
     out.to_parquet(path, index=False)
     return out
 
+
+
+def load_or_build_fii_dii():
+    path = DATA / "fii_dii_daily.parquet"
+    if path.exists():
+        return pd.read_parquet(path)
+    import urllib.request
+    url = "https://raw.githubusercontent.com/MrChartist/fii-dii-data/main/data/history.json"
+    raw_path = DATA / "fii_dii_history.json"
+    urllib.request.urlretrieve(url, raw_path)
+    with open(raw_path, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+    rows = []
+    for r in raw:
+        d = pd.to_datetime(r.get("date"), dayfirst=True, errors="coerce")
+        if pd.isna(d):
+            continue
+        rows.append({
+            "date": d.tz_localize(TZ) if d.tzinfo is None else d.tz_convert(TZ),
+            "fii_net": pd.to_numeric(r.get("fii_net"), errors="coerce"),
+            "dii_net": pd.to_numeric(r.get("dii_net"), errors="coerce"),
+            "fii_idx_fut_net": pd.to_numeric(r.get("fii_idx_fut_net"), errors="coerce"),
+            "fii_idx_call_net": pd.to_numeric(r.get("fii_idx_call_net"), errors="coerce"),
+            "fii_idx_put_net": pd.to_numeric(r.get("fii_idx_put_net"), errors="coerce"),
+            "flow_pcr": pd.to_numeric(r.get("pcr"), errors="coerce"),
+            "flow_sentiment": pd.to_numeric(r.get("sentiment_score"), errors="coerce"),
+        })
+    out = pd.DataFrame(rows).drop_duplicates("date").sort_values("date")
+    if not out.empty:
+        for c in ["fii_net","dii_net","fii_idx_fut_net","fii_idx_call_net","fii_idx_put_net"]:
+            out[c + "_z20"] = (out[c] - out[c].rolling(20).mean()) / out[c].rolling(20).std()
+    out.to_parquet(path, index=False)
+    return out
+
+
 def load_or_build_global():
     path = DATA / "global_daily.parquet"
     if path.exists():
@@ -335,6 +370,17 @@ def build_events():
         direction="backward",
         tolerance=pd.Timedelta(days=5),
     ).drop(columns=["date"], errors="ignore")
+
+    flows = load_or_build_fii_dii().sort_values("date")
+    fc = flows.copy()
+    events["flow_join_date"] = events["ref_ts"].dt.normalize() - pd.Timedelta(seconds=1)
+    events = pd.merge_asof(
+        events.sort_values("flow_join_date"),
+        fc[["date"] + [c for c in fc.columns if c != "date"]].sort_values("date"),
+        left_on="flow_join_date", right_on="date",
+        direction="backward", tolerance=pd.Timedelta(days=7),
+    ).drop(columns=["flow_join_date","date"], errors="ignore")
+
     opt = add_option_event_features(events[["expiry", "ref_ts", "ref_spot"]].copy())
     events = events.merge(opt, on=["expiry", "ref_ts"], how="left")
     events["target_return"] = np.log(events["expiry_close"] / events["ref_spot"])
@@ -401,6 +447,11 @@ def fit_sofnn(train_df, test_df, cols):
     phi_b = np.exp(-db/(2*scale**2))
     clf = LogisticRegression(max_iter=2000, C=1.0, random_state=SEED).fit(phi_a, train_df["target_direction"].astype(int))
     return clf.predict_proba(phi_b)[:,1]
+
+
+def fit_sentiment_sofnn(train_df, test_df, cols):
+    return fit_sofnn(train_df, test_df, cols)
+
 
 def garch_one(train_ret, horizon, model_kind):
     ensure("arch")
@@ -528,6 +579,25 @@ def main():
         row["sofnn_prob"] = sof
         pred_parts.append(row)
 
+    sent_start = pd.Timestamp("2024-01-01", tz=TZ)
+    sent_train_end = pd.Timestamp("2024-12-31 23:59:59", tz=TZ)
+    sent_train = events[(events["ref_ts"] >= sent_start) & (events["ref_ts"] <= sent_train_end)].copy()
+    sent_val = events[(events["ref_ts"] > sent_train_end) & (events["ref_ts"] <= VAL_END)].copy()
+    sent_hold = events[(events["ref_ts"] >= HOLD_START) & (events["ref_ts"] <= HOLD_END)].copy()
+    sent_cols_primary = [c for c in cols if c.startswith("sent_")]
+    if len(sent_cols_primary) and len(sent_train) >= 20:
+        for key, test in [("validation", sent_val), ("holdout", sent_hold)]:
+            if test.empty:
+                continue
+            fit = sent_train if key == "validation" else pd.concat([sent_train, sent_val]).sort_values("ref_ts")
+            p = fit_sentiment_sofnn(fit, test, cols)
+            for i, part in enumerate(pred_parts):
+                if not part.empty and part["ref_ts"].min() == test["ref_ts"].min():
+                    pred_parts[i]["sofnn_sent_prob"] = p
+    for part in pred_parts:
+        if "sofnn_sent_prob" not in part:
+            part["sofnn_sent_prob"] = part["sofnn_prob"]
+
     try:
         seq_cols = [c for c in cols if c.startswith(("ret","vol","range","dd")) or c in ["rsi14","macd","ma_gap20","ret_over_vol20","intraday_ret_10"]]
         pred_parts = [p.reset_index(drop=True) for p in pred_parts]
@@ -545,14 +615,14 @@ def main():
             part["lstm_pred_return"] = np.nan
 
     pred = pd.concat(pred_parts, ignore_index=True).sort_values("ref_ts")
-    pred["ensemble_prob"] = pred[["rf_prob","sofnn_prob","lstm_prob"]].mean(axis=1)
+    pred["ensemble_prob"] = pred[["rf_prob","sofnn_sent_prob","lstm_prob"]].mean(axis=1)
     pred["split"] = pred["ref_ts"].map(split_of)
     pred.to_csv(OUT/"model_predictions.csv", index=False)
 
     metrics = []
     for split in ["validation","holdout"]:
         q = pred[pred["split"]==split]
-        for model in ["rf","sofnn","lstm","ensemble"]:
+        for model in ["rf","sofnn","sofnn_sent","lstm","ensemble"]:
             m = metric_block(q["target_direction"].astype(int), q[f"{model}_prob"])
             m.update({"split":split,"model":model})
             metrics.append(m)
@@ -585,8 +655,9 @@ def main():
     econ = []
     for split in ["validation","holdout"]:
         q = pred[pred["split"]==split].copy()
-        for model in ["rf","sofnn","lstm","ensemble"]:
-            sign = np.where(q[f"{model}_prob"] >= 0.5, 1.0, -1.0)
+        for model in ["rf","sofnn","sofnn_sent","lstm","ensemble"]:
+            prob_col = "sofnn_sent_prob" if model == "sofnn_sent" else f"{model}_prob"
+            sign = np.where(q[prob_col] >= 0.5, 1.0, -1.0)
             sr = sign * q["target_return"].to_numpy(float)
             lo, hi = bootstrap_mean(sr)
             econ.append({
@@ -617,7 +688,8 @@ def main():
         "holdout_events":int(len(hold)),
         "feature_count":int(len(cols)),
         "sentiment_feature_count":int(len(sent_cols)),
-        "events_with_sentiment":int(events[sent_cols].notna().any(axis=1).sum()) if sent_cols else 0,
+        "events_with_sentiment":int(events[sent_cols_primary].notna().any(axis=1).sum()) if sent_cols_primary else 0,
+        "events_with_fii_dii":int(events[[c for c in cols if c.startswith("fii_") or c.startswith("dii_") or c.startswith("flow_")]].notna().any(axis=1).sum()) if any(c.startswith("fii_") or c.startswith("dii_") or c.startswith("flow_") for c in cols) else 0,
         "models":["LSTM","GARCH","EGARCH","GJR-GARCH","SOFNN-inspired","Random Forest","equal-weight ensemble"],
         "garch_stats":gstat,
         "data_note":"D-6 reference events with missing exact 10:00 observations are excluded, not shifted."
