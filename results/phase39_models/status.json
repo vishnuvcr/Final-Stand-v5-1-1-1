@@ -1,0 +1,15 @@
+{
+  "status": "COMPLETE",
+  "models": [
+    "CROL_bayesian_margin",
+    "Bayesian_counterfactual_margin",
+    "Bradley_Terry_preference",
+    "Dynamic_Bayesian_logistic",
+    "Gaussian_process_margin",
+    "Sparse_GAM_margin",
+    "Weighted_kNN_analog"
+  ],
+  "features": 105,
+  "holdout_evaluated": false,
+  "validation_control_rupees": 63948.222105380155
+}
