@@ -1404,3 +1404,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: runs 37538452940 and 37538570390 remain NON-EVIDENCE until a complete run passes all audits; no result is accepted from a performance-limited process.
 - Correction: cache normalized index trading days, exact timestamp-to-spot mapping and VIX state calculations across all candidates. This changes execution only, not numerical definitions.
 - Prevention: future Phase-49 performance audits must examine every candidate-level metadata lookup for repeated whole-dataset scans.
+### F49-010 — Residual validation import-path defect and empty-freeze robustness gap
+- Finding: the development stage used the corrected direct import path, but the later validation stage still attempted `research.phase43_vix_strategy_sweep`, which can fail because `research` is not a Python package in Actions.
+- Evidence status: the active optimized run #9 is now classified NON-EVIDENCE pending rerun with the corrected path. No Phase-49 conclusion is accepted from it.
+- Correction: validation now reuses the direct `phase43_vix_strategy_sweep` import path that passed preflight. The engine also has a registered clean early-stop path when no development candidate survives, so an empty freeze is a scientific outcome rather than a runtime error.
+- Prevention: all phase engines must use one validated import convention throughout the full execution path; zero-candidate branches must be explicitly tested.
