@@ -1121,3 +1121,9 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - The single-script Phase-44 run remained in the numerical step for an excessive duration even after I/O optimization because it processed development, validation and holdout option files in one execution before any candidate freeze.
 - No result from the long monolithic run is accepted.
 - Correction: Phase 44 is now operationally split into registered development, validation and holdout executions. Development reads only the 2021–2023 development expiries and freezes candidates before validation files are touched; validation and holdout then load only their respective date ranges.
+
+
+## F44-010 — strike-filtered two-pass parquet reader
+- The staged development run was still spending substantial time because expiry-day parquet reads included all strikes.
+- No output from that run is accepted.
+- The staged reader is now two-pass: one narrow entry-window read determines ATM/step for the four registered entry times; the expiry-day read then filters to the exact strike union required by the preregistered geometries.
