@@ -56,6 +56,12 @@ jobs:
         if: steps.source.outputs.found != 'true'
         run: echo "No completed Phase 49 raw artifact was found."
 
+      - name: Synchronize branch before generating closeout files
+        if: steps.source.outputs.found == 'true'
+        run: |
+          git fetch origin phase-49-vix-leader-parameter-tuning
+          git reset --hard origin/phase-49-vix-leader-parameter-tuning
+
       - name: Download source artifact
         if: steps.source.outputs.found == 'true'
         uses: actions/download-artifact@v4
@@ -128,8 +134,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin phase-49-vix-leader-parameter-tuning
-          git reset --hard origin/phase-49-vix-leader-parameter-tuning
           git add results/phase49_vix_tuning PHASE49_STATUS.md RESEARCH_LOG.md README.md
           git diff --cached --quiet && exit 0
           git commit -m 'phase49: closeout reconciliation and manuscript'
