@@ -1,6 +1,6 @@
 # Phase 39 Status — Advanced and Counterfactual Direction Prediction
 
-**STEP 1 COMPLETE — FIXED-OPPORTUNITY COUNTERFACTUAL PANEL ACCEPTED; MODEL FITTING NEXT**
+**PHASE 39 COMPLETE — NO CANONICAL PROMOTION; SPARSE-GAM RETAINED AS PAPER-TRADING RESEARCH CANDIDATE**
 
 ## Why Phase 39 exists
 
@@ -376,3 +376,49 @@ The complete manuscript is stored at:
 - 2026 holdout: untouched.
 
 Decision: **REJECT**. The online aggregation did not improve frozen validation, so no sequential replay or holdout test is justified for this family.
+
+
+## Phase 39 final decision — COMPLETE
+
+### Candidate comparison
+
+| Candidate | Development | Validation | 2026 holdout | Decision |
+|---|---:|---:|---:|---|
+| Sparse GAM sequential override | −₹18,175.07 | +₹17,983.53 | +₹7,390.39 | Research candidate only |
+| Symbolic candidate | −₹3,819.52 | +₹11,474.77 | ₹0.00 | Rejected |
+| Online Hedge | +₹2,598.30 | −₹416.82 | Not evaluated | Rejected |
+| DTW / SVR / BOCPD advanced screen | mixed | no independent improvement | Not evaluated | Rejected |
+
+### Promotion decision
+
+**No Phase-39 method is promoted to the canonical strategy.**
+
+The canonical Phase-20/24 strategy remains unchanged and authoritative.
+
+The best new candidate is the Sparse-GAM economic-margin override:
+- default action = canonical stateful direction;
+- predicted economic advantage = alternative-action expected improvement minus uncertainty;
+- override only when score > ₹500;
+- uncertainty multiplier = 1.0.
+
+It is retained only for paper/forward validation because:
+- development control-relative uplift is negative;
+- only seven sequential overrides generate the positive validation/holdout effect;
+- fixed-opportunity paired-expiry uncertainty crosses zero;
+- symbolic improvement disappears on the untouched 2026 holdout;
+- online Hedge is negative in validation.
+
+### Phase stop rule
+
+All registered Phase-39 model families were screened to the extent specified by the preregistration. No ad-hoc model family is added after the registered stop rule.
+
+**Phase 39 is closed.**
+
+### Final research artifacts
+
+- manuscript/PHASE39_MANUSCRIPT.md
+- results/phase39_sequential_policy_audit/audit.json
+- results/phase39_symbolic_audit/audit.json
+- results/phase39_advanced_screen/advanced_model_comparison.csv
+- results/phase39_hedge_screen/summary.json
+- ERROR_LOG.md
