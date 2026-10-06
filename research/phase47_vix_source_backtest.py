@@ -32,6 +32,10 @@ S2_SENSITIVITY = [0.25, 0.30, 0.35]
 
 STATES = ["ALL", "LOW", "NORMAL", "HIGH", "SPIKE", "FALLING", "RISING", "HIGH_RISING"]
 
+def as_tz(x):
+    t = pd.Timestamp(x)
+    return t.tz_localize(TZ) if t.tzinfo is None else t.tz_convert(TZ)
+
 def lot_size_for_expiry(expiry):
     if expiry < pd.Timestamp("2021-07-29", tz=TZ):
         return 75
@@ -48,7 +52,7 @@ def lot_size_for_expiry(expiry):
     return 65
 
 def fee_rates(d):
-    d = pd.Timestamp(d)
+    d = as_tz(d)
     stt = 0.0015 if d >= pd.Timestamp("2026-04-01", tz=TZ) else 0.0010 if d >= pd.Timestamp("2024-10-01", tz=TZ) else 0.000625
     txn, ipft = (
         (0.000355299, 0.000000001) if d >= pd.Timestamp("2026-03-01", tz=TZ)
@@ -136,8 +140,8 @@ def prepare(df):
 _FILE_CACHE = {}
 
 def load_expiry(expiry, entry_ts=None, extra_day=None):
-    expiry = pd.Timestamp(expiry, tz=TZ)
-    key = expiry.date().isoformat()
+    expiry = as_tz(expiry)
+    key = (expiry.date().isoformat(), str(entry_ts) if entry_ts is not None else None, str(extra_day) if extra_day is not None else None)
     if key in _FILE_CACHE:
         return _FILE_CACHE[key]
     name = f"options/NIFTY/{key}.parquet"
@@ -182,7 +186,7 @@ def clear_cache_except(keys):
             del _FILE_CACHE[k]
 
 def split_for(expiry):
-    e = pd.Timestamp(expiry, tz=TZ)
+    e = as_tz(expiry)
     if e <= DEV_END:
         return "development"
     if e <= VAL_END:
@@ -190,17 +194,17 @@ def split_for(expiry):
     return "holdout"
 
 def monthly_expiries(expiries):
-    d = pd.DataFrame({"expiry": sorted(pd.Timestamp(x, tz=TZ) for x in expiries)})
+    d = pd.DataFrame({"expiry": sorted(as_tz(x) for x in expiries)})
     d["ym"] = d.expiry.dt.to_period("M").astype(str)
     return list(d.groupby("ym")["expiry"].max().sort_values())
 
 def entry_four_dte(index, expiry):
-    e = pd.Timestamp(expiry, tz=TZ).normalize()
+    e = as_tz(expiry).normalize()
     days = sorted(pd.Series(index["timestamp"].dt.normalize().unique()).tolist())
     prior = [d for d in days if d < e]
     if len(prior) < 4:
         return None
-    return pd.Timestamp(prior[-4]).tz_convert(TZ) + pd.Timedelta(hours=10)
+    return as_tz(prior[-4]) + pd.Timedelta(hours=10)
 
 def entry_after_expiry(index, expiry):
     e = pd.Timestamp(expiry, tz=TZ).normalize()
@@ -208,11 +212,11 @@ def entry_after_expiry(index, expiry):
     nxt = [d for d in days if d > e]
     if not nxt:
         return None
-    return pd.Timestamp(nxt[0]).tz_convert(TZ) + pd.Timedelta(hours=10)
+    return as_tz(nxt[0]) + pd.Timedelta(hours=10)
 
 def find_next_expiry(expiries, expiry):
-    es = sorted(pd.Timestamp(x, tz=TZ) for x in expiries)
-    e = pd.Timestamp(expiry, tz=TZ)
+    es = sorted(as_tz(x) for x in expiries)
+    e = as_tz(expiry)
     for x in es:
         if x > e:
             return x
