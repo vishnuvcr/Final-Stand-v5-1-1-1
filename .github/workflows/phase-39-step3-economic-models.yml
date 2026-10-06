@@ -46,7 +46,8 @@ jobs:
           assert s['status']=='COMPLETE'
           assert s['holdout_evaluated'] is False
           assert len(z)==7 and z.model.is_unique
-          assert len(pd.read_csv('results/phase39_models/locked_feature_list.json')) == 0 if False else True
+          assert not s.get('holdout_evaluated', True)
+          assert z['validation_uplift_rupees'].notna().all()
           print(z[['model','validation_uplift_rupees','validation_override_share']].to_string(index=False))
           PY
       - name: Persist Step 3 evidence
