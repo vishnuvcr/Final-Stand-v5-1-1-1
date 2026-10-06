@@ -2,6 +2,20 @@
 
 Systematic options-strategy research repository.
 
+## Phase 41 — Regime-conditional counterfactual policy learning — IN PROGRESS
+
+A new isolated branch, phase-41-regime-conditional-policy-learning, was created from the completed Phase-40 branch.
+
+Phase 41 registered 24 policies: two economic-margin learners × four override margins × three India-VIX routing gates. The accepted Phase-39 477-opportunity counterfactual panel is reused with a strict 271/172/34 development-validation-holdout split.
+
+**Interim fixed-opportunity result:** 0 of 24 variants passed the preregistered validation safety screen. The top three diagnostic candidates all produced **zero overrides in development, validation and the frozen 2026 holdout**, so their fixed-opportunity policy P&L is exactly identical to the canonical control at this stage. Exact sequential identity validation is being completed through the registered Phase-41 workflow before final closeout.
+
+- Phase 41 branch: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-41-regime-conditional-policy-learning
+- Phase 41 plan: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_RESEARCH_PLAN.md
+- Phase 41 pre-registration: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_PRE_REGISTRATION.md
+- Phase 41 status: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-41-regime-conditional-policy-learning/PHASE41_STATUS.md
+- Phase 41 workflow run 37463984884: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37463984884
+
 ## Latest research status
 
 **Dynamic-n corrected primary research is complete. Stop-loss research is complete through Phase 19.**
