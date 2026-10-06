@@ -22,11 +22,12 @@ def norm_ts(s):
         x = x.dt.tz_localize(TZ)
     else:
         x = x.dt.tz_convert(TZ)
-    return x
+    return x.astype("datetime64[ns, Asia/Kolkata]")
 
 def norm_scalar_ts(x):
     t = pd.Timestamp(x)
-    return t.tz_localize(TZ) if t.tzinfo is None else t.tz_convert(TZ)
+    t = t.tz_localize(TZ) if t.tzinfo is None else t.tz_convert(TZ)
+    return t.as_unit("ns")
 
 def norm_cdf(x):
     x = np.asarray(x, float)
