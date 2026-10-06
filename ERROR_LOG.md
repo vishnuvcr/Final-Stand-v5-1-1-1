@@ -1000,3 +1000,10 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 - **Impact:** Numerical screen, replay and inference did not start.
 - **Correction:** Replaced the statement with valid Python `lines.extend([...])`; no research parameters or data were changed.
 - **Status:** Corrected; workflow will rerun automatically from the new commit.
+
+
+## 2026-10-06 — Phase 42 F42-001
+- First sequential replay failed because it reconstructed arbitrary minute-level entries and selected a missing long-leg strike on a historical snapshot.
+- Evidence status: non-evidence; no sequential result accepted.
+- Correction: replay now inherits the accepted 477 fixed-opportunity ledger and its audited CALL/PUT counterfactual arms and exit timestamps.
+- Prevention: downstream policy phases must inherit the accepted opportunity ledger rather than create a new entry universe.
