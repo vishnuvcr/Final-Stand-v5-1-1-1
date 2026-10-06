@@ -184,11 +184,11 @@ def backward_join(base, frame, prefix, date_col="date"):
     if frame is None or frame.empty: return base
     f=frame.copy()
     if date_col not in f.columns: return base
-    f[date_col]=norm_ts(f[date_col]).dt.normalize()
+    f[date_col]=norm_ts(f[date_col]).dt.normalize().astype(f"datetime64[ns, {TZ}]")
     numeric=[c for c in f.columns if c!=date_col and pd.api.types.is_numeric_dtype(f[c])]
     f=f[[date_col]+numeric].sort_values(date_col)
     b=base.copy()
-    b["_join_date"]=(b["entry_ts"].dt.normalize()-pd.Timedelta(seconds=1))
+    b["_join_date"]=(b["entry_ts"].dt.normalize()-pd.Timedelta(seconds=1)).astype(f"datetime64[ns, {TZ}]")
     j=pd.merge_asof(b.sort_values("_join_date"),f,left_on="_join_date",right_on=date_col,direction="backward")
     for c in numeric:
         j[prefix+c]=j[c]
