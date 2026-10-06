@@ -63,6 +63,7 @@ jobs:
           assert s['uncertainty_z']==1.0
           assert len(z)>0
           assert set(p.period)=={'development','validation','holdout'}
+          assert s['control_period_counts']=={'development':271,'validation':172,'holdout':34}
           assert s['promotion_status']=='PENDING_FULL_ENGINE_AUDIT'
           print(json.dumps(s,indent=2))
           print(p.to_string(index=False))
