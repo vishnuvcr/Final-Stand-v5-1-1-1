@@ -5,3 +5,5 @@ Retry after F48-001 schema normalization correction; prior run non-evidence.
 Retry after F48-002 generic multi-expiry feasibility audit correction.
 
 Retry after F48-003 zero-trade diagnostic correction; full numerical run remains non-evidence until diagnostic passes.
+
+Retry after F48-004 timestamp probe addition; no numerical evidence accepted yet.
