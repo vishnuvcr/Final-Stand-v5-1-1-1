@@ -1,0 +1,87 @@
+name: Phase 44 - VIX Selection Correction
+
+on:
+  push:
+    branches:
+      - phase-44-vix-candidate-tuning
+    paths:
+      - "trigger/phase44.selection"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase44-selection-correction
+  cancel-in-progress: true
+
+jobs:
+  recompute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check --no-cache-dir numpy pandas pyarrow scipy huggingface_hub
+      - name: Syntax audit
+        run: |
+          python -m py_compile research/phase44_vix_tuning.py
+          python -m py_compile research/phase44_recompute_selection.py
+      - name: Recompute corrected development selection
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase44_recompute_selection.py
+      - name: Audit corrected artifacts
+        run: |
+          test -s results/phase44_vix_tuning/stage1_structure_time_matrix.csv
+          test -s results/phase44_vix_tuning/stage1_all_dev_profiles.csv
+          test -s results/phase44_vix_tuning/stage1_candidates.csv
+          test -s results/phase44_vix_tuning/frozen_stage1.csv
+          test -s results/phase44_vix_tuning/stage1_summary.json
+      - name: Log correction and persist
+        run: |
+          cat >> ERROR_LOG.md <<'EOF'
+
+          ## F44-016 — incorrect development uplift definition in first persisted screen
+          - The original development profile screen computed candidate uplift by subtracting the same strategy P&L from itself on the active-expiry subset, making every uplift exactly zero by construction.
+          - That implementation is non-evidence.
+          - Correct definition: candidate portfolio P&L is the selected strategy P&L on active expiries and zero on inactive expiries; unconditional comparator P&L is the same tuned structure on every eligible expiry. Uplift is the expiry-by-expiry difference across the full development opportunity set.
+          - The persisted structural P&L matrix is reused unchanged; only the profile selection/inference layer is corrected.
+
+          ## F44-017 — validation must not fail when development freeze is empty
+          - A validation run started before the uplift-definition defect was discovered and failed because the old development freeze was empty.
+          - This is non-evidence.
+          - The registered stop condition permits early Phase-44 closure when no candidates survive development. Validation must therefore close cleanly with NO_STAGE1_CANDIDATES rather than treating the absence of a development candidate as a numerical failure.
+          EOF
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          s=json.loads(Path("results/phase44_vix_tuning/stage1_summary.json").read_text())
+          Path("PHASE44_STATUS.md").write_text(
+              "# Phase 44 Status — VIX Candidate Tuning\n\n"
+              f"**{s['status']}**\n\n"
+              f"Current stage: development selection correction\n"
+              f"Structural rows: {s['stage1_rows']}\n"
+              f"Development profile rows: {s['development_profile_rows']}\n"
+              f"Eligible candidates: {s['candidate_rows']}\n"
+              f"Frozen candidates: {s['frozen_candidates']}\n"
+              f"Decision: **{s['decision']}**\n\n"
+              "F44-016 corrected the VIX-filter uplift definition. 2026 holdout remains protected.\n"
+          )
+          with Path("RESEARCH_LOG.md").open("a") as f:
+              f.write(
+                  f"\n\n## 2026-10-06 — Phase 44 corrected Stage-1 selection\n"
+                  f"- Corrected uplift definition applied to the persisted development matrix. "
+                  f"eligible={s['candidate_rows']}; frozen={s['frozen_candidates']}; decision={s['decision']}.\n"
+              )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-44-vix-candidate-tuning
+          git reset --mixed origin/phase-44-vix-candidate-tuning
+          git add results/phase44_vix_tuning PHASE44_STATUS.md RESEARCH_LOG.md ERROR_LOG.md
+          git commit -m "phase44: persist corrected development selection"
+          git push origin HEAD:phase-44-vix-candidate-tuning
