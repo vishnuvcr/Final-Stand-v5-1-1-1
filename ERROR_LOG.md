@@ -1337,3 +1337,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: prior Phase-48 results are REJECTED AS NON-FINAL and will not be used in the phase conclusion.
 - Correction: historical lot-size mapping was corrected for the 2024-2026 sample.
 - Prevention: lot-size mapping is now explicitly documented in code and must be cross-checked against NSE circulars before future numerical runs.
+
+
+## 2026-10-07 — Phase 49 tooling audit
+### F49-TOOL-001 — Initial engine file-generation attempts rejected by tool parser/safety layer
+- Two early attempts to write the full Phase-49 engine failed before any repository write.
+- Evidence status: tooling-only; no numerical analysis or repository evidence was affected.
+- Correction: the engine was reduced to a compact implementation that reuses the accepted Phase-43 execution/cost primitives instead of duplicating them.
+- Prevention: future phase engines should reuse accepted audited primitives whenever possible and keep new code narrowly scoped to the novel research question.
