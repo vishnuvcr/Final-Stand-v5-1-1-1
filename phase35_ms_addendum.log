@@ -1,4 +1,49 @@
-  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 70
-    ev,d=load(); z=prep_states(ev,d); \n    if not {"ms_p0","ms_p1","ms_entropy"}.issubset(ev.columns):\n        ev=ev.merge(z,on="ref_ts",how="left")
-                                       ^
-SyntaxError: unexpected character after line continuation character
+Traceback (most recent call last):
+  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 87, in <module>
+    if __name__=="__main__":main()
+                            ^^^^^^
+  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 77, in main
+    p=fit_lgb(fit,test,ms); q=test[["expiry","ref_ts","target_return","target_direction"]].copy(); q["ms_regime_tree_prob"]=p; q["split"]=split; rows.append(q)
+      ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Final-Stand-v5-1-1-1/Final-Stand-v5-1-1-1/research/phase35_ms_regime_addendum.py", line 54, in fit_lgb
+    imp=SimpleImputer(strategy="median").fit(fit[features]); A=imp.transform(fit[features]); B=imp.transform(test[features])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/base.py", line 1403, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/impute/_base.py", line 448, in fit
+    X = self._validate_input(X, in_fit=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/impute/_base.py", line 375, in _validate_input
+    raise ve
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/impute/_base.py", line 356, in _validate_input
+    X = validate_data(
+        ^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/utils/validation.py", line 3016, in validate_data
+    _check_feature_names(_estimator, X, reset=reset)
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/utils/validation.py", line 2806, in _check_feature_names
+    feature_names_in = _get_feature_names(X)
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/utils/validation.py", line 2364, in _get_feature_names
+    feature_names = np.asarray(nw.from_native(X).columns, dtype=object)
+                               ^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/narwhals/stable/v2/__init__.py", line 492, in from_native
+    return _from_native_impl(  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/narwhals/translate.py", line 370, in _from_native_impl
+    .compliant.from_native(native_object)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/narwhals/_compliant/namespace.py", line 284, in from_native
+    return self._dataframe.from_native(data, context=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/narwhals/_pandas_like/dataframe.py", line 242, in from_native
+    return cls(
+           ^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/narwhals/_pandas_like/dataframe.py", line 117, in __init__
+    check_column_names_are_unique(native_dataframe.columns)
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/narwhals/_utils.py", line 1544, in check_column_names_are_unique
+    raise DuplicateError(msg)
+narwhals.exceptions.DuplicateError: Expected unique column names, got:
+- 'ms_p0' 2 times
+- 'ms_p1' 2 times
+- 'ms_entropy' 2 times
