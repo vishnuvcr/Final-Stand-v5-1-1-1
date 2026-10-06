@@ -106,3 +106,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 - Infrastructure-only; no research parameter changed.
 
 **Phase-43 evidence rule:** only the final corrected/persisted branch artifacts support the conclusion; superseded inference and failed publication runs are audit-only.
+
+
+## 2026-10-06 — Phase 44 initialization / F44-001 quarantine
+- Phase 44 VIX candidate tuning was opened on isolated branch `phase-44-vix-candidate-tuning`.
+- The first tuning implementation was audited before evidence acceptance; its initial workflow snapshot is classified **NON-EVIDENCE** because candidate-freeze logic did not satisfy the registered development-only selection discipline and the VIX threshold grid was incomplete.
+- A corrected implementation was persisted on the Phase-44 branch before accepting numerical evidence.
