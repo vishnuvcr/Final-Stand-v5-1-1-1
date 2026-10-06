@@ -226,13 +226,16 @@ def profile_defs():
     p=build_profiles()
     out=[]
     for pid,par in p:
-        if "ql" in par and "qr" in par: out.append((pid,"HIGH_RISING",par))
-        if "ql" in par:
+        if "ql" in par and "qr" in par:
+            out.append((pid,"HIGH_RISING",par))
+        elif "ql" in par:
             out += [(pid,"LOW",par),(pid,"NORMAL",par),(pid,"HIGH",par)]
-        elif "qr" in par: out.append((pid,"RISING",par))
-        elif "qf" in par: out.append((pid,"FALLING",par))
-        elif "qs" in par: out.append((pid,"SPIKE",par))
-    # Remove duplicate HIGH_RISING entries emitted by level-only profiles.
+        elif "qr" in par:
+            out.append((pid,"RISING",par))
+        elif "qf" in par:
+            out.append((pid,"FALLING",par))
+        elif "qs" in par:
+            out.append((pid,"SPIKE",par))
     return list(dict((f"{pid}|{mode}",(pid,mode,par)) for pid,mode,par in out).values())
 
 def main():
