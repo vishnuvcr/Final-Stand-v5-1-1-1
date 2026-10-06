@@ -17,6 +17,7 @@ from sklearn.decomposition import PCA
 SEED=1337
 ROOT=Path(".")
 DATA=ROOT/"results/phase39_features/point_in_time_features.csv"
+LEDGER=ROOT/"results/phase39_counterfactual/fixed_opportunity_ledger.csv"
 OUT=ROOT/"results/phase39_models"
 OUT.mkdir(parents=True,exist_ok=True)
 
@@ -222,10 +223,15 @@ def run_model(name,fit_fn,df,features):
 
 def main():
     df=pd.read_csv(DATA)
+    ledger=pd.read_csv(LEDGER,usecols=["entry_ts","expiry","split","control_direction","control_net_rupees","call_net_rupees","put_net_rupees","delta_pnl_call_minus_put"])
     df["entry_ts"]=pd.to_datetime(df["entry_ts"])
-    df=df.sort_values("entry_ts").reset_index(drop=True)
+    ledger["entry_ts"]=pd.to_datetime(ledger["entry_ts"])
+    if len(df)!=477 or len(ledger)!=477 or df["entry_ts"].nunique()!=477 or ledger["entry_ts"].nunique()!=477:
+        raise AssertionError("Expected 477 unique feature rows and 477 unique fixed-opportunity rows")
+    df=df.merge(ledger,on=["entry_ts","expiry","split"],how="inner",validate="one_to_one")
     if len(df)!=477:
-        raise AssertionError("Expected 477 fixed opportunities")
+        raise AssertionError("Feature/ledger join lost fixed opportunities")
+    df=df.sort_values("entry_ts").reset_index(drop=True)
     features=select_features(df)
     if len(features)<100:
         raise AssertionError(f"Unexpectedly small primary feature set: {len(features)}")
