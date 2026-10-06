@@ -33,7 +33,9 @@ The new economic-margin idea is retained as a research candidate for a future ph
 - [Phase 39 research plan](PHASE39_RESEARCH_PLAN.md)
 - [Phase 39 manuscript](manuscript/PHASE39_MANUSCRIPT.md)
 - [Phase 39 error log](ERROR_LOG.md)
-- [Phase 39 final conclusion](PHASE39_CONCLUSION.md)
+- [Phase 39 propensity-matched scoring](results/phase39_propensity/summary.json)
+
+[Phase 39 final conclusion](PHASE39_CONCLUSION.md)
 
 ## Research governance
 
