@@ -34,3 +34,7 @@ The corrected numerical results will be accepted only after:
 
 ## Current decision
 No promotion decision has been made.
+
+
+## Step 1 — workflow-trigger preparation — 2026-10-06
+The corrected engine and manual-dispatch workflow are committed. A repository-path push trigger will be used for the numerical execution so the phase is reproducible without manual local execution.
