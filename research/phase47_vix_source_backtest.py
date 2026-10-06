@@ -334,7 +334,10 @@ def strategy_trade_double_calendar(expiry, next_expiry, index, vix):
     snapn = nxt[nxt["timestamp"] == entry_ts]
     if snap.empty or snapn.empty:
         return None
-    atm = float(min(snap["strike"].unique(), key=lambda k: abs(float(k) - spot)))
+    common = np.intersect1d(snap["strike"].unique(), snapn["strike"].unique())
+    if len(common) == 0:
+        return None
+    atm = float(min(common, key=lambda k: abs(float(k) - spot)))
     if exact_row(snap, "CE", atm) is None or exact_row(snap, "PE", atm) is None:
         return None
     if exact_row(snapn, "CE", atm) is None or exact_row(snapn, "PE", atm) is None:
@@ -554,6 +557,57 @@ def audit_source_files(index, expiries):
             raise RuntimeError(f"F47-004 missing CE/PE in {key}")
     return {"sample_files_checked":len(sample),"monthly_expiries":len(m)}
 
+
+def diagnostic_monthly_sample(index, vix, monthly, n=12):
+    rows=[]
+    for e in monthly[:n]:
+        ne=find_next_expiry(monthly,e)
+        entry=entry_four_dte(index,e)
+        rec={"expiry":str(e.date()),"entry":str(entry) if entry is not None else None,
+             "next_expiry":str(ne.date()) if ne is not None else None}
+        if entry is None or ne is None:
+            rec["s1"]="NO_ENTRY_OR_NEXT"; rec["s2"]="NO_ENTRY_OR_NEXT"; rows.append(rec); continue
+        spotrow=index[index.timestamp==entry]
+        rec["spot_available"]=not spotrow.empty
+        try:
+            cur=load_expiry(e,entry,e)
+            nxt=load_expiry(ne,entry,e)
+        except Exception as ex:
+            rec["load_error"]=repr(ex); rows.append(rec); clear_cache_except(set()); continue
+        snap=cur[cur.timestamp==entry]
+        snapn=nxt[nxt.timestamp==entry]
+        rec["cur_entry_rows"]=int(len(snap)); rec["next_entry_rows"]=int(len(snapn))
+        common=np.intersect1d(snap["strike"].unique(),snapn["strike"].unique()) if not snap.empty and not snapn.empty else []
+        rec["common_strikes"]=int(len(common))
+        if snap.empty or snapn.empty:
+            rec["s1"]="NO_ENTRY_SNAPSHOT"
+        elif len(common)==0:
+            rec["s1"]="NO_COMMON_STRIKE"
+        else:
+            atm=float(min(common,key=lambda k:abs(float(k)-float(spotrow.iloc[-1].spot))))
+            legs=[("cur","CE",atm,-1),("cur","PE",atm,-1),("nxt","CE",atm,1),("nxt","PE",atm,1)]
+            ex=common_exit_price({"cur":cur,"nxt":nxt},e,legs)
+            rec["s1"]="OK" if ex is not None else "NO_COMMON_EXIT"
+        if snap.empty or snapn.empty:
+            rec["s2"]="NO_ENTRY_SNAPSHOT"
+        else:
+            prior=vix[vix.date < entry.normalize()]
+            sigma=float(prior.iloc[-1].vix)/100.0 if len(prior) else np.nan
+            spot=float(spotrow.iloc[-1].spot) if not spotrow.empty else np.nan
+            ce=choose_delta_strike(snap,spot,sigma,e,entry,"CE",0.30)
+            pe=choose_delta_strike(snap,spot,sigma,e,entry,"PE",0.30)
+            h=choose_parity_strike(snapn,spot)
+            rec["s2_ce"]=ce; rec["s2_pe"]=pe; rec["s2_hedge"]=h
+            if any(x is None for x in [ce,pe,h]):
+                rec["s2"]="NO_STRIKE_SELECTION"
+            else:
+                legs=[("cur","CE",ce,-1),("cur","PE",pe,-1),("nxt","CE",h,1),("nxt","PE",h,1)]
+                ex=common_exit_price({"cur":cur,"nxt":nxt},e,legs)
+                rec["s2"]="OK" if ex is not None else "NO_COMMON_EXIT"
+        rows.append(rec)
+        clear_cache_except(set())
+    return pd.DataFrame(rows)
+
 def main():
     # ---------------- PRE-FLIGHT ----------------
     index=load_index()
@@ -580,6 +634,11 @@ def main():
         "holdout_start":"2026-01-01",
         "all_vix_states":STATES
     },indent=2))
+    if os.getenv("PHASE47_DIAGNOSTIC_ONLY") == "1":
+        d = diagnostic_monthly_sample(index, vix, monthly, n=12)
+        d.to_csv(OUT/"diagnostic_monthly_sample.csv", index=False)
+        print(d.to_string(index=False))
+        return
     if os.getenv("PHASE47_PREFLIGHT_ONLY") == "1":
         print(json.dumps({"preflight":"PASS", **preflight}, indent=2))
         return
