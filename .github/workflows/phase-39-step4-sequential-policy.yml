@@ -1,0 +1,77 @@
+name: Phase 39 - Step 4 Sequential Policy Replay
+
+on:
+  push:
+    branches: [phase-39-advanced-direction-models]
+    paths:
+      - 'research/phase39_sequential_policy.py'
+      - 'PHASE39_MODEL_SPEC.md'
+      - 'results/phase39_models/model_comparison.csv'
+      - 'results/phase39_models/locked_feature_list.json'
+      - 'results/phase39_features/point_in_time_features.csv'
+      - 'results/phase39_data/development_control_trades_2021_2023.csv'
+      - 'results/phase39_data/frozen_control_trades_2024_2026-06-30.csv'
+      - '.github/workflows/phase-39-step4-sequential-policy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase39-step4-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  sequential_policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase39-hf-seq-${{ runner.os }}-${{ hashFiles('research/phase39_sequential_policy.py') }}
+          restore-keys: |
+            phase39-hf-seq-${{ runner.os }}-
+            phase39-hf-feature-${{ runner.os }}-
+            phase39-hf-${{ runner.os }}-
+      - run: |
+          python -m pip install --disable-pip-version-check --no-input pandas pyarrow numpy scipy scikit-learn requests huggingface_hub
+      - name: Run sequential policy replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase39_sequential_policy.py
+      - name: Verify sequential policy evidence
+        run: |
+          test -f results/phase39_sequential_policy/sequential_trades.csv
+          test -f results/phase39_sequential_policy/period_summary.csv
+          test -f results/phase39_sequential_policy/summary.json
+          python - <<'PY'
+          import json, pandas as pd
+          s=json.load(open('results/phase39_sequential_policy/summary.json'))
+          z=pd.read_csv('results/phase39_sequential_policy/sequential_trades.csv')
+          p=pd.read_csv('results/phase39_sequential_policy/period_summary.csv')
+          assert s['status']=='COMPLETE'
+          assert s['model']=='Sparse_GAM_margin'
+          assert s['margin']==500.0
+          assert s['uncertainty_z']==1.0
+          assert len(z)>0
+          assert set(p.period)=={'development','validation','holdout'}
+          assert s['promotion_status']=='PENDING_FULL_ENGINE_AUDIT'
+          print(json.dumps(s,indent=2))
+          print(p.to_string(index=False))
+          PY
+      - name: Persist Step 4 evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase39_sequential_policy
+          git commit -m 'Phase 39: persist sequential policy replay' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
