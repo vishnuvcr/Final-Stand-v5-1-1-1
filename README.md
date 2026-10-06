@@ -337,14 +337,27 @@ All seven independent selectors were also negative in the 2026 holdout, while th
 **Next research priority:** forward/paper validation of the canonical stateful strategy with full bid/ask, latency, fill-probability and Paytm Money-specific transaction-cost modeling.
 
 
-## Phase 37 — corrected model direction polarity — OPEN
+## Phase 37 — corrected model direction polarity — COMPLETE NUMERICAL CORRECTION
 
-A post-acceptance audit found that Phase 36 mapped NIFTY up/bullish model probabilities to the CALL spread. The intended economic mapping is **bullish/up -> PUT spread; bearish/down -> CALL spread**. Phase 37 is a correction-only rerun of the five cached model selectors with every other execution rule frozen.
+**Status: correction validated; no live-trading promotion yet.**
+
+Phase 37 reran the five predictive model selectors after correcting the Phase-36 polarity mismatch. The frozen mapping is **bullish/up probability >= 0.50 -> PUT spread; bearish/down probability < 0.50 -> CALL spread**.
+
+| Selector | Net P&L | PF | Max DD | 2026 holdout |
+|---|---:|---:|---:|---:|
+| CatBoost | ₹57,874.80 | 1.186 | ₹49,337.02 | ₹49,054.33 |
+| Markov-regime tree | ₹53,060.31 | 1.174 | ₹40,547.67 | ₹41,969.35 |
+| Wavelet-tree | ₹31,294.89 | 1.100 | ₹54,085.53 | ₹50,776.68 |
+| OOF stack | ₹24,765.71 | 1.081 | ₹62,024.82 | ₹48,345.59 |
+| DART | ₹19,372.11 | 1.060 | ₹52,629.57 | ₹39,053.96 |
+
+All five corrected selectors are profitable after costs and positive on the 2026 holdout. The Phase-36 model-selector conclusion is therefore invalid for the intended hypothesis because it used the opposite polarity.
+
+**Not yet promoted:** the preregistered common-expiry paired bootstrap versus the canonical stateful control has not yet been regenerated. Phase 38 is required for control-relative statistical robustness, walk-forward validation, CALL/PUT asymmetry, cost/slippage stress and full execution realism.
 
 - [Phase 37 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direction-polarity-correction)
-- [Phase 37 PR #11](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/11)
-- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_RESEARCH_PLAN.md)
-- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_PRE_REGISTRATION.md)
-- [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_STATUS.md)
-
-Phase-36 model-selector numerical results remain audit-only and are not evidence against the corrected polarity hypothesis.
+- [Phase 37 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_MANUSCRIPT.md)
+- [Phase 37 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_STATUS.md)
+- [Phase 37 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_RESEARCH_PLAN.md)
+- [Phase 37 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_PRE_REGISTRATION.md)
+- [Phase 37 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direction-polarity-correction/results/phase37_model_direction_polarity_correction)
