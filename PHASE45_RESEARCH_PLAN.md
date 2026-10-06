@@ -56,7 +56,7 @@ ALL, LOW, NORMAL, HIGH, SPIKE, FALLING, RISING and HIGH_RISING using prior-obser
 - Batman: +1 CE +1, -2 CE +2, +1 PE -1, -2 PE -2.
 - Jade Lizard: -1 PE, -1 CE/+2 CE call spread.
 - Reverse Jade Lizard: -1 CE, -1 PE/+2 PE put spread.
-- Double Plateau: put condor at -4/-3/-2/-1 plus call condor at +1/+2/+3/+4.
+- Double Plateau: two three-leg butterflies, one put butterfly (+1 at -1, -2 at -2, +1 at -3) and one call butterfly (+1 at +1, -2 at +2, +1 at +3), producing two profit plateaus with fixed tails.
 - Long Iron Condor: +1 PE -1/+1 CE +1, sell outer -3 PE/+3 CE.
 - Long Iron Butterfly: +1 ATM PE +1 ATM CE, sell -2 PE/+2 CE.
 - Strip: +1 CE +2 PE at ATM.
