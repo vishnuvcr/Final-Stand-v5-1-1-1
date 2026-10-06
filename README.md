@@ -335,3 +335,16 @@ All seven independent selectors were also negative in the 2026 holdout, while th
 - [Phase 36 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase-36-independent-direction-selector-overlay.yml)
 
 **Next research priority:** forward/paper validation of the canonical stateful strategy with full bid/ask, latency, fill-probability and Paytm Money-specific transaction-cost modeling.
+
+
+## Phase 37 — corrected model direction polarity — OPEN
+
+A post-acceptance audit found that Phase 36 mapped NIFTY up/bullish model probabilities to the CALL spread. The intended economic mapping is **bullish/up -> PUT spread; bearish/down -> CALL spread**. Phase 37 is a correction-only rerun of the five cached model selectors with every other execution rule frozen.
+
+- [Phase 37 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direction-polarity-correction)
+- [Phase 37 PR #11](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/11)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_RESEARCH_PLAN.md)
+- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_PRE_REGISTRATION.md)
+- [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-37-model-direction-polarity-correction/PHASE37_STATUS.md)
+
+Phase-36 model-selector numerical results remain audit-only and are not evidence against the corrected polarity hypothesis.
