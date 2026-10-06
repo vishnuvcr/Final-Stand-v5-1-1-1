@@ -338,3 +338,15 @@ Evidence status: Non-evidence model-pipeline failure. No model result was produc
 Correction: The model runner now joins only the counterfactual outcome columns needed for realized action P&L, while retaining the feature matrix's locked target/control columns.
 
 Prevention: Model-input joins will explicitly list only absent outcome columns and assert one-to-one row identity after merging.
+
+
+### Error F39-020 — Stale deleted Step-3 workflow referenced a removed duplicate runner
+Run: 37440696950.
+
+Symptom: The consolidated Step-3 Actions job invoked `research/phase39_economic_margin_models.py`, which had been removed as the duplicate implementation, and failed with file-not-found before model fitting.
+
+Evidence status: non-evidence CI wiring failure; no model result accepted.
+
+Correction: The canonical `phase-39-step3-economic-models.yml` workflow is now explicitly hardened and triggered; it invokes the retained `research/phase39_economic_models.py` runner.
+
+Prevention: Each phase step will maintain one workflow-to-runner mapping and the workflow verification will assert the expected output contract.
