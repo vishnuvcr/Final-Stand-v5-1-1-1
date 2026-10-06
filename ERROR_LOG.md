@@ -977,3 +977,11 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 **Correction:** Sequential replay now checks the frozen full-panel override counts first. When all three splits have zero overrides, the candidate is represented by the exact canonical stateful ledger because action, exit path, future availability and state are unchanged. This is an identity proof, not a parameter relaxation. Workflow concurrency was changed to cancel a superseded expensive run when the corrected runner is pushed.
 
 **Prevention:** Future phases must use a pre-replay identity invariant to avoid recomputing a policy already proven to be exactly identical to the control.
+
+
+## 2026-10-06 — Phase 41 implementation correction before numerical execution
+- Propensity-score fitting in the first draft was incorrectly fit inside each evaluation split. The code was corrected before any accepted numerical run: validation matching now fits propensity on development history only; holdout matching fits on development+validation history only.
+- This was a methodology-chronology correction only; no research parameter, outcome definition or trading rule changed.
+
+## 2026-10-06 — Phase 41 accepted execution status
+- Numerical evidence is accepted only from the GitHub Actions run that completes preflight, the frozen 24-variant screen, exact sequential replay and closeout without protocol changes.

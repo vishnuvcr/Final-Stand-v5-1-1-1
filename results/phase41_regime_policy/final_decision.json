@@ -1,0 +1,246 @@
+{
+  "phase": "41",
+  "status": "COMPLETE",
+  "declared_variants": 24,
+  "eligible_count": 0,
+  "decision": "NO PROMOTION \u2014 CANONICAL STRATEGY UNCHANGED",
+  "top3_frozen": [
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "ALL",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    },
+    {
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX_RISING",
+      "development_uplift": 0.0,
+      "validation_uplift": 0.0,
+      "development_overrides": 0,
+      "validation_overrides": 0,
+      "validation_override_rate": 0.0,
+      "validation_policy_dd": 32021.645578619973,
+      "validation_control_dd": 32021.645578619973
+    }
+  ],
+  "promotion_checks": [
+    {
+      "rank": 1,
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "ALL",
+      "promotion_pass": false,
+      "checks": {
+        "positive_validation": false,
+        "positive_holdout": false,
+        "validation_drawdown_ok": true,
+        "holdout_drawdown_ok": true,
+        "validation_bootstrap_lower_nonnegative": true,
+        "holdout_bootstrap_lower_nonnegative": true,
+        "validation_plus50_cost_stress_positive": false,
+        "holdout_plus50_cost_stress_positive": false,
+        "holdout_overrides_at_least_5": false,
+        "expiry_concentration_validation_ok": false,
+        "expiry_concentration_holdout_ok": false
+      },
+      "concentration": {
+        "available": true,
+        "validation": {
+          "max_abs_expiry_uplift": 0.0,
+          "positive_uplift_sum": 0.0,
+          "max_abs_share_of_positive_uplift": Infinity
+        },
+        "holdout": {
+          "max_abs_expiry_uplift": 0.0,
+          "positive_uplift_sum": 0.0,
+          "max_abs_share_of_positive_uplift": Infinity
+        }
+      },
+      "action_asymmetry": {
+        "validation": {
+          "call_trades": 82,
+          "put_trades": 90,
+          "call_net": 43376.59273688008,
+          "put_net": 20571.629368500064
+        },
+        "holdout": {
+          "call_trades": 24,
+          "put_trades": 10,
+          "call_net": 30330.30496488907,
+          "put_net": -30605.95176855698
+        }
+      }
+    },
+    {
+      "rank": 2,
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX",
+      "promotion_pass": false,
+      "checks": {
+        "positive_validation": false,
+        "positive_holdout": false,
+        "validation_drawdown_ok": true,
+        "holdout_drawdown_ok": true,
+        "validation_bootstrap_lower_nonnegative": true,
+        "holdout_bootstrap_lower_nonnegative": true,
+        "validation_plus50_cost_stress_positive": false,
+        "holdout_plus50_cost_stress_positive": false,
+        "holdout_overrides_at_least_5": false,
+        "expiry_concentration_validation_ok": false,
+        "expiry_concentration_holdout_ok": false
+      },
+      "concentration": {
+        "available": true,
+        "validation": {
+          "max_abs_expiry_uplift": 0.0,
+          "positive_uplift_sum": 0.0,
+          "max_abs_share_of_positive_uplift": Infinity
+        },
+        "holdout": {
+          "max_abs_expiry_uplift": 0.0,
+          "positive_uplift_sum": 0.0,
+          "max_abs_share_of_positive_uplift": Infinity
+        }
+      },
+      "action_asymmetry": {
+        "validation": {
+          "call_trades": 82,
+          "put_trades": 90,
+          "call_net": 43376.59273688008,
+          "put_net": 20571.629368500064
+        },
+        "holdout": {
+          "call_trades": 24,
+          "put_trades": 10,
+          "call_net": 30330.30496488907,
+          "put_net": -30605.95176855698
+        }
+      }
+    },
+    {
+      "rank": 3,
+      "model": "SPLINE_RIDGE_VIX",
+      "margin": 0.0,
+      "gate": "HIGH_VIX_RISING",
+      "promotion_pass": false,
+      "checks": {
+        "positive_validation": false,
+        "positive_holdout": false,
+        "validation_drawdown_ok": true,
+        "holdout_drawdown_ok": true,
+        "validation_bootstrap_lower_nonnegative": true,
+        "holdout_bootstrap_lower_nonnegative": true,
+        "validation_plus50_cost_stress_positive": false,
+        "holdout_plus50_cost_stress_positive": false,
+        "holdout_overrides_at_least_5": false,
+        "expiry_concentration_validation_ok": false,
+        "expiry_concentration_holdout_ok": false
+      },
+      "concentration": {
+        "available": true,
+        "validation": {
+          "max_abs_expiry_uplift": 0.0,
+          "positive_uplift_sum": 0.0,
+          "max_abs_share_of_positive_uplift": Infinity
+        },
+        "holdout": {
+          "max_abs_expiry_uplift": 0.0,
+          "positive_uplift_sum": 0.0,
+          "max_abs_share_of_positive_uplift": Infinity
+        }
+      },
+      "action_asymmetry": {
+        "validation": {
+          "call_trades": 82,
+          "put_trades": 90,
+          "call_net": 43376.59273688008,
+          "put_net": 20571.629368500064
+        },
+        "holdout": {
+          "call_trades": 24,
+          "put_trades": 10,
+          "call_net": 30330.30496488907,
+          "put_net": -30605.95176855698
+        }
+      }
+    }
+  ],
+  "validation_diagnostics": {
+    "model": "SPLINE_RIDGE_VIX",
+    "margin": 0.0,
+    "gate": "ALL",
+    "propensity_fit_period": "development",
+    "propensity": {
+      "split": "validation",
+      "treated": 0,
+      "matched": 0,
+      "att": null,
+      "common_support_fraction": 0.0
+    },
+    "ranking": {
+      "split": "validation",
+      "rows": 172,
+      "top_10_mean_delta": 2502.6131905700017,
+      "top_10_ci_lo": 425.30792675122854,
+      "top_10_ci_hi": 4688.788488404583,
+      "top_10_positive_share": 0.7777777777777778,
+      "top_20_mean_delta": 1783.829266855287,
+      "top_20_ci_lo": -22.579576907977998,
+      "top_20_ci_hi": 3543.5375761784694,
+      "top_20_positive_share": 0.7428571428571429,
+      "top_30_mean_delta": 1092.9268786234618,
+      "top_30_ci_lo": -428.7274576819757,
+      "top_30_ci_hi": 2620.233326380724,
+      "top_30_positive_share": 0.6346153846153846
+    }
+  },
+  "holdout_diagnostics": {
+    "model": "SPLINE_RIDGE_VIX",
+    "margin": 0.0,
+    "gate": "ALL",
+    "propensity_fit_period": "development+validation",
+    "propensity": {
+      "split": "holdout",
+      "treated": 0,
+      "matched": 0,
+      "att": null,
+      "common_support_fraction": 0.0
+    },
+    "ranking": {
+      "split": "holdout",
+      "rows": 34,
+      "top_10_mean_delta": 7338.852990534007,
+      "top_10_ci_lo": 2593.3477083052526,
+      "top_10_ci_hi": 9856.560701812514,
+      "top_10_positive_share": 1.0,
+      "top_20_mean_delta": 1823.4468022847245,
+      "top_20_ci_lo": -6338.588700232271,
+      "top_20_ci_hi": 8607.903719693579,
+      "top_20_positive_share": 0.7142857142857143,
+      "top_30_mean_delta": 3359.9035994124583,
+      "top_30_ci_lo": -3128.9134252124777,
+      "top_30_ci_hi": 9023.642860778946,
+      "top_30_positive_share": 0.7272727272727273
+    }
+  }
+}
