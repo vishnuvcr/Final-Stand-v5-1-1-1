@@ -56,3 +56,8 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 - The preliminary GARCH run is not final because EGARCH multi-step analytic forecasts were unsupported and therefore omitted from the family average.
 - The artifact is retained, but final conclusions await the corrected EGARCH simulation run.
 - Run #11 numerical artifact: 11392817248.
+
+
+### Step 8 — verified artifact reconciliation — COMPLETE
+- Corrected Phase-33 run #13 artifact has been reconciled into the branch: cached NIFTY, sentiment, global, FII/DII and event datasets plus model result tables.
+- Postprocessing automation is being triggered from this status update after its branch-expression correction.
