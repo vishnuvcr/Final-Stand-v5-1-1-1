@@ -113,7 +113,7 @@ def build_feature_row(entry,expiry,snap,spot_value,spot_hist,daily,global_d,flow
 def fit_gam(history,test):
     feats=locked_features()
     tr=history.copy()
-    x=tr[feats].replace([np.inf,-np.inf],np.nan)
+    x=tr.reindex(columns=feats).replace([np.inf,-np.inf],np.nan)
     y=tr["delta_pnl"].to_numpy(float)
     pipe=Pipeline([
         ("imp",SimpleImputer(strategy="median")),
@@ -125,7 +125,8 @@ def fit_gam(history,test):
     tx=pipe.predict(x)
     resid=y-tx
     sd=max(float(np.std(resid,ddof=1)),1.0)
-    pred=float(pipe.predict(test[feats].replace([np.inf,-np.inf],np.nan))[0])
+    tx=test.reindex(columns=feats).replace([np.inf,-np.inf],np.nan)
+    pred=float(pipe.predict(tx)[0])
     return pred,sd
 
 from sklearn.pipeline import Pipeline
