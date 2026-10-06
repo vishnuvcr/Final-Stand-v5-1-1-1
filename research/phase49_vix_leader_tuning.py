@@ -31,6 +31,9 @@ def grid():
 GRID=grid()
 FAST_CACHE={}
 FAST_CACHE_EXPIRY=None
+INDEX_DAYS=None
+INDEX_SPOT={}
+VIX_STATE_CACHE={}
 
 
 def baseline(f):
@@ -43,11 +46,27 @@ def legs(c):
     if c["family"]=="bear_put": return [("cur","PE",c["long_offset"],1),("cur","PE",c["short_offset"],-1)]
     return [("cur","PE",c["body"]+c["upper"],1),("cur","PE",c["body"],-2),("cur","PE",c["body"]-c["lower"],1)]
 
+def init_index_cache(index):
+    global INDEX_DAYS, INDEX_SPOT
+    INDEX_DAYS=sorted(pd.to_datetime(index["timestamp"], errors="coerce").dt.normalize().dropna().unique())
+    INDEX_SPOT={}
+    for row in index[["timestamp","spot"]].itertuples(index=False):
+        INDEX_SPOT[row.timestamp]=float(row.spot)
+
 def entry_ts(index,expiry,dte,h,m):
-    days=sorted(index.timestamp.dt.normalize().unique())
-    prior=[x for x in days if x<expiry.normalize()]
+    global INDEX_DAYS
+    if INDEX_DAYS is None:
+        init_index_cache(index)
+    cutoff=expiry.normalize()
+    prior=[x for x in INDEX_DAYS if x<cutoff]
     if len(prior)<dte:return None
     return prior[-dte]+pd.Timedelta(hours=h,minutes=m)
+
+def cached_vix_state(vix,ts):
+    k=str(ts)
+    if k not in VIX_STATE_CACHE:
+        VIX_STATE_CACHE[k]=vix_state(vix,ts)
+    return VIX_STATE_CACHE[k]
 
 def key(c): return json.dumps(c,sort_keys=True,separators=(",",":"))
 
@@ -104,9 +123,12 @@ def one(index,vix,expiry,data,c):
     global FAST_CACHE, FAST_CACHE_EXPIRY
     ts=entry_ts(index,expiry,c["dte"],c["entry_h"],c["entry_m"])
     if ts is None:return None
-    sr=index[index.timestamp==ts]
-    if sr.empty:return None
-    vs=vix_state(vix,ts)
+    spot=INDEX_SPOT.get(ts)
+    if spot is None:
+        init_index_cache(index)
+        spot=INDEX_SPOT.get(ts)
+    if spot is None:return None
+    vs=cached_vix_state(vix,ts)
     if vs is None:return None
     if FAST_CACHE_EXPIRY != str(expiry.date()):
         FAST_CACHE={}
@@ -114,7 +136,6 @@ def one(index,vix,expiry,data,c):
     ck=str(ts)
     cache=FAST_CACHE.get(ck)
     if cache is None:
-        spot=float(sr.iloc[-1].spot)
         cache=fast_cache(data,expiry,ts,spot)
         if cache is None:return None
         FAST_CACHE[ck]=cache
@@ -193,6 +214,7 @@ def main():
     pf=preflight(); (OUT/"preflight.json").write_text(json.dumps(pf,indent=2))
     if os.getenv("PHASE49_PREFLIGHT_ONLY")=="1": print(json.dumps(pf,indent=2)); return
     index=__import__("phase43_vix_strategy_sweep",fromlist=["load_index"]).load_index()
+    init_index_cache(index)
     vix=load_vix(); es=[e for e in expiries() if START<=e<=END]
     rows=[]; errs=[]
     for i,e in enumerate(es):
