@@ -1199,3 +1199,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Run 37512787150 remains in the numerical step, but the temporary GitHub Actions job-log blob returns 404/BlobNotFound while the job is still executing.
 - Evidence status: tooling-only; no numerical conclusion is inferred from missing live logs.
 - Correction: monitor authoritative workflow/job status and inspect full logs only after completion, matching the established project convention.
+
+## F45-003 — manuscript newline serialization defect
+- The first persisted Phase-45 manuscript used the literal two-character sequence \\n instead of actual newline characters because the generator escaped the join delimiter twice.
+- Evidence status: numerical CSV/JSON evidence is unaffected; the manuscript presentation artifact is invalid until regenerated.
+- Correction: regenerate the manuscript with real newline delimiters and rerun the artifact-format audit before closeout.
