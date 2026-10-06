@@ -91,7 +91,7 @@ def run_candidate(cand,fixed,features,vix):
     rising_thr=float(vix[vix.date<pd.Timestamp("2024-01-01")].ret1.abs().quantile(.67))
     history=[]
     rows=[]
-    active_until=pd.Timestamp.min.tz_localize("Asia/Kolkata")
+    active_until=pd.Timestamp("2000-01-01",tz="Asia/Kolkata")
     for i,r in fixed.iterrows():
         entry=pd.Timestamp(r.entry_ts)
         if entry.tzinfo is None: entry=entry.tz_localize("Asia/Kolkata")
