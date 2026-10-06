@@ -60,3 +60,8 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - GitHub Actions run #1 (37422843285) completed the Phase-34 numerical computation successfully and produced artifact 11393642768.
 - The numerical job failed only at the repository persistence step because run #2 was queued from the latest code-touch commit and advanced the branch concurrently. No numerical result from run #1 was used as final evidence.
 - Run #2 (37422865721) recomputed the same registered model set and successfully persisted the final evidence set to the branch. Run #2 is the accepted Phase-34 numerical evidence.
+
+## Phase 34 postprocess failure — run 37423405817
+- Date: 2026-10-06T06:23:30Z
+- Status: figure/statistical postprocessing failed; no postprocess output from this run is accepted.
+- Action: inspect workflow logs and correct the postprocess implementation.
