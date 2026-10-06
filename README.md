@@ -381,3 +381,16 @@ Phase 39 changes the prediction target from NIFTY expiry direction to the actual
 The action-aware counterfactual panel shows a strong regime shift: mean CALL-minus-PUT net P&L is **-₹320.53** in development, **+₹386.77** in validation, and **+₹3,386.31** in the untouched holdout. This does **not** constitute a model or trading-policy result; it is the fixed-opportunity target used for chronological model fitting.
 
 The canonical Phase-38 stateful strategy remains unchanged. Model training now proceeds; no strategy promotion is allowed until the preregistered sequential-policy and holdout gates are passed.
+
+
+## Phase 43 — VIX-conditioned NIFTY all-strategy sweep — REGISTERED
+
+Phase 43 is the new isolated research phase requested on 2026-10-06. It tests a finite broad universe of major NIFTY weekly option structures across point-in-time India-VIX regimes, with realistic Paytm Money costs, one-adverse-tick slippage, historical lot sizes, development/validation/untouched-2026 holdout chronology, preregistered router selection and 10,000-resample inference. The canonical Phase-20/42 strategy remains unchanged.
+
+- [Phase 43 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-43-vix-all-options-strategies)
+- [Phase 43 research plan](PHASE43_RESEARCH_PLAN.md)
+- [Phase 43 pre-registration](PHASE43_PRE_REGISTRATION.md)
+- [Phase 43 literature review](PHASE43_LITERATURE_REVIEW.md)
+- [Phase 43 status](PHASE43_STATUS.md)
+
+**Current phase state: registration complete; numerical execution pending.**
