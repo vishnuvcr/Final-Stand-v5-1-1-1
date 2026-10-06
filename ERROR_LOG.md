@@ -1399,3 +1399,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Run 37535442553 remained in-progress without a status update while the corrected run was queued.
 - Evidence status: NON-EVIDENCE. The run head predates the corrected Phase-49 engine.
 - Operational correction: the Phase-49 workflow concurrency group is being advanced so the corrected execution is not blocked by the stale superseded run. The stale process remains excluded from all research evidence.
+### F49-009 — Residual performance bottleneck in candidate metadata lookup
+- Audit finding: the corrected engine still recomputed the full NIFTY index trading-day list, point-in-time spot lookup and India-VIX historical quantiles inside the per-candidate path.
+- Evidence status: runs 37538452940 and 37538570390 remain NON-EVIDENCE until a complete run passes all audits; no result is accepted from a performance-limited process.
+- Correction: cache normalized index trading days, exact timestamp-to-spot mapping and VIX state calculations across all candidates. This changes execution only, not numerical definitions.
+- Prevention: future Phase-49 performance audits must examine every candidate-level metadata lookup for repeated whole-dataset scans.
