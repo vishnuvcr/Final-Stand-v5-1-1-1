@@ -87,7 +87,7 @@ def run_candidate(candidate, z, vix, thr, expiries, expected, spot):
             "input_signal": signal,
             "requested_direction": "PUT" if requested == -1 else "CALL",
             "final_state_direction": "PUT" if target_dir == -1 else "CALL",
-            "model_override": int(requested != target_dir if False else requested != (1 if signal == -1 else -1)),
+            "state_after_expiry": "PUT" if target_dir == -1 else "CALL",
             "net_rupees": float(sum(float(t["net_rupees"]) for t in tr)),
             "gross_rupees": float(sum(float(t["gross_rupees"]) for t in tr)),
             "cost_rupees": float(sum(float(t["cost_rupees"]) for t in tr)),
@@ -167,6 +167,12 @@ def main():
     z["VIX"] = [eng.vix_prob(x, thr["ret_q67"]) for x in z["vix_ret1"]]
     spot = load_spot()
     expiries, expected = study_expiries_with_data(spot)
+    # Restrict the sequential replay to the exact prediction-covered study
+    # universe used by the frozen Phase-40 validation grid.
+    pred_dates = set(z["expiry"].dt.date.dropna())
+    expiries = [e for e in expiries if e.date() in pred_dates]
+    if len(expiries) != 93:
+        raise AssertionError(f"Phase-40 replay universe changed: expected 93 prediction-covered expiries, got {len(expiries)}")
     control = load_frozen_control()
 
     all_results = []
