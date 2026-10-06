@@ -1,0 +1,5 @@
+{
+  "method": "2-state Markov-switching volatility gate + LightGBM",
+  "proxy_note": "Reproducible proxy for the role of the published MS-Beta-t-QVAR regime gate; not a byte-for-byte implementation of that paper's full model.",
+  "events": 245
+}
