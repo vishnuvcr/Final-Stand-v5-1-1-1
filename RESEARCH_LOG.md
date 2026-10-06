@@ -408,3 +408,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The numerical result was embargoed; no candidate was promoted.
 - Corrected the engine to emit a headered zero-row error ledger and started full rerun #12.
 - Run #11 provisional numerical observation: 2 frozen LOW-VIX candidates; 1 validation economic pass; 0 Holm survivors; 1 holdout confirmation. These values remain non-final until run #12 passes the complete artifact/publication gate.
+
+## 2026-10-07 — Phase 49 final closeout
+- Authoritative numerical run **37542636969 (#12)** passed numerical computation and artifact self-audit.
+- Complete raw artifact: **phase49-raw-37542636969**, artifact ID **11450545178**, digest **sha256:84c171b3ea8312405cc231b8fc8c528259898fc0ec9c5a85eba13fe9d5f6b558**.
+- Automatic reconciliation run **37544951498** regenerated the structured manuscript, parameter summary, annual breakdown, statistical summary, final decision and figures from the raw artifact without changing P&L values.
+- Final decision: **NO PROMOTION**; 2 frozen candidates, 1 validation economic pass, 0 Holm survivors, 1 small holdout confirmation.
+- Best research candidate: LOW-VIX Bear Put, 09:30 IST, 5 trading sessions before expiry, buy PE +1 modal step / sell PE −3 modal steps.
+- Canonical strategy remains unchanged.
