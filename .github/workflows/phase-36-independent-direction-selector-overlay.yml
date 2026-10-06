@@ -1,39 +1,114 @@
-# Phase 36 Error Log — Independent Per-Trade Direction Selector Overlay
+name: Phase 36 - Independent Direction Selector Overlay
 
-## 2026-10-06 — Run 37427528243
+on:
+  push:
+    branches: [phase-36-independent-direction-selector-overlay]
+    paths:
+      - 'research/**'
+      - 'data/phase36_selector_predictions.csv'
+      - '.github/workflows/phase-36-independent-direction-selector-overlay.yml'
+      - 'PHASE36_RESEARCH_PLAN.md'
+      - 'PHASE36_PRE_REGISTRATION.md'
+      - 'PHASE36_STRATEGY_SPEC.md'
+  workflow_dispatch:
+    inputs:
+      sample_start:
+        description: 'Primary sample start date (YYYY-MM-DD)'
+        required: false
+        default: '2024-01-01'
+      sample_end:
+        description: 'Primary sample end date (YYYY-MM-DD)'
+        required: false
+        default: '2026-06-30'
 
-### Error F36-001 — Mixed skip-ledger row widths
-**Affected jobs:** CATBOOST, WAVELET_TREE, OOF_STACK.
+permissions:
+  contents: write
 
-**Symptom:** The numerical loop completed many expiry calculations, then Pandas failed constructing the skip DataFrame with:
-\`ValueError: 3 columns passed, passed data had 4 columns\`.
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        selector: [OTM678_FRESH, OTM789_FRESH, CATBOOST, DART, WAVELET_TREE, OOF_STACK, MARKOV_REGIME_TREE]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-**Cause:** Missing/incomplete expiry skips were stored as three fields, while \`run_expiry()\` returned three fields that were prefixed with expiry, producing four fields.
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-**Evidence status:** The affected jobs are non-evidence. No conclusion or promotion decision uses them.
+      - name: Restore dependency cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: phase36-hf-${{ runner.os }}-${{ hashFiles('data/phase36_selector_predictions.csv') }}
+          restore-keys: |
+            phase36-hf-${{ runner.os }}-
 
-**Correction:** Normalize all skip records to the fixed schema \`expiry, timestamp, reason, detail\` before constructing the DataFrame.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow huggingface_hub
 
-**Prevention:** Enforce a single audit-record schema at the engine boundary and validate row widths before serialization.
+      - name: Run independent selector
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SAMPLE_START: ${{ inputs.sample_start || '2024-01-01' }}
+          SAMPLE_END: ${{ inputs.sample_end || '2026-06-30' }}
+          SELECTOR: ${{ matrix.selector }}
+        run: |
+          set -euo pipefail
+          mkdir -p "results/phase36_independent_direction/${SELECTOR}"
+          python research/phase36_independent_direction_overlay.py 2>&1 | tee "results/phase36_independent_direction/${SELECTOR}/run.log"
 
-**Research impact:** None on accepted evidence; failure occurred after the trade calculation loop and before final artifact creation.
+      - name: Upload selector artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase36-${{ matrix.selector }}
+          path: results/phase36_independent_direction/${{ matrix.selector }}/**
+          if-no-files-found: error
 
 
-## 2026-10-06 — Run 37428195471
+  publish:
+    needs: overlay
+    if: ${{ needs.overlay.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-### Error F36-002 — Duplicate quote rows in fresh premium selector
-**Affected selectors:** OTM678_FRESH, OTM789_FRESH.
+      - name: Download selector artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: phase36-*
+          path: /tmp/phase36-artifacts
+          merge-multiple: false
 
-**Symptom:** Eight expiry-level loops terminated with:
-\`TypeError("float() argument must be a string or a real number, not 'Series'")\`.
-
-**Cause:** At some timestamps the option snapshot contained duplicate rows for the same option type and strike. Pandas \`loc\` returned a Series instead of a scalar close.
-
-**Evidence status:** Fresh-selector results from run #3 are non-final and are not used for phase conclusions.
-
-**Correction:** Group each option type/strike pair in the snapshot and use the last observed close deterministically before evaluating OTM678/OTM789 premium expressions.
-
-**Research impact:** No accepted model-selector results are affected. Fresh-selector results require rerun after correction.
-
-## Final accepted run 37428502722
-All seven selector jobs and the artifact-publication job completed successfully. No implementation error remained in the accepted evidence.
+      - name: Persist numerical artifacts to repository
+        run: |
+          set -euo pipefail
+          mkdir -p results/phase36_independent_direction
+          for d in /tmp/phase36-artifacts/phase36-*; do
+            [ -d "$d" ] || continue
+            selector="${d##*/}"
+            selector="${selector#phase36-}"
+            mkdir -p "results/phase36_independent_direction/${selector}"
+            cp -a "$d/." "results/phase36_independent_direction/${selector}/"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase36_independent_direction
+          if git diff --cached --quiet; then
+            echo "No numerical artifact changes to commit."
+            exit 0
+          fi
+          git commit -m "Phase 36: persist numerical selector results"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
