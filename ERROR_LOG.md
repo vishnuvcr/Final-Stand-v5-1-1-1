@@ -1040,3 +1040,9 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 
 ## F43-RUN-37474661050 — numerical execution failure
 - Exit code: 1. Failed output is non-evidence.
+
+
+## F43-003 — 2026-10-06 — Finalizer payload delimiter incident
+- Initial attempt to persist the Phase-43 post-run manuscript finalizer failed before repository write because a JavaScript template string contained Markdown backtick delimiters from the Python manuscript template.
+- No numerical workflow or research artifact was affected.
+- Correction: remove embedded Markdown backticks from the generator payload and persist the finalizer separately.
