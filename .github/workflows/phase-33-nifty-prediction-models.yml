@@ -4,7 +4,9 @@ on:
   push:
     branches: [phase-33-nifty-prediction-models]
     paths:
-      - 'PHASE33_*.md'
+      - 'PHASE33_RESEARCH_PLAN.md'
+      - 'PHASE33_PRE_REGISTRATION.md'
+      - 'PHASE33_DATA_DICTIONARY.md'
       - 'results/phase33_nifty_prediction/**'
       - 'research/phase33_nifty_prediction_models.py'
       - '.github/workflows/phase-33-nifty-prediction-models.yml'
