@@ -486,14 +486,27 @@ Additional candidate families include Bayesian dynamic models, Bradley-Terry pre
 **Current Phase-39 status:** formulation and preregistration complete; numerical counterfactual engine construction is next. Phase-38 canonical strategy remains unchanged.
 
 
-## Phase 43 — VIX-conditioned NIFTY all-strategy sweep — REGISTERED
+## Phase 43 — VIX-conditioned NIFTY all-strategy sweep — COMPLETE, NO PROMOTION
 
-A new isolated phase has been registered on `phase-43-vix-all-options-strategies` to test a finite universe of major NIFTY weekly option structures across India-VIX regimes. The phase uses the existing VIX cache, realistic Paytm Money brokerage/statutory costs, one-adverse-tick slippage, historical lot sizes, development/validation/untouched-2026 holdout chronology, 10,000 paired-expiry bootstrap inference and a preregistered VIX router. The canonical Phase-20/42 strategy is unchanged.
+Phase 43 tested 22 preregistered NIFTY weekly option strategy families across India-VIX states on 262 expiry opportunities, producing 4,597 strategy observations with realistic Paytm Money costs, adverse slippage, historical lot sizes, development/validation/untouched-2026 chronology and corrected multiple-testing inference.
+
+Final findings:
+- 18 strategies were eligible for defined-risk promotion.
+- 0 strategy×VIX candidates passed the full development/validation/cost-stress gate.
+- 0 VIX routers were frozen for holdout.
+- Corrected VIX regime inference found no Holm-adjusted significant regime advantage; all corrected 95% bootstrap intervals crossed zero.
+- Stage-5 active-exit extension was skipped because the structural VIX router gate was not passed.
+- **Decision: NO PROMOTION. Canonical Phase-20/42 strategy remains unchanged.**
+
+A statistical implementation defect and a promotion-universe contamination defect were both caught and corrected before final closure; their failed outputs are retained as audit/non-evidence.
 
 - [Phase 43 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-43-vix-all-options-strategies)
 - [Phase 43 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_RESEARCH_PLAN.md)
 - [Phase 43 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_PRE_REGISTRATION.md)
 - [Phase 43 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_LITERATURE_REVIEW.md)
 - [Phase 43 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_STATUS.md)
+- [Phase 43 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/PHASE43_MANUSCRIPT.md)
+- [Phase 43 corrected inference](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/results/phase43_vix/corrected_strategy_vix_inference.csv)
+- [Phase 43 corrected router validation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-43-vix-all-options-strategies/results/phase43_vix/corrected_router_dev_validation.csv)
 
-**Status: numerical execution pending.**
+**Final Phase-43 status: CLOSED — NO PROMOTION.**
