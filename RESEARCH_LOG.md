@@ -343,3 +343,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Indexed review identified nine directly relevant Profit Breakout videos, including explicit India-VIX strategy selection, Batman/VIX filtering, Iron Fly versus Iron Condor by volatility, adaptive Iron Fly→Iron Condor management, VIX-adapted monthly strategy, weekly/monthly credit structures and longer-duration NIFTY income structures.
 - Phase-46 scope was expanded so new candidates are **not** treated as high-VIX-only. Subsequent testing must evaluate them across ALL, LOW, NORMAL, FALLING, RISING, HIGH, SPIKE and HIGH_RISING.
 - No numerical evidence or promotion decision changed.
+
+## 2026-10-07 — Phase 47 initialized
+- Created isolated branch phase-47-vix-source-strategy-backtest from the completed Phase-46 discovery branch.
+- Registered three mechanically reconstructable source-derived candidates: Double Calendar Straddle, Monthly Wide-Range Hedge, and Covered Call 2.0 synthetic-future proxy.
+- Registered full eight-state VIX evaluation so LOW/NORMAL/FALLING remain in scope together with RISING/HIGH/SPIKE/HIGH_RISING.
+- Added staged compile/preflight/numerical/artifact/holdout audits and a GitHub Actions workflow with manual dispatch.
+- Corrected and logged four pre-numerical implementation issues before evidence acceptance: timezone normalization, multi-window cache keys, variant grouping, and deterministic inference seeds.
