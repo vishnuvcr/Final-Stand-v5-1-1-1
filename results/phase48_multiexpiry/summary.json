@@ -6,8 +6,8 @@
     "monthly_wide_range_static"
   ],
   "data_errors": 0,
-  "validation_working_states": 0,
-  "frozen_rows": 0,
-  "holdout_confirmation_rows": 0,
+  "validation_working_states": 1,
+  "frozen_rows": 1,
+  "holdout_confirmation_rows": 1,
   "holm_survivors": 0
 }

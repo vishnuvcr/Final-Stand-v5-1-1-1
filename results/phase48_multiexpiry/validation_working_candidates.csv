@@ -1,1 +1,2 @@
 trades,net,net50,mean_net,win_rate,max_dd,profit_factor,strategy,split,state
+30,10326.998665398092,6785.997998097049,344.2332888466031,0.5333333333333333,137155.80139701,1.0272985670872135,covered_call_2_static_proxy,validation,LOW
