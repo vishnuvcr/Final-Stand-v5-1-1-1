@@ -74,7 +74,11 @@ def bootstrap_stats(diff):
 def period_metrics(stream, control):
     a = stream.set_index("expiry")["net"]
     c = control.copy()
-    c.index = pd.to_datetime(c.index).tz_localize(eng.base.TZ)
+    c.index = pd.to_datetime(c.index)
+    if c.index.tz is None:
+        c.index = c.index.tz_localize(eng.base.TZ)
+    else:
+        c.index = c.index.tz_convert(eng.base.TZ)
     common = a.index.intersection(c.index)
     dif = (a.loc[common] - c.loc[common]).to_numpy(float)
     b = bootstrap_stats(dif)
