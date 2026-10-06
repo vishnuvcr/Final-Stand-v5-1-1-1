@@ -116,3 +116,9 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The corrected merge logic was committed with literal \\n characters, producing another SyntaxError before numerical execution.
 - No Markov evidence was produced.
 - Correction: restore actual Python line breaks and rerun with the newly hardened `pipefail` workflow.
+
+
+## 2026-10-06 — Phase 35 Markov addendum run #5 (37426149448)
+- Numerical execution reached the model fit but still found duplicate `ms_p0/ms_p1/ms_entropy` columns because the cached regime table could itself contain the same fields.
+- No evidence accepted.
+- Correction: deterministically drop any existing regime columns from the event table and merge only the canonical four-column regime cache.
