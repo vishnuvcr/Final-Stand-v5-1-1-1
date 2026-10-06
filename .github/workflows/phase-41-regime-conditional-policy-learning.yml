@@ -1,0 +1,107 @@
+name: Phase 41 - Regime Conditional Policy Learning
+
+on:
+  push:
+    branches:
+      - phase-41-regime-conditional-policy-learning
+    paths:
+      - 'PHASE41_TRIGGER.md'
+      - 'PHASE41_RESEARCH_PLAN.md'
+      - 'PHASE41_PRE_REGISTRATION.md'
+      - 'PHASE41_LITERATURE_REVIEW.md'
+      - 'research/phase41_*.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase41-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  phase41:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-41-regime-conditional-policy-learning
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase41-hf-${{ runner.os }}-${{ hashFiles('research/phase41_*.py') }}
+          restore-keys: |
+            phase41-hf-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check --no-input \
+            numpy pandas pyarrow scikit-learn matplotlib huggingface_hub requests
+
+      - name: Preflight
+        run: |
+          test -f PHASE41_RESEARCH_PLAN.md
+          test -f PHASE41_PRE_REGISTRATION.md
+          test -f PHASE41_LITERATURE_REVIEW.md
+          test -f results/phase39_counterfactual/fixed_opportunity_ledger.csv
+          test -f results/phase39_features/point_in_time_features.csv
+          test -f data/phase40_vix/india_vix.csv
+          python - <<'PY'
+          import pandas as pd
+          z=pd.read_csv('results/phase39_counterfactual/fixed_opportunity_ledger.csv')
+          f=pd.read_csv('results/phase39_features/point_in_time_features.csv')
+          assert len(z)==477
+          assert len(f)==477
+          assert set(z['split'])=={'development','validation','holdout'}
+          assert int((z['split']=='development').sum())==271
+          assert int((z['split']=='validation').sum())==172
+          assert int((z['split']=='holdout').sum())==34
+          print('Phase-41 preflight PASS')
+          PY
+
+      - name: Syntax audit
+        run: |
+          python -m py_compile research/phase41_regime_policy_screen.py
+          python -m py_compile research/phase41_sequential_replay.py
+          python -m py_compile research/phase41_finalize.py
+
+      - name: Step 1 - chronological 24-variant fixed-opportunity screen
+        run: python research/phase41_regime_policy_screen.py
+
+      - name: Persist Step 1 artifacts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add PHASE41_STATUS.md results/phase41_regime_policy
+          git commit -m 'Phase 41: persist frozen policy screen and diagnostics' || true
+          git pull --rebase origin phase-41-regime-conditional-policy-learning
+          git push origin HEAD:phase-41-regime-conditional-policy-learning
+
+      - name: Step 2 - exact sequential replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase41_sequential_replay.py
+
+      - name: Persist Step 2 artifacts
+        run: |
+          git add PHASE41_STATUS.md results/phase41_regime_policy
+          git commit -m 'Phase 41: persist exact sequential replay' || true
+          git pull --rebase origin phase-41-regime-conditional-policy-learning
+          git push origin HEAD:phase-41-regime-conditional-policy-learning
+
+      - name: Step 3 - final inference, manuscript and promotion gate
+        run: python research/phase41_finalize.py
+
+      - name: Persist final Phase 41 closeout
+        run: |
+          git add PHASE41_STATUS.md PHASE41_MANUSCRIPT.md RESEARCH_LOG.md ERROR_LOG.md results/phase41_regime_policy
+          git commit -m 'Phase 41: finalize manuscript status and promotion decision' || true
+          git pull --rebase origin phase-41-regime-conditional-policy-learning
+          git push origin HEAD:phase-41-regime-conditional-policy-learning
