@@ -271,3 +271,20 @@ The immediate numerical priority is LightGBM + CatBoost + DART, followed by prob
 - [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_PRE_REGISTRATION.md)
 - [Literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_LITERATURE_REVIEW.md)
 - [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_STATUS.md)
+
+
+## Phase 35 — Advanced NIFTY Prediction Model Search
+
+**Status: COMPLETE — NO MODEL PROMOTED.** Phase 35 tested an expanded battery of tree, probabilistic, decomposition, adaptive, stacking, calibration, conformal and Markov-regime models using the frozen D-6 10:00 IST design. The accepted evidence contains 245 events: 128 development, 95 validation and 22 untouched 2026 holdout events.
+
+Key 2026 holdout result: 68.18% accuracy was reached by CatBoost, ExtraTrees, LightGBM-DART, Wavelet-tree, OOF stacking and the Markov-switching regime + tree proxy. OOF stacking had the strongest holdout signed-return diagnostic (+0.00951; bootstrap 95% CI +0.00255 to +0.01627), but the holdout is only 22 events and the diagnostic is not executable option P&L. **No model is promoted to live trading.**
+
+- [Phase 35 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-35-advanced-tree-and-adaptive-prediction-search)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_RESEARCH_PLAN.md)
+- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_PRE_REGISTRATION.md)
+- [Final status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_STATUS.md)
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_MANUSCRIPT.md)
+- [Model metrics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/model_metrics.csv)
+- [Economic diagnostic](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/directional_economic_diagnostic.csv)
+- [Decision table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_DECISION_TABLE.csv)
+- [Markov regime results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/ms_regime_tree_metrics.csv)
