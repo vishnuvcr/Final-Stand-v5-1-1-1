@@ -183,3 +183,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Added PHASE39_LITERATURE_REVIEW.md, PHASE39_PRE_REGISTRATION.md, PHASE39_RESEARCH_PLAN.md and the candidate-method registry.
 - Added an automated preflight workflow with manual dispatch.
 - Numerical results have not yet been accepted.
+
+
+## 2026-10-06 — Phase 40 exhaustive ensemble direction research initiated
+
+- Created branch `phase-40-ensemble-direction-models`.
+- Registered the hypothesis that previously tested individual selectors may contain complementary information when combined.
+- Registered six experts: CATBOOST, DART, WAVELET_TREE, OOF_STACK, MARKOV_REGIME_TREE and VIX.
+- Registered all 63 non-empty expert subsets, four fixed aggregators and seven VIX routing modes: 1,764 candidates.
+- Added automatic GitHub Actions workflow with manual dispatch and India VIX caching.
+- India VIX is aligned point-in-time using the previous session's close/change; validation freezes the top 10 before untouched 2026 holdout replay.
+- Initial engine construction correction F40-001 was logged before numerical evidence.
