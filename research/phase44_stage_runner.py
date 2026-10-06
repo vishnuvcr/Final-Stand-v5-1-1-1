@@ -132,7 +132,7 @@ def process_expiries(idx, expiries, stage):
     all_rows=[]; all_errors=[]; specs=family_specs()
     needed_offsets={(typ,int(off)) for fam,g in specs for typ,off,_q in make_legs(fam,g)}
     # Two workers keeps runner memory bounded while allowing cached local parquet reads to overlap.
-    with ThreadPoolExecutor(max_workers=2) as pool:
+    with ThreadPoolExecutor(max_workers=4) as pool:
         futs={pool.submit(_process_one_expiry,idx,ex,stage,specs,needed_offsets):ex for ex in expiries}
         for i,f in enumerate(as_completed(futs),1):
             rows,errors=f.result()
