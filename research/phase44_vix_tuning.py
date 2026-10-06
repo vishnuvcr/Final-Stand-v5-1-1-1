@@ -254,7 +254,6 @@ def main():
     idx = load_index()
     vix = load_vix()
     expiries = list_expiries()
-    cache = {}
     base_rows = []
     errors = []
     specs = family_specs()
@@ -265,9 +264,9 @@ def main():
 
     for oi, ex in enumerate(expiries):
         try:
-            if ex not in cache:
-                cache[ex] = prepare(load_parquet(f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"))
-            cur = cache[ex]
+            # Process one expiry at a time; HF cache prevents repeated network downloads
+            # while releasing the dataframe after each expiry keeps RAM bounded.
+            cur = prepare(load_parquet(f"options/NIFTY/{ex.strftime('%Y-%m-%d')}.parquet"))
             split = split_for(ex)
             lot = lot_size_for_expiry(ex)
             cutoff = ex.normalize() + pd.Timedelta(hours=15, minutes=29)
