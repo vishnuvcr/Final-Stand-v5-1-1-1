@@ -21,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase44-vix-${{ github.ref }}
+  group: phase44-vix-v2-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
