@@ -1,0 +1,60 @@
+name: Phase 35 - Markov Switching Regime Addendum
+
+on:
+  push:
+    branches: [phase-35-advanced-tree-and-adaptive-prediction-search]
+    paths:
+      - 'research/phase35_ms_regime_addendum.py'
+      - '.github/workflows/phase-35-ms-regime-addendum.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase35-ms-addendum
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  addendum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyarrow scikit-learn scipy lightgbm statsmodels
+      - name: Run addendum
+        id: run_add
+        continue-on-error: true
+        run: python research/phase35_ms_regime_addendum.py 2>&1 | tee phase35_ms_addendum.log
+      - name: Persist
+        if: steps.run_add.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase35_advanced_tree_prediction data/phase35_ms_regime.parquet phase35_ms_addendum.log
+          git diff --cached --quiet || git commit -m "Phase 35: persist Markov switching regime addendum"
+          git pull --rebase origin phase-35-advanced-tree-and-adaptive-prediction-search
+          git push
+      - name: Log failure
+        if: steps.run_add.outcome != 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          {
+            echo ""
+            echo "## Phase 35 Markov-switching addendum failure — run ${{ github.run_id }}"
+            echo "- Date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "- Status: addendum failed; output is non-evidence."
+          } >> ERROR_LOG.md
+          git add ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 35: log Markov addendum failure"
+          git pull --rebase origin phase-35-advanced-tree-and-adaptive-prediction-search
+          git push
+      - name: Fail after logging
+        if: steps.run_add.outcome != 'success'
+        run: exit 1
