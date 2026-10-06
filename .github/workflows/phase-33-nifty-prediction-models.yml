@@ -43,8 +43,8 @@ jobs:
       - name: Run Phase 33
         env:
           HF_TOKEN: \${{ secrets.HF_TOKEN }}
-          SAMPLE_START: \${{ inputs.sample_start }}
-          SAMPLE_END: \${{ inputs.sample_end }}
+          SAMPLE_START: \${{ inputs.sample_start || '2021-05-27' }}
+          SAMPLE_END: \${{ inputs.sample_end || '2026-09-30' }}
         run: |
           set -o pipefail
           python research/phase33_nifty_prediction_models.py 2>&1 | tee phase33_run.log
