@@ -907,3 +907,13 @@ The 1,764-candidate numerical screen and verification both succeeded. Persistenc
 **Correction:** The engine now reconstructs the point-in-time canonical direction from the accepted Phase-39 control ledger and uses that direction whenever the VIX gate is inactive.
 
 **Prevention:** Every series/gating architecture now has an explicit fallback-state invariant checked before screening.
+
+
+### Error F40-009 — Duplicate ensemble aliases could consume multiple holdout slots
+The validation grid contained many parameterizations (different aggregators/subsets) with exactly the same expiry-level direction sequence. Treating those aliases as independent holdout candidates would exaggerate effective model diversity.
+
+**Evidence status:** The just-completed VIX-gated grid is retained as validation screening evidence, but its raw top-10 holdout list is superseded.
+
+**Correction:** Phase 40 now hashes the validation expiry-level direction sequence and selects the top 10 **unique policies** for holdout evaluation. All 1,764 raw combinations remain reported.
+
+**Prevention:** Future ensemble phases will distinguish specification count from unique decision-policy count.
