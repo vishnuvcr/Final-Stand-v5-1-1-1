@@ -1,0 +1,14 @@
+{
+  "status": "SEQUENTIAL_REPLAY_COMPLETE",
+  "top10_count": 10,
+  "study_expiries": 102,
+  "validation_positive_pvalue_candidates": 0,
+  "validation_candidates_positive_mean": 9,
+  "holdout_candidates_positive_mean": 4,
+  "holdout_candidates_positive_total": 4,
+  "best_validation_candidate_id": 3,
+  "best_validation_mean_uplift": 265.30832582176816,
+  "best_holdout_candidate_id": 873,
+  "best_holdout_total_uplift": 14294.319473499003,
+  "n_bootstrap": 10000
+}
