@@ -1,0 +1,27 @@
+{
+  "status": "COMPLETE",
+  "model": "Sparse_GAM_margin",
+  "margin": 500.0,
+  "uncertainty_z": 1.0,
+  "warmup_policy_trades": 100,
+  "trades": 479,
+  "overrides": 7,
+  "validation_paired_expiry_bootstrap": {
+    "expiries": 83,
+    "mean": 15492.772609450007,
+    "lo": -7.73070496506989e-12,
+    "hi": 46478.317828350024,
+    "p_positive": 0.711
+  },
+  "holdout_paired_expiry_bootstrap": {
+    "expiries": 20,
+    "mean": 7390.390842637,
+    "lo": -5.4569682106375694e-12,
+    "hi": 22171.172527911007,
+    "p_positive": 0.7342
+  },
+  "validation_uplift_rupees": 15492.772609449996,
+  "holdout_uplift_rupees": 7390.390842637001,
+  "fixed_opportunity_step3_result_used": "Sparse_GAM_margin / margin 500 / z 1.0",
+  "promotion_status": "PENDING_FULL_ENGINE_AUDIT"
+}
