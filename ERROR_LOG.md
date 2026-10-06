@@ -990,3 +990,13 @@ The exact replay reused the broader Phase-39 control study-expiry list but faile
 ## 2026-10-06 — Phase 42 initialization
 - No Phase-42 numerical evidence has yet been accepted.
 - The phase is intentionally bounded and directly motivated by Phase-41's zero-override/positive-ranking split.
+
+
+## F42-001 — 2026-10-06 — Finalizer syntax error
+- **Phase:** 42
+- **Workflow:** run 37466838884
+- **Step:** Syntax audit
+- **Failure:** `research/phase42_finalize.py` contained a JavaScript-style `lines.push(...)` statement with a mismatched closing bracket.
+- **Impact:** Numerical screen, replay and inference did not start.
+- **Correction:** Replaced the statement with valid Python `lines.extend([...])`; no research parameters or data were changed.
+- **Status:** Corrected; workflow will rerun automatically from the new commit.
