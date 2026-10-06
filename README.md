@@ -301,13 +301,37 @@ The correct next phase is a **frozen trading-overlay validation**, not another u
 
 ## Phase 36 — Independent per-trade direction selector overlay
 
-**Status: NUMERICAL EXECUTION IN PROGRESS.** A new isolated phase is testing the Continuous Delta 6x6 strategy with **direction selected independently before every new trade**. The prior trade's win/loss/P&L and direction are not inputs to the next trade. All other Phase-32 execution, delta-exit, expiry and cost rules remain frozen.
+**Status: COMPLETE — REJECTED — NO LIVE-TRADING PROMOTION.**
 
+This phase tested the requested rule change: **the previous trade's status, P&L, win/loss result and prior direction do not determine the next trade's direction**. Every eligible new trade receives a fresh direction decision. All other Continuous Delta 6x6 entry, exit, spread, slippage, brokerage and statutory-cost rules were frozen.
+
+Final accepted run: **GitHub Actions 37428502722 (#4)**. All seven selector jobs and the artifact publication job succeeded.
+
+Primary window: **2024-01-01 to 2026-06-30**.
+
+| Treatment | Net P&L |
+|---|---:|
+| Phase-32 stateful control | **+₹63,672.58** |
+| OTM789 fresh | -₹39,122.38 |
+| DART | -₹54,475.24 |
+| OOF stack | -₹59,868.85 |
+| OTM678 fresh | -₹62,665.27 |
+| Wavelet-tree | -₹66,398.02 |
+| Markov-regime tree | -₹88,163.44 |
+| CatBoost | -₹92,977.93 |
+
+All seven independent selectors were also negative in the 2026 holdout, while the stateful control was approximately flat at -₹275.65. Per-expiry bootstrap comparisons favored the stateful control for every selector.
+
+**Conclusion:** the independent-direction overlay is rejected. The Phase-32 stateful direction rule remains the canonical strategy. No Phase-36 selector is promoted to live trading.
+
+### Phase 36 artifacts
 - [Phase 36 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-36-independent-direction-selector-overlay)
 - [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_RESEARCH_PLAN.md)
 - [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_PRE_REGISTRATION.md)
 - [Strategy specification](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_STRATEGY_SPEC.md)
-- [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_STATUS.md)
+- [Final status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/PHASE36_STATUS.md)
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/results/phase36_independent_direction/PHASE36_MANUSCRIPT.md)
+- [Results index](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-36-independent-direction-selector-overlay/results/phase36_independent_direction/PHASE36_RESULTS_INDEX.md)
 - [Phase 36 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase-36-independent-direction-selector-overlay.yml)
 
-Registered selectors: OTM678 fresh, OTM789 fresh, CatBoost, LightGBM-DART, Wavelet-tree, OOF stack, and Markov-regime tree. No Phase-36 result is being treated as accepted evidence until the primary workflow completes successfully.
+**Next research priority:** forward/paper validation of the canonical stateful strategy with full bid/ask, latency, fill-probability and Paytm Money-specific transaction-cost modeling.
