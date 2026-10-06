@@ -179,7 +179,81 @@ The complete chronology/state/cost audit passes. However, this candidate is **NO
 
 The 2026 holdout remains frozen for model selection.
 
-## Step 5 — advanced analog/regime screen — COMPLETE / NO NEW WINNER
+## Step 5 — advanced analog / regime screen — COMPLETE / NO NEW CANDIDATE
+
+- DTW analog: selected margin ₹0; zero development/validation overrides; no uplift.
+- RBF/SVR economic-margin model: selected margin ₹0; zero development/validation overrides; no uplift.
+- BOCPD-gated GAM: selected change-point threshold 0.20 and margin ₹0; fixed-opportunity validation uplift **+₹11,609.60**, identical to Sparse GAM.
+- Step-5 therefore contributes **no independent improvement** over the accepted Sparse-GAM candidate.
+- 2026 holdout was not evaluated in Step 5.
+
+Decision: do not promote any Step-5-specific method. Continue to the preregistered online expert-aggregation family.
+
+
+ — advanced analog/regime screen — COMPLETE / NO NEW WINNER
+
+Registered advanced methods tested:
+- DTW analog margin model.
+- RBF/SVR economic-margin regression.
+- BOCPD-gated Sparse-GAM economic-margin model.
+
+Accepted fixed-opportunity results:
+- DTW: no validation overrides; validation uplift ~₹0.
+- SVR: no validation overrides; validation uplift ~₹0.
+- BOCPD-GAM: 2 validation overrides and **+₹11,609.60** validation uplift, exactly matching the Sparse-GAM fixed-opportunity screen; paired-expiry 95% interval **−₹1,250.46 to +₹36,079.27**.
+
+Decision:
+- No new Step-5 method supersedes Sparse-GAM.
+- 2026 holdout was not touched.
+- The BOCPD result is treated as a redundant regime-gated representation of the same Sparse-GAM economic signal, not independent confirmation.
+
+## Next engineering step
+
+Build the point-in-time feature matrix and leakage audit. Then fit the preregistered CROL/BCMM/Bradley-Terry/Dynamic-Bayesian and low-capacity nonlinear models chronologically, with the 2026 holdout frozen until the model family and override thresholds are locked.
+
+
+## Step 1 — fixed-opportunity counterfactual engine
+
+**CORRECTED IMPLEMENTATION — rerun required before model training.** The first 206-opportunity calculation reproduced the frozen control essentially exactly, but it was correctly rejected as insufficient for the preregistered 2021–2023 development split. The engine has now been corrected to use 271 development trades from the accepted Phase-32 artifact plus the exact frozen 206-trade validation/holdout panel, and to apply deterministic stable duplicate-quote handling.
+
+The accepted panel is therefore:
+- Development: 271 trades / 135 expiries (2021-05-27 through 2023-12-28)
+- Validation: 172 trades (2024-01-11 through 2025-12-30)
+- Holdout: 34 trades (2026-01-06 through 2026-05-19)
+- Intentionally excluded: the 2024-01-04 trade, preserving the exact Phase-38 benchmark
+
+The complete corrected counterfactual engine must re-run before any model training is accepted. The control arm must still reconstruct the frozen ₹63,672.5753 benchmark within the preregistered tolerance.
+
+
+## Current execution state — 2026-10-06
+
+The corrected Step-1 implementation is committed and automatically queued in GitHub Actions with serialized execution. The research is **not yet allowed to advance to model fitting**: the corrected 271/172/34 counterfactual panel must first pass the full control-reconstruction audit. The earlier 206-row counterfactual result remains exploratory only and is explicitly superseded.
+
+
+## Step 1 audit checkpoint — 2026-10-06
+
+The frozen Phase-32 strategy specification confirms that the Phase-39 fixed-opportunity engine uses the correct state-independent spread mechanics for both arms: +0.25/-0.25 entry delta selection, 50-point vertical width, six lots per leg, and first short-leg delta hit at 0.50 or 0.04 magnitude, followed by contract termination when no delta exit occurs.
+
+The latest known Step-1 run was cancelled before producing accepted evidence. A status-only commit also did not match the workflow path filter. No model training is permitted yet.
+
+The next trigger will include explicit panel invariants:
+- exactly 271 development, 172 validation and 34 holdout rows;
+- no accidental 2024-01-04 opportunity in the frozen comparator;
+- deterministic timestamp ordering for first-hit exit detection;
+- exact frozen-control P&L reconstruction within 0.75 rupees per trade and the authoritative ₹63,672.5753 aggregate.
+
+
+## Step 1 numerical result checkpoint — 2026-10-06
+
+The audited engine itself completed on run 37437767581 with the corrected 271/172/34 panel:
+- Development: 271 rows / 135 expiries; control ₹17,657.15
+- Validation: 172 rows / 82 expiries; control ₹63,948.22
+- Holdout: 34 rows / 20 expiries; control -₹275.65
+- Frozen validation+holdout control: ₹63,672.5753
+- Maximum control reconstruction error: <2e-12 rupees across the accepted panel.
+
+The run is not yet accepted as Step-1 CI evidence because the workflow verification used exact float equality for one aggregate-sum assertion. The calculation itself passed its substantive checks. A verification-only workflow correction is being applied; no research parameter or dataset rule is changing.
+ — advanced analog/regime screen — COMPLETE / NO NEW WINNER
 
 Registered advanced methods tested:
 - DTW analog margin model.
