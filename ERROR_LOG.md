@@ -593,3 +593,15 @@ Evidence status: Non-evidence implementation failure. No Step-5 results were acc
 Correction: Realized action P&L arrays are now normalized with `np.asarray` before arithmetic and aggregation.
 
 Prevention: Advanced model evaluation will keep explicit NumPy/Pandas type boundaries.
+
+
+### Error F39-033 — Step-5 automated array patch malformed the evaluator function
+Runs: 37446514386 and predecessor Step-5 iterations.
+
+Symptom: The advanced-family evaluator contained unmatched parentheses and incomplete action-assignment expressions after an automated NumPy/Pandas normalization edit.
+
+Evidence status: Non-evidence code-generation failure. No Step-5 result was accepted.
+
+Correction: The complete `evaluate()` function was replaced with a clean explicit implementation covering OOF threshold selection, BOCPD gating, validation replay and summary metrics.
+
+Prevention: For complex evaluator patches, replace the complete affected function rather than applying multiple fragile text substitutions.
