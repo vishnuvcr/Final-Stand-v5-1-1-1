@@ -69,3 +69,19 @@ The primary treatment comparison therefore uses the frozen canonical control art
 **REJECT ALL FIVE CORRECTED MODEL SELECTORS. DO NOT CHANGE THE CANONICAL STATEFUL DIRECTION RULE.**
 
 Next research priority: Phase 39 robustness of the canonical strategy, with broker-realistic bid/ask, latency/fill and cost/slippage validation.
+
+
+## Secondary risk-adjusted diagnostic
+
+A cumulative **net-P&L / maximum-drawdown** ratio was calculated as a Calmar-style diagnostic:
+
+| Strategy | Net/DD |
+|---|---:|
+| MARKOV_REGIME_TREE | **1.309** |
+| CATBOOST | **1.173** |
+| STATEFUL_CONTROL | **1.028** |
+| WAVELET_TREE | **0.579** |
+| OOF_STACK | **0.399** |
+| DART | **0.368** |
+
+Markov has the strongest cumulative return-to-drawdown efficiency and CatBoost ranks second. This does **not** alter the Phase-38 rejection because neither model beats the frozen control in the preregistered paired expiry comparison.
