@@ -40,3 +40,6 @@ The superseded run 37535442553 stopped updating while the corrected run entered 
 ## 2026-10-07 — Performance correction F49-009
 
 The second self-audit found one more execution-only bottleneck: per-candidate recalculation of the full index day set, spot lookup and VIX historical quantiles. The engine has now been corrected to cache these metadata objects across candidates. No scientific definition changed and no numerical output from the slower runs is accepted.
+## 2026-10-07 — Optimized numerical execution
+
+GitHub Actions **run 37538954063 (#9)** is the current accepted execution candidate. Its preflight has passed; the numerical step is active. It uses the F49-009 metadata-cache correction. No result is accepted until the numerical, artifact, statistical and publication audits all pass.
