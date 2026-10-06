@@ -1,0 +1,55 @@
+name: Phase 33 - Reconcile Verified Results
+
+on:
+  push:
+    branches: [phase-33-nifty-prediction-models]
+    paths:
+      - '.github/workflows/phase-33-reconcile-results.yml'
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'GitHub Actions run ID whose verified artifact should be reconciled'
+        required: true
+        default: '37421284742'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-33-nifty-prediction-models
+
+      - name: Download verified artifact
+        env:
+          GH_TOKEN: \${{ github.token }}
+          RUN_ID: \${{ inputs.run_id || '37421284742' }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y jq unzip >/dev/null
+          REPO="\${GITHUB_REPOSITORY}"
+          ARTIFACT_ID="\$(curl -fsSL -H "Authorization: Bearer \${GH_TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/\${REPO}/actions/runs/\${RUN_ID}/artifacts" | jq -r '.artifacts[0].id')"
+          test "\${ARTIFACT_ID}" != "null"
+          curl -fsSL -L -H "Authorization: Bearer \${GH_TOKEN}" -H "Accept: application/vnd.github+json" -o /tmp/phase33.zip "https://api.github.com/repos/\${REPO}/actions/artifacts/\${ARTIFACT_ID}/zip"
+          rm -rf /tmp/phase33
+          mkdir -p /tmp/phase33
+          unzip -q /tmp/phase33.zip -d /tmp/phase33
+          test -f /tmp/phase33/results/phase33_nifty_prediction/model_metrics.csv
+          test -f /tmp/phase33/data/phase33/events.parquet
+
+      - name: Reconcile data and results
+        run: |
+          set -euo pipefail
+          mkdir -p data/phase33 results/phase33_nifty_prediction
+          cp -a /tmp/phase33/data/phase33/. data/phase33/
+          cp -a /tmp/phase33/results/phase33_nifty_prediction/. results/phase33_nifty_prediction/
+          cp /tmp/phase33/phase33_run.log phase33_run.log
+          git add data/phase33 results/phase33_nifty_prediction phase33_run.log
+          git diff --cached --quiet || git commit -m "Phase 33: reconcile verified model results"
+          git push origin HEAD:phase-33-nifty-prediction-models
