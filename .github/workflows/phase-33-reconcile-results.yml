@@ -27,16 +27,16 @@ jobs:
 
       - name: Download verified artifact
         env:
-          GH_TOKEN: \${{ github.token }}
-          RUN_ID: \${{ inputs.run_id || '37421284742' }}
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.run_id || '37421284742' }}
         run: |
           set -euo pipefail
           sudo apt-get update -y >/dev/null
           sudo apt-get install -y jq unzip >/dev/null
-          REPO="\${GITHUB_REPOSITORY}"
-          ARTIFACT_ID="\$(curl -fsSL -H "Authorization: Bearer \${GH_TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/\${REPO}/actions/runs/\${RUN_ID}/artifacts" | jq -r '.artifacts[0].id')"
-          test "\${ARTIFACT_ID}" != "null"
-          curl -fsSL -L -H "Authorization: Bearer \${GH_TOKEN}" -H "Accept: application/vnd.github+json" -o /tmp/phase33.zip "https://api.github.com/repos/\${REPO}/actions/artifacts/\${ARTIFACT_ID}/zip"
+          REPO="${GITHUB_REPOSITORY}"
+          ARTIFACT_ID="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${REPO}/actions/runs/${RUN_ID}/artifacts" | jq -r '.artifacts[0].id')"
+          test "${ARTIFACT_ID}" != "null"
+          curl -fsSL -L -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" -o /tmp/phase33.zip "https://api.github.com/repos/${REPO}/actions/artifacts/${ARTIFACT_ID}/zip"
           rm -rf /tmp/phase33
           mkdir -p /tmp/phase33
           unzip -q /tmp/phase33.zip -d /tmp/phase33
