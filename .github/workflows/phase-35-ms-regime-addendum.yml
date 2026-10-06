@@ -32,7 +32,7 @@ jobs:
         continue-on-error: true
         run: python research/phase35_ms_regime_addendum.py 2>&1 | tee phase35_ms_addendum.log
       - name: Persist
-        if: steps.run_add.outcome == 'success'
+        if: steps.run_add.conclusion == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -41,7 +41,7 @@ jobs:
           git pull --rebase origin phase-35-advanced-tree-and-adaptive-prediction-search
           git push
       - name: Log failure
-        if: steps.run_add.outcome != 'success'
+        if: steps.run_add.conclusion != 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
