@@ -235,7 +235,22 @@ def main():
         if len(q): frozen.append(q.iloc[0].to_dict())
     fr=pd.DataFrame(frozen); fr.to_csv(OUT/"development_frozen_parameters.csv",index=False)
 
-    index=__import__("research.phase43_vix_strategy_sweep",fromlist=["load_index"]).load_index()
+    if fr.empty:
+        empty_cols=["family","state","param_json","trades_dev","med_net50","avg_net50","med_pf","neighbor_support"]
+        pd.DataFrame(columns=empty_cols).to_csv(OUT/"validation_frozen_trade_matrix.csv",index=False)
+        pd.DataFrame(columns=["expiry","net","net50"]).to_csv(OUT/"validation_baseline_trade_matrix.csv",index=False)
+        pd.DataFrame(columns=["expiry","entry_ts","year","family","param_json","state","net","net50","exit_ts","active_state"]).to_csv(OUT/"holdout_frozen_trade_matrix.csv",index=False)
+        pd.DataFrame(columns=["expiry","error"]).to_csv(OUT/"validation_data_errors.csv",index=False)
+        pd.DataFrame(columns=["expiry","error"]).to_csv(OUT/"holdout_data_errors.csv",index=False)
+        pd.DataFrame(columns=["family","state","trades","complement_trades","net","net50","complement_net","mean_net","win_rate","active_vs_complement_mean","ci_lo","ci_hi","p","paired_common","paired_uplift_net","paired_uplift_net50","p_holm"]).to_csv(OUT/"validation_confirmatory_summary.csv",index=False)
+        pd.DataFrame(columns=["family","state","trades","net","net50","mean_net","win_rate"]).to_csv(OUT/"holdout_confirmation.csv",index=False)
+        decision={"phase":49,"grid_total":len(GRID),"regime_expanded_candidates":len(GRID)*len(STATES),"frozen":0,"validation_rows":0,"validation_economic_passes":0,"holm_survivors":0,"holdout_confirmations":0,"early_stop":"NO_DEVELOPMENT_CANDIDATES"}
+        (OUT/"summary.json").write_text(json.dumps(decision,indent=2))
+        Path(OUT/"PHASE49_MANUSCRIPT.md").write_text("# Phase 49 Manuscript — VIX Leader Parameter Tuning\n\n"+json.dumps(decision,indent=2))
+        print(json.dumps(decision,indent=2))
+        return
+
+    index=__import__("phase43_vix_strategy_sweep",fromlist=["load_index"]).load_index()
     fmap={(r.family,r.state):json.loads(r.param_json) for _,r in fr.iterrows()}
     val=[]; hold=[]; base=[]; val_errs=[]; hold_errs=[]
     for e in es:
