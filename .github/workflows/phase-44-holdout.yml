@@ -6,7 +6,6 @@ on:
       - phase-44-vix-candidate-tuning
     paths:
       - "trigger/phase44.holdout"
-      - "research/phase44_stage_runner.py"
   workflow_dispatch:
 
 permissions:
