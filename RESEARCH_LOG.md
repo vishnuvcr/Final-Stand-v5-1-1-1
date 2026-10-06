@@ -226,3 +226,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Final decision remains **PROMISING / INCONCLUSIVE — NOT PROMOTED**.
 - Complete manuscript, status, grid, inference, sequential replay and error log are persisted on the Phase-40 branch.
 - No change was made to the canonical trading strategy.
+
+
+## 2026-10-06 — Phase 41 initialized: regime-conditional counterfactual policy learning
+- Created isolated branch `phase-41-regime-conditional-policy-learning` from the completed Phase-40 branch.
+- Registered 24 fixed variants: two economic-margin learners × four override margins × three India-VIX routing gates.
+- Reused the accepted Phase-39 477-opportunity fixed counterfactual ledger and point-in-time feature matrix; the 2026 holdout remains frozen for selection.
+- Added literature review, research plan, pre-registration, status, manuscript scaffold and automated/manual GitHub Actions design.
+- Next numerical step: chronological fixed-opportunity screen, followed by frozen top-three sequential replay and final promotion gate.
