@@ -258,3 +258,16 @@ Phase 34 tested eight additional forecasting families beyond Phase 33: **XGBoost
 - [Accepted postprocess Actions run #7](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37423631294)
 
 Any future use of HistGradientBoosting, ExtraTrees or an ensemble as a direction chooser requires a new registered overlay phase with complete Paytm Money brokerage/statutory charges, slippage, execution/fill constraints and expiry-gap handling.
+
+
+## Phase 35 — advanced tree and adaptive prediction search — LITERATURE/DESIGN COMPLETE
+
+A deeper literature search was completed after Phase 34, with **tree-based models retained as the core family**. The search identified several stronger unexplored directions: **LightGBM, CatBoost, DART, NGBoost, BART, quantile-boosting trees, wavelet/EMD/VMD decomposition followed by trees, adaptive rolling tree models, leakage-safe OOF stacking, dynamic ensemble selection, regime-gated trees, forecast pooling/winsorization, and calibration/conformal uncertainty layers**.
+
+The immediate numerical priority is LightGBM + CatBoost + DART, followed by probabilistic/quantile tree models, decomposition-enhanced trees, adaptive tree retraining, and leakage-safe tree stacking. The recently published NIFTY MS-Beta-t-QVAR work is being treated as a regime/volatility gate rather than a stand-alone directional model. No Phase-35 numerical result has yet been accepted.
+
+- [Phase 35 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-35-advanced-tree-and-adaptive-prediction-search)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_RESEARCH_PLAN.md)
+- [Pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_PRE_REGISTRATION.md)
+- [Literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/results/phase35_advanced_tree_prediction/PHASE35_LITERATURE_REVIEW.md)
+- [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-35-advanced-tree-and-adaptive-prediction-search/PHASE35_STATUS.md)
