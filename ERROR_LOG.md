@@ -235,3 +235,15 @@ Evidence status: Non-evidence CI failure only. The engine output passed the subs
 Correction: Replace exact equality in the workflow with a 1e-6 rupee absolute tolerance, consistent with the authoritative frozen-control benchmark check.
 
 Prevention: Aggregate monetary verification in research CI will use explicit deterministic tolerances rather than raw float equality.
+
+
+### Error F39-014 — Workflow job-log blob unavailable during long-running numerical step
+Runs: 37437767581 and 37438127394.
+
+Symptom: The workflow job remained in progress while the temporary job-log download endpoint returned BlobNotFound.
+
+Evidence status: tooling-only; authoritative job status continued to report the numerical step as in progress. No inference was made from the missing logs.
+
+Correction: Use workflow job state/step state while a job is running; inspect full decoded logs only after the job completes.
+
+Prevention: Do not treat temporary log-unavailability as a numerical failure.
