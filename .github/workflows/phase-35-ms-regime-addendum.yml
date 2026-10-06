@@ -30,7 +30,9 @@ jobs:
       - name: Run addendum
         id: run_add
         continue-on-error: true
-        run: python research/phase35_ms_regime_addendum.py 2>&1 | tee phase35_ms_addendum.log
+        run: |
+          set -o pipefail
+          python research/phase35_ms_regime_addendum.py 2>&1 | tee phase35_ms_addendum.log
       - name: Persist
         if: steps.run_add.conclusion == 'success'
         run: |
