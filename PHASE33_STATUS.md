@@ -61,3 +61,8 @@ Build the compact point-in-time dataset, run leakage/coverage audit, then execut
 ### Step 8 — verified artifact reconciliation — COMPLETE
 - Corrected Phase-33 run #13 artifact has been reconciled into the branch: cached NIFTY, sentiment, global, FII/DII and event datasets plus model result tables.
 - Postprocessing automation is being triggered from this status update after its branch-expression correction.
+
+
+### Step 9 — postprocess automation correction — IN PROGRESS
+- Postprocess checkout failed because the action constructed an invalid wildcard refspec.
+- The checkout step is now pinned directly to phase-33-nifty-prediction-models with fetch-depth 1.
