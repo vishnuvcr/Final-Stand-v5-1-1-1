@@ -1,3 +1,30 @@
+# Phase 46 — YouTube/Public-Video VIX Strategy Discovery — COMPLETE (Discovery Only)
+
+Phase 46 was opened to address the remaining **RISING, HIGH, SPIKE and HIGH_RISING** India-VIX gaps after Phases 43–45 found their strongest evidence in LOW/NORMAL VIX.
+
+A broad indexed YouTube/web search was performed across India VIX, high/rising VIX, high IV, VIX spikes, backspreads, calendar/diagonal structures, long volatility, iron condors/iron butterflies, volatility skew and VIX term-structure queries. Ten directly relevant video/public-source leads were recorded.
+
+### Highest-priority new hypotheses
+
+1. **Put Ratio Backspread / Put Backspread + RISING/HIGH VIX**
+2. **Calendar Trap / Calendar Spread + HIGH/RISING VIX**
+3. **Long Straddle / Long Strangle + HIGH/RISING/SPIKE VIX**
+4. **Reverse Iron Condor / Long Iron Butterfly + volatility expansion**
+5. **High-VIX spike followed by VIX reversal → defined-risk short-volatility structures**
+6. **Volatility-skew routing** and **IV-versus-VIX divergence** as secondary filters
+
+No Phase-46 numerical backtest has been run and no strategy has been promoted. YouTube claims are discovery inputs only; they do not enter the evidence hierarchy until independently tested under the project's development/validation/untouched-2026 framework.
+
+**Important:** the scan is broad and reproducible but cannot literally guarantee retrieval of every YouTube video because public search exposes indexed/ranked results rather than a complete corpus.
+
+- [Phase 46 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-46-vix-youtube-strategy-discovery)
+- [Phase 46 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_RESEARCH_PLAN.md)
+- [YouTube/source ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_YOUTUBE_SOURCE_LEDGER.md)
+- [Phase 46 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_STATUS.md)
+- [Phase 46 literature/source review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-46-vix-youtube-strategy-discovery/PHASE46_LITERATURE_REVIEW.md)
+
+---
+
 ## Phase 41 — COMPLETE / NO PROMOTION
 
 Phase 41 tested 24 pre-registered regime-conditional economic-margin policies. Zero candidates passed the development/validation selection gate. The three frozen diagnostics produced zero overrides across the entire 477-opportunity development/validation/2026 counterfactual panel, so exact sequential replay was identical to the canonical control. The canonical strategy remains unchanged.
