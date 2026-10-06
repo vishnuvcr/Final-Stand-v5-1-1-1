@@ -1,15 +1,15 @@
-# Phase 43 Status — VIX-Conditioned All-Strategy Sweep
+# Phase 43 Status — VIX-Conditioned NIFTY All-Strategy Sweep
 
-**REGISTERED — NUMERICAL EXECUTION PENDING**
+**COMPLETE_NO_ROUTER_PROMOTED**
 
-Branch: phase-43-vix-all-options-strategies
+Strategies declared: 22
+Defined-risk strategies: 18
+Expiry opportunities: 262
+Strategy observations: 4597
+Development / validation / holdout observations: 2398 / 1821 / 378
+Frozen strategy×VIX candidates: 0
+Frozen routers: 0
+Stage 5 active-exit state: SKIPPED_NO_ROUTER_PASSED
+Decision: **NO_PROMOTION**
 
-- research plan: COMPLETE
-- pre-registration: COMPLETE
-- literature review: COMPLETE
-- workflow: REGISTERED
-- numerical screen: PENDING
-- holdout: LOCKED
-- canonical strategy: UNCHANGED
-
-No numerical result is evidence until the corrected GitHub Actions run completes and artifacts pass audit.
+The canonical Phase-20/42 strategy remains unchanged unless a separately registered promotion gate is passed.

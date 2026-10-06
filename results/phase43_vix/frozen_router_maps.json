@@ -1,0 +1,33 @@
+{
+  "benchmark": "reverse_call_calendar",
+  "maps": {
+    "mean": {
+      "LOW": "call_backspread",
+      "NORMAL": "put_backspread",
+      "HIGH": "reverse_call_calendar",
+      "SPIKE": "reverse_call_calendar",
+      "FALLING": "reverse_call_calendar",
+      "RISING": "reverse_call_calendar",
+      "HIGH_RISING": "reverse_call_calendar"
+    },
+    "median": {
+      "LOW": "bull_put_credit",
+      "NORMAL": "bear_call_credit",
+      "HIGH": "reverse_call_calendar",
+      "SPIKE": "reverse_call_calendar",
+      "FALLING": "reverse_call_calendar",
+      "RISING": "reverse_call_calendar",
+      "HIGH_RISING": "reverse_call_calendar"
+    },
+    "sharpe": {
+      "LOW": "call_backspread",
+      "NORMAL": "put_backspread",
+      "HIGH": "reverse_call_calendar",
+      "SPIKE": "reverse_call_calendar",
+      "FALLING": "reverse_call_calendar",
+      "RISING": "reverse_call_calendar",
+      "HIGH_RISING": "reverse_call_calendar"
+    }
+  },
+  "frozen": []
+}

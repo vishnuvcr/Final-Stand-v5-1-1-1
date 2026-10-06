@@ -1,0 +1,18 @@
+{
+  "phase": 43,
+  "status": "COMPLETE_NO_ROUTER_PROMOTED",
+  "strategies_declared": 22,
+  "defined_risk_strategies": 18,
+  "expiry_files": 267,
+  "opportunities": 262,
+  "trade_rows": 4597,
+  "development_rows": 2398,
+  "validation_rows": 1821,
+  "holdout_rows": 378,
+  "frozen_top10_count": 0,
+  "frozen_router_count": 0,
+  "best_defined_risk_development_benchmark": "reverse_call_calendar",
+  "data_errors": 2,
+  "stage5": "SKIPPED_NO_ROUTER_PASSED",
+  "decision": "NO_PROMOTION"
+}

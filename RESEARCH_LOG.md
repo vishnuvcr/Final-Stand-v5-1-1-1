@@ -260,3 +260,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Initial file-generation call failed before any repository write because the JavaScript payload used an invalid string delimiter around a repository identifier.
 - No numerical execution or research evidence was affected.
 - Corrected registration artifacts were persisted successfully; the error is retained only for audit and prevention.
+
+
+## 2026-10-06 — Phase 43 structural execution run 37475483601
+- Structural VIX-conditioned sweep completed with status COMPLETE_NO_ROUTER_PROMOTED.
+- Declared strategies: 22; observations: 4597; development/validation/holdout: 2398/1821/378.
+- Frozen strategy×VIX candidates: 0; frozen routers: 0.
+- Stage 5: SKIPPED_NO_ROUTER_PASSED; decision: NO_PROMOTION.
