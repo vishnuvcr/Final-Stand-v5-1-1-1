@@ -1328,3 +1328,12 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: NON-EVIDENCE.
 - Correction: exit prices are now deduplicated by timestamp using the last observed quote, and entry quote selection uses the last duplicate row consistently.
 - Prevention: the artifact audit must include duplicate timestamp handling before numerical evidence is accepted.
+
+
+## F48-008 — Historical NIFTY lot-size schedule audit found a 2024 development-period error
+- The first accepted Phase-48 numerical run used lot size 50 for expiries before 2024-12-26.
+- NSE Circular 37/2024 revised NIFTY from 50 to 25 effective for new contracts from April 26, 2024. NSE Circular 64672 identifies December 19, 2024 as the last weekly expiry with the existing lot size, January 2, 2025 as the first weekly expiry with the revised lot size, and January 30, 2025 as the last monthly expiry with the old lot size.
+- Therefore the October-December 2024 development-period results in the first Phase-48 numerical run used an incorrect lot size.
+- Evidence status: prior Phase-48 results are REJECTED AS NON-FINAL and will not be used in the phase conclusion.
+- Correction: historical lot-size mapping was corrected for the 2024-2026 sample.
+- Prevention: lot-size mapping is now explicitly documented in code and must be cross-checked against NSE circulars before future numerical runs.
