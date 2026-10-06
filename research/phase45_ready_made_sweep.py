@@ -257,9 +257,20 @@ def pf(vals):
     neg=-a[a<0].sum()
     return float(pos/neg) if neg>0 else np.inf if pos>0 else np.nan
 
+def parse_states(x):
+    if isinstance(x, list):
+        return x
+    try:
+        return json.loads(x)
+    except Exception:
+        try:
+            return ast.literal_eval(x)
+        except Exception:
+            return []
+
 def regime_test(z,state,seed=4501):
-    a=z[z["active_states"].apply(lambda x: state in x)]["net"].to_numpy(float)
-    b=z[z["active_states"].apply(lambda x: state not in x)]["net"].to_numpy(float)
+    a=z[z["active_states"].apply(lambda x: state in parse_states(x))]["net"].to_numpy(float)
+    b=z[z["active_states"].apply(lambda x: state not in parse_states(x))]["net"].to_numpy(float)
     if len(a)<10 or len(b)<10:
         return {"n_active":len(a),"n_rest":len(b),"diff_mean":np.nan,"ci_lo":np.nan,"ci_hi":np.nan,"p":np.nan}
     rng=np.random.default_rng(seed)
@@ -328,6 +339,7 @@ def main():
     pd.DataFrame(errors).to_csv(OUT/"data_errors.csv",index=False)
 
     base43["active_states"]=base43["entry_ts"].apply(lambda x: json.dumps(state_flags(vix,x)))
+    new["source"]="phase45_new"
     full=pd.concat([base43,new[base43.columns]],ignore_index=True)
     full=full.drop_duplicates(["expiry","entry_ts","strategy"],keep="first")
     full.to_csv(OUT/"full_ready_made_trade_matrix.csv",index=False)
@@ -337,7 +349,7 @@ def main():
     for (strategy,split),g in full.groupby(["strategy","split"]):
         if split not in ("development","validation","holdout"): continue
         for state in states:
-            z=g[g["active_states"].apply(lambda x: state in x)]
+            z=g[g["active_states"].apply(lambda x: state in parse_states(x))]
             if len(z)==0: continue
             vals=z["net"].to_numpy(float)
             summary.append({
@@ -375,7 +387,7 @@ def main():
     hold=full[full.split=="holdout"]
     for r in fr.itertuples(index=False):
         g=hold[hold.strategy==r.strategy]
-        z=g[g.active_states.apply(lambda x:r.state in x)]
+        z=g[g.active_states.apply(lambda x:r.state in parse_states(x))]
         if len(z)==0: continue
         hold_confirm.append({
             "strategy":r.strategy,"state":r.state,"hold_trades":len(z),
