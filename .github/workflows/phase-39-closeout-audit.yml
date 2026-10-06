@@ -1,0 +1,61 @@
+name: Phase 39 - Final Closeout Audit
+
+on:
+  push:
+    branches: [phase-39-advanced-direction-models]
+    paths:
+      - 'PHASE39_STATUS.md'
+      - 'README.md'
+      - 'ERROR_LOG.md'
+      - 'manuscript/**'
+      - 'results/phase39_counterfactual/**'
+      - 'results/phase39_models/**'
+      - 'results/phase39_sequential_policy/**'
+      - 'results/phase39_sequential_policy_audit/**'
+      - 'results/phase39_advanced_screen/**'
+      - 'results/phase39_final_exploratory/**'
+      - 'research/phase39_closeout_audit.py'
+      - '.github/workflows/phase-39-closeout-audit.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: phase39-closeout-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  closeout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-39-advanced-direction-models
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check --no-input pandas numpy
+      - name: Run closeout audit
+        run: python research/phase39_closeout_audit.py
+      - name: Verify closeout
+        run: |
+          test -f results/phase39_closeout/closeout.json
+          python - <<'PY'
+          import json
+          s=json.load(open('results/phase39_closeout/closeout.json'))
+          assert s['status']=='PASS'
+          assert s['decision']=='CLOSE_PHASE_39_NO_PROMOTION'
+          assert s['canonical_strategy_unchanged'] is True
+          print(json.dumps(s,indent=2))
+          PY
+      - name: Persist closeout audit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase39_closeout
+          git commit -m 'Phase 39: persist final closeout audit' || true
+          git pull --rebase origin phase-39-advanced-direction-models
+          git push origin HEAD:phase-39-advanced-direction-models
