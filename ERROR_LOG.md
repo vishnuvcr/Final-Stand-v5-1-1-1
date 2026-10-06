@@ -103,3 +103,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-27-delta-exit-
 - The workflow also incorrectly treated the failed addendum as successful because the conditional used the step outcome with `continue-on-error`; only cache/log files were persisted, not numerical results.
 - No Markov-switching result from this run is accepted.
 - Correction: drop any existing regime columns before merging the canonical cached regime table and gate persistence on the actual step conclusion.
+
+
+## 2026-10-06 — Phase 35 Markov addendum run #1 (37425571102)
+- GitHub Actions reported success, but the numerical Python process actually failed because `tee` masked the non-zero Python exit status.
+- Log diagnosis: the cached Markov regime table was merged into an event table that already contained `ms_p0/ms_p1/ms_entropy`, creating duplicate columns and a LightGBM/Sklearn dataframe validation failure.
+- No Markov addendum result is accepted as evidence.
+- Corrections: make the merge idempotent and enable shell `pipefail` so future Python failures cannot be masked.
