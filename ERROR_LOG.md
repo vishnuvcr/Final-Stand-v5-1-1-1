@@ -1808,3 +1808,16 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: **NO SCIENTIFIC IMPACT**; no repository mutation occurred from the failed batch.
 - Correction: rebuild the patch payload with explicit per-file variables and apply writes sequentially with fresh content SHAs.
 - Prevention: validate all patch variables before invoking repository writes; use sequential writes for related files.
+
+
+### F50B-048 — TT04 downstream dependency preflight too weak
+- Time: 2026-10-07.
+- Static audit found the TT04 dependency preflight used `test -s` for the TT03 error CSV, which would reject a valid zero-error empty file, and its final TT04 artifact audit did not explicitly require all four preregistered cost fields.
+- Evidence status: **NO SCIENTIFIC IMPACT**; TT04 had not executed numerical research yet.
+- Correction: use existence checks plus explicit zero-row validation, and require `net/net50/net20/net20_50/vix_state` before downstream publication.
+
+### F50B-049 — TT06 exit-timestamp selection used the dataframe index instead of timestamps
+- Time: 2026-10-07.
+- Static audit found TT06's 15:15+ exit search compared the RangeIndex to a timezone-aware timestamp. The code compiled but would fail at runtime when reaching the common-exit search.
+- Evidence status: **NO SCIENTIFIC IMPACT**; TT06 had not executed.
+- Correction: select the earliest common observed value from the explicit `timestamp` columns at/after 15:15, then perform the existing complete-leg exit/coverage logic.
