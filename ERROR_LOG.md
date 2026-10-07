@@ -2101,3 +2101,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Direct inspection of TT04 run 37621965843 found preflight successful and numerical replay still in progress.
 - No new implementation error was identified in the active TT04 V3 workflow or downstream statistical-gate audit.
 - No numerical output was classified as evidence before completion; no duplicate TT04 run was started.
+
+
+### F50B-070 — TT04 live-log endpoint returned BlobNotFound while replay remained active
+- Time: 2026-10-07.
+- Direct job-state inspection shows TT04 run 37621965843 remains in_progress in the numerical replay step.
+- Fetching its live job log for job 112794408361 returned GitHub BlobNotFound.
+- This is an Actions log-availability/observability issue, not a workflow failure and not numerical evidence.
+- Handling: continue using authoritative workflow/job state and artifact publication gates; do not infer replay outcome from missing live logs and do not launch a duplicate run.
+- Evidence status: NO SCIENTIFIC IMPACT.
