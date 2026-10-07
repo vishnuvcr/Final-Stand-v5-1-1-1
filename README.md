@@ -885,3 +885,9 @@ No Phase-50B strategy has been promoted.
 - Final cleaned TT03 V5 rerun was triggered after the workflow rewrite; its live Actions run is not yet observable through the available connector surface, so no run ID is claimed.
 - TT04 V3 was independently audited before execution and its entry-coverage denominator was hardened; no TT04 numerical evidence is accepted yet.
 - TT04 now follows persisted TT03 terminal classification rather than consuming TT03 P&L when TT03 is failed or invalid.
+
+
+### 2026-10-07 — Resume after connection interruption
+- Current TT03 V5 dedicated run [37620274641](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37620274641) is still executing its numerical replay.
+- No TT03 result or downstream promotion decision is accepted while that run remains incomplete.
+- While it executes, downstream TT04 through TT07 coverage-control workflows were hardened to reconcile exclusion diagnostics against summary denominators before accepting future evidence.
