@@ -808,3 +808,9 @@ No Phase-50B strategy has been promoted.
 - Added [TT-03 replay specification](PHASE50B_TT03_REPLAY_SPEC.md) documenting the exact entry window, symmetric ratio sets, expiry-day P&L exit, coverage rules, cost model, chronology and finite far-OTM mutation boundary.
 - The dedicated workflow remains the sole numerical execution path for corrected TT-03.
 - Current trigger refresh commit: `28722b5204166199f91353d793f2840fe2022812`; no TT-03 result artifact is accepted until its complete artifact/coverage/cost audit passes.
+
+
+### 2026-10-07 — Statistical gate protection correction
+- The execution-only VIX inference gate was audited before first execution.
+- Its inferential sample is now explicitly restricted to DEV+VAL (2021–2025); the protected 2026 HOLD cannot influence bootstrap/permutation tests, Holm correction, ranking or tuning.
+- No inference result from the superseded implementation is accepted.
