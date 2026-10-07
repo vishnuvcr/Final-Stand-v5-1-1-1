@@ -1709,3 +1709,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Added TT-04 engine revision `50B-TT04-COVERAGE-V2` and required it in the dedicated TT-04 workflow audit.
 - This blocks any pre-coverage-correction TT-04 artifact from being treated as evidence.
 - Evidence status: **NO SCIENTIFIC IMPACT**. TT-04 numerical execution has not begun.
+
+
+### F50B-035 — Phase-50B concurrency hardening
+- Time: 2026-10-07.
+- Added a serialized concurrency group to the canonical Phase-50B workflow with `cancel-in-progress: false`.
+- Purpose: prevent overlapping numerical runs from competing for cached/published artifacts or obscuring the canonical evidence lineage.
+- Evidence status: **NO SCIENTIFIC IMPACT**. The active run 37593965525 was already running before this workflow hardening.
