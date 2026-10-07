@@ -85,8 +85,10 @@ def exec_px(px, action, stress=1.0):
     return max(0.0, float(px) + slip) if action == "buy" else max(0.0, float(px) - slip)
 
 
-def charges(orders, lot_size, cost_mult=1.0):
-    brokerage = BROKERAGE_PER_ORDER * cost_mult * len(orders)
+def charges(orders, lot_size, cost_mult=1.0, brokerage_per_order=None):
+    # brokerage_per_order is an optional robustness override; legacy callers retain ₹10/order.
+    bpo = BROKERAGE_PER_ORDER if brokerage_per_order is None else float(brokerage_per_order)
+    brokerage = bpo * cost_mult * len(orders)
     exchange = sebi = ipft = stt = stamp = 0.0
     for d, side, px in orders:
         sr, tx, se, ip, sd = fee_rates(d)
