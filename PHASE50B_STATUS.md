@@ -321,3 +321,13 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Workflow source was re-read and confirms `cancel-in-progress: true`, the explicit `trigger/phase50b.start` path restriction, and the 360-minute replay timeout.
 - No numerical result is accepted and no duplicate replay is launched.
 - TT-07 remains source-blocked by the unresolved `ic_entered` lifecycle semantics documented in its source audit.
+
+
+## 2026-10-07 — Pre-execution downstream hardening
+- Re-audited TT03, TT04, TT05 and TT06 while the authoritative TT-02 numerical replay continues.
+- TT03 source/replay contract remains internally consistent; no new blocking defect was found.
+- TT04 workflow dependency/artifact audits were hardened for empty-but-valid error logs and all preregistered cost outputs.
+- TT05 manual/dependency preflight was hardened so it cannot consume incomplete TT04 evidence.
+- TT06 static audit found a latent timestamp-index bug in the 15:15+ exit search; it was corrected before any TT06 execution.
+- These corrections are pre-execution controls and do not alter any accepted numerical evidence.
+- Authoritative TT-02 run 37598918723 remains the sole active numerical run.
