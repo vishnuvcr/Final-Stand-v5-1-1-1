@@ -9,13 +9,13 @@ def main():
     assert REGISTRY.exists() and PRE.exists() and PLAN.exists()
     text = REGISTRY.read_text()
     required = [
-        "Dynamic Ratio Reversals",
-        "0.20/0.10 Delta Calendar Hedge Spread v4",
-        "Corrected Dynamic-n NIFTY Weekly Options Strategy",
-        "Profit Breakout Premium Match Straddle",
-        "Simple Intraday Short Straddle",
-        "Intraday Asym Premium",
-        "Dynamic IC to Ratio",
+        "Dynamic_Ratio_Reversals.json",
+        "020010_Delta_Calendar_Hedge_Spread_v4.json",
+        "Corrected_Dynamic-n_NIFTY_Weekly_Options_Strategy.json",
+        "Profit_Breakout_Premium_Match_Straddle.json",
+        "Simple_Intraday_Short_Straddle.json",
+        "Intraday_Asym_Premium.json",
+        "Dynamic_IC_to_Ratio.json",
         "Iron-condor-to-ratio-v1",
         "NoDip-Stage-1",
         "MC-OPTIONS-INDEPENDENT-BACKTEST-MC1",
