@@ -196,3 +196,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Added TT-03 engine revision `50B-TT03-WINDOW-V2` and a downstream dependency check so results from pre-correction TT-03 code cannot be promoted.
 - Future canonical runs refresh the TT-03 source to the latest branch head before execution.
 - Current run 37593965525 predates this guard; therefore any downstream TT-03 artifact from that run will be treated as non-evidence unless it carries the required revision (and the current TT04 gate will reject stale artifacts).
+
+
+## 2026-10-07 — TT-04 coverage audit hardened
+- Pre-execution static audit corrected a silent trade-loss path for missing exit quotes.
+- TT-04 now records exit coverage gaps separately and applies the same 95% complete-exit feasibility gate before evidence can pass.
+- No TT-04 numerical evidence existed before this correction.
