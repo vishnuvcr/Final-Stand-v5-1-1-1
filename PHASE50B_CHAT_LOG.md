@@ -341,3 +341,10 @@ User requested continuation without pausing. Work performed:
 - Self-audit found a likely artificial source of coverage loss in the hard-close search: latest timestamp could have some but not all legs.
 - Corrected the engine to search backward for the latest complete all-leg quote at or before 15:29.
 - Workflow and trigger were advanced to V3; no V2 result is accepted and TT04 remains blocked.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 fail-closed downstream routing
+- Audited the full TT03 workflow after the V2/V3 coverage failure.
+- Found that FAIL_COVERAGE could still create the TT04 trigger.
+- Corrected downstream routing to PASS-only and retriggered TT03 under the serialized workflow.
+- No TT04 execution from a failed-coverage TT03 state is permitted.
