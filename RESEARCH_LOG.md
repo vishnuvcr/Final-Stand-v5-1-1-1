@@ -552,3 +552,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — TT-02 fallback validation
 - Completed semantic equivalence audit of v2 and v3 before any fallback execution.
+
+
+## 2026-10-07 — Run-overlap control
+- Detected overlapping stale/corrected TT-02 executions; corrected run is retained and stale run is excluded from evidence.
