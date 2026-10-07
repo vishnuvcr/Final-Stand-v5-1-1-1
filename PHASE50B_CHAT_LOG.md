@@ -480,3 +480,7 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - This satisfies the preregistered condition for activating the dormant performance-only fallback.
 - Added and triggered the controlled fallback workflow using 50B-TT04-COVERAGE-V3-FAST-DORMANT.
 - No strategy parameter or scientific rule was changed; fallback evidence remains blocked until the full artifact gate passes.
+
+
+## 2026-10-07 — Continue checkpoint: fallback awaiting Actions dispatch
+- User requested continuation. Canonical TT04 failed and the controlled fallback workflow is installed, but no fallback Actions run exists. The connector does not expose workflow_dispatch and API-authored push triggers are suppressed. No scientific result is inferred; TT05 remains blocked.
