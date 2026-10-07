@@ -583,3 +583,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — Authoritative TT-02 handoff
 - Triggered a fresh corrected TT-02 replay from the latest branch after the pre-fix run was classified non-authoritative.
+
+
+## 2026-10-07 — TT-02 stale-run retirement
+- Confirmed cancellation of the superseded pre-fix TT-02 run and handoff to corrected run 37598918723.
