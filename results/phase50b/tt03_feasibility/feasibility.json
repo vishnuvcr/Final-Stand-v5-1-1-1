@@ -3,7 +3,6 @@
   "diagnostic_only": true,
   "feasibility_state": "FAIL_COVERAGE",
   "engine_revision": "50B-TT03-WINDOW-V2",
-  "source_run_id": 37611676386,
   "trades": 187,
   "candidate_trades": 202,
   "coverage_exclusions": 15,
@@ -13,9 +12,5 @@
   "net20": 73765.927116888,
   "net20_50": 60025.640675332,
   "data_errors": 0,
-  "raw_replay_persistence": "PENDING_DIAGNOSTIC_CAPTURE_RUN_37613416831",
-  "promotion_eligible": false,
-  "vix_conditioning_eligible": false,
-  "tuning_eligible": false,
-  "note": "Coverage is below the preregistered 95% feasibility threshold. P&L fields are diagnostic only and must not be used for promotion, tuning, statistical inference, or candidate ranking."
+  "run_id": 37613416831
 }
