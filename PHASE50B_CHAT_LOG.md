@@ -386,3 +386,10 @@ User requested continuation without pausing. Work performed:
 - Replaced duplicated persistence and routing blocks with one terminal feasibility classifier and one independent downstream route.
 - TT03 failure states remain non-evidence; TT04 can continue without consuming TT03 P&L.
 - Final V5 trigger is held until the cleaned workflow is committed.
+
+
+## 2026-10-07 — Resume checkpoint: TT04 coverage self-audit
+- Audited the TT04 V3 replay before numerical execution.
+- Found a silent candidate-denominator path on normal sessions with no complete 10:00–10:05 ATM CE/PE entry.
+- Corrected it to explicit coverage gaps, with non-regular sessions handled separately.
+- No TT04 numerical evidence has been accepted.
