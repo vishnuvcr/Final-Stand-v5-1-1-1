@@ -552,3 +552,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT04 run 37621965843 remains in_progress in the numerical replay step.
 - Direct live-log retrieval returned BlobNotFound; this is recorded as an operational observability issue only.
 - No duplicate TT04 execution was launched. Artifact publication/audit remains the sole scientific acceptance gate.
+
+
+## 2026-10-07 — TT04 continuation checkpoint
+- User instructed continuation again.
+- Direct Actions state still shows TT04 run **37621965843** in_progress at `Run TT04 replay`; all preflight/replay prerequisites are successful.
+- TT04 result artifacts and the TT05 trigger are still absent from the branch, so no evidence has reached the acceptance/publication gate.
+- No duplicate run was launched; the registered chain remains fail-closed.
