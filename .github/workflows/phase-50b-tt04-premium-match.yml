@@ -39,6 +39,7 @@ jobs:
           d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
           er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V2", d
           assert d["trades"] == len(tr)
           assert d["trades"] > 0
           assert len(er) == 0, er.head()
