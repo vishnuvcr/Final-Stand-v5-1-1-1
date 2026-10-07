@@ -605,3 +605,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Added `.github/workflows/phase50b-tt04-fallback-syntax.yml` with both automatic push and manual dispatch triggers.
 - Its only numerical action is Python syntax compilation of the dormant fallback; it does not load market data or run a backtest.
 - The fallback therefore remains an execution contingency only, while TT04 V3 run **37621965843** remains the sole authoritative scientific execution.
+
+
+## 2026-10-07 — TT04 fallback source-equivalence audit
+- Re-audited the dormant fallback against the canonical TT04 V3 source contract.
+- Confirmed preservation of accepted imports/cost functions, exact observed-LTP premium matching, 10:00–10:05 entry window, ₹7,000 source stop, 15:15–15:30 observed exit search, explicit entry/exit coverage gaps, and all four registered cost outputs.
+- Confirmed the validation workflow is compile-only and does not invoke the replay main function or load market data.
+- The fallback remains non-authoritative and is not wired into TT04 execution.
