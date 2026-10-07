@@ -920,3 +920,11 @@ TT-03 V5 remains an accepted feasibility PASS. TT-04 run **37621965843** is stil
 
 ## Phase 50B — execution contingency — 2026-10-07
 A dormant performance-only TT-04 fallback has been prepared to reduce repeated timestamp scans if the active replay genuinely fails or times out. It is not wired into the active workflow, has not been executed, and is not evidence; TT-04 V3 remains the canonical live run.
+
+
+## Phase 50B — TT04 canonical failure and controlled fallback — 2026-10-07
+- TT-03 V5 remains accepted: 200/201 coverage (99.50%), zero data errors.
+- Canonical TT04 run 37621965843 failed during numerical replay. No artifact passed audit and no TT04 evidence was published.
+- The exact runtime exception is not asserted because the GitHub job-log endpoint returned BlobNotFound.
+- The preregistered TT04 performance contingency is now activated through .github/workflows/phase-50b-tt04-fallback.yml, using the source-equivalence-audited 50B-TT04-COVERAGE-V3-FAST-DORMANT engine.
+- The fallback is execution-only: no strategy or cost parameter changed. TT05 remains fail-closed until an audited fallback artifact is published.
