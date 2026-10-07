@@ -183,3 +183,6 @@ Phase 50 closes after:
 - and a final decision is recorded.
 
 Phase 50 must not reopen Phase 49's parameter search.
+
+## Sparse-regime feasibility amendment
+The first Stage-1 execution demonstrated that HIGH had only 6 development opportunities under the fixed 10:00/4-DTE control. This is insufficient for the confirmatory 15-trade-per-fold gate and does not justify weakening that gate. Therefore the phase now has an explicitly labelled **exploratory sparse-HIGH branch**: the top fixed HIGH-VIX far-OTM development cells are carried forward unchanged into 2024–2025 and 2026 descriptively, but no exploratory result can satisfy or bypass the confirmatory promotion gate. This amendment records a data-feasibility outcome rather than tuning the gate after seeing validation results.
