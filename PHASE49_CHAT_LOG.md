@@ -30,3 +30,10 @@ The corrected #12 numerical execution completed successfully and the artifact se
 The final reconciled artifact is now persisted on the Phase-49 branch with manuscript, tables, figures, statistical summary and final-decision JSON.
 
 Final scientific decision: **NO PROMOTION**. The best tuned configuration is the LOW-VIX Bear Put (09:30 IST; 5 trading sessions before expiry; buy PE +1 modal step; sell PE −3 modal steps; four-step width). It is economically promising but fails the Holm-adjusted confirmatory statistical gate and has only five protected holdout observations.
+## 2026-10-07 — User command: Continue
+
+Phase 49 was re-audited from the repository and confirmed CLOSED with NO PROMOTION. The authoritative numerical run was 37542636969 (#12), with successful automatic reconciliation in 37544951498 (#2).
+
+The final evidence identifies one promising but non-confirmatory tuned candidate: LOW-VIX Bear Put Debit Spread, 09:30 IST, DTE 5, buy PE +1 modal step / sell PE -3, width 4. Validation was +₹28,848.48 net and +₹27,246.47 under +50% cost stress; active-vs-complement p=0.2260 and Holm p=0.4520. The protected holdout had 5 trades and +₹27,278.50 net.
+
+Phase 49 therefore ends at its registered stop condition. The canonical strategy remains unchanged. Any further work should be a separate prospectively registered validation phase rather than reopening the Phase-49 parameter surface.
