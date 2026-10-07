@@ -846,3 +846,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Prepared a separate execution-only fallback for TT04 to reduce repeated timestamp/quote scans identified during the active replay.
 - Static review confirms the fallback retains the registered source semantics and cost model; it is deliberately not connected to the live workflow and has not been executed.
 - This is an execution-performance contingency, not a new strategy variant and not a research-plan change.
+
+
+## 2026-10-07 — TT04 fallback compile-only control
+- Added a compile-only GitHub Actions control for the dormant TT04 performance fallback, with automatic and manual triggers.
+- This control cannot produce trading evidence; it exists only to validate the fallback source before any possible timeout contingency.
+- The canonical TT04 numerical run remains unchanged and active.
