@@ -528,8 +528,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 
 ## 2026-10-07 — Cost model robustness update
-- NSE current statutory charges were reverified; option-sale STT is 0.15% from 1 April 2026 and equity-option stamp duty is 0.003% buyer-side. citeturn214286search0turn214286search3
-- Paytm Money brokerage ambiguity was handled by retaining the preregistered ₹10 primary model and adding a non-selective ₹20/order robustness scenario. citeturn157124search0turn157124search2
+- NSE current statutory charges were reverified; option-sale STT is 0.15% from 1 April 2026 and equity-option stamp duty is 0.003% buyer-side. [NSE STT schedule](https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax); [NSE stamp duty schedule](https://www.nseindia.com/static/invest/first-time-investor-stamp-duty-charges-taxes)
+- Paytm Money brokerage ambiguity was handled by retaining the preregistered ₹10 primary model and adding a non-selective ₹20/order robustness scenario. [Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web); [Paytm Money pricing update](https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/)
 
 
 ## 2026-10-07 — Phase 50B TT-03 evidence-integrity correction
