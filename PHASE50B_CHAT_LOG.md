@@ -471,3 +471,12 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 ## 2026-10-07 — Continue checkpoint: fallback equivalence audit
 - Re-audited the dormant TT04 fallback against the canonical source contract.
 - Confirmed the fallback is not active and the validation workflow is compile-only; no scientific evidence was generated.
+
+
+## 2026-10-07 — Continue checkpoint: TT04 failed and fallback activated
+- User said “Ok proceed”.
+- Canonical TT04 run 37621965843 is now terminal failure at the numerical replay step; artifact audit/publication/TT05 trigger did not execute.
+- The job log remained inaccessible through GitHub (BlobNotFound), so the exact runtime exception is not inferred.
+- This satisfies the preregistered condition for activating the dormant performance-only fallback.
+- Added and triggered the controlled fallback workflow using 50B-TT04-COVERAGE-V3-FAST-DORMANT.
+- No strategy parameter or scientific rule was changed; fallback evidence remains blocked until the full artifact gate passes.
