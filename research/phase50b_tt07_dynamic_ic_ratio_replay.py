@@ -180,23 +180,32 @@ def leg_quote_complete(legs, z):
     return bool(legs) and all(quote(z, opt, strike) is not None for (opt, strike) in legs)
 
 def execute_open_close(position, new_legs, ts, z, lot):
-    orders = []
-    for (opt, strike), qty in list(position["legs"].items()):
-        px = quote(z, opt, strike)
-        if px is None:
+    # Transactional transition: validate every exit and entry quote before
+    # mutating cash or the live-leg ledger. This prevents partial cash mutation
+    # if a later leg is missing at the transition timestamp.
+    old_legs = list(position["legs"].items())
+    new_legs = list(new_legs.items())
+    for (opt, strike), _qty in old_legs + new_legs:
+        if quote(z, opt, strike) is None:
             return False
+
+    orders = []
+    cash_delta = 0.0
+    for (opt, strike), qty in old_legs:
+        px = quote(z, opt, strike)
         side = "sell" if qty > 0 else "buy"
         ep = exec_px(px, side)
-        position["cash"] += (ep if side == "sell" else -ep) * abs(qty) * lot
+        cash_delta += (ep if side == "sell" else -ep) * abs(qty) * lot
         orders.append((pd.Timestamp(ts), side, ep*abs(qty)))
-    for (opt, strike), qty in new_legs.items():
+
+    for (opt, strike), qty in new_legs:
         px = quote(z, opt, strike)
-        if px is None:
-            return False
         side = "buy" if qty > 0 else "sell"
         ep = exec_px(px, side)
-        position["cash"] += (-ep if side == "buy" else ep) * abs(qty) * lot
+        cash_delta += (-ep if side == "buy" else ep) * abs(qty) * lot
         orders.append((pd.Timestamp(ts), side, ep*abs(qty)))
+
+    position["cash"] += cash_delta
     position["legs"] = dict(new_legs)
     position["orders"].extend(orders)
     return True
