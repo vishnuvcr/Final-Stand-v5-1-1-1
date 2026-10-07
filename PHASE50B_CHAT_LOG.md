@@ -160,3 +160,8 @@ User requested continuation without pausing. Work performed:
 
 ## 2026-10-07 — TT-04 revision gate
 - Added TT-04 engine revision `50B-TT04-COVERAGE-V2` and workflow validation against it.
+
+
+## 2026-10-07 — Workflow serialization
+- Added a canonical concurrency group to prevent overlapping Phase-50B numerical runs.
+- Current run remains unaffected.
