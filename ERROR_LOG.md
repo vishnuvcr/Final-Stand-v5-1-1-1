@@ -1458,3 +1458,15 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: raw numerical output is useful exploratory diagnostic evidence but was not publication-accepted by the workflow.
 - Correction: create valid empty ledgers and an explicit sparse-HIGH exploratory validation branch. The exploratory branch is non-promotable and does not relax the confirmatory gate.
 - Prevention: all early-stop paths must emit the full canonical artifact set with headers before publication auditing.
+
+
+## 2026-10-07 — Phase 50B expansion
+
+### Error F50B-001 — Strategy-universe scope gap
+The parent Phase 50 far-OTM phase used a restricted family universe and therefore did not yet contain the user's seven supplied Tradetron strategies or several older repository strategy lineages.
+
+**Evidence status:** no Phase-50B numerical evidence exists yet.
+
+**Correction:** created the dedicated phase-50b-expanded-strategy-universe branch, froze a prospective strategy registry and preregistration, and preserved the parent Phase 50 run unchanged.
+
+**Prevention:** future scope additions must be frozen in a dedicated phase before candidate-selection statistics are run.
