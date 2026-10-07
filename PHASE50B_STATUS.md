@@ -583,3 +583,12 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - The available GitHub wrapper does not expose authoritative `started_at`/`updated_at` timestamps for the run, so timeout status cannot be asserted from the available evidence alone.
 - Therefore the 240-minute fallback threshold is **not declared breached** and no fallback replay is launched.
 - This preserves the scientific rule: never replace a valid active replay merely because it is slow.
+
+
+## 2026-10-07 — Continuation checkpoint after direct Actions revalidation
+- User instructed continuation from the accepted TT-03 V5 PASS.
+- Direct inspection of Actions run **37621965843** confirms the TT-04 **numerical replay** step remains `in_progress`; preflight, compilation, dependency installation and HF cache remain successful.
+- The run currently has **no published Actions artifacts**; artifact audit, publication and TT05 trigger remain pending.
+- The 240-minute workflow timeout remains the registered execution gate. Because the available GitHub wrapper still does not expose authoritative run start-time metadata, timeout breach is not inferred.
+- No duplicate replay, parameter change, VIX inference, holdout analysis or promotion decision was performed from the incomplete run.
+- The finite Phase-50B plan remains unchanged.
