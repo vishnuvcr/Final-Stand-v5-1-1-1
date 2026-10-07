@@ -184,3 +184,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Canonical Phase-50B run **37593965525** (run 18) is now active from the corrected trigger commit `0b09aff32d3a152d1e980819135a9a76784e7a8e`.
 - Registry gate is executing; TT-02 will use the new `coverage_gaps.csv` classification and 95% feasibility rule.
 - No result from the prior failed run is promoted or used for inference.
+
+
+## 2026-10-07 — TT-03 pre-execution audit correction
+- Static audit corrected TT-03 to evaluate the complete 10:00–10:05 entry window and select the earliest feasible complete ratio set.
+- Call ratio remains the registered priority; put ratio remains the fallback when call quotes are unavailable.
+- No TT-03 numerical evidence existed, so this correction has no evidence impact.
