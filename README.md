@@ -649,3 +649,9 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - The implementation had incorrectly treated “at/after 15:15” as “exactly 15:15”. This was corrected so the exit uses the earliest common observed quote time at or after 15:15 for all open legs, without forward-filling.
 - Corrected v2 automatically started Actions run 37589199743 from commit 6a11b859c646dccdacc03a68a22fe7a2be3a842f; no result is accepted until the artifact audit passes.
 - [Phase 50B status](PHASE50B_STATUS.md) and [error log](ERROR_LOG.md) contain the full correction record.
+
+
+## 2026-10-07 — Phase 50B workflow gate correction
+- Run 37589199743 failed before numerical execution because the registry publisher was missing a closing `fi`; registry validation itself passed.
+- Corrected workflow commit e0d4bda09bb943272bac591d68aafa051d7b9f94 restores the shell closure and passes a structural shell-balance audit.
+- No numerical evidence was produced by run 37589199743.
