@@ -123,3 +123,9 @@ User requested continuation without pausing. Work performed:
 - Found that the initial TT-03 engine collapsed the 10:00–10:05 source window to one timestamp.
 - Corrected it to scan the complete frozen window and take the earliest feasible complete ratio set.
 - No TT-03 numerical run had started, so no evidence was affected.
+
+
+## 2026-10-07 — Stale TT-03 evidence guard
+- Added engine revision stamping and downstream validation for TT-03.
+- Future runs refresh the TT-03 source from the branch before execution.
+- Old-run TT-03 artifacts without revision `50B-TT03-WINDOW-V2` cannot pass the TT04 dependency gate.
