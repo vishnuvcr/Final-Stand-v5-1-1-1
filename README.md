@@ -833,3 +833,7 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT-03 coverage denominator correction
 - Eligible TT03 campaigns that cannot complete the source-defined 10:00–10:05 entry are now retained as explicit coverage exclusions.
 - This prevents silent loss of candidate observations and is required for the 95% feasibility gate.
+
+### 2026-10-07 — TT-03 corrected numerical rerun
+- Dedicated TT03 run 37611676386 is currently executing on the corrected engine after passing dependency, compilation, static-contract and HF-cache controls.
+- No TT03 result has been accepted yet; TT04 remains downstream-gated on a complete TT03 artifact audit.
