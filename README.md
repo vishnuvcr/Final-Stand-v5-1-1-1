@@ -814,3 +814,9 @@ No Phase-50B strategy has been promoted.
 - The execution-only VIX inference gate was audited before first execution.
 - Its inferential sample is now explicitly restricted to DEV+VAL (2021–2025); the protected 2026 HOLD cannot influence bootstrap/permutation tests, Holm correction, ranking or tuning.
 - No inference result from the superseded implementation is accepted.
+
+
+### 2026-10-07 — VIX inference-family correction
+- The statistical gate now reconstructs LOW/NORMAL/HIGH plus SPIKE/RISING/FALLING/HIGH_RISING directly from the frozen cached India VIX series and each trade's entry timestamp.
+- Trades without adequate VIX lookback are excluded from both regime and complement inference rather than being misclassified as complements.
+- No statistical result from the superseded gate is accepted.
