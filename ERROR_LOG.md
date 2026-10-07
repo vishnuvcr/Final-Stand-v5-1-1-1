@@ -1558,3 +1558,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No numerical TT-04 result was produced from the defective draft.
 - Correction: TT-04 now tracks executed cash separately and calculates mark-to-market P&L as cash plus the signed market value of all open positions. Opening/closing/replacement cashflows are signed by buy/sell direction.
 - Prevention: every new multi-leg replay must satisfy a zero-at-entry MTM identity on a synthetic fixture before numerical execution.
+
+
+### Error F50B-014 — local TT-04 syntax self-check blocked by environment DNS
+- A local pre-execution `py_compile` attempt could not download the current GitHub file because the container had no external DNS/network access.
+- No numerical execution was attempted from the local environment and no evidence was produced.
+- GitHub Actions compile is the authoritative executable check before TT-04 numerical execution.
