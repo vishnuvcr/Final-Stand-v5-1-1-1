@@ -2139,3 +2139,7 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The job-log endpoint for job 112794408361 remained unavailable with BlobNotFound; therefore the underlying runtime exception is intentionally not guessed.
 - Handling: the failure satisfies the registered condition for the dormant performance-only fallback. A separate gated fallback workflow was added and its trigger activated.
 - Scientific status: NO TT04 RESULT FROM THE FAILED RUN IS EVIDENCE. The fallback remains subject to the identical coverage/zero-error/cost audit.
+
+
+### F50B-082 — TT04 fallback workflow could not be programmatically dispatched
+- The fallback workflow was correctly installed and its trigger marker was refreshed, but no Actions run was created. The available GitHub connector exposes workflow inspection/rerun operations but no workflow_dispatch operation. API-authored trigger commits also do not create push-triggered workflow runs in this repository configuration. This is an orchestration/tooling limitation, not a scientific result. The fallback remains pending execution; no P&L is accepted.
