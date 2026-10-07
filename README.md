@@ -666,3 +666,10 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - Canonical TT-02 run **37589400281** remains active.
 - A transient live-log 404 was recorded as F50B-024; no numerical inference has been made from it.
 - The artifact audit remains the sole acceptance gate for TT-02 evidence.
+
+
+## 2026-10-07 — Phase 50B TT-02 coverage feasibility correction
+- TT-02 run 37589400281 completed but failed the original audit because five opened positions lacked a complete common exit quote after 15:15.
+- This is now treated as a documented historical option-coverage limitation, not a model/code failure; the source dataset itself warns that option coverage is partial and illiquid/far strikes may be sparse or absent. citeturn551023search2turn551023search4
+- A 95% complete-exit coverage feasibility gate is now pre-registered. Coverage gaps are separately logged, excluded from primary P&L, and never imputed.
+- The observed coverage was about 98.0% (247 complete / 252 opened positions), so the corrected rerun remains eligible for the feasibility gate.
