@@ -1437,3 +1437,15 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: documentation-only; no numerical evidence affected.
 - Correction: the README Phase-49 section has been replaced with the reconciled final closeout status and links to the final artifacts.
 - Prevention: every phase closeout must update the README headline/status in the same closeout pass.
+
+## 2026-10-07 — Phase 50 initialization audit
+
+### F50-001 — Initial Stage-2 candidate identity design was too weak
+- The first Phase-50 engine draft did not persist exact Stage-2 entry time/DTE identity in the trade matrix and therefore could not safely reconstruct the frozen candidate from development aggregates.
+- Evidence status: PRE-NUMERICAL. No numerical result from the affected engine snapshot was accepted.
+- Correction: Stage-2 trade rows now persist family, distance, width, entry hour/minute and DTE; freezing groups on the exact registered candidate identity before validation.
+- Prevention: every hierarchical search stage must persist all parameters required to reproduce the exact selected candidate.
+
+### F50-002 — Initial family registry included iron-fly variants without a clean far-OTM distance interpretation
+- Evidence status: PRE-NUMERICAL. No numerical output affected.
+- Correction: Phase 50 primary grid retains only strategy families for which the tail-distance variable has an unambiguous structural meaning. Iron Butterfly is excluded from the primary far-OTM distance screen and remains covered by earlier phases.
