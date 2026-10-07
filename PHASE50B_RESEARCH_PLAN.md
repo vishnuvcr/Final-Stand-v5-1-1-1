@@ -37,6 +37,11 @@ Prior GitHub strategy lineages:
 50B-7 manuscript, figures, tables, appendices and final decision.
 
 ## Scientific rules
+
+## Execution coverage feasibility
+The Phase-50B feasibility gate is operationalized at 95% complete mandatory-exit quote coverage for opened positions. Sparse historical option coverage is treated as a data limitation, not silently repaired. Coverage-gap trades are excluded from primary P&L statistics, retained in a separate coverage log, and never imputed. Candidates below 95% coverage fail the feasibility gate; candidates above it must carry the coverage rate and exclusions into the final sensitivity/limitations analysis.
+
+## Scientific rules
 Source ambiguities must be resolved before the freeze or represented as finite preregistered variants. No post-result VIX threshold, strike distance, stop, exit, DTE or width changes.
 
 Only semantically valid strike-distance mutations are allowed. Strategies without a natural distance variable remain source-faithful controls unless a new phase registers a distinct structural mutation.
