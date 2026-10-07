@@ -1793,3 +1793,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Authoritative run 37598918723 remains in progress, but the GitHub workflow-job log endpoint returned HTTP 404 BlobNotFound while the job was active.
 - This is an observability/API artifact issue, not evidence of numerical failure. No retry or duplicate replay was started.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-047 — Documentation state lagged authoritative workflow/run state
+- Time: 2026-10-07.
+- During the continuation audit, README/status text was found to contain older TT-02 run identifiers and an obsolete `cancel-in-progress: false` description, while the authoritative workflow source uses `cancel-in-progress: true` and run 37598918723 is the active corrected execution.
+- Evidence status: **NO SCIENTIFIC IMPACT**; documentation-only inconsistency.
+- Correction: synchronize Phase-50B status/research/chat/error/README records to the authoritative run and workflow state. Numerical evidence remains governed by the actual workflow/artifact gates, not stale prose.
