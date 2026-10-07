@@ -274,3 +274,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Frozen deterministic source-faithful replay specifications for TT-06 and TT-07 before numerical execution.
 - Both contracts use the established coverage, slippage, ₹10/₹20 brokerage, +50% stress and protected chronology rules.
 - No TT-06/TT-07 numerical evidence exists yet.
+
+
+## 2026-10-07 — TT-02 runtime revision-contract correction
+- Found undefined TT02_ENGINE_REV in the corrected engine; fixed and added a static AST contract audit.
+- Run 37596743408 predates this correction and is explicitly non-authoritative.
+- A post-run corrected rerun is required before TT-02 can produce evidence.
