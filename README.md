@@ -879,3 +879,9 @@ No Phase-50B strategy has been promoted.
 - V5 fixed the V4 negative-exit snapshot defect and is the active source-faithful engine.
 - The dedicated workflow now produces one terminal feasibility artifact with PASS, FAIL_COVERAGE, or INVALID_ENGINE and marks P&L evidence eligibility explicitly.
 - Independent TT04 continuation is allowed after any persisted TT03 terminal classification, while failed/invalid TT03 P&L is never consumed as evidence.
+
+
+### 2026-10-07 — TT03 V5 trigger and TT04 pre-execution audit
+- Final cleaned TT03 V5 rerun was triggered after the workflow rewrite; its live Actions run is not yet observable through the available connector surface, so no run ID is claimed.
+- TT04 V3 was independently audited before execution and its entry-coverage denominator was hardened; no TT04 numerical evidence is accepted yet.
+- TT04 now follows persisted TT03 terminal classification rather than consuming TT03 P&L when TT03 is failed or invalid.
