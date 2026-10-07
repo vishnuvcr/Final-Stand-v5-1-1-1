@@ -411,3 +411,10 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — Resume checkpoint: TT04 V3
 - After TT03 V5 PASS, dispatched TT04 with a normal repository commit because the Actions GITHUB_TOKEN push does not trigger ordinary push workflows.
 - TT04 run 37621965843 is now executing V3; no evidence has been accepted yet.
+
+## 2026-10-07 — Resume checkpoint: TT04 still running
+- Re-read the phase plan and current repository control files before proceeding.
+- Live Actions state shows TT04 run 37621965843 with preflight successful and numerical replay in progress.
+- Used the active-run interval for source/automation auditing rather than launching a duplicate replay.
+- Verified that TT04 publication reconciles its persisted result directory against the current remote branch before committing, so documentation updates made during execution do not silently erase research-log changes.
+- No TT04 conclusion has been inferred from the in-progress run.
