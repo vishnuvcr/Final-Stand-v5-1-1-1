@@ -764,3 +764,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The persisted feasibility artifact records whether P&L may be used as evidence.
 - TT04 may proceed after any persisted terminal classification because TT04 is an independent registered candidate and does not consume TT03 P&L when TT03 is failed/invalid.
 - Final V5 trigger will be issued only after this workflow cleanup is on the branch.
+
+
+## 2026-10-07 — TT04 coverage hardening
+- Audited TT04 V3 before evidence generation.
+- Found silent denominator loss when a normal trading day had no complete 10:00–10:05 entry quote pair.
+- Added explicit entry coverage gaps and separate non-regular-session exclusions; workflow now requires the diagnostic file.
+- No TT04 result from the pre-correction engine is accepted.
