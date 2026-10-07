@@ -457,3 +457,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - V4 diagnostic persistence briefly referenced an undefined session-exclusion dataframe after the new denominator control was introduced.
 - The workflow was corrected to load `session_exclusions.csv` explicitly before writing the feasibility artifact.
 - No V4 numerical result was accepted from the affected workflow revision; the next trigger uses the corrected persistence logic.
+
+
+## 2026-10-07 — TT04 dependency gate corrected
+- Detected that an older TT04 workflow allowed TT03 `FAIL_COVERAGE` to continue. TT04 run 37614211996 was therefore classified non-evidence and must not be used.
+- Corrected TT04 preflight to require current TT03 V4 feasibility `PASS` with >=95% coverage and zero data errors.
+- Triggered a controlled TT04 rerun after this correction; old TT04 execution is superseded by the serialized concurrency group.
