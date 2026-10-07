@@ -661,3 +661,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Corrected the gate to reconstruct all dynamic VIX modes from each trade's entry timestamp and cached India VIX.
 - VIX-unobservable trades are now excluded from both regime and complement inferential samples.
 - Stored replay VIX level labels remain as a consistency audit field.
+
+## 2026-10-07 — TT-03 workflow dependency correction
+- Run 37610158492 stopped in preflight with `ModuleNotFoundError: No module named 'pandas'`.
+- Corrected the dedicated workflow to install dependencies before its evidence gate.
+- Refreshed the TT03 trigger only after the workflow correction.
