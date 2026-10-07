@@ -35,7 +35,9 @@ def clean_ts(df):
     x["strike"] = pd.to_numeric(x["strike"], errors="coerce")
     x["close"] = pd.to_numeric(x["close"], errors="coerce")
     x["option_type"] = x["option_type"].astype(str).str.upper()
-    return x.dropna(subset=["timestamp","strike","close"]).sort_values(["timestamp","option_type","strike"])
+    x=x.dropna(subset=["timestamp","strike","close"]).sort_values(["timestamp","option_type","strike"])
+    # Performance-only index: scientific timestamps/quotes are unchanged.
+    return x.set_index("timestamp",drop=False).sort_index()
 
 def get_index():
     global INDEX_CACHE
@@ -76,16 +78,15 @@ def next_expiry(cur):
     return ex[i+1] if i+1<len(ex) else None
 
 def snap(df,ts):
-    k=str(pd.Timestamp(ts))
-    key=(id(df),k)
-    if key not in SNAP_CACHE:
-        z=df[df.timestamp==ts]
-        if not z.empty:
-            SNAP_CACHE[key]=z.drop_duplicates(["option_type","strike"],keep="last")
-        else:
-            SNAP_CACHE[key]=z
-    return SNAP_CACHE[key]
-
+    # Timestamp index avoids full-frame boolean scans on every 1-minute observation.
+    t=pd.Timestamp(ts)
+    try:
+        z=df.loc[t]
+    except KeyError:
+        return df.iloc[0:0]
+    if isinstance(z,pd.Series):
+        z=z.to_frame().T
+    return z.drop_duplicates(["option_type","strike"],keep="last")
 def quote(z,opt,strike):
     q=z[(z.option_type==opt)&(np.isclose(z.strike,float(strike),rtol=0,atol=1e-8))]
     return None if q.empty else float(q.iloc[-1].close)
@@ -109,19 +110,20 @@ def implied_vol(price,s,k,t,call):
     intrinsic=math.exp(-R*t)*max(s-k,0.0) if call else math.exp(-R*t)*max(k-s,0.0)
     upper=s if call else k*math.exp(-R*t)
     if price<=intrinsic+1e-8 or price>=upper:return None
-    # Fast safeguarded Newton.
-    sigma=max(0.05,min(2.5,math.sqrt(2.0*math.pi/t)*price/max(s,1e-9)))
-    for _ in range(8):
+    sigma=max(0.05,min(2.5,math.sqrt(2.0*math.pi/max(t,1e-12))*price/max(s,1e-9)))
+    for _ in range(5):
         q=math.sqrt(t)
         d1=(math.log(s/k)+(R+0.5*sigma*sigma)*t)/(sigma*q)
+        d2=d1-sigma*q
+        model=s*norm_cdf(d1)-k*math.exp(-R*t)*norm_cdf(d2) if call else k*math.exp(-R*t)*norm_cdf(-d2)-s*norm_cdf(-d1)
+        diff=model-price
+        if abs(diff)<1e-6:return sigma
         vega=s*math.exp(-0.5*d1*d1)/math.sqrt(2*math.pi)*q
-        diff=bs_price(s,k,t,sigma,call)-price
-        if abs(diff)<1e-7:return sigma
         if vega<1e-10:break
         sigma=max(1e-5,min(8.0,sigma-diff/vega))
-    try:return brentq(lambda x:bs_price(s,k,t,x,call)-price,1e-5,8.0,maxiter=60)
+    # Rare fallback preserves the same Black-Scholes root definition.
+    try:return brentq(lambda x:bs_price(s,k,t,x,call)-price,1e-5,8.0,maxiter=40)
     except Exception:return None
-
 def option_delta(opt_price,spot,strike,ts,expiry,opt):
     t=max((expiry.normalize()+pd.Timedelta(hours=15,minutes=30)-pd.Timestamp(ts)).total_seconds(),1.0)/(365*24*3600)
     iv=implied_vol(float(opt_price),float(spot),float(strike),t,opt=="CE")
@@ -306,3 +308,5 @@ if __name__=="__main__":
 # F50B-005 fixed: workflow installs matplotlib for shared Phase-43 import dependency.
 
 # F50B-006 fixed: numerical TT02 workflow now installs matplotlib too.
+
+# F50B-011: performance-only optimization. Option frames are timestamp-indexed and implied-vol Newton iterations are reduced with the same BS root and rare Brent fallback.
