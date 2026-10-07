@@ -41,3 +41,6 @@ Failure at any mandatory gate means NO PROMOTION.
 ## Explicit non-claims
 
 Phase 50 does not assume high VIX is profitable, does not assume far OTM is superior, and does not treat the literature as evidence of a NIFTY trading edge.
+
+## Sparse-HIGH rule added after feasibility audit
+If a primary VIX state has fewer than 15 development observations under the fixed Stage-1 control, its confirmatory candidate gate is not relaxed. Instead, up to five top development far-OTM cells are carried forward as explicitly exploratory diagnostics. Exploratory results cannot be promoted and are excluded from the formal Holm candidate family.
