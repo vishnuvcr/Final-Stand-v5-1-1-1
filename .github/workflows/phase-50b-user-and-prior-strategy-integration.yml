@@ -1,0 +1,33 @@
+name: Phase 50B - User and Prior Strategy Integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-user-and-repo-strategy-integration
+    paths:
+      - "PHASE50B_RESEARCH_PLAN.md"
+      - "PHASE50B_PRE_REGISTRATION.md"
+      - "PHASE50B_STRATEGY_REGISTRY.md"
+      - "PHASE50B_GITHUB_REPO_AUDIT.md"
+      - "research/phase50b_registry_audit.py"
+      - "trigger/phase50b.start"
+
+permissions:
+  contents: read
+
+jobs:
+  registry-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile
+        run: python -m py_compile research/phase50b_registry_audit.py
+      - name: Audit source registry
+        run: python research/phase50b_registry_audit.py
