@@ -1536,3 +1536,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: no TT-03 numerical execution occurred from that draft.
 - Correction: the replay now implements both source sets, preserves the listed set order by giving Call Ratio priority when both are executable, falls back to the Put Ratio only if the call set is unavailable, and keys entry prices by option type plus strike.
 - Prevention: for multi-set Tradetron templates, reproduce set competition/order and use full instrument identity in P&L ledgers before execution.
+
+
+### Error F50B-011 — TT-02 exact replay performance bottleneck
+- Affected run: 37571121043 was still executing its numerical replay with no artifact output after the source-faithful engine reached the `Run TT02 replay` step.
+- Diagnosis: repeated full-DataFrame timestamp scans and unnecessarily expensive implied-vol root solves made the exact 1-minute stateful replay much slower than necessary.
+- Scientific status: no result from the slow run is accepted or discarded as evidence; the mathematical replay definition is unchanged.
+- Correction: option frames are now timestamp-indexed for O(1)-style timestamp access, and implied volatility uses the same Black-Scholes root with a faster five-step Newton solve plus the same Brent fallback for rare non-convergence.
+- Prevention: all long exact replays will be benchmarked for data-access and numerical hot spots before launch, without relaxing quote, timestamp or execution fidelity.
