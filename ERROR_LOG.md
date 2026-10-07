@@ -1664,3 +1664,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Direct inspection of the returned run `path` showed those runs belonged to `phase-46-vix-youtube-strategy-discovery.yml`.
 - Evidence status: **NO RESEARCH IMPACT**. No Phase-50B numerical workflow was duplicated or altered.
 - Prevention: verify both workflow name/path and run ID before classifying an Actions run as a duplicate.
+
+
+### F50B-029 — TT-04 silent loss on missing exit quote
+- Time: 2026-10-07.
+- Pre-execution audit found `finish()` returned `None` for a missing exit-leg quote and the caller silently discarded the trade without recording the coverage limitation.
+- Correction: TT-04 now records such cases in `coverage_gaps.csv`; they are excluded from primary P&L, never imputed, and the workflow applies the same 95% coverage feasibility gate.
+- Evidence status: **NO SCIENTIFIC IMPACT**. TT-04 had not executed.
+- Prevention: a failed exit must always produce either a completed trade or an explicit error/coverage record.
