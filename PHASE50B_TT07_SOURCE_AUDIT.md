@@ -46,3 +46,21 @@ The monthly universal exit is a separate terminal exit on the current-month expi
 The export initializes ic_entered=0 and the initial IC entry condition sets it to 1. No later condition in the raw export resets ic_entered to 0. Therefore it is not scientifically defensible to assume that a new initial IC is allowed after a state-5/state-6 terminal transition or after monthly universal exit.
 
 Decision: TT-07 numerical replay is blocked until this runtime-scope semantics is resolved from actual Tradetron execution behavior or an authoritative account/backtest trace. No substitute interpretation will be silently coded.
+
+
+### Runtime-variable lifecycle resolution — 2026-10-07
+
+Official Tradetron documentation was checked before implementing the replay. Tradetron states that Runtime Variables are stored at the strategy level, persist across the current cycle, and remain active until a Universal Exit; the documentation also describes the current counter as the cycle in which live runtime values are associated. This resolves the prior blocker without inventing a per-trade reset rule.
+
+Sources:
+- https://help.tradetron.tech/en/article/runtime-variables-in-tradetron-capture-once-use-anywhere-83nahv/
+- https://files.tradetron.tech/TT_Keywords.pdf
+
+Replay interpretation now frozen:
+1. At the start of each new strategy counter, `ic_entered` initializes to 0 and `state` initializes to 0.
+2. The first eligible Friday entry sets `ic_entered=1` and starts the monthly campaign.
+3. `ic_entered` remains 1 for the remainder of that counter, so no new initial IC is opened after an intra-cycle state transition.
+4. The monthly Universal Exit at current-month expiry >=15:15 ends the counter. A subsequent counter may therefore initialize `ic_entered=0` and start the next monthly campaign.
+5. No discretionary reset is introduced inside the monthly campaign.
+
+The previous blocker is therefore **RESOLVED** and TT-07 may proceed to numerical replay behind the existing TT-06 dependency gate.
