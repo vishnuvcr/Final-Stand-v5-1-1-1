@@ -385,3 +385,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Eligible campaigns with a valid three-days-before entry day but no observable entry timestamp or no complete source-defined ratio set are now explicit coverage exclusions.
 - This correction prevents silent denominator loss and was made before accepting any TT03 numerical artifact.
 - The in-progress TT03 run is being superseded by a controlled retrigger.
+
+## 2026-10-07 — TT-03 corrected rerun now executing
+- Run 37611676386 is the current TT03 dedicated execution on corrected head `b60f47b6925c55901d780926425b8ee718569a55`.
+- Preflight, dependency installation, compilation, static engine audit and HF cache steps have passed.
+- The source-corrected numerical replay is currently executing; no artifact or result is accepted yet.
+- Superseded runs 37611073923 and 37611383204 were cancelled by the serialized workflow and are non-evidence.
