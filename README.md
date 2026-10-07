@@ -782,3 +782,8 @@ No Phase-50B strategy has been promoted.
 - No Phase-50B strategy has been promoted and no TT-02 result is accepted before the complete artifact/coverage/cost audit.
 - TT-07 remains blocked pending authoritative resolution of the `ic_entered` lifecycle semantics.
 undefined
+
+## 2026-10-07 — Phase 50B execution status
+- TT-02 authoritative evidence is now published and audited: 247/252 coverage, 98.02%; primary net -₹3,387.42; +50% cost stress -₹32,226.76; ₹20/order robustness -₹47,212.62; ₹20/order +50% stress -₹97,964.56.
+- TT-03 first execution failed in chronological summary accounting because of timezone-naive/aware comparison; this was corrected before accepting any result.
+- Dedicated TT-03 replay workflow added and gated on the published TT-02 evidence.
