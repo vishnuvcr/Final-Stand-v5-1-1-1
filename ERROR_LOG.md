@@ -2032,3 +2032,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - A TT04 run (37614211996) had already passed that weak gate and was executing when this defect was detected.
 - Correction: TT04 preflight is now PASS-only and requires TT03 `engine_revision=50B-TT03-WINDOW-V4`, `feasibility_state=PASS`, zero data errors and coverage >=95%. A controlled TT04 retrigger supersedes the weak-gate run via the workflow's serialized concurrency group.
 - Evidence status: **NO TT04 RESULT FROM THE WEAK-GATE RUN WILL BE ACCEPTED OR USED**.
+
+
+### F50B-072 — TT03 V4 negative-exit path left `exit_snap` uninitialized
+- Time: 2026-10-07.
+- V4 numerical replay completed, but 14 eligible expiry campaigns raised `UnboundLocalError` because `exit_snap` was initialized only by the hard-close branch. When the source-defined negative-P&L exit triggered first, the exit timestamp was set but its snapshot was not retained.
+- This caused `data_errors.csv` to contain 14 engine errors, so the V4 artifact was correctly rejected despite 99.47% nominal coverage.
+- Correction: V5 initializes `exit_snap`, stores the contemporaneous snapshot whenever the negative-P&L exit triggers, and validates the snapshot before leg settlement. This removes the accounting/runtime defect without changing source entry/exit semantics.
+- The V4 P&L and coverage statistics are **NON-EVIDENCE** because of the 14 engine errors. V5 is the active implementation.
