@@ -221,7 +221,7 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 
 ## 2026-10-07 — Paytm brokerage robustness scenario added
 - Primary Phase-50B brokerage remains ₹10/order for continuity with the parent methodology.
-- Added a preregistered ₹20/order Paytm Money robustness scenario because official Paytm public materials currently conflict on the brokerage figure. citeturn157124search0turn157124search2
+- Added a preregistered ₹20/order Paytm Money robustness scenario because official Paytm public materials currently conflict on the brokerage figure. [Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web); [Paytm Money pricing update](https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/)
 - Promotion cannot rely only on the ₹10 scenario; the ₹20 scenario must also be reported and must not be used for post-result selection.
 
 
