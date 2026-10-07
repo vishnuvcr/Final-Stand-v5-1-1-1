@@ -2015,3 +2015,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Treating that day as a data-coverage failure would incorrectly penalize the feasibility denominator because no source-defined entry opportunity existed at 10:00.
 - Correction: V4 excludes intended entry dates with no normal 09:15–15:30 NIFTY index session as explicit `session_exclusions`, not coverage gaps. A normal-session day with no 10:00–10:05 observations remains a genuine coverage gap (e.g. 2022-03-07 is not an NSE holiday and therefore remains a data-coverage candidate). citeturn250743search0turn250743search13
 - Evidence status: **NO SCIENTIFIC IMPACT** from the old denominator; V2 remains non-evidence and V4 is the active source-faithful implementation.
+
+
+### F50B-070 — TT03 V4 diagnostic persistence referenced undefined session-exclusion dataframe
+- Time: 2026-10-07.
+- After adding `session_exclusions.csv` to the V4 diagnostic contract, the workflow persistence step referenced `sx` before loading it.
+- This would fail after numerical replay and prevent the feasibility artifact from being persisted, even though the engine itself was correct.
+- Correction: the persistence step now loads `session_exclusions.csv` before constructing the feasibility JSON.
+- The workflow trigger was not allowed to serve as evidence; a further controlled retrigger will execute only the corrected workflow.
+- Evidence status: **NO SCIENTIFIC IMPACT**; caught before accepting V4 evidence.
