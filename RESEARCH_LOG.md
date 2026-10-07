@@ -676,3 +676,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT-03 entry coverage accounting
 - Added explicit coverage gaps for eligible campaigns that cannot complete the 10:00–10:05 source-defined entry.
 - No TT03 result from the superseded engine is accepted.
+
+## 2026-10-07 — TT-03 corrected numerical execution
+- Current run 37611676386 passed the TT02 dependency gate and all pre-numerical controls.
+- Corrected engine includes the hard-close, source-entry gate, and coverage-denominator fixes.
+- Numerical replay is in progress; no inference has been generated.
