@@ -592,3 +592,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT-02 active-run checkpoint
 - Checked authoritative run status and artifact availability; numerical replay remains active with no result artifact yet.
 - Live-log endpoint unavailable; classified as operational only.
+
+
+## 2026-10-07 — Authoritative TT-02 live-state recheck
+- Direct Actions inspection confirms run 37598918723 remains in progress at the canonical TT-02 numerical step.
+- Registry succeeded; replay has not yet reached artifact audit/publication.
+- The workflow source confirms the intended serialization guard is `cancel-in-progress: true` and numerical triggers are restricted to the explicit trigger file.
+- No duplicate numerical execution was started. TT-07 remains blocked on source-faithful resolution of `ic_entered` lifecycle semantics.
