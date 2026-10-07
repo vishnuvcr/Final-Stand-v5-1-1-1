@@ -1765,3 +1765,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The first local construction of the TT-06 workflow failed before GitHub write because GitHub Actions expression syntax conflicted with JavaScript template interpolation.
 - Retried with literal-safe construction; workflow was written successfully and structurally audited.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-043 — TT-07 runtime-variable lifecycle ambiguity
+- Time: 2026-10-07.
+- Direct inspection of the original Dynamic IC to Ratio ASB export recovered the exact state transition graph but showed that ic_entered is set from 0 to 1 at initial entry and never reset in the export.
+- This leaves repeated-initial-IC lifecycle semantics unresolved. Numerical TT-07 replay is blocked until authoritative Tradetron behavior or a trace resolves the scope of that runtime variable.
+- No speculative reset policy will be coded.
+- Evidence status: **NO SCIENTIFIC IMPACT**; source-faithfulness protection.
