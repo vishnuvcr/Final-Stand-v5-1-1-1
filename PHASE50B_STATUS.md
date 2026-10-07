@@ -212,3 +212,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — Statistical gate prepared
 - Added `research/phase50b_statistical_gate.py` implementing the preregistered VIX-regime versus complement bootstrap/permutation framework, Holm correction, chronological split reporting, and protected-holdout handling.
 - It is execution-only and will not select/tune candidates before the registered development/validation process.
+
+
+## 2026-10-07 — TT-02 engine revision gate
+- TT-02 corrected engines now stamp `50B-TT02-COVERAGE-V3` and the workflow requires that revision before artifact acceptance.
+- The active run 37593965525 predates this stamp; it cannot by itself establish final TT-02 evidence.
