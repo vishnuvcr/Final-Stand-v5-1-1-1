@@ -204,11 +204,29 @@ def close_open_replace(pos,name,target_frame,target_exp,opt,target_delta,ts,spot
     return True
 
 def finalize(pos,ts,cur_frame,nxt_frame):
+    # Source rule is exit at/after 15:15, not necessarily at an exact 15:15 quote.
+    # Use the earliest common timestamp at/after the trigger for which every open leg
+    # has an observed close. This preserves a single simultaneous execution timestamp
+    # and avoids inventing prices by forward-filling missing option observations.
+    candidates=sorted(set(cur_frame.index[cur_frame.index>=pd.Timestamp(ts)].tolist()) |
+                      set(nxt_frame.index[nxt_frame.index>=pd.Timestamp(ts)].tolist()))
+    exit_ts=None
+    for cand in candidates:
+        ok=True
+        for name,leg in pos["legs"].items():
+            frame=cur_frame if leg["exp"]=="cur" else nxt_frame
+            if quote(snap(frame,cand),leg["opt"],leg["strike"]) is None:
+                ok=False
+                break
+        if ok:
+            exit_ts=pd.Timestamp(cand)
+            break
+    if exit_ts is None:return None
     for name,leg in pos["legs"].items():
         frame=cur_frame if leg["exp"]=="cur" else nxt_frame
-        px=quote(snap(frame,ts),leg["opt"],leg["strike"])
+        px=quote(snap(frame,exit_ts),leg["opt"],leg["strike"])
         if px is None:return None
-        add_order(pos,ts,"sell" if leg["qty"]>0 else "buy",px,leg["qty"],leg["opt"],name,"exit")
+        add_order(pos,exit_ts,"sell" if leg["qty"]>0 else "buy",px,leg["qty"],leg["opt"],name,"exit")
     gross=0.0; orders=[]
     for r in pos["ledger"]:
         ep=exec_px(r["price"],r["side"])
@@ -307,7 +325,7 @@ def main():
             if cur.normalize()==day.normalize() and ts.time()>=EXIT_TIME:
                 z=finalize(position,ts,cur_frame,nxt_frame)
                 if z is None:
-                    errors.append({"trade_id":position["trade_id"],"expiry":str(cur.date()),"error":"missing exact 15:15 exit quote"})
+                    errors.append({"trade_id":position["trade_id"],"expiry":str(cur.date()),"error":"no complete exit quote at or after 15:15"})
                 else:
                     rows.append(z)
                 position=None
@@ -328,7 +346,7 @@ def main():
 if __name__=="__main__":
     main()
 
-# F50B-005: corrected v2 replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and exact 15:15 expiry exit.
+# F50B-005: corrected v2 replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and first complete expiry exit quote at/after 15:15.
 
 # F50B-005 fixed: workflow installs matplotlib for shared Phase-43 import dependency.
 
