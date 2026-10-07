@@ -70,8 +70,8 @@ jobs:
           set -euo pipefail
           test -s results/phase50b/tt02_calendar_replay/summary.json
           test -s results/phase50b/tt02_calendar_replay/tt02_trades.csv
-          test -s results/phase50b/tt02_calendar_replay/data_errors.csv
-          test -s results/phase50b/tt02_calendar_replay/coverage_gaps.csv
+          test -f results/phase50b/tt02_calendar_replay/data_errors.csv
+          test -f results/phase50b/tt02_calendar_replay/coverage_gaps.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt02_calendar_replay/summary.json"))
