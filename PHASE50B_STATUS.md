@@ -170,3 +170,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT-02 replay job **112687069655** remains in progress in canonical run **37589400281**.
 - Live log retrieval returned a transient 404 (`BlobNotFound`), recorded as F50B-024; no research impact.
 - Numerical evidence remains blocked until the job completes and the zero-data-error artifact audit passes.
+
+
+## 2026-10-07 — TT-02 coverage feasibility rule formalized
+- Run 37589400281 completed numerical replay but its zero-data-error audit failed because five opened positions had no complete common quote at/after 15:15.
+- This is now classified as a **historical option-coverage gap**, not a model/code error. The underlying dataset documentation warns that option coverage is partial and illiquid/far strikes may be sparse or absent. citeturn551023search2turn551023search4
+- Phase 50B now operationalizes its existing feasibility gate at **95% complete mandatory-exit coverage**. Coverage gaps are excluded from primary P&L, never imputed, and published separately.
+- The failed run had 247 completed exits and 5 coverage gaps among 252 opened positions (~98.0%), so the candidate remains feasible subject to the corrected audited rerun.
+- Workflow push triggers are now restricted to the explicit `trigger/phase50b.start` file to prevent intermediate documentation/code commits from launching duplicate numerical runs.
