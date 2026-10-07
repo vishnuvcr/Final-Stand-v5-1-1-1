@@ -1,11 +1,14 @@
 {
   "strategy": "TT-02",
+  "engine_revision": "50B-TT02-COVERAGE-V3",
   "trades": 247,
   "candidate_trades": 252,
   "coverage_exclusions": 5,
   "coverage_rate": 0.9801587301587301,
   "net": -3387.422432333182,
   "net50": -32226.758648499665,
+  "net20": -47212.62243233317,
+  "net20_50": -97964.55864849966,
   "by_vix": [
     {
       "vix_state": "HIGH",
