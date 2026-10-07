@@ -361,3 +361,9 @@ User requested continuation without pausing. Work performed:
 - Self-audit of the V4 workflow found the new session-exclusion dataframe was referenced before loading.
 - Corrected the workflow persistence step before accepting V4 evidence.
 - The next TT03 run is the sole valid V4 attempt; TT04 remains blocked until current-run V4 feasibility PASS.
+
+
+## 2026-10-07 — Resume checkpoint: TT04 fail-closed dependency correction
+- Audited the downstream TT04 workflow after the TT03 V2/V3 feasibility issues.
+- Found that the older workflow allowed FAIL_COVERAGE to proceed; corrected it to require current TT03 V4 PASS.
+- Existing TT04 weak-gate execution is explicitly non-evidence; retriggered TT04 under the corrected gate.
