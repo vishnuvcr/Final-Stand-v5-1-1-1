@@ -439,3 +439,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Self-audit then found that the V2 hard-close branch could stop on a partially quoted latest timestamp and fail to search earlier complete timestamps.
 - V3 now selects the latest complete all-live-leg quote at or before 15:29, preserving the source rule and never imputing.
 - Workflow audit and trigger were updated to V3; the V3 replay is now the sole TT03 numerical attempt under evaluation. Superseded V2 output remains non-evidence.
+
+
+## 2026-10-07 — TT-03 downstream routing hardened
+- Self-audit found an orchestration defect: the TT03 workflow could route TT04 even when TT03 feasibility was `FAIL_COVERAGE`.
+- Corrected the workflow to permit TT04 only on `PASS`; coverage failure now terminates the chain without a downstream trigger.
+- Current TT03 trigger was refreshed after this guard correction; the previous in-progress attempt is superseded by the serialized concurrency group.
