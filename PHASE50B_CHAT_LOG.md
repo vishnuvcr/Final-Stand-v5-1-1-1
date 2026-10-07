@@ -240,3 +240,11 @@ User requested continuation without pausing. Work performed:
 - TT-03's first numerical attempt failed only in DEV/VAL/HOLD accounting because of timezone mismatch; no TT-03 evidence was accepted.
 - Corrected the timezone handling and created a dedicated gated TT-03 workflow to avoid repeating the full TT-02 replay.
 - The next numerical transition is TT-03 corrected replay; downstream TT-04 remains dependency-gated.
+
+
+## 2026-10-07 — Continue checkpoint: TT-03 and TT-07
+- Rechecked the corrected TT-03 trigger: GitHub reports the trigger commit status as pending; no TT03 result artifact or TT04 trigger is visible, so no duplicate replay was started.
+- Checked the previously blocked TT-07 runtime-variable semantics against official Tradetron documentation.
+- Resolved `ic_entered` as counter-scoped runtime state lasting until Universal Exit; updated the source audit and replay spec.
+- Added TT-07 source-faithful replay engine and dependency-gated workflow.
+- Self-audit caught and fixed transition-delta selection using the actual held short strike before numerical execution.
