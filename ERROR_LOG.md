@@ -2049,3 +2049,18 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: workflow revision gates were advanced to 50B-TT03-WINDOW-V5 before the next numerical execution.
 - No V5 result was accepted through the stale V2 audit path.
 - Evidence status: NO SCIENTIFIC IMPACT.
+
+
+### F50B-073 — TT03 workflow accumulated duplicate diagnostic/routing blocks during iterative hardening
+- Time: 2026-10-07.
+- Iterative fixes left multiple TT03 persistence/audit/routing sections in the dedicated workflow, including stale V4/V5 assumptions and duplicated artifact publication paths.
+- This increased the risk of contradictory terminal classifications and stale downstream routing.
+- Correction: replaced the workflow with one source-of-truth numerical replay, one terminal-classification/persistence block, one diagnostic upload, and one downstream routing block.
+- Evidence status: NO SCIENTIFIC IMPACT; no accepted TT03 evidence came through the conflicting workflow state.
+
+### F50B-074 — TT04 gate was coupled to TT03 PASS rather than persisted terminal classification
+- Time: 2026-10-07.
+- The research plan allows unrelated registered strategies to continue after a candidate reaches a persisted feasibility/validity failure, provided no failed candidate P&L is consumed as evidence.
+- The TT04 workflow was still PASS-only despite the repository's terminal-classification architecture.
+- Correction: TT04 now accepts TT03 terminal states PASS, FAIL_COVERAGE, or INVALID_ENGINE, but in the latter two cases explicitly forbids using TT03 P&L as evidence.
+- Evidence status: NO SCIENTIFIC IMPACT; TT04 execution remains independently source-faithful.
