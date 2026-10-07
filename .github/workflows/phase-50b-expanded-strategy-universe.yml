@@ -121,6 +121,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Refresh branch for TT03 source-of-truth
+        run: |
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
       - name: Install TT03 dependencies
         run: python -m pip install --no-input numpy pandas pyarrow matplotlib huggingface_hub
       - name: Compile TT03 replay
@@ -148,6 +152,7 @@ jobs:
           d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
           er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V2", d
           assert d["trades"]==len(tr)
           assert d["trades"] > 0
           assert len(er)==0, er.head()
