@@ -271,6 +271,6 @@ if __name__=="__main__":
 # F50B-068: exact observed premium matching and earliest complete 15:15+ exit semantics are enforced in V3.
 
 
-# DORMANT FALLBACK: not wired to the TT04 workflow. This file preserves the
+# DORMANT FALLBACK: syntax-validated by the compile-only workflow; not wired to the TT04 workflow. This file preserves the
 # registered source rules/cost/coverage semantics while reducing repeated timestamp scans.
 # It may be activated only after a genuine workflow failure/timeout and a fresh evidence audit.
