@@ -306,3 +306,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Pre-fix run 37596743408 is now **cancelled** by the hardened concurrency policy and contributes no evidence.
 - Corrected run **37598918723 (run 20)** is the sole active TT-02 numerical execution and has passed registry, compilation, static engine-contract audit and HF-cache setup.
 - The canonical numerical replay itself remains in progress; no TT-02 result artifact has passed acceptance yet.
+
+
+## 2026-10-07 — TT-02 execution still active
+- Authoritative run 37598918723 remains `in_progress`; TT-02 numerical step is still running.
+- Live-log retrieval returned BlobNotFound again; this does not change run status or evidence classification.
+- No duplicate execution started.
