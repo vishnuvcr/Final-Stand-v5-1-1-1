@@ -11,7 +11,7 @@ on:
 
 concurrency:
   group: phase50b-expanded-strategy
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write
