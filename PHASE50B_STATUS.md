@@ -546,3 +546,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT03 V5 accepted evidence remains unchanged: run **37620274641**, 200/201 complete campaigns, 99.50% coverage, one coverage exclusion, one session exclusion, zero data errors; ₹89,669.15 primary, ₹82,074.11 +50% stress, ₹75,509.15 at ₹20/order, ₹60,834.11 at ₹20/order +50% stress.
 - No TT04 P&L, VIX inference, parameter selection, or promotion claim is accepted while the replay is incomplete.
 - Downstream TT05–TT07 and statistical-gate contracts were re-read during the live interval; no new evidence-impacting defect was identified.
+
+
+## 2026-10-07 — TT04 live-log observability checkpoint
+- TT04 run 37621965843 remains in_progress in the numerical replay step.
+- Direct live-log retrieval returned BlobNotFound; this is recorded as an operational observability issue only.
+- No duplicate TT04 execution was launched. Artifact publication/audit remains the sole scientific acceptance gate.
