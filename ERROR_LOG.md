@@ -2064,3 +2064,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The TT04 workflow was still PASS-only despite the repository's terminal-classification architecture.
 - Correction: TT04 now accepts TT03 terminal states PASS, FAIL_COVERAGE, or INVALID_ENGINE, but in the latter two cases explicitly forbids using TT03 P&L as evidence.
 - Evidence status: NO SCIENTIFIC IMPACT; TT04 execution remains independently source-faithful.
+
+
+### F50B-075 — TT04 entry coverage could silently omit eligible trading days
+- Time: 2026-10-07.
+- Pre-execution audit found that TT04 could finish a normal trading day without an entry and without recording a coverage exclusion when no complete ATM CE/PE quote pair was available during 10:00–10:05.
+- Missing option-chain loads were also recorded only as data errors, without preserving the scheduled entry day in the candidate denominator.
+- Correction: normal-session days are now explicit entry candidates; missing entry quotes are explicit coverage gaps, and non-regular-session days are separate session exclusions.
+- Evidence status: NO SCIENTIFIC IMPACT; no TT04 numerical replay from the pre-correction engine is accepted.
