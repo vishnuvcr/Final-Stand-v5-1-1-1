@@ -233,13 +233,14 @@ def main():
                     sp=nearest_delta(scur,spot,ts,cur_for_day,"PE",-0.20)
                     lc=nearest_delta(snxt,spot,ts,nxt_for_day,"CE",0.10)
                     lp=nearest_delta(snxt,spot,ts,nxt_for_day,"PE",-0.10)
-                    if None not in (sc,sp,lc,lp):
+                    entry_quotes=(quote(scur,"CE",sc),quote(scur,"PE",sp),quote(snxt,"CE",lc),quote(snxt,"PE",lp)) if None not in (sc,sp,lc,lp) else (None,None,None,None)
+                    if None not in entry_quotes:
                         lot=lot_size_for_expiry(cur_for_day)
                         position=make_position(trade_id,ts,spot,cur_for_day,nxt_for_day,sc,sp,lc,lp,lot)
-                        add_order(position,ts,"sell",quote(scur,"CE",sc),-1,"CE","short_ce","entry")
-                        add_order(position,ts,"sell",quote(scur,"PE",sp),-1,"PE","short_pe","entry")
-                        add_order(position,ts,"buy",quote(snxt,"CE",lc),2,"CE","long_ce","entry")
-                        add_order(position,ts,"buy",quote(snxt,"PE",lp),2,"PE","long_pe","entry")
+                        add_order(position,ts,"sell",entry_quotes[0],-1,"CE","short_ce","entry")
+                        add_order(position,ts,"sell",entry_quotes[1],-1,"PE","short_pe","entry")
+                        add_order(position,ts,"buy",entry_quotes[2],2,"CE","long_ce","entry")
+                        add_order(position,ts,"buy",entry_quotes[3],2,"PE","long_pe","entry")
                         trade_id+=1
 
             if position is None:continue
@@ -299,3 +300,5 @@ def main():
 
 if __name__=="__main__":
     main()
+
+# F50B-005: corrected v2 replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and exact 15:15 expiry exit.
