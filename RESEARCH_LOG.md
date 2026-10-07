@@ -498,3 +498,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Phase 50B corrected TT-02 rerun
 - Corrected workflow and engine changes were committed, then the explicit trigger launched run 37593965525.
 - The run is currently at the registry gate; no numerical evidence has been accepted yet.
+
+
+## 2026-10-07 — TT-03 source-window correction
+- Pre-execution audit identified a semantic mismatch in TT-03 entry timing.
+- Corrected the engine to evaluate the entire 10:00–10:05 window and choose the earliest feasible complete ratio set.
+- The frozen geometry, direction priority and exit rule are unchanged.
