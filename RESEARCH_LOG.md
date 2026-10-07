@@ -720,3 +720,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Before accepting that as a strategy-level infeasibility conclusion, the hard-close quote-selection path was audited.
 - Found and corrected a partial-quote timestamp bug: the engine now searches backward for the latest timestamp at or before 15:29 with complete quotes for all live legs.
 - V3 was retriggered. No V2 P&L or coverage result will be used as evidence.
+
+
+## 2026-10-07 — TT-03 chain control correction
+- Pre-execution workflow audit found that FAIL_COVERAGE was incorrectly treated as a downstream-routable TT03 state.
+- Corrected the route to require PASS exactly. This preserves the registered feasibility gate and prevents TT04 from consuming invalid/infeasible TT03 evidence.
