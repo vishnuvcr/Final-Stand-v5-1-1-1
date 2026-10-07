@@ -714,3 +714,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — Phase 50B TT-04 revision gate
 - TT-04 evidence now requires engine revision `50B-TT04-COVERAGE-V2`.
+
+
+## 2026-10-07 — Phase 50B workflow serialization
+- Canonical Phase-50B numerical runs are now serialized with `cancel-in-progress: false` to protect artifact/evidence integrity.
