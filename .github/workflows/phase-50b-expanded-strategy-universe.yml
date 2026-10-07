@@ -41,19 +41,6 @@ jobs:
             git push origin HEAD:${GITHUB_REF_NAME}
 
 
-      - name: Trigger TT04 only after TT03 evidence passes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          git fetch origin phase-50b-expanded-strategy-universe
-          git reset --hard origin/phase-50b-expanded-strategy-universe
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > trigger/phase50b_tt04.start
-          git add trigger/phase50b_tt04.start
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: trigger TT04 after TT03 audit"
-          git push origin HEAD:phase-50b-expanded-strategy-universe
-          fi
-
 
   tt02_replay:
     needs: registry
@@ -184,3 +171,15 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@noreply.github.com" commit -m "Phase 50B: publish TT03 common-cost replay"
             git push origin HEAD:phase-50b-expanded-strategy-universe
           fi
+
+      - name: Trigger TT04 only after TT03 evidence passes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > trigger/phase50b_tt04.start
+          git add trigger/phase50b_tt04.start
+          git -c user.name="github-actions[bot]" -c user.email="41898282+vishnuvcr@users.noreply.github.com" commit -m "Phase 50B: trigger TT04 after TT03 audit"
+          git push origin HEAD:phase-50b-expanded-strategy-universe
