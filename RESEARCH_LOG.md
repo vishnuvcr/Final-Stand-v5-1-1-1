@@ -587,3 +587,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — TT-02 stale-run retirement
 - Confirmed cancellation of the superseded pre-fix TT-02 run and handoff to corrected run 37598918723.
+
+
+## 2026-10-07 — TT-02 active-run checkpoint
+- Checked authoritative run status and artifact availability; numerical replay remains active with no result artifact yet.
+- Live-log endpoint unavailable; classified as operational only.
