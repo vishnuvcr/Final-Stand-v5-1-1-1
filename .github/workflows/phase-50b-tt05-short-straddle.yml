@@ -85,10 +85,12 @@ jobs:
           tr=pd.read_csv("results/phase50b/tt05_short_straddle_replay/tt05_trades.csv")
           er=pd.read_csv("results/phase50b/tt05_short_straddle_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt05_short_straddle_replay/coverage_gaps.csv")
+          sx=pd.read_csv("results/phase50b/tt05_short_straddle_replay/session_exclusions.csv")
           assert d["engine_revision"]=="50B-TT05-COVERAGE-V2", d
           assert d["trades"]==len(tr)
           assert d["candidate_trades"]==len(tr)+len(cg)
           assert d["coverage_rate"]>=0.95, d
+          assert d.get("session_exclusions",0)==len(sx), d
           assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
           assert len(er)==0, er.head()
           print("TT05 replay audit PASS", d)
