@@ -1,3 +1,14 @@
+## Phase 50 — VIX × Far-OTM Tail Geometry — INITIALIZED
+
+Phase 50 directly addresses the remaining VIX research gap: genuinely far-OTM strike geometry was not adequately explored in the earlier VIX sweeps, particularly for HIGH/SPIKE/RISING regimes. The new preregistered study tests existing defined-risk strategy families across 2, 3, 4, 5, 6, 8, 10 and 12 strike-step tail distances, with chronological development/validation and protected 2026 holdout gates.
+
+- [Phase 50 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_RESEARCH_PLAN.md)
+- [Phase 50 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_PRE_REGISTRATION.md)
+- [Phase 50 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_LITERATURE_REVIEW.md)
+- [Phase 50 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_STATUS.md)
+- [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
+- [Phase 50 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/.github/workflows/phase-50-vix-far-otm-tail-geometry.yml)
+
 ## Phase 49 — VIX Leader Parameter Tuning — CLOSED / NO PROMOTION
 
 Phase 49 is complete. The study evaluated 720 raw geometries, expanded to 1,440 geometry×VIX-regime candidates across LOW and NORMAL India-VIX states, using 133 development expiry blocks (2021–2023), 102 validation expiry blocks (2024–2025), and 21 protected holdout expiry blocks.
