@@ -102,3 +102,15 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT05 common-cost replay"
             git push origin HEAD:phase-50b-expanded-strategy-universe
           fi
+
+      - name: Trigger TT06 only after TT05 evidence passes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > trigger/phase50b_tt06.start
+          git add trigger/phase50b_tt06.start
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: trigger TT06 after TT05 audit"
+          git push origin HEAD:phase-50b-expanded-strategy-universe
