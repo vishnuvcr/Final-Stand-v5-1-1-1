@@ -881,3 +881,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Downstream inspection found no TT05 Actions run despite the TT04 trigger marker. The cause was GitHub's suppression of push-triggered workflows for GITHUB_TOKEN-authored commits.
 - Corrected phase-50B downstream orchestration by adding explicit workflow-dispatch API calls (with actions:write) to TT04→TT05, TT05→TT06 and TT06→TT07 while retaining trigger markers for provenance.
 - The TT05 marker was then updated through the repository API, producing run 37654354444. TT05 preflight passed and numerical replay is active. This is an execution-control correction only; the registered scientific plan is unchanged.
+
+
+## 2026-10-07 — TT05 failure diagnosed; timezone-only correction and controlled rerun
+- TT05 run 37654354444 passed preflight but failed during split classification because expiry timestamps were timezone-naive while DEV/VAL/HOLD boundaries were timezone-aware.
+- No TT05 output was accepted. The trading loop and strategy rules were not changed.
+- Corrected the replay to localize expiry timestamps to TZ before split comparison.
+- The TT05 workflow was given an explicit recovery-trigger path, and corrected rerun 37666116836 was instantiated. It is now executing under the same preregistered TT05 engine revision and cost model.
