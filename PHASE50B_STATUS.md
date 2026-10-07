@@ -69,3 +69,17 @@ The current canonical common-cost replay is **Actions run 37570836398 (#latest c
 The canonical workflow automatic trigger is now restricted to the explicit Phase-50B trigger file, the TT-02 replay engine, and its preregistration. README/status/error-log/research-plan edits no longer launch numerical runs. Manual dispatch remains available.
 
 Current canonical run: **37571121043**. Registry preflight has passed and TT-02 common-cost replay is active. Older Phase-50B runs are superseded/non-evidence.
+
+
+## 2026-10-07 — Additional source audits completed while TT-02 replay runs
+
+### TT-03 source audit
+The Corrected Dynamic-n strategy is frozen from the current Tradetron template: 10:00–10:05 on an exact three-calendar-day-to-expiry date; symmetric call-ratio and put-ratio entry sets at ATM ±300/350/400; expiry-day loss exit from 13:30 plus hard 15:29 exit. The first TT-03 replay draft was rejected before execution because it omitted the symmetric set; the corrected source-faithful engine is now ready.
+
+### TT-04 source audit
+Profit Breakout Premium Match Straddle is frozen as a 10:00–10:05 premium-matched ATM straddle with source-defined one-time repairs and a universal −₹7,000 / 15:15 exit. It remains a control; premium-matching must use exact observed LTPs and cannot use delta/fixed-distance substitution.
+
+No numerical inference is taken from these source audits alone.
+
+### Current numerical state
+Canonical run **37571121043** remains active. Registry preflight has passed; **TT-02 common-cost replay is still executing**. The replay has not yet produced a scientific result, so no P&L, VIX uplift or promotion decision is accepted from Phase 50B at this point.
