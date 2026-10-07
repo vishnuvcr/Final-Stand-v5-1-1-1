@@ -76,13 +76,17 @@ jobs:
           set -euo pipefail
           test -s results/phase50b/tt04_premium_match_replay/summary.json
           test -s results/phase50b/tt04_premium_match_replay/tt04_trades.csv
-          test -s results/phase50b/tt04_premium_match_replay/data_errors.csv
+          test -f results/phase50b/tt04_premium_match_replay/data_errors.csv
+          test -f results/phase50b/tt04_premium_match_replay/coverage_gaps.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt04_premium_match_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt04_premium_match_replay/tt04_trades.csv")
           er=pd.read_csv("results/phase50b/tt04_premium_match_replay/data_errors.csv")
+          cg=pd.read_csv("results/phase50b/tt04_premium_match_replay/coverage_gaps.csv")
           assert d["trades"] == len(tr)
+          assert d.get("candidate_trades",len(tr)) == len(tr)+len(cg)
+          assert d.get("coverage_rate",1.0) >= 0.95
           assert len(er) == 0, er.head()
           assert {"net","net50","vix_state"}.issubset(tr.columns) if len(tr) else True
           print("TT04 replay artifact audit PASS", d)
