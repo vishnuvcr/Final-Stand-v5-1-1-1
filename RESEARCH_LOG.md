@@ -725,3 +725,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT-03 chain control correction
 - Pre-execution workflow audit found that FAIL_COVERAGE was incorrectly treated as a downstream-routable TT03 state.
 - Corrected the route to require PASS exactly. This preserves the registered feasibility gate and prevents TT04 from consuming invalid/infeasible TT03 evidence.
+
+
+## 2026-10-07 — TT-03 V4 entry-session denominator correction
+- Reviewed every V2 coverage gap, including entry-day gaps, against exchange-session semantics.
+- Confirmed 2022-10-24 was a Muhurat evening session, so no normal 10:00 entry opportunity existed; it is now a session exclusion rather than a coverage gap. 
+- V4 records these exclusions separately while preserving the 95% feasibility denominator for genuine regular-session opportunities.
+- The V4 workflow also verifies feasibility provenance belongs to the current run before permitting TT04.
