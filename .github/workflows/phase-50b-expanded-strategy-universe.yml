@@ -1,0 +1,44 @@
+name: Phase 50B - Expanded Strategy Universe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-expanded-strategy-universe
+    paths:
+      - PHASE50B_STRATEGY_UNIVERSE.md
+      - PHASE50B_RESEARCH_PLAN.md
+      - PHASE50B_PRE_REGISTRATION.md
+      - research/phase50b_registry_validate.py
+      - PHASE50B_STATUS.md
+      - PHASE50B_CHAT_LOG.md
+
+permissions:
+  contents: write
+
+jobs:
+  registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate strategy registry
+        run: python research/phase50b_registry_validate.py
+      - name: Upload registry validation
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-registry-${{ github.run_id }}
+          path: results/phase50b/registry_validation.json
+      - name: Publish validation artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add results/phase50b/registry_validation.json
+          if git diff --cached --quiet; then
+            echo "No validation changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish registry validation"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
