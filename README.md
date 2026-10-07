@@ -843,3 +843,8 @@ No Phase-50B strategy has been promoted.
 - Corrected TT03 run 37611676386 produced 187/202 complete campaigns (92.57%) and therefore failed the frozen 95% feasibility gate. Its positive P&L remains diagnostic only and is not eligible for promotion or VIX/parameter tuning.
 - Diagnostic capture rerun 37612856834 is now executing only to persist the raw trade and coverage tables and classify the terminal feasibility state.
 - The candidate-local stopping rule allows the independent TT04 candidate to proceed after TT03 terminal classification without consuming TT03 P&L as evidence.
+
+
+### 2026-10-07 — TT-03 terminal classification and TT-04 continuation
+- TT03 diagnostic run 37613416831 completed and persisted its raw replay/coverage data. The corrected baseline remains **FEASIBILITY FAIL** at 187/202 = 92.57% coverage, below the frozen 95% gate; its positive P&L is diagnostic only.
+- TT04 independent run 37614211996 passed the TT03 terminal-feasibility gate and is now executing the corrected V3 engine. No TT04 result is accepted until artifact/coverage/cost audits pass.
