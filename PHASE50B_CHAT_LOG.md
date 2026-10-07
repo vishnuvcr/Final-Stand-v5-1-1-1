@@ -71,3 +71,10 @@ User requested continuation without pausing. Work performed:
 - No TT-02 artifact audit has started and no numerical result is accepted yet.
 - The live run remains the sole canonical numerical evidence candidate; no duplicate replay was launched.
 - Branch head currently advances independently of the running job, while the running job remains pinned to its original execution commit.
+
+
+## 2026-10-07 — TT-04 pre-execution audit correction
+- During the registered static audit while TT-02 remains active, a real TT-04 implementation defect was found and corrected before execution.
+- On current-week expiry day, source semantics require new entries to use next-week options, but an existing prior-day position remains in the current-week series until its 15:15 exit.
+- The engine now keeps the existing position's expiry immutable and uses a separate new-entry quote frame.
+- Logged as F50B-020. No numerical TT-04 evidence was produced from the defective implementation.
