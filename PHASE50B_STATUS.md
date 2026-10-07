@@ -268,3 +268,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT-04 preflight now independently enforces TT-03 coverage >=95%, denominator consistency and all four preregistered cost outputs.
 - TT-05 execution concurrency is now fail-safe against overlapping manual/triggered runs.
 - TT-02 corrected numerical run 37596743408 remains active; no numerical result is yet accepted.
+
+
+## 2026-10-07 — TT-06/TT-07 replay contracts frozen
+- Frozen deterministic source-faithful replay specifications for TT-06 and TT-07 before numerical execution.
+- Both contracts use the established coverage, slippage, ₹10/₹20 brokerage, +50% stress and protected chronology rules.
+- No TT-06/TT-07 numerical evidence exists yet.
