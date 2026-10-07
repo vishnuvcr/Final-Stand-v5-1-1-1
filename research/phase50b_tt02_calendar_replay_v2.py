@@ -366,7 +366,7 @@ def main():
     ]).to_csv(OUT/"coverage_gaps.csv",index=False)
     candidate_trades=len(df)+len(coverage_gaps)
     coverage_rate=(len(df)/candidate_trades) if candidate_trades else 0.0
-    result={"strategy":"TT-02","trades":len(df),"candidate_trades":candidate_trades,
+    result={"strategy":"TT-02","engine_revision":TT02_ENGINE_REV,"trades":len(df),"candidate_trades":candidate_trades,
             "coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,
             "net":float(df.net.sum()) if not df.empty else 0.0,
             "net50":float(df.net50.sum()) if not df.empty else 0.0,
