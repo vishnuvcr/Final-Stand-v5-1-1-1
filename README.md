@@ -655,3 +655,8 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - Run 37589199743 failed before numerical execution because the registry publisher was missing a closing `fi`; registry validation itself passed.
 - Corrected workflow commit e0d4bda09bb943272bac591d68aafa051d7b9f94 restores the shell closure and passes a structural shell-balance audit.
 - No numerical evidence was produced by run 37589199743.
+
+
+## 2026-10-07 — Phase 50B active run checkpoint
+- Canonical run **37589400281** is the sole active Phase-50B numerical run; TT-02 has passed compilation/cache setup and is executing.
+- Operational polling timeout F50B-023 had no research impact. Direct Actions state checks remain authoritative.
