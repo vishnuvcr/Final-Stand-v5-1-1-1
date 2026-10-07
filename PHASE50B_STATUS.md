@@ -62,3 +62,10 @@ The expanded registry contains the seven user-supplied Tradetron strategies plus
 The strongest native HIGH-VIX hypothesis remains **TT-02: 0.20/0.10 Delta Calendar Hedge Spread v4**. Its native Tradetron report showed +₹72,179.25 on 19 High-regime result days, but that number is not Final Stand evidence because the native run uses a different cost/coverage model.
 
 The current canonical common-cost replay is **Actions run 37570836398 (#latest corrected Phase-50B workflow)**. Registry preflight has passed; the TT-02 numerical replay is running. Older duplicate Phase-50B runs are classified SUPERSEDED and are not evidence. The standalone TT-02 workflow is now manual-only to avoid further automatic duplication.
+
+
+## 2026-10-07 — Workflow orchestration hardened
+
+The canonical workflow automatic trigger is now restricted to the explicit Phase-50B trigger file, the TT-02 replay engine, and its preregistration. README/status/error-log/research-plan edits no longer launch numerical runs. Manual dispatch remains available.
+
+Current canonical run: **37571121043**. Registry preflight has passed and TT-02 common-cost replay is active. Older Phase-50B runs are superseded/non-evidence.
