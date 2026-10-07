@@ -280,3 +280,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Found undefined TT02_ENGINE_REV in the corrected engine; fixed and added a static AST contract audit.
 - Run 37596743408 predates this correction and is explicitly non-authoritative.
 - A post-run corrected rerun is required before TT-02 can produce evidence.
+
+
+## 2026-10-07 — TT-06 execution chain prepared
+- TT-06 replay engine and frozen replay workflow are now present and structurally balanced.
+- TT-05 now triggers TT-06 only after TT-05 evidence passes its artifact gate.
+- No TT-06 numerical execution has started.
+- Active TT-02 run 37596743408 remains non-authoritative because it predates the TT02 revision-constant correction.
