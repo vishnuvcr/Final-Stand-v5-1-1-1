@@ -83,3 +83,7 @@ No numerical inference is taken from these source audits alone.
 
 ### Current numerical state
 Canonical run **37571121043** remains active. Registry preflight has passed; **TT-02 common-cost replay is still executing**. The replay has not yet produced a scientific result, so no P&L, VIX uplift or promotion decision is accepted from Phase 50B at this point.
+
+
+## 2026-10-07 — TT-02 replay performance correction
+The canonical TT-02 replay was mathematically unchanged but slower than expected because the stateful engine repeatedly scanned option frames and solved implied volatility expensively. A performance-only correction was committed: timestamp indexing plus a faster Newton/fallback implementation of the same Black-Scholes implied-volatility root. This will trigger the canonical rerun and supersede the slow execution; no numerical result from the old run is used.
