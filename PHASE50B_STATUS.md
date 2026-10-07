@@ -575,3 +575,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - The run has produced zero Actions artifacts so far and the TT05 trigger remains absent.
 - No timeout/failure signal has been observed, so the performance-only fallback remains dormant.
 - No duplicate numerical execution or scientific parameter change was made.
+
+
+## 2026-10-07 — TT04 timeout-gate audit
+- Re-read the authoritative TT04 workflow: numerical job timeout is **240 minutes**.
+- Direct Actions state still reports run **37621965843** as `in_progress`; the replay step is still active and no artifacts exist.
+- The available GitHub wrapper does not expose authoritative `started_at`/`updated_at` timestamps for the run, so timeout status cannot be asserted from the available evidence alone.
+- Therefore the 240-minute fallback threshold is **not declared breached** and no fallback replay is launched.
+- This preserves the scientific rule: never replace a valid active replay merely because it is slow.
