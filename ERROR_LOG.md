@@ -1786,3 +1786,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The corrected concurrency policy successfully cancelled the pre-fix TT-02 replay when the authoritative corrected run was queued.
 - No output from the cancelled run is used as evidence.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-046 — Active TT-02 live-log endpoint unavailable
+- Time: 2026-10-07.
+- Authoritative run 37598918723 remains in progress, but the GitHub workflow-job log endpoint returned HTTP 404 BlobNotFound while the job was active.
+- This is an observability/API artifact issue, not evidence of numerical failure. No retry or duplicate replay was started.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
