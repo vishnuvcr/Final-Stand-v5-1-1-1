@@ -539,3 +539,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — Phase 50B TT-04 stale-artifact protection
 - Added engine revisioning and downstream verification for TT-04 before numerical execution.
+
+
+## 2026-10-07 — Phase 50B orchestration hardening
+- Serialized canonical Phase-50B workflow execution to protect the evidence chain from overlapping numerical runs.
