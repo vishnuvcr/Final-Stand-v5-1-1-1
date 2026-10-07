@@ -64,7 +64,7 @@ jobs:
           key: phase50b-tt02-hf-${{ runner.os }}-${{ hashFiles('research/phase50b_tt02_calendar_replay_v2.py') }}
           restore-keys: |
             phase50b-tt02-hf-${{ runner.os }}-
-      - name: Run TT02 replay
+      - name: Run TT02 replay (canonical v2)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_HUB_DISABLE_TELEMETRY: "1"
