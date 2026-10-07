@@ -1737,3 +1737,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Run 18 is on pre-revision commit `0b09aff...` and is therefore diagnostic/non-evidence; run 19 on corrected commit `dcbb00c...` is the sole eligible TT-02 evidence run.
 - No third numerical run will be launched while either is active.
 - Evidence status: **NO SCIENTIFIC IMPACT**; compute-efficiency/control defect.
+
+
+### F50B-039 — Statistical gate fail-open cost fallback
+- Time: 2026-10-07.
+- The execution-only statistical gate previously substituted missing ₹20 brokerage scenario fields with primary-cost fields, which could mask missing robustness evidence. This was corrected before first statistical execution; the gate now fails closed and explicitly registers all seven strategy slots.
+- Evidence status: NO SCIENTIFIC IMPACT.
