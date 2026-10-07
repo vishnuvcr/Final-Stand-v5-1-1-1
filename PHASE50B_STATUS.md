@@ -518,3 +518,7 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Common-cost TT-03 baseline: net ₹89,669.15; +50% cost stress ₹82,074.11; ₹20/order ₹75,509.15; ₹20/order +50% stress ₹60,834.11.
 - These figures are accepted source-faithful baseline evidence but are not yet a promotion decision; VIX inference, chronological validation/holdout confirmation and statistical gates remain.
 - TT04 was then dispatched explicitly because the TT03 workflow's GITHUB_TOKEN push cannot trigger an ordinary push workflow automatically.
+
+## 2026-10-07 — TT04 V3 active
+- TT04 run 37621965843 passed preflight, including the accepted TT03 V5 PASS terminal gate, and is currently executing the corrected TT04 V3 numerical replay.
+- No TT04 artifact or P&L is accepted until its structural, coverage, cost and diagnostic audits complete.
