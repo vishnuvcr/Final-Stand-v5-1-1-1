@@ -12,6 +12,8 @@ from phase43_vix_strategy_sweep import (
     charges, exec_px, lot_size_for_expiry
 )
 
+TT02_ENGINE_REV = "50B-TT02-COVERAGE-V3"
+
 OUT = Path("results/phase50b/tt02_calendar_replay")
 OUT.mkdir(parents=True, exist_ok=True)
 
