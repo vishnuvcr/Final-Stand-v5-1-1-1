@@ -2131,3 +2131,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The script failed before the GitHub create-file call; **no repository file was mutated by this failed attempt**.
 - Correction: rebuild the fallback using safer literal construction and keep it dormant until a genuine TT04 workflow failure/timeout is established.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-081 — TT04 canonical numerical replay failed before artifact audit
+- Time: 2026-10-07.
+- Canonical TT04 Actions run 37621965843 completed with the numerical replay step failed. Artifact audit, upload, publication and TT05 routing were skipped, so no scientific output was accepted.
+- The job-log endpoint for job 112794408361 remained unavailable with BlobNotFound; therefore the underlying runtime exception is intentionally not guessed.
+- Handling: the failure satisfies the registered condition for the dormant performance-only fallback. A separate gated fallback workflow was added and its trigger activated.
+- Scientific status: NO TT04 RESULT FROM THE FAILED RUN IS EVIDENCE. The fallback remains subject to the identical coverage/zero-error/cost audit.
