@@ -9,12 +9,14 @@ Phase 50B is the bounded continuation after Phase 50. It includes the user's sev
 - [Phase 50B source/baseline audit](PHASE50B_SOURCE_BASELINE_AUDIT.md)
 - [Phase 50B literature review](PHASE50B_LITERATURE_REVIEW.md)
 - [Phase 50B chat log](PHASE50B_CHAT_LOG.md)
+- [Phase 50B 2026 execution-cost audit](PHASE50B_2026_COST_AUDIT.md)
+- [TT-04 source audit](PHASE50B_TT04_SOURCE_AUDIT.md)
 
 ### Current strongest new VIX hypothesis
 
 **TT-02 — 0.20/0.10 Delta Calendar Hedge Spread v4**
 
-Its finished native Tradetron report shows a positive HIGH-VIX outcome-day diagnostic, but the report uses a different coverage/cost model and therefore is not accepted Final Stand evidence. The canonical common-cost replay is currently running under Actions run **37570836398**; registry preflight has passed.
+Its finished native Tradetron report shows a positive HIGH-VIX outcome-day diagnostic, but the report uses a different coverage/cost model and therefore is not accepted Final Stand evidence. The canonical common-cost TT-02 replay is currently running under Actions run **37572837253**; registry preflight has passed. The current replay includes the performance-only delta-selection correction logged as F50B-012; no result from the superseded slower run is accepted.
 
 Older duplicate Phase-50B runs are classified **SUPERSEDED / NON-EVIDENCE**. The standalone TT-02 workflow is now manual-only to avoid repeated automatic executions.
 
