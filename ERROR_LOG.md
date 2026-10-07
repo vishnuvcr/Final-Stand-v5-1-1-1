@@ -1945,3 +1945,13 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: these cases now return explicit coverage_gaps.csv rows and contribute to candidate_trades.
 - The current TT03 run is being superseded before numerical evidence acceptance.
 - Evidence status: NO SCIENTIFIC IMPACT.
+
+
+### F50B-066 — TT03 corrected baseline failed the preregistered 95% feasibility gate
+- Time: 2026-10-07.
+- Corrected TT03 engine revision 50B-TT03-WINDOW-V2 generated 187 completed trades from 202 candidate campaigns, with 15 explicit coverage exclusions: coverage = 92.574%.
+- Primary net was +₹87,005.53, +50% cost stress +₹79,885.04, ₹20/order +₹73,765.93, and ₹20/order +50% stress +₹60,025.64.
+- These P&L figures are diagnostic only because coverage is below the preregistered 95% feasibility threshold. The audit correctly rejected the artifact before publication.
+- Decision: classify TT03 as FEASIBILITY FAIL — NO PROMOTION. Do not tune VIX, far-OTM distance, or other parameters for TT03, and do not include TT03 in confirmatory statistical inference.
+- A rerun is authorized only to persist the full diagnostic replay and coverage gaps; it is not a scientific re-test.
+- Evidence status: SCIENCE-GATING RESULT — TT03 fails feasibility.
