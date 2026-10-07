@@ -833,3 +833,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Run 37621965843 remains in progress with the replay step active and no artifacts.
 - Because authoritative start-time metadata is not exposed by the available GitHub wrapper, the timeout threshold cannot yet be declared breached.
 - No fallback or duplicate scientific replay was initiated.
+
+
+## 2026-10-07 — TT04 continuation / direct state revalidation
+- Revalidated the Phase-50B plan and active evidence chain before proceeding.
+- Actions run **37621965843** remains the sole active TT04 numerical execution; the replay step is still running after successful preflight and HF-cache setup.
+- No TT04 artifact is available for audit, so no numerical evidence is consumed.
+- The research sequence remains frozen and fail-closed: TT04 artifact/coverage/zero-error/cost audit -> TT05 -> TT06 -> TT07 -> statistical gate -> protected holdout -> final decision.
