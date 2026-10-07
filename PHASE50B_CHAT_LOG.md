@@ -254,3 +254,9 @@ User requested continuation without pausing. Work performed:
 - Before numerical execution, self-audited TT-07 state transitions.
 - Found and fixed a latent partial-cash-mutation path when a later leg quote was absent.
 - No TT-07 replay has run; the workflow remains dependency-gated behind audited TT-06 evidence.
+
+
+## 2026-10-07 — Continue checkpoint: TT-03 controlled retry
+- The corrected TT03 trigger remained at commit-status `pending`, with no published result.
+- Refreshed the existing TT03 trigger rather than changing the research specification or launching a parallel numerical path.
+- The refreshed commit is also currently `pending`; TT03 evidence remains absent.
