@@ -177,7 +177,7 @@ def main():
                         option_cache[pos_exp]=option_clean(load_parquet(f"options/NIFTY/{pos_exp.strftime('%Y-%m-%d')}.parquet"))
                         option_ts_cache[pos_exp]=option_timestamp_index(option_cache[pos_exp])
                     z=option_ts_cache[pos_exp].get(ts)
-                if z.empty:continue
+                if z is None or z.empty:continue
                 if position is None and ts.time()<=ENTRY_END:
                     z_entry_ts=option_ts_cache[target].get(ts)
                     if z_entry_ts is None or z_entry_ts.empty:continue
@@ -222,8 +222,7 @@ def main():
                     exited=False
                     for exit_ts in exit_candidates:
                         exit_ts=pd.Timestamp(exit_ts)
-                        z_exit=option_cache[position["expiry"]]
-                        z_exit=z_exit[z_exit.timestamp==exit_ts]
+                        z_exit=option_ts_cache[position["expiry"]].get(exit_ts)
                         out=finish(position,exit_ts,z_exit) if not z_exit.empty else None
                         if out is not None:
                             rows.append(out)
