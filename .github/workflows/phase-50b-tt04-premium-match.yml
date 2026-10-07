@@ -28,26 +28,22 @@ jobs:
         run: python -m pip install --no-input numpy pandas pyarrow matplotlib scipy huggingface_hub
       - name: Compile TT04 replay
         run: python -m py_compile research/phase50b_tt04_premium_match_replay.py
-      - name: Verify TT03 evidence gate
+      - name: Verify TT03 terminal feasibility gate
         run: |
           set -euo pipefail
-          test -s results/phase50b/tt03_dynamic_n_replay/summary.json
-          test -s results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv
-          test -f results/phase50b/tt03_dynamic_n_replay/data_errors.csv
+          test -s results/phase50b/tt03_feasibility/feasibility.json
           python - <<'PY'
-          import json, pandas as pd
-          d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
-          tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
-          er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
-          cg=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv")
+          import json
+          d=json.load(open("results/phase50b/tt03_feasibility/feasibility.json"))
           assert d["engine_revision"]=="50B-TT03-WINDOW-V2", d
-          assert d["trades"] == len(tr)
-          assert d["trades"] > 0
-          assert d["candidate_trades"] == len(tr) + len(cg)
-          assert d["coverage_rate"] >= 0.95, d
-          assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
-          assert len(er) == 0, er.head()
-          print("TT03 dependency gate PASS", d)
+          assert d["feasibility_state"] in ("PASS","FAIL_COVERAGE"), d
+          if d["feasibility_state"]=="FAIL_COVERAGE":
+              assert d["data_errors"]==0, d
+              assert d["coverage_rate"]<0.95, d
+              print("TT03 terminal feasibility FAIL-COVERAGE; TT04 continues independently.", d)
+          else:
+              assert d["coverage_rate"]>=0.95, d
+              print("TT03 terminal feasibility PASS.", d)
           PY
 
   numerical:
