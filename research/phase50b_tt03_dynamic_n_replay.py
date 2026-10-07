@@ -9,7 +9,7 @@ from phase43_vix_strategy_sweep import (
 
 OUT=Path("results/phase50b/tt03_dynamic_n_replay")
 OUT.mkdir(parents=True,exist_ok=True)
-TT03_ENGINE_REV="50B-TT03-WINDOW-V3"
+TT03_ENGINE_REV="50B-TT03-WINDOW-V4"
 
 def expiry_dates():
     p=Path("results/phase43_vix/strategy_trade_matrix_all_splits.csv")
@@ -38,6 +38,16 @@ def entry_day(expiry,index):
 def trade_one(expiry,index,data):
     day=entry_day(expiry,index)
     if day is None:return None
+    # A source-defined 10:00-10:05 entry is only possible on a normal NSE
+    # daytime session. A date with no 09:15-15:30 index observations is a
+    # closed/non-standard-session day (e.g. Muhurat evening session), not a
+    # missing data observation for this intraday strategy.
+    day_regular=index[(index.timestamp.dt.normalize()==day)&
+                      (index.timestamp.dt.time>=pd.Timestamp("09:15").time())&
+                      (index.timestamp.dt.time<=pd.Timestamp("15:30").time())]
+    if day_regular.empty:
+        return {"_session_exclusion":{"expiry":str(expiry.date()),"entry_day":str(day.date()),
+                                      "reason":"no_normal_09:15_to_15:30_session_on_scheduled_entry_day"}}
     ts_candidates=sorted(index[(index.timestamp.dt.normalize()==day)&
                               (index.timestamp>=day+pd.Timedelta(hours=10))&
                               (index.timestamp<day+pd.Timedelta(hours=10,minutes=6))].timestamp.unique())
@@ -144,13 +154,15 @@ def main():
     index=index[["timestamp","close"]].rename(columns={"close":"spot"}).drop_duplicates("timestamp").sort_values("timestamp")
     VIX=load_vix()
     exps=[e for e in expiry_dates() if START<=e<=END]
-    rows=[];errors=[];coverage_gaps=[]
+    rows=[];errors=[];coverage_gaps=[];session_exclusions=[]
     for e in exps:
         try:
             data=option_clean(load_parquet(f"options/NIFTY/{e.strftime('%Y-%m-%d')}.parquet"))
             z=trade_one(e,index,data)
             if isinstance(z,dict) and "_coverage_gap" in z:
                 coverage_gaps.append(z["_coverage_gap"])
+            elif isinstance(z,dict) and "_session_exclusion" in z:
+                session_exclusions.append(z["_session_exclusion"])
             elif z is not None:
                 rows.append(z)
         except Exception as ex:
@@ -159,6 +171,7 @@ def main():
     df.to_csv(OUT/"tt03_trades.csv",index=False)
     pd.DataFrame(errors,columns=["expiry","error"]).to_csv(OUT/"data_errors.csv",index=False)
     pd.DataFrame(coverage_gaps).to_csv(OUT/"coverage_gaps.csv",index=False)
+    pd.DataFrame(session_exclusions).to_csv(OUT/"session_exclusions.csv",index=False)
     if not df.empty:
         splits=[]
         expiry_series=pd.to_datetime(df["expiry"],utc=True).dt.tz_convert(TZ)
@@ -168,7 +181,8 @@ def main():
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean"),win_rate=("win","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
-        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"candidate_trades":len(df)+len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":len(df)/(len(df)+len(coverage_gaps)) if len(df)+len(coverage_gaps) else 0.0,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"by_vix":vx.to_dict("records")}
+        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"candidate_trades":len(df)+len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":len(df)/(len(df)+len(coverage_gaps)) if len(df)+len(coverage_gaps) else 0.0,
+                "session_exclusions":len(session_exclusions),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"by_vix":vx.to_dict("records")}
     else: result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"net":0.0,"net50":0.0,"net20":0.0,"net20_50":0.0,"by_vix":[]}
     (OUT/"summary.json").write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2))
