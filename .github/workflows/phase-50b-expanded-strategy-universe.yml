@@ -7,9 +7,6 @@ on:
       - phase-50b-expanded-strategy-universe
     paths:
       - trigger/phase50b.start
-      - research/phase50b_tt02_calendar_replay_v2.py
-      - research/phase50b_tt03_dynamic_n_replay.py
-      - PHASE50B_PRE_REGISTRATION.md
 
 
 permissions:
@@ -74,15 +71,21 @@ jobs:
           test -s results/phase50b/tt02_calendar_replay/summary.json
           test -s results/phase50b/tt02_calendar_replay/tt02_trades.csv
           test -s results/phase50b/tt02_calendar_replay/data_errors.csv
+          test -s results/phase50b/tt02_calendar_replay/coverage_gaps.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt02_calendar_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt02_calendar_replay/tt02_trades.csv")
           er=pd.read_csv("results/phase50b/tt02_calendar_replay/data_errors.csv")
+          cg=pd.read_csv("results/phase50b/tt02_calendar_replay/coverage_gaps.csv")
           assert d["trades"] == len(tr)
           assert d["trades"] > 0
+          assert d["candidate_trades"] == d["trades"] + len(cg)
+          assert abs(d["coverage_rate"] - d["trades"]/d["candidate_trades"]) < 1e-12
+          assert d["coverage_rate"] >= 0.95
           assert len(er)==0, er.head()
           print("TT02 replay audit PASS", d)
+          print("Coverage gaps are excluded from primary results and retained separately:", len(cg))
           PY
       - name: Upload TT02 artifacts
         uses: actions/upload-artifact@v4
