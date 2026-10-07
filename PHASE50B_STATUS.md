@@ -136,3 +136,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected the engine to separate the new-entry expiry frame from the immutable expiry of an existing position.
 - No TT-04 numerical evidence existed, so this correction has **zero numerical impact** on accepted evidence.
 - TT-04 remains gated behind audited TT-03 evidence; no trigger was created.
+
+
+## 2026-10-07 — Execution-budget checkpoint
+- Canonical TT-02 run 37572837253 has been executing for approximately 41 minutes and remains within its registered 360-minute job timeout.
+- No artifact has been published; no scientific result is accepted.
+- The prepared v3 engine remains an unexecuted fallback and will only replace the canonical v2 run after an actual failure/timeout, not merely because the job is long-running.
