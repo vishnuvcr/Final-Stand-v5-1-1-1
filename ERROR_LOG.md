@@ -1919,3 +1919,20 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: the dedicated TT03 preflight now installs the same core scientific/data dependencies used by the numerical job before validating TT02 artifacts.
 - A controlled TT03 trigger refresh was committed after this workflow correction.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-063 — TT03 hard-close logic could violate the "no later than 15:29" rule
+- Time: 2026-10-07.
+- Pre-execution self-audit found that the baseline TT03 engine, when no negative P&L exit occurred, searched for an observed timestamp at or after 15:29 and could therefore choose 15:30 or later.
+- That contradicts the source-defined hard close of no later than 15:29.
+- Correction: the engine now takes the latest simultaneously observed index/option timestamp **at or before 15:29**, without requiring an exact 15:29 quote and without forward-filling.
+- The currently running TT03 job uses the pre-correction commit and will be superseded by a controlled retrigger.
+- Evidence status: **NO SCIENTIFIC IMPACT**; corrected before accepting any TT03 result.
+
+### F50B-064 — TT03 entry had an unnecessary modal-strike-step feasibility gate
+- Time: 2026-10-07.
+- The engine computed a modal strike step and refused an otherwise complete source-defined ratio entry when the modal-step calculation was unavailable.
+- The source rule specifies point-distance strikes (ATM±300/350/400); modal strike-step availability is not a source condition.
+- Correction: removed the modal-step gate. Complete contemporaneous source-defined strikes are now sufficient.
+- No numerical result from the pre-correction TT03 engine is accepted.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
