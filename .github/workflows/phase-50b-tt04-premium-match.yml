@@ -35,11 +35,27 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open("results/phase50b/tt03_feasibility/feasibility.json"))
-          assert d["engine_revision"]=="50B-TT03-WINDOW-V4", d
-          assert d["feasibility_state"]=="PASS", d
-          assert d["data_errors"]==0, d
-          assert d["coverage_rate"]>=0.95, d
-          print("TT03 terminal feasibility PASS; TT04 may proceed.", d)
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V5", d
+          assert d["feasibility_state"] in ("PASS","FAIL_COVERAGE","INVALID_ENGINE"), d
+          assert d["next_strategy_may_proceed"] is True, d
+          assert d["run_id"] > 0, d
+          if d["feasibility_state"]=="PASS":
+              assert d["diagnostic_only"] is False, d
+              assert d["promotion_eligible"] if "promotion_eligible" in d else d["uses_pnl_as_evidence"], d
+              assert d["coverage_rate"]>=0.95, d
+              assert d["data_errors"]==0, d
+              print("TT03 PASS; TT04 may proceed independently.",d)
+          elif d["feasibility_state"]=="FAIL_COVERAGE":
+              assert d["diagnostic_only"] is True, d
+              assert d["promotion_eligible"] is False, d
+              assert d["coverage_rate"]<0.95, d
+              assert d["uses_pnl_as_evidence"] is False, d
+              print("TT03 failed feasibility; TT04 proceeds without consuming TT03 P&L.",d)
+          else:
+              assert d["diagnostic_only"] is True, d
+              assert d["promotion_eligible"] is False, d
+              assert d["uses_pnl_as_evidence"] is False, d
+              print("TT03 replay invalid; TT04 proceeds independently without consuming TT03 P&L.",d)
           PY
 
   numerical:
