@@ -400,3 +400,10 @@ User requested continuation without pausing. Work performed:
 - TT03 V5 run 37620274641 is still executing its numerical replay; no result has been accepted and no duplicate was started.
 - Used the interruption interval for downstream pre-execution audit rather than idle waiting.
 - Hardened TT04, TT05, TT06 and TT07 workflow checks so persisted exclusion diagnostics must reconcile to their summary counts.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 V5 PASS
+- TT03 V5 completed and passed feasibility at 200/201 coverage candidates (99.50%) with zero data errors.
+- Primary/common-cost result is positive, but this is baseline evidence only; no promotion or VIX-selection inference is made yet.
+- The downstream TT04 marker written by the Actions job did not create a new TT04 run because it was pushed using GITHUB_TOKEN.
+- Dispatched TT04 using a normal repository commit so the dedicated TT04 workflow can start.
