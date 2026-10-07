@@ -574,3 +574,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT-06 control prepared
 - Added source-faithful TT-06 engine and dependency-gated workflow; no numerical evidence produced.
 - Chained TT-05 to TT-06 only after audit success.
+
+
+## 2026-10-07 — TT-07 raw-source reconciliation
+- Inspected the original ASB export directly and reconciled all state transitions.
+- Identified and formally blocked the unresolved ic_entered lifecycle rather than inventing semantics.
