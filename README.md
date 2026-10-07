@@ -701,3 +701,8 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — Phase 50B TT-02 revision gate
 - TT-02 evidence now requires engine revision `50B-TT02-COVERAGE-V3`; pre-correction artifacts cannot be promoted.
+
+
+## 2026-10-07 — Phase 50B cost robustness update
+- Reverified current NSE statutory charges and Paytm Money brokerage information. citeturn214286search0turn214286search3turn157124search0turn157124search2
+- The primary research model remains ₹10/order for comparability; a ₹20/order Paytm robustness scenario is now preregistered for promotion sensitivity.
