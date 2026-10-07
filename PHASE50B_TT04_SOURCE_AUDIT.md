@@ -41,3 +41,9 @@ Tradetron's current validator also emits important warnings. They are source war
 3. The repair structure sits inside a re-enterable set and the validator warns that repair-driven re-entry can compound duplicate entries.
 
 Phase-50B common replay will preserve the source's observed rule semantics rather than silently replace these warnings. Any safer mutation would be a separate preregistered variant, not the baseline.
+
+
+## 2026-10-07 V3 source-fidelity lock
+- Exact premium match means an exact contemporaneous observed LTP match; nearest-premium substitution is not permitted.
+- The universal time exit is evaluated at the earliest observed timestamp at or after 15:15 for which all live legs have simultaneous quotes; a missing first observation is not by itself a coverage failure.
+- These corrections are frozen in engine revision 50B-TT04-COVERAGE-V3 before numerical execution.
