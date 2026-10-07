@@ -68,7 +68,7 @@ def finish(pos,exit_ts,z):
 
 def main():
     index=idx(); vix=load_vix(); E=exps()
-    cache={}; rows=[]; gaps=[]; errors=[]; trade_id=1
+    cache={}; rows=[]; gaps=[]; errors=[]; session_exclusions=[]; trade_id=1
     for day in sorted(index.timestamp.dt.normalize().unique()):
         day=pd.Timestamp(day)
         if day<START.normalize() or day>END.normalize():continue
@@ -77,7 +77,22 @@ def main():
         nxt=next_expiry(E,cur)
         target=nxt if day.weekday()==3 else cur
         if target is None:continue
-        if target not in cache: cache[target]=clean(load_parquet(f"options/NIFTY/{target.strftime('%Y-%m-%d')}.parquet"))
+        regular=index[(index.timestamp.dt.normalize()==day.normalize())&
+                      (index.timestamp.dt.time>=pd.Timestamp("09:15").time())&
+                      (index.timestamp.dt.time<=pd.Timestamp("15:30").time())]
+        if regular.empty:
+            session_exclusions.append({"date":str(day.date()),
+                                       "reason":"no_normal_09:15_to_15:30_session"})
+            continue
+        try:
+            if target not in cache:
+                cache[target]=clean(load_parquet(f"options/NIFTY/{target.strftime('%Y-%m-%d')}.parquet"))
+        except Exception as exc:
+            errors.append({"day":str(day.date()),"error":f"load {target.date()}: {exc}"})
+            gaps.append({"trade_id":trade_id,"expiry":str(target.date()),
+                         "trigger_ts":str(day),"gap_type":"missing_entry_option_chain"})
+            trade_id+=1
+            continue
         z=cache[target]
         dayidx=index[(index.timestamp.dt.normalize()==day)&(index.timestamp.dt.time>=ENTRY_START)&(index.timestamp.dt.time<=EXIT_TIME)]
         traded=False
@@ -105,7 +120,8 @@ def main():
                      "lot":lot,"cash":cash,"orders":orders,"legs":legs,
                      "vix":vs["vix"] if vs else np.nan,"vix_state":vs["level_state"] if vs else None}
                 trade_id+=1; traded=True
-            if not traded:continue
+            if not traded:
+                continue
             snap=z[z.timestamp==ts]
             if snap.empty:continue
             mark=pos["cash"]
@@ -120,10 +136,15 @@ def main():
                 if out is not None:rows.append(out)
                 else:gaps.append(gap)
                 break
+        if not traded:
+            gaps.append({"trade_id":trade_id,"expiry":str(target.date()),
+                         "trigger_ts":str(day),"gap_type":"missing_complete_entry_at_09:30_to_15:10"})
+            trade_id+=1
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt05_trades.csv",index=False)
     pd.DataFrame(gaps,columns=["trade_id","expiry","trigger_ts","gap_type"]).to_csv(OUT/"coverage_gaps.csv",index=False)
     pd.DataFrame(errors,columns=["day","error"]).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(session_exclusions,columns=["date","reason"]).to_csv(OUT/"session_exclusions.csv",index=False)
     cand=len(df)+len(gaps); cov=len(df)/cand if cand else 0.0
     splits=[]
     if not df.empty:
@@ -131,7 +152,7 @@ def main():
         for n,m in [("DEV",d<=DEV_END),("VAL",(d>DEV_END)&(d<=VAL_END)),("HOLD",d>VAL_END)]:
             qv=df[m]; splits.append({"split":n,"trades":len(qv),"net":float(qv.net.sum()),"net50":float(qv.net50.sum()),"net20":float(qv.net20.sum()),"net20_50":float(qv.net20_50.sum())})
     summary={"strategy":"TT-05","engine_revision":TT05_ENGINE_REV,"trades":len(df),"candidate_trades":cand,
-             "coverage_exclusions":len(gaps),"coverage_rate":cov,
+             "coverage_exclusions":len(gaps),"coverage_rate":cov,"session_exclusions":len(session_exclusions),
              "net":float(df.net.sum()) if not df.empty else 0.0,
              "net50":float(df.net50.sum()) if not df.empty else 0.0,
              "net20":float(df.net20.sum()) if not df.empty else 0.0,
