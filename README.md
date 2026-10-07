@@ -543,3 +543,15 @@ Phase 44 tuned six defined-risk VIX-conditioned candidate families across finite
 - TT-04 dedicated run **37621965843** is executing from the corrected V3 engine after TT-03 terminal PASS gating.
 - TT-04 remains unaccepted until its exact premium-match replay passes coverage, zero-data-error, and cost-robustness artifact audits.
 - No Phase-50B strategy has been promoted.
+
+
+## Phase 50B — latest research status — 2026-10-07 18:15 IST
+
+Phase 50B remains active on branch [phase-50b-expanded-strategy-universe](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-expanded-strategy-universe).
+
+- **TT-03 V5:** PASS accepted from Actions run **37620274641** — 200/201 complete campaigns, 99.50% coverage, one coverage exclusion, one session exclusion, zero data errors. Source-faithful net results are ₹89,669.15 (₹10/order), ₹82,074.11 (+50% stress), ₹75,509.15 (₹20/order), and ₹60,834.11 (₹20/order +50% stress).
+- **TT-04 V3:** Actions run **37621965843** is currently executing the numerical replay after successful preflight, compilation, TT-03 terminal-gate verification and HF-cache setup.
+- **Evidence status:** TT-04 is not yet accepted; no downstream statistical inference, tuning, holdout promotion or strategy promotion is being inferred from the in-progress run.
+- **Research chain:** TT-04 → TT-05 → TT-06 → TT-07 → protected statistical inference → finite VIX/far-OTM variants → chronological validation → protected 2026 holdout → final decision/manuscript.
+
+[TT-04 current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37621965843) · [Phase 50B status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-expanded-strategy-universe/PHASE50B_STATUS.md)
