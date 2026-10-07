@@ -1750,3 +1750,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - TT-04 preflight independently checked TT-03 revision, nonzero trades and zero data errors, but did not enforce the 95% coverage or full four-cost-field contract.
 - Corrected before TT-04 execution; preflight now requires coverage >=95%, candidate denominator consistency, and net/net50/net20/net20_50/vix_state fields.
 - Evidence status: **NO SCIENTIFIC IMPACT**; pre-execution control hardening.
+
+
+### F50B-041 — TT-02 revision constant undefined at runtime
+- Time: 2026-10-07.
+- The TT-02 audit required engine revision `50B-TT02-COVERAGE-V3`, but the engine referenced `TT02_ENGINE_REV` without defining it. Python compilation did not detect this because the lookup occurs only when the result summary is constructed.
+- Corrected before accepting any numerical evidence; a static AST contract audit was added to the workflow.
+- Current run 37596743408 predates this correction and remains non-authoritative even if it eventually completes.
+- Evidence status: **NO SCIENTIFIC IMPACT** because no output from the defective revision can pass the new audit.
