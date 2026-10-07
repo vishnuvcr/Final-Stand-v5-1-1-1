@@ -1936,3 +1936,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: removed the modal-step gate. Complete contemporaneous source-defined strikes are now sufficient.
 - No numerical result from the pre-correction TT03 engine is accepted.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-065 — TT03 missing-entry campaigns could be silently omitted from coverage denominator
+- Time: 2026-10-07.
+- Self-audit found that an eligible expiry with a valid three-days-before entry day but no observed entry timestamp, or no complete call/put ratio quote set inside 10:00–10:05, could return None and disappear from the candidate denominator.
+- Because the source strategy is scheduled to attempt entry on each eligible campaign day, such data failure must be an explicit coverage exclusion rather than an unobserved absence.
+- Correction: these cases now return explicit coverage_gaps.csv rows and contribute to candidate_trades.
+- The current TT03 run is being superseded before numerical evidence acceptance.
+- Evidence status: NO SCIENTIFIC IMPACT.
