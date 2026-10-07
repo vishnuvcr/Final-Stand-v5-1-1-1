@@ -17,6 +17,7 @@ import json
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from phase43_vix_strategy_sweep import load_vix, vix_state
 
 OUT = Path("results/phase50b/statistical_gate")
 OUT.mkdir(parents=True, exist_ok=True)
@@ -98,16 +99,42 @@ for strategy,path in STRATEGIES.items():
         s=json.loads(summary_path.read_text())
         coverage=float(s.get("coverage_rate",np.nan))
     coverage_rows.append({"strategy":strategy,"coverage_rate":coverage})
-    if "vix_state" not in z.columns:
-        continue
+    # Reconstruct the full frozen VIX mode membership from the entry date.
+    # Stored vix_state fields contain only LOW/NORMAL/HIGH in the replay engines;
+    # SPIKE/RISING/FALLING/HIGH_RISING must be recomputed from the cached VIX series.
+    if "entry_ts" not in z.columns:
+        raise ValueError(f"{path}: entry_ts required for VIX mode reconstruction")
+    vix_series = load_vix()
+    mode_sets = []
+    level_mismatches = 0
+    for _, row in z.iterrows():
+        ts = pd.Timestamp(row["entry_ts"])
+        if ts.tzinfo is None:
+            ts = ts.tz_localize("Asia/Kolkata")
+        vv = vix_state(vix_series, ts)
+        if vv is None:
+            mode_sets.append(set())
+            continue
+        modes = set(["ALL", vv["level_state"]])
+        if vv["SPIKE"]: modes.add("SPIKE")
+        if vv["RISING"]: modes.add("RISING")
+        if vv["FALLING"]: modes.add("FALLING")
+        if vv["level_state"] == "HIGH" and vv["RISING"]: modes.add("HIGH_RISING")
+        mode_sets.append(modes)
+        if "vix_state" in z.columns and str(row["vix_state"]) not in ("", "nan", "None"):
+            if str(row["vix_state"]) != vv["level_state"]:
+                level_mismatches += 1
+    z["_vix_modes"] = mode_sets
+    z["_vix_level_mismatches"] = level_mismatches
     # Protect the 2026 holdout from inferential hypothesis testing.
     # The registered inference universe is pre-holdout DEV+VAL only.
     infer_z=z[z["_date"]<=pd.Timestamp("2025-12-31")].copy()
     for mode in MODES:
-        regime=infer_z[infer_z.vix_state.astype(str)==mode]
-        complement=infer_z[infer_z.vix_state.astype(str)!=mode]
+        regime=infer_z[infer_z["_vix_modes"].apply(lambda s: mode in s)]
+        complement=infer_z[~infer_z["_vix_modes"].apply(lambda s: mode in s)]
         r=bootstrap_diff(regime.net.values,complement.net.values,seed=505001+len(rows))
         r.update({"strategy":strategy,"vix_mode":mode,"inference_sample":"DEV+VAL","holdout_excluded":True,
+                  "vix_level_mismatch_rows":level_mismatches,
                   "regime_cost50_mean":float(regime.net50.mean()) if len(regime) else np.nan,
                   "complement_cost50_mean":float(complement.net50.mean()) if len(complement) else np.nan,
                   "regime_current20_mean":float(regime.net20.mean()) if len(regime) else np.nan,
@@ -154,6 +181,7 @@ summary={
     "inference_excludes_holdout":True,
     "inference_sample":"DEV+VAL only",
     "cost_fields_fail_closed":True,
-    "registered_strategies":list(STRATEGIES.keys())
+    "registered_strategies":list(STRATEGIES.keys()),
+    "vix_mode_membership_reconstructed_from_entry_ts":True
 }
 (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
