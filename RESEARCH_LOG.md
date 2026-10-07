@@ -738,3 +738,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Audited the new session-exclusion diagnostic plumbing before allowing a V4 run to stand as evidence.
 - Found an undefined `sx` variable in the workflow persistence step.
 - Corrected the load path; no V4 feasibility artifact from the defective workflow is accepted.
+
+
+## 2026-10-07 — TT04 gate audit
+- Found a downstream control defect: TT04 preflight accepted TT03 FAIL_COVERAGE and allowed numerical execution.
+- Reclassified that TT04 run as non-evidence and hardened the gate to current TT03 V4 PASS-only.
+- A controlled trigger refresh was issued; no TT04 P&L is accepted from the weak-gate execution.
