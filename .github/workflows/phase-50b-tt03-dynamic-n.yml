@@ -74,7 +74,7 @@ jobs:
           tree=ast.parse(p.read_text())
           names={n.targets[0].id for n in tree.body if isinstance(n,ast.Assign) and len(n.targets)==1 and isinstance(n.targets[0],ast.Name)}
           assert "TT03_ENGINE_REV" in names
-          assert "50B-TT03-WINDOW-V4" in p.read_text()
+          assert "50B-TT03-WINDOW-V5" in p.read_text()
           print("TT03 engine contract PASS")
           PY
       - name: HF cache
@@ -107,7 +107,7 @@ jobs:
           er=pd.read_csv(src/"data_errors.csv")
           cg=pd.read_csv(src/"coverage_gaps.csv")
           sx=pd.read_csv(src/"session_exclusions.csv")
-          valid=(d.get("engine_revision")=="50B-TT03-WINDOW-V4" and
+          valid=(d.get("engine_revision")=="50B-TT03-WINDOW-V5" and
                  d.get("trades")==len(tr) and
                  d.get("candidate_trades")==len(tr)+len(cg))
           state="FAIL_COVERAGE" if valid and len(er)==0 and float(d.get("coverage_rate",0))<0.95 else ("PASS" if valid and len(er)==0 and float(d.get("coverage_rate",0))>=0.95 else "INVALID")
@@ -155,7 +155,7 @@ jobs:
           er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv")
           sx=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/session_exclusions.csv")
-          assert d["engine_revision"]=="50B-TT03-WINDOW-V4", d
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V5", d
           assert d["trades"]==len(tr) and d["trades"]>0, d
           assert d["candidate_trades"]==len(tr)+len(cg), d
           assert d["coverage_rate"]>=0.95, d
@@ -204,7 +204,7 @@ jobs:
           if int(d.get("run_id",-1)) != int("${{ github.run_id }}"):
               print("TT04 blocked: stale TT03 feasibility artifact does not belong to this workflow run:",d)
               raise SystemExit(0)
-          if d.get("engine_revision") != "50B-TT03-WINDOW-V4":
+          if d.get("engine_revision") != "50B-TT03-WINDOW-V5":
               print("TT04 blocked: feasibility artifact is not current TT03 V4:",d)
               raise SystemExit(0)
           if d["feasibility_state"] != "PASS":
