@@ -493,3 +493,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Reclassified these as source-data coverage exclusions, consistent with the dataset's explicit partial-coverage warning. citeturn551023search2turn551023search4
 - Pre-registered a 95% complete mandatory-exit quote coverage feasibility threshold; no price imputation is permitted.
 - TT-02 will be rerun with `coverage_gaps.csv` and the revised audit. TT-03 remains dependency-gated until the revised TT-02 feasibility audit passes.
+
+
+## 2026-10-07 — Phase 50B corrected TT-02 rerun
+- Corrected workflow and engine changes were committed, then the explicit trigger launched run 37593965525.
+- The run is currently at the registry gate; no numerical evidence has been accepted yet.
