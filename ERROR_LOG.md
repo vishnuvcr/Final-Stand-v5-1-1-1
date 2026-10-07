@@ -1910,3 +1910,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - During the VIX-mode reconstruction correction, trades with fewer than the required historical VIX observations initially produced an empty mode set and could have been counted as members of every regime complement.
 - Correction: inferential testing now restricts to trades with an observable reconstructed VIX mode. Unclassifiable trades are excluded from both the regime and complement for the inferential family.
 - Evidence status for F50B-060/F50B-061: **NO SCIENTIFIC IMPACT**; no statistical-gate result from the defective implementation is accepted.
+
+
+### F50B-062 — TT03 dedicated workflow preflight omitted pandas installation
+- Time: 2026-10-07.
+- Corrected TT03 run 37610158492 failed in its dependency gate before numerical execution because the preflight job imported pandas without installing the replay dependencies.
+- The numerical engine itself was not reached and no TT03 evidence was produced.
+- Correction: the dedicated TT03 preflight now installs the same core scientific/data dependencies used by the numerical job before validating TT02 artifacts.
+- A controlled TT03 trigger refresh was committed after this workflow correction.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
