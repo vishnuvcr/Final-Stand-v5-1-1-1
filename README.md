@@ -678,3 +678,8 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 ## 2026-10-07 — Phase 50B corrected TT-02 rerun active
 - Canonical run **37593965525** is active after the coverage-feasibility and zero-error audit corrections.
 - The revised workflow only launches numerics from `trigger/phase50b.start`, preventing duplicate runs from documentation/code commits.
+
+
+## 2026-10-07 — TT-03 pre-execution correction
+- Corrected TT-03 to honor the full 10:00–10:05 entry window before numerical execution.
+- No TT-03 evidence existed before this correction.
