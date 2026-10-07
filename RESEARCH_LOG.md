@@ -641,3 +641,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Rechecked the corrected TT03 workflow state before changing any research logic.
 - With no result artifact and no downstream TT04 trigger visible, refreshed the TT03 trigger file using the existing serialized workflow.
 - No scientific specification changed and no evidence was produced by this operational retry.
+
+
+## 2026-10-07 — Documentation synchronization control
+- A batched README/status/log write encountered a stale-content SHA conflict after the first file mutation advanced the branch.
+- No evidence files were altered by the failed write.
+- Subsequent documentation changes are being applied one file at a time with a freshly fetched content SHA.
