@@ -406,3 +406,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Preflight and all numerical pre-controls have passed; the replay itself is currently executing.
 - This run exists to persist the raw diagnostic trade/coverage tables and produce a terminal feasibility classification. It is not a parameter re-test.
 - If the classification is PASS, TT04 proceeds normally. If it is the same clean FAIL_COVERAGE seen in run 37611676386, TT04 is allowed to continue independently without treating TT03 as accepted evidence.
+
+
+## 2026-10-07 — TT-04 pre-execution semantic hardening
+- Self-audit found two source-fidelity defects before TT04 numerical execution: nearest-premium rather than exact observed premium matching, and an exit routine that did not search later same-day timestamps for the earliest complete quote set at/after 15:15.
+- Corrected engine revision is now 50B-TT04-COVERAGE-V3.
+- TT04 and the downstream TT05 dependency gates were updated to require V3.
+- No TT04 numerical evidence existed before these corrections.
