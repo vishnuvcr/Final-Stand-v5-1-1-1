@@ -425,3 +425,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Independent TT04 run 37614211996 passed the TT03 terminal feasibility gate, including clean FAIL_COVERAGE handling, and passed compilation/source checks.
 - TT04 V3 numerical replay is currently executing. No TT04 result or downstream TT05 trigger is accepted yet.
 - TT04 V3 is the corrected source-faithful engine after exact premium-match and earliest-complete 15:15+ exit fixes.
+
+
+## 2026-10-07 — TT03 terminal persistence completed
+- Run 37613416831 completed its numerical replay successfully and persisted the full diagnostic replay/coverage dataset.
+- Artifact audit intentionally failed because coverage is 187/202 = 92.57%, below the preregistered 95% threshold; this confirms the previously established TT03 FEASIBILITY FAIL.
+- The diagnostic replay and coverage gaps are now present in the repository. No TT03 P&L is promotion or tuning evidence.
+- Independent TT04 run 37614211996 remains the active numerical candidate.
