@@ -75,6 +75,7 @@ jobs:
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt02_calendar_replay/summary.json"))
+          assert d["engine_revision"]=="50B-TT02-COVERAGE-V3", d
           tr=pd.read_csv("results/phase50b/tt02_calendar_replay/tt02_trades.csv")
           er=pd.read_csv("results/phase50b/tt02_calendar_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt02_calendar_replay/coverage_gaps.csv")
