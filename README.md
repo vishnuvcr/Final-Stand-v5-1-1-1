@@ -820,3 +820,8 @@ No Phase-50B strategy has been promoted.
 - The statistical gate now reconstructs LOW/NORMAL/HIGH plus SPIKE/RISING/FALLING/HIGH_RISING directly from the frozen cached India VIX series and each trade's entry timestamp.
 - Trades without adequate VIX lookback are excluded from both regime and complement inference rather than being misclassified as complements.
 - No statistical result from the superseded gate is accepted.
+
+### 2026-10-07 — TT-03 preflight dependency correction
+- The latest TT03 dedicated run failed before numerical replay because pandas was missing from the preflight environment.
+- The workflow now installs the required scientific/data dependencies before its TT02 evidence gate, and the trigger has been refreshed.
+- No TT03 numerical evidence has been accepted yet.
