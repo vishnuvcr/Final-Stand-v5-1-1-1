@@ -840,3 +840,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Actions run **37621965843** remains the sole active TT04 numerical execution; the replay step is still running after successful preflight and HF-cache setup.
 - No TT04 artifact is available for audit, so no numerical evidence is consumed.
 - The research sequence remains frozen and fail-closed: TT04 artifact/coverage/zero-error/cost audit -> TT05 -> TT06 -> TT07 -> statistical gate -> protected holdout -> final decision.
+
+
+## 2026-10-07 — TT04 performance fallback prepared (dormant)
+- Prepared a separate execution-only fallback for TT04 to reduce repeated timestamp/quote scans identified during the active replay.
+- Static review confirms the fallback retains the registered source semantics and cost model; it is deliberately not connected to the live workflow and has not been executed.
+- This is an execution-performance contingency, not a new strategy variant and not a research-plan change.
