@@ -476,3 +476,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - V4 replay 37617012372 reached 186/187 coverage candidates (99.47%) plus one session exclusion, but generated 14 `UnboundLocalError` data errors on negative-P&L exits. The evidence audit correctly rejected the artifact.
 - V5 fixes the lifecycle by retaining the actual exit snapshot for both negative-P&L exits and hard-close exits, then validates it before settlement.
 - V5 workflow/trigger are now active. TT04 remains blocked until V5 passes all evidence gates with zero data errors and >=95% coverage.
+
+
+## 2026-10-07 — TT03 V5 workflow alignment
+- Run 37611676386 executed V2 and failed the 95% feasibility audit at 187/202 completed trades (92.57 percent).
+- The current V5 engine additionally treats genuine non-regular-session scheduled days as session exclusions and tightens source hard-close and entry handling.
+- Workflow revision checks have now been advanced from V2 to V5 before the next TT03 replay.
+- The V2 result remains non-evidence.
