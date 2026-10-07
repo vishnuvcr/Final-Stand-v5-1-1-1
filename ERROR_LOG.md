@@ -1599,3 +1599,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: **NO NUMERICAL IMPACT**. TT-04 numerical execution had not started.
 - Correction: the replay now separates the frame used for new entries (z_entry) from the frame used for an existing position (position expiry). Existing positions retain their original expiry series through their exit; expiry-day new entries use next-week as required by the source.
 - Prevention: any strategy that changes the entry expiry on an expiry day must carry the position's immutable trade expiry separately from the day's new-entry target expiry and must use the position expiry for all MTM/exit calculations.
+
+
+### F50B-021 — TT-02 audit rejected exact-15:15 exit requirement
+- Time: 2026-10-07.
+- Canonical TT-02 run 37572837253 completed its numerical loop and produced 237 candidate trade rows, but the artifact audit correctly rejected the result because five expiry blocks had no option quote exactly at 15:15.
+- Evidence status: **NO SCIENTIFIC IMPACT / NOT EVIDENCE**. The summary included net -₹85,250.87 and stressed net -₹111,763.06, but those figures are diagnostic only because the required zero-data-error audit failed.
+- Root cause: the replay interpreted the source rule “exit at/after 15:15” as an exact-15:15 quote requirement and recorded missing exact timestamps as data errors.
+- Correction: TT-02 v2 and the unexecuted v3 fallback now search from 15:15 onward for the earliest common timestamp at which all open legs have observed closes, then execute the simultaneous exit at that timestamp. No forward-fill or invented price is used.
+- Prevention: expiry-day exits must implement temporal inequalities literally; never replace “at/after” with an exact timestamp requirement without an explicit source basis. The artifact audit remains zero-tolerance for unresolved data errors.
