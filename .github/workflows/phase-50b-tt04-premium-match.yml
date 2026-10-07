@@ -90,6 +90,7 @@ jobs:
           test -s results/phase50b/tt04_premium_match_replay/tt04_trades.csv
           test -f results/phase50b/tt04_premium_match_replay/data_errors.csv
           test -f results/phase50b/tt04_premium_match_replay/coverage_gaps.csv
+          test -f results/phase50b/tt04_premium_match_replay/session_exclusions.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt04_premium_match_replay/summary.json"))
