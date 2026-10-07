@@ -190,3 +190,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Static audit corrected TT-03 to evaluate the complete 10:00–10:05 entry window and select the earliest feasible complete ratio set.
 - Call ratio remains the registered priority; put ratio remains the fallback when call quotes are unavailable.
 - No TT-03 numerical evidence existed, so this correction has no evidence impact.
+
+
+## 2026-10-07 — Stale-downstream evidence guard added
+- Added TT-03 engine revision `50B-TT03-WINDOW-V2` and a downstream dependency check so results from pre-correction TT-03 code cannot be promoted.
+- Future canonical runs refresh the TT-03 source to the latest branch head before execution.
+- Current run 37593965525 predates this guard; therefore any downstream TT-03 artifact from that run will be treated as non-evidence unless it carries the required revision (and the current TT04 gate will reject stale artifacts).
