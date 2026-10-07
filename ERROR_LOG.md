@@ -2123,3 +2123,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No Actions artifact is available yet.
 - No scientific inference was made from the incomplete run.
 - Evidence status: NO SCIENTIFIC IMPACT.
+
+
+### F50B-080 — Dormant TT04 fallback construction script hit a JavaScript quoting syntax error
+- Time: 2026-10-07.
+- A repository-write preparation script intended to construct a performance-only TT04 fallback failed to parse in the tool runtime because of nested quoting in a replacement string.
+- The script failed before the GitHub create-file call; **no repository file was mutated by this failed attempt**.
+- Correction: rebuild the fallback using safer literal construction and keep it dormant until a genuine TT04 workflow failure/timeout is established.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
