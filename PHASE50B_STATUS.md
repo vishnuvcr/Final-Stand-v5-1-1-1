@@ -256,3 +256,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — TT-02 v2/v3 equivalence confirmed
 - Audited v3 against v2 at the core-function level: BS model, delta selection, repairs, finalization, execution costs, VIX assignment and chronology are unchanged.
 - v3 is authorized only after a genuine v2 failure/timeout and will then require the same evidence gates.
+
+
+## 2026-10-07 — Run-overlap control
+- Run 18 (stale commit) and run 19 (corrected commit) are both active despite the declared concurrency group.
+- Run 18 is explicitly excluded from evidence. Run 19 is the only eligible TT-02 run.
+- No additional TT-02 replay will be started until run 19 reaches a terminal state.
