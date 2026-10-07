@@ -43,3 +43,7 @@ Next step: source-faithful replay under the Final Stand common cost model, begin
 Static audit of the current Tradetron template found embedded Python that initializes `setup_active=1` and repair flags to zero whenever not already initialized. The Entry condition is therefore eligible on any flat minute from 09:20 through 15:00.
 
 The initial replay draft assumed a single entry day immediately before expiry and was rejected before execution. A stateful daily-session replay is being built instead.
+
+## 2026-10-07 — Registry validator correction
+
+The Phase-50B registry preflight failed because the actual registry table omitted the already identified Final-stand-v2 lineage while the validator correctly required it. This was fixed before any Phase-50B numerical replay. The subsequent registry workflow must pass before the replay gate is considered green.
