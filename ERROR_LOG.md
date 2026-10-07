@@ -1515,3 +1515,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: orchestration-only; no numerical conclusions affected.
 - Correction: make the expanded Phase-50B workflow the canonical automatic runner with `concurrency.cancel-in-progress=true`; keep the standalone TT02 workflow manual-only to preserve the manual run button without automatic duplication.
 - Prevention: each research phase must have one canonical automatic execution path, with auxiliary workflows manual-only unless a distinct purpose requires otherwise.
+
+
+### Error F50B-008 — Status/documentation push unintentionally retriggered the full numerical workflow
+- A Phase-50B status commit triggered another full TT-02 replay because the canonical workflow's push-path filter included status/research-documentation files.
+- Evidence status: orchestration-only; no numerical evidence affected, but runner capacity was duplicated.
+- Correction: the canonical automatic workflow is being restricted to the explicit research trigger file and executable engine/pre-registration changes. Status/README/error-log commits no longer start numerical computation. Manual dispatch remains available.
+- Prevention: documentation updates must never launch a paid/long numerical study; every automatic research run requires an explicit research-source or trigger-file change.
