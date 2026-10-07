@@ -73,6 +73,8 @@ def load_strategy_csv(path):
         z["_date"]=z["_date"].dt.tz_localize(None)
     if "net" not in z.columns or "net50" not in z.columns:
         raise ValueError(f"{path}: requires net and net50")
+    if "net20" not in z.columns: z["net20"]=z["net"]
+    if "net20_50" not in z.columns: z["net20_50"]=z["net50"]
     return z.dropna(subset=["_date","net","net50"]).copy()
 
 STRATEGIES = {
@@ -93,7 +95,11 @@ for strategy,path in STRATEGIES.items():
         r=bootstrap_diff(regime.net.values,complement.net.values,seed=505001+len(rows))
         r.update({"strategy":strategy,"vix_mode":mode,
                   "regime_cost50_mean":float(regime.net50.mean()) if len(regime) else np.nan,
-                  "complement_cost50_mean":float(complement.net50.mean()) if len(complement) else np.nan})
+                  "complement_cost50_mean":float(complement.net50.mean()) if len(complement) else np.nan,
+                  "regime_current20_mean":float(regime.net20.mean()) if len(regime) else np.nan,
+                  "complement_current20_mean":float(complement.net20.mean()) if len(complement) else np.nan,
+                  "regime_current20_stress_mean":float(regime.net20_50.mean()) if len(regime) else np.nan,
+                  "complement_current20_stress_mean":float(complement.net20_50.mean()) if len(complement) else np.nan})
         rows.append(r)
 
 inf=pd.DataFrame(rows)
@@ -113,6 +119,8 @@ for strategy,path in STRATEGIES.items():
         split_rows.append({"strategy":strategy,"split":split,"trades":len(q),
                            "net":float(q.net.sum()) if len(q) else 0.0,
                            "net50":float(q.net50.sum()) if len(q) else 0.0,
+                           "net20":float(q.net20.sum()) if len(q) else 0.0,
+                           "net20_50":float(q.net20_50.sum()) if len(q) else 0.0,
                            "mean":float(q.net.mean()) if len(q) else np.nan,
                            "win_rate":float((q.net>0).mean()) if len(q) else np.nan})
 pd.DataFrame(split_rows).to_csv(OUT/"chronological_summary.csv",index=False)
