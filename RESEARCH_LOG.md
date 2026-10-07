@@ -628,3 +628,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Implemented source-faithful TT-07 replay and gated workflow.
 - Caught and corrected a pre-execution semantic defect in transition delta evaluation: the engine must track the actual held short-leg strike rather than reselecting a nearest-delta strike at each minute.
 - Numerical execution remains downstream of TT-06 evidence; no TT-07 result exists yet.
+
+
+## 2026-10-07 — TT-07 transactional execution self-audit
+- Before numerical execution, audited the state-transition cash/ledger mutation path.
+- Found a latent partial-mutation defect when a later leg quote was missing.
+- Reworked the transition helper to validate every old/new leg quote before mutating cash or the live-leg ledger.
+- No TT-07 numerical evidence was generated before or from the defective implementation.
