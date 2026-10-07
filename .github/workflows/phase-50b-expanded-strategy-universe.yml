@@ -9,6 +9,10 @@ on:
       - trigger/phase50b.start
 
 
+concurrency:
+  group: phase50b-expanded-strategy
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
