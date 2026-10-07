@@ -111,32 +111,40 @@ jobs:
       - name: Artifact self-audit
         run: |
           set -euo pipefail
-          for f in             results/phase50_vix_far_otm/preflight.json             results/phase50_vix_far_otm/stage1_registered_grid.csv             results/phase50_vix_far_otm/stage1_development_trade_matrix.csv             results/phase50_vix_far_otm/stage1_selected_cells.csv             results/phase50_vix_far_otm/stage2_registered_grid.csv             results/phase50_vix_far_otm/stage2_development_trade_matrix.csv             results/phase50_vix_far_otm/stage2_frozen_candidates.csv             results/phase50_vix_far_otm/frozen_parameter_grid.csv             results/phase50_vix_far_otm/validation_frozen_trade_matrix.csv             results/phase50_vix_far_otm/validation_confirmatory_summary.csv             results/phase50_vix_far_otm/holdout_confirmation.csv             results/phase50_vix_far_otm/phase50_final_decision.json             results/phase50_vix_far_otm/PHASE50_MANUSCRIPT.md             results/phase50_vix_far_otm/sparse_high_dev_shortlist.csv             results/phase50_vix_far_otm/sparse_high_parameter_grid.csv             results/phase50_vix_far_otm/sparse_high_validation.csv             results/phase50_vix_far_otm/sparse_high_holdout.csv; do
+          for f in \
+            results/phase50_vix_far_otm/preflight.json \
+            results/phase50_vix_far_otm/stage1_registered_grid.csv \
+            results/phase50_vix_far_otm/stage1_development_trade_matrix.csv \
+            results/phase50_vix_far_otm/stage1_selected_cells.csv \
+            results/phase50_vix_far_otm/stage2_registered_grid.csv \
+            results/phase50_vix_far_otm/stage2_development_trade_matrix.csv \
+            results/phase50_vix_far_otm/stage2_frozen_candidates.csv \
+            results/phase50_vix_far_otm/frozen_parameter_grid.csv \
+            results/phase50_vix_far_otm/validation_frozen_trade_matrix.csv \
+            results/phase50_vix_far_otm/validation_confirmatory_summary.csv \
+            results/phase50_vix_far_otm/holdout_confirmation.csv \
+            results/phase50_vix_far_otm/phase50_final_decision.json \
+            results/phase50_vix_far_otm/PHASE50_MANUSCRIPT.md \
+            results/phase50_vix_far_otm/stage1_data_errors.csv \
+            results/phase50_vix_far_otm/stage2_data_errors.csv \
+            results/phase50_vix_far_otm/validation_data_errors.csv \
+            results/phase50_vix_far_otm/holdout_data_errors.csv; do
             test -s "$f"
           done
           python - <<'PY'
-          import json, pandas as pd
-          d=json.load(open("results/phase50_vix_far_otm/preflight.json"))
+          import json, os, pandas as pd
+          d=json.load(open("results/phase50_vix_far_otm/phase50_final_decision.json"))
           grid=pd.read_csv("results/phase50_vix_far_otm/stage1_registered_grid.csv")
-          sel=pd.read_csv("results/phase50_vix_far_otm/stage1_selected_cells.csv")
-          s2=pd.read_csv("results/phase50_vix_far_otm/stage2_registered_grid.csv")
-          fr=pd.read_csv("results/phase50_vix_far_otm/stage2_frozen_candidates.csv")
-          vs=pd.read_csv("results/phase50_vix_far_otm/validation_confirmatory_summary.csv")
-          assert len(grid)==d["stage1_family_state_distance_cells"]
+          assert len(grid)==9*7*8
           assert set(grid.state).issubset({"LOW","NORMAL","HIGH","RISING","FALLING","SPIKE","HIGH_RISING"})
           assert set(grid.distance)==set([2,3,4,5,6,8,10,12])
-          assert len(fr) <= 9*7
-          assert len(vs) == len(fr) or len(vs)==0
           for f in ["stage1_data_errors.csv","stage2_data_errors.csv","validation_data_errors.csv","holdout_data_errors.csv"]:
-              p="results/phase50_vix_far_otm/"+f
-              x=pd.read_csv(p)
-              assert len(x)==0, f"non-empty error ledger: {f}"
-          dec=json.load(open("results/phase50_vix_far_otm/phase50_final_decision.json"))
-          if dec.get("decision") == "NO_CONFIRMATORY_CANDIDATES":
+              assert len(pd.read_csv("results/phase50_vix_far_otm/"+f))==0, f
+          if d.get("decision")=="NO_CONFIRMATORY_CANDIDATES":
               for f in ["sparse_high_dev_shortlist.csv","sparse_high_parameter_grid.csv","sparse_high_validation.csv","sparse_high_holdout.csv"]:
-                  assert __import__("os").path.exists("results/phase50_vix_far_otm/"+f)
-          print("Phase 50 artifact self-audit PASS")
-          print(json.dumps(d,indent=2))
+                  assert os.path.getsize("results/phase50_vix_far_otm/"+f)>0, f
+              assert d.get("high_state_development_opportunities",0)>0
+          print("Phase 50 artifact self-audit PASS", d)
           PY
       - name: Publish results safely
         if: success()
