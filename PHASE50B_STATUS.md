@@ -312,3 +312,12 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Authoritative run 37598918723 remains `in_progress`; TT-02 numerical step is still running.
 - Live-log retrieval returned BlobNotFound again; this does not change run status or evidence classification.
 - No duplicate execution started.
+
+
+## 2026-10-07 — Authoritative TT-02 live-state recheck
+- Rechecked Actions run **37598918723** directly after the latest continuation request.
+- Run 20 remains **in_progress** on head `7a05adf199819fa46a16efcc2f2afe1394325798`.
+- Registry job **112718607157** is complete/successful. TT-02 replay job **112718692505** is still executing its canonical numerical step; artifact audit/publication steps have not started.
+- Workflow source was re-read and confirms `cancel-in-progress: true`, the explicit `trigger/phase50b.start` path restriction, and the 360-minute replay timeout.
+- No numerical result is accepted and no duplicate replay is launched.
+- TT-07 remains source-blocked by the unresolved `ic_entered` lifecycle semantics documented in its source audit.
