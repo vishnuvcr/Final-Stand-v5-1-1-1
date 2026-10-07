@@ -1,0 +1,17 @@
+{
+  "strategy": "TT-03",
+  "run_id": 37620274641,
+  "engine_revision": "50B-TT03-WINDOW-V5",
+  "status": "PASS",
+  "promotion_eligible": true,
+  "coverage_rate": 0.9950248756218906,
+  "coverage_threshold": 0.95,
+  "trades": 200,
+  "candidate_trades": 201,
+  "coverage_exclusions": 1,
+  "session_exclusions": 1,
+  "data_errors": 0,
+  "uses_pnl_as_evidence": true,
+  "next_strategy_may_proceed": true,
+  "reason": "source-faithful baseline passed execution feasibility"
+}
