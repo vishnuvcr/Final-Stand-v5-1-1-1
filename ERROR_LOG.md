@@ -1779,3 +1779,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Time: 2026-10-07.
 - The pre-fix TT-02 run remained visibly active after the corrected trigger was queued. The workflow now uses cancel-in-progress concurrency so the stale run can be retired without waiting the full timeout.
 - This is an execution-control event; no research evidence is taken from the stale run.
+
+
+### F50B-045 — Superseded TT-02 run retired
+- Time: 2026-10-07.
+- The corrected concurrency policy successfully cancelled the pre-fix TT-02 replay when the authoritative corrected run was queued.
+- No output from the cancelled run is used as evidence.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
