@@ -829,3 +829,7 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT-03 semantic corrections before evidence acceptance
 - The TT03 replay was audited while running and two source-semantic defects were found: hard-close selection could cross 15:29, and a non-source modal strike-step gate could exclude valid entries.
 - Both were corrected before result publication; no superseded TT03 output is accepted.
+
+### 2026-10-07 — TT-03 coverage denominator correction
+- Eligible TT03 campaigns that cannot complete the source-defined 10:00–10:05 entry are now retained as explicit coverage exclusions.
+- This prevents silent loss of candidate observations and is required for the 95% feasibility gate.
