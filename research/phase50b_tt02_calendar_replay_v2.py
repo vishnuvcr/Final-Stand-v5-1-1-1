@@ -302,3 +302,5 @@ if __name__=="__main__":
     main()
 
 # F50B-005: corrected v2 replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and exact 15:15 expiry exit.
+
+# F50B-005 fixed: workflow installs matplotlib for shared Phase-43 import dependency.
