@@ -81,7 +81,8 @@ def trade_one(expiry,index,data):
     idxday=index[(index.timestamp.dt.normalize()==expday)&
                  (index.timestamp.dt.time>=pd.Timestamp("13:30").time())&
                  (index.timestamp.dt.time<=pd.Timestamp("15:29").time())]
-    if day_data.empty:return None
+    if day_data.empty:
+        return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"gap_type":"missing_expiry_day_exit_data"}}
     exit_ts=None
     for t in sorted(set(idxday.timestamp).intersection(set(day_data.timestamp))):
         snap_t=day_data[day_data.timestamp==t]
@@ -95,7 +96,8 @@ def trade_one(expiry,index,data):
             exit_ts=pd.Timestamp(t);break
     if exit_ts is None:
         candidate=day_data[day_data.timestamp.dt.time>=pd.Timestamp("15:29").time()]
-        if candidate.empty:return None
+        if candidate.empty:
+            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"gap_type":"missing_15:29_or_later_exit_data"}}
         exit_ts=pd.Timestamp(candidate.timestamp.max())
     exit_snap=day_data[day_data.timestamp==exit_ts]
     for o,k,qty in legs:
@@ -126,17 +128,21 @@ def main():
     index=index[["timestamp","close"]].rename(columns={"close":"spot"}).drop_duplicates("timestamp").sort_values("timestamp")
     VIX=load_vix()
     exps=[e for e in expiry_dates() if START<=e<=END]
-    rows=[];errors=[]
+    rows=[];errors=[];coverage_gaps=[]
     for e in exps:
         try:
             data=option_clean(load_parquet(f"options/NIFTY/{e.strftime('%Y-%m-%d')}.parquet"))
             z=trade_one(e,index,data)
-            if z is not None:rows.append(z)
+            if isinstance(z,dict) and "_coverage_gap" in z:
+                coverage_gaps.append(z["_coverage_gap"])
+            elif z is not None:
+                rows.append(z)
         except Exception as ex:
             errors.append({"expiry":str(e.date()),"error":repr(ex)})
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt03_trades.csv",index=False)
-    pd.DataFrame(errors).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(errors,columns=["expiry","error"]).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(coverage_gaps).to_csv(OUT/"coverage_gaps.csv",index=False)
     if not df.empty:
         splits=[]
         for n,m in [("DEV",df.expiry.map(pd.Timestamp)<=DEV_END),("VAL",(df.expiry.map(pd.Timestamp)>DEV_END)&(df.expiry.map(pd.Timestamp)<=VAL_END)),("HOLD",df.expiry.map(pd.Timestamp)>VAL_END)]:
@@ -145,11 +151,13 @@ def main():
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean"),win_rate=("win","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
-        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"by_vix":vx.to_dict("records")}
-    else: result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":0,"net":0.0,"net50":0.0,"by_vix":[]}
+        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"candidate_trades":len(df)+len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":len(df)/(len(df)+len(coverage_gaps)) if len(df)+len(coverage_gaps) else 0.0,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"by_vix":vx.to_dict("records")}
+    else: result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"net":0.0,"net50":0.0,"net20":0.0,"net20_50":0.0,"by_vix":[]}
     (OUT/"summary.json").write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2))
 if __name__=="__main__":main()
 
 # F50B-010 fixed before numerical execution: emulate both symmetric sets, call-set priority as listed in Tradetron, with put-set fallback only when call-set quotes are unavailable.
 # F50B-026: evaluate the full 10:00-10:05 entry window and select the earliest feasible complete ratio set.
+
+# F50B-033: TT03 opened positions cannot silently disappear; incomplete exits are explicit coverage exclusions.
