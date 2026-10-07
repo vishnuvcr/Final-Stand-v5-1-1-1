@@ -2080,3 +2080,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The script failed before execution; no repository file was mutated by this failed attempt.
 - Correction: subsequent repository-write payloads use plain quoted strings without nested backticks.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-078 — Actions GITHUB_TOKEN push could not trigger the downstream TT04 push workflow
+- Time: 2026-10-07.
+- TT03 V5 correctly persisted PASS and wrote the TT04 trigger marker, but no TT04 Actions run appeared after the workflow pushed that marker using the repository GITHUB_TOKEN.
+- Current GitHub documentation confirms that events caused by GITHUB_TOKEN do not create new workflow runs for ordinary push events; workflow_dispatch and repository_dispatch are exceptions. citeturn852870search0turn852870search1
+- Correction for the active research session: ChatGPT created a normal user-authored trigger commit to dispatch TT04. No TT04 numerical run had started from the suppressed GITHUB_TOKEN push.
+- Evidence status: **NO SCIENTIFIC IMPACT**; orchestration-only.
