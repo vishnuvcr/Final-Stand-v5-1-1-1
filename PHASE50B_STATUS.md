@@ -419,3 +419,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Run 37612856834 began on an earlier head before the diagnostic-capture workflow hardening was committed.
 - The trigger has now been refreshed once more so the serialized TT03 workflow will restart from the latest branch state; no overlapping TT03 evidence is permitted.
 - No scientific conclusion changes: TT03 remains FEASIBILITY FAIL at 92.57% coverage based on run 37611676386, pending repository persistence of the raw diagnostic tables.
+
+
+## 2026-10-07 — TT04 V3 numerical execution
+- Independent TT04 run 37614211996 passed the TT03 terminal feasibility gate, including clean FAIL_COVERAGE handling, and passed compilation/source checks.
+- TT04 V3 numerical replay is currently executing. No TT04 result or downstream TT05 trigger is accepted yet.
+- TT04 V3 is the corrected source-faithful engine after exact premium-match and earliest-complete 15:15+ exit fixes.
