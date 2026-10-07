@@ -1617,3 +1617,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: restored the missing `fi`, normalized the GitHub Actions bot email identity in the TT-03 publisher, and structurally re-counted shell `if`/`fi` tokens before the next trigger.
 - Evidence status: **NO SCIENTIFIC IMPACT**. TT-02 did not execute in run 37589199743.
 - Prevention: every workflow patch must pass a complete shell-block balance audit before a numerical trigger is emitted.
+
+
+### F50B-023 — local polling helper timeout
+- Time: 2026-10-07.
+- A local 30-second sleep used only to let the active GitHub Actions replay advance exceeded the container execution timeout.
+- Evidence status: **NO RESEARCH IMPACT**. No GitHub Actions job was cancelled or modified.
+- Prevention: do not use local sleep-based waiting for long-running numerical runs; use direct Actions state and job-step checks.
