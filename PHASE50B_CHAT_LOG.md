@@ -209,3 +209,8 @@ User requested continuation without pausing. Work performed:
 
 ## 2026-10-07 — Authoritative TT-02 handoff
 - Run 20 is the intended authoritative corrected TT-02 replay; run 19 remains excluded from evidence.
+
+
+## 2026-10-07 — TT-02 authoritative execution
+- Run 20 is now the sole active and eligible numerical replay.
+- Stale run 19 was cancelled and excluded from evidence.
