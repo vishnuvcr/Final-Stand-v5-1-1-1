@@ -1988,3 +1988,13 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Because the audit failed before artifact upload, the 15 coverage-gap rows were not retained for root-cause classification.
 - Correction: the dedicated TT03 workflow now uploads its full replay directory with `if: always()` so feasibility-failed runs remain available for diagnosis without being promoted or published as evidence. A controlled diagnostic retrigger was launched after the workflow correction.
 - Evidence status: **TT03 numerical output remains NON-EVIDENCE pending coverage-gap diagnosis; no downstream phase is permitted yet.**
+
+
+### F50B-067 — TT03 hard-close coverage search stopped at a partially quoted 15:29 timestamp
+- Time: 2026-10-07.
+- Self-audit of the V2 engine found that hard-close logic selected the latest timestamp at or before 15:29 that had any option data, then checked all legs only at that timestamp.
+- If one live leg was missing at that latest timestamp but a complete quote existed at an earlier timestamp, the engine incorrectly classified the campaign as a coverage gap.
+- This can artificially reduce execution coverage and likely contributes to the 92.57% V2 feasibility failure.
+- Correction: V3 now searches backward from 15:29 for the latest timestamp at or before the hard close where **all live legs** have observed quotes. No forward fill or imputation is introduced.
+- The V2 187/202 result remains non-evidence. The V3 engine is being re-run from scratch behind the same 95% feasibility gate.
+- Evidence status: **NO SCIENTIFIC IMPACT**; caught before acceptance of TT03 evidence.
