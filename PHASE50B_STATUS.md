@@ -159,3 +159,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected workflow commit **e0d4bda09bb943272bac591d68aafa051d7b9f94** restores the shell closure and normalizes the TT-03 publisher bot identity.
 - The workflow now has balanced shell `if`/`fi` blocks; the next canonical run will be launched only after this gate is recorded.
 - Current gate: **retrigger Phase-50B from the corrected workflow, then require TT-02 zero-data-error audit**.
+
+
+## 2026-10-07 — Operational polling note
+- Direct Actions checks remain the authoritative monitoring method. A local sleep helper timed out again (F50B-023); no numerical job was affected.
+- Canonical run **37589400281** remains the sole active Phase-50B numerical run.
