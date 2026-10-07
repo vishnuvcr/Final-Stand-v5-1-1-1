@@ -2156,3 +2156,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - This is an Actions log-availability/observability issue, not a workflow failure and not numerical evidence.
 - Handling: continue using authoritative workflow/job state and artifact publication gates; do not infer replay outcome from the unavailable live log and do not launch a duplicate run.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+## F50B-086 — TT04→TT05 downstream trigger suppressed by GITHUB_TOKEN push (2026-10-07)
+- Evidence: TT04 run 37629750175 passed and published its TT04 artifact, but GitHub Actions showed no TT05 run; the screenshot also showed no workflow in progress.
+- Root cause: the TT04 handoff created `trigger/phase50b_tt05.start` with a `git push` authenticated by `GITHUB_TOKEN`. Such token-authored pushes do not start a separate ordinary push-triggered workflow.
+- Scientific impact: none. TT04 results remain valid and accepted; TT05 had not executed, so no TT05 evidence was lost or contaminated.
+- Correction: TT04, TT05 and TT06 downstream handoffs were hardened with `actions: write` and explicit GitHub Actions workflow-dispatch API calls after the audit-passed marker commit. The marker remains as an audit trail.
+- Recovery: the TT05 marker was deliberately touched through the repository API, producing a real push event; TT05 run 37654354444 then started and passed preflight.
+- Prevention: future phase handoffs use explicit workflow dispatch rather than relying on GITHUB_TOKEN push events.
