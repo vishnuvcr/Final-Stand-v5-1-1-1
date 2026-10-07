@@ -202,3 +202,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Pre-execution static audit corrected a silent trade-loss path for missing exit quotes.
 - TT-04 now records exit coverage gaps separately and applies the same 95% complete-exit feasibility gate before evidence can pass.
 - No TT-04 numerical evidence existed before this correction.
+
+
+## 2026-10-07 — TT-02 terminal accounting safeguard
+- Added a terminal-position reconciliation to the corrected TT-02 engines so no opened position can disappear from the denominator.
+- The currently active run 37593965525 predates this safeguard; it remains diagnostic/non-final until its output is examined and a latest-code rerun passes the revised audit.
