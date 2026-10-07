@@ -32,3 +32,9 @@ The historical option dataset stores price/strike/expiry/option type/OHLCV/OI bu
 
 ## Reconciliation targets
 The native report has 3,896 fills, 1,948 buys and 1,948 sells from 2021-10-06 to 2026-10-06. Its first native entry is 2021-10-06 09:20 with current-week 0.20-delta-like short legs and next-week 0.10-delta-like long hedges. Common replay results will be compared against native fill timing/geometry only as a source-fidelity audit; native P&L is not used as the comparator.
+
+
+## V2/V3 equivalence audit — 2026-10-07
+- v3 changes only replay traversal/indexing: cached NIFTY timestamps/spots and day-to-timestamp maps replace repeated dataframe scans.
+- Verified matching implementations for Black–Scholes price/delta, implied volatility, nearest-delta selection, position construction, replacement state machine, finalization, execution-cost calculation, VIX assignment, and chronological split handling.
+- v3 is therefore a **performance-only fallback**, not a new research model. It must not run while v2 is active and cannot contribute evidence unless v2 genuinely fails/times out and a fresh run is launched under the same registry.
