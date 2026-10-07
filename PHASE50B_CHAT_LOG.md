@@ -429,3 +429,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Direct Actions inspection shows TT04 run **37621965843** still executing its V3 numerical replay; preflight succeeded and the numerical step is the only active research step in that run.
 - Re-read the phase plan, TT04 workflow, source contract and downstream statistical gate before continuing.
 - No TT04 result was inferred, no duplicate replay was started, and no research-plan change was made.
+
+
+## 2026-10-07 — Continue: TT04 live log unavailable
+- User instructed “Ok proceed”.
+- Direct Actions state still shows TT04 run 37621965843 executing its numerical replay.
+- Attempted live-log retrieval returned BlobNotFound; treated as operational only.
+- No duplicate replay, no parameter change, and no scientific conclusion was made before TT04 artifact audit.
