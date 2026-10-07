@@ -87,3 +87,9 @@ User requested continuation without pausing. Work performed:
 - Corrected both TT-02 engines to choose the earliest common observed quote timestamp at or after 15:15 across all open legs, without forward-filling.
 - The v2 source-faithful engine is now the canonical rerun; the v3 engine remains an unexecuted performance fallback.
 - Automatic workflow rerun 37589199743 is active from the corrected v2 commit 6a11b859c646dccdacc03a68a22fe7a2be3a842f. No result will be accepted until its artifact audit passes.
+
+
+## 2026-10-07 — Workflow gate F50B-022
+- Corrected v2 commit triggered run 37589199743, but the run stopped in the registry publish step because a closing `fi` was missing.
+- Registry validation passed and uploaded; TT-02 was not executed, so the run has no numerical impact.
+- Corrected workflow commit e0d4bda09bb943272bac591d68aafa051d7b9f94 restores the missing `fi`, normalizes the TT-03 bot identity, and passes a structural `if`/`fi` balance check.
