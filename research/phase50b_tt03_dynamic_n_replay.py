@@ -9,6 +9,7 @@ from phase43_vix_strategy_sweep import (
 
 OUT=Path("results/phase50b/tt03_dynamic_n_replay")
 OUT.mkdir(parents=True,exist_ok=True)
+TT03_ENGINE_REV="50B-TT03-WINDOW-V2"
 
 def expiry_dates():
     p=Path("results/phase43_vix/strategy_trade_matrix_all_splits.csv")
@@ -143,8 +144,8 @@ def main():
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean"),win_rate=("win","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
-        result={"strategy":"TT-03","trades":len(df),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"by_vix":vx.to_dict("records")}
-    else: result={"strategy":"TT-03","trades":0,"net":0.0,"net50":0.0,"by_vix":[]}
+        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"by_vix":vx.to_dict("records")}
+    else: result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":0,"net":0.0,"net50":0.0,"by_vix":[]}
     (OUT/"summary.json").write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2))
 if __name__=="__main__":main()
