@@ -848,3 +848,9 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT-03 terminal classification and TT-04 continuation
 - TT03 diagnostic run 37613416831 completed and persisted its raw replay/coverage data. The corrected baseline remains **FEASIBILITY FAIL** at 187/202 = 92.57% coverage, below the frozen 95% gate; its positive P&L is diagnostic only.
 - TT04 independent run 37614211996 passed the TT03 terminal-feasibility gate and is now executing the corrected V3 engine. No TT04 result is accepted until artifact/coverage/cost audits pass.
+
+
+### 2026-10-07 — TT-03 V2 feasibility rejection and V3 correction
+- TT03 V2 replay 37611676386 produced 187/202 complete campaigns (92.57%) and therefore failed the preregistered 95% feasibility gate; no P&L was accepted.
+- A subsequent hard-close self-audit found a partial-quote timestamp issue that could create artificial coverage gaps. V3 now searches backward to the latest timestamp at or before 15:29 with complete quotes for every live leg.
+- The V3 workflow is retriggered and TT04 remains strictly gated on a V3 artifact passing the full evidence audit.
