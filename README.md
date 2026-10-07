@@ -683,3 +683,8 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 ## 2026-10-07 — TT-03 pre-execution correction
 - Corrected TT-03 to honor the full 10:00–10:05 entry window before numerical execution.
 - No TT-03 evidence existed before this correction.
+
+
+## 2026-10-07 — Phase 50B stale-evidence protection
+- TT-03 now carries engine revision `50B-TT03-WINDOW-V2` and downstream gates reject older revisions.
+- Future chained runs refresh the TT-03 source from the branch before execution, preventing pre-execution corrections from being silently omitted.
