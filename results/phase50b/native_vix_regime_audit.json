@@ -1,0 +1,80 @@
+{
+  "diagnostic_basis": "Tradetron native backtest reports; regime rows are outcome/result-day VIX bins, not entry-date VIX states; native reports carry coverage/cost caveats.",
+  "cost_note": "Native Tradetron runs used brokerage_per_order=0; they are provenance/control only and are not Final Stand cost-adjusted evidence.",
+  "strategies": [
+    {
+      "id": "TT-01",
+      "name": "Dynamic Ratio Reversals",
+      "net_pnl": 91975.5092741485,
+      "trades": 1877,
+      "profit_factor": 1.0303643714532025,
+      "max_net_dd": 53385.20170963633,
+      "high_days": 11,
+      "high_pnl": -14615.25
+    },
+    {
+      "id": "TT-02",
+      "name": "0.20/0.10 Delta Calendar Hedge Spread v4",
+      "net_pnl": 61776.908456172,
+      "trades": 1948,
+      "profit_factor": 1.025254688799608,
+      "max_net_dd": 80587.4456542433,
+      "high_days": 19,
+      "high_pnl": 72179.25,
+      "elevated_days": 91,
+      "elevated_pnl": 122720
+    },
+    {
+      "id": "TT-03",
+      "name": "Corrected Dynamic-n NIFTY Weekly Options Strategy",
+      "net_pnl": 104274.1954246655,
+      "trades": 558,
+      "profit_factor": 1.1850223744261872,
+      "max_net_dd": 26812.48406030146,
+      "high_days": 8,
+      "high_pnl": -7871.5
+    },
+    {
+      "id": "TT-04",
+      "name": "Profit Breakout Premium Match Straddle",
+      "net_pnl": 59500.127652614996,
+      "trades": 1218,
+      "profit_factor": 1.0499193608121058,
+      "max_net_dd": 36284.59089255496,
+      "high_days": 7,
+      "high_pnl": -10455.25
+    },
+    {
+      "id": "TT-05",
+      "name": "Simple Intraday Short Straddle",
+      "net_pnl": 159447.321225608,
+      "trades": 2448,
+      "profit_factor": 1.058958520009751,
+      "max_net_dd": 64325.38326782135,
+      "high_days": 23,
+      "high_pnl": -20250.75
+    },
+    {
+      "id": "TT-06",
+      "name": "Intraday Asym Premium",
+      "net_pnl": 237265.75381739752,
+      "trades": 3722,
+      "profit_factor": 1.0683955831262442,
+      "max_net_dd": 64645.3313465167,
+      "high_days": 23,
+      "high_pnl": -1088.75
+    },
+    {
+      "id": "TT-07",
+      "name": "Dynamic IC to Ratio",
+      "net_pnl": 44416.3659976075,
+      "trades": 820,
+      "profit_factor": 1.0307714854887102,
+      "max_net_dd": 43972.06999490728,
+      "high_days": 3,
+      "high_pnl": 7146.75
+    }
+  ],
+  "top_hypothesis": "TT-02",
+  "next_phase": "Final Stand common-cost source-faithful replay of TT-02 plus exact-control lineages and semantically valid delta/far-OTM mutations."
+}
