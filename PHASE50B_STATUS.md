@@ -432,3 +432,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Artifact audit intentionally failed because coverage is 187/202 = 92.57%, below the preregistered 95% threshold; this confirms the previously established TT03 FEASIBILITY FAIL.
 - The diagnostic replay and coverage gaps are now present in the repository. No TT03 P&L is promotion or tuning evidence.
 - Independent TT04 run 37614211996 remains the active numerical candidate.
+
+
+## 2026-10-07 — TT-03 V2 feasibility result rejected; V3 hard-close correction
+- Corrected V2 TT03 replay 37611676386 produced 187/202 complete campaigns = 92.57% coverage and was rejected by the preregistered 95% feasibility gate. No TT03 P&L was accepted.
+- Self-audit then found that the V2 hard-close branch could stop on a partially quoted latest timestamp and fail to search earlier complete timestamps.
+- V3 now selects the latest complete all-live-leg quote at or before 15:29, preserving the source rule and never imputing.
+- Workflow audit and trigger were updated to V3; the V3 replay is now the sole TT03 numerical attempt under evaluation. Superseded V2 output remains non-evidence.
