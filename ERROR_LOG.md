@@ -1529,3 +1529,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: provenance accounting only; no Phase-50B inference is affected.
 - Correction: Phase-50B will reconstruct complete trades from fills and will not use the native headline trade count as the sample-size denominator.
 - Prevention: reconcile headline statistics with fill-level ledgers before using any external-engine trade count in statistical tests.
+
+
+### Error F50B-010 — Initial TT-03 engine draft omitted the symmetric put set and had an ambiguous entry-price lookup
+- Pre-numerical audit found the first draft implemented only the bearish call ratio and used an option-type-only entry-price lookup.
+- Evidence status: no TT-03 numerical execution occurred from that draft.
+- Correction: the replay now implements both source sets, preserves the listed set order by giving Call Ratio priority when both are executable, falls back to the Put Ratio only if the call set is unavailable, and keys entry prices by option type plus strike.
+- Prevention: for multi-set Tradetron templates, reproduce set competition/order and use full instrument identity in P&L ledgers before execution.
