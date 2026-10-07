@@ -102,7 +102,8 @@ def trade_one(expiry,index,data):
     exit_snap=day_data[day_data.timestamp==exit_ts]
     for o,k,qty in legs:
         px=q(exit_snap,o,k)
-        if px is None:return None
+        if px is None:
+            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"exit_ts":str(exit_ts),"gap_type":"missing_exit_leg_quote","option_type":o,"strike":float(k)}}
         ledger.append({"ts":exit_ts,"side":"sell" if qty>0 else "buy","price":px,"qty":qty,"lot":lot,"opt":o,"strike":k,"phase":"exit"})
     gross=0.0; orders=[]
     for r in ledger:
