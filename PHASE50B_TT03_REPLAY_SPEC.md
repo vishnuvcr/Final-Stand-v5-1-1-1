@@ -1,7 +1,7 @@
 # Phase 50B — TT-03 Replay Specification
 
 ## Status
-Frozen source-faithful numerical replay contract. The corrected dedicated replay workflow is still awaiting an observable GitHub Actions execution/result artifact.
+Frozen source-faithful numerical replay contract. V3 is the current implementation after a hard-close completeness correction; V2 failed the feasibility gate and is non-evidence.
 
 ## Entry
 - Historical Current Week Expiry dates are taken from the project expiry calendar.
@@ -58,3 +58,7 @@ Only after baseline completion and only from the preregistered universe may the 
 - If more than one timestamp is valid, use the earliest valid observation.
 - If ATM tie exists, use the smaller strike.
 - Any source-required quote not observed simultaneously is treated as a feasibility gap, never synthesized.
+
+
+## V3 correction — 2026-10-07
+At the no-negative-P&L hard close, search backward from 15:29 for the latest observed timestamp at or before 15:29 where every live leg has a contemporaneous quote. A timestamp containing only a subset of the legs is not an exit candidate. No forward fill, interpolation or imputation is permitted.
