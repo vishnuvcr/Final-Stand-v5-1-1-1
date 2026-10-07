@@ -630,3 +630,9 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - Prepared `research/phase50b_tt02_calendar_replay_v3.py` as a **performance-only fallback** that pre-indexes spot by timestamp and trading-day timestamps.
 - The Black–Scholes/European-delta definition, quote selection, state machine, entry/exit rules, slippage, brokerage, statutory charges and +50% stress are unchanged.
 - The v3 fallback has **not** been executed and is not evidence; it exists only to avoid repeating an unnecessarily slow run if the current execution fails or times out.
+
+
+## 2026-10-07 — Resume checkpoint / live-state audit
+- Phase 50B was rechecked after user resume.
+- Canonical Actions run **37572837253** remains in progress at TT-02 numerical replay; no result is accepted until artifact audit passes.
+- No duplicate numerical run was launched.
