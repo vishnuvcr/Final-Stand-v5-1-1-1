@@ -718,3 +718,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — Phase 50B workflow serialization
 - Canonical Phase-50B numerical runs are now serialized with `cancel-in-progress: false` to protect artifact/evidence integrity.
+
+
+## 2026-10-07 — Phase 50B TT-05 control prepared
+- TT-05 Simple Intraday Short Straddle now has a source-faithful replay engine and dependency-gated workflow following audited TT-04 evidence.
