@@ -25,6 +25,7 @@ The seven ASB exports are the rule source. The export format states that JSON-ba
 | GH-BATMAN-03 | MC-OPTIONS-VERIFICATION-MC3 | Exact MC-method verification and frozen validation lineage | Method control |
 | GH-FINAL4-01 | Final-stand-v4 | Premium-direction / full-chain-OI research | Selector overlay only |
 | GH-FINAL2-01 | Final-stand-v2 | Earlier regime-aware option-direction research with a planned new information set including VIX, option-implied skew/IV term structure, FII/DII, breadth and global cross-market variables | Selector/provenance lineage |
+| GH-FINAL2-02 | Final-stand-v2 | Monte-Carlo weekly directional three-leg OTM4/OTM5/OTM6 structure: 1 long OTM4 + 1 short OTM5 + 1 short OTM6 on predicted side, entered 4 DTE 10:00 and exited at expiry | High-priority prior strategy candidate / selector downstream |
 
 ## C. Daily-Options / Equity Income hypotheses
 
@@ -53,3 +54,9 @@ No results are pooled until exact rule differences are documented.
 ## E. Inclusion rule
 
 A candidate enters numerical testing only after a deterministic specification and execution model are frozen. Older backtest performance is never treated as prospective validation evidence.
+
+## E. Previously tested Daily-Options families retained as controls
+
+- **Air Defense / VIX expected-range**: Phase 30.1 Base + Stress completed with 0/24 cells passing the fixed weekly gate; retained as negative historical control, not a new promotion candidate.
+- **Falcon Spread**: Phase 30.2/Phase 24 lineage; independent-source coverage was insufficient in at least one corrected run, so it remains a source-faithful data-limited control until an executable validation sample is demonstrated.
+- **Phase 19 short-strangle / iron-condor regime family**: registered historically as a prior NIFTY short-volatility lineage; only results that pass the current Final Stand evidence hierarchy can be reused.
