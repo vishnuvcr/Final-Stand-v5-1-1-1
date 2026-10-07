@@ -1896,3 +1896,17 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No scientific or repository evidence was altered by this failed attempt.
 - Correction: subsequent content payloads will avoid nested template literals or escape them before execution.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-060 — Statistical gate used stored VIX level labels and could not test preregistered dynamic modes
+- Time: 2026-10-07.
+- Pre-execution audit found that replay trade tables store only the three-level VIX label (LOW/NORMAL/HIGH), while the preregistered statistical family also includes SPIKE, RISING, FALLING and HIGH_RISING.
+- The gate therefore could not validly evaluate the full frozen VIX hypothesis family from the stored label alone.
+- Correction: reconstruct full VIX mode membership from each trade's entry timestamp and the cached project VIX series using the same frozen vix_state definition.
+- Stored level labels are retained as a consistency check; mismatches are reported rather than silently ignored.
+
+### F50B-061 — Statistical gate could count VIX-unobservable trades in every regime complement
+- Time: 2026-10-07.
+- During the VIX-mode reconstruction correction, trades with fewer than the required historical VIX observations initially produced an empty mode set and could have been counted as members of every regime complement.
+- Correction: inferential testing now restricts to trades with an observable reconstructed VIX mode. Unclassifiable trades are excluded from both the regime and complement for the inferential family.
+- Evidence status for F50B-060/F50B-061: **NO SCIENTIFIC IMPACT**; no statistical-gate result from the defective implementation is accepted.
