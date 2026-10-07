@@ -1585,3 +1585,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No numerical evidence was affected because the active run 37572837253 was created from the earlier validated commit and was already executing TT-02 before this patch.
 - Correction: moved the trigger step to the end of the TT03 job, removed the stray `fi`, corrected the GitHub Actions bot identity, and preserved the TT04 dedicated manual/trigger workflow.
 - Prevention: every workflow edit must be followed by a complete structural inspection of job placement and shell block closure before publication.
+
+### F50B-019 — local polling sleep timeout
+- Time: 2026-10-07.
+- A second local polling wait helper timed out while waiting for the active GitHub Actions runner.
+- Evidence status: **NO RESEARCH IMPACT**. The active Actions job was not cancelled or modified.
+- Prevention: rely on direct GitHub Actions state checks rather than local sleep-based polling.
