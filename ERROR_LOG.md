@@ -2007,3 +2007,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: downstream TT04 routing is now fail-closed and occurs only when TT03 feasibility state is exactly `PASS`; `FAIL_COVERAGE` exits without creating a downstream trigger.
 - The affected V3 run was superseded via the strategy-specific concurrency group and a controlled retrigger after the correction.
 - Evidence status: **NO SCIENTIFIC IMPACT**; caught before any TT04 downstream trigger was accepted.
+
+
+### F50B-069 — TT03 candidate denominator counted a non-standard-session day as a missing 10:00 entry
+- Time: 2026-10-07.
+- The V2 diagnostic identified 2022-10-24 as a missing 10:00–10:05 observation for a 2022-10-27 expiry. NSE records show that 24-Oct-2022 had a Diwali Muhurat session beginning at 18:15, so there was no normal 09:15–15:30 session at the strategy's scheduled entry time. citeturn282531search15turn282531search21
+- Treating that day as a data-coverage failure would incorrectly penalize the feasibility denominator because no source-defined entry opportunity existed at 10:00.
+- Correction: V4 excludes intended entry dates with no normal 09:15–15:30 NIFTY index session as explicit `session_exclusions`, not coverage gaps. A normal-session day with no 10:00–10:05 observations remains a genuine coverage gap (e.g. 2022-03-07 is not an NSE holiday and therefore remains a data-coverage candidate). citeturn250743search0turn250743search13
+- Evidence status: **NO SCIENTIFIC IMPACT** from the old denominator; V2 remains non-evidence and V4 is the active source-faithful implementation.
