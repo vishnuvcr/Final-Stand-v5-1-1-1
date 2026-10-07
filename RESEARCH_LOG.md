@@ -647,3 +647,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - A batched README/status/log write encountered a stale-content SHA conflict after the first file mutation advanced the branch.
 - No evidence files were altered by the failed write.
 - Subsequent documentation changes are being applied one file at a time with a freshly fetched content SHA.
+
+
+## 2026-10-07 — Statistical-gate holdout protection correction
+- Pre-execution audit of the statistical gate found that its VIX bootstrap/permutation layer pooled HOLD 2026 observations with DEV+VAL.
+- Corrected the inferential sample to DEV+VAL only, preserving 2026 strictly for protected holdout confirmation.
+- Holm correction will operate only on the pre-holdout hypothesis family.
+- No statistical inference result from the defective implementation is accepted.
