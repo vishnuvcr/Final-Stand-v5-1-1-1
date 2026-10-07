@@ -1862,3 +1862,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: validate all old-state and target-state quotes first, compute a single cash delta, and mutate the position only after every quote is confirmed.
 - The defect was caught before any TT-07 numerical run.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-056 — TT-03 trigger remained non-observable at commit-status level
+- Time: 2026-10-07.
+- The corrected TT-03 trigger commit `f7f01c5265203ad27b33d28d0633a93609a4538d` has remained `pending` in the available commit-status endpoint, while no TT-03 result artifact or downstream TT04 trigger is visible on the branch.
+- The available GitHub connector cannot enumerate arbitrary workflow runs by workflow file, so a live run ID could not be independently recovered from the connector.
+- Because the dedicated TT03 workflow uses `cancel-in-progress: true`, a controlled trigger refresh will either start the intended run or cancel/restart a stale queued/in-progress attempt without permitting overlapping TT03 numerical evidence.
+- This is an operational observability/control event, not a scientific conclusion.
