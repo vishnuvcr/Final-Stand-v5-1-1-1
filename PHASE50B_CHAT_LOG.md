@@ -488,3 +488,11 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 
 ## 2026-10-07 — Continue checkpoint: TT04 failure diagnosed; corrected replay queued
 - User requested continuation. The failed TT04 run is now explained by a deterministic timezone mismatch in post-replay split-summary construction. No trading-rule change was required. Canonical and fallback engines were corrected, and corrected canonical run 37629750175 is queued while fallback run 37629239398 is executing under the shared serialized TT04 concurrency group. No evidence is accepted yet.
+
+
+## 2026-10-07 — User continuation and TT05 trigger repair
+- User instructed: "Ok proceed".
+- Assistant verified TT04 run 37629750175 had completed PASS and identified that no TT05 run was present despite the TT04 marker.
+- User supplied GitHub Actions screenshots showing the workflow history and an empty `in_progress` search, confirming no active TT05 run at that point.
+- Assistant inspected the workflow definitions, identified GITHUB_TOKEN push suppression as the handoff defect, and repaired downstream dispatch plumbing without changing scientific rules.
+- The TT05 marker was re-touched through the repository API, launching TT05 run 37654354444. Preflight passed and numerical replay began.
