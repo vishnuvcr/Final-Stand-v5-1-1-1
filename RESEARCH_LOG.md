@@ -569,3 +569,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — TT-02 runtime contract audit
 - Static runtime audit found the revision constant was referenced but not defined; corrected before evidence acceptance.
+
+
+## 2026-10-07 — TT-06 control prepared
+- Added source-faithful TT-06 engine and dependency-gated workflow; no numerical evidence produced.
+- Chained TT-05 to TT-06 only after audit success.
