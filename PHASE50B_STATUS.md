@@ -51,3 +51,14 @@ The Phase-50B registry preflight failed because the actual registry table omitte
 
 ## 2026-10-07 — TT02 runtime dependency correction
 The first TT02 replay attempt failed before numerical execution because the shared Phase-43 module imports matplotlib. The workflow dependency set has been corrected; no replay evidence was produced by the failed attempt.
+
+
+## 2026-10-07 — Phase 50B canonical TT-02 replay active
+
+Phase 50 is now formally closed with NO PROMOTION. Phase 50B is the active bounded continuation.
+
+The expanded registry contains the seven user-supplied Tradetron strategies plus the prior GitHub strategy lineages. The registry validation passed in Actions run 37570311489.
+
+The strongest native HIGH-VIX hypothesis remains **TT-02: 0.20/0.10 Delta Calendar Hedge Spread v4**. Its native Tradetron report showed +₹72,179.25 on 19 High-regime result days, but that number is not Final Stand evidence because the native run uses a different cost/coverage model.
+
+The current canonical common-cost replay is **Actions run 37570836398 (#latest corrected Phase-50B workflow)**. Registry preflight has passed; the TT-02 numerical replay is running. Older duplicate Phase-50B runs are classified SUPERSEDED and are not evidence. The standalone TT-02 workflow is now manual-only to avoid further automatic duplication.
