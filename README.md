@@ -692,3 +692,8 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — Phase 50B TT-04 audit hardening
 - TT-04 now records missing exit-leg observations as explicit coverage exclusions and must clear the 95% complete-exit coverage gate before evidence is accepted.
+
+
+## 2026-10-07 — Phase 50B TT-02 denominator safeguard
+- TT-02 corrected engines now explicitly account for terminal open positions so the candidate denominator cannot silently lose trades.
+- The active pre-safeguard run remains diagnostic until a latest-code rerun passes the full audit.
