@@ -1,0 +1,25 @@
+name: Phase 50B - TT04 Fallback Syntax Check
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-expanded-strategy-universe
+    paths:
+      - research/phase50b_tt04_premium_match_replay_fast.py
+      - .github/workflows/phase50b-tt04-fallback-syntax.yml
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile dormant fallback
+        run: python -m py_compile research/phase50b_tt04_premium_match_replay_fast.py
