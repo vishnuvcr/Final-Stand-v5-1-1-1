@@ -1702,3 +1702,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: TT-03 now emits explicit `coverage_gaps.csv` exclusions, carries a coverage rate, and its workflow enforces the 95% feasibility threshold plus current-cost robustness fields.
 - Evidence status: **NO SCIENTIFIC IMPACT**. TT-03 had not executed under this corrected implementation.
 - Prevention: every opened trade must reconcile to completion, explicit coverage exclusion, or documented model error.
+
+
+### F50B-034 — TT-04 engine revision gate
+- Time: 2026-10-07.
+- Added TT-04 engine revision `50B-TT04-COVERAGE-V2` and required it in the dedicated TT-04 workflow audit.
+- This blocks any pre-coverage-correction TT-04 artifact from being treated as evidence.
+- Evidence status: **NO SCIENTIFIC IMPACT**. TT-04 numerical execution has not begun.
