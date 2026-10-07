@@ -504,3 +504,11 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - No TT05 evidence was accepted. The defect was classified as reporting-layer only; trading rules were unchanged.
 - The expiry split timestamps were normalized to the project timezone and a recovery-trigger path was added.
 - Corrected TT05 run 37666116836 is now active.
+
+
+## 2026-10-07 — TT05 PASS and TT06 launch
+- User instructed continuation.
+- TT05 recovery run 37666116836 completed replay, audit, upload and publication successfully. The final TT06 dispatch substep alone returned HTTP 404.
+- TT05 published evidence: 1,184/1,232 trades, 96.10% coverage, zero data errors; net ₹52,337.89 at ₹10/order, ₹9,429.09 at +50% friction, −₹3,546.91 at ₹20/order, and −₹74,398.11 at ₹20/order +50% stress. HOLD was −₹40,244.68.
+- The 404 was traced to workflow-dispatch requirements for workflow files on the default branch. TT06 was therefore launched through the repository-API trigger marker without altering scientific rules.
+- TT06 run 37675162843 is now queued.
