@@ -1672,3 +1672,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: TT-04 now records such cases in `coverage_gaps.csv`; they are excluded from primary P&L, never imputed, and the workflow applies the same 95% coverage feasibility gate.
 - Evidence status: **NO SCIENTIFIC IMPACT**. TT-04 had not executed.
 - Prevention: a failed exit must always produce either a completed trade or an explicit error/coverage record.
+
+
+### F50B-030 — TT-02 terminal-position accounting safeguard
+- Time: 2026-10-07.
+- Pre-rerun audit found that a position still open at the end of the replay loop could otherwise be omitted from both completed trades and coverage gaps.
+- Correction: the corrected engines now record any terminal open position as an explicit coverage exclusion, preserving the opened-position denominator.
+- Evidence status: **NO IMPACT ON CURRENT RUN**. Run 37593965525 was already executing from an earlier commit; this safeguard will apply to the next canonical rerun.
+- Prevention: every numerical replay must reconcile opened positions = completed trades + explicit exclusions + documented model errors.
