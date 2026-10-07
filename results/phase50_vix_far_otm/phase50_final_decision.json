@@ -1,0 +1,11 @@
+{
+  "phase": 50,
+  "decision": "NO_CONFIRMATORY_CANDIDATES",
+  "stage1_selected": 0,
+  "confirmatory_candidates": 0,
+  "sparse_high_exploratory_candidates": 5,
+  "high_state_development_opportunities": 6,
+  "authoritative_run": 37567632928,
+  "raw_artifact_id": 11459959883,
+  "raw_artifact_sha256": "ff79afd179f33c00825b40d5654b3b39dc8ef914827a599c3f6ffe6512666fc2"
+}
