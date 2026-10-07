@@ -726,3 +726,27 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — TT-02 fallback audit
 - v3 has been audited as a performance-only equivalent of canonical v2 and will be used only after a genuine v2 timeout/failure.
+
+
+## Phase 50B — Expanded Prior-Strategy Universe — IN PROGRESS
+
+Phase 50B is the bounded continuation after Phase 50. It includes the user's seven supplied Tradetron strategies and previously developed strategy lineages discovered across the user's GitHub repositories.
+
+- [Phase 50B research plan](PHASE50B_RESEARCH_PLAN.md)
+- [Phase 50B strategy universe](PHASE50B_STRATEGY_UNIVERSE.md)
+- [Phase 50B pre-registration](PHASE50B_PRE_REGISTRATION.md)
+- [Phase 50B status](PHASE50B_STATUS.md)
+- [Phase 50B source/baseline audit](PHASE50B_SOURCE_BASELINE_AUDIT.md)
+- [Phase 50B literature review](PHASE50B_LITERATURE_REVIEW.md)
+- [Phase 50B chat log](PHASE50B_CHAT_LOG.md)
+- [Phase 50B 2026 execution-cost audit](PHASE50B_2026_COST_AUDIT.md)
+
+### Current execution state — 2026-10-07
+- Corrected TT-02 evidence run 37596743408 is active on the latest-code commit. Compilation, dependencies and HF cache have passed; only canonical numerical replay remains.
+- Older run 37593965525 is on a superseded pre-revision commit and is diagnostic / non-evidence. No result from it can be promoted.
+- The prepared v3 TT-02 implementation is a performance-only equivalent of v2 and remains dormant unless v2 genuinely times out/fails.
+- Phase-50B workflow concurrency has been hardened to cancel superseded overlapping runs on future triggers.
+- TT-05 source-faithful replay is prepared and dependency-gated behind audited TT-04 evidence.
+- The statistical gate is now fail-closed on all four required cost outputs and registers TT-01 through TT-07.
+
+No Phase-50B strategy has been promoted.
