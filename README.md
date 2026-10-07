@@ -755,3 +755,7 @@ No Phase-50B strategy has been promoted.
 ### Phase 50B — Newly frozen replay specifications
 - [TT-06 replay specification](PHASE50B_TT06_REPLAY_SPEC.md)
 - [TT-07 replay specification](PHASE50B_TT07_REPLAY_SPEC.md)
+
+
+### 2026-10-07 — TT-02 contract hardening
+- Corrected an undefined runtime engine-revision constant in TT-02 and added a static AST guard. The active pre-fix execution is non-evidence; a fresh corrected rerun is required.
