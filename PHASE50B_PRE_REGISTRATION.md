@@ -41,3 +41,7 @@ The statistical gate now requires the preregistered ₹10 and ₹20 cost outputs
 
 ## Statistical holdout protection clarification — 2026-10-07
 The preregistered bootstrap/permutation VIX-regime inference family is explicitly defined on **DEV+VAL (2021 through 2025)**. The protected 2026 HOLD is excluded from hypothesis testing, Holm-family construction, threshold selection and candidate ranking. HOLD is used only for final out-of-sample confirmation/descriptive performance after all pre-holdout decisions are frozen.
+
+
+## VIX-mode reconstruction clarification — 2026-10-07
+For statistical inference, VIX regime membership is reconstructed at each trade's entry timestamp from the cached India VIX series using the frozen parent-phase definitions. This preserves the preregistered SPIKE/RISING/FALLING/HIGH_RISING modes even though individual strategy trade tables may store only the LOW/NORMAL/HIGH level label. Trades without the minimum historical VIX lookback are excluded from both the regime and complement inference samples.
