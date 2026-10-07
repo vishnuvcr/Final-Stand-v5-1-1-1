@@ -422,3 +422,10 @@ User requested continuation without pausing. Work performed:
 
 ## 2026-10-07T18:15:00+05:30 — User resumed research
 The user requested continuation from the accepted TT-03 V5 PASS. Live run 37621965843 was checked: preflight passed and TT-04 numerical replay remained in progress. The exact TT-04 workflow and source-fidelity audit were re-read; no new evidence-impacting defect was found. No scientific result or promotion decision was inferred from the incomplete run.
+
+
+## 2026-10-07T18:15:00+05:30 — User resume / TT04 live checkpoint
+- User said “Resume” after the accepted TT03 V5 PASS.
+- Direct Actions inspection shows TT04 run **37621965843** still executing its V3 numerical replay; preflight succeeded and the numerical step is the only active research step in that run.
+- Re-read the phase plan, TT04 workflow, source contract and downstream statistical gate before continuing.
+- No TT04 result was inferred, no duplicate replay was started, and no research-plan change was made.
