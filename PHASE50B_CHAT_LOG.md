@@ -334,3 +334,10 @@ User requested continuation without pausing. Work performed:
 - Run 37613416831 completed the diagnostic capture successfully; artifact audit intentionally rejected the candidate because coverage remained below 95%.
 - The raw diagnostic tables are now persisted, so TT03 is terminal FEASIBILITY FAIL / NO PROMOTION.
 - TT04 run 37614211996 continues independently on the corrected V3 engine.
+
+
+## 2026-10-07 — Resume checkpoint: TT-03 V2 coverage failure audited
+- V2 produced 187/202 complete campaigns (92.57%), so the evidence gate correctly rejected it.
+- Self-audit found a likely artificial source of coverage loss in the hard-close search: latest timestamp could have some but not all legs.
+- Corrected the engine to search backward for the latest complete all-leg quote at or before 15:29.
+- Workflow and trigger were advanced to V3; no V2 result is accepted and TT04 remains blocked.
