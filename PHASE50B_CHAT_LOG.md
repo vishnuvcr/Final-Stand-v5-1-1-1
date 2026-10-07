@@ -104,3 +104,11 @@ User requested continuation without pausing. Work performed:
 - Direct run/job state confirms canonical TT-02 replay 37589400281 remains active.
 - Live log endpoint returned 404/BlobNotFound while the job is running; logged as F50B-024 with no evidence impact.
 - No P&L or scientific inference is being drawn before audited artifacts exist.
+
+
+## 2026-10-07 — TT-02 coverage-gap handling correction
+- Corrected TT-02 replay completed but found five opened positions without a complete common observed exit quote at/after 15:15.
+- This is a data-coverage limitation in the historical option source, not evidence of a strategy or code defect.
+- Formalized the 95% complete-exit coverage feasibility gate: gaps are separately logged, excluded from primary P&L and never imputed.
+- The observed run had 247 complete exits and 5 gaps from 252 opened positions (~98.0%), so TT-02 remains eligible for an audited feasibility rerun.
+- Workflow numerical launches are now controlled only by the explicit Phase-50B trigger file.
