@@ -445,3 +445,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Self-audit found an orchestration defect: the TT03 workflow could route TT04 even when TT03 feasibility was `FAIL_COVERAGE`.
 - Corrected the workflow to permit TT04 only on `PASS`; coverage failure now terminates the chain without a downstream trigger.
 - Current TT03 trigger was refreshed after this guard correction; the previous in-progress attempt is superseded by the serialized concurrency group.
+
+
+## 2026-10-07 — TT-03 V4 session-calendar correction
+- V2 diagnostics showed 13 exit-side missing-CE gaps plus two entry-window gaps. One of the entry gaps, 2022-10-24, was a Diwali Muhurat evening-session day and had no normal 10:00 market session; it must not be counted against a daytime strategy's coverage denominator.
+- V4 explicitly separates non-standard/closed intended entry dates into `session_exclusions` while retaining genuine regular-session entry-data failures as coverage gaps.
+- V4 workflow also requires current-run/V4 provenance on the feasibility diagnostic before any TT04 routing; stale diagnostic files cannot trigger downstream.
