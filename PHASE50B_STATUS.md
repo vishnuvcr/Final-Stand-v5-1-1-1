@@ -229,3 +229,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected TT-03 so incomplete exit observations become explicit coverage exclusions rather than silently disappearing.
 - TT-03 workflow now requires engine revision `50B-TT03-WINDOW-V2`, >=95% coverage, zero data errors, and current-cost robustness output fields.
 - No TT-03 evidence is accepted until those gates pass.
+
+
+## 2026-10-07 — TT-04 engine revision gate
+- TT-04 now stamps `50B-TT04-COVERAGE-V2`; its dedicated workflow rejects stale artifacts.
+- No TT-04 numerical evidence exists yet.
