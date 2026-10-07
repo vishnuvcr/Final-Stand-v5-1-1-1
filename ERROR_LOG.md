@@ -2116,3 +2116,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Direct job-state inspection confirms run 37621965843 remains in_progress at the numerical replay step.
 - No new implementation failure is indicated; result artifacts and downstream trigger are simply not yet available.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+## 2026-10-07 — F50B-072 — TT04 active-run checkpoint
+- Direct job inspection confirms run 37621965843 is still active in the numerical replay.
+- No Actions artifact is available yet.
+- No scientific inference was made from the incomplete run.
+- Evidence status: NO SCIENTIFIC IMPACT.
