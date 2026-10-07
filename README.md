@@ -902,3 +902,13 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT04 V3 active
 - Dedicated [TT04 run 37621965843](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37621965843) passed the TT03 V5 terminal gate and is executing the corrected V3 replay.
 - No TT04 result is accepted until coverage, data-error and cost audits pass.
+
+
+## Phase 50B — live status update — 2026-10-07 18:15 IST
+- **TT-03 V5 PASS accepted:** Actions run **37620274641**; 200/201 complete campaigns (99.50%), one coverage exclusion, one session exclusion, zero data errors.
+- Source-faithful TT-03 cost results: **₹89,669.15** at ₹10/order; **₹82,074.11** at +50% friction; **₹75,509.15** at ₹20/order; **₹60,834.11** at ₹20/order +50% stress.
+- **TT-04 V3 is currently executing:** Actions run **37621965843**. Preflight, compilation, dependency install, TT03 terminal gate and HF cache passed; numerical replay remains in progress.
+- No TT-04 result, VIX inference, parameter tuning or promotion decision is accepted until the complete artifact/coverage/zero-error/cost audit passes.
+- Downstream TT-05 → TT-06 → TT-07 and the protected statistical/holdout gates remain fail-closed. No strategy has been promoted.
+
+[TT-04 current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37621965843) · [Phase 50B status](PHASE50B_STATUS.md) · [Phase 50B chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
