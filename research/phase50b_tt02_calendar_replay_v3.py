@@ -251,11 +251,13 @@ def finalize(pos,ts,cur_frame,nxt_frame):
         orders.append((pd.Timestamp(r["ts"]),r["side"],ep*abs(r["qty"])))
     cost=charges(orders,pos["lot"],1.0)
     cost50=charges(orders,pos["lot"],1.5)
+    cost20=charges(orders,pos["lot"],1.0,brokerage_per_order=20.0)
+    cost20_50=charges(orders,pos["lot"],1.5,brokerage_per_order=20.0)
     vs=vix_state(VIX,pos["entry_ts"])
     return {
         "trade_id":pos["trade_id"],"entry_ts":str(pos["entry_ts"]),"expiry":str(pos["cur"].date()),
         "entry_spot":pos["entry_spot"],"lot":pos["lot"],"gross":gross,"cost":cost,
-        "net":gross-cost,"net50":gross-cost50,
+        "net":gross-cost,"net50":gross-cost50,"net20":gross-cost20,"net20_50":gross-cost20_50,
         "vix":vs["vix"] if vs else np.nan,"vix_state":vs["level_state"] if vs else None,
         "adjustments":sum(1 for x in pos["ledger"] if x["phase"].endswith("_open"))-4,
         "entry_ce_strike":pos["ledger"][0]["price"] if False else pos["legs"]["short_ce"]["strike"],
@@ -378,6 +380,8 @@ def main():
             "coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,
             "net":float(df.net.sum()) if not df.empty else 0.0,
             "net50":float(df.net50.sum()) if not df.empty else 0.0,
+            "net20":float(df.net20.sum()) if not df.empty else 0.0,
+            "net20_50":float(df.net20_50.sum()) if not df.empty else 0.0,
             "by_vix":df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean"),win_rate=("net",lambda x:(x>0).mean())).reset_index().to_dict("records") if not df.empty else []}
     (OUT/"summary.json").write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2))
