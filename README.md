@@ -916,3 +916,7 @@ No Phase-50B strategy has been promoted.
 
 ## Phase 50B — current live execution checkpoint — 2026-10-07
 TT-03 V5 remains an accepted feasibility PASS. TT-04 run **37621965843** is still executing its source-faithful V3 numerical replay; preflight, compilation, dependencies and HF cache have passed, while artifact audit/publication remain pending. No TT-04 evidence or promotion decision is accepted before the complete gate passes. The 240-minute timeout is the registered execution limit, but no breach is inferred without authoritative timing metadata.
+
+
+## Phase 50B — execution contingency — 2026-10-07
+A dormant performance-only TT-04 fallback has been prepared to reduce repeated timestamp scans if the active replay genuinely fails or times out. It is not wired into the active workflow, has not been executed, and is not evidence; TT-04 V3 remains the canonical live run.
