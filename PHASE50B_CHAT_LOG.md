@@ -57,3 +57,9 @@ User requested continuation without pausing. Work performed:
 - Discovered and corrected a workflow-only TT-04 trigger placement defect before it could affect any numerical evidence.
 - The active run 37572837253 remains on its original execution head and is unaffected.
 - The corrected branch workflow now places TT-04 triggering strictly after audited TT-03 publication; the dedicated TT-04 workflow remains manually dispatchable.
+## 2026-10-07 — TT-02 fallback performance audit
+- The active canonical run **37572837253** remains in progress and remains the only numerical evidence candidate.
+- Static profiling identified a second avoidable hot loop in the replay: repeated full NIFTY-index equality scans for every minute.
+- Prepared `research/phase50b_tt02_calendar_replay_v3.py` as a **performance-only fallback** that pre-indexes spot by timestamp and trading-day timestamps.
+- The Black–Scholes/European-delta definition, quote selection, state machine, entry/exit rules, slippage, brokerage, statutory charges and +50% stress are unchanged.
+- The v3 fallback has **not** been executed and is not evidence; it exists only to avoid repeating an unnecessarily slow run if the current execution fails or times out.
