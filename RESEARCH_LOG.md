@@ -535,3 +535,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Phase 50B TT-03 evidence-integrity correction
 - TT-03 now preserves the denominator through explicit coverage exclusions.
 - Added the same coverage and current-cost robustness acceptance gate used for TT-02.
+
+
+## 2026-10-07 — Phase 50B TT-04 stale-artifact protection
+- Added engine revisioning and downstream verification for TT-04 before numerical execution.
