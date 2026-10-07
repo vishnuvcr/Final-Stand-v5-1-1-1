@@ -498,3 +498,16 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Normal-session days with no complete 10:00–10:05 ATM straddle entry are now explicit coverage candidates; non-regular-session days are session exclusions.
 - TT04 workflow now requires the session-exclusion diagnostic artifact.
 - No pre-correction TT04 numerical output is accepted.
+
+
+## 2026-10-07 — Resume checkpoint: current TT03 V5 execution
+- Dedicated TT03 run 37620274641 is currently in progress on the cleaned V5 workflow.
+- Preflight, dependencies, compilation, static engine-contract audit and HF cache have passed; numerical replay is still executing.
+- No TT03 result, feasibility state or P&L is accepted until the terminal-classification and audit steps finish.
+- No duplicate TT03 execution is being started.
+
+## 2026-10-07 — Resume checkpoint: downstream coverage-audit hardening
+- TT04 V3, TT05 V2, TT06 V2 and TT07 V2 workflows were audited while TT03 V5 executes.
+- Coverage/session diagnostic files now have summary-to-row count reconciliation in their downstream evidence gates.
+- TT07 now additionally requires and validates the entry-exclusions diagnostic.
+- These changes are control hardening only and do not trigger any replay because no strategy trigger file was modified.
