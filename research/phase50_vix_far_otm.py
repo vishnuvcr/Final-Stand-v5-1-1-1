@@ -409,16 +409,22 @@ def main():
     stage1_grid_df = pd.DataFrame(stage1_grid_rows)
     stage1_grid_df.to_csv(OUT / "stage1_registered_grid.csv", index=False)
 
-    # Development stage 1
-    dev1 = evaluate_stage(index, vix, dev_es, stage1_grid_df, "stage1_dev")
-    err1 = dev1[dev1["error"].notna()] if "error" in dev1.columns else pd.DataFrame(columns=["error_expiry","error"])
-    dev1 = dev1[dev1["error"].isna()] if "error" in dev1.columns else dev1
-    dev1.to_csv(OUT / "stage1_development_trade_matrix.csv", index=False)
-    if "error_expiry" not in err1.columns:
-        err1 = pd.DataFrame(columns=["error_expiry","error"])
-    if "error_expiry" not in err1.columns:
-        err1 = pd.DataFrame(columns=["error_expiry","error"])
-    err1.to_csv(OUT / "stage1_data_errors.csv", index=False)
+    # Development Stage 1. Reuse the complete raw Stage-1 matrix when explicitly restored
+    # from a previous successful numerical run; this is a cache-only optimization and does
+    # not change the numerical definitions.
+    cached_stage1 = OUT / "stage1_development_trade_matrix.csv"
+    if os.getenv("PHASE50_REUSE_STAGE1") == "1" and cached_stage1.exists() and cached_stage1.stat().st_size > 100:
+        dev1 = pd.read_csv(cached_stage1)
+        err1_path = OUT / "stage1_data_errors.csv"
+        err1 = pd.read_csv(err1_path) if err1_path.exists() and err1_path.stat().st_size > 10 else pd.DataFrame(columns=["error_expiry","error"])
+    else:
+        dev1 = evaluate_stage(index, vix, dev_es, stage1_grid_df, "stage1_dev")
+        err1 = dev1[dev1["error"].notna()] if "error" in dev1.columns else pd.DataFrame(columns=["error_expiry","error"])
+        dev1 = dev1[dev1["error"].isna()] if "error" in dev1.columns else dev1
+        if "error_expiry" not in err1.columns:
+            err1 = pd.DataFrame(columns=["error_expiry","error"])
+        dev1.to_csv(OUT / "stage1_development_trade_matrix.csv", index=False)
+        err1.to_csv(OUT / "stage1_data_errors.csv", index=False)
 
     s1 = stage1_screen(dev1)
     s1.to_csv(OUT / "stage1_selected_cells.csv", index=False)
