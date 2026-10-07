@@ -190,3 +190,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-06/TT-07 replay contracts
 - Froze source-faithful deterministic replay specifications before implementation.
 - No numerical results have been generated from these controls yet.
+
+
+## 2026-10-07 — TT-02 revision-contract correction
+- Found a compile-time-invisible undefined revision constant in TT-02.
+- Fixed it and added an AST-based workflow guard; the active pre-fix run is non-authoritative.
