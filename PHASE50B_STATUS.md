@@ -234,3 +234,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — TT-04 engine revision gate
 - TT-04 now stamps `50B-TT04-COVERAGE-V2`; its dedicated workflow rejects stale artifacts.
 - No TT-04 numerical evidence exists yet.
+
+
+## 2026-10-07 — Canonical workflow serialization
+- Added Phase-50B concurrency protection (`cancel-in-progress: false`) so only one canonical numerical run can execute at a time.
+- Active run 37593965525 remains unchanged; this protects subsequent corrected reruns.
