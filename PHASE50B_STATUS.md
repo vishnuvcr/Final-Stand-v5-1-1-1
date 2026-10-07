@@ -375,3 +375,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT03 run 37610158492 failed before numerical replay because its preflight imported pandas without installing the workflow dependencies.
 - Added the preflight dependency installation and refreshed the trigger in commit `6adb0620ccba9933aa282a1aa95e63b98ed7c5f5`.
 - No TT03 numerical evidence exists from the failed run.
+
+## 2026-10-07 — TT-03 source-semantic corrections before evidence acceptance
+- Self-audit found two pre-execution issues in the active TT03 engine: hard-close fallback could roll to 15:30+, and an unnecessary modal-strike-step gate could reject valid source-defined entries.
+- Both were corrected in commit `aea2196436fbeceb90c40b02ef55008f9f80164f` before any TT03 artifact audit or publication.
+- The currently running TT03 job is on the superseded engine commit and will be replaced by a controlled retrigger.
