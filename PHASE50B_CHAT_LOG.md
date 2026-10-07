@@ -233,3 +233,10 @@ User requested continuation without pausing. Work performed:
 - Added pre-execution hardening to TT04/TT05 dependency gates and corrected TT06 timestamp-based exit selection.
 - These changes do not trigger the canonical Phase-50B run because the workflow is restricted to the explicit TT02 trigger path.
 - TT03 remains ready behind the TT02 audit; TT07 remains blocked on the documented runtime-variable ambiguity.
+
+
+## 2026-10-07 — Continue checkpoint: TT-02 result accepted, TT-03 repaired
+- TT-02 is now an accepted Phase-50B baseline, but its negative common-cost net means it is not promoted.
+- TT-03's first numerical attempt failed only in DEV/VAL/HOLD accounting because of timezone mismatch; no TT-03 evidence was accepted.
+- Corrected the timezone handling and created a dedicated gated TT-03 workflow to avoid repeating the full TT-02 replay.
+- The next numerical transition is TT-03 corrected replay; downstream TT-04 remains dependency-gated.
