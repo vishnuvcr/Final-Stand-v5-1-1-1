@@ -1,6 +1,6 @@
 # Phase 50B Status
 
-**INITIALIZED — PRE-NUMERICAL**
+**ACTIVE — NUMERICAL REPLAY**
 
 ## Current action
 The user requested that seven supplied Tradetron strategies be added and that previous strategies from other GitHub repositories be searched.
@@ -12,7 +12,7 @@ The user requested that seven supplied Tradetron strategies be added and that pr
 - Candidate registry and preregistration created on this dedicated branch.
 
 ## Parent Phase 50 status
-GitHub Actions run 37567632928 on the parent far-OTM branch remains in progress. This branch does not cancel or alter it.
+Parent Phase 50 is formally closed with NO PROMOTION. Its authoritative corrected run was 37567632928; this branch does not alter that closed evidence.
 
 ## Next gates
 1. source-rule diff;
@@ -61,14 +61,14 @@ The expanded registry contains the seven user-supplied Tradetron strategies plus
 
 The strongest native HIGH-VIX hypothesis remains **TT-02: 0.20/0.10 Delta Calendar Hedge Spread v4**. Its native Tradetron report showed +₹72,179.25 on 19 High-regime result days, but that number is not Final Stand evidence because the native run uses a different cost/coverage model.
 
-The current canonical common-cost replay is **Actions run 37570836398 (#latest corrected Phase-50B workflow)**. Registry preflight has passed; the TT-02 numerical replay is running. Older duplicate Phase-50B runs are classified SUPERSEDED and are not evidence. The standalone TT-02 workflow is now manual-only to avoid further automatic duplication.
+The current canonical common-cost replay is **Actions run 37572837253**. Registry preflight has passed; the TT-02 numerical replay is running. Older duplicate Phase-50B runs are classified SUPERSEDED and are not evidence. The standalone TT-02 workflow is now manual-only to avoid further automatic duplication.
 
 
 ## 2026-10-07 — Workflow orchestration hardened
 
 The canonical workflow automatic trigger is now restricted to the explicit Phase-50B trigger file, the TT-02 replay engine, and its preregistration. README/status/error-log/research-plan edits no longer launch numerical runs. Manual dispatch remains available.
 
-Current canonical run: **37571121043**. Registry preflight has passed and TT-02 common-cost replay is active. Older Phase-50B runs are superseded/non-evidence.
+Current canonical run: **37572837253**. Registry preflight has passed and TT-02 common-cost replay is active. Older Phase-50B runs are superseded/non-evidence.
 
 
 ## 2026-10-07 — Additional source audits completed while TT-02 replay runs
@@ -87,3 +87,8 @@ Canonical run **37571121043** remains active. Registry preflight has passed; **T
 
 ## 2026-10-07 — TT-02 replay performance correction
 The canonical TT-02 replay was mathematically unchanged but slower than expected because the stateful engine repeatedly scanned option frames and solved implied volatility expensively. A performance-only correction was committed: timestamp indexing plus a faster Newton/fallback implementation of the same Black-Scholes implied-volatility root. This will trigger the canonical rerun and supersede the slow execution; no numerical result from the old run is used.
+
+
+## 2026-10-07 — Current audit state after F50B-012
+
+The latest canonical replay is run 37572837253. The remaining computational bottleneck in nearest-delta selection was vectorized without changing the Black–Scholes/European-delta scientific definition. TT-04's current saved account template (999088026) was also re-audited: the source uses uncapped premium-match selection (`any`) and contains a repair/re-entry validator warning; these behaviors are documented, not silently corrected. A 2026 execution-cost audit confirms the registered ₹10/order Paytm Money brokerage proxy and 2026 NSE statutory rates, including 0.15% option-sale STT from 2026-04-01.
