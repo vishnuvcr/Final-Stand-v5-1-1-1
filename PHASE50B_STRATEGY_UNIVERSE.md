@@ -24,6 +24,7 @@ The seven ASB exports are the rule source. The export format states that JSON-ba
 | GH-BATMAN-02 | MC-OPTIONS-MARGIN-REDUCTION-MC2 | BATMAN strike and capital-reduction variants | Parameter-sensitivity control |
 | GH-BATMAN-03 | MC-OPTIONS-VERIFICATION-MC3 | Exact MC-method verification and frozen validation lineage | Method control |
 | GH-FINAL4-01 | Final-stand-v4 | Premium-direction / full-chain-OI research | Selector overlay only |
+| GH-FINAL2-01 | Final-stand-v2 | Earlier regime-aware option-direction research with a planned new information set including VIX, option-implied skew/IV term structure, FII/DII, breadth and global cross-market variables | Selector/provenance lineage |
 
 ## C. Daily-Options / Equity Income hypotheses
 
