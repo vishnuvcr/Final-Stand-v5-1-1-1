@@ -35,15 +35,11 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open("results/phase50b/tt03_feasibility/feasibility.json"))
-          assert d["engine_revision"]=="50B-TT03-WINDOW-V2", d
-          assert d["feasibility_state"] in ("PASS","FAIL_COVERAGE"), d
-          if d["feasibility_state"]=="FAIL_COVERAGE":
-              assert d["data_errors"]==0, d
-              assert d["coverage_rate"]<0.95, d
-              print("TT03 terminal feasibility FAIL-COVERAGE; TT04 continues independently.", d)
-          else:
-              assert d["coverage_rate"]>=0.95, d
-              print("TT03 terminal feasibility PASS.", d)
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V4", d
+          assert d["feasibility_state"]=="PASS", d
+          assert d["data_errors"]==0, d
+          assert d["coverage_rate"]>=0.95, d
+          print("TT03 terminal feasibility PASS; TT04 may proceed.", d)
           PY
 
   numerical:
