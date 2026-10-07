@@ -470,3 +470,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Preflight and static engine controls have passed; the numerical replay is still running. No TT03 artifact or P&L has been accepted yet.
 - TT04 run **37617256820** correctly failed its preflight because the currently persisted TT03 diagnostic is still the older V2 FAIL_COVERAGE record. This is the intended fail-closed behavior; no TT04 numerical execution occurred in that run.
 - TT04 remains blocked until the current TT03 V4 run produces a same-run feasibility `PASS` artifact.
+
+
+## 2026-10-07 — TT-03 V4 result rejected; V5 exit-snapshot correction
+- V4 replay 37617012372 reached 186/187 coverage candidates (99.47%) plus one session exclusion, but generated 14 `UnboundLocalError` data errors on negative-P&L exits. The evidence audit correctly rejected the artifact.
+- V5 fixes the lifecycle by retaining the actual exit snapshot for both negative-P&L exits and hard-close exits, then validates it before settlement.
+- V5 workflow/trigger are now active. TT04 remains blocked until V5 passes all evidence gates with zero data errors and >=95% coverage.
