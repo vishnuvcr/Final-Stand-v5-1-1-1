@@ -1,3 +1,15 @@
+## Phase 50B — User + Prior-Repository Strategy Integration — INITIALIZED
+
+Phase 50B expands the VIX/far-OTM research to the seven user-supplied Tradetron strategies and relevant strategy lineages found in the user's other GitHub repositories. It is a separate branch so Phase 50A remains scientifically frozen.
+
+- [Phase 50B research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_RESEARCH_PLAN.md)
+- [Phase 50B pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_PRE_REGISTRATION.md)
+- [Phase 50B strategy registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_STRATEGY_REGISTRY.md)
+- [Phase 50B GitHub audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_GITHUB_REPO_AUDIT.md)
+- [Phase 50B status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_STATUS.md)
+
+Source-faithful reproduction is mandatory before any VIX/far-OTM tuning. Duplicate lineages are de-duplicated and prior P&L claims are not grandfathered into promotion.
+---
 ## Phase 50 — VIX × Far-OTM Tail Geometry — INITIALIZED
 
 Phase 50 directly addresses the remaining VIX research gap: genuinely far-OTM strike geometry was not adequately explored in the earlier VIX sweeps, particularly for HIGH/SPIKE/RISING regimes. The new preregistered study tests existing defined-risk strategy families across 2, 3, 4, 5, 6, 8, 10 and 12 strike-step tail distances, with chronological development/validation and protected 2026 holdout gates.
