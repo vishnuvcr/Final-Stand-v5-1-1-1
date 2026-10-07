@@ -62,3 +62,7 @@ Only after baseline completion and only from the preregistered universe may the 
 
 ## V3 correction — 2026-10-07
 At the no-negative-P&L hard close, search backward from 15:29 for the latest observed timestamp at or before 15:29 where every live leg has a contemporaneous quote. A timestamp containing only a subset of the legs is not an exit candidate. No forward fill, interpolation or imputation is permitted.
+
+
+## V4 entry-session accounting — 2026-10-07
+An intended three-calendar-day entry date with no observed normal 09:15–15:30 NIFTY session is classified as a `session_exclusion`, not a coverage failure, because the source-defined 10:00–10:05 intraday entry opportunity did not exist. A normal-session day with no 10:00–10:05 observations remains a genuine coverage exclusion. This distinction is deterministic and uses only the cached index session observations; it is not a tuned parameter.
