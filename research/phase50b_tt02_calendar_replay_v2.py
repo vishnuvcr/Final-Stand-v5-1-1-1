@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy.optimize import brentq
+from scipy.special import ndtr
 
 from phase43_vix_strategy_sweep import (
     TZ, START, END, DEV_END, VAL_END,
@@ -137,15 +138,39 @@ def delta_cached(z,spot,strike,ts,expiry,opt):
     return DELTA_CACHE[key]
 
 def nearest_delta(z,spot,ts,expiry,opt,target):
-    q=z[z.option_type==opt]
+    q=z[z.option_type==opt][["strike","close"]].drop_duplicates("strike")
     if q.empty:return None
-    best=None
-    for row in q[["strike","close"]].drop_duplicates("strike").itertuples(index=False):
-        d=option_delta(float(row.close),spot,float(row.strike),ts,expiry,opt)
-        if d is None:continue
-        key=(abs(d-target),abs(float(row.strike)-spot),float(row.strike))
-        if best is None or key<best[0]:best=(key,float(row.strike))
-    return None if best is None else best[1]
+    strikes=q["strike"].to_numpy(dtype=float)
+    prices=q["close"].to_numpy(dtype=float)
+    t=max((expiry.normalize()+pd.Timedelta(hours=15,minutes=30)-pd.Timestamp(ts)).total_seconds(),1.0)/(365*24*3600)
+    valid=(prices>0)&np.isfinite(prices)&(strikes>0)&np.isfinite(strikes)&(spot>0)
+    if not np.any(valid):return None
+    k=strikes[valid]; p=prices[valid]
+    call=(opt=="CE")
+    intrinsic=np.maximum(spot-k,0.0) if call else np.maximum(k-spot,0.0)
+    upper=np.full_like(k,spot) if call else k
+    valid2=(p>intrinsic+1e-8)&(p<upper)
+    if not np.any(valid2):return None
+    k=k[valid2]; p=p[valid2]
+    sigma=np.clip(np.sqrt(2*np.pi/max(t,1e-12))*p/max(spot,1e-9),0.05,2.5)
+    sqrt_t=math.sqrt(t); disc=np.exp(-R*t)
+    for _ in range(7):
+        d1=(np.log(spot/k)+(R+0.5*sigma*sigma)*t)/(sigma*sqrt_t)
+        d2=d1-sigma*sqrt_t
+        if call:
+            model=spot*ndtr(d1)-k*disc*ndtr(d2)
+        else:
+            model=k*disc*ndtr(-d2)-spot*ndtr(-d1)
+        diff=model-p
+        vega=spot*np.exp(-0.5*d1*d1)/math.sqrt(2*np.pi)*sqrt_t
+        good=vega>1e-10
+        if not np.any(good):break
+        sigma=np.where(good,np.clip(sigma-diff/vega,1e-5,8.0),sigma)
+    d1=(np.log(spot/k)+(R+0.5*sigma*sigma)*t)/(sigma*sqrt_t)
+    delta=ndtr(d1) if call else ndtr(d1)-1.0
+    err=np.abs(delta-target)
+    j=int(np.nanargmin(err))
+    return float(k[j])
 
 def make_position(trade_id,ts,spot,cur,nxt,sc,sp,lc,lp,lot):
     return {
@@ -310,3 +335,5 @@ if __name__=="__main__":
 # F50B-006 fixed: numerical TT02 workflow now installs matplotlib too.
 
 # F50B-011: performance-only optimization. Option frames are timestamp-indexed and implied-vol Newton iterations are reduced with the same BS root and rare Brent fallback.
+
+# F50B-012: vectorized nearest-delta scan; preserves the same BS-implied-volatility/European-delta definition while removing per-strike Python loops.
