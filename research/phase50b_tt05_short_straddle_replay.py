@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from phase43_vix_strategy_sweep import (
-    TZ, START, END, load_parquet, load_vix, vix_state,
+    TZ, START, END, DEV_END, VAL_END, load_parquet, load_vix, vix_state,
     exec_px, charges, lot_size_for_expiry
 )
 
