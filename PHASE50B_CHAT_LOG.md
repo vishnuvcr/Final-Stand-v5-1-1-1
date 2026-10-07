@@ -195,3 +195,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-02 revision-contract correction
 - Found a compile-time-invisible undefined revision constant in TT-02.
 - Fixed it and added an AST-based workflow guard; the active pre-fix run is non-authoritative.
+
+
+## 2026-10-07 — TT-06 control prepared
+- Added TT-06 replay engine/workflow and chained execution behind TT-05 evidence.
+- Verified workflow shell balance for main, TT05 and TT06 workflows.
