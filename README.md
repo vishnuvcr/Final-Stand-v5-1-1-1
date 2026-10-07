@@ -764,3 +764,7 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT-06 control prepared
 - Added [TT-06 replay engine](research/phase50b_tt06_intraday_asym_replay.py) and [TT-06 workflow](.github/workflows/phase-50b-tt06-intraday-asym.yml), dependency-gated behind audited TT-05 evidence.
 - No TT-06 result exists yet.
+
+
+### 2026-10-07 — TT-07 source-lock blocker
+- Direct inspection of the original [Dynamic IC to Ratio export](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1) resolved the state graph but identified an unresolved ic_entered runtime-scope issue. TT-07 replay is intentionally blocked rather than using a guessed reset policy.
