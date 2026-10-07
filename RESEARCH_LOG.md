@@ -732,3 +732,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Confirmed 2022-10-24 was a Muhurat evening session, so no normal 10:00 entry opportunity existed; it is now a session exclusion rather than a coverage gap. 
 - V4 records these exclusions separately while preserving the 95% feasibility denominator for genuine regular-session opportunities.
 - The V4 workflow also verifies feasibility provenance belongs to the current run before permitting TT04.
+
+
+## 2026-10-07 — TT-03 V4 persistence self-audit
+- Audited the new session-exclusion diagnostic plumbing before allowing a V4 run to stand as evidence.
+- Found an undefined `sx` variable in the workflow persistence step.
+- Corrected the load path; no V4 feasibility artifact from the defective workflow is accepted.
