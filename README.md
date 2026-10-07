@@ -750,3 +750,8 @@ Phase 50B is the bounded continuation after Phase 50. It includes the user's sev
 - The statistical gate is now fail-closed on all four required cost outputs and registers TT-01 through TT-07.
 
 No Phase-50B strategy has been promoted.
+
+
+### Phase 50B — Newly frozen replay specifications
+- [TT-06 replay specification](PHASE50B_TT06_REPLAY_SPEC.md)
+- [TT-07 replay specification](PHASE50B_TT07_REPLAY_SPEC.md)
