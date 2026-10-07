@@ -351,7 +351,7 @@ def stage2_grid(stage1):
 
 
 def preflight():
-    assert len(FAMILIES) == 11
+    assert len(FAMILIES) == 9
     assert DISTANCES == [2,3,4,5,6,8,10,12]
     es = expiry_files()
     assert len(es) >= 100
