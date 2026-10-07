@@ -86,10 +86,20 @@ jobs:
           key: phase50-hf-${{ runner.os }}-${{ hashFiles('research/phase50_vix_far_otm.py') }}
           restore-keys: |
             phase50-hf-${{ runner.os }}-
+      - name: Restore prior raw Stage-1 artifact cache
+        if: success()
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 37565293395
+          name: phase50-raw-37565293395
+          path: results
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run full far-OTM research
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_HUB_DISABLE_TELEMETRY: "1"
+          PHASE50_REUSE_STAGE1: "1"
         run: python research/phase50_vix_far_otm.py
       - name: Upload raw Phase 50 artifacts
         if: always()
