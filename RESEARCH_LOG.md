@@ -790,3 +790,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Cost outputs: net 89,669.15; net50 82,074.11; net20 75,509.15; net20_50 60,834.11.
 - Baseline evidence is accepted; no candidate promotion has occurred.
 - TT04 was explicitly dispatched after confirming the downstream push trigger created by GITHUB_TOKEN does not itself launch an ordinary push workflow.
+
+
+## 2026-10-07 — TT04 V3 numerical execution
+- TT04 run 37621965843 passed the TT03 terminal gate and all TT04 pre-numerical controls.
+- Numerical replay is in progress; no TT04 inference or promotion decision has been generated.
