@@ -391,3 +391,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Preflight, dependency installation, compilation, static engine audit and HF cache steps have passed.
 - The source-corrected numerical replay is currently executing; no artifact or result is accepted yet.
 - Superseded runs 37611073923 and 37611383204 were cancelled by the serialized workflow and are non-evidence.
+
+
+## 2026-10-07 — TT-03 baseline feasibility decision
+- Corrected TT03 replay run 37611676386 completed source-faithful trade generation successfully but failed the artifact gate solely because complete coverage was 187/202 = 92.57%, below the preregistered 95% feasibility threshold.
+- Diagnostic P&L from the corrected engine is not promotion evidence: primary net +₹87,005.53; +50% stress +₹79,885.04; ₹20/order +₹73,765.93; ₹20/order +50% stress +₹60,025.64.
+- TT03 is now classified FEASIBILITY FAIL / NO PROMOTION. No TT03 parameter tuning or confirmatory VIX inference is authorized.
+- A controlled rerun is being used only to persist the complete diagnostic replay and coverage exclusions in the repository.
+- TT04 is an independent candidate. The orchestration gate has therefore been changed so a clean TT03 feasibility failure can route to TT04 without treating TT03 as accepted evidence. TT04 cannot consume TT03 P&L as evidence.
