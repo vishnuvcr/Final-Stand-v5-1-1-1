@@ -37,3 +37,9 @@ TT-01, TT-03, TT-04, TT-05 and TT-06 were negative in the native High regime; TT
 
 ### Phase 50B-2 ready
 Next step: source-faithful replay under the Final Stand common cost model, beginning with TT-02 and the highest-priority controls. Entry-date VIX state will replace the exploratory outcome-day diagnostic, and only semantically valid far-OTM/delta mutations will be tested.
+
+## 2026-10-07 — TT-02 source-semantics audit
+
+Static audit of the current Tradetron template found embedded Python that initializes `setup_active=1` and repair flags to zero whenever not already initialized. The Entry condition is therefore eligible on any flat minute from 09:20 through 15:00.
+
+The initial replay draft assumed a single entry day immediately before expiry and was rejected before execution. A stateful daily-session replay is being built instead.
