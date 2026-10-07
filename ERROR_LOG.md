@@ -1608,3 +1608,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Root cause: the replay interpreted the source rule “exit at/after 15:15” as an exact-15:15 quote requirement and recorded missing exact timestamps as data errors.
 - Correction: TT-02 v2 and the unexecuted v3 fallback now search from 15:15 onward for the earliest common timestamp at which all open legs have observed closes, then execute the simultaneous exit at that timestamp. No forward-fill or invented price is used.
 - Prevention: expiry-day exits must implement temporal inequalities literally; never replace “at/after” with an exact timestamp requirement without an explicit source basis. The artifact audit remains zero-tolerance for unresolved data errors.
+
+
+### F50B-022 — Phase-50B registry publisher shell closure defect
+- Time: 2026-10-07.
+- Corrected TT-02 code automatically launched run 37589199743, but the run stopped before numerical execution because the registry publish shell block in the workflow was missing its closing `fi`.
+- Registry validation itself passed and the registry artifact uploaded successfully; the failure was workflow-only.
+- Correction: restored the missing `fi`, normalized the GitHub Actions bot email identity in the TT-03 publisher, and structurally re-counted shell `if`/`fi` tokens before the next trigger.
+- Evidence status: **NO SCIENTIFIC IMPACT**. TT-02 did not execute in run 37589199743.
+- Prevention: every workflow patch must pass a complete shell-block balance audit before a numerical trigger is emitted.
