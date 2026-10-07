@@ -1971,3 +1971,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: TT04 V3 searches observed timestamps from 15:15 through 15:30 and selects the earliest timestamp with complete quotes for all live legs; only then is a coverage exclusion recorded.
 - No TT04 numerical run had produced accepted evidence before this correction.
 - Evidence status: NO SCIENTIFIC IMPACT; caught before execution.
+
+
+### F50B-069 — TT03 diagnostic rerun initially pinned to a pre-hardening workflow commit
+- Time: 2026-10-07.
+- TT03 run 37612856834 started from head 27328ba before the diagnostic-capture workflow hardening and before the later TT04 V3 changes.
+- Because the workflow uses serialized cancel-in-progress concurrency, that run is not trusted to provide the final diagnostic persistence/routing outcome.
+- Correction: refreshed the TT03 trigger after all workflow hardening so the next serialized run is evaluated from the latest branch head.
+- Evidence status: NO SCIENTIFIC IMPACT; this is execution-orchestration control only.
