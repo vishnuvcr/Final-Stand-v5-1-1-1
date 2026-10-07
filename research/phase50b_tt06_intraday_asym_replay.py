@@ -8,7 +8,7 @@ from phase43_vix_strategy_sweep import (
     load_parquet, load_vix, vix_state, exec_px, charges, lot_size_for_expiry
 )
 
-TT06_ENGINE_REV = "50B-TT06-BASE-V1"
+TT06_ENGINE_REV = "50B-TT06-COVERAGE-V2"
 OUT = Path("results/phase50b/tt06_intraday_asym_replay")
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -131,7 +131,7 @@ def main():
     vix=load_vix()
     E=expiries()
     cache={}
-    rows=[]; gaps=[]; errors=[]
+    rows=[]; gaps=[]; errors=[]; session_exclusions=[]
     trade_id=1
 
     days=sorted(idx.timestamp.dt.normalize().unique())
@@ -142,6 +142,13 @@ def main():
         cur=current_expiry(E,day)
         nxt=next_expiry(E,cur) if cur is not None else None
         if cur is None or nxt is None:
+            continue
+        regular=idx[(idx.timestamp.dt.normalize()==day)&
+                    (idx.timestamp.dt.time>=pd.Timestamp("09:15").time())&
+                    (idx.timestamp.dt.time<=pd.Timestamp("15:30").time())]
+        if regular.empty:
+            session_exclusions.append({"date":str(day.date()),
+                                       "reason":"no_normal_09:15_to_15:30_session"})
             continue
         for e in {cur,nxt}:
             if e not in cache:
@@ -242,11 +249,23 @@ def main():
         if pos is not None:
             gaps.append({"trade_id":pos["trade_id"],"expiry":str(pos["cur"].date()),
                          "trigger_ts":str(pos["entry_ts"]),"gap_type":"open_position_without_complete_exit"})
+        if pos is None:
+            entered_candidates=idx[(idx.timestamp.dt.normalize()==day)&
+                                   (idx.timestamp.dt.time>=ENTRY_START)&
+                                   (idx.timestamp.dt.time<=ENTRY_END)]
+            if not any((not cf[cf.timestamp==pd.Timestamp(ts)].empty and not nf[nf.timestamp==pd.Timestamp(ts)].empty and
+                        nearest_atm(cf[cf.timestamp==pd.Timestamp(ts)],float(idx.loc[idx.timestamp==pd.Timestamp(ts)].iloc[-1].spot)) is not None and
+                        nearest_atm(nf[nf.timestamp==pd.Timestamp(ts)],float(idx.loc[idx.timestamp==pd.Timestamp(ts)].iloc[-1].spot)) is not None)
+                       for ts in entered_candidates.timestamp.tolist()):
+                gaps.append({"trade_id":trade_id,"expiry":str(cur.date()),
+                             "trigger_ts":str(day),"gap_type":"missing_complete_entry_at_09:30_to_15:10"})
+                trade_id += 1
 
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt06_trades.csv",index=False)
     pd.DataFrame(gaps,columns=["trade_id","expiry","trigger_ts","gap_type"]).to_csv(OUT/"coverage_gaps.csv",index=False)
     pd.DataFrame(errors,columns=["day","error"]).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(session_exclusions,columns=["date","reason"]).to_csv(OUT/"session_exclusions.csv",index=False)
     cand=len(rows)+len(gaps); cov=len(rows)/cand if cand else 0.0
     splits=[]
     if not df.empty:
@@ -258,7 +277,7 @@ def main():
                            "net20":float(qv.net20.sum()) if len(qv) else 0.0,
                            "net20_50":float(qv.net20_50.sum()) if len(qv) else 0.0})
     summary={"strategy":"TT-06","engine_revision":TT06_ENGINE_REV,"trades":len(df),"candidate_trades":cand,
-             "coverage_exclusions":len(gaps),"coverage_rate":cov,
+             "coverage_exclusions":len(gaps),"coverage_rate":cov,"session_exclusions":len(session_exclusions),
              "net":float(df.net.sum()) if not df.empty else 0.0,
              "net50":float(df.net50.sum()) if not df.empty else 0.0,
              "net20":float(df.net20.sum()) if not df.empty else 0.0,
