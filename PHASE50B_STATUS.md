@@ -483,3 +483,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - The current V5 engine additionally treats genuine non-regular-session scheduled days as session exclusions and tightens source hard-close and entry handling.
 - Workflow revision checks have now been advanced from V2 to V5 before the next TT03 replay.
 - The V2 result remains non-evidence.
+
+
+## 2026-10-07 — TT03 terminal-routing architecture cleaned
+- TT03 V5 is the active source-faithful engine.
+- The dedicated workflow was rewritten to create exactly one persisted terminal classification: PASS, FAIL_COVERAGE, or INVALID_ENGINE.
+- Failed TT03 candidates remain non-evidence and their P&L is explicitly marked diagnostic-only.
+- Independent TT04 continuation is permitted only from that persisted terminal classification; TT04 does not consume TT03 P&L when TT03 has failed feasibility or engine validity.
+- A final TT03 V5 trigger will be issued after this workflow cleanup so no stale workflow definition can run.
