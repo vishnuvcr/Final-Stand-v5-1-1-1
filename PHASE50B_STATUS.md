@@ -217,3 +217,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — TT-02 engine revision gate
 - TT-02 corrected engines now stamp `50B-TT02-COVERAGE-V3` and the workflow requires that revision before artifact acceptance.
 - The active run 37593965525 predates this stamp; it cannot by itself establish final TT-02 evidence.
+
+
+## 2026-10-07 — Paytm brokerage robustness scenario added
+- Primary Phase-50B brokerage remains ₹10/order for continuity with the parent methodology.
+- Added a preregistered ₹20/order Paytm Money robustness scenario because official Paytm public materials currently conflict on the brokerage figure. citeturn157124search0turn157124search2
+- Promotion cannot rely only on the ₹10 scenario; the ₹20 scenario must also be reported and must not be used for post-result selection.
