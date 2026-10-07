@@ -448,3 +448,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - User requested another continuation.
 - TT04 run 37621965843 remains active with prerequisites successful and the numerical replay step still running.
 - No duplicate replay was started, and the dormant performance fallback was not activated because no timeout/failure has occurred.
+
+
+## 2026-10-07 — Continue checkpoint: TT04 still executing
+- User said “Ok proceed”.
+- Direct Actions inspection again shows TT04 run **37621965843** in the numerical replay step with all prerequisite steps successful.
+- No duplicate run was launched; no incomplete P&L was used as evidence.
+- Repository control files were re-read and the finite plan remains unchanged.
