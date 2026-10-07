@@ -148,7 +148,7 @@ def main():
     cand=len(df)+len(gaps); cov=len(df)/cand if cand else 0.0
     splits=[]
     if not df.empty:
-        d=pd.to_datetime(df.expiry)
+        d=pd.to_datetime(df.expiry).dt.tz_localize(TZ)
         for n,m in [("DEV",d<=DEV_END),("VAL",(d>DEV_END)&(d<=VAL_END)),("HOLD",d>VAL_END)]:
             qv=df[m]; splits.append({"split":n,"trades":len(qv),"net":float(qv.net.sum()),"net50":float(qv.net50.sum()),"net20":float(qv.net20.sum()),"net20_50":float(qv.net20_50.sum())})
     summary={"strategy":"TT-05","engine_revision":TT05_ENGINE_REV,"trades":len(df),"candidate_trades":cand,
