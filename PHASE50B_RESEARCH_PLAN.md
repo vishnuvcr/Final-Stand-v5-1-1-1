@@ -53,3 +53,6 @@ Exact or near-exact lineages are linked rather than pooled until an explicit rul
 
 ## Stop condition
 The phase stops after the finite registered candidate universe has passed its applicable gates. It does not reopen an unbounded strategy search.
+
+## Candidate-local stopping rule — 2026-10-07
+A strategy that fails a preregistered feasibility gate is closed for promotion, VIX conditioning, parameter tuning and confirmatory inference. That failure does **not** block unrelated strategies in the finite registered universe from being tested. Downstream workflows may continue only when the failed strategy has a terminal, persisted feasibility classification and the next strategy's workflow explicitly verifies that no failed candidate P&L is being consumed as evidence.
