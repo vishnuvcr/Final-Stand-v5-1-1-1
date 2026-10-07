@@ -15,6 +15,10 @@ on:
       - PHASE50B_STATUS.md
       - PHASE50B_CHAT_LOG.md
 
+concurrency:
+  group: phase50b-expanded-v1
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
