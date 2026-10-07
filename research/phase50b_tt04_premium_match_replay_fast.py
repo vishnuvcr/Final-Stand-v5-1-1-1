@@ -250,7 +250,7 @@ def main():
     if df.empty:
         summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"session_exclusions":len(session_exclusions),"net":0.0,"net50":0.0,"net20":0.0,"net20_50":0.0}
     else:
-        df["expiry_dt"]=pd.to_datetime(df.expiry)
+        df["expiry_dt"]=pd.to_datetime(df.expiry).dt.tz_localize(TZ)
         splits=[]
         for name,mask in [("DEV",df.expiry_dt<=DEV_END),("VAL",(df.expiry_dt>DEV_END)&(df.expiry_dt<=VAL_END)),("HOLD",df.expiry_dt>VAL_END)]:
             z=df[mask]
