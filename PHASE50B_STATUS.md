@@ -245,3 +245,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Added source-faithful TT-05 short-straddle replay engine and a dedicated manually dispatchable workflow.
 - TT-05 is dependency-gated behind audited TT-04 evidence and uses the same 95% coverage rule plus ₹10/₹20 brokerage robustness outputs.
 - The TT-04 workflow will emit the TT-05 trigger only after its own evidence audit passes.
+
+
+## 2026-10-07 — TT-02 runtime checkpoint
+- Run 37593965525 remains `in_progress` at the canonical v2 numerical replay step.
+- Workflow timeout is 360 minutes. No timeout/failure conclusion has been emitted by GitHub, so the prepared v3 performance fallback is **not** activated yet.
+- v3 remains a performance-only implementation and cannot contribute evidence until v2 genuinely fails/times out and a fresh corrected run is launched.
