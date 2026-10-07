@@ -1830,3 +1830,26 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: normalize the expiry series explicitly with `pd.to_datetime(..., utc=True).dt.tz_convert(TZ)` before chronological split comparisons.
 - A dedicated TT03 workflow was added so the corrected replay can execute without unnecessarily rerunning the already accepted TT02 stage.
 - Evidence status: **NO SCIENTIFIC IMPACT**; TT03 evidence remains pending.
+
+
+### F50B-052 — TT-07 runtime-variable lifecycle ambiguity resolved from authoritative documentation
+- Time: 2026-10-07.
+- The raw TT-07 export initialized `ic_entered=0`, set it to 1 on initial entry, and contained no explicit reset. This had blocked source-faithful replay.
+- Official Tradetron documentation states that Runtime Variables are strategy-level memory that persist across the current cycle and remain active until a Universal Exit; the current counter is the cycle in which live runtime values are associated.
+- Correction: model `ic_entered` and `state` as counter-scoped. Monthly Universal Exit ends the counter; the next counter reinitializes them. No intra-cycle reset is introduced.
+- Evidence status: **NO NUMERICAL IMPACT**; blocker was resolved before TT-07 execution.
+- Sources: https://help.tradetron.tech/en/article/runtime-variables-in-tradetron-capture-once-use-anywhere-83nahv/ and https://files.tradetron.tech/TT_Keywords.pdf
+
+### F50B-053 — Repository patch orchestration assertion error
+- Time: 2026-10-07.
+- A TT-07 engine patch attempt used Python-style `assert` inside the JavaScript repository-write environment, causing the patch script to abort before the GitHub write.
+- No repository mutation occurred from the failed attempt.
+- Correction: replaced the assertion with an explicit JavaScript error check and retried successfully.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
+
+### F50B-054 — TT-07 transition trigger initially recalculated target strikes instead of tracking held strikes
+- Time: 2026-10-07.
+- Self-audit of the newly written TT-07 engine identified that transition conditions were initially evaluated using a newly selected nearest-delta strike instead of the actual strike held by the live state.
+- This would have changed the source semantics and could have generated false state transitions.
+- Correction: transition evaluation now reads the actual open short-leg strike from the position ledger and reconstructs its contemporaneous delta. The workflow has not yet executed this pre-correction engine.
+- Evidence status: **NO SCIENTIFIC IMPACT**; caught and fixed before numerical execution.
