@@ -129,3 +129,9 @@ User requested continuation without pausing. Work performed:
 - Added engine revision stamping and downstream validation for TT-03.
 - Future runs refresh the TT-03 source from the branch before execution.
 - Old-run TT-03 artifacts without revision `50B-TT03-WINDOW-V2` cannot pass the TT04 dependency gate.
+
+
+## 2026-10-07 — TT-04 coverage audit correction
+- Found a silent path where `finish()` could discard a trade if an exit leg quote was missing.
+- Corrected it to log a coverage exclusion and added a 95% coverage audit gate to the TT-04 workflow.
+- No numerical TT-04 evidence existed yet.
