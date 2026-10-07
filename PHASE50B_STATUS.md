@@ -655,3 +655,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected `research/phase50b_tt05_short_straddle_replay.py` to localize expiry timestamps to the project timezone before split comparison.
 - The trading rules, entry window, ATM selection, stop, exit, cost models and VIX capture were not changed.
 - A fresh TT05 rerun will be launched from the corrected engine.
+
+
+## 2026-10-07 — TT05 PASS; TT06 launched
+- Corrected TT05 run **37666116836** completed the numerical replay, artifact audit, upload and safe publication successfully. The overall Actions conclusion is failure only because its final TT06 dispatch substep returned HTTP 404.
+- Published TT05 result: **1,184 trades / 1,232 candidates (96.10% coverage)**, zero data errors, 48 coverage exclusions, 4 session exclusions. Net P&L: **₹52,337.89** at ₹10/order, **₹9,429.09** at +50% friction, **−₹3,546.91** at ₹20/order, **−₹74,398.11** at ₹20/order +50% stress.
+- Split result: DEV 632 trades / ₹12,772.96 net; VAL 474 / ₹79,809.61; HOLD 78 / **−₹40,244.68**.
+- TT05 evidence is accepted for downstream registered analysis, but it is not a promotion decision. HOLD degradation and cost sensitivity remain material.
+- TT06 run **37675162843** has been launched through the audited marker path and is now queued.
