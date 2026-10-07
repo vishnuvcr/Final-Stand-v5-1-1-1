@@ -555,3 +555,7 @@ Phase 50B remains active on branch [phase-50b-expanded-strategy-universe](https:
 - **Research chain:** TT-04 → TT-05 → TT-06 → TT-07 → protected statistical inference → finite VIX/far-OTM variants → chronological validation → protected 2026 holdout → final decision/manuscript.
 
 [TT-04 current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37621965843) · [Phase 50B status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-expanded-strategy-universe/PHASE50B_STATUS.md)
+
+
+## Phase 50B — latest status — 2026-10-07
+The accepted TT-03 V5 baseline is complete (200/201 coverage candidates, 99.50%, zero data errors). TT-04 V3 run **37621965843** is currently executing its numerical replay; no TT-04 result is accepted until the full artifact, coverage, zero-error and cost audit passes. No strategy has been promoted.
