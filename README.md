@@ -768,3 +768,9 @@ No Phase-50B strategy has been promoted.
 
 ### 2026-10-07 — TT-07 source-lock blocker
 - Direct inspection of the original [Dynamic IC to Ratio export](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1) resolved the state graph but identified an unresolved ic_entered runtime-scope issue. TT-07 replay is intentionally blocked rather than using a guessed reset policy.
+
+
+### 2026-10-07 — TT-02 authoritative replay
+- Superseded pre-fix run 37596743408 was cancelled and excluded.
+- Corrected run [37598918723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37598918723) is now the sole active TT-02 numerical execution.
+- It has passed registry, compilation, static engine-contract and cache setup; numerical replay is still running.
