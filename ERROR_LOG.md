@@ -1578,3 +1578,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - A local 30-second sleep used only to poll the active Actions run exceeded the container tool timeout.
 - Evidence status: **NO RESEARCH IMPACT**. No workflow was cancelled or modified by this timeout, and the active GitHub run remains the authoritative execution process.
 - Prevention: avoid relying on local sleep/poll loops for long-running Actions jobs; use direct run/job state checks when needed.
+
+### F50B-017 — TT04 trigger placement defect in workflow patch
+- Time: 2026-10-07.
+- Static review of the newly patched Phase-50B workflow found the TT04 trigger step had been inserted into the registry job rather than after the audited TT03 publication, and a stray shell `fi` remained.
+- No numerical evidence was affected because the active run 37572837253 was created from the earlier validated commit and was already executing TT-02 before this patch.
+- Correction: moved the trigger step to the end of the TT03 job, removed the stray `fi`, corrected the GitHub Actions bot identity, and preserved the TT04 dedicated manual/trigger workflow.
+- Prevention: every workflow edit must be followed by a complete structural inspection of job placement and shell block closure before publication.
