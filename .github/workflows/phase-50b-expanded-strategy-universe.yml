@@ -10,6 +10,8 @@ on:
       - PHASE50B_RESEARCH_PLAN.md
       - PHASE50B_PRE_REGISTRATION.md
       - research/phase50b_registry_validate.py
+      - research/phase50b_tt02_calendar_replay_v2.py
+      - .github/workflows/phase-50b-expanded-strategy-universe.yml
       - PHASE50B_STATUS.md
       - PHASE50B_CHAT_LOG.md
 
@@ -41,4 +43,70 @@ jobs:
           else
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish registry validation"
             git push origin HEAD:${GITHUB_REF_NAME}
+          fi
+
+
+  tt02_replay:
+    needs: registry
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy huggingface_hub
+      - name: Compile TT02 replay
+        run: python -m py_compile research/phase50b_tt02_calendar_replay_v2.py
+      - name: HF cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-tt02-hf-${{ runner.os }}-${{ hashFiles('research/phase50b_tt02_calendar_replay_v2.py') }}
+          restore-keys: |
+            phase50b-tt02-hf-${{ runner.os }}-
+      - name: Run TT02 replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50b_tt02_calendar_replay_v2.py
+      - name: Audit TT02 artifacts
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/tt02_calendar_replay/summary.json
+          test -s results/phase50b/tt02_calendar_replay/tt02_trades.csv
+          test -s results/phase50b/tt02_calendar_replay/data_errors.csv
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase50b/tt02_calendar_replay/summary.json"))
+          tr=pd.read_csv("results/phase50b/tt02_calendar_replay/tt02_trades.csv")
+          er=pd.read_csv("results/phase50b/tt02_calendar_replay/data_errors.csv")
+          assert d["trades"] == len(tr)
+          assert len(er)==0, er.head()
+          print("TT02 replay audit PASS", d)
+          PY
+      - name: Upload TT02 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-tt02-${{ github.run_id }}
+          path: results/phase50b/tt02_calendar_replay
+      - name: Publish TT02 results safely
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          cp -R results/phase50b/tt02_calendar_replay "$tmp/"
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          rm -rf results/phase50b/tt02_calendar_replay
+          mkdir -p results/phase50b
+          cp -R "$tmp/tt02_calendar_replay" results/phase50b/
+          git add results/phase50b/tt02_calendar_replay
+          if git diff --cached --quiet; then
+            echo "No TT02 result changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT02 common-cost replay"
+            git push origin HEAD:phase-50b-expanded-strategy-universe
           fi
