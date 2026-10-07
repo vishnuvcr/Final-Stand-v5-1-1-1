@@ -370,3 +370,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Refreshed `trigger/phase50b_tt03.start` in commit `28722b5204166199f91353d793f2840fe2022812`.
 - Because the dedicated workflow uses `cancel-in-progress: true`, this is a serialized retry/control operation rather than permission for overlapping TT03 evidence.
 - The new commit status is currently `pending`; therefore TT-03 remains pending and no numerical result is accepted.
+
+## 2026-10-07 — TT-03 preflight dependency correction
+- TT03 run 37610158492 failed before numerical replay because its preflight imported pandas without installing the workflow dependencies.
+- Added the preflight dependency installation and refreshed the trigger in commit `6adb0620ccba9933aa282a1aa95e63b98ed7c5f5`.
+- No TT03 numerical evidence exists from the failed run.
