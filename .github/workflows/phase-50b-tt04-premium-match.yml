@@ -1,0 +1,111 @@
+name: Phase 50B - TT04 Premium Match Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-expanded-strategy-universe
+    paths:
+      - trigger/phase50b_tt04.start
+
+concurrency:
+  group: phase50b-tt04-replay-v1
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow matplotlib scipy huggingface_hub
+      - name: Compile TT04 replay
+        run: python -m py_compile research/phase50b_tt04_premium_match_replay.py
+      - name: Verify TT03 evidence gate
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/tt03_dynamic_n_replay/summary.json
+          test -s results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv
+          test -s results/phase50b/tt03_dynamic_n_replay/data_errors.csv
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
+          tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
+          er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
+          assert d["trades"] == len(tr)
+          assert len(er) == 0, er.head()
+          print("TT03 dependency gate PASS", d)
+          PY
+
+  numerical:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
+      - name: Compile TT04 replay
+        run: python -m py_compile research/phase50b_tt04_premium_match_replay.py
+      - name: HF cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-tt04-hf-${{ runner.os }}-${{ hashFiles('research/phase50b_tt04_premium_match_replay.py') }}
+          restore-keys: |
+            phase50b-tt04-hf-${{ runner.os }}-
+      - name: Run TT04 replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50b_tt04_premium_match_replay.py
+      - name: Audit TT04 artifacts
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/tt04_premium_match_replay/summary.json
+          test -s results/phase50b/tt04_premium_match_replay/tt04_trades.csv
+          test -s results/phase50b/tt04_premium_match_replay/data_errors.csv
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase50b/tt04_premium_match_replay/summary.json"))
+          tr=pd.read_csv("results/phase50b/tt04_premium_match_replay/tt04_trades.csv")
+          er=pd.read_csv("results/phase50b/tt04_premium_match_replay/data_errors.csv")
+          assert d["trades"] == len(tr)
+          assert len(er) == 0, er.head()
+          assert {"net","net50","vix_state"}.issubset(tr.columns) if len(tr) else True
+          print("TT04 replay artifact audit PASS", d)
+          PY
+      - name: Upload TT04 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-tt04-${{ github.run_id }}
+          path: results/phase50b/tt04_premium_match_replay
+      - name: Publish TT04 results safely
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          cp -R results/phase50b/tt04_premium_match_replay "$tmp/"
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          rm -rf results/phase50b/tt04_premium_match_replay
+          mkdir -p results/phase50b
+          cp -R "$tmp/tt04_premium_match_replay" results/phase50b/
+          git add results/phase50b/tt04_premium_match_replay
+          if git diff --cached --quiet; then
+            echo "No TT04 result changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT04 common-cost replay"
+            git push origin HEAD:phase-50b-expanded-strategy-universe
+          fi
