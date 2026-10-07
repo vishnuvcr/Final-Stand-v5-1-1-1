@@ -673,3 +673,8 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - This is now treated as a documented historical option-coverage limitation, not a model/code failure; the source dataset itself warns that option coverage is partial and illiquid/far strikes may be sparse or absent. citeturn551023search2turn551023search4
 - A 95% complete-exit coverage feasibility gate is now pre-registered. Coverage gaps are separately logged, excluded from primary P&L, and never imputed.
 - The observed coverage was about 98.0% (247 complete / 252 opened positions), so the corrected rerun remains eligible for the feasibility gate.
+
+
+## 2026-10-07 — Phase 50B corrected TT-02 rerun active
+- Canonical run **37593965525** is active after the coverage-feasibility and zero-error audit corrections.
+- The revised workflow only launches numerics from `trigger/phase50b.start`, preventing duplicate runs from documentation/code commits.
