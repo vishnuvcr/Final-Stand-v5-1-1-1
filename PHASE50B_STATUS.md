@@ -357,3 +357,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Do not duplicate the pending TT-03 replay.
 - Continue the existing dependency chain: corrected TT-03 -> TT-04 -> TT-05 -> TT-06 -> TT-07.
 - TT-07 is no longer source-blocked and will be automatically triggered only after audited TT-06 evidence.
+
+
+## 2026-10-07 — TT-07 pre-execution transaction-safety correction
+- Self-audit identified a latent partial-cash-mutation path during state transitions if a later leg quote was missing.
+- Corrected the TT-07 engine to prevalidate every old and new leg quote before any ledger/cash mutation.
+- This is pre-execution hardening only; no TT-07 numerical evidence exists.
