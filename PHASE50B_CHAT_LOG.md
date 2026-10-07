@@ -290,3 +290,8 @@ User requested continuation without pausing. Work performed:
 - Corrected the hard close to never advance beyond 15:29.
 - Removed the unnecessary modal strike-step gate.
 - The active old-code run will be superseded by a controlled retrigger rather than reused as evidence.
+
+## 2026-10-07 — Resume checkpoint: TT-03 coverage denominator
+- Self-audit found a denominator-loss path when an eligible campaign had no complete entry set.
+- Corrected the engine to record explicit coverage gaps rather than silently omit the campaign.
+- The running old-code attempt will be superseded before evidence acceptance.
