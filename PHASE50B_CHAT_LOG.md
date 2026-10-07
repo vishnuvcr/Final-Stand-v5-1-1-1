@@ -170,3 +170,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-05 execution chain prepared
 - Implemented and workflow-gated TT-05 Simple Intraday Short Straddle.
 - It will run only after TT-04 passes its evidence gate.
+
+
+## 2026-10-07 — TT-02 fallback equivalence audit
+- Confirmed v3 is a performance-only traversal optimization and not a scientific variant.
+- It remains dormant while v2 is active.
