@@ -1656,3 +1656,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: the current workflow refreshes the TT-03 job to the latest branch head before compilation, stamps TT-03 artifacts with `50B-TT03-WINDOW-V2`, and downstream TT-04 preflight rejects any TT-03 result lacking that revision.
 - Evidence status: **NO SCIENTIFIC IMPACT**. The active TT-02 run remains the only numerical evidence candidate; stale downstream evidence cannot pass the revised gates.
 - Prevention: all phase-chain numerical jobs must stamp their engine revision and downstream gates must require the expected revision.
+
+
+### F50B-028 — workflow-list API false duplicate alert
+- Time: 2026-10-07.
+- An Actions API query using a `workflow_id` filter returned unrelated Phase-46 workflow runs on the same branch, which briefly appeared to be Phase-50B duplicates.
+- Direct inspection of the returned run `path` showed those runs belonged to `phase-46-vix-youtube-strategy-discovery.yml`.
+- Evidence status: **NO RESEARCH IMPACT**. No Phase-50B numerical workflow was duplicated or altered.
+- Prevention: verify both workflow name/path and run ID before classifying an Actions run as a duplicate.
