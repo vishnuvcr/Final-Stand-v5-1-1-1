@@ -9,6 +9,19 @@ Phase 50 directly addresses the remaining VIX research gap: genuinely far-OTM st
 - [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
 - [Phase 50 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/.github/workflows/phase-50-vix-far-otm-tail-geometry.yml)
 
+## Phase 50 — VIX × Far-OTM Tail Geometry — IN PROGRESS / SPARSE-HIGH FEASIBILITY
+
+The first far-OTM sweep (Actions run 37565293395) successfully tested **9 existing strategy families × 7 VIX state labels × 8 tail distances (2–12 strike steps)** across the development sample. No confirmatory candidate passed the preregistered development gate because HIGH VIX had only **6 development opportunities** under the fixed 10:00 / 4-DTE control. The confirmatory gate is being preserved rather than weakened.
+
+Development diagnostics nevertheless show positive HIGH-VIX far-OTM cells in Put BWB, Iron Condor and Bull Put, but each rests on only six observations. A sparse-HIGH out-of-sample diagnostic branch is now being run without treating it as promotion evidence.
+
+- [Phase 50 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_RESEARCH_PLAN.md)
+- [Phase 50 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_STATUS.md)
+- [Phase 50 literature](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_LITERATURE_REVIEW.md)
+- [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
+
+---
+
 ## Phase 49 — VIX Leader Parameter Tuning — CLOSED / NO PROMOTION
 
 Phase 49 is complete. The study evaluated 720 raw geometries, expanded to 1,440 geometry×VIX-regime candidates across LOW and NORMAL India-VIX states, using 133 development expiry blocks (2021–2023), 102 validation expiry blocks (2024–2025), and 21 protected holdout expiry blocks.
