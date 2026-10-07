@@ -865,3 +865,9 @@ No Phase-50B strategy has been promoted.
 - Current controlled TT03 run **37617012372** is executing the V4 engine; preflight/static controls have passed and numerical replay is still in progress.
 - TT04 run **37617256820** was fail-closed at preflight because only the older V2 FAIL_COVERAGE diagnostic exists in the branch. No TT04 numerical evidence was generated from that run.
 - TT04 remains blocked until a same-run TT03 V4 feasibility `PASS` artifact is produced.
+
+
+### 2026-10-07 — TT-03 V4 rejected; V5 active
+- TT03 V4 produced 186 completed campaigns out of 187 coverage candidates (99.47%) but 14 engine/data errors. The evidence gate therefore rejected V4 despite strong nominal coverage.
+- V5 retains the exit snapshot for both negative-P&L and hard-close exits and validates it before settlement. No strategy/cost parameter changed.
+- Current TT03 V5 replay is the only active evidence path; TT04 remains blocked until V5 passes with zero data errors and >=95% coverage.
