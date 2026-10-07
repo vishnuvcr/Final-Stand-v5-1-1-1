@@ -25,3 +25,15 @@ GitHub Actions run 37567632928 on the parent far-OTM branch remains in progress.
 
 ## Registry validation
 Automatic Phase-50B registry validation completed successfully in GitHub Actions runs 37569527054 and 37569534954. The frozen registry contains all seven requested Tradetron strategies and the identified prior GitHub lineages.
+
+
+## 2026-10-07 — Phase 50B-1 source and native-regime audit complete
+
+The seven supplied Tradetron strategies were re-read from their current template definitions and their finished native backtests were audited. The native reports are retained only as provenance/exploratory controls because they carry partial-coverage caveats and use ₹0/order brokerage in these runs.
+
+A free native VIX-regime diagnostic identified **TT-02 — 0.20/0.10 Delta Calendar Hedge Spread v4** as the strongest new HIGH-VIX hypothesis: the Tradetron High regime reports +₹72,179.25 over 19 result days, with another +₹122,720 in Elevated. This is gross/native-report evidence and is not a promotion result.
+
+TT-01, TT-03, TT-04, TT-05 and TT-06 were negative in the native High regime; TT-07 was positive but had only 3 High-regime result days. TT-06 also conflicts with the independently closed negative Option-intraday-v1 study and therefore requires reconciliation before any conclusion.
+
+### Phase 50B-2 ready
+Next step: source-faithful replay under the Final Stand common cost model, beginning with TT-02 and the highest-priority controls. Entry-date VIX state will replace the exploratory outcome-day diagnostic, and only semantically valid far-OTM/delta mutations will be tested.
