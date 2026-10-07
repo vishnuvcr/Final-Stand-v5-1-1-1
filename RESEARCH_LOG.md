@@ -543,3 +543,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — Phase 50B orchestration hardening
 - Serialized canonical Phase-50B workflow execution to protect the evidence chain from overlapping numerical runs.
+
+
+## 2026-10-07 — Phase 50B remaining-control preparation
+- Added TT-05 deterministic common-cost replay and dependency-gated workflow.
+- This does not expand the registered universe; it implements an already registered control.
