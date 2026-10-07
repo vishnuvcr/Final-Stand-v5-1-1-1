@@ -6,18 +6,10 @@ on:
     branches:
       - phase-50b-expanded-strategy-universe
     paths:
-      - PHASE50B_STRATEGY_UNIVERSE.md
-      - PHASE50B_RESEARCH_PLAN.md
-      - PHASE50B_PRE_REGISTRATION.md
-      - research/phase50b_registry_validate.py
+      - trigger/phase50b.start
       - research/phase50b_tt02_calendar_replay_v2.py
-      - .github/workflows/phase-50b-expanded-strategy-universe.yml
-      - PHASE50B_STATUS.md
-      - PHASE50B_CHAT_LOG.md
+      - PHASE50B_PRE_REGISTRATION.md
 
-concurrency:
-  group: phase50b-expanded-v1
-  cancel-in-progress: true
 
 permissions:
   contents: write
