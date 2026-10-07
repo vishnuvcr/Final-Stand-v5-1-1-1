@@ -135,3 +135,8 @@ User requested continuation without pausing. Work performed:
 - Found a silent path where `finish()` could discard a trade if an exit leg quote was missing.
 - Corrected it to log a coverage exclusion and added a 95% coverage audit gate to the TT-04 workflow.
 - No numerical TT-04 evidence existed yet.
+
+
+## 2026-10-07 — TT-02 terminal accounting safeguard
+- Added explicit accounting for terminal open positions as coverage exclusions.
+- Current active run predates this correction; latest-code rerun will be required before accepting final TT-02 evidence.
