@@ -159,6 +159,7 @@ def main():
         cf=cache[cur]; nf=cache[nxt]
         dayidx=idx[(idx.timestamp.dt.normalize()==day)&(idx.timestamp.dt.time>=ENTRY_START)&(idx.timestamp.dt.time<=EXIT_TIME)]
         pos=None
+        entered_today=False
         for ts0 in dayidx.timestamp.tolist():
             ts=pd.Timestamp(ts0)
             spot=float(idx.loc[idx.timestamp==ts].iloc[-1].spot)
@@ -186,6 +187,7 @@ def main():
                          "vix":vs["vix"] if vs else np.nan,
                          "vix_state":vs["level_state"] if vs else None}
                     trade_id += 1
+                    entered_today=True
 
             if pos is None:
                 continue
@@ -249,17 +251,10 @@ def main():
         if pos is not None:
             gaps.append({"trade_id":pos["trade_id"],"expiry":str(pos["cur"].date()),
                          "trigger_ts":str(pos["entry_ts"]),"gap_type":"open_position_without_complete_exit"})
-        if pos is None:
-            entered_candidates=idx[(idx.timestamp.dt.normalize()==day)&
-                                   (idx.timestamp.dt.time>=ENTRY_START)&
-                                   (idx.timestamp.dt.time<=ENTRY_END)]
-            if not any((not cf[cf.timestamp==pd.Timestamp(ts)].empty and not nf[nf.timestamp==pd.Timestamp(ts)].empty and
-                        nearest_atm(cf[cf.timestamp==pd.Timestamp(ts)],float(idx.loc[idx.timestamp==pd.Timestamp(ts)].iloc[-1].spot)) is not None and
-                        nearest_atm(nf[nf.timestamp==pd.Timestamp(ts)],float(idx.loc[idx.timestamp==pd.Timestamp(ts)].iloc[-1].spot)) is not None)
-                       for ts in entered_candidates.timestamp.tolist()):
-                gaps.append({"trade_id":trade_id,"expiry":str(cur.date()),
-                             "trigger_ts":str(day),"gap_type":"missing_complete_entry_at_09:30_to_15:10"})
-                trade_id += 1
+        if not entered_today:
+            gaps.append({"trade_id":trade_id,"expiry":str(cur.date()),
+                         "trigger_ts":str(day),"gap_type":"missing_complete_entry_at_09:30_to_15:10"})
+            trade_id += 1
 
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt06_trades.csv",index=False)
