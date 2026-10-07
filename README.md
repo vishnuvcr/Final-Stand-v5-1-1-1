@@ -932,3 +932,10 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 
 ## Phase 50B — TT04 fallback awaiting dispatch — 2026-10-07
 - The canonical TT04 V3 replay failed with no accepted artifact. The controlled performance fallback is installed and source-equivalence audited, but GitHub has not instantiated its Actions run because the available connector cannot issue workflow_dispatch and API-authored push events are suppressed. No fallback result or TT05 advancement is claimed.
+
+
+## Phase 50B — TT04 failure diagnosed and corrected replay queued — 2026-10-07
+- Canonical TT04 run **37621965843** failed after the replay loop while constructing DEV/VAL/HOLD split summaries: expiry timestamps were timezone-naive while split boundaries were timezone-aware.
+- This is a post-replay reporting-layer defect, not a trading-rule change. No output from that run is accepted as evidence.
+- Both canonical and performance-only fallback engines were corrected to localize expiry timestamps to the project timezone.
+- Corrected canonical run **37629750175** is queued; fallback run **37629239398** is executing under the serialized TT04 concurrency group. Full artifact/coverage/zero-error/cost gates remain mandatory.
