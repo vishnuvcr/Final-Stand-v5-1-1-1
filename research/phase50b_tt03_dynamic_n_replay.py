@@ -41,7 +41,9 @@ def trade_one(expiry,index,data):
     ts_candidates=sorted(index[(index.timestamp.dt.normalize()==day)&
                               (index.timestamp>=day+pd.Timedelta(hours=10))&
                               (index.timestamp<day+pd.Timedelta(hours=10,minutes=6))].timestamp.unique())
-    if len(ts_candidates)==0:return None
+    if len(ts_candidates)==0:
+        return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(day),
+                                 "gap_type":"missing_entry_observation_in_10:00_to_10:05_window"}}
 
     # Tradetron evaluates continuously inside the 10:00-10:05 entry window.
     # Use the earliest timestamp at which a complete source-defined ratio set exists.
@@ -62,7 +64,9 @@ def trade_one(expiry,index,data):
         if all(q(snap,o,k) is not None for o,k,_ in put_legs):
             chosen=(ts0,spot,atm,put_legs,"PUT_RATIO_BULLISH",snap)
             break
-    if chosen is None:return None
+    if chosen is None:
+        return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(day),
+                                 "gap_type":"missing_complete_call_or_put_ratio_quotes_in_entry_window"}}
 
     ts,spot,atm,legs,direction,snap=chosen
     lot=lot_size_for_expiry(expiry)
@@ -168,5 +172,6 @@ if __name__=="__main__":main()
 # F50B-026: evaluate the full 10:00-10:05 entry window and select the earliest feasible complete ratio set.
 # F50B-063 correction: expiry-day hard close uses the latest observed common quote at or before 15:29; no forward-to-15:30 is permitted.
 # F50B-064 correction: modal strike-step availability is not a source condition; removed the unnecessary step gate.
+# F50B-065 correction: every eligible expiry campaign with a valid entry day but no complete entry set is retained as an explicit coverage exclusion.
 
 # F50B-033: TT03 opened positions cannot silently disappear; incomplete exits are explicit coverage exclusions.
