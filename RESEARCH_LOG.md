@@ -561,3 +561,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Dependency-chain hardening
 - Corrected TT-04 preflight to independently enforce the complete TT-03 evidence contract before execution.
 - Serialized TT-05 workflow execution.
+
+
+## 2026-10-07 — TT-06/TT-07 specification freeze
+- Completed pre-execution replay-contract freeze for TT-06 and TT-07, including coverage accounting, cost model, chronology and deterministic tie-breaks.
