@@ -486,6 +486,17 @@ def main():
         sparse_val.to_csv(OUT / "sparse_high_validation.csv", index=False)
         sparse_hold.to_csv(OUT / "sparse_high_holdout.csv", index=False)
 
+        empty_trade_cols = [
+            "family","distance","width","entry_h","entry_m","dte","expiry","entry_ts",
+            "year","state_level","state_tag","net","net50","exit_ts","gross","cost","cost50",
+            "vix","dvix","atm","step"
+        ]
+        empty_summary_cols = [
+            "family","state","distance","trades","net","net50","mean_net","mean_net50",
+            "win_rate","pf","max_dd","complement_trades","active_vs_complement_mean",
+            "ci_lo","ci_hi","p","p_holm","economic_pass","holm_survivor"
+        ]
+        empty_hold_cols = ["family","state","distance","trades","net","net50","mean_net","mean_net50","win_rate","pf","max_dd"]
         for fn in [
             "stage2_development_trade_matrix.csv","stage2_validation_trade_matrix.csv",
             "validation_frozen_trade_matrix.csv","validation_confirmatory_summary.csv",
@@ -494,8 +505,12 @@ def main():
         ]:
             if fn.endswith("_data_errors.csv"):
                 pd.DataFrame(columns=["error_expiry","error"]).to_csv(OUT / fn, index=False)
+            elif fn == "validation_confirmatory_summary.csv":
+                pd.DataFrame(columns=empty_summary_cols).to_csv(OUT / fn, index=False)
+            elif fn == "holdout_confirmation.csv":
+                pd.DataFrame(columns=empty_hold_cols).to_csv(OUT / fn, index=False)
             else:
-                pd.DataFrame().to_csv(OUT / fn, index=False)
+                pd.DataFrame(columns=empty_trade_cols).to_csv(OUT / fn, index=False)
 
         decision = {
             "phase": 50,
