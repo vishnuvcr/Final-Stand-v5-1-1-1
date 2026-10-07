@@ -106,6 +106,7 @@ jobs:
           tr=pd.read_csv(src/"tt03_trades.csv")
           er=pd.read_csv(src/"data_errors.csv")
           cg=pd.read_csv(src/"coverage_gaps.csv")
+          sx=pd.read_csv(src/"session_exclusions.csv")
           valid=(d.get("engine_revision")=="50B-TT03-WINDOW-V4" and
                  d.get("trades")==len(tr) and
                  d.get("candidate_trades")==len(tr)+len(cg))
