@@ -175,3 +175,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-02 fallback equivalence audit
 - Confirmed v3 is a performance-only traversal optimization and not a scientific variant.
 - It remains dormant while v2 is active.
+
+
+## 2026-10-07 — Run-overlap control
+- GitHub admitted a corrected TT-02 run while the stale canonical run remained active despite concurrency configuration.
+- Corrected run 19 is authoritative; stale run 18 is diagnostic-only.
