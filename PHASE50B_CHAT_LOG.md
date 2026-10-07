@@ -466,3 +466,8 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Added a compile-only validation workflow for the dormant TT04 fallback, with automatic push and manual triggers.
 - Direct Actions inspection still shows canonical TT04 run **37621965843** in its numerical replay step, with no artifacts yet.
 - No fallback execution, duplicate replay or scientific parameter change was made.
+
+
+## 2026-10-07 — Continue checkpoint: fallback equivalence audit
+- Re-audited the dormant TT04 fallback against the canonical source contract.
+- Confirmed the fallback is not active and the validation workflow is compile-only; no scientific evidence was generated.
