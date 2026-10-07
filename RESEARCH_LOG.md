@@ -702,3 +702,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Pre-execution audit corrected premium-match selection to exact observed LTP matching with deterministic tie-breaking.
 - Corrected expiry/normal-day exit logic to find the earliest complete observed timestamp at or after 15:15 rather than failing at the first incomplete observation.
 - TT04 engine revision V3 is now frozen before execution.
+
+
+## 2026-10-07 — TT04 V3 execution checkpoint
+- TT04 run 37614211996 passed preflight against the persisted TT03 terminal feasibility classification and is now executing the corrected V3 replay.
+- No TT04 result is accepted until the full artifact/coverage/cost audit passes.
