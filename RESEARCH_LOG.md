@@ -689,3 +689,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The positive P&L observed under the corrected engine is diagnostic only and cannot advance to VIX conditioning, far-OTM tuning, statistical inference or holdout promotion.
 - A diagnostic capture rerun is being used only to persist the raw trade/coverage tables.
 - TT04 is now treated as an independent strategy candidate and may proceed after TT03 terminal classification without consuming TT03 numerical evidence.
+
+
+## 2026-10-07 — Candidate-local stopping rule activated
+- TT03 failed the registered coverage feasibility gate, so TT03 is closed for promotion.
+- To avoid letting one infeasible candidate terminate the entire finite universe, TT04 was explicitly decoupled as an independent candidate.
+- TT04's preflight now requires a persisted TT03 terminal feasibility classification but does not accept or consume TT03 P&L when that classification is FAIL_COVERAGE.
+- No scientific comparison or candidate selection uses the TT03 failure P&L.
