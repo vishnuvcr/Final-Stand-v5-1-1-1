@@ -744,3 +744,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Found a downstream control defect: TT04 preflight accepted TT03 FAIL_COVERAGE and allowed numerical execution.
 - Reclassified that TT04 run as non-evidence and hardened the gate to current TT03 V4 PASS-only.
 - A controlled trigger refresh was issued; no TT04 P&L is accepted from the weak-gate execution.
+
+
+## 2026-10-07 — TT-03 V4 rejection and V5 exit-snapshot correction
+- V4 achieved nominal 99.47% coverage but produced 14 engine errors from an uninitialized exit snapshot when the source-defined negative-P&L exit triggered before hard close.
+- Because the preregistered evidence gate requires zero data errors, no V4 result was accepted.
+- Corrected the lifecycle in V5 and retriggered TT03. The source semantics and cost model were unchanged.
