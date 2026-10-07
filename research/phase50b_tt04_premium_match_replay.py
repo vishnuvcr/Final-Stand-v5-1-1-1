@@ -54,14 +54,14 @@ def index_data():
     x=load_parquet("index/NIFTY.parquet")
     return x[["timestamp","close"]].rename(columns={"close":"spot"}).drop_duplicates("timestamp").sort_values("timestamp")
 
-def mark_pnl(pos,ts,z,raw=True):
-    pnl=pos["realized"]
+def mark_pnl(pos,ts,z):
+    # P&L = executed cashflow + current marked value of open positions.
+    cash=pos["cash"]
     for name,leg in pos["legs"].items():
         px=q(z,leg["opt"],leg["strike"])
         if px is None:return None
-        side=1 if leg["qty"]>0 else -1
-        pnl += side*(px-leg["avg_entry"])*abs(leg["qty"])*pos["lot"]
-    return pnl
+        cash += leg["qty"]*float(px)*pos["lot"]
+    return cash
 
 def order_ledger(pos,ts,side,px,qty,opt,leg,phase):
     pos["orders"].append({"ts":str(ts),"side":side,"price":float(px),"qty":int(qty),"lot":int(pos["lot"]),"opt":opt,"strike":float(leg),"phase":phase})
@@ -70,7 +70,7 @@ def execute_close(pos,ts,name,px,phase):
     leg=pos["legs"][name]
     side="buy" if leg["qty"]<0 else "sell"
     ep=exec_px(px,side)
-    pos["realized"] += (1 if side=="sell" else -1)*ep*abs(leg["qty"])*pos["lot"]
+    pos["cash"] -= ep*abs(leg["qty"])*pos["lot"] if side=="buy" else -ep*abs(leg["qty"])*pos["lot"]
     order_ledger(pos,ts,side,ep,leg["qty"],leg["opt"],leg["strike"],phase)
     return ep
 
@@ -90,10 +90,11 @@ def close_and_replace(pos,ts,name,z,opt,target,phase_prefix):
     if new_px is None:return False
     execute_close(pos,ts,name,old_px,phase_prefix+"_close")
     side="sell" if old["qty"]<0 else "buy"
-    pos["realized"] -= exec_px(new_px,side)*abs(old["qty"])*pos["lot"] if side=="sell" else -exec_px(new_px,side)*abs(old["qty"])*pos["lot"]
-    # Reopen with same short direction as the original source leg.
-    pos["legs"][name]={"opt":opt,"strike":float(new_strike),"qty":int(old["qty"]),"avg_entry":float(exec_px(new_px,side))}
-    order_ledger(pos,ts,side,exec_px(new_px,side),old["qty"],opt,new_strike,phase_prefix+"_open")
+    ep=exec_px(new_px,side)
+    if side=="buy": pos["cash"] -= ep*abs(old["qty"])*pos["lot"]
+    else: pos["cash"] += ep*abs(old["qty"])*pos["lot"]
+    pos["legs"][name]={"opt":opt,"strike":float(new_strike),"qty":int(old["qty"]),"avg_entry":float(ep)}
+    order_ledger(pos,ts,side,ep,old["qty"],opt,new_strike,phase_prefix+"_open")
     return True
 
 def finish(pos,ts,z):
@@ -105,7 +106,7 @@ def finish(pos,ts,z):
         pos["realized"] += (1 if side=="sell" else -1)*ep*abs(leg["qty"])*pos["lot"]
         order_ledger(pos,ts,side,ep,leg["qty"],leg["opt"],leg["strike"],"exit")
     orders=[(pd.Timestamp(o["ts"]),o["side"],o["price"]*abs(o["qty"])) for o in pos["orders"]]
-    gross=pos["realized"]
+    gross=pos["cash"]
     cost=charges(orders,pos["lot"],1.0)
     cost50=charges(orders,pos["lot"],1.5)
     return {"expiry":str(pos["expiry"].date()),"entry_ts":pos["entry_ts"],"exit_ts":str(ts),"entry_spot":pos["entry_spot"],"lot":pos["lot"],"gross":float(gross),"cost":float(cost),"net":float(gross-cost),"net50":float(gross-cost50),"repairs_ce":pos["repairs_ce"],"repairs_pe":pos["repairs_pe"],"vix":pos["vix"],"vix_state":pos["vix_state"]}
@@ -142,11 +143,11 @@ def main():
                     ce=q(z,"CE",atm); pe=q(z,"PE",atm)
                     if ce is None or pe is None:continue
                     vs=vix_state(vix,ts)
-                    position={"trade_id":trade_id,"expiry":target,"entry_ts":str(ts),"entry_spot":spot,"lot":lot_size_for_expiry(target),"realized":0.0,"repairs_ce":0,"repairs_pe":0,"vix":vs["vix"] if vs else np.nan,"vix_state":vs["level_state"] if vs else None,"orders":[],"legs":{}}
+                    position={"trade_id":trade_id,"expiry":target,"entry_ts":str(ts),"entry_spot":spot,"lot":lot_size_for_expiry(target),"cash":0.0,"repairs_ce":0,"repairs_pe":0,"vix":vs["vix"] if vs else np.nan,"vix_state":vs["level_state"] if vs else None,"orders":[],"legs":{}}
                     for name,opt,px in [("ce","CE",ce),("pe","PE",pe)]:
                         ep=exec_px(px,"sell")
                         position["legs"][name]={"opt":opt,"strike":atm,"qty":-1,"avg_entry":ep}
-                        position["realized"] -= ep*position["lot"]
+                        position["cash"] += ep*position["lot"]
                         order_ledger(position,ts,"sell",ep,-1,opt,atm,"entry")
                     trade_id+=1
                 if position is None:continue
