@@ -262,3 +262,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Run 18 (stale commit) and run 19 (corrected commit) are both active despite the declared concurrency group.
 - Run 18 is explicitly excluded from evidence. Run 19 is the only eligible TT-02 run.
 - No additional TT-02 replay will be started until run 19 reaches a terminal state.
+
+
+## 2026-10-07 — Downstream dependency hardening
+- TT-04 preflight now independently enforces TT-03 coverage >=95%, denominator consistency and all four preregistered cost outputs.
+- TT-05 execution concurrency is now fail-safe against overlapping manual/triggered runs.
+- TT-02 corrected numerical run 37596743408 remains active; no numerical result is yet accepted.
