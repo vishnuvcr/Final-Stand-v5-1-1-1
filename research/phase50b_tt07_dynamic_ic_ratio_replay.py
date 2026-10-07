@@ -10,7 +10,7 @@ from phase43_vix_strategy_sweep import (
     charges, exec_px, lot_size_for_expiry
 )
 
-TT07_ENGINE_REV = "50B-TT07-SOURCE-V1"
+TT07_ENGINE_REV = "50B-TT07-COVERAGE-V2"
 OUT = Path("results/phase50b/tt07_dynamic_ic_ratio_replay")
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -371,16 +371,20 @@ def main():
     gaps = []
     errors = []
     transition_diag = []
+    entry_exclusions = []
     trade_id = 1
 
     for i, mexp in enumerate(monthly):
         entry_day = campaign_entry_day(monthly, i, index)
         if entry_day is None or entry_day >= mexp.normalize():
+            entry_exclusions.append({"expiry":str(mexp.date()),"reason":"no_valid_source_friday_entry_day"})
             continue
         try:
             chain = get_option(mexp)
         except Exception as exc:
             errors.append({"expiry":str(mexp.date()),"error":f"load option chain: {exc}"})
+            gaps.append({"trade_id":trade_id,"expiry":str(mexp.date()),"entry_ts":str(entry_day.date()),"gap_type":"missing_entry_option_chain"})
+            trade_id += 1
             continue
 
         dayidx = index[(index.timestamp.dt.normalize() == entry_day.normalize()) &
@@ -388,6 +392,7 @@ def main():
                        (index.timestamp.dt.time <= ENTRY_END)]
         pos = None
         entry_vix = None
+        entered=False
         for ts in dayidx.timestamp.tolist():
             ts = pd.Timestamp(ts)
             z = snapshot(chain, ts)
@@ -398,10 +403,16 @@ def main():
                     continue
                 pos["trade_id"] = trade_id
                 trade_id += 1
+                entered=True
                 entry_vix = pos["vix_state"]
                 continue
 
         if pos is None:
+            if not entered:
+                gaps.append({"trade_id":trade_id,"expiry":str(mexp.date()),
+                             "entry_ts":str(entry_day.date()),
+                             "gap_type":"missing_complete_initial_ic_entry_at_or_after_09:20"})
+                trade_id += 1
             continue
 
         # Re-scan from entry to expiry using observed index timestamps.
@@ -463,6 +474,7 @@ def main():
     else:
         pd.DataFrame(columns=["trade_id","expiry","entry_ts","exit_ts","net","net50","net20","net20_50","vix_state"]).to_csv(OUT/"tt07_trades.csv", index=False)
     pd.DataFrame(gaps, columns=["trade_id","expiry","entry_ts","gap_type"]).to_csv(OUT/"coverage_gaps.csv", index=False)
+    pd.DataFrame(entry_exclusions,columns=["expiry","reason"]).to_csv(OUT/"entry_exclusions.csv",index=False)
     pd.DataFrame(errors, columns=["expiry","error"]).to_csv(OUT/"data_errors.csv", index=False)
     pd.DataFrame(transition_diag).to_csv(OUT/"transition_diagnostics.csv", index=False)
 
@@ -503,7 +515,7 @@ def main():
         "engine_revision":TT07_ENGINE_REV,
         "trades":len(df),
         "candidate_trades":candidate,
-        "coverage_exclusions":len(gaps),
+        "coverage_exclusions":len(gaps),"entry_exclusions":len(entry_exclusions),
         "coverage_rate":len(df)/candidate if candidate else 0.0,
         "transition_diagnostic_rows":len(transition_diag),
         "net":float(df.net.sum()) if not df.empty else 0.0,
