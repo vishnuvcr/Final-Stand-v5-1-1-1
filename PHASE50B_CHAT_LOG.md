@@ -266,3 +266,10 @@ User requested continuation without pausing. Work performed:
 - A multi-file documentation synchronization hit a stale SHA conflict after an earlier write advanced the branch.
 - No scientific artifact changed because of the failed write.
 - The repository-write procedure was corrected to use fresh SHAs sequentially.
+
+
+## 2026-10-07 — Continue checkpoint: statistical-gate self-audit
+- Audited the execution-only statistical gate before its first run.
+- Found that VIX bootstrap/permutation inference was pooling protected 2026 HOLD observations.
+- Corrected the inference sample to DEV+VAL only; HOLD is now excluded from hypothesis testing and retained for separate confirmation.
+- No statistical result from the defective implementation was accepted.
