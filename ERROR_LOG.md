@@ -1631,3 +1631,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Attempted to retrieve the live log for TT-02 job 112687069655 while the numerical replay remains in progress; GitHub returned `BlobNotFound` / HTTP 404.
 - Evidence status: **NO RESEARCH IMPACT**. The Actions run/job state remains available through the run and job APIs, and no numerical output was inferred from the missing log.
 - Prevention: live log retrieval is secondary monitoring only; acceptance requires published artifacts and the explicit artifact audit, never a transient live-log endpoint.
+
+
+### F50B-025 — TT-02 mandatory-exit quote gaps reclassified as coverage exclusions
+- Time: 2026-10-07.
+- Corrected TT-02 replay still found five opened positions without a complete common observed quote at or after 15:15.
+- Root cause is the underlying historical option-chain coverage, not an execution-rule defect. The public dataset documentation explicitly notes that option coverage is partial and that illiquid/far strikes can be sparse or absent. citeturn551023search2turn551023search4
+- Correction: these cases are now recorded in `coverage_gaps.csv`, excluded from primary P&L, never forward-filled, and no longer counted as `data_errors`.
+- The feasibility gate is pre-registered at 95% complete mandatory-exit coverage. The observed replay had 247 complete exits and 5 coverage gaps among 252 opened positions (~98.0%), so it clears this operational gate if the rerun reproduces the same coverage.
+- Prevention: every sparse-market-data limitation must be separated from model/code errors and carried into the final sensitivity and limitations analysis.
