@@ -426,3 +426,12 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The research sequence remains frozen as TT-02 → TT-03 → TT-04 → registered controls → statistical correction → final holdout/manuscript.
 - Current execution evidence is restricted to run 37572837253 and its eventual audited artifacts; superseded runs remain quarantined.
 - No scientific conclusion is drawn from an in-progress computation.
+
+
+## 2026-10-07 — Workflow-gate hardening after continuation audit
+- Canonical run **37572837253** remains in progress; TT-02 numerical execution has not produced an auditable result yet.
+- Added a dedicated **TT-04 premium-match workflow** with manual dispatch and a push trigger file.
+- Hardened the future canonical chain so an audited TT-03 success emits the TT-04 trigger; TT-04 preflight independently requires the persisted TT-03 summary/trade/error artifacts with zero data errors.
+- No TT-04 trigger file was created now, so the active TT-02/TT-03 sequence cannot be bypassed.
+- TT-04 workflow is compile/audit gated and uses the corrected source-faithful engine; no numerical TT-04 evidence exists yet.
+- F50B-015 (live Actions log endpoint 404) was recorded as an operational/no-evidence-impact error.
