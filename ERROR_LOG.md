@@ -2165,3 +2165,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: TT04, TT05 and TT06 downstream handoffs were hardened with `actions: write` and explicit GitHub Actions workflow-dispatch API calls after the audit-passed marker commit. The marker remains as an audit trail.
 - Recovery: the TT05 marker was deliberately touched through the repository API, producing a real push event; TT05 run 37654354444 then started and passed preflight.
 - Prevention: future phase handoffs use explicit workflow dispatch rather than relying on GITHUB_TOKEN push events.
+
+
+## F50B-088 — TT05→TT06 workflow-dispatch 404 (2026-10-07)
+- TT05 recovery run **37666116836** completed replay, artifact audit, upload and safe publication successfully.
+- The final downstream-dispatch step returned HTTP 404 when addressing `phase-50b-tt06-intraday-asym.yml` through workflow-dispatch.
+- Root cause: GitHub workflow-dispatch requires the workflow definition to exist on the repository default branch; this phase-specific workflow is maintained on the research branch.
+- Scientific impact: **none**. TT05 evidence remains valid and published; only the orchestration step failed.
+- Recovery: the TT06 trigger marker was updated through the repository API, launching TT06 run **37675162843**.
