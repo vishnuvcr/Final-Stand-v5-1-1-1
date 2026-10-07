@@ -47,3 +47,7 @@ The initial replay draft assumed a single entry day immediately before expiry an
 ## 2026-10-07 — Registry validator correction
 
 The Phase-50B registry preflight failed because the actual registry table omitted the already identified Final-stand-v2 lineage while the validator correctly required it. This was fixed before any Phase-50B numerical replay. The subsequent registry workflow must pass before the replay gate is considered green.
+
+
+## 2026-10-07 — TT02 runtime dependency correction
+The first TT02 replay attempt failed before numerical execution because the shared Phase-43 module imports matplotlib. The workflow dependency set has been corrected; no replay evidence was produced by the failed attempt.
