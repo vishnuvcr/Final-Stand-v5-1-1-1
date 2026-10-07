@@ -491,3 +491,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Failed TT03 candidates remain non-evidence and their P&L is explicitly marked diagnostic-only.
 - Independent TT04 continuation is permitted only from that persisted terminal classification; TT04 does not consume TT03 P&L when TT03 has failed feasibility or engine validity.
 - A final TT03 V5 trigger will be issued after this workflow cleanup so no stale workflow definition can run.
+
+
+## 2026-10-07 — TT04 pre-execution coverage hardening
+- TT04 V3 was audited before any accepted numerical run.
+- Normal-session days with no complete 10:00–10:05 ATM straddle entry are now explicit coverage candidates; non-regular-session days are session exclusions.
+- TT04 workflow now requires the session-exclusion diagnostic artifact.
+- No pre-correction TT04 numerical output is accepted.
