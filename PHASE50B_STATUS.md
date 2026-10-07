@@ -647,3 +647,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected TT04→TT05, TT05→TT06 and TT06→TT07 handoffs to retain the marker audit trail but additionally invoke the downstream workflow through the GitHub Actions workflow-dispatch API with `actions: write` permission.
 - Recovery marker update launched TT05 run **37654354444**. TT05 preflight passed; numerical execution is now underway.
 - No TT05 P&L, VIX inference, tuning or promotion decision is accepted until its complete replay/audit/publication gate passes.
+
+
+## 2026-10-07 — TT05 replay failure diagnosed and corrected
+- TT05 run **37654354444** failed after the replay loop during DEV/VAL/HOLD split classification because expiry timestamps were timezone-naive while split boundaries were timezone-aware.
+- No TT05 artifact passed audit or publication; the failed run is non-evidence.
+- Corrected `research/phase50b_tt05_short_straddle_replay.py` to localize expiry timestamps to the project timezone before split comparison.
+- The trading rules, entry window, ATM selection, stop, exit, cost models and VIX capture were not changed.
+- A fresh TT05 rerun will be launched from the corrected engine.
