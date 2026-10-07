@@ -128,7 +128,7 @@ for strategy,path in STRATEGIES.items():
     z["_vix_level_mismatches"] = level_mismatches
     # Protect the 2026 holdout from inferential hypothesis testing.
     # The registered inference universe is pre-holdout DEV+VAL only.
-    infer_z=z[z["_date"]<=pd.Timestamp("2025-12-31")].copy()
+    infer_z=z[(z["_date"]<=pd.Timestamp("2025-12-31")) & z["_vix_modes"].apply(bool)].copy()
     for mode in MODES:
         regime=infer_z[infer_z["_vix_modes"].apply(lambda s: mode in s)]
         complement=infer_z[~infer_z["_vix_modes"].apply(lambda s: mode in s)]
