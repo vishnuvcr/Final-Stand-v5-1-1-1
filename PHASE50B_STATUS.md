@@ -331,3 +331,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT06 static audit found a latent timestamp-index bug in the 15:15+ exit search; it was corrected before any TT06 execution.
 - These corrections are pre-execution controls and do not alter any accepted numerical evidence.
 - Authoritative TT-02 run 37598918723 remains the sole active numerical run.
+
+
+## 2026-10-07 — TT-02 completed; TT-03 blocked then repaired
+- Authoritative TT-02 run 37598918723 completed successfully at the numerical stage and passed its evidence audit: 247 completed trades / 252 candidate trades, 98.02% coverage, five explicit coverage exclusions.
+- TT-02 common-cost results: net **-₹3,387.42** at the primary ₹10/order cost model; ₹50% cost stress **-₹32,226.76**; ₹20/order robustness **-₹47,212.62**; ₹20/order +50% stress **-₹97,964.56**. These are accepted baseline results, not a promotion.
+- VIX-conditioned diagnostic: HIGH +₹8,513.39 primary / +₹7,462.97 stress (10 trades); LOW -₹19,930.30 / -₹34,934.20 (134); NORMAL +₹8,029.48 / -₹4,755.53 (103). Statistical gate has not yet been applied.
+- TT-03 then failed before artifact publication because pandas produced timezone-naive parsed expiry values during DEV/VAL/HOLD accounting. No TT-03 result was accepted.
+- Corrected the split accounting and added a dedicated TT-03 gated workflow. The already accepted TT-02 artifact is reused; TT-02 is not rerun merely to repair TT-03.
