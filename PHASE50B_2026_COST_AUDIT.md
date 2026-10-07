@@ -26,3 +26,10 @@ The statutory inputs are therefore not left at the 2024 STT rate for 2026 trades
 
 ## Important limitation
 NSE's public pages provide statutory levies, while Paytm Money states that actual exchange/regulatory charges apply. Strategy promotion still requires the registered doubled-friction test; a positive result must survive that stress, not merely the base cost case.
+
+
+## 2026-10-07 — Paytm Money current brokerage robustness audit
+- Paytm Money's current public material is internally inconsistent: an F&O FAQ currently shows ₹10 per unique executed order, while Paytm Money's official 2025 pricing announcement states a flat ₹20 brokerage across segments from 15 January 2025. citeturn157124search0turn157124search2
+- The canonical Phase-50B preregistered model remains **₹10/order** for comparability with the parent research program.
+- A separate **₹20/order current-account robustness scenario** is now required for promotion sensitivity. It does not replace the primary model or permit post-result candidate selection.
+- NSE's current statutory schedule confirms option-sale STT of 0.15% from 1 April 2026 and equity-option stamp duty of 0.003% on buyers. citeturn214286search0turn214286search3
