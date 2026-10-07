@@ -1500,3 +1500,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: no numerical replay occurred; failure happened during module import before data acquisition.
 - Correction: add matplotlib to the workflow dependency set. No scientific definition changed.
 - Prevention: compile/runtime dependency audit must include transitive imports of the shared research engine module.
+
+
+### Error F50B-006 — TT02 workflow dependency patch missed the numerical job
+- Affected run: **37570624002** (and prior standalone attempt 37570436149).
+- The first dependency correction changed one install step but left the standalone workflow's numerical job installing the shared Phase-43 module dependencies without matplotlib.
+- Evidence status: no numerical replay; failure again occurred at module import before data acquisition.
+- Correction: patch every TT02 workflow job dependency line to include matplotlib. A triggering source commit is made only after both workflow definitions are verified.
+- Prevention: after workflow edits, inspect every job's dependency commands rather than assuming a single global install step.
