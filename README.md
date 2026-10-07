@@ -642,3 +642,10 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - Static audit found and corrected an expiry-day quote-series bug before TT-04 execution: new expiry-day entries use next-week options, while an existing current-week position must continue to be marked/exited on its original current-week series.
 - No TT-04 numerical evidence was produced from the defective code.
 - TT-04 remains blocked until audited TT-03 evidence exists.
+
+
+## 2026-10-07 — Phase 50B TT-02 audit correction
+- Canonical run 37572837253 completed the numerical loop but failed the audit because five expiry blocks did not have an exact 15:15 option quote; its diagnostic P&L is **not evidence**.
+- The implementation had incorrectly treated “at/after 15:15” as “exactly 15:15”. This was corrected so the exit uses the earliest common observed quote time at or after 15:15 for all open legs, without forward-filling.
+- Corrected v2 automatically started Actions run 37589199743 from commit 6a11b859c646dccdacc03a68a22fe7a2be3a842f; no result is accepted until the artifact audit passes.
+- [Phase 50B status](PHASE50B_STATUS.md) and [error log](ERROR_LOG.md) contain the full correction record.
