@@ -1624,3 +1624,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - A local 30-second sleep used only to let the active GitHub Actions replay advance exceeded the container execution timeout.
 - Evidence status: **NO RESEARCH IMPACT**. No GitHub Actions job was cancelled or modified.
 - Prevention: do not use local sleep-based waiting for long-running numerical runs; use direct Actions state and job-step checks.
+
+
+### F50B-024 — live TT-02 job-log endpoint unavailable
+- Time: 2026-10-07.
+- Attempted to retrieve the live log for TT-02 job 112687069655 while the numerical replay remains in progress; GitHub returned `BlobNotFound` / HTTP 404.
+- Evidence status: **NO RESEARCH IMPACT**. The Actions run/job state remains available through the run and job APIs, and no numerical output was inferred from the missing log.
+- Prevention: live log retrieval is secondary monitoring only; acceptance requires published artifacts and the explicit artifact audit, never a transient live-log endpoint.
