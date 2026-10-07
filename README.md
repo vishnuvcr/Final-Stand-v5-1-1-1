@@ -1,24 +1,19 @@
-## Phase 50 — VIX × Far-OTM Tail Geometry — INITIALIZED
+## Phase 50 — VIX × Far-OTM Tail Geometry — CLOSED / NO PROMOTION
 
-Phase 50 directly addresses the remaining VIX research gap: genuinely far-OTM strike geometry was not adequately explored in the earlier VIX sweeps, particularly for HIGH/SPIKE/RISING regimes. The new preregistered study tests existing defined-risk strategy families across 2, 3, 4, 5, 6, 8, 10 and 12 strike-step tail distances, with chronological development/validation and protected 2026 holdout gates.
+Phase 50 completed the registered far-OTM study. The authoritative numerical calculation (Actions run **37567632928**) completed successfully; its workflow audit failed only on sparse-HIGH early-stop packaging, so the raw artifact was independently reconciled rather than recomputed.
 
-- [Phase 50 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_RESEARCH_PLAN.md)
-- [Phase 50 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_PRE_REGISTRATION.md)
-- [Phase 50 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_LITERATURE_REVIEW.md)
-- [Phase 50 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_STATUS.md)
-- [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
-- [Phase 50 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/.github/workflows/phase-50-vix-far-otm-tail-geometry.yml)
+Final outcome: **0 confirmatory candidates**. HIGH-VIX had only **6 development opportunities** under the fixed 10:00 / 4-DTE Stage-1 control, below the registered 15-observation fold gate. Five sparse-HIGH candidates were carried forward descriptively.
 
-## Phase 50 — VIX × Far-OTM Tail Geometry — IN PROGRESS / SPARSE-HIGH FEASIBILITY
+The most interesting exploratory result was far-OTM **Put BWB** in HIGH VIX. Development was strongly positive on only six trades per cell; validation had only three trades per cell; protected 2026 holdout had four trades per cell. Put BWB distance 4 produced +₹9,814.49 in the four-trade holdout, +₹9,521.73 under +50% cost stress, but this remains **exploratory and non-confirmatory**. Far-OTM Iron Condors were negative in validation and holdout.
 
-The first far-OTM sweep (Actions run 37565293395) successfully tested **9 existing strategy families × 7 VIX state labels × 8 tail distances (2–12 strike steps)** across the development sample. No confirmatory candidate passed the preregistered development gate because HIGH VIX had only **6 development opportunities** under the fixed 10:00 / 4-DTE control. The confirmatory gate is being preserved rather than weakened.
+- [Phase 50 status](PHASE50_STATUS.md)
+- [Phase 50 closeout reconciliation](PHASE50_CLOSEOUT_RECONCILIATION.md)
+- [Phase 50 research plan](PHASE50_RESEARCH_PLAN.md)
+- [Phase 50 pre-registration](PHASE50_PRE_REGISTRATION.md)
+- [Phase 50 manuscript](PHASE50_MANUSCRIPT.md)
+- [Authoritative numerical Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37567632928)
 
-Development diagnostics nevertheless show positive HIGH-VIX far-OTM cells in Put BWB, Iron Condor and Bull Put, but each rests on only six observations. A sparse-HIGH out-of-sample diagnostic branch is now being run without treating it as promotion evidence.
-
-- [Phase 50 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_RESEARCH_PLAN.md)
-- [Phase 50 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_STATUS.md)
-- [Phase 50 literature](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_LITERATURE_REVIEW.md)
-- [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
+**Next bounded phase:** [Phase 50B — Expanded Prior-Strategy Universe](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-expanded-strategy-universe)
 
 ---
 
