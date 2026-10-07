@@ -348,6 +348,14 @@ def main():
         if day.dayofweek==0 or day.day==1:
             pd.DataFrame(rows).to_csv(OUT/"progress_trades.csv",index=False)
 
+    if position is not None:
+        coverage_gaps.append(position.get("_exit_gap",{
+            "trade_id":position["trade_id"],
+            "expiry":str(position["cur"].date()),
+            "trigger_ts":None,
+            "gap_type":"terminal_open_position_without_completed_exit"
+        }))
+        position=None
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt02_trades.csv",index=False)
     pd.DataFrame(errors,columns=["trade_id","expiry","error"]).to_csv(OUT/"data_errors.csv",index=False)
@@ -371,6 +379,7 @@ if __name__=="__main__":
 
 # F50B-005: corrected replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and first complete expiry exit quote at/after 15:15.
 # F50B-025: option-coverage gaps at mandatory exits are reported separately, excluded from primary trades, and never imputed.
+# F50B-030: every opened position must be accounted for as a completed trade or explicit terminal coverage exclusion.
 
 # F50B-005 fixed: workflow installs matplotlib for shared Phase-43 import dependency.
 
