@@ -23,3 +23,12 @@ User requested continuation without pausing. Work performed:
 - Logged the TT-02 replay performance bottleneck and corrected timestamp indexing / implied-vol computation without changing the mathematical replay definition.
 - Added current literature review material and preserved the evidence hierarchy: native Tradetron results are provenance only; common-cost chronological replay is primary evidence.
 - No Phase-50B strategy has been promoted. The TT-02 numerical result remains pending.
+
+
+## 2026-10-07 — Proceed cycle: cost audit and TT-04 pre-execution preparation
+
+- Confirmed canonical run 37572837253 remains active in TT-02 numerical replay; registry passed.
+- Verified current Paytm Money/NSE execution-cost assumptions against current public sources: Paytm Money F&O FAQ states ₹10 per unique executed order; NSE lists 0.15% option-sale STT from 2026-04-01 and 0.003% buyer stamp duty on equity options.
+- Audited current Tradetron TT-04 template 999088026. Validator warnings were preserved as source warnings rather than silently repaired: uncapped premium matching, fixed rupee stop, and repair/re-entry warning.
+- Built a source-faithful TT-04 common-cost replay engine but caught a cashflow-sign/MTM accounting defect before numerical execution. That draft is non-evidence and was corrected; no TT-04 numerical result exists yet.
+- A local syntax check was attempted but external DNS was unavailable; this was logged as F50B-014. GitHub Actions compile is the authoritative executable check.
