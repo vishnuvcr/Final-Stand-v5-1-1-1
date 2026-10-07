@@ -898,3 +898,7 @@ No Phase-50B strategy has been promoted.
 - Common-cost baseline: ₹89,669 net; ₹82,074 at +50% cost stress; ₹75,509 at ₹20/order; ₹60,834 at ₹20/order +50% stress.
 - This is accepted baseline evidence, not a final strategy recommendation. Statistical inference, chronological splits and protected holdout confirmation remain.
 - TT04 was explicitly dispatched after the Actions GITHUB_TOKEN push did not create a downstream push-triggered run.
+
+### 2026-10-07 — TT04 V3 active
+- Dedicated [TT04 run 37621965843](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37621965843) passed the TT03 V5 terminal gate and is executing the corrected V3 replay.
+- No TT04 result is accepted until coverage, data-error and cost audits pass.
