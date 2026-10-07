@@ -857,3 +857,12 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT04 fallback source-equivalence audit
 - Rechecked the dormant performance fallback against the canonical TT04 V3 source contract; no intentional scientific rule change was identified.
 - The compile-only workflow validates syntax only. The fallback remains inactive and non-evidence.
+
+
+## 2026-10-07 — TT04 canonical failure; fallback activated
+- Rechecked the finite Phase-50B plan and canonical TT04 run 37621965843.
+- The numerical replay job completed with failure; all downstream audit/publication/TT05 steps were skipped and no artifact was produced.
+- The live log endpoint remained unavailable, so no unsupported claim about the underlying runtime exception is made.
+- Since the registered contingency requires a genuine failure or timeout, the previously dormant performance-only TT04 fallback was activated through a separate gated workflow.
+- The fallback preserves exact observed-premium matching, 10:00–10:05 entry, ₹7,000 stop, 15:15–15:30 earliest-complete exit search, explicit coverage gaps/session exclusions, historical lot sizes, slippage and all four registered cost outputs.
+- No scientific result is accepted until the fallback artifact audit passes.
