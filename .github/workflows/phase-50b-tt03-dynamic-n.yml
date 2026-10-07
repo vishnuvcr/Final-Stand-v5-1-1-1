@@ -89,6 +89,56 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_HUB_DISABLE_TELEMETRY: "1"
         run: python research/phase50b_tt03_dynamic_n_replay.py
+      - name: Persist TT03 diagnostic replay
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/tt03_dynamic_n_replay/summary.json
+          mkdir -p results/phase50b/tt03_feasibility
+          python - <<'PY'
+          import json, pandas as pd
+          from pathlib import Path
+          src=Path("results/phase50b/tt03_dynamic_n_replay")
+          dst=Path("results/phase50b/tt03_feasibility")
+          d=json.loads((src/"summary.json").read_text())
+          tr=pd.read_csv(src/"tt03_trades.csv")
+          er=pd.read_csv(src/"data_errors.csv")
+          cg=pd.read_csv(src/"coverage_gaps.csv")
+          valid=(d.get("engine_revision")=="50B-TT03-WINDOW-V2" and
+                 d.get("trades")==len(tr) and
+                 d.get("candidate_trades")==len(tr)+len(cg))
+          state="FAIL_COVERAGE" if valid and len(er)==0 and float(d.get("coverage_rate",0))<0.95 else ("PASS" if valid and len(er)==0 and float(d.get("coverage_rate",0))>=0.95 else "INVALID")
+          out={"strategy":"TT-03","diagnostic_only":True,"feasibility_state":state,
+               "engine_revision":d.get("engine_revision"),"trades":d.get("trades"),
+               "candidate_trades":d.get("candidate_trades"),"coverage_exclusions":d.get("coverage_exclusions"),
+               "coverage_rate":d.get("coverage_rate"),"net":d.get("net"),
+               "net50":d.get("net50"),"net20":d.get("net20"),"net20_50":d.get("net20_50"),
+               "data_errors":len(er),"run_id":${{ github.run_id }}}
+          (dst/"feasibility.json").write_text(json.dumps(out,indent=2))
+          print(json.dumps(out,indent=2))
+          PY
+          rm -rf results/phase50b/tt03_feasibility/replay
+          cp -R results/phase50b/tt03_dynamic_n_replay results/phase50b/tt03_feasibility/replay
+          tmp=$(mktemp -d)
+          cp -R results/phase50b/tt03_feasibility "$tmp/"
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          rm -rf results/phase50b/tt03_feasibility
+          mkdir -p results/phase50b
+          cp -R "$tmp/tt03_feasibility" results/phase50b/
+          git add results/phase50b/tt03_feasibility
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: persist TT03 feasibility diagnostic"
+          git push origin HEAD:phase-50b-expanded-strategy-universe
+
+      - name: Upload TT03 diagnostic artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-tt03-diagnostic-${{ github.run_id }}
+          path: results/phase50b/tt03_dynamic_n_replay
+
       - name: Audit TT03 artifacts
         run: |
           set -euo pipefail
@@ -134,14 +184,26 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT03 common-cost replay"
             git push origin HEAD:phase-50b-expanded-strategy-universe
           fi
-      - name: Trigger TT04 only after TT03 evidence passes
+      - name: Route downstream after TT03 feasibility classification
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/phase50b/tt03_feasibility/feasibility.json")
+          if not p.exists():
+              raise SystemExit("No TT03 feasibility classification; do not trigger downstream.")
+          d=json.loads(p.read_text())
+          if d["feasibility_state"] not in ("PASS","FAIL_COVERAGE"):
+              raise SystemExit(f"TT03 classification unsafe: {d}")
+          print("TT03 downstream routing allowed:",d["feasibility_state"])
+          PY
           git fetch origin phase-50b-expanded-strategy-universe
           git reset --hard origin/phase-50b-expanded-strategy-universe
           date -u +"%Y-%m-%dT%H:%M:%SZ" > trigger/phase50b_tt04.start
           git add trigger/phase50b_tt04.start
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: trigger TT04 after TT03 audit"
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: route TT04 after TT03 feasibility"
           git push origin HEAD:phase-50b-expanded-strategy-universe
