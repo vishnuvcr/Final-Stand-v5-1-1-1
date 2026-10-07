@@ -618,3 +618,9 @@ The frozen execution order is **TT-02 → TT-03 → TT-04 → remaining register
 
 ### Phase 50B workflow hardening
 The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-04 workflow](.github/workflows/phase-50b-tt04-premium-match.yml) is manual-capable and will also accept the protected TT-04 trigger emitted only after an audited TT-03 success. No trigger is created while the current TT-02 replay remains incomplete.
+
+
+## 2026-10-07 — Automation audit correction
+- Discovered and corrected a workflow-only TT-04 trigger placement defect before it could affect any numerical evidence.
+- The active run 37572837253 remains on its original execution head and is unaffected.
+- The corrected branch workflow now places TT-04 triggering strictly after audited TT-03 publication; the dedicated TT-04 workflow remains manually dispatchable.
