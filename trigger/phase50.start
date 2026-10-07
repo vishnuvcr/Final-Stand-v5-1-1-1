@@ -1,0 +1,7 @@
+Phase 50 trigger — VIX × far-OTM tail geometry.
+
+Execute Stage 0/1 and registered Stage 2 refinement across HIGH/SPIKE/RISING and control LOW/NORMAL/FALLING regimes.
+
+Research question: whether genuinely far-OTM existing strategy variants recover robust high-volatility candidates that were not identified by the near-ATM Phase 49 grid.
+
+Use cached HF data, full Paytm Money cost/slippage model, chronological development/validation, Holm inference, and protected 2026 holdout. No user intervention is required unless a serious research-definition failure occurs.
