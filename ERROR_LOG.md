@@ -2072,3 +2072,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Missing option-chain loads were also recorded only as data errors, without preserving the scheduled entry day in the candidate denominator.
 - Correction: normal-session days are now explicit entry candidates; missing entry quotes are explicit coverage gaps, and non-regular-session days are separate session exclusions.
 - Evidence status: NO SCIENTIFIC IMPACT; no TT04 numerical replay from the pre-correction engine is accepted.
+
+
+### F50B-077 — Repository-log synchronization script quoted a backticked filename inside a JavaScript template literal
+- Time: 2026-10-07.
+- A multi-file documentation update script failed to parse because the string contained an unescaped backticked filename reference.
+- The script failed before execution; no repository file was mutated by this failed attempt.
+- Correction: subsequent repository-write payloads use plain quoted strings without nested backticks.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
