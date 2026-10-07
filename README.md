@@ -536,3 +536,10 @@ Phase 44 tuned six defined-risk VIX-conditioned candidate families across finite
 **Validation result:** 18/30 frozen candidates had positive net P&L; 16/30 remained positive under +50% cost stress; 9/30 had positive total uplift. Zero candidates had a strictly positive 95% CI lower bound, zero had unadjusted p<0.05, and zero survived Holm correction.
 
 **Phase 44 decision: NO PROMOTION.** Stage 3 active-exit tuning was skipped and the 2026 holdout remained protected. The Phase-20/42 canonical strategy remains unchanged.
+
+
+## Phase 50B current checkpoint — 2026-10-07 18:15 IST
+- TT-03 V5 is accepted: 200/201 campaigns, 99.50% coverage, one session exclusion, zero data errors; source-faithful cost outputs are ₹89,669 / ₹82,074 (+50% stress) / ₹75,509 (₹20/order) / ₹60,834 (₹20/order +50% stress).
+- TT-04 dedicated run **37621965843** is executing from the corrected V3 engine after TT-03 terminal PASS gating.
+- TT-04 remains unaccepted until its exact premium-match replay passes coverage, zero-data-error, and cost-robustness artifact audits.
+- No Phase-50B strategy has been promoted.
