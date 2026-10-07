@@ -1522,3 +1522,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: orchestration-only; no numerical evidence affected, but runner capacity was duplicated.
 - Correction: the canonical automatic workflow is being restricted to the explicit research trigger file and executable engine/pre-registration changes. Status/README/error-log commits no longer start numerical computation. Manual dispatch remains available.
 - Prevention: documentation updates must never launch a paid/long numerical study; every automatic research run requires an explicit research-source or trigger-file change.
+
+
+### Error F50B-009 — Native TT-03 headline trade count is not a complete-trade count
+- The Tradetron native result reports 558 “trades”, while its fill ledger contains 1,116 fills (558 buys and 558 sells) and the strategy has three entry legs plus three expiry exits per completed trade.
+- Evidence status: provenance accounting only; no Phase-50B inference is affected.
+- Correction: Phase-50B will reconstruct complete trades from fills and will not use the native headline trade count as the sample-size denominator.
+- Prevention: reconcile headline statistics with fill-level ledgers before using any external-engine trade count in statistical tests.
