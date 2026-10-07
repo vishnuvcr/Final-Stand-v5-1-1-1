@@ -484,3 +484,7 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 
 ## 2026-10-07 — Continue checkpoint: fallback awaiting Actions dispatch
 - User requested continuation. Canonical TT04 failed and the controlled fallback workflow is installed, but no fallback Actions run exists. The connector does not expose workflow_dispatch and API-authored push triggers are suppressed. No scientific result is inferred; TT05 remains blocked.
+
+
+## 2026-10-07 — Continue checkpoint: TT04 failure diagnosed; corrected replay queued
+- User requested continuation. The failed TT04 run is now explained by a deterministic timezone mismatch in post-replay split-summary construction. No trading-rule change was required. Canonical and fallback engines were corrected, and corrected canonical run 37629750175 is queued while fallback run 37629239398 is executing under the shared serialized TT04 concurrency group. No evidence is accepted yet.
