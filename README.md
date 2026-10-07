@@ -1,41 +1,41 @@
 ## Phase 50B — Expanded Prior-Strategy Universe — IN PROGRESS
 
-The user requested inclusion of seven supplied Tradetron strategies and prior strategies from other repositories. A dedicated branch now freezes the expanded candidate universe before numerical selection.
+Phase 50B is the bounded continuation after Phase 50. It includes the user's seven supplied Tradetron strategies and previously developed strategy lineages discovered across the user's GitHub repositories.
 
 - [Phase 50B research plan](PHASE50B_RESEARCH_PLAN.md)
 - [Phase 50B strategy universe](PHASE50B_STRATEGY_UNIVERSE.md)
 - [Phase 50B pre-registration](PHASE50B_PRE_REGISTRATION.md)
 - [Phase 50B status](PHASE50B_STATUS.md)
+- [Phase 50B source/baseline audit](PHASE50B_SOURCE_BASELINE_AUDIT.md)
 - [Phase 50B chat log](PHASE50B_CHAT_LOG.md)
 
-The parent Phase 50 far-OTM workflow remains active separately; Phase 50B does not alter or cancel it.
+### Current strongest new VIX hypothesis
+
+**TT-02 — 0.20/0.10 Delta Calendar Hedge Spread v4**
+
+Its finished native Tradetron report shows a positive HIGH-VIX outcome-day diagnostic, but the report uses a different coverage/cost model and therefore is not accepted Final Stand evidence. The canonical common-cost replay is currently running under Actions run **37570836398**; registry preflight has passed.
+
+Older duplicate Phase-50B runs are classified **SUPERSEDED / NON-EVIDENCE**. The standalone TT-02 workflow is now manual-only to avoid repeated automatic executions.
+
+### Prior strategy universe now included
+
+The registry explicitly includes:
+Dynamic Ratio Reversals; 0.20/0.10 Delta Calendar Hedge Spread v4; Corrected Dynamic-n NIFTY Weekly Options; Profit Breakout Premium Match Straddle; Simple Intraday Short Straddle; Intraday Asym Premium; Dynamic IC to Ratio; Iron-condor-to-ratio v1/v2; Option-intraday-v1; NoDip-Stage-1; BATMAN MC1/MC2/MC3; Final-stand-v4/v2; and the relevant Daily-Options VIX/weekly strategy lineages.
 
 ---
 
-## Phase 50 — VIX × Far-OTM Tail Geometry — INITIALIZED
+## Phase 50 — VIX × Far-OTM Tail Geometry — CLOSED / NO PROMOTION
 
-Phase 50 directly addresses the remaining VIX research gap: genuinely far-OTM strike geometry was not adequately explored in the earlier VIX sweeps, particularly for HIGH/SPIKE/RISING regimes. The new preregistered study tests existing defined-risk strategy families across 2, 3, 4, 5, 6, 8, 10 and 12 strike-step tail distances, with chronological development/validation and protected 2026 holdout gates.
+Phase 50 is closed. The authoritative numerical run **37567632928** completed successfully; its generic workflow audit failed only on sparse-HIGH early-stop packaging and was independently reconciled from artifact **11459959883**.
 
-- [Phase 50 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_RESEARCH_PLAN.md)
-- [Phase 50 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_PRE_REGISTRATION.md)
-- [Phase 50 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_LITERATURE_REVIEW.md)
+No confirmatory candidate survived. HIGH VIX had only **6 development opportunities** under the fixed 10:00 / 4-DTE control, below the registered 15-observation gate. Five sparse-HIGH exploratory cells were carried forward.
+
+The most interesting exploratory result was far-OTM Put BWB. In the protected 2026 holdout, distance 4 produced **+₹9,814.49 net / +₹9,521.73 stressed across 4 trades**, but this remains strictly exploratory. Far-OTM Iron Condors were negative in both validation and holdout.
+
 - [Phase 50 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_STATUS.md)
-- [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
-- [Phase 50 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/.github/workflows/phase-50-vix-far-otm-tail-geometry.yml)
-
-## Phase 50 — VIX × Far-OTM Tail Geometry — IN PROGRESS / SPARSE-HIGH FEASIBILITY
-
-The first far-OTM sweep (Actions run 37565293395) successfully tested **9 existing strategy families × 7 VIX state labels × 8 tail distances (2–12 strike steps)** across the development sample. No confirmatory candidate passed the preregistered development gate because HIGH VIX had only **6 development opportunities** under the fixed 10:00 / 4-DTE control. The confirmatory gate is being preserved rather than weakened.
-
-Development diagnostics nevertheless show positive HIGH-VIX far-OTM cells in Put BWB, Iron Condor and Bull Put, but each rests on only six observations. A sparse-HIGH out-of-sample diagnostic branch is now being run without treating it as promotion evidence.
-
-- [Phase 50 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_RESEARCH_PLAN.md)
-- [Phase 50 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_STATUS.md)
-- [Phase 50 literature](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_LITERATURE_REVIEW.md)
-- [Phase 50 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/research/phase50_vix_far_otm.py)
+- [Phase 50 closeout reconciliation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50-vix-far-otm-tail-geometry/PHASE50_CLOSEOUT_RECONCILIATION.md)
 
 ---
-
 ## Phase 49 — VIX Leader Parameter Tuning — CLOSED / NO PROMOTION
 
 Phase 49 is complete. The study evaluated 720 raw geometries, expanded to 1,440 geometry×VIX-regime candidates across LOW and NORMAL India-VIX states, using 133 development expiry blocks (2021–2023), 102 validation expiry blocks (2024–2025), and 21 protected holdout expiry blocks.
