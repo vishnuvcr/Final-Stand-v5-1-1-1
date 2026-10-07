@@ -826,3 +826,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Rechecked the sole active TT04 numerical job and its artifact store.
 - Numerical replay remains active; no result artifact is available for audit.
 - The finite research plan and evidence gates remain unchanged.
+
+
+## 2026-10-07 — TT04 timeout-gate audit
+- Re-read the TT04 workflow timeout: 240 minutes for the numerical job.
+- Run 37621965843 remains in progress with the replay step active and no artifacts.
+- Because authoritative start-time metadata is not exposed by the available GitHub wrapper, the timeout threshold cannot yet be declared breached.
+- No fallback or duplicate scientific replay was initiated.
