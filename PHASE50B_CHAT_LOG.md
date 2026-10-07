@@ -52,3 +52,8 @@ User requested continuation without pausing. Work performed:
 - No TT-04 trigger file was created now, so the active TT-02/TT-03 sequence cannot be bypassed.
 - TT-04 workflow is compile/audit gated and uses the corrected source-faithful engine; no numerical TT-04 evidence exists yet.
 - F50B-015 (live Actions log endpoint 404) was recorded as an operational/no-evidence-impact error.
+
+## 2026-10-07 — Automation audit correction
+- Discovered and corrected a workflow-only TT-04 trigger placement defect before it could affect any numerical evidence.
+- The active run 37572837253 remains on its original execution head and is unaffected.
+- The corrected branch workflow now places TT-04 triggering strictly after audited TT-03 publication; the dedicated TT-04 workflow remains manually dispatchable.
