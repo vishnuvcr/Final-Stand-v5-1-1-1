@@ -367,3 +367,9 @@ User requested continuation without pausing. Work performed:
 - Audited the downstream TT04 workflow after the TT03 V2/V3 feasibility issues.
 - Found that the older workflow allowed FAIL_COVERAGE to proceed; corrected it to require current TT03 V4 PASS.
 - Existing TT04 weak-gate execution is explicitly non-evidence; retriggered TT04 under the corrected gate.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 V4 evidence rejection
+- V4 achieved 99.47% nominal coverage but had 14 runtime/data errors and therefore failed the evidence gate.
+- Root cause: negative-P&L exit path did not retain the contemporaneous exit snapshot.
+- Fixed in V5 and retriggered. No V4 P&L is accepted; TT04 remains blocked.
