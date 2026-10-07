@@ -407,3 +407,7 @@ User requested continuation without pausing. Work performed:
 - Primary/common-cost result is positive, but this is baseline evidence only; no promotion or VIX-selection inference is made yet.
 - The downstream TT04 marker written by the Actions job did not create a new TT04 run because it was pushed using GITHUB_TOKEN.
 - Dispatched TT04 using a normal repository commit so the dedicated TT04 workflow can start.
+
+## 2026-10-07 — Resume checkpoint: TT04 V3
+- After TT03 V5 PASS, dispatched TT04 with a normal repository commit because the Actions GITHUB_TOKEN push does not trigger ordinary push workflows.
+- TT04 run 37621965843 is now executing V3; no evidence has been accepted yet.
