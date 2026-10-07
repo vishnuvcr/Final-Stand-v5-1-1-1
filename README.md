@@ -597,3 +597,20 @@ The canonical Phase-20/42 strategy remains unchanged.
 - Canonical strategy remains unchanged.
 
 Key evidence: [Phase 49 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/PHASE49_MANUSCRIPT.md), [final decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/phase49_final_decision.json), [parameter summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/phase49_parameter_summary.csv), [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md), [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/ERROR_LOG.md).
+
+
+## Phase 50B — Expanded prior-strategy universe — ACTIVE
+
+Current canonical numerical run: **GitHub Actions 37572837253**. Registry/preflight has passed; TT-02 common-cost replay is still in progress, so **no Phase-50B numerical result or promotion claim is accepted yet**.
+
+- [Phase 50B status](PHASE50B_STATUS.md)
+- [Phase 50B research plan](PHASE50B_RESEARCH_PLAN.md)
+- [Phase 50B pre-registration](PHASE50B_PRE_REGISTRATION.md)
+- [Phase 50B strategy universe](PHASE50B_STRATEGY_UNIVERSE.md)
+- [Phase 50B chat/decision log](PHASE50B_CHAT_LOG.md)
+- [TT-02 replay specification](PHASE50B_TT02_REPLAY_SPEC.md)
+- [TT-04 source audit](PHASE50B_TT04_SOURCE_AUDIT.md)
+- [Phase 50B branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-expanded-strategy-universe)
+- [Current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37572837253)
+
+The frozen execution order is **TT-02 → TT-03 → TT-04 → remaining registered controls → statistical correction → protected holdout/manuscript**. The canonical Phase-20/42 strategy remains unchanged.
