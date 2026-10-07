@@ -480,3 +480,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Operational monitoring correction
 - Local sleep polling timed out (F50B-023) with no workflow impact.
 - Monitoring switched back to direct Actions state/job checks; no numerical evidence was altered.
+
+
+## 2026-10-07 — Phase 50B monitoring checkpoint
+- Canonical TT-02 run 37589400281 remains in progress.
+- Live log endpoint returned 404/BlobNotFound (F50B-024); this is an operational monitoring issue only.
+- The evidence hierarchy remains unchanged: accept numerical evidence only after completed replay plus zero-data-error artifact audit.
