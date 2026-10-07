@@ -300,3 +300,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Run 20 (**37598918723**) was launched from the corrected latest branch commit `7a05adf...`.
 - Run 19 (**37596743408**) remains visible as in-progress until GitHub applies the new `cancel-in-progress: true` concurrency policy; it is pre-fix and remains non-evidence.
 - No statistical or downstream strategy gate will consume TT-02 until the new run passes the complete artifact audit.
+
+
+## 2026-10-07 — TT-02 authoritative run active
+- Pre-fix run 37596743408 is now **cancelled** by the hardened concurrency policy and contributes no evidence.
+- Corrected run **37598918723 (run 20)** is the sole active TT-02 numerical execution and has passed registry, compilation, static engine-contract audit and HF-cache setup.
+- The canonical numerical replay itself remains in progress; no TT-02 result artifact has passed acceptance yet.
