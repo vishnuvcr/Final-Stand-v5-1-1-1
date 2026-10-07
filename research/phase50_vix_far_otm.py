@@ -451,15 +451,68 @@ def main():
         opp_summary = pd.DataFrame(columns=["split","state_tag","opportunities","entry_snapshots"])
     opp_summary.to_csv(OUT / "vix_opportunity_counts.csv", index=False)
 
-    # Stage 2 development/validation.
+    # Sparse-regime exploratory branch: HIGH-VIX development opportunities are too few for the
+    # confirmatory gate, but their fixed far-OTM variants are still evaluated out of sample.
     if s2grid.empty:
-        pd.DataFrame().to_csv(OUT / "stage2_development_trade_matrix.csv", index=False)
-        pd.DataFrame().to_csv(OUT / "stage2_validation_trade_matrix.csv", index=False)
-        pd.DataFrame().to_csv(OUT / "validation_confirmatory_summary.csv", index=False)
-        pd.DataFrame().to_csv(OUT / "holdout_confirmation.csv", index=False)
-        decision = {"phase": 50, "decision": "NO_STAGE2_CANDIDATES", "stage1_selected": 0}
+        sparse = dev1[dev1["state_tag"] == "HIGH"].copy() if not dev1.empty else pd.DataFrame()
+        sparse_rows = []
+        if not sparse.empty:
+            for (f, d), g in sparse.groupby(["family","distance"]):
+                m = summarize(g)
+                sparse_rows.append({"family": f, "distance": int(d), **m})
+        sparse_df = pd.DataFrame(sparse_rows)
+        if not sparse_df.empty:
+            sparse_df = sparse_df.sort_values(
+                ["mean_net50","mean_net","pf"], ascending=[False,False,False]
+            ).head(5).reset_index(drop=True)
+        sparse_df.to_csv(OUT / "sparse_high_dev_shortlist.csv", index=False)
+
+        sparse_grid = sparse_df.assign(state="HIGH", width=2, entry_h=10, entry_m=0, dte=4)[
+            ["family","state","distance","width","entry_h","entry_m","dte"]
+        ] if not sparse_df.empty else pd.DataFrame(columns=["family","state","distance","width","entry_h","entry_m","dte"])
+        sparse_grid.to_csv(OUT / "sparse_high_parameter_grid.csv", index=False)
+
+        if not sparse_grid.empty:
+            sparse_val = evaluate_stage(index, vix, val_es, sparse_grid, "sparse_high_validation")
+            sparse_hold = evaluate_stage(index, vix, hold_es, sparse_grid, "sparse_high_holdout")
+            if "error" in sparse_val.columns:
+                sparse_val = sparse_val[sparse_val["error"].isna()]
+            if "error" in sparse_hold.columns:
+                sparse_hold = sparse_hold[sparse_hold["error"].isna()]
+        else:
+            sparse_val = pd.DataFrame()
+            sparse_hold = pd.DataFrame()
+
+        sparse_val.to_csv(OUT / "sparse_high_validation.csv", index=False)
+        sparse_hold.to_csv(OUT / "sparse_high_holdout.csv", index=False)
+
+        for fn in [
+            "stage2_development_trade_matrix.csv","stage2_validation_trade_matrix.csv",
+            "validation_frozen_trade_matrix.csv","validation_confirmatory_summary.csv",
+            "holdout_confirmation.csv","stage2_data_errors.csv",
+            "validation_data_errors.csv","holdout_data_errors.csv"
+        ]:
+            if fn.endswith("_data_errors.csv"):
+                pd.DataFrame(columns=["error_expiry","error"]).to_csv(OUT / fn, index=False)
+            else:
+                pd.DataFrame().to_csv(OUT / fn, index=False)
+
+        decision = {
+            "phase": 50,
+            "decision": "NO_CONFIRMATORY_CANDIDATES",
+            "stage1_selected": 0,
+            "confirmatory_candidates": 0,
+            "sparse_high_exploratory_candidates": int(len(sparse_df)),
+            "high_state_development_opportunities": int(sparse["expiry"].nunique()) if not sparse.empty else 0
+        }
         (OUT / "phase50_final_decision.json").write_text(json.dumps(decision, indent=2))
-        Path(OUT / "PHASE50_MANUSCRIPT.md").write_text("# Phase 50 Manuscript\n\nNo Stage-1 candidate met the preregistered development gate.")
+        manuscript = ["# Phase 50 Manuscript — VIX × Far-OTM Tail Geometry", "",
+                      "## Confirmatory result",
+                      "No candidate met the preregistered development gate. In particular, HIGH-VIX had only a small number of development opportunities under the fixed Stage-1 control, so a confirmatory candidate could not be selected without weakening the statistical design.",
+                      "",
+                      "## Exploratory sparse-HIGH result",
+                      f"{len(sparse_df)} fixed HIGH-VIX far-OTM candidates were carried forward descriptively. These results are explicitly exploratory and cannot be promoted from this phase."]
+        Path(OUT / "PHASE50_MANUSCRIPT.md").write_text("\n".join(manuscript) + "\n\n" + json.dumps(decision, indent=2))
         print(json.dumps(decision, indent=2))
         return
 
