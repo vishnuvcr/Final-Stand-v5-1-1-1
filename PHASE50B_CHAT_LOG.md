@@ -63,3 +63,11 @@ User requested continuation without pausing. Work performed:
 - Prepared `research/phase50b_tt02_calendar_replay_v3.py` as a **performance-only fallback** that pre-indexes spot by timestamp and trading-day timestamps.
 - The Black–Scholes/European-delta definition, quote selection, state machine, entry/exit rules, slippage, brokerage, statutory charges and +50% stress are unchanged.
 - The v3 fallback has **not** been executed and is not evidence; it exists only to avoid repeating an unnecessarily slow run if the current execution fails or times out.
+
+
+## 2026-10-07 — Resume checkpoint / live-state audit
+- User resumed Phase 50B research.
+- Live Actions run **37572837253** was rechecked; registry remains successful and **TT-02 replay is still in progress**.
+- No TT-02 artifact audit has started and no numerical result is accepted yet.
+- The live run remains the sole canonical numerical evidence candidate; no duplicate replay was launched.
+- Branch head currently advances independently of the running job, while the running job remains pinned to its original execution commit.
