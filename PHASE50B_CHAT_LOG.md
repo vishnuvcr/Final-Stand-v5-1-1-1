@@ -455,3 +455,8 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Direct Actions inspection again shows TT04 run **37621965843** in the numerical replay step with all prerequisite steps successful.
 - No duplicate run was launched; no incomplete P&L was used as evidence.
 - Repository control files were re-read and the finite plan remains unchanged.
+
+
+## 2026-10-07 — Continue checkpoint: dormant TT04 fallback prepared
+- During the active TT04 replay, an execution-only fallback was prepared to avoid repeating expensive timestamp scans if a genuine workflow timeout/failure occurs.
+- The fallback is not wired, not run, and contributes no evidence. The canonical TT04 V3 run remains authoritative while active.
