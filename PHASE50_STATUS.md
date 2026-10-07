@@ -28,3 +28,9 @@ No Phase-50 numerical result exists yet. No candidate is promoted.
 6. manuscript and final decision.
 
 All failures will be logged in ERROR_LOG.md.
+
+## 2026-10-07 — Preflight implementation audit
+
+F50-001 and F50-002 were caught before numerical execution and logged in ERROR_LOG.md. The exact Stage-2 candidate identity is now persisted; the primary family grid is restricted to strategies with an unambiguous far-OTM distance definition. No Phase-50 numerical evidence existed before the correction.
+
+GitHub Actions run **37565293395 (#1)** has been triggered automatically from the Phase-50 branch.
