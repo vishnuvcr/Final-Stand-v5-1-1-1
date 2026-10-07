@@ -1729,3 +1729,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Audited the prepared v3 fallback against v2 and confirmed the scientific state machine and cost model are unchanged; only traversal/indexing is optimized.
 - v3 remains performance-only and is forbidden while v2 is active.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-038 — Phase 50B overlapping stale/corrected runs
+- Time: 2026-10-07.
+- The intended workflow concurrency group did not prevent run 19 from starting while stale run 18 was still executing.
+- Run 18 is on pre-revision commit `0b09aff...` and is therefore diagnostic/non-evidence; run 19 on corrected commit `dcbb00c...` is the sole eligible TT-02 evidence run.
+- No third numerical run will be launched while either is active.
+- Evidence status: **NO SCIENTIFIC IMPACT**; compute-efficiency/control defect.
