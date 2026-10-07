@@ -2040,3 +2040,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - This caused `data_errors.csv` to contain 14 engine errors, so the V4 artifact was correctly rejected despite 99.47% nominal coverage.
 - Correction: V5 initializes `exit_snap`, stores the contemporaneous snapshot whenever the negative-P&L exit triggers, and validates the snapshot before leg settlement. This removes the accounting/runtime defect without changing source entry/exit semantics.
 - The V4 P&L and coverage statistics are **NON-EVIDENCE** because of the 14 engine errors. V5 is the active implementation.
+
+
+### F50B-066 — TT03 workflow artifact gate lagged corrected engine revision V5
+- Time: 2026-10-07.
+- The replay engine had been hardened from V2 to V5, but the dedicated workflow still required V2 in its static and artifact audit gates.
+- This could reject a scientifically corrected V5 run even if its replay and coverage were valid.
+- Correction: workflow revision gates were advanced to 50B-TT03-WINDOW-V5 before the next numerical execution.
+- No V5 result was accepted through the stale V2 audit path.
+- Evidence status: NO SCIENTIFIC IMPACT.
