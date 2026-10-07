@@ -579,3 +579,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT-07 raw-source reconciliation
 - Inspected the original ASB export directly and reconciled all state transitions.
 - Identified and formally blocked the unresolved ic_entered lifecycle rather than inventing semantics.
+
+
+## 2026-10-07 — Authoritative TT-02 handoff
+- Triggered a fresh corrected TT-02 replay from the latest branch after the pre-fix run was classified non-authoritative.
