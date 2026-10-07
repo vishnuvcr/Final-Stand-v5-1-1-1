@@ -363,3 +363,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Self-audit identified a latent partial-cash-mutation path during state transitions if a later leg quote was missing.
 - Corrected the TT-07 engine to prevalidate every old and new leg quote before any ledger/cash mutation.
 - This is pre-execution hardening only; no TT-07 numerical evidence exists.
+
+
+## 2026-10-07 — TT-03 controlled trigger refresh
+- The first corrected TT-03 trigger remained non-observable at the available commit-status endpoint, with no published TT03 artifact or TT04 trigger.
+- Refreshed `trigger/phase50b_tt03.start` in commit `28722b5204166199f91353d793f2840fe2022812`.
+- Because the dedicated workflow uses `cancel-in-progress: true`, this is a serialized retry/control operation rather than permission for overlapping TT03 evidence.
+- The new commit status is currently `pending`; therefore TT-03 remains pending and no numerical result is accepted.
