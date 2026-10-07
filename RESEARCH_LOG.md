@@ -874,3 +874,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — TT04 runtime failure diagnosed and corrected
 - The completed TT04 V3 log was re-read after the run became terminal. The failure occurred only at DEV/VAL/HOLD split-summary construction: expiry dates were parsed timezone-naive and compared to timezone-aware split boundaries. No numerical artifact was published. Both canonical and fallback engines were corrected to localize expiry_dt to TZ. A corrected canonical rerun was queued; the fallback replay is also being handled under the serialized TT04 concurrency group.
+
+
+## 2026-10-07 — TT05 handoff repair and execution start
+- TT04 canonical run 37629750175 passed the registered evidence gate and published its source-faithful result.
+- Downstream inspection found no TT05 Actions run despite the TT04 trigger marker. The cause was GitHub's suppression of push-triggered workflows for GITHUB_TOKEN-authored commits.
+- Corrected phase-50B downstream orchestration by adding explicit workflow-dispatch API calls (with actions:write) to TT04→TT05, TT05→TT06 and TT06→TT07 while retaining trigger markers for provenance.
+- The TT05 marker was then updated through the repository API, producing run 37654354444. TT05 preflight passed and numerical replay is active. This is an execution-control correction only; the registered scientific plan is unchanged.
