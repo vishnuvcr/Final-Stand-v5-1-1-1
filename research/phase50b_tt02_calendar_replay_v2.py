@@ -350,8 +350,12 @@ def main():
 
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt02_trades.csv",index=False)
-    pd.DataFrame(errors).to_csv(OUT/"data_errors.csv",index=False)
-    pd.DataFrame(coverage_gaps).to_csv(OUT/"coverage_gaps.csv",index=False)
+    pd.DataFrame(errors,columns=["trade_id","expiry","error"]).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(coverage_gaps,columns=[
+        "trade_id","expiry","trigger_ts","gap_type",
+        "short_ce_last_quote_at_or_after_1515","short_pe_last_quote_at_or_after_1515",
+        "long_ce_last_quote_at_or_after_1515","long_pe_last_quote_at_or_after_1515"
+    ]).to_csv(OUT/"coverage_gaps.csv",index=False)
     candidate_trades=len(df)+len(coverage_gaps)
     coverage_rate=(len(df)/candidate_trades) if candidate_trades else 0.0
     result={"strategy":"TT-02","trades":len(df),"candidate_trades":candidate_trades,
