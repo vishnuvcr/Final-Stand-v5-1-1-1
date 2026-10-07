@@ -1888,3 +1888,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No scientific or data artifact was lost; the failed write did not overwrite any file.
 - Correction: all subsequent related documentation writes will fetch a fresh SHA immediately before each individual update.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-059 — Repository-write script quoting error during statistical-gate documentation patch
+- Time: 2026-10-07.
+- A batched JavaScript repository-write script contained an unescaped template-literal backtick in its string content and aborted before any GitHub mutation.
+- No scientific or repository evidence was altered by this failed attempt.
+- Correction: subsequent content payloads will avoid nested template literals or escape them before execution.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
