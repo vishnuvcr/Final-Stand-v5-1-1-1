@@ -373,3 +373,9 @@ User requested continuation without pausing. Work performed:
 - V4 achieved 99.47% nominal coverage but had 14 runtime/data errors and therefore failed the evidence gate.
 - Root cause: negative-P&L exit path did not retain the contemporaneous exit snapshot.
 - Fixed in V5 and retriggered. No V4 P&L is accepted; TT04 remains blocked.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 V5 feasibility correction
+- The latest completed TT03 run was V2 and failed the preregistered 95 percent coverage gate at 187/202 = 92.57 percent; no evidence was accepted.
+- Audited the current V5 engine and confirmed that it changes session and coverage treatment, so the V2 result cannot be used as the final TT03 disposition.
+- Updated the dedicated workflow revision checks to V5 before the next numerical replay.
