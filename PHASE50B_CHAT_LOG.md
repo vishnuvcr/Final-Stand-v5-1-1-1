@@ -315,3 +315,10 @@ User requested continuation without pausing. Work performed:
 - Added a candidate-local stopping rule so an infeasible TT03 does not halt unrelated registered candidates.
 - TT04 now requires a persisted TT03 terminal feasibility classification but can proceed after a clean TT03 FAIL_COVERAGE without treating TT03 P&L as evidence.
 - TT03 diagnostic-capture run 37612856834 is currently executing.
+
+
+## 2026-10-07 — Resume checkpoint: TT04 V3 self-audit
+- Before TT04 execution, audited the premium-match and 15:15 exit semantics.
+- Found nearest-premium substitution where the source requires exact observed LTP matching; corrected to exact matching with deterministic distance tie-break.
+- Found an exit-coverage path that could reject the first 15:15+ observation instead of searching later same-day complete quotes; corrected to earliest complete observed exit timestamp.
+- TT04 engine revision V3 is now the only eligible implementation; downstream TT05 gate updated accordingly.
