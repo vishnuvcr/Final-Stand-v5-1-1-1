@@ -380,3 +380,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Self-audit found two pre-execution issues in the active TT03 engine: hard-close fallback could roll to 15:30+, and an unnecessary modal-strike-step gate could reject valid source-defined entries.
 - Both were corrected in commit `aea2196436fbeceb90c40b02ef55008f9f80164f` before any TT03 artifact audit or publication.
 - The currently running TT03 job is on the superseded engine commit and will be replaced by a controlled retrigger.
+
+## 2026-10-07 — TT-03 entry coverage correction
+- Eligible campaigns with a valid three-days-before entry day but no observable entry timestamp or no complete source-defined ratio set are now explicit coverage exclusions.
+- This correction prevents silent denominator loss and was made before accepting any TT03 numerical artifact.
+- The in-progress TT03 run is being superseded by a controlled retrigger.
