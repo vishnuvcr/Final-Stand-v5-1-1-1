@@ -1680,3 +1680,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: the corrected engines now record any terminal open position as an explicit coverage exclusion, preserving the opened-position denominator.
 - Evidence status: **NO IMPACT ON CURRENT RUN**. Run 37593965525 was already executing from an earlier commit; this safeguard will apply to the next canonical rerun.
 - Prevention: every numerical replay must reconcile opened positions = completed trades + explicit exclusions + documented model errors.
+
+
+### F50B-031 — TT-02 engine revision gate
+- Time: 2026-10-07.
+- Added explicit TT-02 engine revision `50B-TT02-COVERAGE-V3` to prevent artifacts from the pre-coverage/terminal-accounting engines from being promoted.
+- The workflow audit now requires that revision before accepting TT-02 evidence.
+- Evidence status: **NO IMPACT ON CURRENT RUN**. Run 37593965525 predates this revision stamp and will therefore be diagnostic unless separately superseded by a latest-code audited rerun.
