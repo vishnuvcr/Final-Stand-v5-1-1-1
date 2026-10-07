@@ -8,6 +8,7 @@ on:
     paths:
       - trigger/phase50b.start
       - research/phase50b_tt02_calendar_replay_v2.py
+      - research/phase50b_tt03_dynamic_n_replay.py
       - PHASE50B_PRE_REGISTRATION.md
 
 
@@ -79,6 +80,7 @@ jobs:
           tr=pd.read_csv("results/phase50b/tt02_calendar_replay/tt02_trades.csv")
           er=pd.read_csv("results/phase50b/tt02_calendar_replay/data_errors.csv")
           assert d["trades"] == len(tr)
+          assert d["trades"] > 0
           assert len(er)==0, er.head()
           print("TT02 replay audit PASS", d)
           PY
@@ -144,6 +146,7 @@ jobs:
           tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
           er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
           assert d["trades"]==len(tr)
+          assert d["trades"] > 0
           assert len(er)==0, er.head()
           print("TT03 replay audit PASS",d)
           PY
