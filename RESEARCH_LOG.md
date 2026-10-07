@@ -756,3 +756,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Run 37611676386 completed the V2 replay with 187/202 coverage (92.57 percent) and correctly failed the preregistered 95 percent feasibility audit; it is non-evidence.
 - Code review showed V5 changes session handling so non-regular scheduled days are explicit session exclusions rather than coverage gaps, and it tightens the source hard-close and entry semantics.
 - The workflow revision gate was updated to V5 and a clean V5 replay is required before final TT03 disposition.
+
+
+## 2026-10-07 — TT03 terminal-routing cleanup
+- Replaced the accumulated TT03 workflow persistence/routing logic with a single terminal-classification path.
+- Terminal states are PASS, FAIL_COVERAGE, or INVALID_ENGINE; only PASS is promotion-eligible.
+- The persisted feasibility artifact records whether P&L may be used as evidence.
+- TT04 may proceed after any persisted terminal classification because TT04 is an independent registered candidate and does not consume TT03 P&L when TT03 is failed/invalid.
+- Final V5 trigger will be issued only after this workflow cleanup is on the branch.
