@@ -248,3 +248,9 @@ User requested continuation without pausing. Work performed:
 - Resolved `ic_entered` as counter-scoped runtime state lasting until Universal Exit; updated the source audit and replay spec.
 - Added TT-07 source-faithful replay engine and dependency-gated workflow.
 - Self-audit caught and fixed transition-delta selection using the actual held short strike before numerical execution.
+
+
+## 2026-10-07 — Continue checkpoint: TT-07 integrity hardening
+- Before numerical execution, self-audited TT-07 state transitions.
+- Found and fixed a latent partial-cash-mutation path when a later leg quote was absent.
+- No TT-07 replay has run; the workflow remains dependency-gated behind audited TT-06 evidence.
