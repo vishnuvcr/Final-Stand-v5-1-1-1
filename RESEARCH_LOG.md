@@ -866,3 +866,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Since the registered contingency requires a genuine failure or timeout, the previously dormant performance-only TT04 fallback was activated through a separate gated workflow.
 - The fallback preserves exact observed-premium matching, 10:00–10:05 entry, ₹7,000 stop, 15:15–15:30 earliest-complete exit search, explicit coverage gaps/session exclusions, historical lot sizes, slippage and all four registered cost outputs.
 - No scientific result is accepted until the fallback artifact audit passes.
+
+
+## 2026-10-07 — TT04 fallback dispatch blocker
+- Fallback activation was structurally prepared after the genuine TT04 V3 failure, but GitHub did not instantiate an Actions run from the API-authored trigger commit. The connector lacks a workflow_dispatch operation. This is an execution-orchestration limitation only; no numerical inference is made and the fallback remains pending.
