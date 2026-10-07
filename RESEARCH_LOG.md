@@ -416,3 +416,13 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Final decision: **NO PROMOTION**; 2 frozen candidates, 1 validation economic pass, 0 Holm survivors, 1 small holdout confirmation.
 - Best research candidate: LOW-VIX Bear Put, 09:30 IST, 5 trading sessions before expiry, buy PE +1 modal step / sell PE −3 modal steps.
 - Canonical strategy remains unchanged.
+## 2026-10-07 — Phase 50B continuation checkpoint
+2026-10-07 — continuation checkpoint
+- Canonical GitHub Actions run 37572837253 remains the active Phase-50B numerical replay.
+- Registry/preflight job passed; TT-02 numerical replay is still in progress.
+- No TT-02 P&L, VIX uplift, validation result or promotion claim is accepted while the numerical job is incomplete.
+- TT-03 is dependency-gated behind TT-02; its source-faithful engine and audit are already prepared.
+- TT-04 source-faithful engine is prepared and its pre-execution MTM/cashflow defect has been corrected; no TT-04 numerical evidence exists yet.
+- The research sequence remains frozen as TT-02 → TT-03 → TT-04 → registered controls → statistical correction → final holdout/manuscript.
+- Current execution evidence is restricted to run 37572837253 and its eventual audited artifacts; superseded runs remain quarantined.
+- No scientific conclusion is drawn from an in-progress computation.
