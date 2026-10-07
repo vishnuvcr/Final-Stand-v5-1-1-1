@@ -1853,3 +1853,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - This would have changed the source semantics and could have generated false state transitions.
 - Correction: transition evaluation now reads the actual open short-leg strike from the position ledger and reconstructs its contemporaneous delta. The workflow has not yet executed this pre-correction engine.
 - Evidence status: **NO SCIENTIFIC IMPACT**; caught and fixed before numerical execution.
+
+
+### F50B-055 — TT-07 transition execution was not transactional
+- Time: 2026-10-07.
+- Pre-execution self-audit found that `execute_open_close` could mutate cash for earlier closing legs before discovering a missing quote on a later leg.
+- This could corrupt the simulated ledger and is therefore classified as a source-accounting integrity defect.
+- Correction: validate all old-state and target-state quotes first, compute a single cash delta, and mutate the position only after every quote is confirmed.
+- The defect was caught before any TT-07 numerical run.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
