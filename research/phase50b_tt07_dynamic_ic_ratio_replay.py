@@ -379,6 +379,12 @@ def main():
         if entry_day is None or entry_day >= mexp.normalize():
             entry_exclusions.append({"expiry":str(mexp.date()),"reason":"no_valid_source_friday_entry_day"})
             continue
+        regular=index[(index.timestamp.dt.normalize()==entry_day.normalize())&
+                      (index.timestamp.dt.time>=pd.Timestamp("09:15").time())&
+                      (index.timestamp.dt.time<=pd.Timestamp("15:30").time())]
+        if regular.empty:
+            entry_exclusions.append({"expiry":str(mexp.date()),"reason":"no_normal_09:15_to_15:30_session"})
+            continue
         try:
             chain = get_option(mexp)
         except Exception as exc:
