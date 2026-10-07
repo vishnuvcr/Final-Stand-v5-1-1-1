@@ -612,3 +612,12 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Confirmed preservation of accepted imports/cost functions, exact observed-LTP premium matching, 10:00–10:05 entry window, ₹7,000 source stop, 15:15–15:30 observed exit search, explicit entry/exit coverage gaps, and all four registered cost outputs.
 - Confirmed the validation workflow is compile-only and does not invoke the replay main function or load market data.
 - The fallback remains non-authoritative and is not wired into TT04 execution.
+
+
+## 2026-10-07 — TT04 canonical failure and controlled fallback activation
+- Canonical TT04 V3 run 37621965843 completed with the numerical replay step FAILED. Artifact audit, upload, publication and TT05 trigger were skipped; no result from this run is evidence.
+- Direct job-log retrieval remained unavailable (BlobNotFound), so the precise runtime exception is not asserted.
+- Because this is now a genuine workflow failure, the preregistered performance-only fallback contingency was activated.
+- Added .github/workflows/phase-50b-tt04-fallback.yml and activated trigger/phase50b_tt04_fallback.start. The fallback uses the source-equivalence-audited engine 50B-TT04-COVERAGE-V3-FAST-DORMANT and the same 95% coverage, zero-error, four-cost and TT03 terminal gates.
+- The fallback is an execution correction only, not a strategy mutation or new scientific candidate. No parameter, entry, repair, stop, exit, strike or cost rule was changed.
+- TT05 remains fail-closed until the fallback produces an audited published TT04 artifact.
