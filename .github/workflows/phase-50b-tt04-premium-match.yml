@@ -97,10 +97,12 @@ jobs:
           tr=pd.read_csv("results/phase50b/tt04_premium_match_replay/tt04_trades.csv")
           er=pd.read_csv("results/phase50b/tt04_premium_match_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt04_premium_match_replay/coverage_gaps.csv")
+          sx=pd.read_csv("results/phase50b/tt04_premium_match_replay/session_exclusions.csv")
           assert d["engine_revision"]=="50B-TT04-COVERAGE-V3", d
           assert d["trades"] == len(tr)
           assert d.get("candidate_trades",len(tr)) == len(tr)+len(cg)
           assert d.get("coverage_rate",1.0) >= 0.95
+          assert d.get("session_exclusions",0)==len(sx), d
           assert len(er) == 0, er.head()
           assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns) if len(tr) else True
           print("TT04 replay artifact audit PASS", d)
