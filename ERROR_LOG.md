@@ -2110,3 +2110,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - This is an Actions log-availability/observability issue, not a workflow failure and not numerical evidence.
 - Handling: continue using authoritative workflow/job state and artifact publication gates; do not infer replay outcome from missing live logs and do not launch a duplicate run.
 - Evidence status: NO SCIENTIFIC IMPACT.
+
+
+## 2026-10-07 — F50B-071 — TT04 replay still active; no new error
+- Direct job-state inspection confirms run 37621965843 remains in_progress at the numerical replay step.
+- No new implementation failure is indicated; result artifacts and downstream trigger are simply not yet available.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
