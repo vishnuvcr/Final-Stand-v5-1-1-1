@@ -463,3 +463,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Detected that an older TT04 workflow allowed TT03 `FAIL_COVERAGE` to continue. TT04 run 37614211996 was therefore classified non-evidence and must not be used.
 - Corrected TT04 preflight to require current TT03 V4 feasibility `PASS` with >=95% coverage and zero data errors.
 - Triggered a controlled TT04 rerun after this correction; old TT04 execution is superseded by the serialized concurrency group.
+
+
+## 2026-10-07 — Current active execution
+- TT03 V4 run **37617012372** is the current controlled numerical execution after the session-exclusion, hard-close completeness, diagnostic persistence and fail-closed downstream corrections.
+- Preflight and static engine controls have passed; the numerical replay is still running. No TT03 artifact or P&L has been accepted yet.
+- TT04 run **37617256820** correctly failed its preflight because the currently persisted TT03 diagnostic is still the older V2 FAIL_COVERAGE record. This is the intended fail-closed behavior; no TT04 numerical execution occurred in that run.
+- TT04 remains blocked until the current TT03 V4 run produces a same-run feasibility `PASS` artifact.
