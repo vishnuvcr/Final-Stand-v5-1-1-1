@@ -92,3 +92,12 @@ The canonical TT-02 replay was mathematically unchanged but slower than expected
 ## 2026-10-07 — Current audit state after F50B-012
 
 The latest canonical replay is run 37572837253. The remaining computational bottleneck in nearest-delta selection was vectorized without changing the Black–Scholes/European-delta scientific definition. TT-04's current saved account template (999088026) was also re-audited: the source uses uncapped premium-match selection (`any`) and contains a repair/re-entry validator warning; these behaviors are documented, not silently corrected. A 2026 execution-cost audit confirms the registered ₹10/order Paytm Money brokerage proxy and 2026 NSE statutory rates, including 0.15% option-sale STT from 2026-04-01.
+
+## 2026-10-07 — Continuation checkpoint
+2026-10-07 — continuation checkpoint
+- Canonical GitHub Actions run 37572837253 remains the active Phase-50B numerical replay.
+- Registry/preflight job passed; TT-02 numerical replay is still in progress.
+- No TT-02 P&L, VIX uplift, validation result or promotion claim is accepted while the numerical job is incomplete.
+- TT-03 is dependency-gated behind TT-02; its source-faithful engine and audit are already prepared.
+- TT-04 source-faithful engine is prepared and its pre-execution MTM/cashflow defect has been corrected; no TT-04 numerical evidence exists yet.
+- The research sequence remains frozen as TT-02 → TT-03 → TT-04 → registered controls → statistical correction → final holdout/manuscript.
