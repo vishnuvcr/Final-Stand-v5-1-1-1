@@ -178,3 +178,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Phase 50B now operationalizes its existing feasibility gate at **95% complete mandatory-exit coverage**. Coverage gaps are excluded from primary P&L, never imputed, and published separately.
 - The failed run had 247 completed exits and 5 coverage gaps among 252 opened positions (~98.0%), so the candidate remains feasible subject to the corrected audited rerun.
 - Workflow push triggers are now restricted to the explicit `trigger/phase50b.start` file to prevent intermediate documentation/code commits from launching duplicate numerical runs.
+
+
+## 2026-10-07 — Corrected TT-02 coverage-audited rerun active
+- Canonical Phase-50B run **37593965525** (run 18) is now active from the corrected trigger commit `0b09aff32d3a152d1e980819135a9a76784e7a8e`.
+- Registry gate is executing; TT-02 will use the new `coverage_gaps.csv` classification and 95% feasibility rule.
+- No result from the prior failed run is promoted or used for inference.
