@@ -348,3 +348,10 @@ User requested continuation without pausing. Work performed:
 - Found that FAIL_COVERAGE could still create the TT04 trigger.
 - Corrected downstream routing to PASS-only and retriggered TT03 under the serialized workflow.
 - No TT04 execution from a failed-coverage TT03 state is permitted.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 V4 session handling and routing guard
+- Audited all V2 coverage-gap categories using the diagnostic artifact.
+- 13 exit gaps are plausible hard-close quote issues; the V3/V4 backward-complete-quote search addresses them.
+- One entry gap (2022-10-24) was a non-standard Muhurat evening session, not a daytime data outage; V4 excludes it from the candidate denominator and records it separately.
+- Also hardened TT04 routing to require a current-run V4 PASS feasibility artifact, preventing stale diagnostic files from triggering downstream.
