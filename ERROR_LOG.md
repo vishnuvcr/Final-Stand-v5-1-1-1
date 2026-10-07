@@ -1544,3 +1544,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Scientific status: no result from the slow run is accepted or discarded as evidence; the mathematical replay definition is unchanged.
 - Correction: option frames are now timestamp-indexed for O(1)-style timestamp access, and implied volatility uses the same Black-Scholes root with a faster five-step Newton solve plus the same Brent fallback for rare non-convergence.
 - Prevention: all long exact replays will be benchmarked for data-access and numerical hot spots before launch, without relaxing quote, timestamp or execution fidelity.
+
+
+### Error F50B-012 — TT-02 delta-selection hot loop
+- After F50B-011, code inspection showed the remaining dominant hot spot: every minute, each nearest-delta call still iterated through every strike in Python and solved IV independently.
+- This is a computational implementation issue, not a scientific result.
+- Correction: nearest-delta selection is now vectorized across the complete strike set using the same Black-Scholes implied-volatility / European-delta definition; the candidate universe is unchanged and no strike-distance shortcut is introduced.
+- The slower run is not used as evidence. The corrected canonical run supersedes it through workflow concurrency.
