@@ -93,3 +93,8 @@ User requested continuation without pausing. Work performed:
 - Corrected v2 commit triggered run 37589199743, but the run stopped in the registry publish step because a closing `fi` was missing.
 - Registry validation passed and uploaded; TT-02 was not executed, so the run has no numerical impact.
 - Corrected workflow commit e0d4bda09bb943272bac591d68aafa051d7b9f94 restores the missing `fi`, normalizes the TT-03 bot identity, and passes a structural `if`/`fi` balance check.
+
+
+## 2026-10-07 — Operational polling note
+- Local sleep polling timed out again; logged as F50B-023 with no research impact.
+- Continued using direct GitHub Actions state checks; canonical run 37589400281 remains active in TT-02 replay.
