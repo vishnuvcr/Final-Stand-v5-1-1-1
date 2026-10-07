@@ -160,7 +160,8 @@ jobs:
           assert len(er)==0, er.head()
           print("TT03 replay artifact audit PASS", d)
           PY
-      - name: Upload TT03 artifacts
+      - name: Upload TT03 diagnostics/evidence artifact
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: phase50b-tt03-${{ github.run_id }}
