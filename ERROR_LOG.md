@@ -1478,3 +1478,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 **Correction:** native reports are explicitly classified as provenance/exploratory controls. The next Phase-50B numerical replay uses the project-standard Paytm Money/NSE/statutory/slippage model and entry-date VIX classification.
 
 **Prevention:** every external-engine result must be tagged with its own cost model, coverage and data caveats before entering the research evidence hierarchy.
+
+### Error F50B-003 — Initial TT-02 replay draft used the wrong entry-time model
+- Pre-numerical audit found the draft `research/phase50b_tt02_calendar_replay.py` entered only on the trading day immediately before current-week expiry.
+- The actual TT-02 strategy initializes `setup_active=1` in its embedded Python and never turns it off; the Entry condition is therefore eligible whenever flat from 09:20 through 15:00.
+- Evidence status: NO NUMERICAL EXECUTION from the affected draft.
+- Correction: replace the draft with a stateful session-by-session replay that can enter on any eligible flat day and holds until the current-week expiry-day 15:15 universal exit.
+- Prevention: for any Tradetron strategy containing `Get Runtime` gates, inspect and freeze the embedded Python/runtime initialization before implementing the historical state machine.
