@@ -717,7 +717,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 
 ## 2026-10-07 — Phase 50B workflow serialization
-- Canonical Phase-50B numerical runs are now serialized with `cancel-in-progress: false` to protect artifact/evidence integrity.
+- Canonical Phase-50B numerical runs use `cancel-in-progress: true` within their strategy-specific concurrency groups so superseded retries cannot overlap; evidence is still accepted only from audited artifacts.
 
 
 ## 2026-10-07 — Phase 50B TT-05 control prepared
@@ -742,15 +742,24 @@ Phase 50B is the bounded continuation after Phase 50. It includes the user's sev
 - [Phase 50B 2026 execution-cost audit](PHASE50B_2026_COST_AUDIT.md)
 
 ### Current execution state — 2026-10-07
-- Corrected TT-02 evidence run 37596743408 is active on the latest-code commit. Compilation, dependencies and HF cache have passed; only canonical numerical replay remains.
-- Older run 37593965525 is on a superseded pre-revision commit and is diagnostic / non-evidence. No result from it can be promoted.
-- The prepared v3 TT-02 implementation is a performance-only equivalent of v2 and remains dormant unless v2 genuinely times out/fails.
-- Phase-50B workflow concurrency has been hardened to cancel superseded overlapping runs on future triggers.
-- TT-05 source-faithful replay is prepared and dependency-gated behind audited TT-04 evidence.
-- The statistical gate is now fail-closed on all four required cost outputs and registers TT-01 through TT-07.
+- TT-02 evidence is accepted from run 37598918723: 247/252 completed coverage (98.02%), primary net -₹3,387.42, +50% cost stress -₹32,226.76, ₹20/order robustness -₹47,212.62, and ₹20/order +50% stress -₹97,964.56. The baseline is not promoted.
+- The overall parent workflow run 37598918723 is now completed with failure because its TT-03 child replay failed during chronological accounting; the TT-02 replay and artifact publication jobs succeeded.
+- The TT-03 timezone defect was corrected and a dedicated gated replay was triggered by commit f7f01c5265203ad27b33d28d0633a93609a4538d. Its commit status is currently pending, no corrected TT-03 result directory is published, and no TT-04 trigger exists. No duplicate TT-03 replay is being launched.
+- TT-07's runtime-variable lifecycle ambiguity is resolved from current official Tradetron documentation: strategy-level runtime variables persist through the current counter and remain until Universal Exit unless manually reset. The replay therefore treats ic_entered/state as counter-scoped.
+- TT-07 source audit/replay specification, engine, and gated workflow are now prepared. Two additional pre-execution integrity defects were caught and corrected: transition checks now use the actual held short-leg strike, and transition cash mutation is transactional.
+- TT-05 and TT-06 remain dependency-gated behind audited TT-04/TT-05 evidence; TT-07 is dependency-gated behind audited TT-06 evidence.
+- The statistical gate remains fail-closed on all four required cost outputs and registers TT-01 through TT-07.
 
 No Phase-50B strategy has been promoted.
 
+
+### Phase 50B — Current control links — 2026-10-07
+
+- [TT-03 corrected replay workflow](.github/workflows/phase-50b-tt03-dynamic-n.yml)
+- [TT-07 source audit](PHASE50B_TT07_SOURCE_AUDIT.md)
+- [TT-07 replay specification](PHASE50B_TT07_REPLAY_SPEC.md)
+- [TT-07 replay engine](research/phase50b_tt07_dynamic_ic_ratio_replay.py)
+- [TT-07 gated workflow](.github/workflows/phase-50b-tt07-dynamic-ic-ratio.yml)
 
 ### Phase 50B — Newly frozen replay specifications
 - [TT-06 replay specification](PHASE50B_TT06_REPLAY_SPEC.md)
