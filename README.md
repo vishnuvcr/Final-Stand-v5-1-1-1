@@ -722,3 +722,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — Phase 50B TT-05 control prepared
 - TT-05 Simple Intraday Short Straddle now has a source-faithful replay engine and dependency-gated workflow following audited TT-04 evidence.
+
+
+## 2026-10-07 — TT-02 fallback audit
+- v3 has been audited as a performance-only equivalent of canonical v2 and will be used only after a genuine v2 timeout/failure.
