@@ -681,3 +681,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Current run 37611676386 passed the TT02 dependency gate and all pre-numerical controls.
 - Corrected engine includes the hard-close, source-entry gate, and coverage-denominator fixes.
 - Numerical replay is in progress; no inference has been generated.
+
+
+## 2026-10-07 — TT03 feasibility failure
+- Corrected TT03 replay produced 187/202 complete campaigns (92.57%).
+- The preregistered 95% coverage gate therefore failed.
+- The positive P&L observed under the corrected engine is diagnostic only and cannot advance to VIX conditioning, far-OTM tuning, statistical inference or holdout promotion.
+- A diagnostic capture rerun is being used only to persist the raw trade/coverage tables.
+- TT04 is now treated as an independent strategy candidate and may proceed after TT03 terminal classification without consuming TT03 numerical evidence.
