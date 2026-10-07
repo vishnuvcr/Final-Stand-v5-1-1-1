@@ -707,3 +707,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — TT04 V3 execution checkpoint
 - TT04 run 37614211996 passed preflight against the persisted TT03 terminal feasibility classification and is now executing the corrected V3 replay.
 - No TT04 result is accepted until the full artifact/coverage/cost audit passes.
+
+
+## 2026-10-07 — TT03 diagnostic persistence completed
+- Run 37613416831 completed and persisted TT03 raw trades, coverage gaps and feasibility classification.
+- Coverage remains 92.57%; the preregistered feasibility gate therefore closes TT03 for promotion and tuning.
+- TT04 remains independent and is the active numerical candidate.
