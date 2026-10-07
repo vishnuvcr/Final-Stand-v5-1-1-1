@@ -7,6 +7,7 @@ on:
       - phase-50b-expanded-strategy-universe
     paths:
       - trigger/phase50b_tt05.start
+      - trigger/phase50b_tt05.retrigger
 
 concurrency:
   group: phase50b-tt05-replay
