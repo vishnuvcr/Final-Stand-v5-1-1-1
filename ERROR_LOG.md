@@ -1716,3 +1716,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Added a serialized concurrency group to the canonical Phase-50B workflow with `cancel-in-progress: false`.
 - Purpose: prevent overlapping numerical runs from competing for cached/published artifacts or obscuring the canonical evidence lineage.
 - Evidence status: **NO SCIENTIFIC IMPACT**. The active run 37593965525 was already running before this workflow hardening.
+
+
+### F50B-036 — TT-05 control workflow introduced
+- Time: 2026-10-07.
+- Added a deterministic TT-05 replay and dependency-gated workflow as the next registered control after TT-04.
+- No numerical TT-05 execution occurred in this step, so no evidence impact.
