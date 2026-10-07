@@ -101,16 +101,19 @@ jobs:
           test -f results/phase50b/tt07_dynamic_ic_ratio_replay/data_errors.csv
           test -f results/phase50b/tt07_dynamic_ic_ratio_replay/coverage_gaps.csv
           test -f results/phase50b/tt07_dynamic_ic_ratio_replay/transition_diagnostics.csv
+          test -f results/phase50b/tt07_dynamic_ic_ratio_replay/entry_exclusions.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt07_dynamic_ic_ratio_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt07_dynamic_ic_ratio_replay/tt07_trades.csv")
           er=pd.read_csv("results/phase50b/tt07_dynamic_ic_ratio_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt07_dynamic_ic_ratio_replay/coverage_gaps.csv")
+          ex=pd.read_csv("results/phase50b/tt07_dynamic_ic_ratio_replay/entry_exclusions.csv")
           assert d["engine_revision"]=="50B-TT07-COVERAGE-V2", d
           assert d["trades"]==len(tr), d
           assert d["candidate_trades"]==len(tr)+len(cg), d
           assert d["coverage_rate"]>=0.95, d
+          assert d.get("entry_exclusions",0)==len(ex), d
           assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
           assert len(er)==0, er.head()
           print("TT07 replay audit PASS", d)
