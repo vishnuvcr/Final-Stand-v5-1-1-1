@@ -629,3 +629,13 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 
 ## 2026-10-07 — TT04 failure diagnosed; timezone correction applied
 - The canonical TT04 V3 failure is now fully diagnosed from the completed job log: the replay reached summary construction, then failed because expiry_dt was timezone-naive while DEV_END/VAL_END were timezone-aware. This was a reporting-layer defect, not a trading-rule defect. Both canonical and fallback engines were corrected with project-timezone localization. A corrected canonical TT04 run 37629750175 has been queued; fallback run 37629239398 is also active/serialized under the same TT04 concurrency group. No result is accepted until the corrected run passes the full artifact gate.
+
+
+## 2026-10-07 — Corrected TT04 live checkpoint after timezone fix
+- Revalidated the finite Phase-50B plan, status controls and live Actions state before continuation.
+- Corrected canonical TT04 run **37629750175** is **in_progress** on commit **388301f19e6d8570041eb3605753e1112ded3296**.
+- TT04 preflight completed successfully: compilation and the TT-03 terminal feasibility gate passed.
+- Numerical execution remains in progress; replay, artifact audit, publication and TT05 trigger remain pending.
+- Former fallback run **37629239398** is **cancelled** by the shared TT04 concurrency guard; it is non-evidence and does not represent a scientific failure.
+- Fallback syntax-control run **37629740301** completed successfully.
+- No TT04 P&L, VIX result, parameter tuning, holdout result or promotion decision has been accepted.
