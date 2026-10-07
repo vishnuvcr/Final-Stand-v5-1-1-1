@@ -1,0 +1,145 @@
+name: Phase 50B - TT03 Dynamic-n Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-expanded-strategy-universe
+    paths:
+      - trigger/phase50b_tt03.start
+
+concurrency:
+  group: phase50b-tt03-replay
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify TT02 evidence gate
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/tt02_calendar_replay/summary.json
+          test -s results/phase50b/tt02_calendar_replay/tt02_trades.csv
+          test -f results/phase50b/tt02_calendar_replay/data_errors.csv
+          test -f results/phase50b/tt02_calendar_replay/coverage_gaps.csv
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase50b/tt02_calendar_replay/summary.json"))
+          tr=pd.read_csv("results/phase50b/tt02_calendar_replay/tt02_trades.csv")
+          er=pd.read_csv("results/phase50b/tt02_calendar_replay/data_errors.csv")
+          cg=pd.read_csv("results/phase50b/tt02_calendar_replay/coverage_gaps.csv")
+          assert d["engine_revision"]=="50B-TT02-COVERAGE-V3", d
+          assert d["trades"]==len(tr) and d["trades"]>0, d
+          assert d["candidate_trades"]==len(tr)+len(cg), d
+          assert d["coverage_rate"]>=0.95, d
+          assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
+          assert len(er)==0, er.head()
+          print("TT02 dependency gate PASS", d)
+          PY
+
+  numerical:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Refresh branch for source-of-truth
+        run: |
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow matplotlib scipy huggingface_hub
+      - name: Compile TT03 replay
+        run: python -m py_compile research/phase50b_tt03_dynamic_n_replay.py
+      - name: Static TT03 engine-contract audit
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          p=Path("research/phase50b_tt03_dynamic_n_replay.py")
+          tree=ast.parse(p.read_text())
+          names={n.targets[0].id for n in tree.body if isinstance(n,ast.Assign) and len(n.targets)==1 and isinstance(n.targets[0],ast.Name)}
+          assert "TT03_ENGINE_REV" in names
+          assert "50B-TT03-WINDOW-V2" in p.read_text()
+          print("TT03 engine contract PASS")
+          PY
+      - name: HF cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-tt03-hf-${{ runner.os }}-${{ hashFiles('research/phase50b_tt03_dynamic_n_replay.py') }}
+          restore-keys: |
+            phase50b-tt03-hf-${{ runner.os }}-
+      - name: Run TT03 replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50b_tt03_dynamic_n_replay.py
+      - name: Audit TT03 artifacts
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/tt03_dynamic_n_replay/summary.json
+          test -s results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv
+          test -f results/phase50b/tt03_dynamic_n_replay/data_errors.csv
+          test -f results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
+          tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
+          er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
+          cg=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv")
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V2", d
+          assert d["trades"]==len(tr) and d["trades"]>0, d
+          assert d["candidate_trades"]==len(tr)+len(cg), d
+          assert d["coverage_rate"]>=0.95, d
+          assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
+          assert len(er)==0, er.head()
+          print("TT03 replay artifact audit PASS", d)
+          PY
+      - name: Upload TT03 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-tt03-${{ github.run_id }}
+          path: results/phase50b/tt03_dynamic_n_replay
+      - name: Publish TT03 results safely
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          cp -R results/phase50b/tt03_dynamic_n_replay "$tmp/"
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          rm -rf results/phase50b/tt03_dynamic_n_replay
+          mkdir -p results/phase50b
+          cp -R "$tmp/tt03_dynamic_n_replay" results/phase50b/
+          git add results/phase50b/tt03_dynamic_n_replay
+          if git diff --cached --quiet; then
+            echo "No TT03 result changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT03 common-cost replay"
+            git push origin HEAD:phase-50b-expanded-strategy-universe
+          fi
+      - name: Trigger TT04 only after TT03 evidence passes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git fetch origin phase-50b-expanded-strategy-universe
+          git reset --hard origin/phase-50b-expanded-strategy-universe
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > trigger/phase50b_tt04.start
+          git add trigger/phase50b_tt04.start
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: trigger TT04 after TT03 audit"
+          git push origin HEAD:phase-50b-expanded-strategy-universe
