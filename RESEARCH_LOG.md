@@ -654,3 +654,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Corrected the inferential sample to DEV+VAL only, preserving 2026 strictly for protected holdout confirmation.
 - Holm correction will operate only on the pre-holdout hypothesis family.
 - No statistical inference result from the defective implementation is accepted.
+
+
+## 2026-10-07 — Statistical VIX-mode reconstruction correction
+- Audited the execution-only inference gate against the preregistered LOW/NORMAL/HIGH/SPIKE/FALLING/RISING/HIGH_RISING family.
+- Corrected the gate to reconstruct all dynamic VIX modes from each trade's entry timestamp and cached India VIX.
+- VIX-unobservable trades are now excluded from both regime and complement inferential samples.
+- Stored replay VIX level labels remain as a consistency audit field.
