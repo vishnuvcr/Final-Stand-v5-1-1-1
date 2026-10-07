@@ -759,3 +759,8 @@ No Phase-50B strategy has been promoted.
 
 ### 2026-10-07 — TT-02 contract hardening
 - Corrected an undefined runtime engine-revision constant in TT-02 and added a static AST guard. The active pre-fix execution is non-evidence; a fresh corrected rerun is required.
+
+
+### 2026-10-07 — TT-06 control prepared
+- Added [TT-06 replay engine](research/phase50b_tt06_intraday_asym_replay.py) and [TT-06 workflow](.github/workflows/phase-50b-tt06-intraday-asym.yml), dependency-gated behind audited TT-05 evidence.
+- No TT-06 result exists yet.
