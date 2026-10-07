@@ -9,7 +9,7 @@ from phase43_vix_strategy_sweep import (
 
 OUT=Path("results/phase50b/tt03_dynamic_n_replay")
 OUT.mkdir(parents=True,exist_ok=True)
-TT03_ENGINE_REV="50B-TT03-WINDOW-V2"
+TT03_ENGINE_REV="50B-TT03-WINDOW-V3"
 
 def expiry_dates():
     p=Path("results/phase43_vix/strategy_trade_matrix_all_splits.csv")
@@ -101,18 +101,24 @@ def trade_one(expiry,index,data):
         # simultaneously observed index/option timestamp at or BEFORE 15:29.
         # Never roll forward to 15:30+ and never require an exact 15:29 quote.
         hard_close=pd.Timestamp("15:29").time()
-        common=sorted(
-            set(idxday.timestamp).intersection(set(day_data.timestamp))
-        )
+        common=sorted(set(idxday.timestamp).intersection(set(day_data.timestamp)))
         eligible=[pd.Timestamp(t) for t in common if pd.Timestamp(t).time()<=hard_close]
-        if not eligible:
-            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"gap_type":"missing_observed_hard_close_quote_at_or_before_15:29"}}
-        exit_ts=max(eligible)
-    exit_snap=day_data[day_data.timestamp==exit_ts]
+        exit_ts=None
+        exit_snap=None
+        # Search backward for the latest timestamp at or before 15:29 for which
+        # every live leg has an observed quote. Do not stop at a timestamp that
+        # has some-but-not-all legs; that would create an artificial coverage gap.
+        for candidate in reversed(eligible):
+            snap_candidate=day_data[day_data.timestamp==candidate]
+            if all(q(snap_candidate,o,k) is not None for o,k,_ in legs):
+                exit_ts=candidate
+                exit_snap=snap_candidate
+                break
+        if exit_ts is None:
+            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),
+                                     "gap_type":"missing_complete_hard_close_quote_at_or_before_15:29"}}
     for o,k,qty in legs:
         px=q(exit_snap,o,k)
-        if px is None:
-            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"exit_ts":str(exit_ts),"gap_type":"missing_exit_leg_quote","option_type":o,"strike":float(k)}}
         ledger.append({"ts":exit_ts,"side":"sell" if qty>0 else "buy","price":px,"qty":qty,"lot":lot,"opt":o,"strike":k,"phase":"exit"})
     gross=0.0; orders=[]
     for r in ledger:
