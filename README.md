@@ -559,3 +559,7 @@ Phase 50B remains active on branch [phase-50b-expanded-strategy-universe](https:
 
 ## Phase 50B — latest status — 2026-10-07
 The accepted TT-03 V5 baseline is complete (200/201 coverage candidates, 99.50%, zero data errors). TT-04 V3 run **37621965843** is currently executing its numerical replay; no TT-04 result is accepted until the full artifact, coverage, zero-error and cost audit passes. No strategy has been promoted.
+
+
+## Phase 50B — live execution contingency — 2026-10-07
+TT-04 V3 remains the active numerical replay. A separate dormant performance-only fallback was prepared but not executed or wired into the workflow; no fallback result is evidence.
