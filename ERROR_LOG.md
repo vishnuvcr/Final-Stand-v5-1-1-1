@@ -1458,3 +1458,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: raw numerical output is useful exploratory diagnostic evidence but was not publication-accepted by the workflow.
 - Correction: create valid empty ledgers and an explicit sparse-HIGH exploratory validation branch. The exploratory branch is non-promotable and does not relax the confirmatory gate.
 - Prevention: all early-stop paths must emit the full canonical artifact set with headers before publication auditing.
+
+
+### F50B-001 — Tradetron page retrieval limitation
+- The seven supplied Tradetron backtest URLs were not retrievable by the available web crawler because the pages are dynamically served/cache-missed.
+- No rule was inferred from unavailable page HTML.
+- Correction: use the seven user-uploaded Tradetron JSON exports as the executable source-of-truth while preserving all seven URLs as provenance references.
+- Evidence status: documentation/source-intake limitation; no numerical result affected.
