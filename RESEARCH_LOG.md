@@ -613,3 +613,18 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - TT-03 generated its trade data but failed in chronological summary construction due to a naive/aware timestamp comparison.
 - The defect was isolated from the trade-generation logic, corrected with explicit timezone normalization, and logged as F50B-051.
 - A dedicated TT-03 workflow was added with an explicit TT-02 dependency gate and the same artifact/coverage/cost requirements.
+
+
+## 2026-10-07 — TT-03 corrected replay operational checkpoint
+- The corrected TT-03 trigger commit is visible with a pending GitHub commit status; no TT03 results or TT04 trigger are published.
+- No duplicate run was launched.
+
+## 2026-10-07 — TT-07 source semantics resolution
+- Verified Tradetron Runtime Variable semantics from the current official helpdesk and keyword documentation before numerical implementation.
+- The documentation supports counter-scoped strategy-level runtime memory until Universal Exit, resolving the raw-export `ic_entered` ambiguity.
+- Updated TT-07 source audit and replay contract; no numerical parameter was changed.
+
+## 2026-10-07 — TT-07 pre-execution self-audit
+- Implemented source-faithful TT-07 replay and gated workflow.
+- Caught and corrected a pre-execution semantic defect in transition delta evaluation: the engine must track the actual held short-leg strike rather than reselecting a nearest-delta strike at each minute.
+- Numerical execution remains downstream of TT-06 evidence; no TT-07 result exists yet.
