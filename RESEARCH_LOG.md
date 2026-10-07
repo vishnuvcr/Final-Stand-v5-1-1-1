@@ -525,3 +525,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Phase 50B TT-02 stale-artifact protection
 - Added TT-02 engine revision stamping and downstream acceptance check.
 - Only artifacts produced by the fully corrected coverage/terminal-accounting engine can pass the next numerical gate.
+
+
+## 2026-10-07 — Cost model robustness update
+- NSE current statutory charges were reverified; option-sale STT is 0.15% from 1 April 2026 and equity-option stamp duty is 0.003% buyer-side. citeturn214286search0turn214286search3
+- Paytm Money brokerage ambiguity was handled by retaining the preregistered ₹10 primary model and adding a non-selective ₹20/order robustness scenario. citeturn157124search0turn157124search2
