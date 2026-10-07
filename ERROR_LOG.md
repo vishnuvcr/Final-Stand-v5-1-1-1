@@ -1758,3 +1758,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Corrected before accepting any numerical evidence; a static AST contract audit was added to the workflow.
 - Current run 37596743408 predates this correction and remains non-authoritative even if it eventually completes.
 - Evidence status: **NO SCIENTIFIC IMPACT** because no output from the defective revision can pass the new audit.
+
+
+### F50B-042 — TT-06 workflow creation quoting defect
+- Time: 2026-10-07.
+- The first local construction of the TT-06 workflow failed before GitHub write because GitHub Actions expression syntax conflicted with JavaScript template interpolation.
+- Retried with literal-safe construction; workflow was written successfully and structurally audited.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
