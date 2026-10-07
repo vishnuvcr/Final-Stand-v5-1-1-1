@@ -151,3 +151,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected TT-02 v2/v3 to select the earliest common observed quote timestamp at or after 15:15 for all open legs, without forward-filling.
 - Corrected v2 automatically launched canonical Actions run **37589199743**. TT-03 remains dependency-gated and no TT-04 trigger may be created until TT-02 and TT-03 audit successfully.
 - Current gate: **TT-02 numerical rerun + zero-data-error artifact audit**.
+
+
+## 2026-10-07 — Workflow gate F50B-022 corrected
+- Corrected v2 run 37589199743 never reached TT-02 because the registry validation publisher had a missing shell `fi`.
+- Registry validation itself passed; no numerical evidence was produced by that run.
+- Corrected workflow commit **e0d4bda09bb943272bac591d68aafa051d7b9f94** restores the shell closure and normalizes the TT-03 publisher bot identity.
+- The workflow now has balanced shell `if`/`fi` blocks; the next canonical run will be launched only after this gate is recorded.
+- Current gate: **retrigger Phase-50B from the corrected workflow, then require TT-02 zero-data-error audit**.
