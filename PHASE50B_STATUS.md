@@ -567,3 +567,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Static review of V3 identifies computationally expensive repeated timestamp/quote scans inside the minute-by-minute replay, especially repeated full option-frame filtering and repeated 15:15–15:30 exit-candidate reconstruction.
 - This is recorded as a **performance-risk observation**, not a scientific error: the frozen source semantics, strike matching, chronology, costs and coverage rules are unchanged.
 - A performance-only fallback may be prepared without triggering it; it can be activated only after a genuine timeout/failure and a fresh evidence-gated replay.
+
+
+## 2026-10-07 — TT04 bounded continuation checkpoint
+- User instructed continuation again.
+- Direct Actions inspection: TT04 run 37621965843 remains in_progress at Run TT04 replay; all prerequisite steps remain successful.
+- The run has produced zero Actions artifacts so far and the TT05 trigger remains absent.
+- No timeout/failure signal has been observed, so the performance-only fallback remains dormant.
+- No duplicate numerical execution or scientific parameter change was made.
