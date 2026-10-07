@@ -451,3 +451,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - V2 diagnostics showed 13 exit-side missing-CE gaps plus two entry-window gaps. One of the entry gaps, 2022-10-24, was a Diwali Muhurat evening-session day and had no normal 10:00 market session; it must not be counted against a daytime strategy's coverage denominator.
 - V4 explicitly separates non-standard/closed intended entry dates into `session_exclusions` while retaining genuine regular-session entry-data failures as coverage gaps.
 - V4 workflow also requires current-run/V4 provenance on the feasibility diagnostic before any TT04 routing; stale diagnostic files cannot trigger downstream.
+
+
+## 2026-10-07 — TT-03 V4 workflow persistence hardening
+- V4 diagnostic persistence briefly referenced an undefined session-exclusion dataframe after the new denominator control was introduced.
+- The workflow was corrected to load `session_exclusions.csv` explicitly before writing the feasibility artifact.
+- No V4 numerical result was accepted from the affected workflow revision; the next trigger uses the corrected persistence logic.
