@@ -260,3 +260,9 @@ User requested continuation without pausing. Work performed:
 - The corrected TT03 trigger remained at commit-status `pending`, with no published result.
 - Refreshed the existing TT03 trigger rather than changing the research specification or launching a parallel numerical path.
 - The refreshed commit is also currently `pending`; TT03 evidence remains absent.
+
+
+## 2026-10-07 — Continue checkpoint: documentation write conflict
+- A multi-file documentation synchronization hit a stale SHA conflict after an earlier write advanced the branch.
+- No scientific artifact changed because of the failed write.
+- The repository-write procedure was corrected to use fresh SHAs sequentially.
