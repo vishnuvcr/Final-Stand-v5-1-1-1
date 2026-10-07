@@ -7,7 +7,7 @@ from phase43_vix_strategy_sweep import (
     exec_px, charges, lot_size_for_expiry
 )
 
-TT05_ENGINE_REV="50B-TT05-BASE-V1"
+TT05_ENGINE_REV="50B-TT05-COVERAGE-V2"
 OUT=Path("results/phase50b/tt05_short_straddle_replay"); OUT.mkdir(parents=True,exist_ok=True)
 ENTRY_START=pd.Timestamp("09:30").time()
 ENTRY_END=pd.Timestamp("15:10").time()
