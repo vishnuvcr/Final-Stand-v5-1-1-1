@@ -7,6 +7,7 @@ Phase 50B is the bounded continuation after Phase 50. It includes the user's sev
 - [Phase 50B pre-registration](PHASE50B_PRE_REGISTRATION.md)
 - [Phase 50B status](PHASE50B_STATUS.md)
 - [Phase 50B source/baseline audit](PHASE50B_SOURCE_BASELINE_AUDIT.md)
+- [Phase 50B literature review](PHASE50B_LITERATURE_REVIEW.md)
 - [Phase 50B chat log](PHASE50B_CHAT_LOG.md)
 
 ### Current strongest new VIX hypothesis
