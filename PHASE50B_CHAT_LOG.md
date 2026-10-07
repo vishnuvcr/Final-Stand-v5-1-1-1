@@ -98,3 +98,9 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — Operational polling note
 - Local sleep polling timed out again; logged as F50B-023 with no research impact.
 - Continued using direct GitHub Actions state checks; canonical run 37589400281 remains active in TT-02 replay.
+
+
+## 2026-10-07 — Live-log monitoring note
+- Direct run/job state confirms canonical TT-02 replay 37589400281 remains active.
+- Live log endpoint returned 404/BlobNotFound while the job is running; logged as F50B-024 with no evidence impact.
+- No P&L or scientific inference is being drawn before audited artifacts exist.
