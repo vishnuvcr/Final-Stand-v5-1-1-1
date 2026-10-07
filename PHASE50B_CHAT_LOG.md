@@ -32,3 +32,14 @@ User requested continuation without pausing. Work performed:
 - Audited current Tradetron TT-04 template 999088026. Validator warnings were preserved as source warnings rather than silently repaired: uncapped premium matching, fixed rupee stop, and repair/re-entry warning.
 - Built a source-faithful TT-04 common-cost replay engine but caught a cashflow-sign/MTM accounting defect before numerical execution. That draft is non-evidence and was corrected; no TT-04 numerical result exists yet.
 - A local syntax check was attempted but external DNS was unavailable; this was logged as F50B-014. GitHub Actions compile is the authoritative executable check.
+
+## 2026-10-07 — Continue the research checkpoint
+2026-10-07 — continuation checkpoint
+- Canonical GitHub Actions run 37572837253 remains the active Phase-50B numerical replay.
+- Registry/preflight job passed; TT-02 numerical replay is still in progress.
+- No TT-02 P&L, VIX uplift, validation result or promotion claim is accepted while the numerical job is incomplete.
+- TT-03 is dependency-gated behind TT-02; its source-faithful engine and audit are already prepared.
+- TT-04 source-faithful engine is prepared and its pre-execution MTM/cashflow defect has been corrected; no TT-04 numerical evidence exists yet.
+- The research sequence remains frozen as TT-02 → TT-03 → TT-04 → registered controls → statistical correction → final holdout/manuscript.
+- Repo orchestration was audited before proceeding; README/status/chat/research-log paths do not trigger numerical execution.
+- TT-04 will remain blocked until TT-02 and TT-03 have completed successfully and passed their artifact audits.
