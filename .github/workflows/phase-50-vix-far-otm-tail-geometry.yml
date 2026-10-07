@@ -144,3 +144,5 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50: publish far-OTM research results"
             git push origin HEAD:phase-50-vix-far-otm-tail-geometry
           fi
+
+# Phase 50 trigger validation marker
