@@ -1551,3 +1551,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - This is a computational implementation issue, not a scientific result.
 - Correction: nearest-delta selection is now vectorized across the complete strike set using the same Black-Scholes implied-volatility / European-delta definition; the candidate universe is unchanged and no strike-distance shortcut is introduced.
 - The slower run is not used as evidence. The corrected canonical run supersedes it through workflow concurrency.
+
+
+### Error F50B-013 — TT-04 baseline engine cashflow accounting audit
+- Found during static pre-execution audit before any TT-04 numerical run: the initial engine draft represented short-sale cashflows with the wrong sign and used a non-zero-at-entry P&L representation.
+- No numerical TT-04 result was produced from the defective draft.
+- Correction: TT-04 now tracks executed cash separately and calculates mark-to-market P&L as cash plus the signed market value of all open positions. Opening/closing/replacement cashflows are signed by buy/sell direction.
+- Prevention: every new multi-leg replay must satisfy a zero-at-entry MTM identity on a synthetic fixture before numerical execution.
