@@ -559,3 +559,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Direct Actions state still shows TT04 run **37621965843** in_progress at `Run TT04 replay`; all preflight/replay prerequisites are successful.
 - TT04 result artifacts and the TT05 trigger are still absent from the branch, so no evidence has reached the acceptance/publication gate.
 - No duplicate run was launched; the registered chain remains fail-closed.
+
+
+## 2026-10-07 — TT04 runtime/performance audit during active replay
+- TT04 run **37621965843** remains in_progress; no artifact audit has begun and no result is accepted.
+- Workflow timeout is 240 minutes for the numerical job. Current state has not reached timeout, so no fallback execution is authorized yet.
+- Static review of V3 identifies computationally expensive repeated timestamp/quote scans inside the minute-by-minute replay, especially repeated full option-frame filtering and repeated 15:15–15:30 exit-candidate reconstruction.
+- This is recorded as a **performance-risk observation**, not a scientific error: the frozen source semantics, strike matching, chronology, costs and coverage rules are unchanged.
+- A performance-only fallback may be prepared without triggering it; it can be activated only after a genuine timeout/failure and a fresh evidence-gated replay.
