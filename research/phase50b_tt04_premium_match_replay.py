@@ -7,7 +7,7 @@ from phase43_vix_strategy_sweep import (
     load_parquet, load_vix, vix_state, exec_px, charges, lot_size_for_expiry
 )
 
-TT04_ENGINE_REV = "50B-TT04-COVERAGE-V2"
+TT04_ENGINE_REV = "50B-TT04-COVERAGE-V3"
 OUT = Path("results/phase50b/tt04_premium_match_replay")
 OUT.mkdir(parents=True, exist_ok=True)
 ENTRY_START = pd.Timestamp("10:00").time()
@@ -29,11 +29,15 @@ def q(z,opt,k):
     a=z[(z.option_type==opt)&(np.isclose(z.strike,float(k),rtol=0,atol=1e-8))]
     return None if a.empty else float(a.iloc[-1].close)
 
-def nearest_ltp_strike(z,opt,target):
-    a=z[z.option_type==opt][["strike","close"]].drop_duplicates("strike")
-    if a.empty:return None
-    a=a.assign(err=(a.close.astype(float)-float(target)).abs())
-    return float(a.sort_values(["err","strike"],kind="stable").iloc[0].strike)
+def exact_ltp_strike(z,opt,target,spot):
+    if z is None or z.empty or target is None or not np.isfinite(float(target)):
+        return None
+    a=z[(z.option_type==opt)&np.isfinite(z.close)&(np.abs(z.close.astype(float)-float(target))<=1e-12)][["strike","close"]].drop_duplicates("strike")
+    if a.empty:
+        return None
+    a=a.assign(dist=(a.strike.astype(float)-float(spot)).abs())
+    a=a.sort_values(["dist","strike"],kind="stable")
+    return float(a.iloc[0].strike)
 
 def expiry_list():
     p=Path("results/phase43_vix/strategy_trade_matrix_all_splits.csv")
@@ -85,7 +89,7 @@ def close_and_replace(pos,ts,name,z,opt,target,phase_prefix):
     old=pos["legs"][name]
     old_px=q(z,old["opt"],old["strike"])
     if old_px is None:return False
-    new_strike=nearest_ltp_strike(z,opt,target)
+    new_strike=exact_ltp_strike(z,opt,target,pos["entry_spot"])
     if new_strike is None:return False
     new_px=q(z,opt,new_strike)
     if new_px is None:return False
@@ -191,10 +195,25 @@ def main():
                     position=None
                     continue
                 if ts.time()>=EXIT_TIME:
-                    out=finish(position,ts,z)
-                    if out:rows.append(out)
-                    else:coverage_gaps.append(position.get("_coverage_gap",{"trade_id":position["trade_id"],"expiry":str(position["expiry"].date()),"trigger_ts":str(ts),"gap_type":"missing_exit_leg_quote"}))
+                    # Source rule is exit at/after 15:15. Search the same day's
+                    # observed timestamps for the earliest complete exit rather
+                    # than requiring the first timestamp after 15:15 to contain
+                    # every leg.
+                    exit_candidates=idx[(idx.timestamp.dt.normalize()==day.normalize())&(idx.timestamp.dt.time>=EXIT_TIME)&(idx.timestamp.dt.time<=pd.Timestamp("15:30").time())]["timestamp"].tolist()
+                    exited=False
+                    for exit_ts in exit_candidates:
+                        exit_ts=pd.Timestamp(exit_ts)
+                        z_exit=option_cache[position["expiry"]]
+                        z_exit=z_exit[z_exit.timestamp==exit_ts]
+                        out=finish(position,exit_ts,z_exit) if not z_exit.empty else None
+                        if out is not None:
+                            rows.append(out)
+                            exited=True
+                            break
+                    if not exited:
+                        coverage_gaps.append({"trade_id":position["trade_id"],"expiry":str(position["expiry"].date()),"trigger_ts":str(position["entry_ts"]),"gap_type":"no_complete_exit_quote_at_or_after_15:15"})
                     position=None
+                    break
         except Exception as e:
             errors.append({"day":str(day.date()),"error":repr(e)})
     df=pd.DataFrame(rows)
@@ -222,4 +241,4 @@ if __name__=="__main__":
 
 # F50B-029: pre-execution correction. Missing exit-leg quotes are explicit coverage exclusions, never silent trade loss or imputation.
 
-# F50B-034: TT04 evidence requires revision 50B-TT04-COVERAGE-V2.
+# F50B-068: exact observed premium matching and earliest complete 15:15+ exit semantics are enforced in V3.
