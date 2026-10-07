@@ -74,7 +74,7 @@ jobs:
           tree=ast.parse(p.read_text())
           names={n.targets[0].id for n in tree.body if isinstance(n,ast.Assign) and len(n.targets)==1 and isinstance(n.targets[0],ast.Name)}
           assert "TT03_ENGINE_REV" in names
-          assert "50B-TT03-WINDOW-V3" in p.read_text()
+          assert "50B-TT03-WINDOW-V4" in p.read_text()
           print("TT03 engine contract PASS")
           PY
       - name: HF cache
@@ -106,7 +106,7 @@ jobs:
           tr=pd.read_csv(src/"tt03_trades.csv")
           er=pd.read_csv(src/"data_errors.csv")
           cg=pd.read_csv(src/"coverage_gaps.csv")
-          valid=(d.get("engine_revision")=="50B-TT03-WINDOW-V3" and
+          valid=(d.get("engine_revision")=="50B-TT03-WINDOW-V4" and
                  d.get("trades")==len(tr) and
                  d.get("candidate_trades")==len(tr)+len(cg))
           state="FAIL_COVERAGE" if valid and len(er)==0 and float(d.get("coverage_rate",0))<0.95 else ("PASS" if valid and len(er)==0 and float(d.get("coverage_rate",0))>=0.95 else "INVALID")
@@ -115,7 +115,7 @@ jobs:
                "candidate_trades":d.get("candidate_trades"),"coverage_exclusions":d.get("coverage_exclusions"),
                "coverage_rate":d.get("coverage_rate"),"net":d.get("net"),
                "net50":d.get("net50"),"net20":d.get("net20"),"net20_50":d.get("net20_50"),
-               "data_errors":len(er),"run_id":${{ github.run_id }}}
+               "data_errors":len(er),"session_exclusions":len(sx),"run_id":${{ github.run_id }}}
           (dst/"feasibility.json").write_text(json.dumps(out,indent=2))
           print(json.dumps(out,indent=2))
           PY
@@ -146,13 +146,15 @@ jobs:
           test -s results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv
           test -f results/phase50b/tt03_dynamic_n_replay/data_errors.csv
           test -f results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv
+          test -f results/phase50b/tt03_dynamic_n_replay/session_exclusions.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
           er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv")
-          assert d["engine_revision"]=="50B-TT03-WINDOW-V3", d
+          sx=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/session_exclusions.csv")
+          assert d["engine_revision"]=="50B-TT03-WINDOW-V4", d
           assert d["trades"]==len(tr) and d["trades"]>0, d
           assert d["candidate_trades"]==len(tr)+len(cg), d
           assert d["coverage_rate"]>=0.95, d
@@ -198,6 +200,12 @@ jobs:
           if not p.exists():
               raise SystemExit("No TT03 feasibility classification; do not trigger downstream.")
           d=json.loads(p.read_text())
+          if int(d.get("run_id",-1)) != int("${{ github.run_id }}"):
+              print("TT04 blocked: stale TT03 feasibility artifact does not belong to this workflow run:",d)
+              raise SystemExit(0)
+          if d.get("engine_revision") != "50B-TT03-WINDOW-V4":
+              print("TT04 blocked: feasibility artifact is not current TT03 V4:",d)
+              raise SystemExit(0)
           if d["feasibility_state"] != "PASS":
               print("TT04 blocked because TT03 feasibility did not pass:", d)
               raise SystemExit(0)
