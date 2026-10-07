@@ -140,3 +140,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-02 terminal accounting safeguard
 - Added explicit accounting for terminal open positions as coverage exclusions.
 - Current active run predates this correction; latest-code rerun will be required before accepting final TT-02 evidence.
+
+
+## 2026-10-07 — TT-02 engine revision gate
+- Added `50B-TT02-COVERAGE-V3` revision stamping and workflow verification.
+- Current active run predates the stamp, so latest-code rerun remains required for final evidence.
