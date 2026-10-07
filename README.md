@@ -1,32 +1,21 @@
-## Phase 49 — VIX Leader Parameter Tuning — INITIALIZED
+## Phase 49 — VIX Leader Parameter Tuning — CLOSED / NO PROMOTION
 
-Phase 49 tunes only the empirical VIX leaders rather than reopening the full strategy universe. The registered search covers Bear Call, Bear Put and Put Broken-Wing Butterfly in LOW and NORMAL VIX, with different strike geometry/hedge widths, entry times and entry distances. Total search universe: **1,440 parameter×regime candidates**.
+Phase 49 is complete. The study evaluated 720 raw geometries, expanded to 1,440 geometry×VIX-regime candidates across LOW and NORMAL India-VIX states, using 133 development expiry blocks (2021–2023), 102 validation expiry blocks (2024–2025), and 21 protected holdout expiry blocks.
 
-Development tuning uses 2021-2023. Validation is 2024-2025. The 2026 holdout remains protected. Candidate selection requires year-by-year development consistency and neighborhood support. No parameter is changed after the validation freeze.
+Final gate: 2 candidates frozen, 1 validation economic pass, 0 Holm-adjusted statistical survivors, 1 protected holdout confirmation, and NO PROMOTION. The canonical strategy is unchanged.
 
-- [Phase 49 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-49-vix-leader-parameter-tuning)
+The strongest research candidate was the LOW-VIX Bear Put Debit Spread: 09:30 IST, 5 trading sessions before expiry, buy PE +1 modal strike step, sell PE -3 steps, width 4 steps. Validation net was ₹28,848.48 and +50% cost-stress net was ₹27,246.47 across 42 active LOW-VIX trades. Active-vs-complement inference remained non-confirmatory (p=0.2260; Holm p=0.4520; 95% CI crossed zero). The protected holdout had 5 trades, ₹27,278.50 net, ₹27,051.63 stressed, and 80% wins; this is encouraging but underpowered.
+
+The tuned Put Broken-Wing Butterfly was rejected: -₹43,963.84 validation net and -₹16,356.40 on the 2026 holdout.
+
 - [Phase 49 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_RESEARCH_PLAN.md)
-- [Phase 49 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_PRE_REGISTRATION.md)
-- [Phase 49 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md)
-- [Phase 49 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_LITERATURE_REVIEW.md)
-- [Phase 49 engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/research/phase49_vix_leader_tuning.py)
-
-**Phase 49 correction status (2026-10-07):** the first long-running numerical attempt is explicitly NON-EVIDENCE. A pre-result code audit found an undefined family registry, an incorrect validation comparator (candidate-vs-rest instead of active-VIX-vs-complement-VIX), and a mismatch between the preregistered forward-fold selector and the implementation. These defects are being corrected before any numerical conclusion is accepted. The registered 720 geometries / 1,440 regime-expanded candidates and the protected 2026 holdout remain unchanged.
-
-The current authoritative Phase-49 status is recorded in [PHASE49_STATUS.md](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md).
+- [Phase 49 pre-registration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_PRE_REGISTRATION.md)
+- [Phase 49 final status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/PHASE49_STATUS.md)
+- [Phase 49 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/PHASE49_MANUSCRIPT.md)
+- [Phase 49 final decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-49-vix-leader-parameter-tuning/results/phase49_vix_tuning/phase49_final_decision.json)
+- [Automatic closeout reconciliation run #2](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37544951498)
 
 ---
-
-**Phase 49 performance correction (F49-009, 2026-10-07):** the engine now caches index trading days, timestamp-to-spot mappings and VIX state calculations across candidates. This is execution-only and does not alter the preregistered search or inference definitions. The optimized run is tracked as Actions run #9; all slower/superseded Phase-49 runs remain non-evidence.
-
-
-**Phase 49 F49-010 correction (2026-10-07):** a final static audit found a remaining validation-stage import-path defect and an unhandled zero-candidate freeze branch. The active run #9 is NON-EVIDENCE. The corrected engine is on run #11 and no numerical conclusion is accepted until its full artifact/statistical audits pass.
-
-
-**Phase 49 F49-011 status (2026-10-07):** run #11 completed the numerical computation but failed the artifact self-audit solely because an empty development error ledger was zero bytes. The numerical values remain embargoed. Run #12 is the corrected full rerun with a valid empty error ledger and the same scientific definitions.
-
----
-
 ## Phase 48 — Independent Multi-Expiry VIX Data Bridge — CLOSED / NO PROMOTION
 
 Phase 48 successfully repaired the multi-expiry data limitation identified in Phase 47 by using an independent NIFTY intraday option source with multiple expiries on the same trade date. The final corrected run contains **124 accepted trade rows** across three registered baselines.
