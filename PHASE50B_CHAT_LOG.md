@@ -355,3 +355,9 @@ User requested continuation without pausing. Work performed:
 - 13 exit gaps are plausible hard-close quote issues; the V3/V4 backward-complete-quote search addresses them.
 - One entry gap (2022-10-24) was a non-standard Muhurat evening session, not a daytime data outage; V4 excludes it from the candidate denominator and records it separately.
 - Also hardened TT04 routing to require a current-run V4 PASS feasibility artifact, preventing stale diagnostic files from triggering downstream.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 V4 persistence fix
+- Self-audit of the V4 workflow found the new session-exclusion dataframe was referenced before loading.
+- Corrected the workflow persistence step before accepting V4 evidence.
+- The next TT03 run is the sole valid V4 attempt; TT04 remains blocked until current-run V4 feasibility PASS.
