@@ -10,7 +10,7 @@ on:
 
 concurrency:
   group: phase50b-tt05-replay
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write
