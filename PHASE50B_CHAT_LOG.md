@@ -156,3 +156,7 @@ User requested continuation without pausing. Work performed:
 - Found silent loss of TT-03 trades when mandatory exit quotes were missing.
 - Added explicit coverage exclusions and a 95% feasibility gate.
 - Added current Paytm brokerage robustness outputs to the corrected replay.
+
+
+## 2026-10-07 — TT-04 revision gate
+- Added TT-04 engine revision `50B-TT04-COVERAGE-V2` and workflow validation against it.
