@@ -251,3 +251,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Run 37593965525 remains `in_progress` at the canonical v2 numerical replay step.
 - Workflow timeout is 360 minutes. No timeout/failure conclusion has been emitted by GitHub, so the prepared v3 performance fallback is **not** activated yet.
 - v3 remains a performance-only implementation and cannot contribute evidence until v2 genuinely fails/times out and a fresh corrected run is launched.
+
+
+## 2026-10-07 — TT-02 v2/v3 equivalence confirmed
+- Audited v3 against v2 at the core-function level: BS model, delta selection, repairs, finalization, execution costs, VIX assignment and chronology are unchanged.
+- v3 is authorized only after a genuine v2 failure/timeout and will then require the same evidence gates.
