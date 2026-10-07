@@ -29,7 +29,7 @@ NSE's public pages provide statutory levies, while Paytm Money states that actua
 
 
 ## 2026-10-07 — Paytm Money current brokerage robustness audit
-- Paytm Money's current public material is internally inconsistent: an F&O FAQ currently shows ₹10 per unique executed order, while Paytm Money's official 2025 pricing announcement states a flat ₹20 brokerage across segments from 15 January 2025. citeturn157124search0turn157124search2
+- Paytm Money's current public material is internally inconsistent: an F&O FAQ currently shows ₹10 per unique executed order, while Paytm Money's official 2025 pricing announcement states a flat ₹20 brokerage across segments from 15 January 2025. [Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web); [Paytm Money pricing update](https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/)
 - The canonical Phase-50B preregistered model remains **₹10/order** for comparability with the parent research program.
 - A separate **₹20/order current-account robustness scenario** is now required for promotion sensitivity. It does not replace the primary model or permit post-result candidate selection.
-- NSE's current statutory schedule confirms option-sale STT of 0.15% from 1 April 2026 and equity-option stamp duty of 0.003% on buyers. citeturn214286search0turn214286search3
+- NSE's current statutory schedule confirms option-sale STT of 0.15% from 1 April 2026 and equity-option stamp duty of 0.003% on buyers. [NSE STT schedule](https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax); [NSE stamp duty schedule](https://www.nseindia.com/static/invest/first-time-investor-stamp-duty-charges-taxes)
