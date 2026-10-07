@@ -207,3 +207,8 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — TT-02 terminal accounting safeguard
 - Added a terminal-position reconciliation to the corrected TT-02 engines so no opened position can disappear from the denominator.
 - The currently active run 37593965525 predates this safeguard; it remains diagnostic/non-final until its output is examined and a latest-code rerun passes the revised audit.
+
+
+## 2026-10-07 — Statistical gate prepared
+- Added `research/phase50b_statistical_gate.py` implementing the preregistered VIX-regime versus complement bootstrap/permutation framework, Holm correction, chronological split reporting, and protected-holdout handling.
+- It is execution-only and will not select/tune candidates before the registered development/validation process.
