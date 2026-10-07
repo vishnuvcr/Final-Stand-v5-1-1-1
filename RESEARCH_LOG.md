@@ -475,3 +475,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Registry validation itself passed and uploaded; no TT-02 evidence exists from this run.
 - Corrected workflow commit e0d4bda09bb943272bac591d68aafa051d7b9f94 restores the shell closure and normalizes the TT-03 publisher identity.
 - Shell `if`/`fi` balance was rechecked before the next trigger.
+
+
+## 2026-10-07 — Operational monitoring correction
+- Local sleep polling timed out (F50B-023) with no workflow impact.
+- Monitoring switched back to direct Actions state/job checks; no numerical evidence was altered.
