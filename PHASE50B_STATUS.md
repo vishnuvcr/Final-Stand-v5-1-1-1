@@ -592,3 +592,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - The 240-minute workflow timeout remains the registered execution gate. Because the available GitHub wrapper still does not expose authoritative run start-time metadata, timeout breach is not inferred.
 - No duplicate replay, parameter change, VIX inference, holdout analysis or promotion decision was performed from the incomplete run.
 - The finite Phase-50B plan remains unchanged.
+
+
+## 2026-10-07 — TT04 dormant performance fallback prepared
+- While TT04 V3 remains actively executing, a separate **semantics-preserving performance-only fallback** was added at `research/phase50b_tt04_premium_match_replay_fast.py`.
+- It replaces repeated full timestamp scans with timestamp-indexed option frames, pre-indexed spot lookup and one-time daily exit-candidate construction.
+- The fallback retains the same source entry/repair/stop/15:15-or-later exit rules, exact observed premium matching, chronological handling, coverage/session treatment, lot sizing and four registered cost outputs.
+- It is **not wired to the active workflow, not executed, and not evidence**. Activation remains contingent on a genuine TT04 workflow failure/timeout followed by a fresh compile/evidence audit.
