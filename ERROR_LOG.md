@@ -1640,3 +1640,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: these cases are now recorded in `coverage_gaps.csv`, excluded from primary P&L, never forward-filled, and no longer counted as `data_errors`.
 - The feasibility gate is pre-registered at 95% complete mandatory-exit coverage. The observed replay had 247 complete exits and 5 coverage gaps among 252 opened positions (~98.0%), so it clears this operational gate if the rerun reproduces the same coverage.
 - Prevention: every sparse-market-data limitation must be separated from model/code errors and carried into the final sensitivity and limitations analysis.
+
+
+### F50B-026 — TT-03 entry window implementation correction
+- Time: 2026-10-07.
+- Pre-execution audit found TT-03 selected only the first timestamp in the 10:00–10:05 window.
+- Correction: the engine now evaluates the entire frozen entry window and selects the earliest timestamp at which a complete source-defined ratio set is available, retaining call-set priority and put-set fallback.
+- Evidence status: **NO SCIENTIFIC IMPACT**. TT-03 had not executed.
+- Prevention: source-defined time windows must be implemented as windows, not silently collapsed to the first bar unless the source explicitly requires that.
