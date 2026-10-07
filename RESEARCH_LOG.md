@@ -870,3 +870,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — TT04 fallback dispatch blocker
 - Fallback activation was structurally prepared after the genuine TT04 V3 failure, but GitHub did not instantiate an Actions run from the API-authored trigger commit. The connector lacks a workflow_dispatch operation. This is an execution-orchestration limitation only; no numerical inference is made and the fallback remains pending.
+
+
+## 2026-10-07 — TT04 runtime failure diagnosed and corrected
+- The completed TT04 V3 log was re-read after the run became terminal. The failure occurred only at DEV/VAL/HOLD split-summary construction: expiry dates were parsed timezone-naive and compared to timezone-aware split boundaries. No numerical artifact was published. Both canonical and fallback engines were corrected to localize expiry_dt to TZ. A corrected canonical rerun was queued; the fallback replay is also being handled under the serialized TT04 concurrency group.
