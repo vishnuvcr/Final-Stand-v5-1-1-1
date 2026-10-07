@@ -129,7 +129,7 @@ def main():
     vix=load_vix()
     days=sorted(idx.timestamp.dt.normalize().unique())
     option_cache={}
-    rows=[];errors=[];coverage_gaps=[];trade_id=1;position=None
+    rows=[];errors=[];coverage_gaps=[];session_exclusions=[];trade_id=1;position=None
     for day in days:
         day=pd.Timestamp(day)
         if day<START.normalize() or day>END.normalize():continue
@@ -138,6 +138,15 @@ def main():
         next_exp=next_expiry(exps,cur)
         target=next_exp if day.normalize()==cur.normalize() else cur
         if target is None:continue
+
+        regular=index_data_for_day=idx[(idx.timestamp.dt.normalize()==day.normalize())&
+                                      (idx.timestamp.dt.time>=pd.Timestamp("09:15").time())&
+                                      (idx.timestamp.dt.time<=pd.Timestamp("15:30").time())]
+        if regular.empty:
+            session_exclusions.append({"date":str(day.date()),
+                                       "reason":"no_normal_09:15_to_15:30_session"})
+            continue
+
         try:
             if target not in option_cache:
                 option_cache[target]=option_clean(load_parquet(f"options/NIFTY/{target.strftime('%Y-%m-%d')}.parquet"))
@@ -147,6 +156,7 @@ def main():
             # existing current-week position must be marked/exited against its own
             # current-week option series.
             day_rows=idx[(idx.timestamp.dt.normalize()==day.normalize())&(idx.timestamp.dt.time>=ENTRY_START)&(idx.timestamp.dt.time<=EXIT_TIME)]
+            entered_today=False
             for ts in day_rows.timestamp.tolist():
                 ts=pd.Timestamp(ts)
                 ix=idx[idx.timestamp==ts]
@@ -172,6 +182,7 @@ def main():
                         position["legs"][name]={"opt":opt,"strike":atm,"qty":-1,"avg_entry":ep}
                         position["cash"] += ep*position["lot"]
                         order_ledger(position,ts,"sell",ep,-1,opt,atm,"entry")
+                    entered_today=True
                     trade_id+=1
                 if position is None:continue
                 # Source repair triggers use ORIGINAL ENTRY premiums and raw LTPs.
@@ -214,14 +225,23 @@ def main():
                         coverage_gaps.append({"trade_id":position["trade_id"],"expiry":str(position["expiry"].date()),"trigger_ts":str(position["entry_ts"]),"gap_type":"no_complete_exit_quote_at_or_after_15:15"})
                     position=None
                     break
+            if not entered_today and position is None:
+                coverage_gaps.append({"trade_id":trade_id,"expiry":str(target.date()),
+                                      "trigger_ts":str(day),"gap_type":"missing_complete_entry_at_10:00_to_10:05"})
+                trade_id+=1
         except Exception as e:
             errors.append({"day":str(day.date()),"error":repr(e)})
+            if position is None:
+                coverage_gaps.append({"trade_id":trade_id,"expiry":str(target.date()),
+                                      "trigger_ts":str(day),"gap_type":"entry_or_replay_exception"})
+                trade_id+=1
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt04_trades.csv",index=False)
     pd.DataFrame(errors,columns=["day","error"]).to_csv(OUT/"data_errors.csv",index=False)
     pd.DataFrame(coverage_gaps,columns=["trade_id","expiry","trigger_ts","gap_type"]).to_csv(OUT/"coverage_gaps.csv",index=False)
+    pd.DataFrame(session_exclusions,columns=["date","reason"]).to_csv(OUT/"session_exclusions.csv",index=False)
     if df.empty:
-        summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"net":0.0,"net50":0.0}
+        summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"session_exclusions":len(session_exclusions),"net":0.0,"net50":0.0,"net20":0.0,"net20_50":0.0}
     else:
         df["expiry_dt"]=pd.to_datetime(df.expiry)
         splits=[]
@@ -231,7 +251,7 @@ def main():
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
         candidate_trades=len(df)+len(coverage_gaps); coverage_rate=len(df)/candidate_trades if candidate_trades else 0.0
-        summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
+        summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"session_exclusions":len(session_exclusions),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
     (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2))
