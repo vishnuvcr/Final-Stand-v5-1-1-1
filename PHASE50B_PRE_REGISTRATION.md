@@ -30,3 +30,6 @@ For source-faithful baselines using historical option-chain data, mandatory exit
 
 ## Explicit non-claims
 A Tradetron report, repository README, video, or earlier backtest does not establish a durable edge.
+
+## Brokerage robustness
+The preregistered primary execution model remains ₹10/order for continuity with the parent research program. Because current Paytm Money public materials indicate a flat ₹20/order rate from 15 January 2025 while an older F&O FAQ still displays ₹10, every candidate that reaches promotion must also report a ₹20/order brokerage robustness scenario. This secondary scenario cannot be used to select or tune candidates and cannot be omitted from the final cost-sensitivity table. citeturn157124search2turn157124search0
