@@ -511,3 +511,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Coverage/session diagnostic files now have summary-to-row count reconciliation in their downstream evidence gates.
 - TT07 now additionally requires and validates the entry-exclusions diagnostic.
 - These changes are control hardening only and do not trigger any replay because no strategy trigger file was modified.
+
+
+## 2026-10-07 — TT-03 V5 PASSED feasibility
+- Run 37620274641 completed with TT-03 V5 PASS: 200 completed campaigns / 201 candidates, 99.50% coverage, 1 explicit coverage exclusion, 1 session exclusion, zero data errors.
+- Common-cost TT-03 baseline: net ₹89,669.15; +50% cost stress ₹82,074.11; ₹20/order ₹75,509.15; ₹20/order +50% stress ₹60,834.11.
+- These figures are accepted source-faithful baseline evidence but are not yet a promotion decision; VIX inference, chronological validation/holdout confirmation and statistical gates remain.
+- TT04 was then dispatched explicitly because the TT03 workflow's GITHUB_TOKEN push cannot trigger an ordinary push workflow automatically.
