@@ -796,3 +796,9 @@ No Phase-50B strategy has been promoted.
 - TT-02 authoritative evidence is now published and audited: 247/252 coverage, 98.02%; primary net -₹3,387.42; +50% cost stress -₹32,226.76; ₹20/order robustness -₹47,212.62; ₹20/order +50% stress -₹97,964.56.
 - TT-03 first execution failed in chronological summary accounting because of timezone-naive/aware comparison; this was corrected before accepting any result.
 - Dedicated TT-03 replay workflow added and gated on the published TT-02 evidence.
+
+
+### 2026-10-07 — TT-03 trigger refresh
+- The corrected TT03 workflow remained non-observable through the available commit-status endpoint, so its trigger file was refreshed in commit `28722b5204166199f91353d793f2840fe2022812`.
+- The dedicated TT03 workflow uses serialized `cancel-in-progress: true` concurrency; no overlapping TT03 evidence is permitted.
+- The new commit status is pending and no TT03 result is accepted yet.
