@@ -1691,7 +1691,7 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 
 ### F50B-032 — Paytm Money brokerage-rate ambiguity resolved by robustness scenario
 - Time: 2026-10-07.
-- Current Paytm Money public material conflicts: one current F&O FAQ displays ₹10/order while an official 2025 pricing announcement states flat ₹20/order from 15 January 2025. citeturn157124search0turn157124search2
+- Current Paytm Money public material conflicts: one current F&O FAQ displays ₹10/order while an official 2025 pricing announcement states flat ₹20/order from 15 January 2025. [Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web); [Paytm Money pricing update](https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/)
 - Correction: retain the preregistered ₹10/order primary model for continuity, while adding a non-selective ₹20/order robustness scenario required for promotion sensitivity.
 - Evidence status: **NO IMPACT ON CURRENT RUN**; this applies only to the latest-code rerun.
 
