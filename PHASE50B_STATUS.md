@@ -164,3 +164,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — Operational polling note
 - Direct Actions checks remain the authoritative monitoring method. A local sleep helper timed out again (F50B-023); no numerical job was affected.
 - Canonical run **37589400281** remains the sole active Phase-50B numerical run.
+
+
+## 2026-10-07 — Live-log monitoring note
+- TT-02 replay job **112687069655** remains in progress in canonical run **37589400281**.
+- Live log retrieval returned a transient 404 (`BlobNotFound`), recorded as F50B-024; no research impact.
+- Numerical evidence remains blocked until the job completes and the zero-data-error artifact audit passes.
