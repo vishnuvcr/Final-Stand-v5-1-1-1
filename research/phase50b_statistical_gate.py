@@ -100,11 +100,14 @@ for strategy,path in STRATEGIES.items():
     coverage_rows.append({"strategy":strategy,"coverage_rate":coverage})
     if "vix_state" not in z.columns:
         continue
+    # Protect the 2026 holdout from inferential hypothesis testing.
+    # The registered inference universe is pre-holdout DEV+VAL only.
+    infer_z=z[z["_date"]<=pd.Timestamp("2025-12-31")].copy()
     for mode in MODES:
-        regime=z[z.vix_state.astype(str)==mode]
-        complement=z[z.vix_state.astype(str)!=mode]
+        regime=infer_z[infer_z.vix_state.astype(str)==mode]
+        complement=infer_z[infer_z.vix_state.astype(str)!=mode]
         r=bootstrap_diff(regime.net.values,complement.net.values,seed=505001+len(rows))
-        r.update({"strategy":strategy,"vix_mode":mode,
+        r.update({"strategy":strategy,"vix_mode":mode,"inference_sample":"DEV+VAL","holdout_excluded":True,
                   "regime_cost50_mean":float(regime.net50.mean()) if len(regime) else np.nan,
                   "complement_cost50_mean":float(complement.net50.mean()) if len(complement) else np.nan,
                   "regime_current20_mean":float(regime.net20.mean()) if len(regime) else np.nan,
@@ -148,6 +151,8 @@ summary={
         "protected 2026 holdout confirmation"
     ],
     "holdout_is_protected":True,
+    "inference_excludes_holdout":True,
+    "inference_sample":"DEV+VAL only",
     "cost_fields_fail_closed":True,
     "registered_strategies":list(STRATEGIES.keys())
 }
