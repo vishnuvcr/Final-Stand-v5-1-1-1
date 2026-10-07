@@ -1564,3 +1564,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - A local pre-execution `py_compile` attempt could not download the current GitHub file because the container had no external DNS/network access.
 - No numerical execution was attempted from the local environment and no evidence was produced.
 - GitHub Actions compile is the authoritative executable check before TT-04 numerical execution.
+
+
+### F50B-015 — in-progress Actions job-log retrieval returned 404
+- Time: 2026-10-07.
+- Attempted to retrieve the live log for Phase-50B job 112635156015 (TT-02 replay) from GitHub Actions.
+- GitHub returned HTTP 404 / BlobNotFound while the job remained in progress.
+- Evidence status: **NO RESEARCH IMPACT**. The workflow run itself remains the authoritative execution state; no numerical output was inferred from the failed log retrieval.
+- Prevention: do not treat a transient live-log retrieval failure as a numerical failure; re-check run/job state through the Actions run API and use the published artifacts only after the self-audit passes.
