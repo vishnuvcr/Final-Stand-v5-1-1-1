@@ -771,3 +771,14 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Found silent denominator loss when a normal trading day had no complete 10:00–10:05 entry quote pair.
 - Added explicit entry coverage gaps and separate non-regular-session exclusions; workflow now requires the diagnostic file.
 - No TT04 result from the pre-correction engine is accepted.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 V5
+- Rechecked live Actions run 37620274641; it remains in the numerical replay step after all pre-numerical controls passed.
+- No duplicate TT03 run was launched.
+
+## 2026-10-07 — Resume checkpoint: downstream workflow audit
+- Re-audited TT04 through TT07 coverage-control contracts while TT03 V5 executes.
+- Found and corrected a workflow-audit weakness: exclusion diagnostic row counts were not cross-checked against summary counts.
+- Added reconciliation checks to TT04, TT05 and TT06, plus entry-exclusion reconciliation to TT07.
+- No downstream numerical execution was triggered by these workflow-only changes.
