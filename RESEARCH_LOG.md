@@ -852,3 +852,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Added a compile-only GitHub Actions control for the dormant TT04 performance fallback, with automatic and manual triggers.
 - This control cannot produce trading evidence; it exists only to validate the fallback source before any possible timeout contingency.
 - The canonical TT04 numerical run remains unchanged and active.
+
+
+## 2026-10-07 — TT04 fallback source-equivalence audit
+- Rechecked the dormant performance fallback against the canonical TT04 V3 source contract; no intentional scientific rule change was identified.
+- The compile-only workflow validates syntax only. The fallback remains inactive and non-evidence.
