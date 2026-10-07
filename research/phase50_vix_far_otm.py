@@ -22,8 +22,7 @@ ALL_STATES = LEVEL_STATES + TAG_STATES
 
 FAMILIES = [
     "bear_call", "bear_put", "bull_call", "bull_put",
-    "iron_condor", "otm_put_body_iron_fly", "otm_call_body_iron_fly",
-    "put_bwb", "call_bwb", "call_backspread", "put_backspread"
+    "iron_condor", "put_bwb", "call_bwb", "call_backspread", "put_backspread"
 ]
 
 DISTANCES = [2, 3, 4, 5, 6, 8, 10, 12]
@@ -109,12 +108,6 @@ def family_legs(family, d, width):
     if family == "iron_condor":
         return [("PE", -d, -1), ("PE", -(d + width), +1),
                 ("CE", +d, -1), ("CE", +(d + width), +1)]
-    if family == "otm_put_body_iron_fly":
-        return [("PE", -d, -1), ("CE", -d, -1),
-                ("PE", -(d + width), +1), ("CE", +(d + width), +1)]
-    if family == "otm_call_body_iron_fly":
-        return [("CE", +d, -1), ("PE", +d, -1),
-                ("CE", +(d + width), +1), ("PE", -(d + width), +1)]
     if family == "put_bwb":
         return [("PE", -(d - 1), +1), ("PE", -d, -2), ("PE", -(d + 4), +1)]
     if family == "call_bwb":
@@ -177,7 +170,7 @@ def quote_cache(data, expiry, ts, spot):
     return QUOTE_CACHE[key]
 
 
-def evaluate(cache, expiry, ts, family, d, width):
+def evaluate(cache, expiry, ts, family, d, width, dte):
     legs = family_legs(family, d, safe_width(family, width))
     entry = cache["entry"]
     series = cache["series"]
@@ -210,6 +203,9 @@ def evaluate(cache, expiry, ts, family, d, width):
         "family": family,
         "distance": d,
         "width": width,
+        "entry_h": int(ts.hour),
+        "entry_m": int(ts.minute),
+        "dte": int(dte),
         "expiry": str(expiry.date()),
         "entry_ts": str(ts),
         "year": ts.year,
@@ -236,7 +232,7 @@ def run_cell(index, vix, expiry, data, family, state, d, width, h, m, dte):
     cache = quote_cache(data, expiry, ts, spot)
     if cache is None:
         return None
-    r = evaluate(cache, expiry, ts, family, d, width)
+    r = evaluate(cache, expiry, ts, family, d, width, dte)
     if r is None:
         return None
     r["state_level"] = states["level"]
@@ -415,9 +411,11 @@ def main():
 
     # Development stage 1
     dev1 = evaluate_stage(index, vix, dev_es, stage1_grid_df, "stage1_dev")
-    err1 = dev1[dev1["error"].notna()] if "error" in dev1.columns else pd.DataFrame(columns=["error"])
-    dev1 = dev1[dev1.get("error", pd.Series(index=dev1.index)).isna()] if not dev1.empty else dev1
+    err1 = dev1[dev1["error"].notna()] if "error" in dev1.columns else pd.DataFrame(columns=["error_expiry","error"])
+    dev1 = dev1[dev1["error"].isna()] if "error" in dev1.columns else dev1
     dev1.to_csv(OUT / "stage1_development_trade_matrix.csv", index=False)
+    if "error_expiry" not in err1.columns:
+        err1 = pd.DataFrame(columns=["error_expiry","error"])
     if "error_expiry" not in err1.columns:
         err1 = pd.DataFrame(columns=["error_expiry","error"])
     err1.to_csv(OUT / "stage1_data_errors.csv", index=False)
@@ -436,6 +434,23 @@ def main():
         val1 = pd.DataFrame()
     val1.to_csv(OUT / "stage1_validation_diagnostic.csv", index=False)
 
+    # Quote-covered VIX opportunity counts, deduplicated to entry snapshots rather than candidate rows.
+    opp_frames = []
+    for split_name, frame in [("development", dev1), ("validation", val1)]:
+        if frame is None or frame.empty or "state_tag" not in frame.columns:
+            continue
+        q = frame[["expiry","entry_ts","state_tag"]].drop_duplicates().copy()
+        q["split"] = split_name
+        opp_frames.append(q)
+    opp = pd.concat(opp_frames, ignore_index=True) if opp_frames else pd.DataFrame(columns=["expiry","entry_ts","state_tag","split"])
+    if not opp.empty:
+        opp_summary = opp.groupby(["split","state_tag"], as_index=False).agg(
+            opportunities=("expiry","nunique"), entry_snapshots=("entry_ts","nunique")
+        )
+    else:
+        opp_summary = pd.DataFrame(columns=["split","state_tag","opportunities","entry_snapshots"])
+    opp_summary.to_csv(OUT / "vix_opportunity_counts.csv", index=False)
+
     # Stage 2 development/validation.
     if s2grid.empty:
         pd.DataFrame().to_csv(OUT / "stage2_development_trade_matrix.csv", index=False)
@@ -449,73 +464,37 @@ def main():
         return
 
     dev2 = evaluate_stage(index, vix, dev_es, s2grid, "stage2_dev")
-    dev2_err = dev2[dev2["error"].notna()] if "error" in dev2.columns else pd.DataFrame(columns=["error"])
-    dev2 = dev2[dev2.get("error", pd.Series(index=dev2.index)).isna()] if not dev2.empty else dev2
+    dev2_err = dev2[dev2["error"].notna()] if "error" in dev2.columns else pd.DataFrame(columns=["error_expiry","error"])
+    dev2 = dev2[dev2["error"].isna()] if "error" in dev2.columns else dev2
     dev2.to_csv(OUT / "stage2_development_trade_matrix.csv", index=False)
+    if "error_expiry" not in dev2_err.columns:
+        dev2_err = pd.DataFrame(columns=["error_expiry","error"])
     dev2_err.to_csv(OUT / "stage2_data_errors.csv", index=False)
 
-    # Freeze one Stage-2 configuration per family×state using development only.
+    # Freeze one exact Stage-2 configuration per family×state using development only.
     freeze_rows = []
-    for (f, s, d), g in dev2.groupby(["family","state_tag","distance"]):
-        ok = candidate_dev_ok(g)
-        if not ok:
-            continue
-        m = summarize(g)
-        freeze_rows.append({
-            "family": f, "state": s, "distance": int(d),
-            **m
-        })
+    if not dev2.empty:
+        for keys, g in dev2.groupby(["family","state_tag","distance","width","entry_h","entry_m","dte"]):
+            f, s, d, width, eh, em, dte = keys
+            if candidate_dev_ok(g):
+                freeze_rows.append({
+                    "family": f, "state": s, "distance": int(d),
+                    "width": int(width), "entry_h": int(eh), "entry_m": int(em), "dte": int(dte),
+                    **summarize(g)
+                })
     freeze_scores = pd.DataFrame(freeze_rows)
     if not freeze_scores.empty:
-        freeze_scores = freeze_scores.sort_values(["family","state","mean_net50"], ascending=[True,True,False])
-        freeze_scores = freeze_scores.groupby(["family","state"], as_index=False).head(1).reset_index(drop=True)
+        freeze_scores = freeze_scores.sort_values(
+            ["family","state","mean_net50","mean_net","pf"],
+            ascending=[True,True,False,False,False]
+        ).groupby(["family","state"], as_index=False).head(1).reset_index(drop=True)
     freeze_scores.to_csv(OUT / "stage2_frozen_candidates.csv", index=False)
-
-    frozen_grid = []
-    for _, r in freeze_scores.iterrows():
-        # Select the best exact configuration observed in the development trade matrix.
-        mask = (
-            (dev2.family == r.family) & (dev2.state_tag == r.state) &
-            (dev2.distance == r.distance)
-        )
-        z = dev2.loc[mask]
-        grouped = z.groupby(["width","entry_ts","year"], as_index=False).size()
-        # Reconstruct exact candidate settings from the first trade for each unique parameter tuple.
-        params = z[["family","distance","width","entry_ts"]].copy()
-        # exact candidate parameters are stored in stage2_registered_grid; choose by aggregate means.
-        candidates = []
-        for key, zz in dev2[mask].groupby(["width","entry_ts"]):
-            sm = summarize(zz)
-            candidates.append({"width": key[0], "entry_ts": key[1], **sm})
-        # entry_ts does not preserve clock; map it through registered grid by matching date/time.
-        best = max(candidates, key=lambda x: x["mean_net50"])
-        candidate_rows = s2grid[
-            (s2grid.family == r.family) & (s2grid.state == r.state) &
-            (s2grid.distance == r.distance) & (s2grid.width == best["width"])
-        ].copy()
-        # The exact entry/DTE selection is not recoverable from aggregate entry_ts alone across expiries,
-        # so choose by full dev candidate aggregation below.
-        scores = []
-        for rec in s2grid[
-            (s2grid.family == r.family) & (s2grid.state == r.state) &
-            (s2grid.distance == r.distance)
-        ].itertuples(index=False):
-            g = dev2[
-                (dev2.family == rec.family) & (dev2.state_tag == rec.state) &
-                (dev2.distance == rec.distance) & (dev2.width == rec.width)
-            ]
-            # Entry/DTE are not persisted in the trade matrix here; this ambiguity is forbidden.
-            # Use a separate exact scoring pass keyed by the registered row below.
-        frozen_grid.append({"family": r.family, "state": r.state, "distance": r.distance,
-                             "width": best["width"], "entry_h": 10, "entry_m": 0, "dte": 4})
-
-    frozen_grid = pd.DataFrame(frozen_grid).drop_duplicates()
-    # The exact Stage-2 freeze is only valid when the engine can preserve full candidate identity.
-    # Enforce identity audit before confirmation.
-    if len(frozen_grid) != len(freeze_scores):
-        raise RuntimeError("F50-001 candidate identity audit failed")
-
+    frozen_grid = freeze_scores[["family","state","distance","width","entry_h","entry_m","dte"]].copy() if not freeze_scores.empty else pd.DataFrame(
+        columns=["family","state","distance","width","entry_h","entry_m","dte"]
+    )
     frozen_grid.to_csv(OUT / "frozen_parameter_grid.csv", index=False)
+    if not frozen_grid.empty and len(frozen_grid) != len(freeze_scores):
+        raise RuntimeError("F50-001 candidate identity audit failed")
 
     val2 = evaluate_stage(index, vix, val_es, frozen_grid, "validation")
     hold2 = evaluate_stage(index, vix, hold_es, frozen_grid, "holdout")
