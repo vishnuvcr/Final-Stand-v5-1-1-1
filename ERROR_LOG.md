@@ -1821,3 +1821,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Static audit found TT06's 15:15+ exit search compared the RangeIndex to a timezone-aware timestamp. The code compiled but would fail at runtime when reaching the common-exit search.
 - Evidence status: **NO SCIENTIFIC IMPACT**; TT06 had not executed.
 - Correction: select the earliest common observed value from the explicit `timestamp` columns at/after 15:15, then perform the existing complete-leg exit/coverage logic.
+
+
+### F50B-051 — TT03 timezone-naive split accounting failure
+- Time: 2026-10-07.
+- Corrected TT03 numerical replay completed its trade generation but failed while constructing DEV/VAL/HOLD summaries because `df.expiry` parsed as timezone-naive under the runner's pandas version while `DEV_END/VAL_END` are timezone-aware.
+- This is a code/accounting defect, not a market-data failure; no TT03 numerical result was accepted or published.
+- Correction: normalize the expiry series explicitly with `pd.to_datetime(..., utc=True).dt.tz_convert(TZ)` before chronological split comparisons.
+- A dedicated TT03 workflow was added so the corrected replay can execute without unnecessarily rerunning the already accepted TT02 stage.
+- Evidence status: **NO SCIENTIFIC IMPACT**; TT03 evidence remains pending.
