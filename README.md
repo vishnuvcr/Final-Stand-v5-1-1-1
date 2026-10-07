@@ -1,3 +1,17 @@
+## Phase 50B — Expanded Prior-Strategy Universe — IN PROGRESS
+
+The user requested inclusion of seven supplied Tradetron strategies and prior strategies from other repositories. A dedicated branch now freezes the expanded candidate universe before numerical selection.
+
+- [Phase 50B research plan](PHASE50B_RESEARCH_PLAN.md)
+- [Phase 50B strategy universe](PHASE50B_STRATEGY_UNIVERSE.md)
+- [Phase 50B pre-registration](PHASE50B_PRE_REGISTRATION.md)
+- [Phase 50B status](PHASE50B_STATUS.md)
+- [Phase 50B chat log](PHASE50B_CHAT_LOG.md)
+
+The parent Phase 50 far-OTM workflow remains active separately; Phase 50B does not alter or cancel it.
+
+---
+
 ## Phase 50 — VIX × Far-OTM Tail Geometry — INITIALIZED
 
 Phase 50 directly addresses the remaining VIX research gap: genuinely far-OTM strike geometry was not adequately explored in the earlier VIX sweeps, particularly for HIGH/SPIKE/RISING regimes. The new preregistered study tests existing defined-risk strategy families across 2, 3, 4, 5, 6, 8, 10 and 12 strike-step tail distances, with chronological development/validation and protected 2026 holdout gates.
