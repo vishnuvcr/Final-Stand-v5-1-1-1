@@ -70,3 +70,18 @@ VIX is not an input to the source-faithful baseline. It is an external attributi
 
 ## Deterministic delta selection
 For a requested target delta, select the listed strike with minimum absolute delta error among valid contemporaneous quotes. Ties resolve to the smaller strike. This tie-break is deterministic bookkeeping, not parameter search.
+
+
+## Source-lock update — 2026-10-07
+The raw Tradetron export resolves the state transition graph, but it leaves one runtime-scope question unresolved: the variable ic_entered is initialized to 0 and set to 1 by the initial IC entry, with no reset anywhere in the export. The replay therefore must not assume repeated initial-IC entries after a terminal state or monthly universal exit.
+
+Exact transitions recovered:
+- state 0 -> state 1 on CE short abs(delta) <= 0.10; state 0 -> state 2 on PE short abs(delta) <= 0.10.
+- state 1 -> state 3 on short abs(delta) <= 0.10; state 1 -> state 2 on short abs(delta) >= 0.65.
+- state 2 -> state 4 on short abs(delta) <= 0.10; state 2 -> state 1 on short abs(delta) >= 0.65.
+- state 3 -> state 5 on short abs(delta) <= 0.10; state 3 -> state 2 on short abs(delta) >= 0.65.
+- state 4 -> state 6 on short abs(delta) <= 0.10; state 4 -> state 1 on short abs(delta) >= 0.65.
+- state 5 -> state 3 on short abs(delta) <= 0.10; no >=0.65 transition is present in the export.
+- state 6 -> state 4 on short abs(delta) <= 0.10; no >=0.65 transition is present in the export.
+
+**Execution gate:** TT-07 numerical replay remains blocked until the ic_entered lifecycle is resolved from authoritative Tradetron behavior. No guessed reset policy will be used.
