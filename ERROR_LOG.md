@@ -2024,3 +2024,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: the persistence step now loads `session_exclusions.csv` before constructing the feasibility JSON.
 - The workflow trigger was not allowed to serve as evidence; a further controlled retrigger will execute only the corrected workflow.
 - Evidence status: **NO SCIENTIFIC IMPACT**; caught before accepting V4 evidence.
+
+
+### F50B-071 — TT04 workflow accepted TT03 FAIL_COVERAGE and continued numerical replay
+- Time: 2026-10-07.
+- A prior TT04 workflow version explicitly allowed TT03 `FAIL_COVERAGE` to continue independently. This was inconsistent with the registered research plan, which requires a strategy to pass the 95% feasibility gate before advancing.
+- A TT04 run (37614211996) had already passed that weak gate and was executing when this defect was detected.
+- Correction: TT04 preflight is now PASS-only and requires TT03 `engine_revision=50B-TT03-WINDOW-V4`, `feasibility_state=PASS`, zero data errors and coverage >=95%. A controlled TT04 retrigger supersedes the weak-gate run via the workflow's serialized concurrency group.
+- Evidence status: **NO TT04 RESULT FROM THE WEAK-GATE RUN WILL BE ACCEPTED OR USED**.
