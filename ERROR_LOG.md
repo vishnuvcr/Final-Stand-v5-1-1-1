@@ -1687,3 +1687,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Added explicit TT-02 engine revision `50B-TT02-COVERAGE-V3` to prevent artifacts from the pre-coverage/terminal-accounting engines from being promoted.
 - The workflow audit now requires that revision before accepting TT-02 evidence.
 - Evidence status: **NO IMPACT ON CURRENT RUN**. Run 37593965525 predates this revision stamp and will therefore be diagnostic unless separately superseded by a latest-code audited rerun.
+
+
+### F50B-032 — Paytm Money brokerage-rate ambiguity resolved by robustness scenario
+- Time: 2026-10-07.
+- Current Paytm Money public material conflicts: one current F&O FAQ displays ₹10/order while an official 2025 pricing announcement states flat ₹20/order from 15 January 2025. citeturn157124search0turn157124search2
+- Correction: retain the preregistered ₹10/order primary model for continuity, while adding a non-selective ₹20/order robustness scenario required for promotion sensitivity.
+- Evidence status: **NO IMPACT ON CURRENT RUN**; this applies only to the latest-code rerun.
