@@ -78,6 +78,7 @@ jobs:
           test -s results/phase50b/tt05_short_straddle_replay/tt05_trades.csv
           test -f results/phase50b/tt05_short_straddle_replay/data_errors.csv
           test -f results/phase50b/tt05_short_straddle_replay/coverage_gaps.csv
+          test -f results/phase50b/tt05_short_straddle_replay/session_exclusions.csv
           python - <<'PY'
           import json, pandas as pd
           d=json.load(open("results/phase50b/tt05_short_straddle_replay/summary.json"))
