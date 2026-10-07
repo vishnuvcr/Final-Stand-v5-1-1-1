@@ -1773,3 +1773,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - This leaves repeated-initial-IC lifecycle semantics unresolved. Numerical TT-07 replay is blocked until authoritative Tradetron behavior or a trace resolves the scope of that runtime variable.
 - No speculative reset policy will be coded.
 - Evidence status: **NO SCIENTIFIC IMPACT**; source-faithfulness protection.
+
+
+### F50B-044 — Stale-run handoff control
+- Time: 2026-10-07.
+- The pre-fix TT-02 run remained visibly active after the corrected trigger was queued. The workflow now uses cancel-in-progress concurrency so the stale run can be retired without waiting the full timeout.
+- This is an execution-control event; no research evidence is taken from the stale run.
