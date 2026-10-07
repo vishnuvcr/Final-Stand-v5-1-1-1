@@ -180,3 +180,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — Run-overlap control
 - GitHub admitted a corrected TT-02 run while the stale canonical run remained active despite concurrency configuration.
 - Corrected run 19 is authoritative; stale run 18 is diagnostic-only.
+
+
+## 2026-10-07 — Dependency-chain hardening
+- Found and corrected a missing TT-03 coverage/cost gate in TT-04 preflight.
+- TT-05 workflow was also hardened against overlapping executions.
