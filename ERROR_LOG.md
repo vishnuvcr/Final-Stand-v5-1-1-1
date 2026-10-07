@@ -1694,3 +1694,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Current Paytm Money public material conflicts: one current F&O FAQ displays ₹10/order while an official 2025 pricing announcement states flat ₹20/order from 15 January 2025. citeturn157124search0turn157124search2
 - Correction: retain the preregistered ₹10/order primary model for continuity, while adding a non-selective ₹20/order robustness scenario required for promotion sensitivity.
 - Evidence status: **NO IMPACT ON CURRENT RUN**; this applies only to the latest-code rerun.
+
+
+### F50B-033 — TT-03 silent exclusion of incomplete exits
+- Time: 2026-10-07.
+- Pre-execution audit found TT-03 returned `None` for missing expiry-day exit observations, which would silently omit an opened trade from the sample.
+- Correction: TT-03 now emits explicit `coverage_gaps.csv` exclusions, carries a coverage rate, and its workflow enforces the 95% feasibility threshold plus current-cost robustness fields.
+- Evidence status: **NO SCIENTIFIC IMPACT**. TT-03 had not executed under this corrected implementation.
+- Prevention: every opened trade must reconcile to completion, explicit coverage exclusion, or documented model error.
