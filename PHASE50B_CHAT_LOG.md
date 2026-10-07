@@ -307,3 +307,11 @@ User requested continuation without pausing. Work performed:
 - TT03 is therefore a no-promotion feasibility failure despite positive diagnostic P&L.
 - Rerun is for diagnostic persistence only.
 - TT04 is being decoupled as an independent candidate so the finite research universe can continue without using TT03 as evidence.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 terminal failure and TT04 continuation
+- TT03 corrected baseline failed the frozen 95% coverage gate at 92.57%.
+- Positive TT03 P&L is diagnostic only; TT03 is closed for promotion and tuning.
+- Added a candidate-local stopping rule so an infeasible TT03 does not halt unrelated registered candidates.
+- TT04 now requires a persisted TT03 terminal feasibility classification but can proceed after a clean TT03 FAIL_COVERAGE without treating TT03 P&L as evidence.
+- TT03 diagnostic-capture run 37612856834 is currently executing.
