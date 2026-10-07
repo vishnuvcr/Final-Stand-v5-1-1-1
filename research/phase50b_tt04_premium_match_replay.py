@@ -129,17 +129,28 @@ def main():
         try:
             if target not in option_cache:
                 option_cache[target]=option_clean(load_parquet(f"options/NIFTY/{target.strftime('%Y-%m-%d')}.parquet"))
-            zday=option_cache[target]
+            z_entry=option_cache[target]
+            # Existing positions retain the expiry chosen at their original entry.
+            # On the current expiry day, NEW entries use next-week quotes, but an
+            # existing current-week position must be marked/exited against its own
+            # current-week option series.
             day_rows=idx[(idx.timestamp.dt.normalize()==day.normalize())&(idx.timestamp.dt.time>=ENTRY_START)&(idx.timestamp.dt.time<=EXIT_TIME)]
             for ts in day_rows.timestamp.tolist():
                 ts=pd.Timestamp(ts)
                 ix=idx[idx.timestamp==ts]
                 if ix.empty:continue
                 spot=float(ix.iloc[-1].spot)
-                z=zday[zday.timestamp==ts]
+                if position is None:
+                    z=z_entry[z_entry.timestamp==ts]
+                else:
+                    pos_exp=position["expiry"]
+                    if pos_exp not in option_cache:
+                        option_cache[pos_exp]=option_clean(load_parquet(f"options/NIFTY/{pos_exp.strftime('%Y-%m-%d')}.parquet"))
+                    z=option_cache[pos_exp]
+                    z=z[z.timestamp==ts]
                 if z.empty:continue
                 if position is None and ts.time()<=ENTRY_END:
-                    atm=float(z.iloc[(z.strike.astype(float)-spot).abs().argsort().iloc[0]].strike)
+                    atm=float(z_entry[z_entry.timestamp==ts].iloc[(z_entry[z_entry.timestamp==ts].strike.astype(float)-spot).abs().argsort().iloc[0]].strike)
                     ce=q(z,"CE",atm); pe=q(z,"PE",atm)
                     if ce is None or pe is None:continue
                     vs=vix_state(vix,ts)
