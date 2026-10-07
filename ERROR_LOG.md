@@ -1470,3 +1470,11 @@ The parent Phase 50 far-OTM phase used a restricted family universe and therefor
 **Correction:** created the dedicated phase-50b-expanded-strategy-universe branch, froze a prospective strategy registry and preregistration, and preserved the parent Phase 50 run unchanged.
 
 **Prevention:** future scope additions must be frozen in a dedicated phase before candidate-selection statistics are run.
+
+
+### Error F50B-002 — Native-report evidence is not directly comparable to Final Stand costs
+Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and carry high-severity coverage caveats. Treating their native net P&L as Final Stand evidence would mix execution models.
+
+**Correction:** native reports are explicitly classified as provenance/exploratory controls. The next Phase-50B numerical replay uses the project-standard Paytm Money/NSE/statutory/slippage model and entry-date VIX classification.
+
+**Prevention:** every external-engine result must be tagged with its own cost model, coverage and data caveats before entering the research evidence hierarchy.
