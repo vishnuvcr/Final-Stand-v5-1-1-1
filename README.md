@@ -859,3 +859,9 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT-03 V4 session-calendar and provenance controls
 - The V4 replay distinguishes regular-session data failures from scheduled-entry dates that had no normal 09:15–15:30 session (e.g. 2022-10-24 Muhurat evening session). Such dates are recorded as session exclusions, not missing-data coverage gaps. citeturn282531search15turn282531search21
 - TT04 routing now requires a current-run V4 feasibility PASS artifact, preventing stale diagnostic artifacts from advancing the research chain.
+
+
+### 2026-10-07 — Active TT-03 V4 execution
+- Current controlled TT03 run **37617012372** is executing the V4 engine; preflight/static controls have passed and numerical replay is still in progress.
+- TT04 run **37617256820** was fail-closed at preflight because only the older V2 FAIL_COVERAGE diagnostic exists in the branch. No TT04 numerical evidence was generated from that run.
+- TT04 remains blocked until a same-run TT03 V4 feasibility `PASS` artifact is produced.
