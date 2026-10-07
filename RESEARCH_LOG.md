@@ -504,3 +504,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Pre-execution audit identified a semantic mismatch in TT-03 entry timing.
 - Corrected the engine to evaluate the entire 10:00–10:05 window and choose the earliest feasible complete ratio set.
 - The frozen geometry, direction priority and exit rule are unchanged.
+
+
+## 2026-10-07 — Phase 50B chain integrity correction
+- Added explicit TT-03 engine revisioning and a downstream gate against stale code results.
+- Future TT-03 jobs refresh to the latest branch before compilation.
+- This protects the chronology/evidence chain after pre-execution code corrections.
