@@ -1,0 +1,146 @@
+name: Phase 50 - VIX Far-OTM Tail Geometry
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50-vix-far-otm-tail-geometry
+    paths:
+      - "research/phase50_vix_far_otm.py"
+      - "PHASE50_RESEARCH_PLAN.md"
+      - "PHASE50_PRE_REGISTRATION.md"
+      - "PHASE50_LITERATURE_REVIEW.md"
+      - "trigger/phase50.start"
+
+concurrency:
+  group: phase50-vix-far-otm-v1
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub matplotlib
+      - name: Compile
+        run: python -m py_compile research/phase50_vix_far_otm.py
+      - name: Cache HF dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50-hf-${{ runner.os }}-${{ hashFiles('research/phase50_vix_far_otm.py') }}
+          restore-keys: |
+            phase50-hf-${{ runner.os }}-
+      - name: Run preflight
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PHASE50_PREFLIGHT_ONLY: "1"
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50_vix_far_otm.py
+      - name: Validate preflight
+        run: |
+          set -euo pipefail
+          test -s results/phase50_vix_far_otm/preflight.json
+          python - <<'PY'
+          import json
+          p=json.load(open("results/phase50_vix_far_otm/preflight.json"))
+          assert p["families"] == 9
+          assert p["distances"] == [2,3,4,5,6,8,10,12]
+          assert p["stage1_family_state_distance_cells"] == 9*7*8
+          assert p["stage1_primary_level_cells"] == 9*3*8
+          assert p["dev_expiries"] >= 100
+          assert p["validation_expiries"] >= 90
+          assert p["holdout_expiries"] >= 1
+          print("Phase 50 preflight PASS", p)
+          PY
+
+  numerical:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub matplotlib
+      - name: Compile
+        run: python -m py_compile research/phase50_vix_far_otm.py
+      - name: Cache HF dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50-hf-${{ runner.os }}-${{ hashFiles('research/phase50_vix_far_otm.py') }}
+          restore-keys: |
+            phase50-hf-${{ runner.os }}-
+      - name: Run full far-OTM research
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50_vix_far_otm.py
+      - name: Upload raw Phase 50 artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50-raw-${{ github.run_id }}
+          path: results/phase50_vix_far_otm
+          if-no-files-found: warn
+      - name: Artifact self-audit
+        run: |
+          set -euo pipefail
+          for f in             results/phase50_vix_far_otm/preflight.json             results/phase50_vix_far_otm/stage1_registered_grid.csv             results/phase50_vix_far_otm/stage1_development_trade_matrix.csv             results/phase50_vix_far_otm/stage1_selected_cells.csv             results/phase50_vix_far_otm/stage2_registered_grid.csv             results/phase50_vix_far_otm/stage2_development_trade_matrix.csv             results/phase50_vix_far_otm/stage2_frozen_candidates.csv             results/phase50_vix_far_otm/frozen_parameter_grid.csv             results/phase50_vix_far_otm/validation_frozen_trade_matrix.csv             results/phase50_vix_far_otm/validation_confirmatory_summary.csv             results/phase50_vix_far_otm/holdout_confirmation.csv             results/phase50_vix_far_otm/phase50_final_decision.json             results/phase50_vix_far_otm/PHASE50_MANUSCRIPT.md; do
+            test -s "$f"
+          done
+          python - <<'PY'
+          import json, pandas as pd
+          d=json.load(open("results/phase50_vix_far_otm/preflight.json"))
+          grid=pd.read_csv("results/phase50_vix_far_otm/stage1_registered_grid.csv")
+          sel=pd.read_csv("results/phase50_vix_far_otm/stage1_selected_cells.csv")
+          s2=pd.read_csv("results/phase50_vix_far_otm/stage2_registered_grid.csv")
+          fr=pd.read_csv("results/phase50_vix_far_otm/stage2_frozen_candidates.csv")
+          vs=pd.read_csv("results/phase50_vix_far_otm/validation_confirmatory_summary.csv")
+          assert len(grid)==d["stage1_family_state_distance_cells"]
+          assert set(grid.state).issubset({"LOW","NORMAL","HIGH","RISING","FALLING","SPIKE","HIGH_RISING"})
+          assert set(grid.distance)==set([2,3,4,5,6,8,10,12])
+          assert len(fr) <= 9*7
+          assert len(vs) == len(fr) or len(vs)==0
+          for f in ["stage1_data_errors.csv","stage2_data_errors.csv","validation_data_errors.csv","holdout_data_errors.csv"]:
+              p="results/phase50_vix_far_otm/"+f
+              x=pd.read_csv(p)
+              assert len(x)==0, f"non-empty error ledger: {f}"
+          print("Phase 50 artifact self-audit PASS")
+          print(json.dumps(d,indent=2))
+          PY
+      - name: Publish results safely
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          cp -R results/phase50_vix_far_otm "$tmp/"
+          git fetch origin phase-50-vix-far-otm-tail-geometry
+          git reset --hard origin/phase-50-vix-far-otm-tail-geometry
+          rm -rf results/phase50_vix_far_otm
+          mkdir -p results
+          cp -R "$tmp/phase50_vix_far_otm" results/
+          git add results/phase50_vix_far_otm
+          if git diff --cached --quiet; then
+            echo "No result changes to publish."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50: publish far-OTM research results"
+            git push origin HEAD:phase-50-vix-far-otm-tail-geometry
+          fi
