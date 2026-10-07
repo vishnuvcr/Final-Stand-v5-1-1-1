@@ -322,3 +322,9 @@ User requested continuation without pausing. Work performed:
 - Found nearest-premium substitution where the source requires exact observed LTP matching; corrected to exact matching with deterministic distance tie-break.
 - Found an exit-coverage path that could reject the first 15:15+ observation instead of searching later same-day complete quotes; corrected to earliest complete observed exit timestamp.
 - TT04 engine revision V3 is now the only eligible implementation; downstream TT05 gate updated accordingly.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 latest-head rerun queued
+- The first diagnostic rerun was pinned to an earlier workflow commit, so it is being superseded by the serialized latest-head rerun.
+- New TT03 run 37613416831 is pending on trigger commit 5397259b5501db1f0bd32bfe08425e5bd820e966.
+- No scientific evidence is taken from the superseded run.
