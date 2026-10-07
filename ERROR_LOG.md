@@ -1998,3 +1998,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: V3 now searches backward from 15:29 for the latest timestamp at or before the hard close where **all live legs** have observed quotes. No forward fill or imputation is introduced.
 - The V2 187/202 result remains non-evidence. The V3 engine is being re-run from scratch behind the same 95% feasibility gate.
 - Evidence status: **NO SCIENTIFIC IMPACT**; caught before acceptance of TT03 evidence.
+
+
+### F50B-068 — TT03 workflow could route TT04 on FAIL_COVERAGE
+- Time: 2026-10-07.
+- Self-audit of the dedicated TT03 workflow found that its downstream routing script allowed both `PASS` and `FAIL_COVERAGE` feasibility states to create the TT04 trigger.
+- This contradicted the preregistered 95% feasibility gate: a strategy failing coverage must stop, not advance to downstream validation.
+- Correction: downstream TT04 routing is now fail-closed and occurs only when TT03 feasibility state is exactly `PASS`; `FAIL_COVERAGE` exits without creating a downstream trigger.
+- The affected V3 run was superseded via the strategy-specific concurrency group and a controlled retrigger after the correction.
+- Evidence status: **NO SCIENTIFIC IMPACT**; caught before any TT04 downstream trigger was accepted.
