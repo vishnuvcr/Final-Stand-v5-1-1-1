@@ -781,3 +781,4 @@ No Phase-50B strategy has been promoted.
 - The workflow uses `cancel-in-progress: true` and only the explicit `trigger/phase50b.start` push path for automatic numerical launches; manual dispatch remains available.
 - No Phase-50B strategy has been promoted and no TT-02 result is accepted before the complete artifact/coverage/cost audit.
 - TT-07 remains blocked pending authoritative resolution of the `ic_entered` lifecycle semantics.
+undefined
