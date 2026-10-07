@@ -1492,3 +1492,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: documentation/CI-only; no numerical research evidence was produced by the failed validation runs.
 - Correction: added the missing Final-stand-v2 row to PHASE50B_STRATEGY_UNIVERSE.md. The registry validator definition remains unchanged.
 - Prevention: after creating or editing a registry, run the same required-term validator against the actual checked-in registry before considering the phase preflight green.
+
+
+### Error F50B-005 — TT02 replay workflow omitted matplotlib dependency
+- Affected run: **37570436149**.
+- The corrected TT02 engine imports `phase43_vix_strategy_sweep`, which imports matplotlib at module load even though TT02 itself does not plot figures.
+- Evidence status: no numerical replay occurred; failure happened during module import before data acquisition.
+- Correction: add matplotlib to the workflow dependency set. No scientific definition changed.
+- Prevention: compile/runtime dependency audit must include transitive imports of the shared research engine module.
