@@ -713,3 +713,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Run 37613416831 completed and persisted TT03 raw trades, coverage gaps and feasibility classification.
 - Coverage remains 92.57%; the preregistered feasibility gate therefore closes TT03 for promotion and tuning.
 - TT04 remains independent and is the active numerical candidate.
+
+
+## 2026-10-07 — TT-03 V2 feasibility rejection and V3 correction
+- V2 numerical replay completed but failed the preregistered 95% coverage gate: 187 complete campaigns / 202 candidates (92.57%).
+- Before accepting that as a strategy-level infeasibility conclusion, the hard-close quote-selection path was audited.
+- Found and corrected a partial-quote timestamp bug: the engine now searches backward for the latest timestamp at or before 15:29 with complete quotes for all live legs.
+- V3 was retriggered. No V2 P&L or coverage result will be used as evidence.
