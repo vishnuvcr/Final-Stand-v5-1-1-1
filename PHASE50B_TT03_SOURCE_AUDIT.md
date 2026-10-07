@@ -47,3 +47,6 @@ Native Tradetron P&L remains provenance only. Common replay will use historical 
 
 ## Allowed Phase-50B mutation
 A finite source-semantic tail-distance study may shift the 300/350/400-point anchor outward while preserving the 50-point spacing, three-day expiry-relative rule, entry timing and exit rule. Selection remains development-only before validation and holdout.
+
+## V2 feasibility result and V3 correction — 2026-10-07
+The V2 replay completed 187/202 candidate campaigns (92.57%) and therefore failed the preregistered 95% feasibility threshold; its P&L is not evidence. Self-audit identified a hard-close completeness defect whereby a latest timestamp with some-but-not-all leg quotes could create a false coverage gap. V3 searches backward for the latest complete all-live-leg quote at or before 15:29. V3 is now the active source-faithful implementation.
