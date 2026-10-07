@@ -100,7 +100,12 @@ def close_and_replace(pos,ts,name,z,opt,target,phase_prefix):
 def finish(pos,ts,z):
     for name,leg in pos["legs"].items():
         px=q(z,leg["opt"],leg["strike"])
-        if px is None:return None
+        if px is None:
+            pos["_coverage_gap"]={
+                "trade_id":pos["trade_id"],"expiry":str(pos["expiry"].date()),
+                "trigger_ts":str(ts),"gap_type":"missing_exit_leg_quote"
+            }
+            return None
         side="sell" if leg["qty"]>0 else "buy"
         ep=exec_px(px,side)
         pos["cash"] += ep*abs(leg["qty"])*pos["lot"] if side=="sell" else -ep*abs(leg["qty"])*pos["lot"]
@@ -117,7 +122,7 @@ def main():
     vix=load_vix()
     days=sorted(idx.timestamp.dt.normalize().unique())
     option_cache={}
-    rows=[];errors=[];trade_id=1;position=None
+    rows=[];errors=[];coverage_gaps=[];trade_id=1;position=None
     for day in days:
         day=pd.Timestamp(day)
         if day<START.normalize() or day>END.normalize():continue
@@ -179,19 +184,22 @@ def main():
                 if raw_pnl is not None and raw_pnl<=STOP_RUPEES:
                     out=finish(position,ts,z)
                     if out:rows.append(out)
+                    else:coverage_gaps.append(position.get("_coverage_gap",{"trade_id":position["trade_id"],"expiry":str(position["expiry"].date()),"trigger_ts":str(ts),"gap_type":"missing_exit_leg_quote"}))
                     position=None
                     continue
                 if ts.time()>=EXIT_TIME:
                     out=finish(position,ts,z)
                     if out:rows.append(out)
+                    else:coverage_gaps.append(position.get("_coverage_gap",{"trade_id":position["trade_id"],"expiry":str(position["expiry"].date()),"trigger_ts":str(ts),"gap_type":"missing_exit_leg_quote"}))
                     position=None
         except Exception as e:
             errors.append({"day":str(day.date()),"error":repr(e)})
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt04_trades.csv",index=False)
-    pd.DataFrame(errors).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(errors,columns=["day","error"]).to_csv(OUT/"data_errors.csv",index=False)
+    pd.DataFrame(coverage_gaps,columns=["trade_id","expiry","trigger_ts","gap_type"]).to_csv(OUT/"coverage_gaps.csv",index=False)
     if df.empty:
-        summary={"strategy":"TT-04","trades":0,"net":0.0,"net50":0.0}
+        summary={"strategy":"TT-04","trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"net":0.0,"net50":0.0}
     else:
         df["expiry_dt"]=pd.to_datetime(df.expiry)
         splits=[]
@@ -200,10 +208,13 @@ def main():
             splits.append({"split":name,"trades":len(z),"net":float(z.net.sum()),"net50":float(z.net50.sum()),"win_rate":float((z.net>0).mean()) if len(z) else 0})
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
-        summary={"strategy":"TT-04","trades":len(df),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
+        candidate_trades=len(df)+len(coverage_gaps); coverage_rate=len(df)/candidate_trades if candidate_trades else 0.0
+        summary={"strategy":"TT-04","trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
     (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2))
 
 if __name__=="__main__":
     main()
+
+# F50B-029: pre-execution correction. Missing exit-leg quotes are explicit coverage exclusions, never silent trade loss or imputation.
