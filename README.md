@@ -1,3 +1,12 @@
+## Phase 50B — User + Prior-Repository Strategy Integration — INITIALIZED
+
+Phase 50B adds the seven user-supplied Tradetron strategies and relevant prior strategy lineages discovered in the user's GitHub repositories to the VIX/far-OTM research. It is isolated from Phase 50A so earlier numerical evidence remains frozen.
+
+- [Phase 50B branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-user-and-repo-strategy-integration)
+- [Strategy registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_STRATEGY_REGISTRY.md)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_RESEARCH_PLAN.md)
+- [GitHub repository audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-user-and-repo-strategy-integration/PHASE50B_GITHUB_REPO_AUDIT.md)
+
 # Final Stand v5 1-1-1-1
 
 Systematic options-strategy research repository.
