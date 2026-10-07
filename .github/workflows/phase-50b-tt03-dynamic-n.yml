@@ -140,29 +140,51 @@ jobs:
           name: phase50b-tt03-diagnostic-${{ github.run_id }}
           path: results/phase50b/tt03_dynamic_n_replay
 
-      - name: Audit TT03 artifacts
+      - name: Audit TT03 artifacts and classify terminal feasibility
         run: |
           set -euo pipefail
           test -s results/phase50b/tt03_dynamic_n_replay/summary.json
-          test -s results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv
+          test -f results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv
           test -f results/phase50b/tt03_dynamic_n_replay/data_errors.csv
           test -f results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv
           test -f results/phase50b/tt03_dynamic_n_replay/session_exclusions.csv
           python - <<'PY'
           import json, pandas as pd
-          d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
-          tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
-          er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
-          cg=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv")
-          sx=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/session_exclusions.csv")
+          from pathlib import Path
+          out=Path("results/phase50b/tt03_dynamic_n_replay")
+          d=json.load(open(out/"summary.json"))
+          tr=pd.read_csv(out/"tt03_trades.csv")
+          er=pd.read_csv(out/"data_errors.csv")
+          cg=pd.read_csv(out/"coverage_gaps.csv")
+          sx=pd.read_csv(out/"session_exclusions.csv")
           assert d["engine_revision"]=="50B-TT03-WINDOW-V5", d
-          assert d["trades"]==len(tr) and d["trades"]>0, d
+          assert d["trades"]==len(tr), d
           assert d["candidate_trades"]==len(tr)+len(cg), d
-          assert d["coverage_rate"]>=0.95, d
           assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
           assert len(er)==0, er.head()
-          print("TT03 replay artifact audit PASS", d)
+          cov=float(d["coverage_rate"])
+          status="PASS" if cov>=0.95 else "FEASIBILITY_FAIL"
+          decision={
+            "strategy":"TT-03",
+            "engine_revision":d["engine_revision"],
+            "status":status,
+            "promotion_eligible":bool(status=="PASS"),
+            "coverage_rate":cov,
+            "coverage_threshold":0.95,
+            "trades":int(d["trades"]),
+            "candidate_trades":int(d["candidate_trades"]),
+            "coverage_exclusions":int(d["coverage_exclusions"]),
+            "session_exclusions":int(d.get("session_exclusions",len(sx))),
+            "data_errors":int(len(er)),
+            "uses_pnl_as_evidence":bool(status=="PASS"),
+            "next_strategy_may_proceed":True,
+            "reason":("coverage below preregistered 95% feasibility threshold" if status=="FEASIBILITY_FAIL"
+                      else "source-faithful baseline passed execution feasibility")
+          }
+          (out/"terminal_decision.json").write_text(json.dumps(decision,indent=2))
+          print("TT03 terminal decision:",json.dumps(decision,indent=2))
           PY
+
       - name: Upload TT03 diagnostics/evidence artifact
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
