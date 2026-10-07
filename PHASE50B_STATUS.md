@@ -639,3 +639,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Former fallback run **37629239398** is **cancelled** by the shared TT04 concurrency guard; it is non-evidence and does not represent a scientific failure.
 - Fallback syntax-control run **37629740301** completed successfully.
 - No TT04 P&L, VIX result, parameter tuning, holdout result or promotion decision has been accepted.
+
+
+## 2026-10-07 — TT04 accepted; TT05 automation repair and launch
+- Canonical TT04 run **37629750175** completed with full artifact audit PASS and safe publication. Accepted TT04 summary: 1,214 trades / 1,232 candidates, 98.54% coverage, 18 coverage exclusions, 4 session exclusions, zero data errors; net ₹55,582.71 at ₹10/order, ₹11,429.95 under +50% friction, −₹1,718.09 at ₹20/order, and −₹74,521.25 at ₹20/order +50% stress.
+- Self-audit identified an orchestration defect: TT04 created the TT05 marker using a GITHUB_TOKEN-authored push, which does not trigger a separate ordinary push workflow. No TT05 scientific run had started; no evidence was lost.
+- Corrected TT04→TT05, TT05→TT06 and TT06→TT07 handoffs to retain the marker audit trail but additionally invoke the downstream workflow through the GitHub Actions workflow-dispatch API with `actions: write` permission.
+- Recovery marker update launched TT05 run **37654354444**. TT05 preflight passed; numerical execution is now underway.
+- No TT05 P&L, VIX inference, tuning or promotion decision is accepted until its complete replay/audit/publication gate passes.
