@@ -39,9 +39,13 @@ jobs:
           d=json.load(open("results/phase50b/tt03_dynamic_n_replay/summary.json"))
           tr=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv")
           er=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/data_errors.csv")
+          cg=pd.read_csv("results/phase50b/tt03_dynamic_n_replay/coverage_gaps.csv")
           assert d["engine_revision"]=="50B-TT03-WINDOW-V2", d
           assert d["trades"] == len(tr)
           assert d["trades"] > 0
+          assert d["candidate_trades"] == len(tr) + len(cg)
+          assert d["coverage_rate"] >= 0.95, d
+          assert {"net","net50","net20","net20_50","vix_state"}.issubset(tr.columns)
           assert len(er) == 0, er.head()
           print("TT03 dependency gate PASS", d)
           PY
