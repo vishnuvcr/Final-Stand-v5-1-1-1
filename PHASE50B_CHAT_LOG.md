@@ -205,3 +205,7 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-07 source reconciliation
 - Raw export resolves the six-state transition graph but leaves ic_entered lifecycle ambiguous.
 - TT-07 numerical execution is blocked until the ambiguity is resolved from authoritative behavior.
+
+
+## 2026-10-07 — Authoritative TT-02 handoff
+- Run 20 is the intended authoritative corrected TT-02 replay; run 19 remains excluded from evidence.
