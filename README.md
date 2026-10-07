@@ -939,3 +939,14 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - This is a post-replay reporting-layer defect, not a trading-rule change. No output from that run is accepted as evidence.
 - Both canonical and performance-only fallback engines were corrected to localize expiry timestamps to the project timezone.
 - Corrected canonical run **37629750175** is queued; fallback run **37629239398** is executing under the serialized TT04 concurrency group. Full artifact/coverage/zero-error/cost gates remain mandatory.
+
+
+## Phase 50B — TT04 accepted; TT05 launched after automation repair — 2026-10-07
+- Canonical **TT04 run 37629750175** passed the complete evidence gate and was safely published: 1,214 trades / 1,232 candidates, 98.54% coverage, 18 coverage exclusions, 4 session exclusions, zero data errors.
+- TT04 cost sensitivity: **₹55,582.71** at ₹10/order; **₹11,429.95** at +50% friction; **−₹1,718.09** at ₹20/order; **−₹74,521.25** at ₹20/order +50% stress.
+- Self-audit found that the TT04→TT05 marker commit used `GITHUB_TOKEN`, which suppresses a separate push-triggered workflow. No TT05 scientific run had started at that point.
+- Corrected TT04→TT05, TT05→TT06 and TT06→TT07 orchestration to use explicit GitHub Actions workflow dispatch with `actions: write`, while retaining trigger-marker provenance.
+- **TT05 run 37654354444** has now started from the repaired trigger; preflight passed and numerical replay is underway.
+- No TT05 P&L or strategy-promotion claim is accepted until the full coverage, zero-error, cost and publication gates pass.
+
+[TT05 current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37654354444) · [Phase 50B status](PHASE50B_STATUS.md) · [Phase 50B chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
