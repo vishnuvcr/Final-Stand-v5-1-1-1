@@ -84,4 +84,20 @@ Exact transitions recovered:
 - state 5 -> state 3 on short abs(delta) <= 0.10; no >=0.65 transition is present in the export.
 - state 6 -> state 4 on short abs(delta) <= 0.10; no >=0.65 transition is present in the export.
 
-**Execution gate:** TT-07 numerical replay remains blocked until the ic_entered lifecycle is resolved from authoritative Tradetron behavior. No guessed reset policy will be used.
+**Runtime-variable lifecycle resolution — 2026-10-07**
+
+Official Tradetron documentation was checked before numerical implementation. Runtime Variables are strategy-level memory and persist through the current cycle until a Universal Exit; the current cycle/counter is the unit associated with live runtime values. Therefore the raw export's `ic_entered=0 -> 1` is interpreted as:
+
+- initialize `ic_entered=0`, `state=0` at the start of each new strategy counter;
+- set `ic_entered=1` at the first initial-IC entry;
+- do not reset `ic_entered` during any intra-cycle transition;
+- monthly Universal Exit at current-month expiry >=15:15 ends the counter, allowing the next counter to initialize again;
+- do not invent any additional reset.
+
+Sources: [Tradetron Runtime Variables](https://help.tradetron.tech/en/article/runtime-variables-in-tradetron-capture-once-use-anywhere-83nahv/) and [Tradetron keyword documentation](https://files.tradetron.tech/TT_Keywords.pdf).
+
+**Frozen transition implementation rule**
+
+A state transition is executed only when the source trigger is satisfied and complete contemporaneous quotes exist for every leg of both the exiting state and the target state. When the target state lacks a complete quote set, the current state is retained and the trigger is re-evaluated at the next observed timestamp; no partial or synthetic transition is created. This is a deterministic data-feasibility rule, not a parameter choice. Such missed transition observations are reported in a dedicated diagnostic table.
+
+**Execution gate:** TT-07 is now unblocked and may enter numerical replay after the registered TT-06 evidence dependency passes. No numerical result exists yet.
