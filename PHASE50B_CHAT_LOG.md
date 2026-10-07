@@ -112,3 +112,8 @@ User requested continuation without pausing. Work performed:
 - Formalized the 95% complete-exit coverage feasibility gate: gaps are separately logged, excluded from primary P&L and never imputed.
 - The observed run had 247 complete exits and 5 gaps from 252 opened positions (~98.0%), so TT-02 remains eligible for an audited feasibility rerun.
 - Workflow numerical launches are now controlled only by the explicit Phase-50B trigger file.
+
+
+## 2026-10-07 — Corrected TT-02 rerun launched
+- Explicit Phase-50B trigger launched run 37593965525 after the coverage-feasibility and audit-gate corrections.
+- Numerical evidence remains blocked until TT-02 completes and the revised coverage audit passes.
