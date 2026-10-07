@@ -21,7 +21,7 @@ Only source-semantic dimensions may be varied:
 Management triggers, stops and expiry rules remain source-faithful unless a separate finite variant is preregistered.
 
 ## Statistics
-Use active-VIX versus complement bootstrap inference, one-sided permutation inference, Holm correction, paired common-expiry baseline comparisons, annual/regime breakdowns, drawdown and expected-shortfall diagnostics.
+Use active-VIX versus complement bootstrap inference, two-sided permutation inference, Holm correction, paired common-expiry baseline comparisons, annual/regime breakdowns, drawdown and expected-shortfall diagnostics.
 
 ## Promotion
 Require economic validation positivity, doubled-friction positivity, adequate execution coverage, statistical gate passage and protected 2026 confirmation.
@@ -33,3 +33,7 @@ A Tradetron report, repository README, video, or earlier backtest does not estab
 
 ## Brokerage robustness
 The preregistered primary execution model remains ₹10/order for continuity with the parent research program. Because current Paytm Money public materials indicate a flat ₹20/order rate from 15 January 2025 while an older F&O FAQ still displays ₹10, every candidate that reaches promotion must also report a ₹20/order brokerage robustness scenario. This secondary scenario cannot be used to select or tune candidates and cannot be omitted from the final cost-sensitivity table. citeturn157124search2turn157124search0
+
+
+## 2026-10-07 — Statistical-gate fail-closed hardening
+The statistical gate now requires the preregistered ₹10 and ₹20 cost outputs (net, net50, net20, net20_50) instead of substituting missing fields. All seven Phase-50B strategy slots are registered in the execution gate; unavailable artifacts are skipped rather than fabricated.
