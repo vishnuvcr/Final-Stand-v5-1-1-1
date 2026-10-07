@@ -7,6 +7,7 @@ from phase43_vix_strategy_sweep import (
     load_parquet, load_vix, vix_state, exec_px, charges, lot_size_for_expiry
 )
 
+TT04_ENGINE_REV = "50B-TT04-COVERAGE-V2"
 OUT = Path("results/phase50b/tt04_premium_match_replay")
 OUT.mkdir(parents=True, exist_ok=True)
 ENTRY_START = pd.Timestamp("10:00").time()
@@ -201,7 +202,7 @@ def main():
     pd.DataFrame(errors,columns=["day","error"]).to_csv(OUT/"data_errors.csv",index=False)
     pd.DataFrame(coverage_gaps,columns=["trade_id","expiry","trigger_ts","gap_type"]).to_csv(OUT/"coverage_gaps.csv",index=False)
     if df.empty:
-        summary={"strategy":"TT-04","trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"net":0.0,"net50":0.0}
+        summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":0,"candidate_trades":len(coverage_gaps),"coverage_exclusions":len(coverage_gaps),"coverage_rate":0.0,"net":0.0,"net50":0.0}
     else:
         df["expiry_dt"]=pd.to_datetime(df.expiry)
         splits=[]
@@ -211,7 +212,7 @@ def main():
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
         candidate_trades=len(df)+len(coverage_gaps); coverage_rate=len(df)/candidate_trades if candidate_trades else 0.0
-        summary={"strategy":"TT-04","trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
+        summary={"strategy":"TT-04","engine_revision":TT04_ENGINE_REV,"trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
     (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2))
@@ -220,3 +221,5 @@ if __name__=="__main__":
     main()
 
 # F50B-029: pre-execution correction. Missing exit-leg quotes are explicit coverage exclusions, never silent trade loss or imputation.
+
+# F50B-034: TT04 evidence requires revision 50B-TT04-COVERAGE-V2.
