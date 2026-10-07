@@ -114,7 +114,9 @@ def finish(pos,ts,z):
     gross=pos["cash"]
     cost=charges(orders,pos["lot"],1.0)
     cost50=charges(orders,pos["lot"],1.5)
-    return {"expiry":str(pos["expiry"].date()),"entry_ts":pos["entry_ts"],"exit_ts":str(ts),"entry_spot":pos["entry_spot"],"lot":pos["lot"],"gross":float(gross),"cost":float(cost),"net":float(gross-cost),"net50":float(gross-cost50),"repairs_ce":pos["repairs_ce"],"repairs_pe":pos["repairs_pe"],"vix":pos["vix"],"vix_state":pos["vix_state"]}
+    cost20=charges(orders,pos["lot"],1.0,brokerage_per_order=20.0)
+    cost20_50=charges(orders,pos["lot"],1.5,brokerage_per_order=20.0)
+    return {"expiry":str(pos["expiry"].date()),"entry_ts":pos["entry_ts"],"exit_ts":str(ts),"entry_spot":pos["entry_spot"],"lot":pos["lot"],"gross":float(gross),"cost":float(cost),"net":float(gross-cost),"net50":float(gross-cost50),"net20":float(gross-cost20),"net20_50":float(gross-cost20_50),"repairs_ce":pos["repairs_ce"],"repairs_pe":pos["repairs_pe"],"vix":pos["vix"],"vix_state":pos["vix_state"]}
 
 def main():
     idx=index_data()
@@ -209,7 +211,7 @@ def main():
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
         candidate_trades=len(df)+len(coverage_gaps); coverage_rate=len(df)/candidate_trades if candidate_trades else 0.0
-        summary={"strategy":"TT-04","trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
+        summary={"strategy":"TT-04","trades":len(df),"candidate_trades":candidate_trades,"coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"splits":splits,"by_vix":vx.to_dict("records")}
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
     (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2))
