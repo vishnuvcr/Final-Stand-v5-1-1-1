@@ -239,3 +239,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — Canonical workflow serialization
 - Added Phase-50B concurrency protection (`cancel-in-progress: false`) so only one canonical numerical run can execute at a time.
 - Active run 37593965525 remains unchanged; this protects subsequent corrected reruns.
+
+
+## 2026-10-07 — TT-05 control execution prepared
+- Added source-faithful TT-05 short-straddle replay engine and a dedicated manually dispatchable workflow.
+- TT-05 is dependency-gated behind audited TT-04 evidence and uses the same 95% coverage rule plus ₹10/₹20 brokerage robustness outputs.
+- The TT-04 workflow will emit the TT-05 trigger only after its own evidence audit passes.
