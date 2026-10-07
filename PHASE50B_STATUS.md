@@ -537,3 +537,12 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Active TT-04 run **37621965843** remains the sole numerical path; preflight passed and numerical replay is still executing.
 - The TT-04 workflow, source-audit lock and V3 engine were re-read at the active run head. No new evidence-impacting defect was identified; exact premium matching, expiry-day next-week handling, 15:15-or-later complete-quote exit semantics, explicit coverage gaps, zero-error gate, and ₹10/₹20 cost outputs remain enforced.
 - No TT-04 result is accepted until the artifact/coverage/data-error/cost audit passes.
+
+
+## 2026-10-07T18:15:00+05:30 — TT04 live continuation / chat checkpoint
+- User resumed Phase 50B and explicitly instructed continuation.
+- Direct GitHub Actions inspection confirms TT04 run **37621965843** is still the sole active TT04 numerical execution. Preflight passed; compilation and HF cache passed; the numerical replay step remains in progress.
+- The active TT04 workflow revision is **50B-TT04-COVERAGE-V3**. Its acceptance gate requires the persisted TT03 V5 PASS terminal artifact, >=95% complete mandatory-exit coverage, explicit session exclusions, zero data errors, and all four registered cost outputs.
+- TT03 V5 accepted evidence remains unchanged: run **37620274641**, 200/201 complete campaigns, 99.50% coverage, one coverage exclusion, one session exclusion, zero data errors; ₹89,669.15 primary, ₹82,074.11 +50% stress, ₹75,509.15 at ₹20/order, ₹60,834.11 at ₹20/order +50% stress.
+- No TT04 P&L, VIX inference, parameter selection, or promotion claim is accepted while the replay is incomplete.
+- Downstream TT05–TT07 and statistical-gate contracts were re-read during the live interval; no new evidence-impacting defect was identified.
