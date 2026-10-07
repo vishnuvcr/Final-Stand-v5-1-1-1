@@ -413,3 +413,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected engine revision is now 50B-TT04-COVERAGE-V3.
 - TT04 and the downstream TT05 dependency gates were updated to require V3.
 - No TT04 numerical evidence existed before these corrections.
+
+
+## 2026-10-07 — TT03 diagnostic rerun supersession control
+- Run 37612856834 began on an earlier head before the diagnostic-capture workflow hardening was committed.
+- The trigger has now been refreshed once more so the serialized TT03 workflow will restart from the latest branch state; no overlapping TT03 evidence is permitted.
+- No scientific conclusion changes: TT03 remains FEASIBILITY FAIL at 92.57% coverage based on run 37611676386, pending repository persistence of the raw diagnostic tables.
