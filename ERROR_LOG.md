@@ -1879,3 +1879,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: after confirming that no TT03 artifact or downstream TT04 trigger existed, the trigger file was changed and committed again to explicitly retrigger the dedicated TT03 workflow.
 - No duplicate numerical evidence was launched while the previous trigger had no observable Actions run.
 - Evidence status: **NO SCIENTIFIC IMPACT**.
+
+
+### F50B-057 — Batched documentation write hit a stale SHA conflict
+- Time: 2026-10-07.
+- A sequential documentation synchronization batch attempted to update multiple repository files using SHAs fetched before the preceding write.
+- The first write advanced the branch, causing a later file update to be rejected with HTTP 409 because its SHA was stale.
+- No scientific or data artifact was lost; the failed write did not overwrite any file.
+- Correction: all subsequent related documentation writes will fetch a fresh SHA immediately before each individual update.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
