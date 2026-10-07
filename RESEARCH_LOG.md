@@ -782,3 +782,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Found and corrected a workflow-audit weakness: exclusion diagnostic row counts were not cross-checked against summary counts.
 - Added reconciliation checks to TT04, TT05 and TT06, plus entry-exclusion reconciliation to TT07.
 - No downstream numerical execution was triggered by these workflow-only changes.
+
+
+## 2026-10-07 — TT-03 V5 feasibility PASS
+- The cleaned TT03 V5 replay completed successfully in run 37620274641.
+- Final feasibility: 200/201 completed campaigns, 99.50% coverage, one coverage exclusion, one session exclusion, zero data errors.
+- Cost outputs: net 89,669.15; net50 82,074.11; net20 75,509.15; net20_50 60,834.11.
+- Baseline evidence is accepted; no candidate promotion has occurred.
+- TT04 was explicitly dispatched after confirming the downstream push trigger created by GITHUB_TOKEN does not itself launch an ordinary push workflow.
