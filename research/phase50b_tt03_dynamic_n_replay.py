@@ -37,28 +37,35 @@ def entry_day(expiry,index):
 def trade_one(expiry,index,data):
     day=entry_day(expiry,index)
     if day is None:return None
-    ts0=day+pd.Timedelta(hours=10)
-    times=sorted(index[(index.timestamp.dt.normalize()==day)&
-                       (index.timestamp>=ts0)&
-                       (index.timestamp<day+pd.Timedelta(hours=10,minutes=5))].timestamp.unique())
-    if len(times)==0:return None
-    ts=pd.Timestamp(times[0])
-    ix=index[index.timestamp==ts]
-    if ix.empty:return None
-    spot=float(ix.iloc[-1].spot)
-    snap=data[data.timestamp==ts]
-    if snap.empty:return None
-    step=modal_step(snap)
-    if step is None:return None
-    atm=float(min(snap.strike.unique(),key=lambda k:abs(float(k)-spot)))
-    call_legs=[("CE",atm+300.0,+1),("CE",atm+350.0,-1),("CE",atm+400.0,-1)]
-    put_legs=[("PE",atm-300.0,+1),("PE",atm-350.0,-1),("PE",atm-400.0,-1)]
-    if all(q(snap,o,k) is not None for o,k,_ in call_legs):
-        legs=call_legs; direction="CALL_RATIO_BEARISH"
-    elif all(q(snap,o,k) is not None for o,k,_ in put_legs):
-        legs=put_legs; direction="PUT_RATIO_BULLISH"
-    else:
-        return None
+    ts_candidates=sorted(index[(index.timestamp.dt.normalize()==day)&
+                              (index.timestamp>=day+pd.Timedelta(hours=10))&
+                              (index.timestamp<day+pd.Timedelta(hours=10,minutes=6))].timestamp.unique())
+    if len(ts_candidates)==0:return None
+
+    # Tradetron evaluates continuously inside the 10:00-10:05 entry window.
+    # Use the earliest timestamp at which a complete source-defined ratio set exists.
+    chosen=None
+    for ts0 in ts_candidates:
+        ts0=pd.Timestamp(ts0)
+        ix=index[index.timestamp==ts0]
+        if ix.empty:continue
+        spot=float(ix.iloc[-1].spot)
+        snap=data[data.timestamp==ts0]
+        if snap.empty:continue
+        step=modal_step(snap)
+        if step is None:continue
+        atm=float(min(snap.strike.unique(),key=lambda k:abs(float(k)-spot)))
+        call_legs=[("CE",atm+300.0,+1),("CE",atm+350.0,-1),("CE",atm+400.0,-1)]
+        put_legs=[("PE",atm-300.0,+1),("PE",atm-350.0,-1),("PE",atm-400.0,-1)]
+        if all(q(snap,o,k) is not None for o,k,_ in call_legs):
+            chosen=(ts0,spot,atm,call_legs,"CALL_RATIO_BEARISH",snap)
+            break
+        if all(q(snap,o,k) is not None for o,k,_ in put_legs):
+            chosen=(ts0,spot,atm,put_legs,"PUT_RATIO_BULLISH",snap)
+            break
+    if chosen is None:return None
+
+    ts,spot,atm,legs,direction,snap=chosen
     lot=lot_size_for_expiry(expiry)
     ledger=[]
     entry_px={(o,k):q(snap,o,k) for o,k,_ in legs}
@@ -111,8 +118,6 @@ def trade_one(expiry,index,data):
       "win":int((gross-cost)>0)
     }
 
-VIX=None
-
 def main():
     global VIX
     index=load_parquet("index/NIFTY.parquet")
@@ -145,3 +150,4 @@ def main():
 if __name__=="__main__":main()
 
 # F50B-010 fixed before numerical execution: emulate both symmetric sets, call-set priority as listed in Tradetron, with put-set fallback only when call-set quotes are unavailable.
+# F50B-026: evaluate the full 10:00-10:05 entry window and select the earliest feasible complete ratio set.
