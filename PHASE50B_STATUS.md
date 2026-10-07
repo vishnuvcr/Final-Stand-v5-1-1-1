@@ -287,3 +287,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT-05 now triggers TT-06 only after TT-05 evidence passes its artifact gate.
 - No TT-06 numerical execution has started.
 - Active TT-02 run 37596743408 remains non-authoritative because it predates the TT02 revision-constant correction.
+
+
+## 2026-10-07 — TT-07 source-lock correction
+- Raw TT-07 export inspection recovered the exact six-state transition graph.
+- A genuine runtime-scope ambiguity remains for ic_entered because the export contains no reset after setting it to 1.
+- TT-07 numerical replay is therefore blocked pending authoritative resolution; no guessed reset policy will be used.
+- TT-02 run 37596743408 remains active and non-authoritative.
