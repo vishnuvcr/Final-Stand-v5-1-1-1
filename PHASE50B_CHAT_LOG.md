@@ -145,3 +145,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-02 engine revision gate
 - Added `50B-TT02-COVERAGE-V3` revision stamping and workflow verification.
 - Current active run predates the stamp, so latest-code rerun remains required for final evidence.
+
+
+## 2026-10-07 — Paytm brokerage robustness scenario
+- Verified current public Paytm Money materials and found ₹10 vs ₹20/order inconsistency.
+- Retained ₹10 as the preregistered primary model and added a ₹20/order robustness scenario to avoid overstating economic viability.
