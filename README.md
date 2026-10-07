@@ -825,3 +825,7 @@ No Phase-50B strategy has been promoted.
 - The latest TT03 dedicated run failed before numerical replay because pandas was missing from the preflight environment.
 - The workflow now installs the required scientific/data dependencies before its TT02 evidence gate, and the trigger has been refreshed.
 - No TT03 numerical evidence has been accepted yet.
+
+### 2026-10-07 — TT-03 semantic corrections before evidence acceptance
+- The TT03 replay was audited while running and two source-semantic defects were found: hard-close selection could cross 15:29, and a non-source modal strike-step gate could exclude valid entries.
+- Both were corrected before result publication; no superseded TT03 output is accepted.
