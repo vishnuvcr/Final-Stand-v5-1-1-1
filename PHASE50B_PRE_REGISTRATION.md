@@ -37,3 +37,7 @@ The preregistered primary execution model remains ₹10/order for continuity wit
 
 ## 2026-10-07 — Statistical-gate fail-closed hardening
 The statistical gate now requires the preregistered ₹10 and ₹20 cost outputs (net, net50, net20, net20_50) instead of substituting missing fields. All seven Phase-50B strategy slots are registered in the execution gate; unavailable artifacts are skipped rather than fabricated.
+
+
+## Statistical holdout protection clarification — 2026-10-07
+The preregistered bootstrap/permutation VIX-regime inference family is explicitly defined on **DEV+VAL (2021 through 2025)**. The protected 2026 HOLD is excluded from hypothesis testing, Holm-family construction, threshold selection and candidate ranking. HOLD is used only for final out-of-sample confirmation/descriptive performance after all pre-holdout decisions are frozen.
