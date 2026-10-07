@@ -808,3 +808,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The accepted TT03 V5 feasibility result remains unchanged and is the dependency artifact consumed by TT04: 200/201 complete campaigns, 99.50% coverage, one coverage exclusion, one session exclusion, zero data errors.
 - TT04 V3 remains source-faithful and fail-closed on coverage, session exclusions, zero data errors and the four registered cost outputs. No incomplete TT04 P&L is used for VIX inference or promotion.
 - Downstream controls and the statistical gate were re-audited during the live interval; no new evidence-impacting defect was identified.
+
+
+## 2026-10-07 — TT04 active-run observability audit
+- Checked TT04 run 37621965843 job state directly: preflight succeeded and numerical replay remains active.
+- The live log endpoint returned BlobNotFound; no inference was drawn from unavailable logs.
+- The registered workflow, artifact gate and fail-closed downstream chain remain unchanged.
