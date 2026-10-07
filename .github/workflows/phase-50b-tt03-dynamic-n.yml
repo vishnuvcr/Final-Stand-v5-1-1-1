@@ -138,7 +138,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: phase50b-tt03-diagnostic-${{ github.run_id }}
-          path: results/phase50b/tt03_dynamic_n_replay
+          path: |
+            results/phase50b/tt03_dynamic_n_replay
+            results/phase50b/tt03_feasibility
 
       - name: Audit TT03 artifacts and classify terminal feasibility
         run: |
@@ -182,7 +184,31 @@ jobs:
                       else "source-faithful baseline passed execution feasibility")
           }
           (out/"terminal_decision.json").write_text(json.dumps(decision,indent=2))
+          feas=Path("results/phase50b/tt03_feasibility")
+          feas.mkdir(parents=True,exist_ok=True)
+          feasibility_state = "PASS" if status=="PASS" else ("FAIL_COVERAGE" if status=="FEASIBILITY_FAIL" else "INVALID_ENGINE")
+          feasibility={
+            "strategy":"TT-03",
+            "diagnostic_only":bool(feasibility_state!="PASS"),
+            "feasibility_state":feasibility_state,
+            "engine_revision":d["engine_revision"],
+            "trades":int(d["trades"]),
+            "candidate_trades":int(d["candidate_trades"]),
+            "coverage_exclusions":int(d["coverage_exclusions"]),
+            "coverage_rate":cov,
+            "net":float(d.get("net",0.0)),
+            "net50":float(d.get("net50",0.0)),
+            "net20":float(d.get("net20",0.0)),
+            "net20_50":float(d.get("net20_50",0.0)),
+            "data_errors":int(len(er)),
+            "session_exclusions":int(d.get("session_exclusions",len(sx))),
+            "uses_pnl_as_evidence":bool(feasibility_state=="PASS"),
+            "next_strategy_may_proceed":True,
+            "run_terminal_decision":decision
+          }
+          (feas/"feasibility.json").write_text(json.dumps(feasibility,indent=2))
           print("TT03 terminal decision:",json.dumps(decision,indent=2))
+          print("TT03 feasibility artifact:",json.dumps(feasibility,indent=2))
           PY
 
       - name: Upload TT03 diagnostics/evidence artifact
