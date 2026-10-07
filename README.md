@@ -775,22 +775,22 @@ No Phase-50B strategy has been promoted.
 - No TT-06 result exists yet.
 
 
-### 2026-10-07 — TT-07 source-lock blocker
-- Direct inspection of the original [Dynamic IC to Ratio export](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1) resolved the state graph but identified an unresolved ic_entered runtime-scope issue. TT-07 replay is intentionally blocked rather than using a guessed reset policy.
+### 2026-10-07 — TT-07 source-lock blocker — RESOLVED LATER
+- Direct inspection of the original [Dynamic IC to Ratio export](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1) initially left the `ic_entered` runtime scope ambiguous. Numerical replay was correctly blocked at that point.
+- The ambiguity was subsequently resolved from current official Tradetron Runtime Variable documentation; see the current execution section above and [TT-07 source audit](PHASE50B_TT07_SOURCE_AUDIT.md).
 
 
-### 2026-10-07 — TT-02 authoritative replay
+### 2026-10-07 — TT-02 authoritative replay — HISTORICAL CHECKPOINT
 - Superseded pre-fix run 37596743408 was cancelled and excluded.
-- Corrected run [37598918723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37598918723) is now the sole active TT-02 numerical execution.
-- It has passed registry, compilation, static engine-contract and cache setup; numerical replay is still running.
+- Corrected run [37598918723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37598918723) completed the TT-02 numerical and artifact-publication jobs successfully.
+- The parent workflow later finished with failure because its TT-03 child replay failed; the TT-02 artifact itself remains accepted evidence.
 
 
-### 2026-10-07 — Current execution state synchronized
-- Authoritative corrected TT-02 run [37598918723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37598918723) remains in progress; registry passed and canonical replay is still executing.
+### 2026-10-07 — Historical execution state — SUPERSEDED
+- At this checkpoint the corrected TT-02 run was still in progress; it subsequently completed and its TT-02 artifact was accepted.
 - The workflow uses `cancel-in-progress: true` and only the explicit `trigger/phase50b.start` push path for automatic numerical launches; manual dispatch remains available.
-- No Phase-50B strategy has been promoted and no TT-02 result is accepted before the complete artifact/coverage/cost audit.
-- TT-07 remains blocked pending authoritative resolution of the `ic_entered` lifecycle semantics.
-undefined
+- No Phase-50B strategy has been promoted.
+
 
 ## 2026-10-07 — Phase 50B execution status
 - TT-02 authoritative evidence is now published and audited: 247/252 coverage, 98.02%; primary net -₹3,387.42; +50% cost stress -₹32,226.76; ₹20/order robustness -₹47,212.62; ₹20/order +50% stress -₹97,964.56.
