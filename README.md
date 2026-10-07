@@ -891,3 +891,10 @@ No Phase-50B strategy has been promoted.
 - Current TT03 V5 dedicated run [37620274641](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37620274641) is still executing its numerical replay.
 - No TT03 result or downstream promotion decision is accepted while that run remains incomplete.
 - While it executes, downstream TT04 through TT07 coverage-control workflows were hardened to reconcile exclusion diagnostics against summary denominators before accepting future evidence.
+
+
+### 2026-10-07 — TT-03 V5 feasibility PASS
+- Dedicated run [37620274641](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37620274641) completed the corrected TT03 V5 replay and passed feasibility: 200/201 coverage (99.50%), zero data errors, one session exclusion.
+- Common-cost baseline: ₹89,669 net; ₹82,074 at +50% cost stress; ₹75,509 at ₹20/order; ₹60,834 at ₹20/order +50% stress.
+- This is accepted baseline evidence, not a final strategy recommendation. Statistical inference, chronological splits and protected holdout confirmation remain.
+- TT04 was explicitly dispatched after the Actions GITHUB_TOKEN push did not create a downstream push-triggered run.
