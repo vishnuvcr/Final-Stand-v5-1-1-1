@@ -666,3 +666,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Run 37610158492 stopped in preflight with `ModuleNotFoundError: No module named 'pandas'`.
 - Corrected the dedicated workflow to install dependencies before its evidence gate.
 - Refreshed the TT03 trigger only after the workflow correction.
+
+## 2026-10-07 — TT-03 pre-execution semantic corrections
+- Audited the running TT03 engine before accepting any evidence.
+- Corrected the no-later-than-15:29 hard close to use the latest common observed timestamp at or before 15:29.
+- Removed the non-source modal strike-step feasibility gate.
+- No TT03 result from the superseded implementation is accepted.
