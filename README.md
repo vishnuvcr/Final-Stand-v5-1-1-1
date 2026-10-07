@@ -704,7 +704,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 
 ## 2026-10-07 — Phase 50B cost robustness update
-- Reverified current NSE statutory charges and Paytm Money brokerage information. citeturn214286search0turn214286search3turn157124search0turn157124search2
+- Reverified current NSE statutory charges and Paytm Money brokerage information. [NSE STT schedule](https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax); [NSE stamp duty schedule](https://www.nseindia.com/static/invest/first-time-investor-stamp-duty-charges-taxes); [Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web); [Paytm Money pricing update](https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/)
 - The primary research model remains ₹10/order for comparability; a ₹20/order Paytm robustness scenario is now preregistered for promotion sensitivity.
 
 
