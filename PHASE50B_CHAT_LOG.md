@@ -279,3 +279,8 @@ User requested continuation without pausing. Work performed:
 - Audited the statistical gate against the full preregistered VIX mode family.
 - Found that trade tables store only LOW/NORMAL/HIGH, which is insufficient to test SPIKE/RISING/FALLING/HIGH_RISING.
 - Corrected the gate to reconstruct the full mode set from entry-date VIX and to exclude VIX-unobservable observations from both regime and complement.
+
+## 2026-10-07 — Resume checkpoint: TT-03 dependency fix
+- Inspected the latest TT03 Actions run and found a preflight-only dependency failure: pandas was not installed.
+- Corrected the workflow and refreshed the TT03 trigger.
+- No numerical result was accepted and no downstream phase was bypassed.
