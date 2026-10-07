@@ -1458,3 +1458,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: raw numerical output is useful exploratory diagnostic evidence but was not publication-accepted by the workflow.
 - Correction: create valid empty ledgers and an explicit sparse-HIGH exploratory validation branch. The exploratory branch is non-promotable and does not relax the confirmatory gate.
 - Prevention: all early-stop paths must emit the full canonical artifact set with headers before publication auditing.
+
+### F50-004 — Phase-50 corrected numerical run failed only at artifact self-audit
+- Affected run: 37567632928 (#6).
+- The far-OTM numerical step completed successfully and produced the sparse-HIGH exploratory artifact set, but the workflow failed in the generic artifact self-audit.
+- The decision artifact was NO_CONFIRMATORY_CANDIDATES with 5 sparse-HIGH exploratory cells and 6 HIGH development opportunities. This is a valid data-feasibility outcome under the registered gate.
+- Evidence status: numerical output is valid exploratory evidence, but publication is blocked until the audit logic is corrected.
+- Correction: simplify the sparse-HIGH early-stop audit and branch explicitly on the decision JSON rather than applying a uniform Stage-2 schema.
+- Prevention: terminal scientific outcomes must have outcome-specific artifact audits.
