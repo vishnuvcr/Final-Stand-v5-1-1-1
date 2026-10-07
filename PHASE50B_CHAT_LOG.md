@@ -460,3 +460,9 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 ## 2026-10-07 — Continue checkpoint: dormant TT04 fallback prepared
 - During the active TT04 replay, an execution-only fallback was prepared to avoid repeating expensive timestamp scans if a genuine workflow timeout/failure occurs.
 - The fallback is not wired, not run, and contributes no evidence. The canonical TT04 V3 run remains authoritative while active.
+
+
+## 2026-10-07 — Continue checkpoint: fallback validation control
+- Added a compile-only validation workflow for the dormant TT04 fallback, with automatic push and manual triggers.
+- Direct Actions inspection still shows canonical TT04 run **37621965843** in its numerical replay step, with no artifacts yet.
+- No fallback execution, duplicate replay or scientific parameter change was made.
