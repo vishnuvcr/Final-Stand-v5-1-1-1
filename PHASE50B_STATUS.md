@@ -599,3 +599,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - It replaces repeated full timestamp scans with timestamp-indexed option frames, pre-indexed spot lookup and one-time daily exit-candidate construction.
 - The fallback retains the same source entry/repair/stop/15:15-or-later exit rules, exact observed premium matching, chronological handling, coverage/session treatment, lot sizing and four registered cost outputs.
 - It is **not wired to the active workflow, not executed, and not evidence**. Activation remains contingent on a genuine TT04 workflow failure/timeout followed by a fresh compile/evidence audit.
+
+
+## 2026-10-07 — TT04 fallback validation control added
+- Added `.github/workflows/phase50b-tt04-fallback-syntax.yml` with both automatic push and manual dispatch triggers.
+- Its only numerical action is Python syntax compilation of the dormant fallback; it does not load market data or run a backtest.
+- The fallback therefore remains an execution contingency only, while TT04 V3 run **37621965843** remains the sole authoritative scientific execution.
