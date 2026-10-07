@@ -328,3 +328,9 @@ User requested continuation without pausing. Work performed:
 - The first diagnostic rerun was pinned to an earlier workflow commit, so it is being superseded by the serialized latest-head rerun.
 - New TT03 run 37613416831 is pending on trigger commit 5397259b5501db1f0bd32bfe08425e5bd820e966.
 - No scientific evidence is taken from the superseded run.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 terminal classification
+- Run 37613416831 completed the diagnostic capture successfully; artifact audit intentionally rejected the candidate because coverage remained below 95%.
+- The raw diagnostic tables are now persisted, so TT03 is terminal FEASIBILITY FAIL / NO PROMOTION.
+- TT04 run 37614211996 continues independently on the corrected V3 engine.
