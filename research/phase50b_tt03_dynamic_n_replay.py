@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from phase43_vix_strategy_sweep import (
     TZ, START, END, DEV_END, VAL_END,
-    load_parquet, load_vix, modal_step, exec_px, charges, lot_size_for_expiry, vix_state
+    load_parquet, load_vix, exec_px, charges, lot_size_for_expiry, vix_state
 )
 
 OUT=Path("results/phase50b/tt03_dynamic_n_replay")
@@ -53,8 +53,6 @@ def trade_one(expiry,index,data):
         spot=float(ix.iloc[-1].spot)
         snap=data[data.timestamp==ts0]
         if snap.empty:continue
-        step=modal_step(snap)
-        if step is None:continue
         atm=float(min(snap.strike.unique(),key=lambda k:abs(float(k)-spot)))
         call_legs=[("CE",atm+300.0,+1),("CE",atm+350.0,-1),("CE",atm+400.0,-1)]
         put_legs=[("PE",atm-300.0,+1),("PE",atm-350.0,-1),("PE",atm-400.0,-1)]
@@ -95,10 +93,17 @@ def trade_one(expiry,index,data):
         if pnl is not None and pd.Timestamp(t).time()>=pd.Timestamp("13:30").time() and pnl<0:
             exit_ts=pd.Timestamp(t);break
     if exit_ts is None:
-        candidate=day_data[day_data.timestamp.dt.time>=pd.Timestamp("15:29").time()]
-        if candidate.empty:
-            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"gap_type":"missing_15:29_or_later_exit_data"}}
-        exit_ts=pd.Timestamp(candidate.timestamp.max())
+        # Source rule is "no later than 15:29". Therefore use the latest
+        # simultaneously observed index/option timestamp at or BEFORE 15:29.
+        # Never roll forward to 15:30+ and never require an exact 15:29 quote.
+        hard_close=pd.Timestamp("15:29").time()
+        common=sorted(
+            set(idxday.timestamp).intersection(set(day_data.timestamp))
+        )
+        eligible=[pd.Timestamp(t) for t in common if pd.Timestamp(t).time()<=hard_close]
+        if not eligible:
+            return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"gap_type":"missing_observed_hard_close_quote_at_or_before_15:29"}}
+        exit_ts=max(eligible)
     exit_snap=day_data[day_data.timestamp==exit_ts]
     for o,k,qty in legs:
         px=q(exit_snap,o,k)
@@ -161,5 +166,7 @@ if __name__=="__main__":main()
 
 # F50B-010 fixed before numerical execution: emulate both symmetric sets, call-set priority as listed in Tradetron, with put-set fallback only when call-set quotes are unavailable.
 # F50B-026: evaluate the full 10:00-10:05 entry window and select the earliest feasible complete ratio set.
+# F50B-063 correction: expiry-day hard close uses the latest observed common quote at or before 15:29; no forward-to-15:30 is permitted.
+# F50B-064 correction: modal strike-step availability is not a source condition; removed the unnecessary step gate.
 
 # F50B-033: TT03 opened positions cannot silently disappear; incomplete exits are explicit coverage exclusions.
