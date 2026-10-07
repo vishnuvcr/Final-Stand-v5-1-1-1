@@ -442,3 +442,9 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - User said “Ok proceed”.
 - TT04 run 37621965843 remains active in the numerical replay step.
 - No duplicate execution, parameter change, or premature conclusion was made.
+
+
+## 2026-10-07 — Continue checkpoint: TT04 remains active
+- User requested another continuation.
+- TT04 run 37621965843 remains active with prerequisites successful and the numerical replay step still running.
+- No duplicate replay was started, and the dormant performance fallback was not activated because no timeout/failure has occurred.
