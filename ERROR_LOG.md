@@ -1722,3 +1722,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Time: 2026-10-07.
 - Added a deterministic TT-05 replay and dependency-gated workflow as the next registered control after TT-04.
 - No numerical TT-05 execution occurred in this step, so no evidence impact.
+
+
+### F50B-037 — TT-02 v2/v3 fallback equivalence audit
+- Time: 2026-10-07.
+- Audited the prepared v3 fallback against v2 and confirmed the scientific state machine and cost model are unchanged; only traversal/indexing is optimized.
+- v3 remains performance-only and is forbidden while v2 is active.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
