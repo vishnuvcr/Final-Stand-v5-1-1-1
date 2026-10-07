@@ -1591,3 +1591,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - A second local polling wait helper timed out while waiting for the active GitHub Actions runner.
 - Evidence status: **NO RESEARCH IMPACT**. The active Actions job was not cancelled or modified.
 - Prevention: rely on direct GitHub Actions state checks rather than local sleep-based polling.
+
+### F50B-020 — TT04 expiry-day position-marking series mismatch
+- Time: 2026-10-07.
+- Static pre-execution audit of the corrected TT-04 replay found that, on a current-week expiry day, the loop selected the **next-week** option frame for the day because next-week is the source-defined expiry-day entry target.
+- An existing position opened on a prior non-expiry day remains a **current-week** position and must therefore be marked, repaired and exited from its own current-week option series.
+- Evidence status: **NO NUMERICAL IMPACT**. TT-04 numerical execution had not started.
+- Correction: the replay now separates the frame used for new entries (z_entry) from the frame used for an existing position (position expiry). Existing positions retain their original expiry series through their exit; expiry-day new entries use next-week as required by the source.
+- Prevention: any strategy that changes the entry expiry on an expiry day must carry the position's immutable trade expiry separately from the day's new-entry target expiry and must use the position expiry for all MTM/exit calculations.
