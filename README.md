@@ -697,3 +697,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 ## 2026-10-07 — Phase 50B TT-02 denominator safeguard
 - TT-02 corrected engines now explicitly account for terminal open positions so the candidate denominator cannot silently lose trades.
 - The active pre-safeguard run remains diagnostic until a latest-code rerun passes the full audit.
+
+
+## 2026-10-07 — Phase 50B TT-02 revision gate
+- TT-02 evidence now requires engine revision `50B-TT02-COVERAGE-V3`; pre-correction artifacts cannot be promoted.
