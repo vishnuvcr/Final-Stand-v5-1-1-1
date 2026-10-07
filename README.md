@@ -802,3 +802,9 @@ No Phase-50B strategy has been promoted.
 - The corrected TT03 workflow remained non-observable through the available commit-status endpoint, so its trigger file was refreshed in commit `28722b5204166199f91353d793f2840fe2022812`.
 - The dedicated TT03 workflow uses serialized `cancel-in-progress: true` concurrency; no overlapping TT03 evidence is permitted.
 - The new commit status is pending and no TT03 result is accepted yet.
+
+
+### 2026-10-07 — TT-03 replay contract frozen
+- Added [TT-03 replay specification](PHASE50B_TT03_REPLAY_SPEC.md) documenting the exact entry window, symmetric ratio sets, expiry-day P&L exit, coverage rules, cost model, chronology and finite far-OTM mutation boundary.
+- The dedicated workflow remains the sole numerical execution path for corrected TT-03.
+- Current trigger refresh commit: `28722b5204166199f91353d793f2840fe2022812`; no TT-03 result artifact is accepted until its complete artifact/coverage/cost audit passes.
