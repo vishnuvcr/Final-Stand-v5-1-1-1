@@ -530,3 +530,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT04 preflight passed, including the TT03 V5 terminal gate; no TT04 result, inference, or promotion claim is accepted before artifact audit and publication.
 - Downstream TT05/TT06/TT07 workflows were re-audited and remain fail-closed behind the persisted dependency artifacts and reconciliation checks.
 - No research-plan change was made.
+
+
+## 2026-10-07T18:15:00+05:30 — Continuation/source-gate audit
+- User resumed Phase 50B after accepted TT-03 V5 PASS.
+- Active TT-04 run **37621965843** remains the sole numerical path; preflight passed and numerical replay is still executing.
+- The TT-04 workflow, source-audit lock and V3 engine were re-read at the active run head. No new evidence-impacting defect was identified; exact premium matching, expiry-day next-week handling, 15:15-or-later complete-quote exit semantics, explicit coverage gaps, zero-error gate, and ₹10/₹20 cost outputs remain enforced.
+- No TT-04 result is accepted until the artifact/coverage/data-error/cost audit passes.
