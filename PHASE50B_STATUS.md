@@ -22,3 +22,6 @@ GitHub Actions run 37567632928 on the parent far-OTM branch remains in progress.
 5. semantically valid far-OTM mutations;
 6. chronological validation and protected holdout;
 7. final statistical gate and manuscript.
+
+## Registry validation
+Automatic Phase-50B registry validation completed successfully in GitHub Actions runs 37569527054 and 37569534954. The frozen registry contains all seven requested Tradetron strategies and the identified prior GitHub lineages.
