@@ -621,3 +621,7 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Added .github/workflows/phase-50b-tt04-fallback.yml and activated trigger/phase50b_tt04_fallback.start. The fallback uses the source-equivalence-audited engine 50B-TT04-COVERAGE-V3-FAST-DORMANT and the same 95% coverage, zero-error, four-cost and TT03 terminal gates.
 - The fallback is an execution correction only, not a strategy mutation or new scientific candidate. No parameter, entry, repair, stop, exit, strike or cost rule was changed.
 - TT05 remains fail-closed until the fallback produces an audited published TT04 artifact.
+
+
+## 2026-10-07 — TT04 fallback dispatch blocker
+- The controlled fallback workflow is installed and the trigger marker is present, but no Actions run was created from the API-authored trigger commit. The available GitHub connector has no workflow_dispatch operation, and push-triggered workflows are suppressed for these API-authored commits. Therefore fallback execution has not started and no result is accepted. This does not alter the research plan or scientific gates.
