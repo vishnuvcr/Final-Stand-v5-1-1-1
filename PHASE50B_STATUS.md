@@ -223,3 +223,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Primary Phase-50B brokerage remains ₹10/order for continuity with the parent methodology.
 - Added a preregistered ₹20/order Paytm Money robustness scenario because official Paytm public materials currently conflict on the brokerage figure. citeturn157124search0turn157124search2
 - Promotion cannot rely only on the ₹10 scenario; the ₹20 scenario must also be reported and must not be used for post-result selection.
+
+
+## 2026-10-07 — TT-03 coverage/accounting gate hardened
+- Corrected TT-03 so incomplete exit observations become explicit coverage exclusions rather than silently disappearing.
+- TT-03 workflow now requires engine revision `50B-TT03-WINDOW-V2`, >=95% coverage, zero data errors, and current-cost robustness output fields.
+- No TT-03 evidence is accepted until those gates pass.
