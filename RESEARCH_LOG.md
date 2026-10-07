@@ -486,3 +486,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Canonical TT-02 run 37589400281 remains in progress.
 - Live log endpoint returned 404/BlobNotFound (F50B-024); this is an operational monitoring issue only.
 - The evidence hierarchy remains unchanged: accept numerical evidence only after completed replay plus zero-data-error artifact audit.
+
+
+## 2026-10-07 — Phase 50B TT-02 coverage feasibility correction
+- Run 37589400281 completed replay but failed the original zero-data-error gate solely because five opened positions lacked a complete common exit quote after 15:15.
+- Reclassified these as source-data coverage exclusions, consistent with the dataset's explicit partial-coverage warning. citeturn551023search2turn551023search4
+- Pre-registered a 95% complete mandatory-exit quote coverage feasibility threshold; no price imputation is permitted.
+- TT-02 will be rerun with `coverage_gaps.csv` and the revised audit. TT-03 remains dependency-gated until the revised TT-02 feasibility audit passes.
