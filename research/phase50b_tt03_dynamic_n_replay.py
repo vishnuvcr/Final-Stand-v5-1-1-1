@@ -108,11 +108,12 @@ def trade_one(expiry,index,data):
         gross += (-1 if r["side"]=="buy" else 1)*ep*abs(r["qty"])*r["lot"]
         orders.append((pd.Timestamp(r["ts"]),r["side"],ep*abs(r["qty"])))
     cost=charges(orders,lot,1.0); cost50=charges(orders,lot,1.5)
+    cost20=charges(orders,lot,1.0,brokerage_per_order=20.0); cost20_50=charges(orders,lot,1.5,brokerage_per_order=20.0)
     vs=vix_state(VIX,ts)
     return {
       "expiry":str(expiry.date()),"entry_ts":str(ts),"exit_ts":str(exit_ts),
       "year":ts.year,"spot":spot,"atm":atm,
-      "net":gross-cost,"net50":gross-cost50,"gross":gross,"cost":cost,
+      "net":gross-cost,"net50":gross-cost50,"net20":gross-cost20,"net20_50":gross-cost20_50,"gross":gross,"cost":cost,
       "vix":vs["vix"] if vs else np.nan,"vix_state":vs["level_state"] if vs else None,
       "direction":direction,
       "distance_points":300,
@@ -144,7 +145,7 @@ def main():
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
         vx=df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean"),win_rate=("win","mean")).reset_index()
         vx.to_csv(OUT/"vix_summary.csv",index=False)
-        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"by_vix":vx.to_dict("records")}
+        result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":len(df),"net":float(df.net.sum()),"net50":float(df.net50.sum()),"net20":float(df.net20.sum()),"net20_50":float(df.net20_50.sum()),"by_vix":vx.to_dict("records")}
     else: result={"strategy":"TT-03","engine_revision":TT03_ENGINE_REV,"trades":0,"net":0.0,"net50":0.0,"by_vix":[]}
     (OUT/"summary.json").write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2))
