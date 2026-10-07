@@ -142,3 +142,12 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Canonical TT-02 run 37572837253 has been executing for approximately 41 minutes and remains within its registered 360-minute job timeout.
 - No artifact has been published; no scientific result is accepted.
 - The prepared v3 engine remains an unexecuted fallback and will only replace the canonical v2 run after an actual failure/timeout, not merely because the job is long-running.
+
+
+## 2026-10-07 — TT-02 audit failure corrected; canonical rerun active
+- Run **37572837253** completed its numerical loop but was rejected by the artifact gate because five expiry blocks lacked an exact 15:15 quote.
+- The implementation error was semantic: the source rule is exit **at/after 15:15**, not exactly at 15:15.
+- The observed 237-row output (net -₹85,250.87; +50% cost stress -₹111,763.06) is **diagnostic only and not evidence**.
+- Corrected TT-02 v2/v3 to select the earliest common observed quote timestamp at or after 15:15 for all open legs, without forward-filling.
+- Corrected v2 automatically launched canonical Actions run **37589199743**. TT-03 remains dependency-gated and no TT-04 trigger may be created until TT-02 and TT-03 audit successfully.
+- Current gate: **TT-02 numerical rerun + zero-data-error artifact audit**.
