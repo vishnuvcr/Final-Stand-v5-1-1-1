@@ -548,3 +548,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Phase 50B remaining-control preparation
 - Added TT-05 deterministic common-cost replay and dependency-gated workflow.
 - This does not expand the registered universe; it implements an already registered control.
+
+
+## 2026-10-07 — TT-02 fallback validation
+- Completed semantic equivalence audit of v2 and v3 before any fallback execution.
