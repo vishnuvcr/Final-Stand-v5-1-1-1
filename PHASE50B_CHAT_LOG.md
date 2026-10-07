@@ -185,3 +185,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — Dependency-chain hardening
 - Found and corrected a missing TT-03 coverage/cost gate in TT-04 preflight.
 - TT-05 workflow was also hardened against overlapping executions.
+
+
+## 2026-10-07 — TT-06/TT-07 replay contracts
+- Froze source-faithful deterministic replay specifications before implementation.
+- No numerical results have been generated from these controls yet.
