@@ -672,3 +672,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Corrected the no-later-than-15:29 hard close to use the latest common observed timestamp at or before 15:29.
 - Removed the non-source modal strike-step feasibility gate.
 - No TT03 result from the superseded implementation is accepted.
+
+## 2026-10-07 — TT-03 entry coverage accounting
+- Added explicit coverage gaps for eligible campaigns that cannot complete the 10:00–10:05 source-defined entry.
+- No TT03 result from the superseded engine is accepted.
