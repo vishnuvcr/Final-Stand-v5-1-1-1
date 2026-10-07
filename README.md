@@ -688,3 +688,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 ## 2026-10-07 — Phase 50B stale-evidence protection
 - TT-03 now carries engine revision `50B-TT03-WINDOW-V2` and downstream gates reject older revisions.
 - Future chained runs refresh the TT-03 source from the branch before execution, preventing pre-execution corrections from being silently omitted.
+
+
+## 2026-10-07 — Phase 50B TT-04 audit hardening
+- TT-04 now records missing exit-leg observations as explicit coverage exclusions and must clear the 95% complete-exit coverage gate before evidence is accepted.
