@@ -51,16 +51,19 @@ def trade_one(expiry,index,data):
     step=modal_step(snap)
     if step is None:return None
     atm=float(min(snap.strike.unique(),key=lambda k:abs(float(k)-spot)))
-    legs=[
-      ("CE",atm+300.0,+1),
-      ("CE",atm+350.0,-1),
-      ("CE",atm+400.0,-1)
-    ]
-    if any(q(snap,o,k) is None for o,k,_ in legs):return None
+    call_legs=[("CE",atm+300.0,+1),("CE",atm+350.0,-1),("CE",atm+400.0,-1)]
+    put_legs=[("PE",atm-300.0,+1),("PE",atm-350.0,-1),("PE",atm-400.0,-1)]
+    if all(q(snap,o,k) is not None for o,k,_ in call_legs):
+        legs=call_legs; direction="CALL_RATIO_BEARISH"
+    elif all(q(snap,o,k) is not None for o,k,_ in put_legs):
+        legs=put_legs; direction="PUT_RATIO_BULLISH"
+    else:
+        return None
     lot=lot_size_for_expiry(expiry)
     ledger=[]
+    entry_px={(o,k):q(snap,o,k) for o,k,_ in legs}
     for o,k,qty in legs:
-        px=q(snap,o,k)
+        px=entry_px[(o,k)]
         ledger.append({"ts":ts,"side":"buy" if qty>0 else "sell","price":px,"qty":qty,"lot":lot,"opt":o,"strike":k,"phase":"entry"})
 
     expday=expiry.normalize()
@@ -79,7 +82,7 @@ def trade_one(expiry,index,data):
             px=q(snap_t,o,k)
             if px is None:
                 pnl=None;break
-            pnl += qty*(px-ledger[[z["opt"] for z in ledger].index(o)]["price"]) * lot
+            pnl += qty*(px-entry_px[(o,k)])*lot
         if pnl is not None and pd.Timestamp(t).time()>=pd.Timestamp("13:30").time() and pnl<0:
             exit_ts=pd.Timestamp(t);break
     if exit_ts is None:
@@ -103,7 +106,7 @@ def trade_one(expiry,index,data):
       "year":ts.year,"spot":spot,"atm":atm,
       "net":gross-cost,"net50":gross-cost50,"gross":gross,"cost":cost,
       "vix":vs["vix"] if vs else np.nan,"vix_state":vs["level_state"] if vs else None,
-      "direction":"CALL_RATIO_BEARISH",
+      "direction":direction,
       "distance_points":300,
       "win":int((gross-cost)>0)
     }
@@ -140,3 +143,5 @@ def main():
     (OUT/"summary.json").write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2))
 if __name__=="__main__":main()
+
+# F50B-010 fixed before numerical execution: emulate both symmetric sets, call-set priority as listed in Tradetron, with put-set fallback only when call-set quotes are unavailable.
