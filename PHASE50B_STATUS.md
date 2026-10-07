@@ -399,3 +399,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - TT03 is now classified FEASIBILITY FAIL / NO PROMOTION. No TT03 parameter tuning or confirmatory VIX inference is authorized.
 - A controlled rerun is being used only to persist the complete diagnostic replay and coverage exclusions in the repository.
 - TT04 is an independent candidate. The orchestration gate has therefore been changed so a clean TT03 feasibility failure can route to TT04 without treating TT03 as accepted evidence. TT04 cannot consume TT03 P&L as evidence.
+
+
+## 2026-10-07 — TT-03 diagnostic-capture rerun
+- Dedicated run 37612856834 is the current TT03 rerun on the corrected workflow.
+- Preflight and all numerical pre-controls have passed; the replay itself is currently executing.
+- This run exists to persist the raw diagnostic trade/coverage tables and produce a terminal feasibility classification. It is not a parameter re-test.
+- If the classification is PASS, TT04 proceeds normally. If it is the same clean FAIL_COVERAGE seen in run 37611676386, TT04 is allowed to continue independently without treating TT03 as accepted evidence.
