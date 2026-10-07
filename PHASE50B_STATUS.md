@@ -129,3 +129,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - No TT-02 artifact audit has started and no numerical result is accepted yet.
 - The live run remains the sole canonical numerical evidence candidate; no duplicate replay was launched.
 - Branch head currently advances independently of the running job, while the running job remains pinned to its original execution commit.
+
+
+## 2026-10-07 — TT-04 static audit correction (F50B-020)
+- Before TT-04 numerical execution, static code review found an expiry-day series mismatch: existing current-week positions could be marked against next-week quotes.
+- Corrected the engine to separate the new-entry expiry frame from the immutable expiry of an existing position.
+- No TT-04 numerical evidence existed, so this correction has **zero numerical impact** on accepted evidence.
+- TT-04 remains gated behind audited TT-03 evidence; no trigger was created.
