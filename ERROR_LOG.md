@@ -2143,3 +2143,7 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 
 ### F50B-082 — TT04 fallback workflow could not be programmatically dispatched
 - The fallback workflow was correctly installed and its trigger marker was refreshed, but no Actions run was created. The available GitHub connector exposes workflow inspection/rerun operations but no workflow_dispatch operation. API-authored trigger commits also do not create push-triggered workflow runs in this repository configuration. This is an orchestration/tooling limitation, not a scientific result. The fallback remains pending execution; no P&L is accepted.
+
+
+### F50B-083 — TT04 canonical replay failed on timezone mismatch during split-summary construction
+- The completed canonical run 37621965843 ran for about 50 minutes and failed after the replay loop while constructing DEV/VAL/HOLD split masks. Pandas rejected comparison of timezone-naive expiry_dt values with timezone-aware DEV_END/VAL_END. No artifact audit ran, so no P&L from this run is evidence. Correction: both canonical and performance-fallback engines now localize expiry_dt to the project timezone before split classification. Scientific rules and trade logic are unchanged.
