@@ -2147,3 +2147,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 
 ### F50B-083 — TT04 canonical replay failed on timezone mismatch during split-summary construction
 - The completed canonical run 37621965843 ran for about 50 minutes and failed after the replay loop while constructing DEV/VAL/HOLD split masks. Pandas rejected comparison of timezone-naive expiry_dt values with timezone-aware DEV_END/VAL_END. No artifact audit ran, so no P&L from this run is evidence. Correction: both canonical and performance-fallback engines now localize expiry_dt to the project timezone before split classification. Scientific rules and trade logic are unchanged.
+
+
+### F50B-085 — TT04 live log endpoint unavailable during active replay
+- Time: 2026-10-07.
+- Direct job-state inspection confirms corrected TT04 run **37629750175** remains active in the numerical replay.
+- Fetching the live job log for job **112821170181** returned GitHub `BlobNotFound` while the job is still running.
+- This is an Actions log-availability/observability issue, not a workflow failure and not numerical evidence.
+- Handling: continue using authoritative workflow/job state and artifact publication gates; do not infer replay outcome from the unavailable live log and do not launch a duplicate run.
+- Evidence status: **NO SCIENTIFIC IMPACT**.
