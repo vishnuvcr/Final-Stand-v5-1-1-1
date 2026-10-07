@@ -710,3 +710,7 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 
 ## 2026-10-07 — Phase 50B TT-03 evidence gate hardened
 - TT-03 now records incomplete exits as coverage exclusions and requires >=95% coverage plus the current-cost robustness outputs before evidence is accepted.
+
+
+## 2026-10-07 — Phase 50B TT-04 revision gate
+- TT-04 evidence now requires engine revision `50B-TT04-COVERAGE-V2`.
