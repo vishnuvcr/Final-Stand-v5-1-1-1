@@ -284,3 +284,9 @@ User requested continuation without pausing. Work performed:
 - Inspected the latest TT03 Actions run and found a preflight-only dependency failure: pandas was not installed.
 - Corrected the workflow and refreshed the TT03 trigger.
 - No numerical result was accepted and no downstream phase was bypassed.
+
+## 2026-10-07 — Resume checkpoint: TT-03 engine hardening
+- Self-audit caught two TT03 source-semantic issues before accepting evidence.
+- Corrected the hard close to never advance beyond 15:29.
+- Removed the unnecessary modal strike-step gate.
+- The active old-code run will be superseded by a controlled retrigger rather than reused as evidence.
