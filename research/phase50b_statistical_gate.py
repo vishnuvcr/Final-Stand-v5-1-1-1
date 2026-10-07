@@ -71,22 +71,33 @@ def load_strategy_csv(path):
     z["_date"]=pd.to_datetime(z[date_col],errors="coerce")
     if z["_date"].dt.tz is not None:
         z["_date"]=z["_date"].dt.tz_localize(None)
-    if "net" not in z.columns or "net50" not in z.columns:
-        raise ValueError(f"{path}: requires net and net50")
-    if "net20" not in z.columns: z["net20"]=z["net"]
-    if "net20_50" not in z.columns: z["net20_50"]=z["net50"]
+    required={"net","net50","net20","net20_50"}
+    missing=required-set(z.columns)
+    if missing:
+        raise ValueError(f"{path}: missing required cost fields {sorted(missing)}; fail closed")
     return z.dropna(subset=["_date","net","net50"]).copy()
 
 STRATEGIES = {
+    "TT01": Path("results/phase50b/tt01_dynamic_ratio_replay/tt01_trades.csv"),
     "TT02": Path("results/phase50b/tt02_calendar_replay/tt02_trades.csv"),
     "TT03": Path("results/phase50b/tt03_dynamic_n_replay/tt03_trades.csv"),
     "TT04": Path("results/phase50b/tt04_premium_match_replay/tt04_trades.csv"),
+    "TT05": Path("results/phase50b/tt05_short_straddle_replay/tt05_trades.csv"),
+    "TT06": Path("results/phase50b/tt06_intraday_asym_replay/tt06_trades.csv"),
+    "TT07": Path("results/phase50b/tt07_dynamic_ic_ratio_replay/tt07_trades.csv"),
 }
 
 rows=[]
+coverage_rows=[]
 for strategy,path in STRATEGIES.items():
     z=load_strategy_csv(path)
     if z.empty: continue
+    summary_path=path.parent/"summary.json"
+    coverage=np.nan
+    if summary_path.exists():
+        s=json.loads(summary_path.read_text())
+        coverage=float(s.get("coverage_rate",np.nan))
+    coverage_rows.append({"strategy":strategy,"coverage_rate":coverage})
     if "vix_state" not in z.columns:
         continue
     for mode in MODES:
@@ -109,6 +120,7 @@ if len(inf):
 else:
     inf=pd.DataFrame(columns=["strategy","vix_mode","n_regime","n_complement","mean_diff","ci_lo","ci_hi","p_perm","p_holm","robust_positive"])
 inf.to_csv(OUT/"vix_regime_inference.csv",index=False)
+pd.DataFrame(coverage_rows).to_csv(OUT/"coverage_summary.csv",index=False)
 
 split_rows=[]
 for strategy,path in STRATEGIES.items():
@@ -135,6 +147,8 @@ summary={
         "Holm-adjusted regime effect with bootstrap CI above zero",
         "protected 2026 holdout confirmation"
     ],
-    "holdout_is_protected":True
+    "holdout_is_protected":True,
+    "cost_fields_fail_closed":True,
+    "registered_strategies":list(STRATEGIES.keys())
 }
 (OUT/"summary.json").write_text(json.dumps(summary,indent=2))
