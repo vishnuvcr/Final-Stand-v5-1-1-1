@@ -38,7 +38,7 @@ jobs:
           tr=pd.read_csv("results/phase50b/tt04_premium_match_replay/tt04_trades.csv")
           er=pd.read_csv("results/phase50b/tt04_premium_match_replay/data_errors.csv")
           cg=pd.read_csv("results/phase50b/tt04_premium_match_replay/coverage_gaps.csv")
-          assert d.get("engine_revision")=="50B-TT04-COVERAGE-V2", d
+          assert d.get("engine_revision")=="50B-TT04-COVERAGE-V3", d
           assert d.get("trades",0)==len(tr) and d.get("trades",0)>0, d
           assert d.get("candidate_trades",0)==len(tr)+len(cg), d
           assert d.get("coverage_rate",0)>=0.95, d
