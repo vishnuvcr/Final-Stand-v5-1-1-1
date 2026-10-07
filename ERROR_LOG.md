@@ -1979,3 +1979,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Because the workflow uses serialized cancel-in-progress concurrency, that run is not trusted to provide the final diagnostic persistence/routing outcome.
 - Correction: refreshed the TT03 trigger after all workflow hardening so the next serialized run is evaluated from the latest branch head.
 - Evidence status: NO SCIENTIFIC IMPACT; this is execution-orchestration control only.
+
+
+### F50B-066 — TT03 baseline failed preregistered 95% feasibility gate; raw diagnostic artifact was not retained
+- Time: 2026-10-07.
+- Corrected TT03 run 37611676386 completed numerical replay successfully but produced 187 completed trades out of 202 candidate campaigns: 92.5743% coverage, below the preregistered 95% feasibility threshold.
+- The audit correctly rejected the run, so no TT03 P&L was accepted as evidence and no TT04 trigger was created.
+- Because the audit failed before artifact upload, the 15 coverage-gap rows were not retained for root-cause classification.
+- Correction: the dedicated TT03 workflow now uploads its full replay directory with `if: always()` so feasibility-failed runs remain available for diagnosis without being promoted or published as evidence. A controlled diagnostic retrigger was launched after the workflow correction.
+- Evidence status: **TT03 numerical output remains NON-EVIDENCE pending coverage-gap diagnosis; no downstream phase is permitted yet.**
