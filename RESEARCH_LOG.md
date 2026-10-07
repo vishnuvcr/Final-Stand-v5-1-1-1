@@ -520,3 +520,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## 2026-10-07 — Phase 50B TT-02 denominator reconciliation safeguard
 - Corrected engines now enforce opened-position accounting through completed-trade or explicit-exclusion classification.
 - Current run 37593965525 predates the safeguard; it cannot by itself establish final audited evidence.
+
+
+## 2026-10-07 — Phase 50B TT-02 stale-artifact protection
+- Added TT-02 engine revision stamping and downstream acceptance check.
+- Only artifacts produced by the fully corrected coverage/terminal-accounting engine can pass the next numerical gate.
