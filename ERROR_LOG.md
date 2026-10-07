@@ -1449,3 +1449,12 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 ### F50-002 — Initial family registry included iron-fly variants without a clean far-OTM distance interpretation
 - Evidence status: PRE-NUMERICAL. No numerical output affected.
 - Correction: Phase 50 primary grid retains only strategy families for which the tail-distance variable has an unambiguous structural meaning. Iron Butterfly is excluded from the primary far-OTM distance screen and remains covered by earlier phases.
+
+
+### F50-003 — Phase 50 #1 artifact audit failure on sparse early-stop packaging
+- Affected run: **37565293395 (#1)**.
+- Numerical calculation completed successfully. The development far-OTM sweep produced **no confirmatory Stage-1 candidate** because the preregistered fold gate required 15 observations in both 2022 and 2023, while the HIGH-VIX state had only 6 development opportunities under the fixed Stage-1 control.
+- The artifact audit failed because the early-stop branch did not create all empty error-ledger/result files required by the workflow.
+- Evidence status: raw numerical output is useful exploratory diagnostic evidence but was not publication-accepted by the workflow.
+- Correction: create valid empty ledgers and an explicit sparse-HIGH exploratory validation branch. The exploratory branch is non-promotable and does not relax the confirmatory gate.
+- Prevention: all early-stop paths must emit the full canonical artifact set with headers before publication auditing.
