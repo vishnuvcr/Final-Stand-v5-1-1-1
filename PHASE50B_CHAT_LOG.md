@@ -214,3 +214,8 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — TT-02 authoritative execution
 - Run 20 is now the sole active and eligible numerical replay.
 - Stale run 19 was cancelled and excluded from evidence.
+
+
+## 2026-10-07 — TT-02 active-run checkpoint
+- Run 37598918723 remains active; no result artifact is available yet.
+- GitHub live-log endpoint returned BlobNotFound; no research conclusion drawn from that failure.
