@@ -2,15 +2,6 @@ name: Phase 50B - TT02 Delta Calendar Replay
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - phase-50b-expanded-strategy-universe
-    paths:
-      - research/phase50b_tt02_calendar_replay_v2.py
-      - PHASE50B_STATUS.md
-      - PHASE50B_PRE_REGISTRATION.md
-      - PHASE50B_RESEARCH_PLAN.md
-
 concurrency:
   group: phase50b-tt02-replay-v1
   cancel-in-progress: true
