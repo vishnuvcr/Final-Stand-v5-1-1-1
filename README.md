@@ -854,3 +854,8 @@ No Phase-50B strategy has been promoted.
 - TT03 V2 replay 37611676386 produced 187/202 complete campaigns (92.57%) and therefore failed the preregistered 95% feasibility gate; no P&L was accepted.
 - A subsequent hard-close self-audit found a partial-quote timestamp issue that could create artificial coverage gaps. V3 now searches backward to the latest timestamp at or before 15:29 with complete quotes for every live leg.
 - The V3 workflow is retriggered and TT04 remains strictly gated on a V3 artifact passing the full evidence audit.
+
+
+### 2026-10-07 — TT-03 V4 session-calendar and provenance controls
+- The V4 replay distinguishes regular-session data failures from scheduled-entry dates that had no normal 09:15–15:30 session (e.g. 2022-10-24 Muhurat evening session). Such dates are recorded as session exclusions, not missing-data coverage gaps. citeturn282531search15turn282531search21
+- TT04 routing now requires a current-run V4 feasibility PASS artifact, preventing stale diagnostic artifacts from advancing the research chain.
