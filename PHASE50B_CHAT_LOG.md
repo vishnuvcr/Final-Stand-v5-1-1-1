@@ -393,3 +393,10 @@ User requested continuation without pausing. Work performed:
 - Found a silent candidate-denominator path on normal sessions with no complete 10:00–10:05 ATM CE/PE entry.
 - Corrected it to explicit coverage gaps, with non-regular sessions handled separately.
 - No TT04 numerical evidence has been accepted.
+
+
+## 2026-10-07 — Resume after network interruption
+- Reconnected to the repository and verified the current branch head and Actions state.
+- TT03 V5 run 37620274641 is still executing its numerical replay; no result has been accepted and no duplicate was started.
+- Used the interruption interval for downstream pre-execution audit rather than idle waiting.
+- Hardened TT04, TT05, TT06 and TT07 workflow checks so persisted exclusion diagnostics must reconcile to their summary counts.
