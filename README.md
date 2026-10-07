@@ -636,3 +636,9 @@ The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-0
 - Phase 50B was rechecked after user resume.
 - Canonical Actions run **37572837253** remains in progress at TT-02 numerical replay; no result is accepted until artifact audit passes.
 - No duplicate numerical run was launched.
+
+
+## 2026-10-07 — TT-04 F50B-020 correction
+- Static audit found and corrected an expiry-day quote-series bug before TT-04 execution: new expiry-day entries use next-week options, while an existing current-week position must continue to be marked/exited on its original current-week series.
+- No TT-04 numerical evidence was produced from the defective code.
+- TT-04 remains blocked until audited TT-03 evidence exists.
