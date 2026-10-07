@@ -696,3 +696,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - To avoid letting one infeasible candidate terminate the entire finite universe, TT04 was explicitly decoupled as an independent candidate.
 - TT04's preflight now requires a persisted TT03 terminal feasibility classification but does not accept or consume TT03 P&L when that classification is FAIL_COVERAGE.
 - No scientific comparison or candidate selection uses the TT03 failure P&L.
+
+
+## 2026-10-07 — TT04 V3 semantic corrections
+- Pre-execution audit corrected premium-match selection to exact observed LTP matching with deterministic tie-breaking.
+- Corrected expiry/normal-day exit logic to find the earliest complete observed timestamp at or after 15:15 rather than failing at the first incomplete observation.
+- TT04 engine revision V3 is now frozen before execution.
