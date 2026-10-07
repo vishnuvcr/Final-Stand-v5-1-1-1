@@ -1743,3 +1743,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Time: 2026-10-07.
 - The execution-only statistical gate previously substituted missing ₹20 brokerage scenario fields with primary-cost fields, which could mask missing robustness evidence. This was corrected before first statistical execution; the gate now fails closed and explicitly registers all seven strategy slots.
 - Evidence status: NO SCIENTIFIC IMPACT.
+
+
+### F50B-040 — TT-04 dependency gate incomplete
+- Time: 2026-10-07.
+- TT-04 preflight independently checked TT-03 revision, nonzero trades and zero data errors, but did not enforce the 95% coverage or full four-cost-field contract.
+- Corrected before TT-04 execution; preflight now requires coverage >=95%, candidate denominator consistency, and net/net50/net20/net20_50/vix_state fields.
+- Evidence status: **NO SCIENTIFIC IMPACT**; pre-execution control hardening.
