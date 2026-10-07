@@ -1572,3 +1572,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - GitHub returned HTTP 404 / BlobNotFound while the job remained in progress.
 - Evidence status: **NO RESEARCH IMPACT**. The workflow run itself remains the authoritative execution state; no numerical output was inferred from the failed log retrieval.
 - Prevention: do not treat a transient live-log retrieval failure as a numerical failure; re-check run/job state through the Actions run API and use the published artifacts only after the self-audit passes.
+
+### F50B-016 — local polling wait timeout
+- Time: 2026-10-07.
+- A local 30-second sleep used only to poll the active Actions run exceeded the container tool timeout.
+- Evidence status: **NO RESEARCH IMPACT**. No workflow was cancelled or modified by this timeout, and the active GitHub run remains the authoritative execution process.
+- Prevention: avoid relying on local sleep/poll loops for long-running Actions jobs; use direct run/job state checks when needed.
