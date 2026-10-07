@@ -565,3 +565,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-07 — TT-06/TT-07 specification freeze
 - Completed pre-execution replay-contract freeze for TT-06 and TT-07, including coverage accounting, cost model, chronology and deterministic tie-breaks.
+
+
+## 2026-10-07 — TT-02 runtime contract audit
+- Static runtime audit found the revision constant was referenced but not defined; corrected before evidence acceptance.
