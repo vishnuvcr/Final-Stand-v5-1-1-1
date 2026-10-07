@@ -614,3 +614,7 @@ Current canonical numerical run: **GitHub Actions 37572837253**. Registry/prefli
 - [Current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37572837253)
 
 The frozen execution order is **TT-02 → TT-03 → TT-04 → remaining registered controls → statistical correction → protected holdout/manuscript**. The canonical Phase-20/42 strategy remains unchanged.
+
+
+### Phase 50B workflow hardening
+The canonical chain is now explicitly gated **TT-02 → TT-03 → TT-04**. [TT-04 workflow](.github/workflows/phase-50b-tt04-premium-match.yml) is manual-capable and will also accept the protected TT-04 trigger emitted only after an audited TT-03 success. No trigger is created while the current TT-02 replay remains incomplete.
