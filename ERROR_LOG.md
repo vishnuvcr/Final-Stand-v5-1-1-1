@@ -1466,3 +1466,10 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: numerical output is valid exploratory evidence, but publication is blocked until the audit logic is corrected.
 - Correction: simplify the sparse-HIGH early-stop audit and branch explicitly on the decision JSON rather than applying a uniform Stage-2 schema.
 - Prevention: terminal scientific outcomes must have outcome-specific artifact audits.
+
+### F50-008 — Phase 50 closeout artifact reconciliation
+- Run 37567632928 produced a complete numerical artifact, but the generic GitHub Actions self-audit rejected the sparse-HIGH terminal branch.
+- Evidence status: numerical engine PASS; publication audit initially NON-PASS.
+- Correction: artifact 11459959883 was downloaded, independently inspected, the decision and key validation/holdout tables reconciled, and the result published in PHASE50_CLOSEOUT_RECONCILIATION.md. No numerical values were changed.
+- Final scientific decision: **NO CONFIRMATORY CANDIDATE / NO PROMOTION**.
+- Prevention: terminal scientific outcomes with legitimate sparse-data branches must have outcome-specific artifact audits rather than a single homogeneous schema check.
