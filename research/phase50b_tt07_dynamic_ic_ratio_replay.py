@@ -227,47 +227,46 @@ def enter_position(state, ts, spot, expiry, z, lot, vix):
         pos["orders"].append((pd.Timestamp(ts), side, ep*abs(qty)))
     return pos
 
-def transition_trigger(state, z, spot, ts, expiry):
+def transition_trigger(pos, z, spot, ts, expiry):
+    state = pos["state"]
     if state == 0:
-        ce_strike = nearest_delta(z, spot, ts, expiry, "CE", 0.30)
-        pe_strike = nearest_delta(z, spot, ts, expiry, "PE", -0.30)
-        if ce_strike is not None:
-            ce = quote(z, "CE", ce_strike)
-            d = None
-            if ce is not None:
-                # nearest_delta target=0.30 is the frozen short-leg selection geometry;
-                # reconstruct the actual contemporaneous delta from that quote below.
-                d = option_delta(ce, spot, ce_strike, ts, expiry, "CE")
+        # Evaluate the two short legs that were actually opened at entry.
+        for opt, transition_name in [("CE","low_ce"), ("PE","low_pe")]:
+            short_legs = [
+                (strike, qty) for (o, strike), qty in pos["legs"].items()
+                if o == opt and qty < 0
+            ]
+            if not short_legs:
+                continue
+            strike = short_legs[0][0]
+            px = quote(z, opt, strike)
+            if px is None:
+                continue
+            d = option_delta(px, spot, strike, ts, expiry, opt)
             if d is not None and abs(d) <= 0.10:
-                return 1
-        if pe_strike is not None:
-            pe = quote(z, "PE", pe_strike)
-            d = None
-            if pe is not None:
-                d = option_delta(pe, spot, pe_strike, ts, expiry, "PE")
-            if d is not None and abs(d) <= 0.10:
-                return 2
+                return TRANSITIONS[state].get(transition_name)
         return None
-    if state in (1,2,3,4,5,6):
-        short_target = {
-            1:("CE",0.40), 2:("PE",-0.40),
-            3:("CE",0.30), 4:("PE",-0.30),
-            5:("CE",0.30), 6:("PE",-0.30)
-        }[state]
-        opt, target = short_target
-        strike = nearest_delta(z, spot, ts, expiry, opt, target)
-        if strike is None:
-            return None
-        px = quote(z, opt, strike)
-        if px is None:
-            return None
-        d = option_delta(px, spot, strike, ts, expiry, opt)
-        if d is None:
-            return None
-        if abs(d) <= 0.10:
-            return TRANSITIONS[state].get("low")
-        if abs(d) >= 0.65:
-            return TRANSITIONS[state].get("high")
+
+    short_opt = {
+        1:"CE", 2:"PE", 3:"CE", 4:"PE", 5:"CE", 6:"PE"
+    }[state]
+    short_legs = [
+        (strike, qty) for (opt, strike), qty in pos["legs"].items()
+        if opt == short_opt and qty < 0
+    ]
+    if not short_legs:
+        return None
+    strike = short_legs[0][0]
+    px = quote(z, short_opt, strike)
+    if px is None:
+        return None
+    d = option_delta(px, spot, strike, ts, expiry, short_opt)
+    if d is None:
+        return None
+    if abs(d) <= 0.10:
+        return TRANSITIONS[state].get("low")
+    if abs(d) >= 0.65:
+        return TRANSITIONS[state].get("high")
     return None
 
 def option_delta(price, spot, strike, ts, expiry, opt):
@@ -414,7 +413,7 @@ def main():
                         break
                 continue
 
-            nxt = transition_trigger(pos["state"], z, spot, ts, mexp)
+            nxt = transition_trigger(pos, z, spot, ts, mexp)
             if nxt is None:
                 continue
 
