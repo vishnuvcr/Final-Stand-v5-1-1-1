@@ -226,3 +226,10 @@ User requested continuation without pausing. Work performed:
 - Rechecked authoritative TT-02 run 37598918723: still in progress; registry passed and TT-02 numerical replay remains the active step.
 - Re-read the Phase-50B workflow and confirmed trigger isolation plus `cancel-in-progress: true`; no duplicate run was launched.
 - Re-read TT-07 source audit: exact six-state graph is resolved, but `ic_entered` reset/scope remains unresolved, so no speculative replay is permitted.
+
+
+## 2026-10-07 — Continue checkpoint: downstream controls hardened
+- TT-02 authoritative replay remains in progress; no result artifact is accepted yet.
+- Added pre-execution hardening to TT04/TT05 dependency gates and corrected TT06 timestamp-based exit selection.
+- These changes do not trigger the canonical Phase-50B run because the workflow is restricted to the explicit TT02 trigger path.
+- TT03 remains ready behind the TT02 audit; TT07 remains blocked on the documented runtime-variable ambiguity.
