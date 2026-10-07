@@ -1485,3 +1485,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Evidence status: NO NUMERICAL EXECUTION from the affected draft.
 - Correction: replace the draft with a stateful session-by-session replay that can enter on any eligible flat day and holds until the current-week expiry-day 15:15 universal exit.
 - Prevention: for any Tradetron strategy containing `Get Runtime` gates, inspect and freeze the embedded Python/runtime initialization before implementing the historical state machine.
+
+### Error F50B-004 — Registry validation missed Final-stand-v2
+- Affected runs: 37570048355 and 37570258257.
+- The validation script correctly required the previously identified Final-stand-v2 lineage, but the frozen registry table accidentally omitted it.
+- Evidence status: documentation/CI-only; no numerical research evidence was produced by the failed validation runs.
+- Correction: added the missing Final-stand-v2 row to PHASE50B_STRATEGY_UNIVERSE.md. The registry validator definition remains unchanged.
+- Prevention: after creating or editing a registry, run the same required-term validator against the actual checked-in registry before considering the phase preflight green.
