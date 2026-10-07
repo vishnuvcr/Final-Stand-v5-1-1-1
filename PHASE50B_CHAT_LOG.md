@@ -78,3 +78,12 @@ User requested continuation without pausing. Work performed:
 - On current-week expiry day, source semantics require new entries to use next-week options, but an existing prior-day position remains in the current-week series until its 15:15 exit.
 - The engine now keeps the existing position's expiry immutable and uses a separate new-entry quote frame.
 - Logged as F50B-020. No numerical TT-04 evidence was produced from the defective implementation.
+
+
+## 2026-10-07 — TT-02 replay audit failure and correction
+- Canonical run 37572837253 finished its numerical replay but failed the artifact audit because five expiry blocks lacked an exact 15:15 option quote.
+- The replay had produced 237 candidate rows, with diagnostic net -₹85,250.87 and +50% cost-stress net -₹111,763.06; these values are explicitly **not evidence** because the data-error audit failed.
+- Static audit identified the implementation mistake: source semantics say exit **at/after** 15:15, while the engine required exact 15:15.
+- Corrected both TT-02 engines to choose the earliest common observed quote timestamp at or after 15:15 across all open legs, without forward-filling.
+- The v2 source-faithful engine is now the canonical rerun; the v3 engine remains an unexecuted performance fallback.
+- Automatic workflow rerun 37589199743 is active from the corrected v2 commit 6a11b859c646dccdacc03a68a22fe7a2be3a842f. No result will be accepted until its artifact audit passes.
