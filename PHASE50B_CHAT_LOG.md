@@ -379,3 +379,10 @@ User requested continuation without pausing. Work performed:
 - The latest completed TT03 run was V2 and failed the preregistered 95 percent coverage gate at 187/202 = 92.57 percent; no evidence was accepted.
 - Audited the current V5 engine and confirmed that it changes session and coverage treatment, so the V2 result cannot be used as the final TT03 disposition.
 - Updated the dedicated workflow revision checks to V5 before the next numerical replay.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 workflow cleanup
+- Audited the accumulated TT03 workflow after the V2, V4 and V5 corrections.
+- Replaced duplicated persistence and routing blocks with one terminal feasibility classifier and one independent downstream route.
+- TT03 failure states remain non-evidence; TT04 can continue without consuming TT03 P&L.
+- Final V5 trigger is held until the cleaned workflow is committed.
