@@ -522,3 +522,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 ## 2026-10-07 — TT04 V3 active
 - TT04 run 37621965843 passed preflight, including the accepted TT03 V5 PASS terminal gate, and is currently executing the corrected TT04 V3 numerical replay.
 - No TT04 artifact or P&L is accepted until its structural, coverage, cost and diagnostic audits complete.
+
+## 2026-10-07 — Resume / TT04 live-state checkpoint
+- Revalidated the Phase-50B research plan, pre-registration, status log, chat log and error log before continuing.
+- TT03 V5 remains accepted as a feasibility PASS from run 37620274641: 200/201 complete campaigns, 99.50% coverage, 1 coverage exclusion, 1 session exclusion, zero data errors.
+- TT04 run 37621965843 remains `in_progress` in its numerical replay step on the source-faithful V3 engine.
+- TT04 preflight passed, including the TT03 V5 terminal gate; no TT04 result, inference, or promotion claim is accepted before artifact audit and publication.
+- Downstream TT05/TT06/TT07 workflows were re-audited and remain fail-closed behind the persisted dependency artifacts and reconciliation checks.
+- No research-plan change was made.
