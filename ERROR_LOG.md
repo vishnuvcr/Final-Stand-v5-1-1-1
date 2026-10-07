@@ -1648,3 +1648,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: the engine now evaluates the entire frozen entry window and selects the earliest timestamp at which a complete source-defined ratio set is available, retaining call-set priority and put-set fallback.
 - Evidence status: **NO SCIENTIFIC IMPACT**. TT-03 had not executed.
 - Prevention: source-defined time windows must be implemented as windows, not silently collapsed to the first bar unless the source explicitly requires that.
+
+
+### F50B-027 — stale TT-03 downstream execution risk
+- Time: 2026-10-07.
+- The active Phase-50B run 37593965525 was created before the later TT-03 entry-window correction, so its downstream TT-03 job would otherwise have checked out the older engine revision.
+- Correction: the current workflow refreshes the TT-03 job to the latest branch head before compilation, stamps TT-03 artifacts with `50B-TT03-WINDOW-V2`, and downstream TT-04 preflight rejects any TT-03 result lacking that revision.
+- Evidence status: **NO SCIENTIFIC IMPACT**. The active TT-02 run remains the only numerical evidence candidate; stale downstream evidence cannot pass the revised gates.
+- Prevention: all phase-chain numerical jobs must stamp their engine revision and downstream gates must require the expected revision.
