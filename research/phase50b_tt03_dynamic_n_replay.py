@@ -9,7 +9,7 @@ from phase43_vix_strategy_sweep import (
 
 OUT=Path("results/phase50b/tt03_dynamic_n_replay")
 OUT.mkdir(parents=True,exist_ok=True)
-TT03_ENGINE_REV="50B-TT03-WINDOW-V4"
+TT03_ENGINE_REV="50B-TT03-WINDOW-V5"
 
 def expiry_dates():
     p=Path("results/phase43_vix/strategy_trade_matrix_all_splits.csv")
@@ -96,6 +96,7 @@ def trade_one(expiry,index,data):
     if day_data.empty:
         return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),"gap_type":"missing_expiry_day_exit_data"}}
     exit_ts=None
+    exit_snap=None
     for t in sorted(set(idxday.timestamp).intersection(set(day_data.timestamp))):
         snap_t=day_data[day_data.timestamp==t]
         pnl=0.0
@@ -105,7 +106,9 @@ def trade_one(expiry,index,data):
                 pnl=None;break
             pnl += qty*(px-entry_px[(o,k)])*lot
         if pnl is not None and pd.Timestamp(t).time()>=pd.Timestamp("13:30").time() and pnl<0:
-            exit_ts=pd.Timestamp(t);break
+            exit_ts=pd.Timestamp(t)
+            exit_snap=snap_t
+            break
     if exit_ts is None:
         # Source rule is "no later than 15:29". Therefore use the latest
         # simultaneously observed index/option timestamp at or BEFORE 15:29.
@@ -127,6 +130,11 @@ def trade_one(expiry,index,data):
         if exit_ts is None:
             return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),
                                      "gap_type":"missing_complete_hard_close_quote_at_or_before_15:29"}}
+    if exit_snap is None:
+        exit_snap=day_data[day_data.timestamp==exit_ts]
+    if exit_snap.empty:
+        return {"_coverage_gap":{"expiry":str(expiry.date()),"entry_ts":str(ts),
+                                 "exit_ts":str(exit_ts),"gap_type":"missing_exit_snapshot"}}
     for o,k,qty in legs:
         px=q(exit_snap,o,k)
         ledger.append({"ts":exit_ts,"side":"sell" if qty>0 else "buy","price":px,"qty":qty,"lot":lot,"opt":o,"strike":k,"phase":"exit"})
