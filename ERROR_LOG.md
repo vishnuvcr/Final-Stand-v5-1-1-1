@@ -1465,3 +1465,11 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - No rule was inferred from unavailable page HTML.
 - Correction: use the seven user-uploaded Tradetron JSON exports as the executable source-of-truth while preserving all seven URLs as provenance references.
 - Evidence status: documentation/source-intake limitation; no numerical result affected.
+
+
+### F50B-002 — Registry audit asserted display names instead of exact source identifiers
+- Affected run: **37569085825 (#1)**.
+- The registry itself was correct; the validator looked for human-readable strategy names that only appear in the source export, while the registry stores exact export filenames.
+- Evidence status: validator-only; no research data or strategy definition affected.
+- Correction: validator now checks exact source export filenames plus repository lineage names.
+- Prevention: audit scripts must validate against canonical registry identifiers, not paraphrased display labels.
