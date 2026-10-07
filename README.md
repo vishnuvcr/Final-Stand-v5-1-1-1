@@ -1,3 +1,16 @@
+## Phase 50B — Current research status (2026-10-07)
+
+**TT-03 V5: PASS. TT-04: RUNNING. No strategy promoted.**
+
+Phase 50B is the finite research extension testing the user's supplied Tradetron strategies and prior strategy lineages under common chronological replay, broker-realistic costs, VIX conditioning and protected holdout rules. The isolated research branch is [phase-50b-expanded-strategy-universe](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-expanded-strategy-universe).
+
+- TT-03 V5 run [37620274641](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37620274641): **PASS**, 200/201 complete campaigns (99.50%), 1 coverage exclusion, 1 session exclusion, zero data errors.
+- TT-03 accepted baseline cost outputs: **₹89,669.15 / ₹82,074.11 / ₹75,509.15 / ₹60,834.11** for ₹10/order, +50% stress, ₹20/order, and ₹20/order +50% stress respectively. These are not a promotion decision.
+- TT-04 V3 run [37621965843](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37621965843) is **running** after successful preflight and dependency validation.
+- Current research chain: **TT-04 → TT-05 → TT-06 → TT-07 → statistical inference → finite VIX/far-OTM variants → chronological validation → protected 2026 holdout → final decision/manuscript**.
+
+See the [Phase 50B branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-expanded-strategy-universe), [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-expanded-strategy-universe/PHASE50B_STATUS.md), [research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-expanded-strategy-universe/PHASE50B_RESEARCH_PLAN.md), [chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-expanded-strategy-universe/PHASE50B_CHAT_LOG.md), and [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-expanded-strategy-universe/ERROR_LOG.md).
+
 ## Phase 50B — User + Prior-Repository Strategy Integration — INITIALIZED
 
 Phase 50B adds the seven user-supplied Tradetron strategies and relevant prior strategy lineages discovered in the user's GitHub repositories to the VIX/far-OTM research. It is isolated from Phase 50A so earlier numerical evidence remains frozen.
