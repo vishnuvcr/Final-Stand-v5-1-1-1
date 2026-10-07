@@ -1,0 +1,9 @@
+{
+  "authoritative_run": 37567632928,
+  "artifact_id": 11459959883,
+  "artifact_sha256": "ff79afd179f33c00825b40d5654b3b39dc8ef914827a599c3f6ffe6512666fc2",
+  "numerical_status": "completed",
+  "workflow_audit_status": "failed_only_on_sparse_high_early_stop_packaging",
+  "scientific_decision": "NO_CONFIRMATORY_CANDIDATES / NO_PROMOTION",
+  "large_raw_trade_matrix_note": "The complete 2.3 MB Stage-1 development matrix remains in the immutable Actions artifact because the repository Contents API is not appropriate for a large generated matrix. Summary, decision, key exploratory tables and artifact fingerprint are committed here."
+}
