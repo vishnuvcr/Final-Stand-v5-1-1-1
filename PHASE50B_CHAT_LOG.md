@@ -496,3 +496,11 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - User supplied GitHub Actions screenshots showing the workflow history and an empty `in_progress` search, confirming no active TT05 run at that point.
 - Assistant inspected the workflow definitions, identified GITHUB_TOKEN push suppression as the handoff defect, and repaired downstream dispatch plumbing without changing scientific rules.
 - The TT05 marker was re-touched through the repository API, launching TT05 run 37654354444. Preflight passed and numerical replay began.
+
+
+## 2026-10-07 — TT05 failure diagnosis and corrected rerun
+- User continued the research.
+- TT05 run 37654354444 terminated in the replay script with a timezone-naive versus timezone-aware comparison error during DEV/VAL/HOLD split labeling.
+- No TT05 evidence was accepted. The defect was classified as reporting-layer only; trading rules were unchanged.
+- The expiry split timestamps were normalized to the project timezone and a recovery-trigger path was added.
+- Corrected TT05 run 37666116836 is now active.
