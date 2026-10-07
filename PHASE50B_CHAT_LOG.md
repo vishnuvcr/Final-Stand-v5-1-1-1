@@ -299,3 +299,11 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — Resume checkpoint: TT-03 corrected replay executing
 - Current TT03 run 37611676386 is executing the corrected engine after all identified pre-execution defects were fixed.
 - Preflight and static controls passed. Awaiting replay artifact audit; no downstream TT04 trigger has been created yet.
+
+
+## 2026-10-07 — Resume checkpoint: TT03 feasibility gate
+- Inspected run 37611676386 directly.
+- Corrected TT03 numerical replay completed, but the artifact audit correctly rejected it because coverage was 187/202 = 92.57%, below the frozen 95% feasibility threshold.
+- TT03 is therefore a no-promotion feasibility failure despite positive diagnostic P&L.
+- Rerun is for diagnostic persistence only.
+- TT04 is being decoupled as an independent candidate so the finite research universe can continue without using TT03 as evidence.
