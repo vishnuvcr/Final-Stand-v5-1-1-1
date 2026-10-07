@@ -837,3 +837,9 @@ No Phase-50B strategy has been promoted.
 ### 2026-10-07 — TT-03 corrected numerical rerun
 - Dedicated TT03 run 37611676386 is currently executing on the corrected engine after passing dependency, compilation, static-contract and HF-cache controls.
 - No TT03 result has been accepted yet; TT04 remains downstream-gated on a complete TT03 artifact audit.
+
+
+### 2026-10-07 — TT-03 feasibility failure and diagnostic capture
+- Corrected TT03 run 37611676386 produced 187/202 complete campaigns (92.57%) and therefore failed the frozen 95% feasibility gate. Its positive P&L remains diagnostic only and is not eligible for promotion or VIX/parameter tuning.
+- Diagnostic capture rerun 37612856834 is now executing only to persist the raw trade and coverage tables and classify the terminal feasibility state.
+- The candidate-local stopping rule allows the independent TT04 candidate to proceed after TT03 terminal classification without consuming TT03 P&L as evidence.
