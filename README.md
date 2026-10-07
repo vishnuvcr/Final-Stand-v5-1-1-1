@@ -871,3 +871,11 @@ No Phase-50B strategy has been promoted.
 - TT03 V4 produced 186 completed campaigns out of 187 coverage candidates (99.47%) but 14 engine/data errors. The evidence gate therefore rejected V4 despite strong nominal coverage.
 - V5 retains the exit snapshot for both negative-P&L and hard-close exits and validates it before settlement. No strategy/cost parameter changed.
 - Current TT03 V5 replay is the only active evidence path; TT04 remains blocked until V5 passes with zero data errors and >=95% coverage.
+
+
+### 2026-10-07 — TT-03 V5 final-routing preparation
+- V2 baseline failed coverage at 187/202 (92.57 percent) and is non-evidence.
+- V4 reached 99.47 percent nominal coverage but had 14 engine errors and is non-evidence.
+- V5 fixed the V4 negative-exit snapshot defect and is the active source-faithful engine.
+- The dedicated workflow now produces one terminal feasibility artifact with PASS, FAIL_COVERAGE, or INVALID_ENGINE and marks P&L evidence eligibility explicitly.
+- Independent TT04 continuation is allowed after any persisted TT03 terminal classification, while failed/invalid TT03 P&L is never consumed as evidence.
