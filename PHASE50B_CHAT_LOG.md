@@ -273,3 +273,9 @@ User requested continuation without pausing. Work performed:
 - Found that VIX bootstrap/permutation inference was pooling protected 2026 HOLD observations.
 - Corrected the inference sample to DEV+VAL only; HOLD is now excluded from hypothesis testing and retained for separate confirmation.
 - No statistical result from the defective implementation was accepted.
+
+
+## 2026-10-07 — Continue checkpoint: VIX inference self-audit
+- Audited the statistical gate against the full preregistered VIX mode family.
+- Found that trade tables store only LOW/NORMAL/HIGH, which is insufficient to test SPIKE/RISING/FALLING/HIGH_RISING.
+- Corrected the gate to reconstruct the full mode set from entry-date VIX and to exclude VIX-unobservable observations from both regime and complement.
