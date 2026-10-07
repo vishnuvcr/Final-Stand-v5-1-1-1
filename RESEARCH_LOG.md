@@ -468,3 +468,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Root cause was a semantic implementation error: the source rule is exit **at/after** 15:15, not exactly at 15:15.
 - Corrected v2 and v3 so the expiry exit uses the earliest common observed quote timestamp at or after 15:15 for all open legs, preserving simultaneous execution and avoiding forward-filled prices.
 - Corrected v2 automatically launched Phase-50B Actions run 37589199743. The research sequence remains frozen and the audit gate remains zero-tolerance for unresolved data errors.
+
+
+## 2026-10-07 — Phase 50B F50B-022 workflow-only correction
+- Run 37589199743 failed before numerical execution because the registry publish shell block lacked its closing `fi`.
+- Registry validation itself passed and uploaded; no TT-02 evidence exists from this run.
+- Corrected workflow commit e0d4bda09bb943272bac591d68aafa051d7b9f94 restores the shell closure and normalizes the TT-03 publisher identity.
+- Shell `if`/`fi` balance was rechecked before the next trigger.
