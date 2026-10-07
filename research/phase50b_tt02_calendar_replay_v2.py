@@ -204,10 +204,8 @@ def close_open_replace(pos,name,target_frame,target_exp,opt,target_delta,ts,spot
     return True
 
 def finalize(pos,ts,cur_frame,nxt_frame):
-    # Source rule is exit at/after 15:15, not necessarily at an exact 15:15 quote.
-    # Use the earliest common timestamp at/after the trigger for which every open leg
-    # has an observed close. This preserves a single simultaneous execution timestamp
-    # and avoids inventing prices by forward-filling missing option observations.
+    # Source rule: exit at/after the 15:15 trigger. Use the earliest common
+    # observed timestamp for every open leg; never forward-fill or invent prices.
     candidates=sorted(set(cur_frame.index[cur_frame.index>=pd.Timestamp(ts)].tolist()) |
                       set(nxt_frame.index[nxt_frame.index>=pd.Timestamp(ts)].tolist()))
     exit_ts=None
@@ -221,7 +219,19 @@ def finalize(pos,ts,cur_frame,nxt_frame):
         if ok:
             exit_ts=pd.Timestamp(cand)
             break
-    if exit_ts is None:return None
+    if exit_ts is None:
+        gap={
+            "trade_id":pos["trade_id"],
+            "expiry":str(pos["cur"].date()),
+            "trigger_ts":str(pd.Timestamp(ts)),
+            "gap_type":"no_common_observed_exit_quote_at_or_after_15:15"
+        }
+        for name,leg in pos["legs"].items():
+            frame=cur_frame if leg["exp"]=="cur" else nxt_frame
+            ix=frame.index[frame.index>=pd.Timestamp(ts)]
+            gap[name+"_last_quote_at_or_after_1515"]=str(pd.Timestamp(ix.max())) if len(ix) else None
+        pos["_exit_gap"]=gap
+        return None
     for name,leg in pos["legs"].items():
         frame=cur_frame if leg["exp"]=="cur" else nxt_frame
         px=quote(snap(frame,exit_ts),leg["opt"],leg["strike"])
@@ -252,7 +262,7 @@ def main():
     VIX=load_vix()
     expiries=get_expiries()
     days=sorted(idx.timestamp.dt.normalize().unique())
-    position=None; trade_id=1; rows=[]; errors=[]
+    position=None; trade_id=1; rows=[]; errors=[]; coverage_gaps=[]
 
     for day in days:
         day=pd.Timestamp(day)
@@ -325,7 +335,12 @@ def main():
             if cur.normalize()==day.normalize() and ts.time()>=EXIT_TIME:
                 z=finalize(position,ts,cur_frame,nxt_frame)
                 if z is None:
-                    errors.append({"trade_id":position["trade_id"],"expiry":str(cur.date()),"error":"no complete exit quote at or after 15:15"})
+                    coverage_gaps.append(position.get("_exit_gap",{
+                        "trade_id":position["trade_id"],
+                        "expiry":str(cur.date()),
+                        "trigger_ts":str(ts),
+                        "gap_type":"no_complete_exit_quote_at_or_after_15:15"
+                    }))
                 else:
                     rows.append(z)
                 position=None
@@ -336,7 +351,11 @@ def main():
     df=pd.DataFrame(rows)
     df.to_csv(OUT/"tt02_trades.csv",index=False)
     pd.DataFrame(errors).to_csv(OUT/"data_errors.csv",index=False)
-    result={"strategy":"TT-02","trades":len(df),
+    pd.DataFrame(coverage_gaps).to_csv(OUT/"coverage_gaps.csv",index=False)
+    candidate_trades=len(df)+len(coverage_gaps)
+    coverage_rate=(len(df)/candidate_trades) if candidate_trades else 0.0
+    result={"strategy":"TT-02","trades":len(df),"candidate_trades":candidate_trades,
+            "coverage_exclusions":len(coverage_gaps),"coverage_rate":coverage_rate,
             "net":float(df.net.sum()) if not df.empty else 0.0,
             "net50":float(df.net50.sum()) if not df.empty else 0.0,
             "by_vix":df.groupby("vix_state").agg(trades=("net","size"),net=("net","sum"),net50=("net50","sum"),mean=("net","mean"),win_rate=("net",lambda x:(x>0).mean())).reset_index().to_dict("records") if not df.empty else []}
@@ -346,7 +365,8 @@ def main():
 if __name__=="__main__":
     main()
 
-# F50B-005: corrected v2 replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and first complete expiry exit quote at/after 15:15.
+# F50B-005: corrected replay uses the 09:20-15:00 flat-entry gate, source runtime initialization, and first complete expiry exit quote at/after 15:15.
+# F50B-025: option-coverage gaps at mandatory exits are reported separately, excluded from primary trades, and never imputed.
 
 # F50B-005 fixed: workflow installs matplotlib for shared Phase-43 import dependency.
 
