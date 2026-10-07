@@ -150,3 +150,9 @@ User requested continuation without pausing. Work performed:
 ## 2026-10-07 — Paytm brokerage robustness scenario
 - Verified current public Paytm Money materials and found ₹10 vs ₹20/order inconsistency.
 - Retained ₹10 as the preregistered primary model and added a ₹20/order robustness scenario to avoid overstating economic viability.
+
+
+## 2026-10-07 — TT-03 coverage/accounting correction
+- Found silent loss of TT-03 trades when mandatory exit quotes were missing.
+- Added explicit coverage exclusions and a 95% feasibility gate.
+- Added current Paytm brokerage robustness outputs to the corrected replay.
