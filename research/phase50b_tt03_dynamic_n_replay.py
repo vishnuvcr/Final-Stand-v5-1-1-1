@@ -146,7 +146,8 @@ def main():
     pd.DataFrame(coverage_gaps).to_csv(OUT/"coverage_gaps.csv",index=False)
     if not df.empty:
         splits=[]
-        for n,m in [("DEV",df.expiry.map(pd.Timestamp)<=DEV_END),("VAL",(df.expiry.map(pd.Timestamp)>DEV_END)&(df.expiry.map(pd.Timestamp)<=VAL_END)),("HOLD",df.expiry.map(pd.Timestamp)>VAL_END)]:
+        expiry_series=pd.to_datetime(df["expiry"],utc=True).dt.tz_convert(TZ)
+        for n,m in [("DEV",expiry_series<=DEV_END),("VAL",(expiry_series>DEV_END)&(expiry_series<=VAL_END)),("HOLD",expiry_series>VAL_END)]:
             z=df[m]
             splits.append({"split":n,"trades":len(z),"net":float(z.net.sum()),"net50":float(z.net50.sum()),"win_rate":float(z.win.mean()) if len(z) else 0})
         pd.DataFrame(splits).to_csv(OUT/"split_summary.csv",index=False)
