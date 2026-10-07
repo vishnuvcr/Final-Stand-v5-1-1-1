@@ -510,3 +510,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Added explicit TT-03 engine revisioning and a downstream gate against stale code results.
 - Future TT-03 jobs refresh to the latest branch before compilation.
 - This protects the chronology/evidence chain after pre-execution code corrections.
+
+
+## 2026-10-07 — Phase 50B TT-04 feasibility hardening
+- Added explicit coverage accounting for incomplete exit observations and a 95% feasibility threshold.
+- This prevents sparse option data from silently changing the denominator or P&L sample.
