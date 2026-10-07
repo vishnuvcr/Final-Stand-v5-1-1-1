@@ -103,7 +103,7 @@ def finish(pos,ts,z):
         if px is None:return None
         side="sell" if leg["qty"]>0 else "buy"
         ep=exec_px(px,side)
-        pos["realized"] += (1 if side=="sell" else -1)*ep*abs(leg["qty"])*pos["lot"]
+        pos["cash"] += ep*abs(leg["qty"])*pos["lot"] if side=="sell" else -ep*abs(leg["qty"])*pos["lot"]
         order_ledger(pos,ts,side,ep,leg["qty"],leg["opt"],leg["strike"],"exit")
     orders=[(pd.Timestamp(o["ts"]),o["side"],o["price"]*abs(o["qty"])) for o in pos["orders"]]
     gross=pos["cash"]
@@ -156,9 +156,7 @@ def main():
                 entry_pe=next(o["price"] for o in position["orders"] if o["phase"]=="entry" and o["opt"]=="PE")
                 # Recover the source-side trigger values by undoing execution slippage.
                 entry_ce_raw=entry_ce+0.05; entry_pe_raw=entry_pe+0.05
-                if position["repairs_ce"]==0 and entry_pe_raw-entry_ce_raw>=100:
-                    pass
-                # Since the initial entry differential is source-determined, set eligibility once.
+                # The repair condition compares the original entry premiums, as in the source.
                 if position["repairs_ce"]==0 and entry_pe_raw-entry_ce_raw>=100:
                     if close_and_replace(position,ts,"ce",z,"CE",entry_pe_raw,"ce_repair"):
                         position["repairs_ce"]=1
