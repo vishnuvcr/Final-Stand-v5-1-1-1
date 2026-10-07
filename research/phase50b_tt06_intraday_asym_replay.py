@@ -216,19 +216,27 @@ def main():
                 break
             if ts.time()>=EXIT_TIME:
                 # Use earliest common observed timestamp at/after 15:15.
-                candidates=sorted(set(cf.index[cf.index>=ts].tolist()) & set(nf.index[nf.index>=ts].tolist()))
+                # Use the earliest common observed option timestamp at/after 15:15.
+                cur_ts=set(cf.loc[cf["timestamp"]>=ts,"timestamp"].tolist())
+                nxt_ts=set(nf.loc[nf["timestamp"]>=ts,"timestamp"].tolist())
+                candidates=sorted(cur_ts & nxt_ts)
                 exit_done=False
                 for exitt in candidates:
-                    cfs=cf.loc[exitt] if exitt in cf.index else cf.iloc[0:0]
-                    nfs=nf.loc[exitt] if exitt in nf.index else nf.iloc[0:0]
-                    cfs=cfs.to_frame().T if isinstance(cfs,pd.Series) else cfs
-                    nfs=nfs.to_frame().T if isinstance(nfs,pd.Series) else nfs
-                    ok=(quote(cfs,"CE",pos["legs"]["ce"]["strike"]) is not None if pos["legs"]["ce"]["exp"]=="cur" else quote(nfs,"CE",pos["legs"]["ce"]["strike"]) is not None) and                        (quote(cfs,"PE",pos["legs"]["pe"]["strike"]) is not None if pos["legs"]["pe"]["exp"]=="cur" else quote(nfs,"PE",pos["legs"]["pe"]["strike"]) is not None)
+                    cfs=cf[cf["timestamp"]==exitt]
+                    nfs=nf[nf["timestamp"]==exitt]
+                    ce_frame=cfs if pos["legs"]["ce"]["exp"]=="cur" else nfs
+                    pe_frame=cfs if pos["legs"]["pe"]["exp"]=="cur" else nfs
+                    ok=(quote(ce_frame,"CE",pos["legs"]["ce"]["strike"]) is not None and
+                        quote(pe_frame,"PE",pos["legs"]["pe"]["strike"]) is not None)
                     if ok:
                         out,gap=finish(pos,pd.Timestamp(exitt),cfs,nfs)
-                        if out is not None: rows.append(out)
-                        else: gaps.append(gap)
-                        pos=None; exit_done=True; break
+                        if out is not None:
+                            rows.append(out)
+                        else:
+                            gaps.append(gap)
+                        pos=None
+                        exit_done=True
+                        break
                 if exit_done:
                     break
         if pos is not None:
