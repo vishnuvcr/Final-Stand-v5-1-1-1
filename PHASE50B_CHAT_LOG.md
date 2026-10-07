@@ -295,3 +295,7 @@ User requested continuation without pausing. Work performed:
 - Self-audit found a denominator-loss path when an eligible campaign had no complete entry set.
 - Corrected the engine to record explicit coverage gaps rather than silently omit the campaign.
 - The running old-code attempt will be superseded before evidence acceptance.
+
+## 2026-10-07 — Resume checkpoint: TT-03 corrected replay executing
+- Current TT03 run 37611676386 is executing the corrected engine after all identified pre-execution defects were fixed.
+- Preflight and static controls passed. Awaiting replay artifact audit; no downstream TT04 trigger has been created yet.
