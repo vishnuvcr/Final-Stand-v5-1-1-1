@@ -928,3 +928,7 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - The exact runtime exception is not asserted because the GitHub job-log endpoint returned BlobNotFound.
 - The preregistered TT04 performance contingency is now activated through .github/workflows/phase-50b-tt04-fallback.yml, using the source-equivalence-audited 50B-TT04-COVERAGE-V3-FAST-DORMANT engine.
 - The fallback is execution-only: no strategy or cost parameter changed. TT05 remains fail-closed until an audited fallback artifact is published.
+
+
+## Phase 50B — TT04 fallback awaiting dispatch — 2026-10-07
+- The canonical TT04 V3 replay failed with no accepted artifact. The controlled performance fallback is installed and source-equivalence audited, but GitHub has not instantiated its Actions run because the available connector cannot issue workflow_dispatch and API-authored push events are suppressed. No fallback result or TT05 advancement is claimed.
