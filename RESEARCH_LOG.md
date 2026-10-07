@@ -814,3 +814,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Checked TT04 run 37621965843 job state directly: preflight succeeded and numerical replay remains active.
 - The live log endpoint returned BlobNotFound; no inference was drawn from unavailable logs.
 - The registered workflow, artifact gate and fail-closed downstream chain remain unchanged.
+
+
+## 2026-10-07 — TT04 continuation checkpoint
+- Rechecked the sole active TT04 execution, run 37621965843.
+- Numerical replay remains active; no result directory or downstream trigger is visible.
+- No scientific inference or strategy selection was performed from the incomplete replay.
