@@ -1955,3 +1955,19 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Decision: classify TT03 as FEASIBILITY FAIL — NO PROMOTION. Do not tune VIX, far-OTM distance, or other parameters for TT03, and do not include TT03 in confirmatory statistical inference.
 - A rerun is authorized only to persist the full diagnostic replay and coverage gaps; it is not a scientific re-test.
 - Evidence status: SCIENCE-GATING RESULT — TT03 fails feasibility.
+
+
+### F50B-067 — TT04 premium-match helper violated source exact-match semantics
+- Time: 2026-10-07.
+- Pre-execution audit found the TT04 engine used nearest-premium selection by absolute LTP error instead of requiring an exact contemporaneous observed premium match.
+- This could substitute a different premium and materially change the repair leg.
+- Correction: TT04 V3 requires an exact observed LTP match (within deterministic floating-point tolerance) and uses nearest distance-to-spot only as a tie-break among exact matches.
+- No TT04 numerical run had produced accepted evidence before this correction.
+- Evidence status: NO SCIENTIFIC IMPACT; caught before execution.
+
+### F50B-068 — TT04 exit path required earliest complete 15:15+ timestamp
+- Time: 2026-10-07.
+- Pre-execution audit found the TT04 baseline attempted exit at the first index timestamp at/after 15:15 and treated missing leg quotes there as a coverage loss, rather than searching later same-day observed timestamps permitted by the source rule.
+- Correction: TT04 V3 searches observed timestamps from 15:15 through 15:30 and selects the earliest timestamp with complete quotes for all live legs; only then is a coverage exclusion recorded.
+- No TT04 numerical run had produced accepted evidence before this correction.
+- Evidence status: NO SCIENTIFIC IMPACT; caught before execution.
