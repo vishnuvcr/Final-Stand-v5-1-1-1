@@ -1432,3 +1432,8 @@ No numerical error has occurred at registration. Any failed workflow or implemen
 - Evidence status: numerical evidence and reconciled result package remain valid; publication of the status/log narrative was incomplete.
 - Correction: closeout workflow now synchronizes the branch before artifact generation and commits the generated status/log/README changes afterward.
 - Prevention: no workflow may reset/rebase the working tree after generating tracked research-status artifacts.
+### F49-013 — README phase-status lag at final closeout
+- Finding: PHASE49_STATUS.md and the final decision artifacts were CLOSED/NO PROMOTION while the README Phase-49 header still said INITIALIZED.
+- Evidence status: documentation-only; no numerical evidence affected.
+- Correction: the README Phase-49 section has been replaced with the reconciled final closeout status and links to the final artifacts.
+- Prevention: every phase closeout must update the README headline/status in the same closeout pass.
