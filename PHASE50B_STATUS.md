@@ -294,3 +294,9 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - A genuine runtime-scope ambiguity remains for ic_entered because the export contains no reset after setting it to 1.
 - TT-07 numerical replay is therefore blocked pending authoritative resolution; no guessed reset policy will be used.
 - TT-02 run 37596743408 remains active and non-authoritative.
+
+
+## 2026-10-07 — Authoritative TT-02 handoff initiated
+- Run 20 (**37598918723**) was launched from the corrected latest branch commit `7a05adf...`.
+- Run 19 (**37596743408**) remains visible as in-progress until GitHub applies the new `cancel-in-progress: true` concurrency policy; it is pre-fix and remains non-evidence.
+- No statistical or downstream strategy gate will consume TT-02 until the new run passes the complete artifact audit.
