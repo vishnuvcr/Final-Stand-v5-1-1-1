@@ -977,3 +977,7 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - The replay completed; the Actions failure was solely the artifact coverage assertion. No scientific rule or cost assumption changed.
 - F50B-091 records the terminal classification and a non-fatal IV-Newton divide-by-zero warning.
 - TT07 is closed under the candidate-local stopping rule. The finite research now proceeds to the next registered Phase-50B gate; no strategy has been promoted.
+
+
+### Phase 50B-4 — Far-OTM geometry active
+The bounded far-OTM gate is now testing only the source-semantic TT-03 strike-distance family: BASE 300/350/400, OTM350 350/400/450, and OTM400 400/450/500. Development selection is frozen before validation and protected 2026 holdout review. Actions run **37762837711** is currently executing.
