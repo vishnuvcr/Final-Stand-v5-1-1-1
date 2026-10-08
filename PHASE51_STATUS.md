@@ -9,3 +9,6 @@ Primary objective: broker-calibrated execution realism plus genuinely fresh chro
 Phase 51-0 registry audit passed in GitHub Actions.
 
 Phase 51-0 registry audit passed in GitHub Actions.
+
+
+Phase 51-1 files registered on the dedicated branch.
