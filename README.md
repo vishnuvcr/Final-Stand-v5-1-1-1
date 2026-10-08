@@ -981,3 +981,7 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 
 ### Phase 50B-4 — Far-OTM geometry active
 The bounded far-OTM gate is now testing only the source-semantic TT-03 strike-distance family: BASE 300/350/400, OTM350 350/400/450, and OTM400 400/450/500. Development selection is frozen before validation and protected 2026 holdout review. Actions run **37762837711** is currently executing.
+
+
+## Phase 50B-5 — Chronological validation initialized — 2026-10-08
+A dedicated branch `phase-50b-chronological-validation` now runs the next finite gate after 50B-4. The fixed comparison is TT-03, frozen TT-03 OTM350, TT-04 and TT-05 across 2021–2023 development, 2024–2025 validation and protected 2026 holdout. The phase reports profit/trade, chronological equity and drawdown diagnostics while explicitly refusing to claim capital-normalized return without a common accepted capital/margin denominator. [Phase 50B-5 status](PHASE50B_5_STATUS.md) · [Phase 50B plan](PHASE50B_RESEARCH_PLAN.md) · [Research log](RESEARCH_LOG.md) · [Chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
