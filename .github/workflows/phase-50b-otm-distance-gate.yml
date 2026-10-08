@@ -1,0 +1,62 @@
+name: Phase 50B - TT03 OTM Distance Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-otm-distance-gate
+    paths:
+      - trigger/phase50b_otm_distance.start
+
+permissions:
+  contents: write
+
+jobs:
+  replay:
+    strategy:
+      fail-fast: false
+      matrix:
+        distance: [200, 300, 400, 500, 600]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy huggingface_hub
+      - name: Replay registered distance
+        env:
+          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          TT03_DISTANCE: \${{ matrix.distance }}
+        run: python research/phase50b_tt03_otm_distance_replay.py
+      - name: Feasibility audit
+        env:
+          TT03_DISTANCE: \${{ matrix.distance }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          d=os.environ["TT03_DISTANCE"]
+          p=Path("results/phase50b/tt03_otm_distance")/("d"+d)
+          s=json.loads((p/"summary.json").read_text())
+          print(json.dumps(s,indent=2))
+          assert s["coverage_rate"] >= 0.95, s
+          assert s["trades"] > 0, s
+          assert s.get("net20_50") is not None, s
+          assert len(s.get("by_vix",[])) >= 1, s
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-tt03-distance-\${{ matrix.distance }}-\${{ github.run_id }}
+          path: results/phase50b/tt03_otm_distance/d\${{ matrix.distance }}
+      - name: Publish result
+        if: matrix.distance == 300
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add results/phase50b/tt03_otm_distance
+          if ! git diff --cached --quiet; then
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT03 distance gate"
+            git push origin HEAD:phase-50b-otm-distance-gate
+          fi
