@@ -152,3 +152,7 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 - Development: 13,292 structural rows; 3,500 profiles; 522 eligible; 30 frozen.
 - Validation: 10,130 structural rows; 18/30 positive net; 16/30 positive under +50% cost stress; 9/30 positive uplift; 0/30 positive CI lower bound; 0 Holm survivors.
 - Final decision: **NO PROMOTION**. Stage 3 skipped; 2026 holdout protected; canonical Phase-20/42 unchanged.
+
+
+## 2026-10-09 — Phase 51-1 data-availability stop
+Phase 51-1 was stopped before OOS replay. The frozen OOS window remains 2026-04-21 through 2026-08-04. Spot validation passed, but the original option source ends at expiry 2026-07-21; the tested public augmentation failed endpoint/common-coverage gates; and the authenticated Upstox recovery path is blocked because UPSTOX_ACCESS_TOKEN is not configured. No fresh OOS P&L or promotion decision was produced. See the authoritative Phase-51 branch report for details.
