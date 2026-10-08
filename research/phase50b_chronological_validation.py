@@ -97,8 +97,8 @@ expected={
 checks=[]
 for name,vals in expected.items():
     r=summary[summary.strategy==name].iloc[0]
-    ok=all(math.isclose(float(r[f"{k}"]),v,rel_tol=0,abs_tol=0.05) for k,v in vals.items())
-    checks.append({"strategy":name,"accepted_total_crosscheck":ok,"observed":{k:float(r[k]) for k in vals},"expected":vals})
+    ok=all(math.isclose(float(r[f"{k}_net"]),v,rel_tol=0,abs_tol=0.05) for k,v in vals.items())
+    checks.append({"strategy":name,"accepted_total_crosscheck":ok,"observed":{k:float(r[f"{k}_net"]) for k in vals},"expected":vals})
     assert ok,(name,r.to_dict())
 
 (OUT/"cross_checks.json").write_text(json.dumps({"checks":checks,"holdout_protected":True,
