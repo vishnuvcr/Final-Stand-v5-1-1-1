@@ -1024,3 +1024,14 @@ A dedicated branch `phase-50b-chronological-validation` now runs the next finite
 
 ## Phase 51 — Broker-Calibrated Execution + Fresh OOS Validation
 **ACTIVE.** Phase 50B is terminal with NO PROMOTION. Phase 51 begins a new independent finite protocol limited to frozen TT-03 and TT-03 OTM350. [Phase 51 plan](PHASE51_RESEARCH_PLAN.md) · [Phase 51 status](PHASE51_STATUS.md)
+
+
+## Phase 51 — Current status (2026-10-09)
+
+- **Phase 51-1A spot source:** PASS. Frozen OOS spot coverage is complete for 2026-04-21 → 2026-08-04; direct overlap against the original spot source passed the registered discrepancy gate.
+- **Phase 51-1B options source:** BLOCKED on data completeness, not strategy performance. The primary 1-minute options source ends at expiry 2026-07-21. The public supplemental files labelled 2026-07-28 and 2026-08-04 were independently inspected and actually end on 2026-07-02, so they are not valid replacements for the missing expiry sessions.
+- **OOS window remains frozen:** 2026-04-21 → 2026-08-04. No shortening or P&L-based source selection has been performed.
+- **TT-03 / OTM350 OOS replay:** not started; no trading conclusion has been drawn from Phase 51.
+- **Next phase:** authenticated expired-options acquisition gate, with automatic schema/coverage/hash validation and fail-closed behavior if the required source is unavailable.
+
+Key audit files: `PHASE51_RESEARCH_PLAN.md`, `PHASE51_STATUS.md`, and `ERROR_LOG.md`.
