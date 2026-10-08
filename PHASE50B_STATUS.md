@@ -713,3 +713,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - OTM400: DEV 121 / ₹18,891.16 net; net50 ₹14,511.75; net20_50 ₹1,661.55. VAL 76 / ₹25,842.14; net50 ₹22,977.59. HOLD 3 / ₹4,265.28.
 - The run's final publication push failed non-fast-forward because the branch changed concurrently. This is F50B-094, with no scientific impact.
 - Publication recovery has been committed to the workflow: fetch/rebase current branch before pushing generated artifacts. The frozen OTM350 selection itself is not changed.
+
+
+## 2026-10-08 — Phase 50B-5 chronological validation initialized
+- Dedicated branch: `phase-50b-chronological-validation`.
+- Frozen scope is TT-03, frozen TT-03 OTM350, TT-04 and TT-05 only.
+- 2021–2023 DEV, 2024–2025 VAL, protected 2026 HOLD.
+- OTM350 will be reconstructed identically before risk analysis because its prior computed artifact was not persisted after the F50B-094 publication race.
+- No new optimization is registered; next finite gate after completion is 50B-6 inference.
