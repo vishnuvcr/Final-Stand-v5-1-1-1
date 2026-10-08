@@ -2456,3 +2456,13 @@ Scientific impact: source is rejected before any OOS P&L. No strategy conclusion
 Correction: retain the frozen OOS window and move to the next authorized raw source rather than shortening the window or selecting a source by P&L.
 
 Prevention: vendor filename/catalog coverage is feasibility evidence only; actual file bytes and common-expiry equivalence must determine source acceptance.
+
+
+## 2026-10-09 — F51-023 — No authorized raw-options credential route configured
+The Phase 51-1F GitHub Actions access inventory found all checked credentials absent: UPSTOX_ACCESS_TOKEN, DHAN_ACCESS_TOKEN, ICICI_BREEZE_API_KEY, ICICI_BREEZE_API_SECRET and ICICI_BREEZE_SESSION_TOKEN. The Upstox acquisition therefore failed closed before any external data request.
+
+Scientific impact: none. No OOS P&L, tuning, or inference was calculated.
+
+Decision: do not fabricate access, bypass authentication, or substitute an oracle for raw data. The next valid route is an authorized commercial archive or a user-supplied licensed archive/token.
+
+Prevention: run the authorized-credential inventory before repeatedly launching expensive acquisition workflows.
