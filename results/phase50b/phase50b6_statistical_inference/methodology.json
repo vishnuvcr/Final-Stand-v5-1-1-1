@@ -1,0 +1,22 @@
+{
+  "phase": "50B-6",
+  "inference_population": "DEV+VAL only (2021-2025)",
+  "protected_holdout": "2026 descriptive only; excluded from hypothesis testing, Holm correction and selection",
+  "hypotheses": "H0: expected trade-level net P&L <= 0; H1: > 0",
+  "primary_test": "10,000 sign-randomization permutations of fixed trade magnitudes",
+  "dependence_robustness": "10,000 expiry-day block bootstrap confidence intervals",
+  "secondary": "one-sided binomial sign test",
+  "multiplicity": "Holm correction across fixed 16 strategy x cost hypotheses",
+  "promotion_statistical_gate": "positive mean AND 95% expiry-block bootstrap lower bound > 0 AND Holm-adjusted permutation p < 0.05; robustness additionally requires this at all four registered cost models",
+  "cost_models": [
+    "net",
+    "net50",
+    "net20",
+    "net20_50"
+  ],
+  "seed": 5062026,
+  "bootstrap_replicates": 10000,
+  "permutation_replicates": 10000,
+  "capital_normalized_return_claim": false,
+  "no_new_selection_or_tuning": true
+}

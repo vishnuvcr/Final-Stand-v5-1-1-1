@@ -1,0 +1,12 @@
+{
+  "strategies": [
+    "TT03",
+    "TT03_OTM350",
+    "TT04",
+    "TT05"
+  ],
+  "hypotheses": 16,
+  "robust_positive_strategies": [],
+  "any_primary_positive": true,
+  "holdout_protected": true
+}

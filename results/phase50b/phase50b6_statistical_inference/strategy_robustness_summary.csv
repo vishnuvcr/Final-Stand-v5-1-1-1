@@ -1,0 +1,5 @@
+strategy,all_four_costs_primary_positive,all_four_holm_reject,min_holm_q,min_bootstrap_ci_low
+TT03,False,False,0.0031996800319968005,36.651170074627785
+TT03_OTM350,False,False,0.0031996800319968005,2.8568036924542928
+TT04,False,False,1.0,-168.76298448556875
+TT05,False,False,0.7159284071592841,-138.91197598326377
