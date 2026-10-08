@@ -908,3 +908,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Preflight has passed; numerical job **113132915078** is currently in progress.
 - The corrected engine is pinned to the same registered TT06 engine revision **50B-TT06-COVERAGE-V2**; only the expiry split-report timezone normalization changed.
 - No TT06 P&L, VIX inference, promotion decision or downstream TT07 launch is accepted until replay + artifact audit + publication all pass.
+
+## 2026-10-08 — TT06 terminal classification and TT07 continuation
+- TT06 controlled rerun **37722386852** completed replay successfully but failed the preregistered 95% coverage gate at **70.40% (692/983)**.
+- Coverage exclusions: 291; session exclusions: 3; data errors: 0. The negative cost outputs are diagnostic only and are not evidence.
+- Persisted `terminal_classification.json` records **FAIL_COVERAGE**, `pnl_evidence_eligible=false`, and `downstream_use_of_pnl=false`.
+- This is a terminal candidate-local feasibility decision; no parameter tuning or VIX conditioning will be attempted for TT06.
+- TT07 workflow dependency logic was corrected to recognize persisted TT06 terminal failure without consuming TT06 P&L, consistent with the finite Phase-50B plan.
+- Next gate: launch and audit TT07 source-faithful replay.
