@@ -28,10 +28,12 @@ jobs:
       - name: Install data tools
         run: python -m pip install --disable-pip-version-check --no-input pandas pyarrow huggingface_hub
       - name: Audit option completeness and supplemental equivalence
+        continue-on-error: true
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python research/phase51_1_options_augmentation.py
       - name: Upload options gate artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: phase51-1-options-augmentation
@@ -41,18 +43,22 @@ jobs:
             data/phase51/options_augmentation/
           if-no-files-found: error
           retention-days: 14
-      - name: Publish validated option source
+      - name: Enforce final options gate
+        if: always()
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           a=json.load(open('results/phase51/options_augmentation_audit.json'))
           v=json.load(open('results/phase51/validated_option_source.json'))
-          assert a.get('PASS') is True
+          assert a.get('PASS') is True, a.get('failed_expiry_gates')
           assert v.get('status') == 'PASS'
           assert a['missing_expiries'] == ['2026-07-28','2026-08-04']
           print('options augmentation PASS')
           PY
+      - name: Publish validated option source
+        if: success()
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase51
