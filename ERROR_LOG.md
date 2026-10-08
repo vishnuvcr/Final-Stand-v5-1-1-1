@@ -2267,3 +2267,7 @@ No new error. Final manuscript phase initialized from the audited 50B-6 evidence
 
 ## 2026-10-09 — Phase 51 initialization
 No error. New phase registered from the terminal Phase 50B evidence. No Phase 50B result was modified.
+
+
+## 2026-10-09 — Phase 51-1 data audit
+F51-001: the initially selected NIFTY spot cache ends 2026-07-02 while the frozen OOS window extends to 2026-08-04. No strategy P&L was calculated from this incomplete source. The OOS window remains frozen. A separate spot-source fallback and overlap audit is required before replay.
