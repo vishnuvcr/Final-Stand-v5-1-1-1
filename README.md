@@ -950,3 +950,10 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - No TT05 P&L or strategy-promotion claim is accepted until the full coverage, zero-error, cost and publication gates pass.
 
 [TT05 current Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37654354444) · [Phase 50B status](PHASE50B_STATUS.md) · [Phase 50B chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
+
+
+## Phase 50B — TT06 timezone correction and controlled rerun — 2026-10-08
+- TT06 run **37675162843** passed preflight/static checks but failed during DEV/VAL/HOLD split reporting because expiry timestamps were timezone-naive while split boundaries were timezone-aware.
+- No TT06 output from the failed run is accepted as evidence.
+- The engine was corrected with a reporting-only timezone normalization; trading rules, execution-cost model and VIX capture are unchanged.
+- **F50B-089** documents the defect and prevention rule. The controlled TT06 rerun is now the next gate.
