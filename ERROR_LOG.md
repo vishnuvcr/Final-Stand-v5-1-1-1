@@ -2206,3 +2206,14 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The divide-by-zero RuntimeWarnings observed in the implied-volatility Newton update were non-fatal and did not cause the terminal classification; they are recorded as an implementation warning for future engine hardening, not as accepted evidence.
 - Terminal classification has been persisted at `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
 - No strategy rule, strike, stop, exit, cost model, lot size or VIX definition was changed.
+
+
+## F50B-092 — VIX statistical gate artifact-name interpolation failure (2026-10-08)
+- Run: 37749517982
+- Scientific stages completed successfully: preflight, compilation, VIX inference, and audit.
+- Result: 28 hypotheses tested; 0 Holm-adjusted robust-positive effects; 2026 holdout protected.
+- Failure occurred only at artifact upload because the generated artifact name contained a literal backslash before the GitHub Actions run-id expression.
+- Impact: no scientific result invalidation; publication step was skipped because upload failed.
+- Correction: removed the unintended escape from \${{ github.run_id }} in the workflow artifact name.
+- Scientific rule/cost model/data unchanged.
+- Rerun required to publish the already-computed gate outputs.
