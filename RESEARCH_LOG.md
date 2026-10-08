@@ -1047,3 +1047,10 @@ Upstox recovery path created for the two missing frozen OOS expiries. Workflow 3
 - Added GitHub Actions workflow `.github/workflows/phase51-1E-hf-options-gate.yml` with manual dispatch and push triggers.
 - Added validator `research/phase51_1E_hf_options_gate.py` to check exact target files, schema, timestamps, expiry, duplicates and endpoint dates.
 - No OOS P&L, strategy tuning, or inference has been performed.
+
+
+## 2026-10-09 — Phase 51-1E corrected live validation
+- GitHub Actions run **37841471316** is executing the corrected source-equivalence gate.
+- The workflow has already completed dependency installation and is actively running the download/validation step.
+- The prior failures 37840536857 / 37840549074 / 37840567920 were implementation failures: source files downloaded successfully, but the validator was absent/wrong-schema.
+- No OOS trading result has been consumed from any of these failed validation runs.
