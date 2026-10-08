@@ -2335,3 +2335,15 @@ A tool-orchestration string containing Markdown backticks failed with a JavaScri
 **Evidence status:** tooling-only; no repository or numerical evidence changed.
 
 **Correction:** use plain-text generated sections without embedded template-literal delimiters for repository writes.
+
+
+## 2026-10-09 — Phase 51-1 options-source completeness finding
+
+### F51-009 — Frozen OOS options file stops before the frozen OOS endpoint
+The Phase 51-1 data manifest contains NIFTY option rows from 2026-04-21 through 2026-07-21, with 14 weekly expiries. The frozen OOS window ends 2026-08-04, so the 2026-07-28 and 2026-08-04 expiry blocks are absent from the initially selected options source.
+
+**Evidence status:** no strategy P&L was calculated. The OOS window remains frozen; the missing expiry blocks are not silently removed from the research period.
+
+**Correction:** register an independent pre-P&L option-source augmentation gate. Thetrademarkk's NIFTY options directory contains explicit 2026-07-28 and 2026-08-04 1-minute option files. These files will be compared against common expiries from the original rissin source before either is used for replay.
+
+**Prevention:** Phase 51 option coverage must be audited at the expiry-block level, not merely by total row count and maximum observed expiry.
