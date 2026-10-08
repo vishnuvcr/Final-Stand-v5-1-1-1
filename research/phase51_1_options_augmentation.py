@@ -113,7 +113,6 @@ for exp in SUPP_EXPIRIES:
 for exp in COMMON_EXPIRIES:
     rp=ROOT/f"rissin_common_{exp}.parquet"
     tp=fetch(TMK_BASE,f"options/NIFTY/{exp}.parquet",ROOT/f"tmk_common_{exp}.parquet")
-    rr=normalize_rissin(rpath)
     rr=rr[rr["expiry"]==exp]
     tt=normalize_tmk(tp,exp)
     key=["timestamp","strike","option_type"]
