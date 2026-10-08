@@ -973,3 +973,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Created branch `phase-51-execution-oos-validation` from the completed Phase 50B final branch.
 - Registered a new finite six-step protocol focused on broker-calibrated execution realism and genuinely fresh OOS validation of frozen TT-03 and TT-03 OTM350.
 - No Phase-50B parameter, VIX threshold, strike, stop or exit was reopened.
+
+
+### 2026-10-09 — Phase 51-1 data coverage gate
+- Workflow 37834186657 successfully downloaded and audited the frozen OOS sources.
+- The option source has 15.5 million OOS 1-minute rows and expiries through 2026-07-21, but the paired spot source ends 2026-07-02.
+- No strategy P&L was calculated from the incomplete source.
+- F51-001 logged. A separate spot fallback acquisition and overlap audit has been added before any replay can proceed.
