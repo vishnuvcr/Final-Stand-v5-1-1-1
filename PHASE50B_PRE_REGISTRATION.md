@@ -45,3 +45,7 @@ The preregistered bootstrap/permutation VIX-regime inference family is explicitl
 
 ## VIX-mode reconstruction clarification — 2026-10-07
 For statistical inference, VIX regime membership is reconstructed at each trade's entry timestamp from the cached India VIX series using the frozen parent-phase definitions. This preserves the preregistered SPIKE/RISING/FALLING/HIGH_RISING modes even though individual strategy trade tables may store only the LOW/NORMAL/HIGH level label. Trades without the minimum historical VIX lookback are excluded from both the regime and complement inference samples.
+
+
+## 2026-10-08 — Far-OTM TT-03 finite mutation freeze
+Only the following three TT-03 geometries are registered: BASE 300/350/400; OTM350 350/400/450; OTM400 400/450/500, applied symmetrically to call and put ratio sets. BASE is a source-faithful regression control. Only OTM350 and OTM400 can be selected as far-OTM candidates. The selection rule is fixed: >=95% coverage, positive development net, positive development net50, then highest development net50. Exactly one mutation can be frozen for validation. Validation must have positive net and positive net50; 2026 HOLD remains protected and descriptive.
