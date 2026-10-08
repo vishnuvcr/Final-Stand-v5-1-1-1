@@ -2387,3 +2387,8 @@ The pre-P&L overlap audit also showed that the supplemental source is only a par
 **External-source search:** public evidence confirms Upstox provides expired-contract 1-minute candles, but its expired-instrument APIs require an authenticated Upstox Plus account. Public FNOTrader material advertises a current NIFTY 1-minute archive, but no installed project integration is available to acquire its raw data. Daily historical pages (e.g. MoneyTicks / optionbacktesting.in) are insufficient for minute-level replay.
 
 **Required next acquisition:** authenticated 1-minute expired-option source reaching at least 2026-08-04, or a publicly downloadable dataset with equivalent provenance and full strike/time coverage. Until then Phase 51 remains DATA-BLOCKED and the frozen OOS window is unchanged.
+
+
+## 2026-10-09 — Phase 51-1C authenticated-source gate
+### F51-016 — Missing Upstox access secret
+Workflow run 37839447686 could not acquire the missing 2026-07-28 and 2026-08-04 expired NIFTY option contracts because UPSTOX_ACCESS_TOKEN is not configured in repository secrets. No source data or strategy P&L was fabricated.
