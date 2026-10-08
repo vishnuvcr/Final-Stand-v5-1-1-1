@@ -7,6 +7,7 @@ on:
       - phase-50b-far-otm-geometry
     paths:
       - trigger/phase50b_far_otm.start
+      - .github/workflows/phase50b-far-otm-geometry.yml
 
 concurrency:
   group: phase50b-far-otm
