@@ -1,0 +1,77 @@
+{
+  "phase": "51-1",
+  "status": "BLOCKED_DATA_AVAILABILITY",
+  "decision": "NO_OOS_REPLAY",
+  "frozen_oos_window": [
+    "2026-04-21",
+    "2026-08-04"
+  ],
+  "spot_source": {
+    "status": "PASS",
+    "repository": "technovusin/nifty50-historical-data",
+    "rows": 27375,
+    "first_timestamp": "2026-04-21T09:15:00+05:30",
+    "last_timestamp": "2026-08-04T15:29:00+05:30",
+    "direct_primary_overlap_rows": 16467,
+    "direct_primary_median_abs_points": 0,
+    "direct_primary_p99_abs_points": 0.767,
+    "direct_primary_p95_rel_bp": 0.042,
+    "gate": "PASS"
+  },
+  "original_options_source": {
+    "repository": "rissin/nse-options-intraday",
+    "file": "upstox_intraday/NIFTY/NIFTY_2026.parquet",
+    "sha256": "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73",
+    "bytes": 394805617,
+    "observed_expiries_through": "2026-07-21",
+    "missing_expiries": [
+      "2026-07-28",
+      "2026-08-04"
+    ]
+  },
+  "rejected_supplemental_source": {
+    "repository": "thetrademarkk/india-index-options-1m",
+    "files": [
+      {
+        "expiry": "2026-07-28",
+        "sha256": "f9c3a6d1e4498274644ccbfeb8aeb3d545fc2ce1a12b908f450360a643e40d17",
+        "rows": 320359,
+        "min_timestamp": "2026-06-15T09:15:00+05:30",
+        "max_timestamp": "2026-07-02T15:30:00+05:30"
+      },
+      {
+        "expiry": "2026-08-04",
+        "sha256": "8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c",
+        "rows": 2646,
+        "min_timestamp": "2026-06-24T10:08:00+05:30",
+        "max_timestamp": "2026-07-02T15:29:00+05:30"
+      }
+    ],
+    "common_expiry_coverage_vs_rissin": {
+      "2026-07-07": 0.3457350542,
+      "2026-07-14": 0.1495349182,
+      "2026-07-21": 0.0460397003
+    },
+    "failed_checks": {
+      "2026-07-07": [
+        "coverage_vs_rissin_ge_0.80",
+        "p95_rel_bp_le_10"
+      ],
+      "2026-07-14": [
+        "coverage_vs_rissin_ge_0.80"
+      ],
+      "2026-07-21": [
+        "coverage_vs_rissin_ge_0.80"
+      ]
+    },
+    "gate": "FAIL"
+  },
+  "authenticated_source": {
+    "provider": "Upstox expired-instruments API",
+    "status": "BLOCKED",
+    "reason": "UPSTOX_ACCESS_TOKEN secret is not configured in the repository",
+    "api_capability": "1-minute expired-contract candles require Upstox Plus authentication"
+  },
+  "scientific_conclusion": "The frozen 2026-04-21 through 2026-08-04 OOS sample cannot be replayed without inventing or selectively excluding the 2026-07-28 and 2026-08-04 expiry blocks. Phase 51 therefore stops before OOS strategy P&L and inference.",
+  "next_required_data": "Authenticated 1-minute expired NIFTY option candles covering 2026-07-28 and 2026-08-04 from Upstox Plus or an equivalent full-coverage, independently auditable source."
+}
