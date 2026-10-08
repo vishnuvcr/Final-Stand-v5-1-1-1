@@ -527,3 +527,11 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Preflight has passed; numerical job **113132915078** is currently in progress.
 - The corrected engine is pinned to the same registered TT06 engine revision **50B-TT06-COVERAGE-V2**; only the expiry split-report timezone normalization changed.
 - No TT06 P&L, VIX inference, promotion decision or downstream TT07 launch is accepted until replay + artifact audit + publication all pass.
+
+## 2026-10-08 — Resume: TT06 terminal failure
+- User requested resume. Canonical TT06 rerun **37722386852** completed.
+- Replay generated 692 trades from 983 candidates; 291 coverage exclusions; 3 session exclusions; zero data errors. Coverage **70.40%**, so the mandatory 95% feasibility gate failed.
+- The Actions failure occurred in artifact audit on the coverage assertion, not in trade generation.
+- TT06 is terminal FAIL_COVERAGE; its P&L is diagnostic only and cannot enter downstream inference or promotion.
+- Persisted terminal classification and hardened TT07 dependency gate were added.
+- Continuing to the independent registered TT07 candidate is allowed by the candidate-local stopping rule.
