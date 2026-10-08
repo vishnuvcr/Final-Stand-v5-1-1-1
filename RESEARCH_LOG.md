@@ -922,3 +922,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The frozen 95% feasibility gate failed, so no TT07 P&L is accepted as evidence.
 - Terminal classification was persisted; the candidate-local stopping rule closes TT07 for promotion, VIX conditioning, tuning and confirmatory inference.
 - The next action is the next finite registered Phase-50B candidate/gate, not reopening TT07.
+
+
+### 2026-10-08 — Phase 50B-4 far-OTM geometry started
+- Frozen finite TT-03 mutation grid before numerical inspection.
+- Baseline regression is included to detect semantic drift.
+- Only source-semantic strike-distance variants are tested; TT-02 was excluded from this mutation gate because delta changes would also alter its source-specific repair targets.
+- Actions run 37762837711 is executing the three registered profiles.
