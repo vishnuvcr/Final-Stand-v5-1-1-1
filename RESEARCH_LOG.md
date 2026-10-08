@@ -1077,3 +1077,11 @@ The refreshed Hugging Face source was fully audited by GitHub Actions run 378429
 The open-source track was reopened as requested. Public candidates were evaluated for actual raw 1-minute coverage of 2026-07-28 and 2026-08-04. Kaggle's free 1-minute NIFTY option-chain dataset is documented as ending 2026-03-24; bhav's offline sample ends Jun-2026; SauMStats documents a 2026 live-data layout but does not commit the live archive; pawan625 demonstrates broker-generated July-2026 option candles but does not expose an independent full raw archive; and the CodePyx bucket's advertised NIFTY Parquet path returned 404 in Actions run 37844364676.
 
 Decision: no open-source source is admitted. Frozen OOS remains unchanged; no P&L is calculated from partial/synthetic/oracle data.
+
+
+## 2026-10-09 — Phase 51-1G final open-source recovery exhaustion
+- Rechecked exact missing-expiry filenames and date-specific NIFTY 1-minute option archive references across public GitHub/Hugging Face/web-indexed sources.
+- Confirmed the CodePyx HF bucket remains publicly advertised but the required NIFTY expiry paths are not reproducible through the registered acquisition path (HTTP 404).
+- Confirmed that visible thetrademarkk filenames/commits cannot override the byte-level audit, which found both target files ending 2026-07-02 and common-expiry coverage far below the registered gate.
+- Checked public research projects referencing the same downloader/data workflow for embedded raw copies; none supplied an independent archive for both missing expiries.
+- **Outcome:** Phase 51-1G is complete and DATA-BLOCKED. No OOS P&L, tuning, or inference was performed. The next admissible event is authorized raw data/token availability or discovery of a new independent public raw archive.
