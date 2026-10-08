@@ -566,3 +566,9 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - TT-03 and TT-03 OTM350 retain positive evidence at lower registered costs, but both fail the strict doubled-friction ₹20/order robustness gate after Holm correction.
 - TT-04/TT-05 fail the primary statistical gate; 2026 HOLD remained protected.
 - Decision: no promotion; advance once to Phase 50B-7 final manuscript and final research decision.
+
+
+### 2026-10-09 — Phase 50B-7 initialization
+- Verified 50B-6 accepted results and no-promotion decision.
+- Created final manuscript branch and added manuscript, figure generation and publication workflow.
+- Final scope is fixed: manuscript, figures, tables, appendices, provenance and final decision only.
