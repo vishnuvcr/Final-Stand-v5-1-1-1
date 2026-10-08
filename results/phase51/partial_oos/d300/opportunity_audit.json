@@ -1,0 +1,104 @@
+{
+  "status": "NO_ELIGIBLE_CAMPAIGNS",
+  "strategy": "TT-03 frozen source-faithful rule",
+  "distance_points": 300,
+  "window": [
+    "2026-04-21",
+    "2026-07-21"
+  ],
+  "source_repository": "rissin/nse-options-intraday",
+  "source_file": "upstox_intraday/NIFTY/NIFTY_2026.parquet",
+  "source_sha256": "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73",
+  "observed_expiries": [
+    "2026-04-21",
+    "2026-04-28",
+    "2026-05-05",
+    "2026-05-12",
+    "2026-05-19",
+    "2026-05-26",
+    "2026-06-02",
+    "2026-06-09",
+    "2026-06-16",
+    "2026-06-23",
+    "2026-06-30",
+    "2026-07-07",
+    "2026-07-14",
+    "2026-07-21"
+  ],
+  "eligible_expiries": [],
+  "ineligible_expiries": [
+    {
+      "expiry": "2026-04-21",
+      "scheduled_entry_date": "2026-04-18",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-04-28",
+      "scheduled_entry_date": "2026-04-25",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-05-05",
+      "scheduled_entry_date": "2026-05-02",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-05-12",
+      "scheduled_entry_date": "2026-05-09",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-05-19",
+      "scheduled_entry_date": "2026-05-16",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-05-26",
+      "scheduled_entry_date": "2026-05-23",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-06-02",
+      "scheduled_entry_date": "2026-05-30",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-06-09",
+      "scheduled_entry_date": "2026-06-06",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-06-16",
+      "scheduled_entry_date": "2026-06-13",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-06-23",
+      "scheduled_entry_date": "2026-06-20",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-06-30",
+      "scheduled_entry_date": "2026-06-27",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-07-07",
+      "scheduled_entry_date": "2026-07-04",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-07-14",
+      "scheduled_entry_date": "2026-07-11",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    },
+    {
+      "expiry": "2026-07-21",
+      "scheduled_entry_date": "2026-07-18",
+      "reason": "scheduled_three_calendar_day_entry_date_is_weekend"
+    }
+  ],
+  "coverage_gate": "NOT_APPLICABLE_NO_ELIGIBLE_CAMPAIGNS",
+  "pnl_interpretation_allowed": false,
+  "reason": "Every observed expiry in the available partial-OOS interval is a Tuesday. The frozen TT-03 rule schedules entry exactly three calendar days before expiry, which falls on Saturday for every observed expiry. Therefore no entry opportunity exists in the partial window. This is a protocol/calendar outcome, not a strategy P&L result."
+}
