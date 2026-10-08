@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "selected_source": {
+    "repository": "technovusin/nifty50-historical-data",
+    "raw_base": "https://raw.githubusercontent.com/technovusin/nifty50-historical-data/main/1min/2026",
+    "months": [
+      "04",
+      "05",
+      "06",
+      "07",
+      "08"
+    ],
+    "files": [
+      {
+        "filename": "NIFTY50_1min_2026-04.csv",
+        "sha256": "38d61de4383494720f8200a1ddbc03a4e586dbce7fe9a6abb694f86df2349a6c",
+        "bytes": 543674
+      },
+      {
+        "filename": "NIFTY50_1min_2026-05.csv",
+        "sha256": "401687147b485b7b74c39cc63537ff226f093569f72772c23452869ab03fbfd0",
+        "bytes": 515564
+      },
+      {
+        "filename": "NIFTY50_1min_2026-06.csv",
+        "sha256": "54d6899167a713eafff168cb0b5ce5e85b0e4e2afdfdf82b139c0a38279c1ded",
+        "bytes": 569497
+      },
+      {
+        "filename": "NIFTY50_1min_2026-07.csv",
+        "sha256": "8aa29ad194a62075d00de80ffeb19c366b4f54f3aa7775c12cae1e12471a8217",
+        "bytes": 623542
+      },
+      {
+        "filename": "NIFTY50_1min_2026-08.csv",
+        "sha256": "156c91df4181ec6bd2430f35472131277d62c4d10fbc0a82aca78ebb872d3ac2",
+        "bytes": 568266
+      }
+    ]
+  },
+  "selected_oos_window": [
+    "2026-04-21",
+    "2026-08-04"
+  ],
+  "selected_oos_rows": 27375,
+  "selected_first_timestamp": "2026-04-21 09:15:00+05:30",
+  "selected_last_timestamp": "2026-08-04 15:29:00+05:30",
+  "selected_bad_days": [],
+  "direct_primary_overlap": {
+    "overlap_rows": 16467,
+    "overlap_first": "2026-04-21 09:15:00+05:30",
+    "overlap_last": "2026-07-02 15:29:00+05:30",
+    "median_abs_points": 0.0,
+    "p95_abs_points": 0.09999999999854481,
+    "p99_abs_points": 0.7669999999997599,
+    "max_abs_points": 6.799999999999272,
+    "median_rel_bp": 0.0,
+    "p95_rel_bp": 0.04173730705886464,
+    "mean_signed_points": 0.0024564280075287095,
+    "median_signed_points": 0.0
+  },
+  "direct_primary_overlap_gate": {
+    "overlap_rows_ge_10000": true,
+    "median_abs_le_0_50": true,
+    "p99_abs_le_3_00": true,
+    "p95_rel_bp_le_2_00": true,
+    "abs_mean_signed_le_1_00": true,
+    "PASS": true
+  },
+  "fallback_overlap": {
+    "overlap_rows": 20587,
+    "overlap_first": "2026-04-21 09:15:00+05:30",
+    "overlap_last": "2026-07-17 15:29:00+05:30",
+    "median_abs_points": 0.0,
+    "p95_abs_points": 0.10000000000218279,
+    "p99_abs_points": 0.8499999999985448,
+    "max_abs_points": 7.099999999998545,
+    "median_rel_bp": 0.0,
+    "p95_rel_bp": 0.04179073296613251,
+    "mean_signed_points": -0.0017705348035150508,
+    "median_signed_points": 0.0
+  },
+  "fallback_overlap_gate": {
+    "overlap_rows_ge_10000": true,
+    "median_abs_le_0_50": true,
+    "p99_abs_le_3_00": true,
+    "p95_rel_bp_le_2_00": true,
+    "abs_mean_signed_le_1_00": true,
+    "PASS": true
+  },
+  "rejected_fallback_source": {
+    "repo_id": "Jitendra12421/AlargeDatabase",
+    "filename": "INDDEX FILES/NIFTY_minute.parquet",
+    "sha256": "e275584bcdbcc3fc01e530bc83adbafac3da8eabe55cc280a06c7ada517394a0",
+    "timestamp_column": "date",
+    "price_column": "close"
+  },
+  "rejected_fallback_overlap_gate": {
+    "overlap_rows_ge_10000": true,
+    "median_abs_le_0_50": true,
+    "p99_abs_le_3_00": true,
+    "p95_rel_bp_le_2_00": true,
+    "abs_mean_signed_le_1_00": true,
+    "PASS": true
+  },
+  "rejected_fallback_note": "Source rejected under F51-006 for material intraday session gaps; see ERROR_LOG.md",
+  "selection_basis": "data-quality evidence only; frozen before any OOS strategy P&L calculation"
+}

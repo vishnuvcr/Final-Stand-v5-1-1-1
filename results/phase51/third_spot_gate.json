@@ -1,0 +1,12 @@
+{
+  "PASS": true,
+  "third_source_session_gate": true,
+  "fallback_overlap_gate": {
+    "overlap_rows_ge_10000": true,
+    "median_abs_le_0_50": true,
+    "p99_abs_le_3_00": true,
+    "p95_rel_bp_le_2_00": true,
+    "abs_mean_signed_le_1_00": true,
+    "PASS": true
+  }
+}

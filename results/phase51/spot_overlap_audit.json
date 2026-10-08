@@ -1,0 +1,41 @@
+{
+  "primary_source": {
+    "repo_id": "thetrademarkk/india-index-options-1m",
+    "filename": "index/NIFTY.parquet",
+    "sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+    "timestamp_column": "timestamp",
+    "price_column": "close"
+  },
+  "fallback_source": {
+    "repo_id": "Jitendra12421/AlargeDatabase",
+    "filename": "INDDEX FILES/NIFTY_minute.parquet",
+    "sha256": "e275584bcdbcc3fc01e530bc83adbafac3da8eabe55cc280a06c7ada517394a0",
+    "timestamp_column": "date",
+    "price_column": "close"
+  },
+  "oos_window": [
+    "2026-04-21",
+    "2026-08-04"
+  ],
+  "overlap_stats": {
+    "overlap_rows": 14622,
+    "overlap_first": "2026-04-21 09:15:00+05:30",
+    "overlap_last": "2026-07-02 15:29:00+05:30",
+    "median_abs_points": 0.0,
+    "p95_abs_points": 0.0,
+    "p99_abs_points": 0.0,
+    "max_abs_points": 7.099999999998545,
+    "median_rel_bp": 0.0,
+    "p95_rel_bp": 0.0,
+    "mean_signed_points": -0.0007830666119551363,
+    "median_signed_points": 0.0
+  },
+  "gate": {
+    "overlap_rows_ge_10000": true,
+    "median_abs_le_0_50": true,
+    "p99_abs_le_3_00": true,
+    "p95_rel_bp_le_2_00": true,
+    "abs_mean_signed_le_1_00": true,
+    "PASS": true
+  }
+}
