@@ -1,37 +1,17 @@
 # Phase 50B-3 Status
 
-**ACTIVE — VIX CONDITIONING REPLAY**
+**CLOSED — DESCRIPTIVE VIX CONDITIONING COMPLETE / NO REGIME PROMOTION**
 
-## Scope
-Four feasible Phase-50B strategies:
-- TT-02
-- TT-03
-- TT-04
-- TT-05
+Accepted Actions run: **37848498918**.
 
-Seven fixed entry-time VIX modes:
-- LOW
-- NORMAL
-- HIGH
-- SPIKE
-- FALLING
-- RISING
-- HIGH_RISING
+- 4 feasible strategies
+- 7 fixed entry-time VIX modes
+- 28 frozen hypotheses
+- 84 DEV/VAL/HOLD cells
+- 0 VIX-unobservable trades
+- HOLD excluded from selection and inference
+- No parameter or threshold tuning
 
-Total frozen hypotheses: **28**.
+The strongest descriptive pattern was NORMAL-regime strength for TT-03, TT-04 and TT-05 in DEV/VAL, but no regime is promoted. All 28 hypotheses remain registered for the later statistical gate.
 
-## Exclusions
-TT-06 and TT-07 are terminal FAIL_COVERAGE and their diagnostic P&L is not used.
-
-## Statistical protection
-DEV/VAL are the only inferential periods. HOLD 2026 is protected descriptive confirmation. No regime is selected after inspecting HOLD.
-
-## Current gate
-Compile → feasible-artifact validation → cached VIX reconstruction → 28-hypothesis regime tables → artifact audit → publication.
-
-## Next phase
-After Phase-50B-3 closes, the finite research proceeds to the preregistered far-OTM geometry phase and then chronological validation/statistical inference. No unregistered strategy search is opened.
-
-## 2026-10-09 — Actions execution
-
-Phase 50B-3 workflow run **37848475527** is executing on the dedicated branch. Preflight checkout and Python setup have passed; dependency installation is in progress. No VIX result is accepted yet.
+Next finite phase: **Phase 50B-4 far-OTM geometry**, limited to the preregistered TT-03 BASE/OTM350/OTM400 family.
