@@ -1,3 +1,13 @@
+## Phase 50B-4 — Far-OTM Geometry — ACTIVE (2026-10-09)
+
+Phase 50B-3 closed without promoting a VIX regime. The next finite preregistered step is testing only the TT-03 natural strike-distance mutations **OTM350 (350/400/450)** and **OTM400 (400/450/500)** against the accepted **BASE (300/350/400)** control.
+
+Selection is frozen: an OTM mutation must pass >=95% coverage, positive DEV net and positive DEV +50% cost-stress net; if both qualify, the higher DEV +50% DEV-stress net is selected. Validation and protected 2026 HOLD are post-selection.
+
+- [Phase 50B-4 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-4-far-otm-geometry)
+- [Phase 50B-4 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/PHASE50B_4_FAR_OTM_PREREGISTRATION.md)
+- [Phase 50B-4 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/PHASE50B_4_STATUS.md)
+
 ## Phase 50B-3 — VIX Conditioning — ACTIVE (2026-10-09)
 
 Phase 51 remains blocked at the full-window data gate because the audited primary option source ends at 2026-07-21 and the 2026-07-28/2026-08-04 endpoint blocks remain unresolved. The non-confirmatory Phase-51-2 partial audit found no eligible TT-03 campaigns under its frozen three-calendar-day entry rule, so no economic inference was made.
