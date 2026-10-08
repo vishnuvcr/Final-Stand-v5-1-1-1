@@ -948,3 +948,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 \n\n### 2026-10-08 — Phase 50B-5 CI correction\nRun 37821975113 failed in the reporting cross-check after the frozen OTM350 artifact passed reconstruction/audit. Error F50B-095 records the schema mismatch. Commit 70aa069 fixes the cross-check without changing any research parameter. Phase 50B-5 remains active pending a clean rerun.\n
 - **Phase 50B-5 numerical gate passed in run 37827007176:** four-strategy chronology and audit completed; accepted TT-03/TT-04/TT-05 total cross-checks passed; 2026 holdout remained protected. Publication failed only on Git rebase identity (F50B-096). No numerical conclusion changed.
 \n\n### 2026-10-09 — Phase 50B-5 completion and 50B-6 launch\n- Run **37828322922** completed Phase 50B-5 successfully: preflight, frozen OTM350 reconstruction/audit, chronology, chronology audit and publication all passed.\n- Phase 50B-6 dedicated branch `phase-50b-statistical-inference` created from the completed 50B-5 branch.\n- Added the preregistered inference engine/workflow: 16 fixed strategy×cost hypotheses, DEV+VAL only, protected 2026 HOLD, expiry-day block bootstrap, sign-randomization permutation tests and Holm correction.\n- No new strategy, parameter or VIX search was introduced.\n
+
+### 2026-10-09 — Phase 50B-6 completed
+- Corrected Actions run **37832396945** passed the full inference/audit/publication gate after F50B-097 correction.
+- 16 fixed hypotheses were tested on DEV+VAL only with the protected 2026 HOLD excluded from inference.
+- TT-03 passed the statistical gate at net, net50 and net20 but failed net20_50 after Holm correction; TT-03 OTM350 passed net, net50 and net20 but failed net20_50. TT04 and TT05 did not pass any primary hypothesis.
+- No strategy met the preregistered all-cost robustness criterion. **No promotion.**
+- Phase 50B-7 is the final finite manuscript/decision phase.
