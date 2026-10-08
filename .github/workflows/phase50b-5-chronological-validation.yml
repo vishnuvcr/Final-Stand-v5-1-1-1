@@ -103,6 +103,8 @@ jobs:
           else
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-5: publish chronological validation results"
             git fetch origin phase-50b-chronological-validation
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git rebase origin/phase-50b-chronological-validation
             git push origin HEAD:phase-50b-chronological-validation
           fi
