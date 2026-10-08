@@ -113,7 +113,7 @@ for exp in SUPP_EXPIRIES:
 for exp in COMMON_EXPIRIES:
     rp=ROOT/f"rissin_common_{exp}.parquet"
     tp=fetch(TMK_BASE,f"options/NIFTY/{exp}.parquet",ROOT/f"tmk_common_{exp}.parquet")
-    rr=rr[rr["expiry"]==exp]
+    rr=r[r["expiry"]==exp]
     tt=normalize_tmk(tp,exp)
     key=["timestamp","strike","option_type"]
     a=rr[key+["close"]].rename(columns={"close":"close_rissin"})
