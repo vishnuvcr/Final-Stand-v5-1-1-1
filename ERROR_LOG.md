@@ -2414,3 +2414,7 @@ The first write of the Phase-51-1D source-audit section reused F51-016, which wa
 **Correction:** the source-audit finding is now uniquely identified as F51-017. Future Phase-51 error entries must allocate IDs sequentially from the current error-log tail before writing.
 
 **Prevention:** read the current error-log tail before assigning a new identifier and validate uniqueness during the source-audit packaging step.
+
+
+## 2026-10-09 — Phase 51-1E source availability
+No scientific error. The commercial archive is a viable coverage candidate, but the actual authorized bytes are not present in the repository. Vendor catalog coverage is therefore recorded as feasibility evidence only, not numerical evidence.
