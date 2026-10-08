@@ -1054,3 +1054,7 @@ Upstox recovery path created for the two missing frozen OOS expiries. Workflow 3
 - The workflow has already completed dependency installation and is actively running the download/validation step.
 - The prior failures 37840536857 / 37840549074 / 37840567920 were implementation failures: source files downloaded successfully, but the validator was absent/wrong-schema.
 - No OOS trading result has been consumed from any of these failed validation runs.
+
+
+## 2026-10-09 — Phase 51-1E endpoint-assertion correction
+Run 37842244545 downloaded and processed the HF/RISSIN data successfully but stopped at a validator assertion that incorrectly required the minimum timestamp of each supplemental expiry file to equal the expiry date. This has been corrected: pre-expiry observations are expected; the maximum timestamp must reach the named expiry, and expiry-day session coverage is evaluated separately.
