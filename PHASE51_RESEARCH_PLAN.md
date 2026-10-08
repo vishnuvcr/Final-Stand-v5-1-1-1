@@ -164,3 +164,7 @@ Independent augmentation candidate registered: thetrademarkk/india-index-options
 
 ### 2026-10-09 — Phase 51-1B common-expiry equivalence threshold correction
 The common-expiry source-equivalence gate uses a scale-invariant minimum of 10,000 exact matched quote rows plus at least 80% coverage of the original source's comparable rows. The prior 100,000-row cutoff was removed because weekly expiries have materially different strike/contract populations; the correction was made before any OOS P&L or strategy selection.
+
+
+### 2026-10-09 — Phase 51-1B data gate
+The frozen OOS period remains 2026-04-21 through 2026-08-04. The primary option file reaches only 2026-07-21. The public supplemental files checked for 2026-07-28 and 2026-08-04 end on 2026-07-02, so they cannot fill the missing endpoint. Minute-level replay is blocked until a full-coverage source is acquired.
