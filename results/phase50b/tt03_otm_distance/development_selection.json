@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "base": {
+    "geometry": "BASE",
+    "coverage_rate": 0.9950248756218906,
+    "trades": 200,
+    "net": 89669.15492531851,
+    "net50": 82074.10738797774,
+    "net20": 75509.15492531851,
+    "net20_50": 60834.107387977754
+  },
+  "mutation_candidates": [
+    {
+      "geometry": "OTM350",
+      "distance_points": 350,
+      "coverage_rate": 0.9950248756218906,
+      "trades": 200,
+      "dev_trades": 121,
+      "dev_net": 36634.923125925,
+      "dev_net50": 32213.009688887498,
+      "val_net": 27811.496591519997,
+      "val_net50": 24895.99488728,
+      "hold_net": 5105.639331923499,
+      "hold_net50": 4985.333997885249,
+      "net": 69552.05904936849,
+      "net50": 62094.33857405276,
+      "net20": 55392.0590493685,
+      "net20_50": 40854.33857405275,
+      "qualifies": true
+    },
+    {
+      "geometry": "OTM400",
+      "distance_points": 400,
+      "coverage_rate": 0.9950248756218906,
+      "trades": 200,
+      "dev_trades": 121,
+      "dev_net": 18891.1646306,
+      "dev_net50": 14511.7469459,
+      "val_net": 25842.140242750003,
+      "val_net50": 22977.585364124996,
+      "hold_net": 4265.275312363499,
+      "hold_net50": 4147.28796854525,
+      "net": 48998.580185713494,
+      "net50": 41636.62027857025,
+      "net20": 34838.580185713494,
+      "net20_50": 20396.620278570248,
+      "qualifies": true
+    }
+  ],
+  "selected_mutation": "OTM350",
+  "selection_basis": "Both mutations passed the preregistered >=95% coverage and positive DEV net/DEV +50% stress gates; OTM350 had the higher DEV +50% stress net.",
+  "control_comparison": "OTM350 remains below the fixed BASE control on aggregate net, DEV net, validation net and 2026 HOLD net. Therefore selection means the preregistered mutation candidate is frozen for Phase 50B-6 inference; it does not mean the BASE control is displaced.",
+  "selection_rule": "Among OTM350/OTM400 only: >=95% coverage, positive DEV net and positive DEV +50% cost-stress net; highest DEV +50% stress net wins.",
+  "validation_and_holdout_are_post_selection_descriptive": true,
+  "phase50b6_input": "Frozen OTM350 versus fixed BASE"
+}
