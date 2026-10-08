@@ -916,3 +916,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - This is a terminal candidate-local feasibility decision; no parameter tuning or VIX conditioning will be attempted for TT06.
 - TT07 workflow dependency logic was corrected to recognize persisted TT06 terminal failure without consuming TT06 P&L, consistent with the finite Phase-50B plan.
 - Next gate: launch and audit TT07 source-faithful replay.
+
+## 2026-10-08 — TT07 terminal feasibility classification
+- Source-faithful TT07 replay run **37746729676** generated 1 trade from 59 candidates, with **1.69% coverage** and zero data errors.
+- The frozen 95% feasibility gate failed, so no TT07 P&L is accepted as evidence.
+- Terminal classification was persisted; the candidate-local stopping rule closes TT07 for promotion, VIX conditioning, tuning and confirmatory inference.
+- The next action is the next finite registered Phase-50B candidate/gate, not reopening TT07.
