@@ -39,3 +39,11 @@ Status: BLOCKED. The public supplemental files checked for the missing 2026-07-2
 
 ### Phase 51-1C authenticated source gate — BLOCKED
 Workflow run 37839447686 reached the Upstox acquisition step but could not proceed because UPSTOX_ACCESS_TOKEN is not configured in repository secrets. No expired-contract or 1-minute option candle data were downloaded. This branch is a recovery path only and does not alter the frozen OOS window.
+
+
+### Phase 51-1D — Commercial/UI/external source audit
+**COMPLETE — DATA-BLOCKED.** StockMock and StockMojo both confirm minute-level historical option/backtest capability, but no documented public raw export/API was found. They are therefore registered as independent oracles, not raw substitutes. FNOTrader is the highest-priority external oracle; Upstox is the highest-priority authenticated raw path; OptionsData.shop is the strongest commercial raw-data candidate. NSE licensed data remains the official exchange route. MoneyTicks is currently unavailable for purchase. No OOS strategy P&L was calculated.
+
+Source manifest: results/phase51/phase51_1d_source_audit.json
+Detailed audit: results/phase51/PHASE51_1D_SOURCE_AUDIT.md
+Action log: results/phase51/PHASE51_1D_CHAT_LOG.md
