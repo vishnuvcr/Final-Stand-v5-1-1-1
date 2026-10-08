@@ -41,3 +41,11 @@ Runs **37846806366** and **37846815991** failed because the newly added `PHASE51
 **Evidence status:** non-evidence / repository-ordering issue.
 
 **Correction:** the reference artifact was recreated and verified on the current Phase-51-2 branch. The wrapper will be retriggered from a subsequent commit after the reference artifact is definitely in its ancestry.
+
+## 2026-10-09 — Partial-OOS audit completed
+
+Corrected workflow run **37847094909** completed successfully for both matrix geometries.
+
+Final accepted Phase-51-2 status: **NO_ELIGIBLE_CAMPAIGNS**. Both d300 and d350 found the same 14 observed expiries, zero eligible entries, and therefore no P&L sample. The complete Phase-51 window remains blocked by the unresolved 2026-07-28 and 2026-08-04 option blocks.
+
+The phase report was written to results/phase51/PHASE51_2_PARTIAL_OOS_REPORT.md. No strategy was promoted or rejected on economic grounds.
