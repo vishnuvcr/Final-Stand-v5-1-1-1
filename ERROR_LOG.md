@@ -2385,3 +2385,11 @@ The first complete options audit reached the common-source comparison and found 
 **Correction:** replace the absolute 100,000-row requirement with a minimum 10,000 exact matched rows plus >=80% coverage of the original source's comparable rows, while retaining the price-difference thresholds. This makes the equivalence gate invariant to the natural number of listed/active strikes in each weekly expiry.
 
 **Prevention:** use coverage- and scale-aware data-quality criteria for cross-source validation rather than fixed row counts.
+
+
+### F51-014 — Supplemental option timestamp assertion was semantically invalid
+The audit failed on `min_timestamp.startswith(expiry)` for a supplemental weekly option file. An option contract trades for days before its expiry, so its first observation timestamp should not equal the expiry date.
+
+**Evidence status:** no source was rejected on quote equivalence; the failure occurred after the common-source comparison logic.
+
+**Correction:** remove the prefix assertion and rely on the normalized expiry column, timestamp ordering and non-empty file checks already enforced by the loader.
