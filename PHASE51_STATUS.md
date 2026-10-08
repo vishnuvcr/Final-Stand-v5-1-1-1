@@ -84,3 +84,7 @@ The actual target bytes were downloaded successfully. However, the file labelled
 **DATA-BLOCKED — acquisition boundary reached.** GitHub Actions run 37843867795 safely inspected credential presence without exposing secret values. All checked routes were absent: Upstox, Dhan and ICICI Breeze credentials. Upstox acquisition consequently failed closed before data retrieval.
 
 The finite recovery matrix has been exhausted for currently configured raw APIs. The remaining complete raw route identified in current public evidence is an authorized commercial archive such as OptionsData.shop, whose current catalog documents full NIFTY 1-minute chain coverage containing both missing expiries. No purchase or unauthorized access was attempted. TT-03 / OTM350 OOS replay remains prohibited until an authorized raw archive is supplied and passes the existing gate.
+
+
+### 2026-10-09 — Phase 51-1G Open-source alternatives audit
+Open-source recovery remains **DATA-BLOCKED** for the two missing frozen expiries. Audited candidates include Kaggle (reported coverage through 2026-03-24), bhav/Backtesting-NSE (offline sample through Jun-2026), SauMStats/nifty-options-data-engine (open engine but live Parquet archive not in repository), pawan625 HF Space (broker-generated cached candles, not independent raw archive), and CodePyx HF bucket (advertised path returned 404). No source has been admitted into OOS replay.
