@@ -2396,7 +2396,7 @@ Workflow run 37839447686 could not acquire the missing 2026-07-28 and 2026-08-04
 
 ## 2026-10-09 — Phase 51-1D source audit
 
-### F51-016 — UI/backtest platforms cannot be promoted to raw-data sources without an authorized export/API
+### F51-017 — UI/backtest platforms cannot be promoted to raw-data sources without an authorized export/API
 StockMock, StockMojo, FNOTrader, QuantFlo and AlgoTest were checked as potential recovery sources. Their public documentation establishes minute-level historical option data/backtesting capability, but this audit did not establish an authorized bulk raw-data export/API for the frozen OOS blocks for this repository. Treating their UI outputs or opaque backtest numbers as if they were the missing raw tape would violate the preregistered source-equivalence requirement.
 
 **Evidence status:** no strategy P&L or inference was calculated.
@@ -2404,3 +2404,13 @@ StockMock, StockMojo, FNOTrader, QuantFlo and AlgoTest were checked as potential
 **Correction:** register these platforms as independent validation/oracle sources only. Prioritize authenticated Upstox raw acquisition and authorized OptionsData.shop raw Parquet. Retain NSE as the official licensed-data route.
 
 **Prevention:** platform existence or minute-level UI visibility is not sufficient evidence of a reproducible raw dataset; require documented authorized export/API access and a pre-P&L equivalence audit.
+
+
+### F51-018 — Duplicate error identifier in Phase-51-1D documentation
+The first write of the Phase-51-1D source-audit section reused F51-016, which was already assigned to the missing Upstox access-secret failure.
+
+**Evidence status:** documentation-only; no scientific output or strategy P&L was affected.
+
+**Correction:** the source-audit finding is now uniquely identified as F51-017. Future Phase-51 error entries must allocate IDs sequentially from the current error-log tail before writing.
+
+**Prevention:** read the current error-log tail before assigning a new identifier and validate uniqueness during the source-audit packaging step.
