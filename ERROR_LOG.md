@@ -2297,3 +2297,17 @@ A multi-file update script failed in the tool runtime with a JavaScript `SyntaxE
 **Evidence status:** tooling-only; no repository or numerical evidence changed.
 
 **Correction:** Subsequent Phase-51 writes are being performed as deterministic one-file operations with fresh SHA reads where needed.
+
+
+## 2026-10-09 — Phase 51-1A fallback gate correction
+
+### F51-005 — Initial session-length gate rejected legitimate shortened-session candidates
+Actions run **37835085807** downloaded the fallback successfully but stopped because three OOS dates had fewer than 300 rows: 2026-05-25 (277 rows), 2026-06-25 (30 rows) and 2026-07-08 (30 rows).
+
+**Evidence status:** no fallback gate was accepted; no overlap result or strategy P&L was produced.
+
+**Diagnosis:** A simple row-count threshold cannot distinguish a legitimate shortened trading session from a truncated 30-row source fragment.
+
+**Correction:** The gate now records exact first/last timestamps, session span and maximum internal gap for short days. A short day is accepted only when it still has at least 240 rows, spans at least 240 minutes and has no internal gap greater than five minutes. Tiny 30-row fragments will fail closed.
+
+**Prevention:** Session completeness tests must use temporal continuity and session-span invariants, not row count alone.
