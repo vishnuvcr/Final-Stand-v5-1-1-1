@@ -894,3 +894,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - TT05 run 37666116836 produced a complete audited and safely published artifact. The workflow's terminal failure was confined to the downstream TT06 workflow-dispatch 404; no TT05 evidence was invalidated.
 - Published TT05: 1,184/1,232 trades, 96.10% coverage, 48 coverage exclusions, 4 session exclusions, zero data errors; ₹52,337.89 at ₹10/order and negative under ₹20/order and doubled-friction stress.
 - TT06 was launched through the repository-API marker path as run 37675162843. Scientific plan and TT05 rules remain unchanged.
+
+
+## 2026-10-08 — TT06 replay failure and controlled correction
+- Canonical TT06 run **37675162843** passed dependency preflight and static engine checks, then failed in the reporting layer when the replay attempted DEV/VAL/HOLD split labeling with tz-naive expiry values against tz-aware boundaries.
+- No TT06 numerical artifact was published; the result is non-evidence.
+- Corrected the engine to localize `df.expiry` to the project timezone before split comparison. No entry/repair/exit/cost logic changed.
+- The correction is explicitly classified as reporting-layer only. The next TT06 replay is a controlled rerun under the same registered engine revision.
