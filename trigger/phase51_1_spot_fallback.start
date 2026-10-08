@@ -5,3 +5,5 @@ Retry after F51-005 session-gate correction.
 Diagnostic overlap rerun after F51-006 fail-closed coverage behavior.
 
 Freeze validated spot source after direct-primary overlap PASS.
+
+Retry validated spot source publication after F51-010 correction.
