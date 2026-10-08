@@ -1,0 +1,64 @@
+name: Phase 51-2 - Available Data Partial OOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-51-2-available-data-partial-oos
+    paths:
+      - research/phase51_2_partial_oos.py
+      - research/phase50b_tt03_otm_distance_replay.py
+      - .github/workflows/phase-51-2-available-data-partial-oos.yml
+      - trigger/phase51_2_partial_oos.start
+
+permissions:
+  contents: write
+
+jobs:
+  replay:
+    strategy:
+      fail-fast: false
+      matrix:
+        distance: [300, 350]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy huggingface_hub matplotlib
+      - name: Run partial fresh OOS
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          TT03_DISTANCE: ${{ matrix.distance }}
+        run: python research/phase51_2_partial_oos.py
+      - name: Validate partial-OOS artifact
+        env:
+          TT03_DISTANCE: ${{ matrix.distance }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path("results/phase51/partial_oos") / ("d"+os.environ["TT03_DISTANCE"]) / "summary.json"
+          s=json.loads(p.read_text())
+          assert s["trades"] > 0, s
+          assert s["coverage_rate"] >= 0.95, s
+          assert s["candidate_trades"] == s["trades"] + s["coverage_exclusions"], s
+          print(json.dumps(s, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase51-partial-oos-d${{ matrix.distance }}-${{ github.run_id }}
+          path: results/phase51/partial_oos/d${{ matrix.distance }}
+      - name: Publish partial-OOS artifacts
+        if: matrix.distance == 300
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add results/phase51/partial_oos
+          if ! git diff --cached --quiet; then
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 51-2: publish available-data partial OOS"
+            git push origin HEAD:phase-51-2-available-data-partial-oos
+          fi
