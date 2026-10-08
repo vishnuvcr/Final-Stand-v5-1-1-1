@@ -2373,3 +2373,15 @@ Run **37836313364** failed only in the freeze publication step because the workf
 Options gate run **37836222630** was cancelled during its audit while the spot-source validation workflow was publishing a new branch commit. No option augmentation result was accepted or used.
 
 **Correction:** rerun the options gate after the spot-source freeze is complete and the branch is stable.
+
+
+## 2026-10-09 — Phase 51-1B options-equivalence gate correction
+
+### F51-013 — Fixed common-expiry row-count threshold was not scale-invariant
+The first complete options audit reached the common-source comparison and found 38,578 exact common quote rows for expiry 2026-07-21, below the pre-set 100,000-row cutoff. This cutoff was a data-quality heuristic, not a scientific parameter and varied with expiry-specific contract activity.
+
+**Evidence status:** no OOS strategy P&L was calculated and no source was accepted.
+
+**Correction:** replace the absolute 100,000-row requirement with a minimum 10,000 exact matched rows plus >=80% coverage of the original source's comparable rows, while retaining the price-difference thresholds. This makes the equivalence gate invariant to the natural number of listed/active strikes in each weekly expiry.
+
+**Prevention:** use coverage- and scale-aware data-quality criteria for cross-source validation rather than fixed row counts.
