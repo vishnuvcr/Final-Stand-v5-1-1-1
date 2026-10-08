@@ -128,7 +128,9 @@ for exp in COMMON_EXPIRIES:
     a=rr[key+["close"]].rename(columns={"close":"close_rissin"})
     b=tt[key+["close"]].rename(columns={"close":"close_tmk"})
     j=a.merge(b,on=key,how="inner")
-    if len(j)<10000: raise AssertionError(f"{exp}: insufficient common quote rows {len(j)}")
+    insufficient = len(j) < 10000
+    if insufficient:
+        manifest.setdefault("quality_failures",[]).append({"expiry":exp,"reason":f"insufficient common quote rows {len(j)}"})
     j["abs_diff"]=(j.close_rissin-j.close_tmk).abs()
     j["rel_bp"]=j.abs_diff/j.close_rissin.replace(0,pd.NA)*10000
     j=j.dropna(subset=["rel_bp"])
@@ -156,10 +158,11 @@ for exp in COMMON_EXPIRIES:
 overall=all(x["gate"]["PASS"] for x in manifest["common_expiry_comparisons"]) and not manifest.get("quality_failures")
 # Validate supplemental files have only their intended expiry and at least one full OOS session.
 for f in manifest["supplemental_source"]["files"]:
-    assert f["min_timestamp"] < f["max_timestamp"]
-    assert f["min_timestamp"].startswith(f["expiry"])
-assert overall
-
+    if not (f["min_timestamp"] < f["max_timestamp"]):
+        manifest.setdefault("quality_failures",[]).append({"expiry":f["expiry"],"reason":"non-increasing timestamp bounds"})
+    if not f["max_timestamp"].startswith(f["expiry"]):
+        manifest.setdefault("quality_failures",[]).append({"expiry":f["expiry"],"reason":"file does not extend through named expiry"})
+overall = all(x["gate"]["PASS"] for x in manifest["common_expiry_comparisons"]) and not manifest.get("quality_failures")
 manifest["PASS"]=bool(overall)
 Path("results/phase51").mkdir(parents=True,exist_ok=True)
 Path("results/phase51/options_augmentation_audit.json").write_text(json.dumps(manifest,indent=2))
@@ -172,3 +175,5 @@ Path("results/phase51/validated_option_source.json").write_text(json.dumps({
     "selection_basis":"data-quality evidence only; no OOS strategy P&L was inspected"
 },indent=2))
 print(json.dumps(manifest,indent=2))
+if not overall:
+    raise SystemExit(1)
