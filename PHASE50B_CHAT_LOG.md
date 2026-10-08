@@ -559,3 +559,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 \n\n### 2026-10-08 — Phase 50B-5 execution log\n- Retriggered run 37821975113 did execute; it did not stall.\n- Preflight accepted TT-03/TT-04/TT-05, OTM350 reconstruction completed, and OTM350 audit passed.\n- Chronological validation failed on a script schema bug (`KeyError: 'net'`) before outputs were finalized.\n- Correction commit 70aa069 maps accepted totals to the generated `{cost}_net` fields. No evidence or strategy ranking changed.\n- Next action: clean Phase 50B-5 rerun; Phase 50B-6 remains blocked until Phase 50B-5 completes its full audit.\n
 - Run 37827007176 passed Phase 50B-5 numerical chronology and audit. Publication failed only on Git rebase identity; F50B-096 logged and workflow commit 0c4bba95 fixes it.
 \n\n### 2026-10-09 — User requested continuation after Phase 50B-5\n- Verified the corrected Phase 50B-5 run **37828322922**: every numerical and publication step completed successfully.\n- Re-read the Phase 50B research plan/status/log/error/README context before advancing.\n- Created dedicated branch `phase-50b-statistical-inference`.\n- Registered the fixed 50B-6 statistical protocol and added its GitHub Actions workflow, inference engine, status file and trigger marker.\n- Scientific scope remains closed to the four Phase-50B-5 candidates; 2026 HOLD remains protected.\n
+
+### 2026-10-09 — Phase 50B-6 completion
+- Corrected run 37832396945 passed inference, audit and publication.
+- The fixed 16-hypothesis family yielded no robust-across-cost strategy.
+- TT-03 and TT-03 OTM350 retain positive evidence at lower registered costs, but both fail the strict doubled-friction ₹20/order robustness gate after Holm correction.
+- TT-04/TT-05 fail the primary statistical gate; 2026 HOLD remained protected.
+- Decision: no promotion; advance once to Phase 50B-7 final manuscript and final research decision.
