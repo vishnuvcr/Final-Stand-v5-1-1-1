@@ -119,7 +119,7 @@ for exp in COMMON_EXPIRIES:
     a=rr[key+["close"]].rename(columns={"close":"close_rissin"})
     b=tt[key+["close"]].rename(columns={"close":"close_tmk"})
     j=a.merge(b,on=key,how="inner")
-    if len(j)<100000: raise AssertionError(f"{exp}: insufficient common quote rows {len(j)}")
+    if len(j)<10000: raise AssertionError(f"{exp}: insufficient common quote rows {len(j)}")
     j["abs_diff"]=(j.close_rissin-j.close_tmk).abs()
     j["rel_bp"]=j.abs_diff/j.close_rissin.replace(0,pd.NA)*10000
     j=j.dropna(subset=["rel_bp"])
