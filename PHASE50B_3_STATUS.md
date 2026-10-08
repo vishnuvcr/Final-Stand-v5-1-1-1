@@ -31,3 +31,7 @@ Compile → feasible-artifact validation → cached VIX reconstruction → 28-hy
 
 ## Next phase
 After Phase-50B-3 closes, the finite research proceeds to the preregistered far-OTM geometry phase and then chronological validation/statistical inference. No unregistered strategy search is opened.
+
+## 2026-10-09 — Actions execution
+
+Phase 50B-3 workflow run **37848475527** is executing on the dedicated branch. Preflight checkout and Python setup have passed; dependency installation is in progress. No VIX result is accepted yet.
