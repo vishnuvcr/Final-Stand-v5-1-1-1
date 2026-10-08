@@ -970,3 +970,10 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - TT06 P&L is diagnostic only and is excluded from promotion, VIX conditioning, tuning and confirmatory inference. The terminal classification is persisted in `results/phase50b/tt06_intraday_asym_replay/terminal_classification.json`.
 - The TT07 workflow now accepts a persisted TT06 terminal failure while explicitly verifying that no TT06 P&L is consumed.
 - **Next phase gate: TT07 Dynamic IC to Ratio source-faithful replay.**
+
+### 2026-10-08 — TT07 terminal feasibility failure
+- **TT07 is terminal FAIL_COVERAGE:** run **37746729676** produced only 1/59 complete candidates (**1.69% coverage**), below the preregistered 95% gate; 58 coverage exclusions, 1 entry exclusion, zero data errors.
+- TT07 P&L is diagnostic only and excluded from promotion, VIX conditioning, tuning and confirmatory inference. Terminal classification is persisted in `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
+- The replay completed; the Actions failure was solely the artifact coverage assertion. No scientific rule or cost assumption changed.
+- F50B-091 records the terminal classification and a non-fatal IV-Newton divide-by-zero warning.
+- TT07 is closed under the candidate-local stopping rule. The finite research now proceeds to the next registered Phase-50B gate; no strategy has been promoted.
