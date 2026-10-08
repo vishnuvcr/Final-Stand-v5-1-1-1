@@ -1,0 +1,36 @@
+{
+  "strategy": "TT-07",
+  "status": "FAIL_COVERAGE",
+  "run_id": 37746729676,
+  "numerical_job_id": 113210030856,
+  "engine_revision": "50B-TT07-COVERAGE-V2",
+  "trades": 1,
+  "candidate_trades": 59,
+  "coverage_exclusions": 58,
+  "coverage_rate": 0.01694915254237288,
+  "entry_exclusions": 1,
+  "transition_diagnostic_rows": 2,
+  "data_errors": 0,
+  "pnl_evidence_eligible": false,
+  "promotion_eligible": false,
+  "downstream_use_of_pnl": false,
+  "reason": "Complete mandatory-exit quote coverage was 1.6949%, below the preregistered 95% feasibility gate.",
+  "diagnostic_cost_outputs": {
+    "net_10_per_order": 611.9140500749996,
+    "net50": 304.7460751124995,
+    "net20": 187.11405007499957,
+    "net20_50": -332.4539248875003
+  },
+  "by_vix": [
+    {
+      "vix_state": "LOW",
+      "trades": 1,
+      "net": 611.9140500749996,
+      "net50": 304.7460751124995,
+      "net20": 187.11405007499957,
+      "net20_50": -332.4539248875003
+    }
+  ],
+  "classification_source": "GitHub Actions run log; replay completed and artifact audit rejected coverage gate.",
+  "classification_date": "2026-10-08"
+}
