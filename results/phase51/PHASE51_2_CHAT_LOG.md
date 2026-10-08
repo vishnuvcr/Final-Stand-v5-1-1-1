@@ -8,3 +8,10 @@ A separate partial-OOS study was registered rather than altering the frozen full
 Two already-frozen TT-03 geometries are being replayed: BASE (distance 300) and OTM350 (distance 350).
 
 No private chain-of-thought is stored. This log records research actions, decisions, outcomes and corrections only.
+
+### Workflow audit and correction
+Runs 37845718056 and 37845741103 both reached the replay stage but failed before numerical execution because the wrapper was invoked as a file path and could not import the `research` package.
+
+The wrapper was corrected to add both repository-root and research-directory paths explicitly. During the same audit, an output-path collision with the inherited Phase-50B engine was identified and corrected so Phase-51-2 artifacts are written only under `results/phase51/partial_oos`.
+
+Both failures are logged in PHASE51_2_ERROR_LOG.md as non-evidence. The partial-OOS research protocol and frozen endpoint were not changed.
