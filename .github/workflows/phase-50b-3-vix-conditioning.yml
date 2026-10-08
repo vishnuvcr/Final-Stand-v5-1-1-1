@@ -1,0 +1,120 @@
+name: Phase 50B-3 - VIX Conditioning
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-3-vix-conditioning
+    paths:
+      - trigger/phase50b_3.start
+      - PHASE50B_3_VIX_PREREGISTRATION.md
+      - research/phase50b_vix_conditioning.py
+      - research/phase43_vix_strategy_sweep.py
+
+concurrency:
+  group: phase50b-3-vix-conditioning
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  vix_conditioning:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
+
+      - name: Compile
+        run: |
+          python -m py_compile research/phase50b_vix_conditioning.py
+          python -m py_compile research/phase43_vix_strategy_sweep.py
+
+      - name: Verify feasible candidate artifacts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          candidates = {
+            "TT02": Path("results/phase50b/tt02_calendar_replay"),
+            "TT03": Path("results/phase50b/tt03_dynamic_n_replay"),
+            "TT04": Path("results/phase50b/tt04_premium_match_replay"),
+            "TT05": Path("results/phase50b/tt05_short_straddle_replay"),
+          }
+          for name, d in candidates.items():
+              s = json.loads((d/"summary.json").read_text())
+              assert float(s["coverage_rate"]) >= 0.95, (name, s)
+              assert (d/"data_errors.csv").exists(), name
+              assert any(d.glob("*_trades.csv")), name
+          print("Feasible candidate artifact gate PASS")
+          PY
+
+      - name: HF cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-3-vix-${{ runner.os }}-${{ hashFiles('research/phase50b_vix_conditioning.py', 'research/phase43_vix_strategy_sweep.py') }}
+          restore-keys: |
+            phase50b-3-vix-${{ runner.os }}-
+
+      - name: Run VIX conditioning
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50b_vix_conditioning.py
+
+      - name: Audit outputs
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/vix_conditioning/vix_conditioning_by_split.csv
+          test -s results/phase50b/vix_conditioning/vix_observability_audit.csv
+          test -s results/phase50b/vix_conditioning/registered_hypotheses.csv
+          python - <<'PY'
+          import json, pandas as pd
+          from pathlib import Path
+          out=Path("results/phase50b/vix_conditioning")
+          m=json.loads((out/"phase50b_3_manifest.json").read_text())
+          h=pd.read_csv(out/"registered_hypotheses.csv")
+          t=pd.read_csv(out/"vix_conditioning_by_split.csv")
+          a=pd.read_csv(out/"vix_observability_audit.csv")
+          assert m["hypotheses"] == 28, m
+          assert len(h)==28 and h["hypothesis_id"].nunique()==28
+          assert len(t)==84, len(t)
+          assert set(t["split"])=={"DEV","VAL","HOLD"}
+          assert set(t["vix_mode"])==set(m["modes"])
+          assert set(a["strategy"])==set(m["strategies"])
+          print("Phase 50B-3 audit PASS")
+          print(m)
+          PY
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-3-vix-${{ github.run_id }}
+          path: results/phase50b/vix_conditioning
+
+      - name: Publish artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          cp -R results/phase50b/vix_conditioning "$tmp/"
+          git fetch origin phase-50b-3-vix-conditioning
+          git reset --hard origin/phase-50b-3-vix-conditioning
+          rm -rf results/phase50b/vix_conditioning
+          mkdir -p results/phase50b
+          cp -R "$tmp/vix_conditioning" results/phase50b/
+          git add results/phase50b/vix_conditioning
+          if git diff --cached --quiet; then
+            echo "No Phase 50B-3 result changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-3: publish VIX conditioning diagnostics"
+            git push origin HEAD:phase-50b-3-vix-conditioning
+          fi
