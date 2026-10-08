@@ -2418,3 +2418,11 @@ The first write of the Phase-51-1D source-audit section reused F51-016, which wa
 
 ## 2026-10-09 — Phase 51-1E source availability
 No scientific error. The commercial archive is a viable coverage candidate, but the actual authorized bytes are not present in the repository. Vendor catalog coverage is therefore recorded as feasibility evidence only, not numerical evidence.
+
+
+## 2026-10-09 — F51-019 — Stale external-data rejection superseded
+The earlier Phase-51-1B rejection of thetrademarkk/india-index-options-1m was based on an older observed dataset state. A fresh audit now shows verified NIFTY files for 2026-07-28 and 2026-08-04. This is a research-process error in external-source freshness, not a strategy result.
+
+**Correction:** reopen the source and require actual-byte validation before accepting it.
+
+**Prevention:** every continuation must re-query the live external dataset index before carrying forward a prior source rejection when the source is actively maintained.
