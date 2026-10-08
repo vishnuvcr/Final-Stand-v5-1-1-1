@@ -60,13 +60,12 @@ jobs:
           name: phase51-partial-oos-d${{ matrix.distance }}-${{ github.run_id }}
           path: results/phase51/partial_oos/d${{ matrix.distance }}
       - name: Publish partial-OOS artifacts
-        if: matrix.distance == 300
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git add results/phase51/partial_oos
+          git add results/phase51/partial_oos/d${{ matrix.distance }}
           if ! git diff --cached --quiet; then
-            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 51-2: publish available-data partial OOS"
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 51-2: publish d${{ matrix.distance }} available-data audit"
             git pull --rebase origin phase-51-2-available-data-partial-oos
             git push origin HEAD:phase-51-2-available-data-partial-oos
           fi
