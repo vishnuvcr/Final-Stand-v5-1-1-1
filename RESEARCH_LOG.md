@@ -988,3 +988,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Added a pre-registered primary-vs-fallback overlap gate using >=10,000 common rows, median absolute difference <=0.50 NIFTY points, p99 <=3.00 points, p95 relative difference <=2 bp and absolute mean signed difference <=1 point.
 - The workflow uploads the fallback dataset plus manifests as an Actions artifact and publishes only the audited JSON gate outputs.
 - No strategy replay is connected to this workflow.
+
+
+## 2026-10-09 — Phase 51-1A fallback acquisition diagnostic correction
+- Fallback workflow run **37835085807** downloaded the independent spot source but rejected three short OOS dates under the first row-count-only session gate.
+- The audit logic was corrected to distinguish a contiguous shortened session from a truncated fragment using row count, intraday span and internal timestamp gaps.
+- No strategy P&L or candidate selection occurred before this correction.
