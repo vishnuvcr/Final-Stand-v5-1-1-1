@@ -694,3 +694,12 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Persisted terminal classification: `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
 - Non-fatal divide-by-zero warnings occurred in the implied-volatility Newton update; they did not alter the classification.
 - No scientific rule or cost assumption changed. TT07 is now closed under the candidate-local stopping rule; continue only with the next finite registered Phase-50B gate.
+
+
+## 2026-10-08 — Phase 50B-4 far-OTM geometry active
+- Dedicated branch: phase-50b-far-otm-geometry.
+- Frozen TT-03 geometry profiles: BASE 300/350/400, OTM350 350/400/450, OTM400 400/450/500.
+- BASE is a regression control against the canonical TT-03 replay.
+- Only OTM350/OTM400 may be selected; selection is DEV-only and fixed before validation/holdout.
+- Canonical GitHub Actions run: 37762837711.
+- Current numerical state: BASE regression replay executing; no geometry result accepted yet.
