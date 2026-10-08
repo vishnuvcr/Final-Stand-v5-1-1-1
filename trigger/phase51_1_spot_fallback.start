@@ -1,3 +1,5 @@
 Phase 51-1A fallback acquisition and overlap gate trigger.
 
 Retry after F51-005 session-gate correction.
+
+Diagnostic overlap rerun after F51-006 fail-closed coverage behavior.
