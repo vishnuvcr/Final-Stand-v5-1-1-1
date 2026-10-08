@@ -929,3 +929,12 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Baseline regression is included to detect semantic drift.
 - Only source-semantic strike-distance variants are tested; TT-02 was excluded from this mutation gate because delta changes would also alter its source-specific repair targets.
 - Actions run 37762837711 is executing the three registered profiles.
+
+
+## 2026-10-08 — Phase 50B-4 geometry results and publication recovery
+- Far-OTM run **37762837711** completed the full frozen grid and audit.
+- BASE regression passed, confirming the geometry engine reproduced canonical TT-03 economics under the registered BASE profile.
+- OTM350 and OTM400 both passed coverage/data-quality gates and the development economic screen. OTM350 ranked first by DEV net50 and was frozen for validation.
+- OTM350 validation check was economically positive in the run: VAL net ₹27,811.50 and VAL net50 ₹24,895.99. This is a frozen candidate result, not yet a final promotion decision.
+- Publication failed only because the Actions push encountered a concurrent branch update. F50B-094 records the orchestration defect; the scientific result is unaffected.
+- Workflow publication was hardened to fetch/rebase before push. Next action is to recover publication, then continue only within the registered finite Phase 50B sequence.
