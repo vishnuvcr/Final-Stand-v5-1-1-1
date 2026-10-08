@@ -2173,3 +2173,13 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Root cause: GitHub workflow-dispatch requires the workflow definition to exist on the repository default branch; this phase-specific workflow is maintained on the research branch.
 - Scientific impact: **none**. TT05 evidence remains valid and published; only the orchestration step failed.
 - Recovery: the TT06 trigger marker was updated through the repository API, launching TT06 run **37675162843**.
+
+
+## F50B-089 — TT06 split-report timezone mismatch (2026-10-08)
+- Run: **37675162843**.
+- Preflight, compile, static engine audit and HF setup passed. The numerical replay then failed only during DEV/VAL/HOLD split classification.
+- Cause: `pd.to_datetime(df.expiry)` returned timezone-naive expiry timestamps, while `DEV_END`/ `VAL_END` are timezone-aware project-timezone timestamps; Pandas rejected the comparison.
+- Scientific impact: **NO NUMERICAL EVIDENCE ACCEPTED** from this run. The failure occurred after trade generation logic and before artifact audit/publication.
+- Correction: changed the reporting-layer conversion to `pd.to_datetime(df.expiry).dt.tz_localize(TZ)`. Trading rules, quote selection, repair logic, exit logic, cost model, lot sizes and VIX capture are unchanged.
+- Recovery: a fresh TT06 run will be triggered from the existing marker path after the corrected engine is committed.
+- Prevention: all Phase-50B replay engines must normalize expiry columns to the canonical project timezone before any chronological split comparison.
