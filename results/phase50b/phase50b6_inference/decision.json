@@ -1,0 +1,80 @@
+{
+  "phase": "50B-6",
+  "status": "NO_PROMOTION",
+  "treatment": "OTM350",
+  "control": "BASE",
+  "primary_sample": "2024-01-01 through 2025-12-31",
+  "primary_endpoint": "validation paired expiry-level net P&L difference",
+  "primary_result": {
+    "endpoint": "standard",
+    "n_expiries": 76,
+    "mean_difference": -73.87501176858555,
+    "median_difference": -141.33371566500008,
+    "mean_bootstrap_ci_low": -282.25751656641864,
+    "mean_bootstrap_ci_high": 149.3599058340864,
+    "p_one_sided_signflip": 0.7385826141738583,
+    "prob_otm_beats_base": 0.13157894736842105,
+    "positive_expiry_count": 10,
+    "negative_expiry_count": 66,
+    "holm_adjusted_p": null
+  },
+  "secondary_results": {
+    "net": {
+      "endpoint": "standard",
+      "n_expiries": 76,
+      "mean_difference": -73.87501176858555,
+      "median_difference": -141.33371566500008,
+      "mean_bootstrap_ci_low": -282.25751656641864,
+      "mean_bootstrap_ci_high": 149.3599058340864,
+      "p_one_sided_signflip": 0.7385826141738583,
+      "prob_otm_beats_base": 0.13157894736842105,
+      "positive_expiry_count": 10,
+      "negative_expiry_count": 66,
+      "holm_adjusted_p": null
+    },
+    "net50": {
+      "endpoint": "plus50_stress",
+      "n_expiries": 76,
+      "mean_difference": -73.03291238972037,
+      "median_difference": -140.7505734975001,
+      "mean_bootstrap_ci_low": -283.4037194768077,
+      "mean_bootstrap_ci_high": 152.0705848748319,
+      "p_one_sided_signflip": 0.7374526254737452,
+      "prob_otm_beats_base": 0.13157894736842105,
+      "positive_expiry_count": 10,
+      "negative_expiry_count": 66,
+      "holm_adjusted_p": 1.0
+    },
+    "net20": {
+      "endpoint": "brokerage20",
+      "n_expiries": 76,
+      "mean_difference": -73.87501176858552,
+      "median_difference": -141.3337156650001,
+      "mean_bootstrap_ci_low": -285.34386399924836,
+      "mean_bootstrap_ci_high": 147.83547601945477,
+      "p_one_sided_signflip": 0.7408925910740892,
+      "prob_otm_beats_base": 0.13157894736842105,
+      "positive_expiry_count": 10,
+      "negative_expiry_count": 66,
+      "holm_adjusted_p": 1.0
+    },
+    "net20_50": {
+      "endpoint": "brokerage20_plus50_stress",
+      "n_expiries": 76,
+      "mean_difference": -73.03291238972034,
+      "median_difference": -140.7505734975001,
+      "mean_bootstrap_ci_low": -287.99640773710934,
+      "mean_bootstrap_ci_high": 150.73447140881072,
+      "p_one_sided_signflip": 0.7380626193738062,
+      "prob_otm_beats_base": 0.13157894736842105,
+      "positive_expiry_count": 10,
+      "negative_expiry_count": 66,
+      "holm_adjusted_p": 1.0
+    }
+  },
+  "holdout_used_for_selection_or_inference": false,
+  "selection_reopened": false,
+  "seed": 5062026,
+  "bootstrap_resamples": 10000,
+  "signflip_mc_resamples": 100000
+}
