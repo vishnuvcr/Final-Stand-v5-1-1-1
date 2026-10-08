@@ -37,6 +37,12 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python research/phase51_1_spot_overlap.py
+      - name: Triangulate with independent GitHub spot source
+        if: always()
+        continue-on-error: true
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase51_1_third_spot_audit.py
       - name: Upload fallback source artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -47,6 +53,9 @@ jobs:
             results/phase51/spot_fallback_manifest.json
             results/phase51/spot_overlap_audit.json
             results/phase51/spot_fallback_gate.json
+            results/phase51/third_spot_audit.json
+            results/phase51/third_spot_gate.json
+            data/phase51/third_spot/
           if-no-files-found: error
           retention-days: 14
       - name: Enforce final fallback gate
@@ -57,6 +66,8 @@ jobs:
           import json
           m=json.load(open('results/phase51/spot_fallback_manifest.json'))
           g=json.load(open('results/phase51/spot_fallback_gate.json'))
+          third=json.load(open('results/phase51/third_spot_gate.json'))
+          assert third.get('PASS') is True, third
           assert m['coverage_gate']['PASS'] is True, m.get('coverage_gate')
           assert g.get('PASS') is True, g
           assert m['full_min_timestamp'] <= '2026-04-21'
