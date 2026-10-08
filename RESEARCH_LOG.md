@@ -938,3 +938,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - OTM350 validation check was economically positive in the run: VAL net ₹27,811.50 and VAL net50 ₹24,895.99. This is a frozen candidate result, not yet a final promotion decision.
 - Publication failed only because the Actions push encountered a concurrent branch update. F50B-094 records the orchestration defect; the scientific result is unaffected.
 - Workflow publication was hardened to fetch/rebase before push. Next action is to recover publication, then continue only within the registered finite Phase 50B sequence.
+
+
+## 2026-10-08 — Phase 50B-5 initialized
+- Created dedicated branch `phase-50b-chronological-validation` and froze the chronological validation protocol.
+- The phase compares TT-03, TT-03 OTM350, TT-04 and TT-05 using the fixed 2021–2023 DEV / 2024–2025 VAL / protected 2026 HOLD chronology.
+- Risk diagnostics include profit/trade, worst/best trade, win rate, chronological equity and maximum drawdown. A capital-normalized return percentage is explicitly withheld unless a defensible common capital/margin denominator is available.
+- OTM350 reconstruction is artifact recovery under the already-frozen engine, not a new parameter search.
