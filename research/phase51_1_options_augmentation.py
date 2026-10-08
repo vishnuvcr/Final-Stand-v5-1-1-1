@@ -175,3 +175,5 @@ Path("results/phase51/validated_option_source.json").write_text(json.dumps({
 print(json.dumps(manifest,indent=2))
 if not overall:
     raise SystemExit("OPTIONS_AUGMENTATION_REJECTED: detailed audit persisted")
+
+# F51-014 diagnostic rerun marker
