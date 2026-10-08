@@ -32,11 +32,13 @@ def split(y):
 
 def grouped_block_bootstrap(x, rng, B=N_BOOT):
     # Resample expiry-day blocks, preserving all trades from each expiry together.
+    # Only the numeric trade-P&L vector enters the bootstrap statistic.
     x=x.copy()
     x["block"]=x["expiry_dt"].dt.strftime("%Y-%m-%d")
-    blocks=[g.values for _,g in x.groupby("block",sort=True)]
+    blocks=[pd.to_numeric(g["v"],errors="coerce").dropna().to_numpy(float)
+            for _,g in x.groupby("block",sort=True)]
+    blocks=[b for b in blocks if len(b)]
     if not blocks: return np.array([])
-    vals=np.concatenate([b for b in blocks])
     idx=np.arange(len(blocks))
     means=np.empty(B)
     for i in range(B):
@@ -73,7 +75,9 @@ for strategy,rel in FILES.items():
         sign_p=float(binomtest(wins,n,.5,alternative="greater").pvalue) if n else np.nan
         perm_p=paired_sign_permutation(x,rng) if n else np.nan
         # Independent seeded stream per hypothesis for reproducibility.
-        b=grouped_block_bootstrap(d[[cost,"expiry_dt"]].rename(columns={cost:"v"}).assign(v=pd.to_numeric(d[cost],errors="coerce")),rng)
+        boot_input=d[["expiry_dt",cost]].rename(columns={cost:"v"}).copy()
+        boot_input["v"]=pd.to_numeric(boot_input["v"],errors="coerce")
+        b=grouped_block_bootstrap(boot_input,rng)
         lo=float(np.quantile(b,.025)) if len(b) else np.nan
         hi=float(np.quantile(b,.975)) if len(b) else np.nan
         rows.append(dict(strategy=strategy,cost_model=cost,n=n,mean=mean,median=median,
