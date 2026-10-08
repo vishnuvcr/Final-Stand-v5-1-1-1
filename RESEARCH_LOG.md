@@ -1062,3 +1062,12 @@ Run 37842244545 downloaded and processed the HF/RISSIN data successfully but sto
 
 ## 2026-10-09 — Phase 51-1E actual-byte HF source rejection
 The refreshed Hugging Face source was fully audited by GitHub Actions run 37842966411. The 2026-07-28 file contains 320,359 rows but only through 2026-07-02 15:30 IST; the 2026-08-04 file contains 2,646 rows but only through 2026-07-02 15:29 IST. Neither contains named-expiry-day observations. Common-expiry matched coverage versus the frozen RISSIN source was 34.57% (7-Jul), 14.95% (14-Jul), and 4.60% (21-Jul), all below the registered 80% threshold. The 7-Jul p95 relative error was 14.79 bp, above the registered 10 bp limit. The source is rejected for Phase-51 OOS augmentation. No OOS P&L was calculated.
+
+
+## 2026-10-09 — Phase 51-1F authorized-options recovery boundary
+- Created dedicated branch `phase-51-1F-authorized-options-recovery` with a finite source matrix.
+- Registered automated Upstox full-chain acquisition using expired contract enumeration plus 1-minute historical candles.
+- GitHub Actions run **37843867795** found no configured Upstox, Dhan or ICICI Breeze credentials. The inventory recommended the commercial archive route.
+- Current public commercial evidence: OptionsData.shop advertises a NIFTY 1-minute full-chain archive through Sep-2026 and a 29-Jun-2026 to 25-Sep-2026 pack containing the missing frozen expiries. It is a paid archive; no purchase was made.
+- FNOTrader is retained as an independent backtest oracle with advertised 1-minute NIFTY history, not as a raw substitute.
+- The finite acquisition search therefore stops here until an authorized archive/token exists. The frozen OOS window is unchanged and no strategy P&L has been calculated.
