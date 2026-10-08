@@ -1,0 +1,46 @@
+name: Phase 51-1 - Cost and Data Calibration
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-51-1-cost-data-calibration]
+    paths:
+      - trigger/phase51_1.start
+      - research/phase51_1_download_audit.py
+      - results/phase51/cost_spec.json
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Install data tools
+        run: python -m pip install --no-input pandas pyarrow huggingface_hub
+      - name: Download and audit frozen OOS sources
+        run: python research/phase51_1_download_audit.py
+      - name: Validate manifest
+        run: |
+          set -euo pipefail
+          test -s results/phase51/cost_spec.json
+          test -s results/phase51/data_manifest.json
+          python - <<'PY'
+          import json
+          m=json.load(open('results/phase51/data_manifest.json'))
+          assert m['option_rows_in_oos'] > 0
+          assert m['spot_rows_in_oos'] > 0
+          assert m['option_has_bid_ask'] is False
+          print(m)
+          PY
+      - name: Publish manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase51
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 51-1: publish cost and data manifest"
+          git fetch origin phase-51-1-cost-data-calibration
+          git rebase origin/phase-51-1-cost-data-calibration
+          git push origin HEAD:phase-51-1-cost-data-calibration
