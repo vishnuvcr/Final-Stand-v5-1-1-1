@@ -922,3 +922,12 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The frozen 95% feasibility gate failed, so no TT07 P&L is accepted as evidence.
 - Terminal classification was persisted; the candidate-local stopping rule closes TT07 for promotion, VIX conditioning, tuning and confirmatory inference.
 - The next action is the next finite registered Phase-50B candidate/gate, not reopening TT07.
+
+
+### 2026-10-08 — VIX statistical gate completed
+- Canonical run **37754032120** succeeded after correcting F50B-092 artifact-name interpolation.
+- Preflight, VIX reconstruction, bootstrap/permutation inference, Holm correction and audit all passed.
+- 28 hypotheses; **0** Holm-adjusted robust-positive effects.
+- Holdout protected; TT06/TT07 P&L excluded.
+- No VIX filter promoted.
+- Next: preregistered far-OTM/strike-geometry gate.
