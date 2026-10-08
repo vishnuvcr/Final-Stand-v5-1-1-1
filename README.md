@@ -1,3 +1,17 @@
+## Phase 50B-3 — VIX Conditioning — ACTIVE (2026-10-09)
+
+Phase 51 remains blocked at the full-window data gate because the audited primary option source ends at 2026-07-21 and the 2026-07-28/2026-08-04 endpoint blocks remain unresolved. The non-confirmatory Phase-51-2 partial audit found no eligible TT-03 campaigns under its frozen three-calendar-day entry rule, so no economic inference was made.
+
+The bounded Phase-50B research is therefore continuing on its own preregistered finite chain. TT-02, TT-03, TT-04 and TT-05 passed the 95% feasibility gate; TT-06 and TT-07 are terminal coverage failures and are excluded from downstream VIX analysis.
+
+Phase 50B-3 freezes **28 strategy×VIX hypotheses** (four feasible strategies × LOW/NORMAL/HIGH/SPIKE/FALLING/RISING/HIGH_RISING), using **entry-time VIX only**. 2026 HOLD is descriptive and protected from selection/inference. No VIX threshold or strategy parameter is being tuned.
+
+- [Phase 50B-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-3-vix-conditioning)
+- [Phase 50B-3 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-3-vix-conditioning/PHASE50B_3_VIX_PREREGISTRATION.md)
+- [Phase 50B-3 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-3-vix-conditioning/PHASE50B_3_RESEARCH_PLAN.md)
+- [Phase 50B-3 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-3-vix-conditioning/PHASE50B_3_LITERATURE_REVIEW.md)
+- [Phase 50B-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-3-vix-conditioning/PHASE50B_3_STATUS.md)
+
 ## Phase 51 — CURRENT RESEARCH STATUS: FULL-WINDOW DATA AVAILABILITY STOP
 
 **Latest authoritative status (2026-10-09): full Phase-51 economic OOS validation remains blocked.**
