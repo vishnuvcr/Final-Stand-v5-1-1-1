@@ -71,6 +71,6 @@ jobs:
           set -euo pipefail
           git add results/phase50b/phase50b6_inference
           if git diff --cached --quiet; then exit 0; fi
-          git -c user.name="github-actions[bot]" -c user.email="41898282+users.noreply.github.com" commit -m "Phase 50B-6: publish statistical inference"
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-6: publish statistical inference"
           git pull --rebase origin phase-50b-6-statistical-inference
           git push origin HEAD:phase-50b-6-statistical-inference
