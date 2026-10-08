@@ -964,3 +964,9 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - Preflight has passed; numerical job **113132915078** is currently in progress.
 - The corrected engine is pinned to the same registered TT06 engine revision **50B-TT06-COVERAGE-V2**; only the expiry split-report timezone normalization changed.
 - No TT06 P&L, VIX inference, promotion decision or downstream TT07 launch is accepted until replay + artifact audit + publication all pass.
+
+### 2026-10-08 — TT06 terminal feasibility failure; TT07 continues
+- **TT06 is terminal FAIL_COVERAGE:** corrected replay run **37722386852** produced 692/983 complete candidates (**70.40%**), below the preregistered 95% gate; 291 coverage exclusions, 3 session exclusions, zero data errors.
+- TT06 P&L is diagnostic only and is excluded from promotion, VIX conditioning, tuning and confirmatory inference. The terminal classification is persisted in `results/phase50b/tt06_intraday_asym_replay/terminal_classification.json`.
+- The TT07 workflow now accepts a persisted TT06 terminal failure while explicitly verifying that no TT06 P&L is consumed.
+- **Next phase gate: TT07 Dynamic IC to Ratio source-faithful replay.**
