@@ -2241,3 +2241,17 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 
 **Research impact:** None on numerical evidence.
 \n\n## 2026-10-09 — Phase 50B-5 completion\nNo new error. Run 37828322922 passed all numerical, audit and publication gates after the F50B-096 Git identity correction.\n\n## 2026-10-09 — Phase 50B-6 initialization\nNo numerical error observed at initialization. The inference engine is frozen and awaits GitHub Actions execution.\n
+## 2026-10-09 — Phase 50B-6 run 37831453896
+
+### Error F50B-097 — Block-bootstrap input schema bug
+**Run:** 37831453896.
+
+**Symptom:** The preregistered inference script failed in the expiry-day block bootstrap because the bootstrap block arrays included both numeric P&L and Timestamp values.
+
+**Cause:** The bootstrap call passed a dataframe containing both expiry_dt and the renamed P&L column and converted the entire grouped dataframe to numpy.
+
+**Evidence status:** No statistical output was accepted. The failure occurred before the audit or publication stages.
+
+**Correction:** The bootstrap now explicitly groups expiry dates but resamples only the numeric P&L vector. The permutation test, hypothesis family, cost models, seed, replicate counts, protected holdout and promotion criteria are unchanged.
+
+**Prevention:** Bootstrap routines must explicitly isolate the numeric statistic column before conversion to numpy and include a numeric-schema assertion.
