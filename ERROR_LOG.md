@@ -156,3 +156,10 @@ See: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-37-model-direc
 
 ## 2026-10-09 — Phase 51-1 data-availability stop
 Phase 51-1 was stopped before OOS replay. The frozen OOS window remains 2026-04-21 through 2026-08-04. Spot validation passed, but the original option source ends at expiry 2026-07-21; the tested public augmentation failed endpoint/common-coverage gates; and the authenticated Upstox recovery path is blocked because UPSTOX_ACCESS_TOKEN is not configured. No fresh OOS P&L or promotion decision was produced. See the authoritative Phase-51 branch report for details.
+
+
+## 2026-10-09 — Phase 51-2 partial-data audit corrections
+- Several Phase-51-2 workflow implementation defects were encountered and quarantined as non-evidence: import-path failure, inherited output-path collision, stale expiry enumeration, wrong module lookup for the source-manifest helper, zero-campaign validation mismatch, concurrent reference-artifact ordering, and an initial publication rule that persisted only d300.
+- Each defect was corrected and retained on the isolated Phase-51-2 error log.
+- Final run 37847094909 passed with explicit `NO_ELIGIBLE_CAMPAIGNS` artifacts for both d300 and d350.
+- No numerical strategy result was accepted from any superseded run.
