@@ -54,7 +54,7 @@ jobs:
         run: python -m py_compile research/phase50b_statistical_gate.py
       - name: Run preregistered VIX inference
         env:
-          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_HUB_DISABLE_TELEMETRY: "1"
         run: python research/phase50b_statistical_gate.py
       - name: Audit statistical outputs
@@ -83,11 +83,11 @@ jobs:
       - name: Upload statistical artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: phase50b-vix-statistical-gate-\${{ github.run_id }}
+          name: phase50b-vix-statistical-gate-${{ github.run_id }}
           path: results/phase50b/statistical_gate
       - name: Publish statistical artifacts
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           git add results/phase50b/statistical_gate
