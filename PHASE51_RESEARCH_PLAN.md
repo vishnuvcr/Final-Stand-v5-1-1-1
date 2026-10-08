@@ -168,3 +168,19 @@ The common-expiry source-equivalence gate uses a scale-invariant minimum of 10,0
 
 ### 2026-10-09 — Phase 51-1B data gate
 The frozen OOS period remains 2026-04-21 through 2026-08-04. The primary option file reaches only 2026-07-21. The public supplemental files checked for 2026-07-28 and 2026-08-04 end on 2026-07-02, so they cannot fill the missing endpoint. Minute-level replay is blocked until a full-coverage source is acquired.
+
+
+### 2026-10-09 — Phase 51-1D commercial/UI/external source audit
+The missing 2026-07-28 and 2026-08-04 option blocks were investigated through StockMock, StockMojo, FNOTrader, Upstox, OptionsData.shop, NSE, MoneyTicks, QuantFlo and AlgoTest before any OOS P&L inspection.
+
+Findings:
+1. StockMock confirms 1-minute OHLC backtesting and historical simulator coverage, but no documented public raw-data export/API was located. Treat as an independent strategy-level oracle only.
+2. StockMojo confirms minute-level historical/expired option-chain replay with OI, volume, premium, IV and Greeks, but no documented public raw-data export/API was located. Treat as an independent chain/backtest oracle only.
+3. FNOTrader advertises deep NIFTY 1-minute history and MCP-backed programmatic backtesting. It is the highest-priority independent oracle, but no project connector/account is available in this environment.
+4. Upstox is the strongest authenticated raw path: official expired-contract enumeration plus 1-minute expired historical candles with OI/volume. Current repo acquisition script is blocked only by absent UPSTOX_ACCESS_TOKEN.
+5. OptionsData.shop is the strongest commercial raw-data candidate: its public catalog advertises NIFTY full-chain 1-minute Parquet for 2023 through Sep-2026, including the frozen gap. Authorized purchase/download and equivalence testing are required before use.
+6. NSE remains the official provenance route. Public free contract-wise historical data is daily; minute snapshot/order-trade data is a licensed paid product.
+7. MoneyTicks advertises 1-minute expired options API/export but is currently not selling access while licensing is finalized.
+8. QuantFlo and AlgoTest are suitable independent backtest oracles but were not shown to expose an authorized raw archive in public documentation.
+
+Decision: keep Phase 51 DATA-BLOCKED. No strategy P&L, strike tuning, source selection by performance, or OOS inference may occur until an authorized raw source passes the existing coverage/equivalence gate.
