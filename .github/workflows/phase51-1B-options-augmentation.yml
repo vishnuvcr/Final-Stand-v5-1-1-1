@@ -2,10 +2,13 @@ name: Phase 51-1B - Options Completeness and Augmentation Gate
 on:
   workflow_dispatch:
   push:
-    branches: [phase-51-1-cost-data-calibration]
+    branches: [phase-51-1B-options-augmentation]
     paths:
       - trigger/phase51_1_options_augmentation.start
       - research/phase51_1_options_augmentation.py
+concurrency:
+  group: phase51-1B-options-augmentation
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
