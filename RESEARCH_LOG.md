@@ -1028,3 +1028,12 @@ Upstox recovery path created for the two missing frozen OOS expiries. Workflow 3
 - MoneyTicks: 1-minute expired-options API/export advertised but currently not sold.
 - QuantFlo/AlgoTest: independent backtest oracles, not raw-data sources in this repository until export/API provenance is established.
 - Decision: Phase 51 remains DATA-BLOCKED; no OOS strategy P&L, parameter tuning, or source choice based on performance was performed.
+
+
+## 2026-10-09 — Phase 51-1E OptionsData.shop gate
+- Rechecked current commercial catalog coverage.
+- Confirmed the 29-Jun-2026 to 25-Sep-2026 NIFTY 1-minute pack contains both missing frozen OOS expiry dates.
+- Confirmed the free sample is 15-17 Sep 2026 and therefore cannot be used as the missing OOS source.
+- Registered an authorized-byte validation gate before any strategy P&L.
+- No purchase, credential bypass, or unauthorized download was attempted.
+- No OOS P&L, parameter tuning, or inference was performed.
