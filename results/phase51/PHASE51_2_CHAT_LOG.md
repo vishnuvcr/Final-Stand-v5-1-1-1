@@ -21,3 +21,9 @@ Both failures are logged in PHASE51_2_ERROR_LOG.md as non-evidence. The partial-
 Corrected replay run 37846113617 reached the numerical engine but returned zero campaigns for both distances. Audit traced this to the inherited `expiry_dates()` helper reading a Phase-43 trade matrix rather than the frozen option-source expiry manifest.
 
 The wrapper now overrides only the opportunity enumeration with the engine's existing source-manifest function `list_expiry_files()`. No strategy parameter, execution rule, frozen endpoint or cost assumption changed. Run 37846113617 remains non-evidence.
+
+## 2026-10-09 — Source-manifest import correction
+
+Run 37846264039 failed immediately because the prior wrapper correction referenced `base.list_expiry_files`, but the function is defined in `phase43_vix_strategy_sweep.py` and is not exported by the inherited TT-03 module.
+
+The wrapper now imports the helper directly from its defining module. Run 37846264039 is non-evidence; no OOS P&L was produced.
