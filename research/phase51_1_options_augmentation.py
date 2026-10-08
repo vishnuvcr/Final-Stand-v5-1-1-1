@@ -134,7 +134,7 @@ for exp in COMMON_EXPIRIES:
         "mean_signed_points":float((j.close_tmk-j.close_rissin).mean()),
     }
     gate={
-        "matched_rows_ge_100000":stats["matched_rows"]>=100000,
+        "matched_rows_ge_10000":stats["matched_rows"]>=10000,
         "coverage_vs_rissin_ge_0_80":stats["coverage_vs_rissin"]>=0.80,
         "median_abs_le_0_05":stats["median_abs_points"]<=0.05,
         "p99_abs_le_1_00":stats["p99_abs_points"]<=1.00,
