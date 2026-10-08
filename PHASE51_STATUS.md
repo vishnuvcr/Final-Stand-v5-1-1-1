@@ -78,3 +78,9 @@ The latest full-data run reached the source audit but stopped on an incorrect mi
 
 ### 2026-10-09 — Phase 51-1E Hugging Face source gate: FAIL / SOURCE REJECTED
 The actual target bytes were downloaded successfully. However, the file labelled 2026-07-28 ends at 2026-07-02 (320,359 rows) and the file labelled 2026-08-04 also ends at 2026-07-02 (2,646 rows); neither contains any observations on its named expiry day. Common-expiry equivalence versus frozen RISSIN fails the registered >=80% coverage gate for all three tested expiries: 34.57%, 14.95%, 4.60%. The 2026-07-07 comparison also fails the 10 bp p95 relative-error limit at 14.79 bp. Source is rejected before OOS P&L. Result: results/phase51/phase51_1e_hf_options_gate_result.json
+
+
+### 2026-10-09 — Phase 51-1F Authorized Options Recovery
+**DATA-BLOCKED — acquisition boundary reached.** GitHub Actions run 37843867795 safely inspected credential presence without exposing secret values. All checked routes were absent: Upstox, Dhan and ICICI Breeze credentials. Upstox acquisition consequently failed closed before data retrieval.
+
+The finite recovery matrix has been exhausted for currently configured raw APIs. The remaining complete raw route identified in current public evidence is an authorized commercial archive such as OptionsData.shop, whose current catalog documents full NIFTY 1-minute chain coverage containing both missing expiries. No purchase or unauthorized access was attempted. TT-03 / OTM350 OOS replay remains prohibited until an authorized raw archive is supplied and passes the existing gate.
