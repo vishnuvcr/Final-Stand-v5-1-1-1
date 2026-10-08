@@ -1,3 +1,24 @@
+## Phase 51 — CURRENT RESEARCH STATUS: DATA AVAILABILITY STOP
+
+**Latest authoritative status (2026-10-09): the fresh Phase-51 OOS replay has not started.**
+
+The frozen OOS window remains **2026-04-21 through 2026-08-04**. Spot-source validation passed, but the primary NIFTY 1-minute option file stops at expiry **2026-07-21**. The public supplemental option source tested for 2026-07-28 and 2026-08-04 failed endpoint and common-expiry coverage checks. The authenticated Upstox recovery path is currently blocked because the repository does not have the required **UPSTOX_ACCESS_TOKEN** secret.
+
+**No TT-03 or TT-03 OTM350 OOS P&L, statistical inference, ranking, or promotion decision has been produced from this frozen window.** The OOS window has not been shortened and missing option prices have not been synthesized.
+
+Authoritative Phase-51 files:
+- [Phase 51 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/PHASE51_RESEARCH_PLAN.md)
+- [Phase 51 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/PHASE51_STATUS.md)
+- [Phase 51-1 source-gate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/results/phase51/PHASE51_1_SOURCE_GATE_REPORT.md)
+- [Structured source-gate decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/results/phase51/phase51_1_source_gate_final.json)
+- [Phase 51 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/ERROR_LOG.md)
+- [Phase 51 research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/RESEARCH_LOG.md)
+- [Authenticated Upstox recovery branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-1C-authenticated-options-acquisition)
+
+Phase 51-2 through 51-6 are **not started** because the frozen option dataset is incomplete.
+
+---
+
 ## Phase 50B — Current research status (2026-10-07)
 
 **TT-03 V5: PASS. TT-04: RUNNING. No strategy promoted.**
