@@ -16,3 +16,7 @@ Actions run 37848842347 stopped at BASE verification because pandas was absent f
 ## 2026-10-09 — Error F50B4-002
 
 Actions run 37848915637: OTM350 numerical replay completed and produced a source-faithful result, but the audit step failed because TT03_DISTANCE was not exported into the audit step environment. This was a workflow/audit packaging defect, not a replay/data failure. The numerical output was therefore rejected from evidence publication and the branch was corrected to export the matrix distance before accepting any result.
+
+## 2026-10-09 — Error F50B4-003
+
+Actions run 37850091712: both OTM350 and OTM400 numerical replays and audits passed, and both raw artifacts were uploaded successfully, but branch publication failed because the publish step reset the working tree before copying the generated directory; after reset the source and destination resolved to the same path. The scientific replay evidence remains preserved in Actions artifacts. The publish step was corrected to stage outputs before reset and rebase before push.
