@@ -12,3 +12,7 @@ Pre-execution controls:
 ## 2026-10-09 — Error F50B6-001
 
 Actions run 37851483949 stopped during the pre-inference pairing audit because the first implementation incorrectly required OTM350 and BASE to have identical exit timestamps. Exit timestamps are an outcome of the strategy geometry and are expected to differ; requiring identical exits would invalidate the treatment comparison. The correct paired unit is the common expiry/campaign block. The engine was therefore corrected to pair by exact common expiry membership and retain entry/exit/direction differences as treatment outcomes rather than integrity failures.
+
+## 2026-10-09 — Error F50B6-002
+
+Actions run 37851576223 completed the preregistered inference and audit successfully and uploaded the inference artifact, but publication failed during git rebase because the runner did not retain commit identity configuration across the rebase. This is a publication-only defect; no scientific result was invalidated. The workflow was corrected to set the bot identity before commit and rebase.
