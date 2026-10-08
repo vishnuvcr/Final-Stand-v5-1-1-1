@@ -43,9 +43,16 @@ jobs:
           from pathlib import Path
           p=Path("results/phase51/partial_oos") / ("d"+os.environ["TT03_DISTANCE"]) / "summary.json"
           s=json.loads(p.read_text())
-          assert s["trades"] > 0, s
-          assert s["coverage_rate"] >= 0.95, s
-          assert s["candidate_trades"] == s["trades"] + s["coverage_exclusions"], s
+          if s.get("status") == "NO_ELIGIBLE_CAMPAIGNS":
+            assert s["candidate_trades"] == 0, s
+            assert s["eligible_expiries"] == [], s
+            assert len(s["observed_expiries"]) > 0, s
+            assert s["coverage_gate"] == "NOT_APPLICABLE_NO_ELIGIBLE_CAMPAIGNS", s
+            assert s["pnl_interpretation_allowed"] is False, s
+          else:
+            assert s["trades"] > 0, s
+            assert s["coverage_rate"] >= 0.95, s
+            assert s["candidate_trades"] == s["trades"] + s["coverage_exclusions"], s
           print(json.dumps(s, indent=2))
           PY
       - uses: actions/upload-artifact@v4
