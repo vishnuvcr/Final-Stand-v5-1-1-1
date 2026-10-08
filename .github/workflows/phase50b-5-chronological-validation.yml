@@ -1,0 +1,108 @@
+name: Phase 50B-5 - Chronological Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-chronological-validation
+    paths:
+      - trigger/phase50b_5.start
+      - research/phase50b_chronological_validation.py
+      - research/phase50b_tt03_far_otm.py
+
+concurrency:
+  group: phase50b-5-chronological
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  chronological:
+    runs-on: ubuntu-latest
+    timeout-minutes: 600
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
+      - name: Cache HF dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-5-hf-${{ runner.os }}-${{ hashFiles('research/phase50b_tt03_far_otm.py') }}
+          restore-keys: |
+            phase50b-5-hf-${{ runner.os }}-
+      - name: Preflight accepted feasible evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pandas as pd
+          base='results/phase50b'
+          specs={
+            'TT03':f'{base}/tt03_dynamic_n_replay/summary.json',
+            'TT04':f'{base}/tt04_premium_match_replay/summary.json',
+            'TT05':f'{base}/tt05_short_straddle_replay/summary.json'
+          }
+          for name,p in specs.items():
+              d=json.load(open(p))
+              assert d.get('coverage_rate',0)>=0.95,(name,d)
+              assert int(d.get('data_errors',0))==0,(name,d)
+              print(name,'accepted feasibility PASS',d.get('coverage_rate'))
+          PY
+          python -m py_compile research/phase50b_tt03_far_otm.py research/phase50b_chronological_validation.py
+      - name: Reconstruct frozen OTM350 artifact
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          TT03_GEOMETRY: OTM350
+        run: python research/phase50b_tt03_far_otm.py
+      - name: Audit frozen OTM350 artifact
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pandas as pd
+          p='results/phase50b/tt03_far_otm/OTM350'
+          d=json.load(open(p+'/summary.json'))
+          tr=pd.read_csv(p+'/tt03_trades.csv')
+          er=pd.read_csv(p+'/data_errors.csv')
+          assert d.get('engine_revision')=='50B-TT03-OTM-GEOM-V1',d
+          assert d.get('coverage_rate',0)>=0.95,d
+          assert d.get('trades',0)==len(tr),d
+          assert d.get('candidate_trades',0)==len(tr)+d.get('coverage_exclusions',0),d
+          assert len(er)==0,er.head()
+          print('OTM350 artifact PASS',d)
+          PY
+      - name: Run chronological validation and risk diagnostics
+        run: python research/phase50b_chronological_validation.py
+      - name: Audit chronology outputs
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pandas as pd
+          p='results/phase50b/phase50b5_chronological_validation'
+          s=pd.read_csv(p+'/chronological_strategy_summary.csv')
+          assert set(s.strategy)=={'TT03','TT03_OTM350','TT04','TT05'},s.strategy.tolist()
+          c=json.load(open(p+'/cross_checks.json'))
+          assert all(x['accepted_total_crosscheck'] for x in c['checks']),c
+          assert c['holdout_protected'] is True
+          assert c['capital_normalized_return_claim'] is False
+          print('Chronological audit PASS')
+          print(s[['strategy','net_profit_per_trade','net20_50_profit_per_trade','all_max_drawdown_rupees','all_max_drawdown_pct_of_prior_equity_peak']].to_string(index=False))
+          PY
+      - name: Publish Phase 50B-5 results
+        run: |
+          set -euo pipefail
+          git add results/phase50b/tt03_far_otm/OTM350 results/phase50b/phase50b5_chronological_validation
+          if git diff --cached --quiet; then
+            echo "No Phase 50B-5 changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-5: publish chronological validation results"
+            git fetch origin phase-50b-chronological-validation
+            git rebase origin/phase-50b-chronological-validation
+            git push origin HEAD:phase-50b-chronological-validation
+          fi
