@@ -132,3 +132,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Live TT-04 run 37621965843 was rechecked; preflight passed and numerical replay remained in progress.
 - Re-read TT-04 source audit/workflow/engine at the active run head. No new evidence-impacting defect was identified.
 - No TT-04 numerical result is accepted until the artifact audit passes.
+
+
+## 2026-10-09 — Phase 51-1 source-gate closeout
+Phase 51-1 stopped fail-closed on data availability before any fresh OOS strategy P&L. Frozen OOS: 2026-04-21 to 2026-08-04. Validated spot source: technovusin/nifty50-historical-data. Primary option source reaches only 2026-07-21. Tested thetrademarkk supplemental option source failed endpoint and common-expiry coverage. Upstox authenticated recovery workflow 37839447686 was blocked because UPSTOX_ACCESS_TOKEN is not configured. No strategy promotion or OOS inference was made.
