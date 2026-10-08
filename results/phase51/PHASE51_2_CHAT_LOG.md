@@ -15,3 +15,9 @@ Runs 37845718056 and 37845741103 both reached the replay stage but failed before
 The wrapper was corrected to add both repository-root and research-directory paths explicitly. During the same audit, an output-path collision with the inherited Phase-50B engine was identified and corrected so Phase-51-2 artifacts are written only under `results/phase51/partial_oos`.
 
 Both failures are logged in PHASE51_2_ERROR_LOG.md as non-evidence. The partial-OOS research protocol and frozen endpoint were not changed.
+
+## 2026-10-09 — Fresh-OOS opportunity enumeration correction
+
+Corrected replay run 37846113617 reached the numerical engine but returned zero campaigns for both distances. Audit traced this to the inherited `expiry_dates()` helper reading a Phase-43 trade matrix rather than the frozen option-source expiry manifest.
+
+The wrapper now overrides only the opportunity enumeration with the engine's existing source-manifest function `list_expiry_files()`. No strategy parameter, execution rule, frozen endpoint or cost assumption changed. Run 37846113617 remains non-evidence.
