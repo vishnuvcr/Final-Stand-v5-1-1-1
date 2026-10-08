@@ -14,6 +14,8 @@ OUT.mkdir(parents=True, exist_ok=True)
 PARTIAL_START = pd.Timestamp("2026-04-21", tz="Asia/Kolkata")
 PARTIAL_END = pd.Timestamp("2026-07-21", tz="Asia/Kolkata")
 
+# Reference artifact is verified in this branch before workflow execution.
+
 
 def frozen_opportunity_audit():
     ref = json.loads(REFERENCE.read_text())
