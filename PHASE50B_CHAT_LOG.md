@@ -542,3 +542,12 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Persisted `terminal_classification.json` and recorded F50B-091. TT07 is closed to promotion, VIX conditioning, tuning and confirmatory inference.
 - A non-fatal divide-by-zero warning in the IV Newton update was noted for future engine hardening.
 - Continue to the next finite registered Phase-50B gate without consuming TT07 P&L.
+
+
+### 2026-10-08 — VIX statistical gate completed
+- Canonical run **37754032120** succeeded after correcting F50B-092 artifact-name interpolation.
+- Preflight, VIX reconstruction, bootstrap/permutation inference, Holm correction and audit all passed.
+- 28 hypotheses; **0** Holm-adjusted robust-positive effects.
+- Holdout protected; TT06/TT07 P&L excluded.
+- No VIX filter promoted.
+- Next: preregistered far-OTM/strike-geometry gate.
