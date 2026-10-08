@@ -2359,3 +2359,11 @@ Run **37836116045** completed the spot source acquisition, primary overlap and i
 **Correction:** the freeze step will depend only on the persisted overlap/triangulation artifacts that are present after the audit steps, and will record the failed fallback as an explicit F51-006 source-quality rejection rather than requiring the transient acquisition manifest.
 
 **Prevention:** publication steps must consume only artifacts explicitly guaranteed by the immediately preceding workflow contract.
+
+
+### F51-011 — Spot freeze publication schema mismatch
+Run **37836313364** failed only in the freeze publication step because the workflow treated `spot_fallback_gate.json` as if source metadata were top-level; the file stores it under `details`.
+
+**Evidence status:** scientific gates passed; no P&L affected.
+
+**Correction:** use the persisted JSON schema as emitted by the overlap audit (`details.fallback_source` and `details.gate`) in the freeze step.
