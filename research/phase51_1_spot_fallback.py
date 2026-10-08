@@ -66,16 +66,38 @@ if oos.empty:
 
 days = oos.assign(day=oos.timestamp.dt.date).groupby("day").size()
 partial_days = days[days < 300]
-if len(partial_days):
-    raise AssertionError(f"Partial OOS trading/session days (<300 rows): {partial_days.to_dict()}")
-
+short_session_audit = []
+short_session_failures = []
 gap_max = 0
 gap_events = 0
-for _, g in oos.groupby(oos.timestamp.dt.date):
-    diffs = g.timestamp.sort_values().diff().dropna().dt.total_seconds().div(60)
+for day, g in oos.groupby(oos.timestamp.dt.date):
+    gs = g.timestamp.sort_values()
+    diffs = gs.diff().dropna().dt.total_seconds().div(60)
+    day_gap = int(diffs.max()) if len(diffs) else 0
+    day_span = int((gs.max() - gs.min()).total_seconds() / 60) if len(gs) else 0
+    row_count = int(len(gs))
+    if row_count < 300:
+        item = {
+            "date": str(day),
+            "rows": row_count,
+            "first_timestamp": str(gs.min()),
+            "last_timestamp": str(gs.max()),
+            "span_minutes": day_span,
+            "max_internal_gap_minutes": day_gap,
+        }
+        short_session_audit.append(item)
+        # A legitimate shortened session can have fewer than 300 rows, but
+        # it must still form a long contiguous intraday span. A tiny fragment
+        # is treated as a source-coverage failure.
+        if day_span < 240 or day_gap > 5 or row_count < 240:
+            short_session_failures.append(item)
     if len(diffs):
-        gap_max = max(gap_max, int(diffs.max()))
+        gap_max = max(gap_max, day_gap)
         gap_events += int((diffs > 5).sum())
+if short_session_failures:
+    raise AssertionError(f"Suspicious partial-session/source-gap dates: {short_session_failures}")
+if gap_events:
+    raise AssertionError(f"OOS internal timestamp gaps >5 minutes: {gap_events}")
 
 assert work.timestamp.min() <= OOS_START, f"fallback starts after OOS start: {work.timestamp.min()}"
 assert work.timestamp.max() >= OOS_END, f"fallback ends before OOS end: {work.timestamp.max()}"
@@ -97,6 +119,7 @@ manifest = {
     "oos_distinct_days": int(days.size),
     "oos_min_rows_per_present_day": int(days.min()),
     "oos_max_rows_per_present_day": int(days.max()),
+    "short_session_audit": short_session_audit,
     "oos_max_internal_gap_minutes": gap_max,
     "oos_gap_events_gt5min": gap_events,
     "duplicate_timestamps": dup,
