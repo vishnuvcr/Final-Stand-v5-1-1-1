@@ -39,3 +39,11 @@ Status: BLOCKED. The public supplemental files checked for the missing 2026-07-2
 
 ### Phase 51-1C — Authenticated source path prepared
 A dedicated branch `phase-51-1C-authenticated-options-acquisition` now contains the Upstox expired-option contract acquisition code for the two missing expiries. Upstox documents 1-minute expired-contract candles, but the API requires authenticated Plus access. No credentials are assumed, and no OOS P&L is being produced while the required minute data is unavailable.
+
+
+### Phase 51-1 final disposition — DATA AVAILABILITY STOP
+**Authoritative status: BLOCKED — NO OOS REPLAY.** The frozen OOS window 2026-04-21 through 2026-08-04 remains unchanged. Spot-source validation passed, but the original option source stops at 2026-07-21. The tested public augmentation failed endpoint and common-expiry coverage gates, and the authenticated Upstox path is blocked because UPSTOX_ACCESS_TOKEN is not configured. No TT-03 or TT-03 OTM350 OOS P&L, inference, ranking or promotion decision has been produced.
+
+Required resume condition: a full-coverage, auditable 1-minute NIFTY option source for the entire frozen window, including 2026-07-28 and 2026-08-04, must pass the preregistered source gate before any replay.
+
+Formal closeout: results/phase51/PHASE51_1_SOURCE_GATE_REPORT.md
