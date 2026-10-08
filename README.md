@@ -1099,3 +1099,12 @@ A GitHub Actions workflow now acquires those two public files and runs the pre-P
 - Current complete raw-data fallback is an **authorized commercial archive** such as OptionsData.shop; no purchase or access bypass has been attempted.
 - **Current status: DATA-BLOCKED at acquisition boundary.** Frozen OOS remains 2026-04-21 → 2026-08-04. TT-03 / TT-03 OTM350 OOS replay has not started.
 - [Phase 51-1F recovery plan](results/phase51/PHASE51_1F_AUTHORIZED_OPTIONS_RECOVERY.md) · [Phase 51 status](PHASE51_STATUS.md) · [Error log](ERROR_LOG.md)
+
+
+## Phase 51-1G — Open-source options-data recovery
+- Reopened the open-source track across GitHub, Hugging Face, Kaggle and public research archives.
+- **No independent raw 1-minute source currently covers both missing expiries 2026-07-28 and 2026-08-04.**
+- thetrademarkk HF source was already rejected on actual bytes; CodePyx's advertised NIFTY Parquet path returned 404 in automated Actions.
+- Kaggle's free 1-minute NIFTY option-chain dataset is documented as ending 2026-03-24; bhav's offline sample reaches June 2026 only; SauMStats provides an open engine but not the live archive; pawan625 uses broker-generated Kite candles rather than an independent archive.
+- **No Phase-51 OOS P&L has been calculated from these alternatives.**
+- [Open-source audit](results/phase51/PHASE51_1G_OPEN_SOURCE_AUDIT.md) · [Phase 51 status](PHASE51_STATUS.md) · [Error log](ERROR_LOG.md)
