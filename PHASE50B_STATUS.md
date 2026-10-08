@@ -694,3 +694,15 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Persisted terminal classification: `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
 - Non-fatal divide-by-zero warnings occurred in the implied-volatility Newton update; they did not alter the classification.
 - No scientific rule or cost assumption changed. TT07 is now closed under the candidate-local stopping rule; continue only with the next finite registered Phase-50B gate.
+
+
+### 2026-10-08 — Phase 50B VIX statistical gate
+- Status: **COMPLETE — no robust VIX regime effect detected**.
+- Canonical run: **37754032120** (successful after F50B-092 operational correction).
+- Eligible evidence: TT02, TT03, TT04, TT05 only; TT06/TT07 P&L excluded by terminal feasibility classifications.
+- 28 preregistered strategy × VIX hypotheses tested on DEV+VAL only.
+- Holm-adjusted robust-positive effects: **0**.
+- 2026 HOLDOUT remained protected from inference.
+- Artifact: **phase50b-vix-statistical-gate-37754032120**, SHA256 **c9c64d8d9bc8def64d16b1d39335003bf0ca9553475d960b5fc275858c53f03f**.
+- Interpretation: no statistically defensible VIX regime filter has yet earned promotion.
+- Next registered gate: far-OTM/strike-geometry analysis where semantically valid.
