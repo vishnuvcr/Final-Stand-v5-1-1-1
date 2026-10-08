@@ -146,3 +146,17 @@ The first frozen spot source failed endpoint coverage before OOS P&L inspection.
 5. If no source passes, Phase 51-4 stops with a data-availability limitation; the OOS window is not shortened.
 
 Independent triangulation source registered: public GitHub repository technovusin/nifty50-historical-data, cleaned NIFTY50 1-minute files for 2026-04 through 2026-08. It is a validation source only until the above gate passes.
+
+
+### 2026-10-09 — Phase 51-1 options-source augmentation rule
+
+The initial option source does not reach the frozen OOS endpoint. Before any strategy P&L is calculated, Phase 51-1 may augment only the missing expiry blocks from an independently published 1-minute NIFTY options source, under a fixed data-quality rule:
+
+1. The frozen OOS window and all existing expiry blocks remain unchanged.
+2. Missing expiry blocks must be identified from the source manifest, not from strategy P&L.
+3. The supplemental source must contain explicit 1-minute files for each missing expiry and pass schema/timestamp integrity.
+4. Common expiry blocks must be compared against the original rissin source before supplementation is accepted.
+5. No P&L-based choice among data sources or expiry blocks is permitted.
+6. If the augmented source still fails the registered 95% replay coverage gate, Phase 51 stops with a data-availability/feasibility conclusion; the OOS window is not shortened.
+
+Independent augmentation candidate registered: thetrademarkk/india-index-options-1m, options/NIFTY/2026-07-28.parquet and options/NIFTY/2026-08-04.parquet.
