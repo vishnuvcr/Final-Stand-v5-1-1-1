@@ -2195,3 +2195,14 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No trading rule, strike rule, stop, exit, cost model, lot size or VIX definition was changed to obtain this classification.
 - Prevention: persist the terminal classification before advancing to an unrelated registered candidate; downstream workflows must explicitly verify that TT06 P&L is excluded when TT06 is FAIL_COVERAGE.
 - Evidence status: **TT06 is not a valid Phase-50B evidence candidate and is not promotable.**
+
+
+## F50B-091 — TT07 feasibility failure at 1.69% coverage (2026-10-08)
+- Run **37746729676**; numerical job **113210030856**.
+- TT07 replay completed, but only **1/59** candidate campaigns produced a complete trade, giving **1.6949%** coverage; 58 coverage exclusions, 1 entry exclusion, 2 transition-diagnostic rows and zero data errors.
+- The artifact audit failed solely because the frozen **95% mandatory-exit coverage gate** was not met. The replay itself did not crash.
+- Diagnostic cost outputs are not evidence: net **+₹611.91** at ₹10/order, +₹304.75 under +50% friction, +₹187.11 at ₹20/order, and **−₹332.45** at ₹20/order +50% stress.
+- Scientific classification: **TT07 FAIL_COVERAGE**. Per the candidate-local stopping rule, TT07 is closed for promotion, VIX conditioning, parameter tuning and confirmatory inference. Its P&L must not be consumed downstream.
+- The divide-by-zero RuntimeWarnings observed in the implied-volatility Newton update were non-fatal and did not cause the terminal classification; they are recorded as an implementation warning for future engine hardening, not as accepted evidence.
+- Terminal classification has been persisted at `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
+- No strategy rule, strike, stop, exit, cost model, lot size or VIX definition was changed.
