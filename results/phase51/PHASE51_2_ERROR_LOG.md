@@ -43,3 +43,18 @@ The inherited TT-03 engine writes to `results/phase50b/tt03_otm_distance/d<dista
 **Correction:** Phase 51-2 now overrides only the expiry enumeration to use the existing frozen source manifest function `list_expiry_files()`, which enumerates explicit NIFTY option expiry files from the registered Hugging Face source within the frozen 2026-04-21 to 2026-07-21 endpoint. The trade engine, costs, entry/exit rules and candidate parameters remain unchanged.
 
 **Prevention:** every fresh-OOS wrapper must enumerate opportunities from the frozen OOS source manifest, not from a prior phase's strategy-trade matrix.
+
+## 2026-10-09 — Error P51-2-004: source-expiry helper imported from the wrong module
+
+**Affected workflow run:** 37846264039  
+**Affected jobs:** replay (300) and replay (350)
+
+**Symptom:** both jobs failed before numerical execution with `AttributeError: module 'research.phase50b_tt03_otm_distance_replay' has no attribute 'list_expiry_files'`.
+
+**Cause:** the first correction assumed `list_expiry_files()` was re-exported by the inherited TT-03 engine. It is defined in `phase43_vix_strategy_sweep.py` and only selected functions were imported into the TT-03 module.
+
+**Evidence status:** non-evidence. No OOS P&L or coverage result was produced.
+
+**Correction:** the wrapper now imports `list_expiry_files` explicitly from `phase43_vix_strategy_sweep` and assigns that source-manifest function to the inherited engine's `expiry_dates` hook.
+
+**Prevention:** source-manifest helpers must be resolved from their defining module during phase-wrapper audit; do not assume incidental re-export.
