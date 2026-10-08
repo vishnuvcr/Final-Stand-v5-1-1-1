@@ -945,3 +945,4 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The phase compares TT-03, TT-03 OTM350, TT-04 and TT-05 using the fixed 2021–2023 DEV / 2024–2025 VAL / protected 2026 HOLD chronology.
 - Risk diagnostics include profit/trade, worst/best trade, win rate, chronological equity and maximum drawdown. A capital-normalized return percentage is explicitly withheld unless a defensible common capital/margin denominator is available.
 - OTM350 reconstruction is artifact recovery under the already-frozen engine, not a new parameter search.
+\n\n### 2026-10-08 — Phase 50B-5 CI correction\nRun 37821975113 failed in the reporting cross-check after the frozen OTM350 artifact passed reconstruction/audit. Error F50B-095 records the schema mismatch. Commit 70aa069 fixes the cross-check without changing any research parameter. Phase 50B-5 remains active pending a clean rerun.\n
