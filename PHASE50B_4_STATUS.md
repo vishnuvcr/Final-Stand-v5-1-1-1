@@ -15,4 +15,7 @@ OTM350/OTM400 must independently pass >=95% coverage, positive DEV net and posit
 Validation and 2026 HOLD are post-selection and descriptive only.
 
 ## Current step
-Verify BASE, then replay OTM350 and OTM400 under GitHub Actions. No new distance is permitted.
+- BASE verification passed in Actions run 37848915637.
+- OTM350 and OTM400 replays are still running in Actions run 37848915637.
+- No numerical OTM result has been accepted yet.
+- No validation/HOLD interpretation has been performed.
