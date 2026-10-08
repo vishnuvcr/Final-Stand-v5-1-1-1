@@ -999,3 +999,10 @@ A dedicated branch `phase-50b-chronological-validation` now runs the next finite
 - Primary inference: 10,000 sign-randomization permutations; dependence robustness: 10,000 expiry-day block-bootstrap replicates; Holm correction across the fixed family.
 - Statistical gate: positive mean, bootstrap 95% lower bound > 0, and Holm-adjusted permutation p < 0.05. Cross-cost robustness requires all four registered cost models to pass.
 - [Phase 50B-6 status](PHASE50B_6_STATUS.md) · [Phase 50B research plan](PHASE50B_RESEARCH_PLAN.md) · [Research log](RESEARCH_LOG.md) · [Chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
+
+
+### Phase 50B-6 completed — 2026-10-09
+- Corrected run **37832396945 PASS**: inference, audit and publication completed successfully.
+- **16 fixed hypotheses; no robust strategy across all four registered cost models.** TT-03 passed net/net50/net20 but failed net20_50 after Holm correction. TT-03 OTM350 likewise passed net/net50/net20 but failed net20_50. TT-04 and TT-05 did not pass the primary gate.
+- **Final Phase 50B decision so far: NO PROMOTION.** The finite program now advances to 50B-7 for the complete manuscript, figures, tables, appendices and final decision.
+- [Phase 50B-6 status](PHASE50B_6_STATUS.md) · [Inference results](results/phase50b/phase50b6_statistical_inference/hypothesis_results.csv) · [Research plan](PHASE50B_RESEARCH_PLAN.md) · [Error log](ERROR_LOG.md)
