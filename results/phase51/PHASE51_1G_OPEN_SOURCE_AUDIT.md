@@ -39,3 +39,18 @@ The public ecosystem is useful for independent validation:
 ## Next open-source trigger
 
 Do not purchase or bypass access. Resume this phase only if a new public raw archive becomes discoverable or a user supplies an authorized archive. Any new source must pass the existing RISSIN equivalence and >=95% replay-entry/exit coverage gates before OOS P&L.
+
+
+## 2026-10-09 — Phase 51-1G final public-source exhaustion pass
+
+A second exact-date search was performed across public GitHub/Hugging Face/web-indexed sources for independent copies of the missing NIFTY 1-minute option blocks. Exact-file searches for `2026-07-28.parquet` and `2026-08-04.parquet` did not identify an independent mirror.
+
+The CodePyx HF bucket still advertises 4 GB / 3,337 files and a structure of `options/{SYMBOL}/{EXPIRY}.parquet`, but the registered automated audit could not resolve the requested NIFTY expiry paths (HTTP 404). The source therefore remains non-reproducible for the frozen gap.
+
+The public thetrademarkk directory visibly lists both missing filenames and verified commits, but the actual bytes acquired by the Phase-51 workflow remain the previously audited truncated files. Filename/commit existence is not accepted as data coverage evidence.
+
+Additional public projects that reference the same downloader or research workflow were checked for embedded copies; no independent raw archive containing both missing expiry blocks was found.
+
+**Decision:** the open-source recovery phase is exhausted under the current evidence boundary. The OOS window is not shortened, synthesized, or selected based on expected P&L. Phase 51 remains DATA-BLOCKED until an independently reproducible public raw archive or an authorized raw archive/token is supplied.
+
+Web evidence: thetrademarkk current directory and commit history; CodePyx public bucket description.
