@@ -1,4 +1,30 @@
-## Phase 50B — Expanded Prior-Strategy Universe — IN PROGRESS
+# Current Research Status — 2026-10-09
+
+## Phase 51 — Broker-Calibrated Execution + Fresh OOS Validation — ACTIVE / DATA-BLOCKED
+
+Phase 51 has a frozen fresh OOS window of **2026-04-21 through 2026-08-04** and only two frozen candidates: **TT-03** and **TT-03 OTM350**. No Phase-51 strategy P&L has been calculated because minute-level option coverage is incomplete at the OOS endpoint.
+
+### Latest data-source audit
+- **StockMock:** confirms 1-minute OHLC backtesting/simulator capability; no documented public raw export/API found. Registered as an independent strategy-calibration oracle only.
+- **StockMojo:** confirms minute-level historical/expired NIFTY option-chain replay with OI, volume, premium, IV and Greeks; no documented public raw export/API found. Registered as an independent chain/backtest oracle only.
+- **FNOTrader:** advertises deep 1-minute NIFTY history and MCP-backed backtesting; highest-priority external oracle, but no project connector/account is available in the current environment.
+- **Upstox:** official expired-option contract and 1-minute expired-candle APIs; current repo acquisition path is blocked only by missing `UPSTOX_ACCESS_TOKEN`.
+- **OptionsData.shop:** strongest commercial raw-data candidate; public catalog advertises full-chain NIFTY 1-minute Parquet through Sep-2026, including the frozen gap, subject to authorized purchase/download and source-equivalence audit.
+- **NSE:** official provenance; public contract-wise history is daily, while 1-minute snapshot and historical order/trade data are licensed products.
+- **MoneyTicks:** advertises 1-minute expired-option API/export but is currently not selling access.
+- **QuantFlo / AlgoTest:** independent backtest oracles, not accepted as raw repository data without an authorized export/API and provenance audit.
+
+**Decision:** Phase 51 remains **DATA-BLOCKED**. No source will be selected based on strategy P&L. No parameter tuning or OOS inference is allowed before the registered data-quality gate passes.
+
+- [Phase 51 research plan](PHASE51_RESEARCH_PLAN.md)
+- [Phase 51 status](PHASE51_STATUS.md)
+- [Phase 51-1D source audit](results/phase51/PHASE51_1D_SOURCE_AUDIT.md)
+- [Phase 51-1D source manifest](results/phase51/phase51_1d_source_audit.json)
+- [Phase 51-1D action log](results/phase51/PHASE51_1D_CHAT_LOG.md)
+
+---
+
+## Phase 50B — Expanded Prior-Strategy Universe — COMPLETE / NO PROMOTION
 
 Phase 50B is the bounded continuation after Phase 50. It includes the user's seven supplied Tradetron strategies and previously developed strategy lineages discovered across the user's GitHub repositories.
 
