@@ -2271,3 +2271,29 @@ No error. New phase registered from the terminal Phase 50B evidence. No Phase 50
 
 ## 2026-10-09 — Phase 51-1 data audit
 F51-001: the initially selected NIFTY spot cache ends 2026-07-02 while the frozen OOS window extends to 2026-08-04. No strategy P&L was calculated from this incomplete source. The OOS window remains frozen. A separate spot-source fallback and overlap audit is required before replay.
+
+
+## 2026-10-09 — Phase 51 tooling audit
+
+### F51-002 — Local repository clone unavailable
+The container runtime attempted a read-only clone of the public repository for independent file inspection, but outbound DNS/network access was unavailable (`Could not resolve host: github.com`).
+
+**Evidence status:** tooling-only; no repository or numerical evidence changed.
+
+**Correction:** Repository inspection continued exclusively through the authenticated GitHub connector, including branch, file, commit and Actions APIs.
+
+**Prevention:** Prefer the GitHub connector for repository access; use the container only when the required bytes are already locally available or network access is known to work.
+
+### F51-003 — Fallback audit was initially only a download/print stub
+The Phase-51 fallback scripts created in the prior step downloaded the Jitendra12421 spot file and printed its columns/tail but did not yet enforce the registered schema, full OOS coverage, timestamp integrity, or overlap-discrepancy gate.
+
+**Evidence status:** no strategy P&L was calculated; no scientific evidence was produced.
+
+**Correction:** The fallback scripts are being replaced by explicit acquisition, coverage, timestamp-integrity and overlap-comparison gates before replay.
+
+### F51-004 — Repository update batch orchestration syntax error
+A multi-file update script failed in the tool runtime with a JavaScript `SyntaxError` before any GitHub write occurred.
+
+**Evidence status:** tooling-only; no repository or numerical evidence changed.
+
+**Correction:** Subsequent Phase-51 writes are being performed as deterministic one-file operations with fresh SHA reads where needed.
