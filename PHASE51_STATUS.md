@@ -31,3 +31,7 @@ The frozen option source currently ends at expiry 2026-07-21, leaving 2026-07-28
 
 ### Phase 51-1B — Options completeness: PENDING RERUN
 The original options file stops at expiry 2026-07-21. The 2026-07-28 and 2026-08-04 blocks are being validated from an independent 1-minute options source before replay.
+
+
+### Phase 51-1B — Options data gate
+Status: BLOCKED. The public supplemental files checked for the missing 2026-07-28 and 2026-08-04 expiries end on 2026-07-02. No OOS strategy result has been calculated.
