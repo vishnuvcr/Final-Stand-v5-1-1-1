@@ -94,14 +94,20 @@ for day, g in oos.groupby(oos.timestamp.dt.date):
     if len(diffs):
         gap_max = max(gap_max, day_gap)
         gap_events += int((diffs > 5).sum())
-if short_session_failures:
-    raise AssertionError(f"Suspicious partial-session/source-gap dates: {short_session_failures}")
-if gap_events:
-    raise AssertionError(f"OOS internal timestamp gaps >5 minutes: {gap_events}")
+coverage_gate = {
+    "full_window_endpoints": bool(work.timestamp.min() <= OOS_START and work.timestamp.max() >= OOS_END),
+    "minimum_oos_rows": bool(len(oos) >= 18000),
+    "no_short_or_fragmented_days": len(short_session_failures) == 0,
+    "no_internal_gap_gt5min": gap_events == 0,
+}
+coverage_gate["PASS"] = all(coverage_gate.values())
 
-assert work.timestamp.min() <= OOS_START, f"fallback starts after OOS start: {work.timestamp.min()}"
-assert work.timestamp.max() >= OOS_END, f"fallback ends before OOS end: {work.timestamp.max()}"
-assert len(oos) >= 18000, f"unexpectedly small OOS row count: {len(oos)}"
+if not coverage_gate["full_window_endpoints"]:
+    raise AssertionError(f"Fallback endpoint coverage failure: min={work.timestamp.min()} max={work.timestamp.max()}")
+if not coverage_gate["minimum_oos_rows"]:
+    raise AssertionError(f"unexpectedly small OOS row count: {len(oos)}")
+
+# Persist the diagnostic manifest before failing closed on session-quality issues.
 
 manifest = {
     "source": {"repo_id": REPO_ID, "filename": FILENAME},
@@ -123,8 +129,12 @@ manifest = {
     "oos_max_internal_gap_minutes": gap_max,
     "oos_gap_events_gt5min": gap_events,
     "duplicate_timestamps": dup,
+    "coverage_gate": coverage_gate,
+    "short_session_failures": short_session_failures,
 }
 
 Path("results/phase51").mkdir(parents=True, exist_ok=True)
 Path("results/phase51/spot_fallback_manifest.json").write_text(json.dumps(manifest, indent=2))
 print(json.dumps(manifest, indent=2))
+if not coverage_gate["PASS"]:
+    raise SystemExit("FALLBACK_COVERAGE_REJECTED: see spot_fallback_manifest.json")
