@@ -1,0 +1,33 @@
+{
+  "source_gate_reference": {
+    "phase": "51-1",
+    "status": "BLOCKED_DATA_AVAILABILITY",
+    "original_options_source": {
+      "repository": "rissin/nse-options-intraday",
+      "file": "upstox_intraday/NIFTY/NIFTY_2026.parquet",
+      "sha256": "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73"
+    },
+    "frozen_partial_window": ["2026-04-21", "2026-07-21"],
+    "observed_expiries": [
+      "2026-04-21",
+      "2026-04-28",
+      "2026-05-05",
+      "2026-05-12",
+      "2026-05-19",
+      "2026-05-26",
+      "2026-06-02",
+      "2026-06-09",
+      "2026-06-16",
+      "2026-06-23",
+      "2026-06-30",
+      "2026-07-07",
+      "2026-07-14",
+      "2026-07-21"
+    ],
+    "unresolved_missing_expiries": [
+      "2026-07-28",
+      "2026-08-04"
+    ],
+    "provenance": "Copied from the Phase-51-1 preregistered source-gate record before any Phase-51-2 P&L interpretation."
+  }
+}
