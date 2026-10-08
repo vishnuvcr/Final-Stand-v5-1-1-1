@@ -2,14 +2,26 @@
 
 ## 2026-10-09 — Phase initialized
 
-Phase 50B-3 closed with no VIX regime promotion. The bounded research now advances to the preregistered TT-03 far-OTM geometry phase.
+Phase 50B-3 closed with no VIX regime promotion. The bounded research advanced to the preregistered TT-03 far-OTM geometry phase.
 
-The frozen universe is BASE, OTM350 and OTM400. BASE is the accepted source-faithful control; only OTM350 and OTM400 require fresh replay.
+The frozen universe was BASE, OTM350 and OTM400. No additional geometry or parameter search was allowed.
 
-No additional geometry or parameter search is allowed.
+## 2026-10-09 — Numerical replay
 
-## 2026-10-09 — Numerical replay started
+Actions run 37848915637 produced complete OTM350 and OTM400 numerical replays. Both audits passed after correcting the missing TT03_DISTANCE environment export.
 
-Actions run 37848915637 started after correction of the BASE-verification dependency defect. BASE verification completed successfully. OTM350 and OTM400 are executing concurrently.
+Accepted replay results:
+- OTM350: 200 trades, 99.50% coverage, aggregate net ₹69,552.06, +50% stress ₹62,094.34.
+- OTM400: 200 trades, 99.50% coverage, aggregate net ₹48,998.58, +50% stress ₹41,636.62.
 
-No numerical result has been interpreted or accepted while replay remains incomplete.
+Both mutation candidates passed the preregistered development gate. OTM350 won on DEV +50% stress and was frozen.
+
+## 2026-10-09 — Protected interpretation
+
+Validation and 2026 HOLD were read only after the development selection was frozen. OTM350 remained below BASE on aggregate DEV, VAL, HOLD and cost-stress results. No promotion claim was made.
+
+## 2026-10-09 — Phase close
+
+Phase 50B-4 is closed. The frozen handoff is OTM350 versus fixed BASE for Phase 50B-6 statistical inference.
+
+The workflow publication defect was logged separately; scientific evidence was preserved in the uploaded Actions artifacts and the workflow was corrected to stage outputs before branch reset and rebase before push.
