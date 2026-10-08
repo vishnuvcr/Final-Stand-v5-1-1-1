@@ -1,3 +1,34 @@
+# Phase 51 — CURRENT STATUS: DATA AVAILABILITY STOP
+
+Phase 51 has reached its first hard data gate and **does not proceed to OOS replay**.
+
+**Frozen fresh OOS window:** 2026-04-21 through 2026-08-04.
+
+| Gate | Status |
+|---|---|
+| Registry / OOS freeze | PASS |
+| Spot source validation | PASS |
+| Original NIFTY options source coverage | FAIL — ends at 2026-07-21 |
+| Public supplemental option source | FAIL — missing-expiry files end 2026-07-02 and common-expiry coverage is insufficient |
+| Authenticated Upstox recovery path | BLOCKED — UPSTOX_ACCESS_TOKEN not configured |
+| TT-03 / TT-03 OTM350 fresh OOS P&L | NOT RUN |
+| Strategy promotion | NONE |
+
+The research has **not** shortened the OOS window, dropped the last two expiry blocks, fabricated option prices, or selected a data source using P&L.
+
+- [Phase 51 research plan](PHASE51_RESEARCH_PLAN.md)
+- [Phase 51 status](PHASE51_STATUS.md)
+- [Phase 51-1 source-gate report](results/phase51/PHASE51_1_SOURCE_GATE_REPORT.md)
+- [Structured source-gate decision](results/phase51/phase51_1_source_gate_final.json)
+- [Research log](RESEARCH_LOG.md)
+- [Error log](ERROR_LOG.md)
+- [Options augmentation branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-1B-options-augmentation)
+- [Authenticated Upstox branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-1C-authenticated-options-acquisition)
+
+Phase 51-2 through Phase 51-6 are **not started** because the frozen OOS option dataset is not yet complete.
+
+---
+
 ## Phase 50B — Expanded Prior-Strategy Universe — IN PROGRESS
 
 Phase 50B is the bounded continuation after Phase 50. It includes the user's seven supplied Tradetron strategies and previously developed strategy lineages discovered across the user's GitHub repositories.
