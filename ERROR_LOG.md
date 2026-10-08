@@ -2472,3 +2472,17 @@ Prevention: run the authorized-credential inventory before repeatedly launching 
 Phase 51-1G GitHub Actions run 37844364676 attempted direct public downloads of options/NIFTY/2026-07-21.parquet, 2026-07-28.parquet and 2026-08-04.parquet from codepyx23/india-index-options-1m-bucket. The advertised path returned HTTP 404. No data bytes were acquired and no P&L was calculated.
 
 Prevention: distinguish a public bucket/catalog claim from an actually resolvable file path before treating it as an alternative source.
+
+
+## 2026-10-09 — Phase 51-1G
+
+### Error F51-025 — Public exact-expiry archive exhaustion
+**Symptom:** Public exact-date searches did not locate an independent raw 1-minute NIFTY option archive containing both 2026-07-28 and 2026-08-04 expiry blocks.
+
+**Evidence status:** DATA-AVAILABILITY BLOCKER; no numerical evidence affected because OOS replay was prohibited before the gate.
+
+**Cause:** Thetrademarkk target files are present by filename/commit but the acquired bytes are truncated at 2026-07-02; CodePyx advertises a bucket structure but the required NIFTY expiry paths returned HTTP 404 in the automated acquisition audit; other open datasets stop before the frozen endpoint or expose only broker-generated/sample data.
+
+**Correction:** No synthetic reconstruction, shortened OOS, or P&L-based source selection was permitted. The source-search phase was closed after the registered finite alternatives were exhausted.
+
+**Prevention:** Maintain the frozen 2026-04-21→2026-08-04 OOS window and fail closed until an independently reproducible public raw archive or authorized raw source passes the existing coverage/equivalence gate.
