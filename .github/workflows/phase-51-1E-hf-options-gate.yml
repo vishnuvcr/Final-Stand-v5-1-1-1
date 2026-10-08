@@ -1,3 +1,4 @@
+# Phase 51-1E: frozen-gap options validation; fail closed before OOS P&L.
 name: Phase 51-1E HF Options Gate
 
 on:
