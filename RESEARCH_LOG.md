@@ -994,3 +994,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Fallback workflow run **37835085807** downloaded the independent spot source but rejected three short OOS dates under the first row-count-only session gate.
 - The audit logic was corrected to distinguish a contiguous shortened session from a truncated fragment using row count, intraday span and internal timestamp gaps.
 - No strategy P&L or candidate selection occurred before this correction.
+
+
+## 2026-10-09 — Phase 51-1 option-source completeness audit
+- The frozen OOS window remains 2026-04-21 through 2026-08-04.
+- The initial rissin NIFTY 1-minute options file currently reaches only 2026-07-21 and therefore omits the 2026-07-28 and 2026-08-04 expiry blocks.
+- The missing blocks were detected before any OOS strategy P&L was calculated.
+- Thetrademarkk's NIFTY options directory explicitly contains 2026-07-28 and 2026-08-04 1-minute files, so an independent pre-P&L augmentation and overlap gate is now registered.
