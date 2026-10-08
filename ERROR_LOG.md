@@ -2214,3 +2214,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No numerical result was inferred from the unavailable log.
 - Scientific impact: none; execution continues from the authoritative run state.
 - Action: rely on workflow job/run state and persisted artifacts only; do not retry or alter research code solely for this endpoint error.
+
+
+## F50B-094 — Far-OTM publication push race (2026-10-08)
+- Run **37762837711** completed all three frozen geometry replays and the selection audit successfully, but the final publication push was rejected as non-fast-forward because the research branch received a concurrent repository update while Actions was running.
+- Scientific impact: **none**. Numerical replay, BASE regression, coverage gate and preregistered selection completed before publication. No result was altered by the push failure.
+- Selection result already printed by the authoritative audit: **OTM350 frozen for validation**. DEV/VAL/HOLD values are recorded in the run log; holdout remains protected.
+- Recovery: hardened the publication step to fetch/rebase the current branch before pushing. This is an orchestration-only correction; frozen geometry, selection criteria and cost assumptions are unchanged.
+- Prevention: Actions publication must reconcile concurrent branch updates before pushing generated artifacts.
