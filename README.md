@@ -1,3 +1,16 @@
+
+
+## Phase 51-1G — Open-source recovery closed / DATA-BLOCKED (2026-10-09)
+
+The finite public-source recovery pass is complete. Exact-date searches found no independent raw 1-minute NIFTY option archive covering both frozen missing expiries **2026-07-28** and **2026-08-04**. The CodePyx HF bucket remains non-reproducible for the required NIFTY expiry paths (HTTP 404 in the registered audit). The visible thetrademarkk files are not accepted because the actual bytes downloaded by Actions fail endpoint coverage and common-expiry equivalence.
+
+**No OOS P&L, parameter tuning, or inference has been performed from incomplete/synthetic/oracle data.** The frozen OOS remains **2026-04-21 → 2026-08-04**. Phase 51 can resume only when an authorized raw archive/token or a newly discoverable independent public raw archive passes the existing data-quality gate.
+
+- [Phase 51-1G open-source audit](results/phase51/PHASE51_1G_OPEN_SOURCE_AUDIT.md)
+- [Phase 51 status](PHASE51_STATUS.md)
+- [Phase 51 research plan](PHASE51_RESEARCH_PLAN.md)
+- [Error log](ERROR_LOG.md)
+- [Research log](RESEARCH_LOG.md)
 ## Phase 51-1E — OptionsData.shop raw-data gate — REGISTERED / WAITING FOR AUTHORIZED BYTES
 
 The current NIFTY 1-minute commercial pack advertises coverage from **2026-06-29 through 2026-09-25**, which contains both missing frozen OOS expiries (**2026-07-28** and **2026-08-04**). The public free sample covers only 2026-09-15 through 2026-09-17 and cannot fill the frozen gap.
