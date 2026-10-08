@@ -2436,3 +2436,13 @@ The first Phase-51-1E validator assumed `datetime`, `expiry_date`, `strike_price
 **Correction:** Phase 51-1E now reuses the established source-normalization/equivalence engine, with the preregistered 10,000 matched-row and 80% common-expiry coverage thresholds, the registered price-equivalence checks, explicit duplicate detection, and expiry-day session checks.
 
 **Prevention:** validators must consume the canonical schema already established by the frozen data manifest/source scripts rather than inventing column aliases independently. Schema discovery must run before field access and must be persisted in the audit artifact.
+
+
+## 2026-10-09 — F51-021 — Incorrect minimum-timestamp assertion in expiry-series validation
+The corrected Phase-51-1E validator attempted to require the minimum timestamp of each expiry-series file to start on the expiry date. That is not the correct endpoint invariant: an expiry-series file should contain pre-expiry history, while the maximum timestamp is the endpoint that must reach the named expiry. The run therefore failed on a validator assertion before writing the audit artifact.
+
+**Scientific impact:** none. The underlying downloaded files were not rejected on their data values; the failure was in the validation assertion itself.
+
+**Correction:** remove the minimum-date equality requirement; require increasing timestamp bounds, require the maximum timestamp to reach the named expiry, and retain a separate expiry-day session-coverage gate.
+
+**Prevention:** distinguish start-of-series, end-of-series, and expiry-day session invariants explicitly rather than conflating them.
