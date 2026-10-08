@@ -70,3 +70,7 @@ Validator: research/phase51_1E_hf_options_gate.py
 The initial HF gate failed only because the validator expected `datetime`/ `expiry_date` fields that are not present in the actual source. Actions logs show both missing-expiry files downloaded successfully before the exception. The validator has been replaced with the established Phase-51 source normalization/equivalence engine, corrected to the registered 10,000-row/80% common-expiry threshold and explicit session/duplicate checks.
 
 **Current status: VALIDATION RUNNING.** No OOS P&L has been calculated.
+
+
+### 2026-10-09 — Phase 51-1E validator endpoint correction
+The latest full-data run reached the source audit but stopped on an incorrect minimum-timestamp assertion. This is a validator defect, not a source-data decision. The corrected gate now records full file spans, checks that each file reaches its named expiry at the maximum timestamp, and separately records expiry-day session coverage. No OOS P&L has been calculated.
