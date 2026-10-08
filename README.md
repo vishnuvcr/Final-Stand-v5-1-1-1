@@ -1006,3 +1006,10 @@ A dedicated branch `phase-50b-chronological-validation` now runs the next finite
 - **16 fixed hypotheses; no robust strategy across all four registered cost models.** TT-03 passed net/net50/net20 but failed net20_50 after Holm correction. TT-03 OTM350 likewise passed net/net50/net20 but failed net20_50. TT-04 and TT-05 did not pass the primary gate.
 - **Final Phase 50B decision so far: NO PROMOTION.** The finite program now advances to 50B-7 for the complete manuscript, figures, tables, appendices and final decision.
 - [Phase 50B-6 status](PHASE50B_6_STATUS.md) · [Inference results](results/phase50b/phase50b6_statistical_inference/hypothesis_results.csv) · [Research plan](PHASE50B_RESEARCH_PLAN.md) · [Error log](ERROR_LOG.md)
+
+
+### Phase 50B-7 final manuscript — 2026-10-09
+- Terminal finite phase initialized on branch phase-50b-final-manuscript.
+- Complete manuscript: FINAL_STAND_PHASE50B_MANUSCRIPT.md.
+- Figure generation: research/phase50b7_make_figures.py.
+- Final decision remains **NO PROMOTION** because no strategy passed the all-cost robustness gate.
