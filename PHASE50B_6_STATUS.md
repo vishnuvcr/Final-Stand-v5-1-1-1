@@ -42,3 +42,7 @@ A strategy is **robust across registered costs** only if all four cost models pa
 
 ## Next step
 After this finite inference run is audited, advance exactly once to Phase 50B-7 final manuscript/figures/tables/appendices/final decision.
+
+
+## 2026-10-09 — Controlled correction after run 37831453896
+Run 37831453896 failed before statistical output because the block-bootstrap routine accidentally included expiry timestamps in the numeric sample (F50B-097). No inference result was accepted. The correction isolates the P&L vector while preserving expiry-day block membership; all preregistered hypotheses, cost models, seed, replicate counts, Holm family and protected holdout remain unchanged. A clean rerun is required.
