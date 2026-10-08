@@ -2446,3 +2446,13 @@ The corrected Phase-51-1E validator attempted to require the minimum timestamp o
 **Correction:** remove the minimum-date equality requirement; require increasing timestamp bounds, require the maximum timestamp to reach the named expiry, and retain a separate expiry-day session-coverage gate.
 
 **Prevention:** distinguish start-of-series, end-of-series, and expiry-day session invariants explicitly rather than conflating them.
+
+
+## 2026-10-09 — F51-022 — HF supplemental files fail actual-byte coverage/equivalence gate
+The current public thetrademarkk/india-index-options-1m files named 2026-07-28 and 2026-08-04 were downloaded successfully, but the actual data ends on 2026-07-02 and contains no observations on the named expiry days. Common-expiry coverage versus the frozen RISSIN source was 34.57%, 14.95%, and 4.60% for 7-Jul, 14-Jul, and 21-Jul respectively, below the registered 80% threshold. The 7-Jul common comparison also failed the 10 bp p95 relative-error limit at 14.79 bp.
+
+Scientific impact: source is rejected before any OOS P&L. No strategy conclusion is affected.
+
+Correction: retain the frozen OOS window and move to the next authorized raw source rather than shortening the window or selecting a source by P&L.
+
+Prevention: vendor filename/catalog coverage is feasibility evidence only; actual file bytes and common-expiry equivalence must determine source acceptance.
