@@ -1,4 +1,4 @@
-name: Phase 51-1A - Spot Fallback Data Gate
+name: Phase 51-1A - Spot Source Validation and Fallback Gate
 on:
   workflow_dispatch:
   push:
@@ -59,22 +59,37 @@ jobs:
             data/phase51/third_spot/
           if-no-files-found: error
           retention-days: 14
-      - name: Enforce final fallback gate
+      - name: Freeze validated spot source
         if: always()
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
-          m=json.load(open('results/phase51/spot_fallback_manifest.json'))
-          g=json.load(open('results/phase51/spot_fallback_gate.json'))
-          third=json.load(open('results/phase51/third_spot_gate.json'))
-          assert third.get('PASS') is True, third
-          assert m['coverage_gate']['PASS'] is True, m.get('coverage_gate')
-          assert g.get('PASS') is True, g
-          assert m['full_min_timestamp'] <= '2026-04-21'
-          assert m['full_max_timestamp'] >= '2026-08-04'
-          assert m['duplicate_timestamps'] == 0
-          print('fallback gate PASS')
+          from pathlib import Path
+          third_gate=json.load(open('results/phase51/third_spot_gate.json'))
+          third=json.load(open('results/phase51/third_spot_audit.json'))
+          rejected=json.load(open('results/phase51/spot_fallback_manifest.json'))
+          assert third_gate.get('PASS') is True, third_gate
+          selected=third['source']
+          freeze={
+              'status':'PASS',
+              'selected_source':selected,
+              'selected_oos_window':third['oos_window'],
+              'selected_oos_rows':third['oos_rows'],
+              'selected_first_timestamp':third['oos_first_timestamp'],
+              'selected_last_timestamp':third['oos_last_timestamp'],
+              'selected_bad_days':third['bad_days'],
+              'direct_primary_overlap':third['primary_overlap'],
+              'direct_primary_overlap_gate':third['primary_overlap_gate'],
+              'fallback_overlap':third['fallback_overlap'],
+              'fallback_overlap_gate':third['fallback_overlap_gate'],
+              'rejected_fallback_source':rejected['source'],
+              'rejected_fallback_coverage_gate':rejected['coverage_gate'],
+              'rejected_fallback_short_session_failures':rejected['short_session_failures'],
+              'selection_basis':'data-quality evidence only; frozen before any OOS strategy P&L calculation'
+          }
+          Path('results/phase51/validated_spot_source.json').write_text(json.dumps(freeze,indent=2))
+          print(json.dumps(freeze,indent=2))
           PY
       - name: Publish audited gate
         if: success()
@@ -82,7 +97,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase51
-          git commit -m "Phase 51-1A: publish spot fallback gate"
+          git commit -m "Phase 51-1A: publish validated spot source"
           git fetch origin phase-51-1-cost-data-calibration
           git rebase origin/phase-51-1-cost-data-calibration
           git push origin HEAD:phase-51-1-cost-data-calibration
