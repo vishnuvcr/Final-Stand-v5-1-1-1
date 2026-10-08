@@ -46,3 +46,15 @@ After this finite inference run is audited, advance exactly once to Phase 50B-7 
 
 ## 2026-10-09 — Controlled correction after run 37831453896
 Run 37831453896 failed before statistical output because the block-bootstrap routine accidentally included expiry timestamps in the numeric sample (F50B-097). No inference result was accepted. The correction isolates the P&L vector while preserving expiry-day block membership; all preregistered hypotheses, cost models, seed, replicate counts, Holm family and protected holdout remain unchanged. A clean rerun is required.
+
+
+## 2026-10-09 — Phase 50B-6 inference PASS, no robust promotion
+Corrected run **37832396945** passed inference, audit and publication. Across 16 fixed strategy×cost hypotheses, Holm-adjusted primary inference identified positive evidence for TT-03 at net/net50/net20 and for TT-03 OTM350 at net/net50/net20. Neither strategy passed the registered net20_50 robustness gate. TT-04 and TT-05 had no primary-positive hypothesis after the bootstrap + Holm criteria. Therefore **no strategy is robust across all registered cost models and none is promoted**. The 2026 HOLD remained protected and was only reported descriptively.
+
+Key DEV+VAL results:
+- TT-03 mean P&L/trade: ₹423.69 net; ₹385.76 net50; ₹352.89 net20; ₹279.56 net20_50. The net20_50 Holm-adjusted p=0.08099 and bootstrap lower CI=₹36.65, so the strict statistical gate fails on multiplicity despite a positive bootstrap lower bound.
+- TT-03 OTM350: ₹327.14; ₹289.89; ₹256.34; ₹183.69 respectively. net20_50 Holm-adjusted p=0.15928, so the strict gate fails.
+- TT-04 and TT-05 have bootstrap CIs crossing zero at every cost model and no Holm-rejected primary hypothesis.
+
+### Decision
+**NO PROMOTION.** The finite Phase 50B research now advances exactly once to 50B-7 final manuscript/figures/tables/appendices/final decision. No further tuning is permitted inside this phase.
