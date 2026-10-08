@@ -1,0 +1,58 @@
+name: Phase 51-1B - Options Completeness and Augmentation Gate
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-51-1-cost-data-calibration]
+    paths:
+      - trigger/phase51_1_options_augmentation.start
+      - research/phase51_1_options_augmentation.py
+permissions:
+  contents: write
+jobs:
+  options_gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: phase51-options-${{ runner.os }}-v1
+      - name: Install data tools
+        run: python -m pip install --disable-pip-version-check --no-input pandas pyarrow huggingface_hub
+      - name: Audit option completeness and supplemental equivalence
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase51_1_options_augmentation.py
+      - name: Upload options gate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase51-1-options-augmentation
+          path: |
+            results/phase51/options_augmentation_audit.json
+            results/phase51/validated_option_source.json
+            data/phase51/options_augmentation/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Publish validated option source
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          a=json.load(open('results/phase51/options_augmentation_audit.json'))
+          v=json.load(open('results/phase51/validated_option_source.json'))
+          assert a.get('PASS') is True
+          assert v.get('status') == 'PASS'
+          assert a['missing_expiries'] == ['2026-07-28','2026-08-04']
+          print('options augmentation PASS')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase51
+          git commit -m "Phase 51-1B: publish validated option augmentation"
+          git fetch origin phase-51-1-cost-data-calibration
+          git rebase origin/phase-51-1-cost-data-calibration
+          git push origin HEAD:phase-51-1-cost-data-calibration
