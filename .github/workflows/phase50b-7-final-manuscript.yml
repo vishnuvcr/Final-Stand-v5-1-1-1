@@ -1,0 +1,52 @@
+name: Phase 50B-7 - Final Manuscript
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-final-manuscript
+    paths:
+      - trigger/phase50b_7.start
+      - research/phase50b7_make_figures.py
+      - FINAL_STAND_PHASE50B_MANUSCRIPT.md
+permissions:
+  contents: write
+jobs:
+  manuscript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Install plotting dependencies
+        run: python -m pip install --no-input numpy pandas matplotlib
+      - name: Preflight final evidence
+        run: |
+          test -f results/phase50b/phase50b5_chronological_validation/chronological_strategy_summary.csv
+          test -f results/phase50b/phase50b6_statistical_inference/hypothesis_results.csv
+          python - <<'PY'
+          import pandas as pd
+          d=pd.read_csv('results/phase50b/phase50b6_statistical_inference/hypothesis_results.csv')
+          assert len(d)==16
+          assert not d.groupby('strategy').primary_positive.all().any()
+          PY
+      - name: Generate figures
+        run: python research/phase50b7_make_figures.py
+      - name: Audit figures
+        run: |
+          test -s results/phase50b/final_manuscript/TT03_equity.png
+          test -s results/phase50b/final_manuscript/TT03_OTM350_equity.png
+          test -s results/phase50b/final_manuscript/TT04_equity.png
+          test -s results/phase50b/final_manuscript/TT05_equity.png
+          test -s results/phase50b/final_manuscript/mean_pnl_cost_sensitivity.png
+          test -s results/phase50b/final_manuscript/cost_sensitivity_lines.png
+      - name: Publish final evidence
+        run: |
+          git add results/phase50b/final_manuscript
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-7: publish final figures"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-50b-final-manuscript
+          git rebase origin/phase-50b-final-manuscript
+          git push origin HEAD:phase-50b-final-manuscript
