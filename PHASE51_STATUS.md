@@ -47,3 +47,9 @@ Workflow run 37839447686 reached the Upstox acquisition step but could not proce
 Source manifest: results/phase51/phase51_1d_source_audit.json
 Detailed audit: results/phase51/PHASE51_1D_SOURCE_AUDIT.md
 Action log: results/phase51/PHASE51_1D_CHAT_LOG.md
+
+
+### Phase 51-1E — OptionsData.shop commercial raw-data gate
+**REGISTERED — awaiting authorized archive bytes.** Current catalog coverage explicitly contains 2026-07-28 and 2026-08-04. The free sample does not. A validation gate is registered before any OOS P&L: archive hash, exact expiry coverage, schema/timestamp/duplicate integrity, session continuity, common-expiry equivalence against RISSIN, and 95% mandatory replay coverage. No strategy result is calculated yet.
+
+Gate specification: results/phase51/PHASE51_1E_OPTIONSDATA_GATE.md
