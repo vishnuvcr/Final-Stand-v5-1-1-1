@@ -1,21 +1,36 @@
-## Phase 51 — CURRENT RESEARCH STATUS: DATA AVAILABILITY STOP
+## Phase 51 — CURRENT RESEARCH STATUS: FULL-WINDOW DATA AVAILABILITY STOP
 
-**Latest authoritative status (2026-10-09): the fresh Phase-51 OOS replay has not started.**
+**Latest authoritative status (2026-10-09): full Phase-51 economic OOS validation remains blocked.**
 
-The frozen OOS window remains **2026-04-21 through 2026-08-04**. Spot-source validation passed, but the primary NIFTY 1-minute option file stops at expiry **2026-07-21**. The public supplemental option source tested for 2026-07-28 and 2026-08-04 failed endpoint and common-expiry coverage checks. The authenticated Upstox recovery path is currently blocked because the repository does not have the required **UPSTOX_ACCESS_TOKEN** secret.
+The frozen OOS window remains **2026-04-21 through 2026-08-04**. The primary NIFTY 1-minute options source stops at expiry **2026-07-21**; the tested public augmentation did not satisfy the registered endpoint/common-expiry quality gates for **2026-07-28** and **2026-08-04**; the authenticated Upstox recovery path is blocked by the missing **UPSTOX_ACCESS_TOKEN** secret.
 
-**No TT-03 or TT-03 OTM350 OOS P&L, statistical inference, ranking, or promotion decision has been produced from this frozen window.** The OOS window has not been shortened and missing option prices have not been synthesized.
+### Phase 51-2 partial-data audit result
+
+A separate, explicitly non-confirmatory Phase-51-2 branch audited the currently complete endpoint **2026-04-21 through 2026-07-21**.
+
+The frozen Phase-51-1 source record contains **14 observed expiries, all Tuesdays**. The frozen TT-03 rule requires entry exactly **three calendar days before expiry**. Every scheduled entry date therefore falls on Saturday, leaving **0 eligible campaigns** for both frozen TT-03 BASE (300/350/400) and TT-03 OTM350 (350/400/450).
+
+Therefore:
+- **0 trades**
+- **0 candidate campaigns**
+- **No P&L evidence**
+- **No statistical inference**
+- **No promotion decision**
+
+This is a calendar/protocol outcome, **not** evidence that TT-03 is profitable or unprofitable. No strategy rule was changed, and the full Phase-51 window was not shortened.
 
 Authoritative Phase-51 files:
 - [Phase 51 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/PHASE51_RESEARCH_PLAN.md)
-- [Phase 51 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/PHASE51_STATUS.md)
-- [Phase 51-1 source-gate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/results/phase51/PHASE51_1_SOURCE_GATE_REPORT.md)
-- [Structured source-gate decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/results/phase51/phase51_1_source_gate_final.json)
-- [Phase 51 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/ERROR_LOG.md)
-- [Phase 51 research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/RESEARCH_LOG.md)
+- [Phase 51 source-gate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/results/phase51/PHASE51_1_SOURCE_GATE_REPORT.md)
+- [Phase 51-1 structured decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1-cost-data-calibration/results/phase51/phase51_1_source_gate_final.json)
+- [Phase 51-2 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-2-available-data-partial-oos)
+- [Phase 51-2 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-2-available-data-partial-oos/results/phase51/PHASE51_2_PARTIAL_OOS_REPORT.md)
+- [Phase 51-2 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-2-available-data-partial-oos/results/phase51/PHASE51_2_PARTIAL_OOS_STATUS.md)
+- [Phase 51-2 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-2-available-data-partial-oos/results/phase51/PHASE51_2_ERROR_LOG.md)
+- [Phase 51-2 final Actions run 37847094909](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37847094909)
 - [Authenticated Upstox recovery branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-1C-authenticated-options-acquisition)
 
-Phase 51-2 through 51-6 are **not started** because the frozen option dataset is incomplete.
+**Phase 51-3 through 51-6 are not advanced from this partial audit.** A calendar-normalized three-trading-day interpretation, if researched, must be separately pre-registered as a new strategy specification rather than inserted into Phase 51.
 
 ---
 
