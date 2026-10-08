@@ -1,55 +1,53 @@
 # Phase 51-2 — Available-data partial OOS
 
-**Status: ACTIVE — OPPORTUNITY-CALENDAR AUDIT READY**
+**Status: CLOSED — NO ELIGIBLE CAMPAIGNS / NON-INFORMATIVE FOR PERFORMANCE**
 
 ## Scope
-This study uses only the currently complete frozen option-data endpoint: **2026-04-21 through 2026-07-21**.
 
-It is deliberately separate from the complete Phase-51 OOS validation, whose frozen window remains **2026-04-21 through 2026-08-04**.
+This study used only the currently complete frozen option-source interval: **2026-04-21 through 2026-07-21**.
+
+It remained separate from the complete Phase-51 OOS validation window, which is still frozen at **2026-04-21 through 2026-08-04**.
 
 ## Frozen candidates
-- TT-03 BASE: 300/350/400 symmetric ratio geometry.
-- TT-03 OTM350: 350/400/450 symmetric ratio geometry.
 
-The implementation uses distance 300 and distance 350 respectively. No parameter is selected from this study.
+- TT-03 BASE: 300/350/400 geometry.
+- TT-03 OTM350: 350/400/450 geometry.
 
-## Execution model
-Existing audited TT-03 V5 engine; one-tick execution stress; Paytm Money ₹10 and ₹20 brokerage scenarios; statutory charges; explicit coverage exclusions; no forward-fill or synthetic quote repair.
+No parameter was selected or tuned.
 
-## Latest execution state
-Runs **37845718056** and **37845741103** failed before numerical execution because the wrapper could not import the inherited replay module when invoked as a file.
+## Final result
 
-The wrapper has been corrected and the artifact output root has been isolated to `results/phase51/partial_oos`.
+The Phase-51-1 source gate records **14 observed expiries** in the available interval, all Tuesdays. Under the frozen TT-03 rule, entry is exactly three calendar days before expiry. Every scheduled entry date therefore falls on Saturday.
 
-These failed runs are non-evidence. The corrected branch push is expected to trigger the registered Actions replay automatically.
+Result for both geometries:
 
-## Interpretation rule
-Positive partial-OOS results are evidence of performance over the available complete interval only. They cannot close the complete Phase-51 gate or establish endpoint confirmation for 2026-07-28 and 2026-08-04.
+- Observed expiries: **14**
+- Eligible expiries: **0**
+- Candidate trades: **0**
+- Completed trades: **0**
+- Performance P&L: **not applicable**
+- Coverage: **not applicable because no candidate campaigns exist**
+- Promotion: **none**
 
-The Actions artifacts must pass zero-error, >=95% coverage and complete cost-output checks before numerical interpretation.
+This is a protocol/calendar outcome, not a strategy P&L failure.
 
+## Workflow evidence
 
-## Latest execution state
+- Final successful Actions run: **37847094909**
+- d300 summary: results/phase51/partial_oos/d300/summary.json
+- d350 summary: results/phase51/partial_oos/d350/summary.json
+- d300 audit: results/phase51/partial_oos/d300/opportunity_audit.json
+- d350 audit: results/phase51/partial_oos/d350/opportunity_audit.json
+- Report: results/phase51/PHASE51_2_PARTIAL_OOS_REPORT.md
 
-Run **37846113617** passed the import stage but failed the fail-closed artifact validation because both replay jobs discovered zero campaigns. This was traced to inherited Phase-50B opportunity enumeration rather than missing OOS data.
+All earlier failed runs remain logged as non-evidence in the Phase-51-2 error log.
 
-The wrapper has been corrected to enumerate explicit expiry files from the frozen Hugging Face options source using the existing `list_expiry_files()` function. The trade engine and frozen research rules remain unchanged.
+## Interpretation
 
-Run 37846113617 is non-evidence. Push-triggered run **37846264039** is the registered validation attempt for this correction.
+Phase 51-2 provides **no economic evidence for or against TT-03** because the frozen rule creates no eligible fresh-OOS campaigns in the currently available endpoint.
 
-## Latest execution state — 2026-10-09
+The complete Phase-51 gate is still blocked by the missing 2026-07-28 and 2026-08-04 option data. Therefore Phase 51-3 onward is not advanced from this partial study.
 
-Run **37846264039** failed before numerical execution with an import/attribute error in the wrapper's source-manifest correction.
+## Next permitted research direction
 
-The wrapper has now been corrected to import `list_expiry_files()` directly from `phase43_vix_strategy_sweep.py`. No strategy rule, parameter, cost model or frozen endpoint was changed.
-
-Run 37846264039 is non-evidence. The next push-triggered Actions run is the validation attempt for this correction.
-
-  
-## Latest execution state
-
-Run **37846507265** reached the fail-closed validator with zero campaigns. The audit traced this to the frozen three-calendar-day entry rule combined with the all-Tuesday expiry set in the available partial window; no strategy P&L was produced.
-
-Runs **37846806366** and **37846815991** failed because their concurrent checkouts predated the verified source-gate reference artifact. They are repository-ordering non-evidence.
-
-The current branch now contains the verified Phase-51-1 source-gate reference artifact, and the wrapper is being retriggered from a commit that includes it.
+A separate future research phase may study a calendar-normalized or trading-day interpretation of the three-day rule. Such a mutation must be separately pre-registered and must not be retroactively introduced into Phase 51.
