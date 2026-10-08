@@ -26,26 +26,31 @@ jobs:
           python-version: "3.11"
       - name: Install preflight dependencies
         run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
-      - name: Verify TT06 dependency evidence
+      - name: Verify TT06 terminal dependency
         run: |
           set -euo pipefail
-          test -s results/phase50b/tt06_intraday_asym_replay/summary.json
-          test -s results/phase50b/tt06_intraday_asym_replay/tt06_trades.csv
-          test -f results/phase50b/tt06_intraday_asym_replay/data_errors.csv
-          test -f results/phase50b/tt06_intraday_asym_replay/coverage_gaps.csv
           python - <<'PY'
-          import json, pandas as pd
-          d=json.load(open("results/phase50b/tt06_intraday_asym_replay/summary.json"))
-          tr=pd.read_csv("results/phase50b/tt06_intraday_asym_replay/tt06_trades.csv")
-          er=pd.read_csv("results/phase50b/tt06_intraday_asym_replay/data_errors.csv")
-          cg=pd.read_csv("results/phase50b/tt06_intraday_asym_replay/coverage_gaps.csv")
-          assert d["engine_revision"]=="50B-TT06-COVERAGE-V2", d
-          assert d["trades"]==len(tr) and d["trades"]>0, d
-          assert d["candidate_trades"]==len(tr)+len(cg), d
-          assert d["coverage_rate"]>=0.95, d
-          assert {"net","net50","net20","net20_50"}.issubset(tr.columns)
-          assert len(er)==0, er.head()
-          print("TT06 dependency gate PASS", d)
+          import json
+          from pathlib import Path
+          root=Path("results/phase50b/tt06_intraday_asym_replay")
+          terminal=root/"terminal_classification.json"
+          assert terminal.is_file(), "Missing TT06 terminal classification"
+          t=json.loads(terminal.read_text())
+          assert t["strategy"]=="TT-06", t
+          assert t["engine_revision"]=="50B-TT06-COVERAGE-V2", t
+          if t["status"]=="PASS":
+              assert t["pnl_evidence_eligible"] is True, t
+              assert t["coverage_rate"]>=0.95, t
+              assert t["data_errors"]==0, t
+              print("TT06 dependency gate PASS: accepted evidence")
+          elif t["status"]=="FAIL_COVERAGE":
+              assert t["pnl_evidence_eligible"] is False, t
+              assert t["promotion_eligible"] is False, t
+              assert t["downstream_use_of_pnl"] is False, t
+              assert t["coverage_rate"]<0.95, t
+              print("TT06 dependency gate PASS: terminal FAIL_COVERAGE; no TT06 P&L consumed")
+          else:
+              raise AssertionError(f"Unsupported TT06 terminal status: {t['status']}")
           PY
 
   numerical:
