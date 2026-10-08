@@ -15,17 +15,18 @@ for _p in (str(REPO_ROOT), str(RESEARCH_ROOT)):
         sys.path.insert(0, _p)
 
 import research.phase50b_tt03_otm_distance_replay as base
+from phase43_vix_strategy_sweep import list_expiry_files as source_expiry_files
 
 # Partial-OOS study: use only the currently complete frozen-source endpoint.
 # This is deliberately NOT the full Phase-51 OOS validation.
 base.START = pd.Timestamp("2026-04-21", tz=base.TZ)
 base.END = pd.Timestamp("2026-07-21", tz=base.TZ)
 
-# The inherited engine's expiry_dates() reads the Phase-43 trade matrix, which
-# predates this fresh OOS interval. Phase-51-2 must enumerate expiry files from
-# the frozen option source itself; this changes only opportunity discovery, not
-# the frozen trade rules or candidate parameters.
-base.expiry_dates = base.list_expiry_files
+# The inherited Phase-50B engine enumerates expiry dates from a prior-phase
+# strategy trade matrix. Phase-51-2 must enumerate opportunities from the
+# frozen OOS option-source manifest instead. This changes only opportunity
+# discovery; the frozen TT-03 entry/exit/cost rules remain unchanged.
+base.expiry_dates = source_expiry_files
 
 # Publish into the Phase-51-2 namespace rather than the inherited Phase-50B
 # result tree. This prevents cross-phase artifact collisions and makes the
