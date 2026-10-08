@@ -71,3 +71,15 @@ The inherited TT-03 engine writes to `results/phase50b/tt03_otm_distance/d<dista
 **Evidence status:** non-evidence. No OOS P&L was calculated.
 
 **Correction:** Phase 51-2 has been converted to a fail-closed opportunity-calendar audit for this partial window. A zero-campaign outcome is now represented explicitly as `NO_ELIGIBLE_CAMPAIGNS`, with coverage marked not applicable rather than as a zero percent coverage failure. No frozen strategy rule is changed.
+
+## 2026-10-09 — Error P51-2-008: matrix publication initially persisted only d300
+
+**Affected workflow run:** 37846984206
+
+**Symptom:** both matrix jobs succeeded, but only d300 artifacts were present on the branch after the workflow because the original publish step was conditioned on matrix distance = 300. The d350 artifact existed only in the job workspace/upload.
+
+**Evidence status:** packaging-only; no numerical result was affected.
+
+**Correction:** the workflow publish step now commits each matrix distance's artifact directory independently and rebases before push.
+
+**Prevention:** matrix jobs must persist every registered variant, not only the first matrix cell.
