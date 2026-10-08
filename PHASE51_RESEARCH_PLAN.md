@@ -192,3 +192,11 @@ The current OptionsData.shop catalog was rechecked. Its NIFTY 1-minute last-thre
 A dedicated authorized-byte gate is registered. The downloaded archive must pass SHA capture, exact expiry presence, schema/timestamp/duplicate checks, session continuity, common-expiry equivalence against the frozen RISSIN source, and the existing 95% replay-coverage rule before any Phase-51 P&L can be calculated. Historical bid/ask remains unavailable from this source, so it cannot be presented as observed quote data.
 
 The research remains data-blocked until the actual authorized archive bytes are available. No OOS source will be selected from vendor marketing claims alone.
+
+
+### 2026-10-09 — Phase 51-1E correction: Hugging Face source updated
+A fresh public-source audit found that the previously rejected `thetrademarkk/india-index-options-1m` dataset has since been updated. Its verified commit history now contains NIFTY `2026-07-28.parquet` and `2026-08-04.parquet`, both committed 2026-07-04. The 2026-08-04 commit records an LFS object size of 58,248 bytes. Therefore the earlier Phase-51-1B conclusion that this public source stopped at 2026-07-02 is superseded by the current repository state of the external dataset.
+
+The source remains unaccepted for OOS P&L until actual file bytes pass schema, timestamp, duplicate, session, and common-expiry equivalence checks. A GitHub Actions workflow has been registered to acquire the two public files and run the pre-P&L gate. The workflow has a manual dispatch button and also has push triggers for its gate files.
+
+Important: the dataset is licensed CC-BY-NC-4.0, so any downstream redistribution/publication must respect that license. Repository caching of the raw files is not being asserted until the licensing and repository-storage policy are checked.
