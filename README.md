@@ -987,3 +987,15 @@ The bounded far-OTM gate is now testing only the source-semantic TT-03 strike-di
 A dedicated branch `phase-50b-chronological-validation` now runs the next finite gate after 50B-4. The fixed comparison is TT-03, frozen TT-03 OTM350, TT-04 and TT-05 across 2021–2023 development, 2024–2025 validation and protected 2026 holdout. The phase reports profit/trade, chronological equity and drawdown diagnostics while explicitly refusing to claim capital-normalized return without a common accepted capital/margin denominator. [Phase 50B-5 status](PHASE50B_5_STATUS.md) · [Phase 50B plan](PHASE50B_RESEARCH_PLAN.md) · [Research log](RESEARCH_LOG.md) · [Chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
 \n\n### Phase 50B-5 correction — 2026-10-08\nRun 37821975113 failed only in the chronology script's accepted-total cross-check because generated cost-prefixed metric names were indexed as unprefixed `net`. The defect is logged as F50B-095 and fixed in commit 70aa069. The frozen research protocol is unchanged; Phase 50B-5 remains pending clean validation before Phase 50B-6.\n
 - **Phase 50B-5 numerical gate passed:** run 37827007176 completed chronology and audit for TT-03, frozen TT-03 OTM350, TT-04 and TT-05. Publication requires one corrected rerun because Git rebase lacked identity (F50B-096). Phase 50B-6 remains gated.
+
+
+### Phase 50B-5 completion — 2026-10-09
+- **Run 37828322922 PASS:** numerical replay, frozen OTM350 reconstruction/audit, chronology, chronology audit and publication all completed successfully.
+- The fixed four-strategy comparison is now closed to further tuning.
+
+### Phase 50B-6 statistical inference — 2026-10-09
+- Dedicated branch: `phase-50b-statistical-inference`.
+- Frozen inference: 16 strategy×cost hypotheses on DEV+VAL 2021–2025; 2026 HOLD protected/descriptive only.
+- Primary inference: 10,000 sign-randomization permutations; dependence robustness: 10,000 expiry-day block-bootstrap replicates; Holm correction across the fixed family.
+- Statistical gate: positive mean, bootstrap 95% lower bound > 0, and Holm-adjusted permutation p < 0.05. Cross-cost robustness requires all four registered cost models to pass.
+- [Phase 50B-6 status](PHASE50B_6_STATUS.md) · [Phase 50B research plan](PHASE50B_RESEARCH_PLAN.md) · [Research log](RESEARCH_LOG.md) · [Chat log](PHASE50B_CHAT_LOG.md) · [Error log](ERROR_LOG.md)
