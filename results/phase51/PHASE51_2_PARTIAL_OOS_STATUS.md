@@ -36,3 +36,11 @@ Run **37846113617** passed the import stage but failed the fail-closed artifact 
 The wrapper has been corrected to enumerate explicit expiry files from the frozen Hugging Face options source using the existing `list_expiry_files()` function. The trade engine and frozen research rules remain unchanged.
 
 Run 37846113617 is non-evidence. Push-triggered run **37846264039** is the registered validation attempt for this correction.
+
+## Latest execution state — 2026-10-09
+
+Run **37846264039** failed before numerical execution with an import/attribute error in the wrapper's source-manifest correction.
+
+The wrapper has now been corrected to import `list_expiry_files()` directly from `phase43_vix_strategy_sweep.py`. No strategy rule, parameter, cost model or frozen endpoint was changed.
+
+Run 37846264039 is non-evidence. The next push-triggered Actions run is the validation attempt for this correction.
