@@ -980,3 +980,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The option source has 15.5 million OOS 1-minute rows and expiries through 2026-07-21, but the paired spot source ends 2026-07-02.
 - No strategy P&L was calculated from the incomplete source.
 - F51-001 logged. A separate spot fallback acquisition and overlap audit has been added before any replay can proceed.
+
+
+## 2026-10-09 — Phase 51-1A fallback acquisition gate registered
+- Added a dedicated Phase-51-1A Actions workflow with both manual and marker-triggered execution.
+- Hardened fallback acquisition to require HF_TOKEN, resolve timestamp/price schema, reject duplicates/non-positive prices, require full 2026-04-21 through 2026-08-04 endpoint coverage and audit internal minute gaps.
+- Added a pre-registered primary-vs-fallback overlap gate using >=10,000 common rows, median absolute difference <=0.50 NIFTY points, p99 <=3.00 points, p95 relative difference <=2 bp and absolute mean signed difference <=1 point.
+- The workflow uploads the fallback dataset plus manifests as an Actions artifact and publishes only the audited JSON gate outputs.
+- No strategy replay is connected to this workflow.
