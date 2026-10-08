@@ -1,6 +1,6 @@
 # Phase 51-2 — Available-data partial OOS
 
-**Status: ACTIVE — CORRECTED REPLAY READY**
+**Status: ACTIVE — SOURCE-MANIFEST CORRECTION READY**
 
 ## Scope
 This study uses only the currently complete frozen option-data endpoint: **2026-04-21 through 2026-07-21**.
@@ -27,3 +27,12 @@ These failed runs are non-evidence. The corrected branch push is expected to tri
 Positive partial-OOS results are evidence of performance over the available complete interval only. They cannot close the complete Phase-51 gate or establish endpoint confirmation for 2026-07-28 and 2026-08-04.
 
 The Actions artifacts must pass zero-error, >=95% coverage and complete cost-output checks before numerical interpretation.
+
+
+## Latest execution state
+
+Run **37846113617** passed the import stage but failed the fail-closed artifact validation because both replay jobs discovered zero campaigns. This was traced to inherited Phase-50B opportunity enumeration rather than missing OOS data.
+
+The wrapper has been corrected to enumerate explicit expiry files from the frozen Hugging Face options source using the existing `list_expiry_files()` function. The trade engine and frozen research rules remain unchanged.
+
+Run 37846113617 is non-evidence. Push-triggered run **37846264039** is the registered validation attempt for this correction.
