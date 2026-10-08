@@ -19,6 +19,14 @@ jobs:
           key: phase51-1F-upstox-${{ runner.os }}-${{ hashFiles('research/phase51_1F_upstox_fullchain_acquisition.py') }}
           restore-keys: |
             phase51-1F-upstox-${{ runner.os }}-
+      - name: Record authorized credential presence
+        env:
+          UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+          ICICI_BREEZE_API_KEY: ${{ secrets.ICICI_BREEZE_API_KEY }}
+          ICICI_BREEZE_API_SECRET: ${{ secrets.ICICI_BREEZE_API_SECRET }}
+          ICICI_BREEZE_SESSION_TOKEN: ${{ secrets.ICICI_BREEZE_SESSION_TOKEN }}
+        run: python research/phase51_1F_authorized_access_inventory.py
       - name: Install dependencies
         run: python -m pip install -U requests pandas pyarrow
       - name: Run authorized Upstox acquisition gate
