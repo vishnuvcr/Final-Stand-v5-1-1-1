@@ -2347,3 +2347,15 @@ The Phase 51-1 data manifest contains NIFTY option rows from 2026-04-21 through 
 **Correction:** register an independent pre-P&L option-source augmentation gate. Thetrademarkk's NIFTY options directory contains explicit 2026-07-28 and 2026-08-04 1-minute option files. These files will be compared against common expiries from the original rissin source before either is used for replay.
 
 **Prevention:** Phase 51 option coverage must be audited at the expiry-block level, not merely by total row count and maximum observed expiry.
+
+
+## 2026-10-09 — Phase 51-1A freeze publication correction
+
+### F51-010 — Validated spot-source freeze depended on a non-persisted fallback manifest
+Run **37836116045** completed the spot source acquisition, primary overlap and independent triangulation gates successfully, but the final freeze step failed because `results/phase51/spot_fallback_manifest.json` was not present in the runner workspace at publication time.
+
+**Evidence status:** source-quality evidence is valid and already persisted in the Actions artifact; no P&L or inference was affected.
+
+**Correction:** the freeze step will depend only on the persisted overlap/triangulation artifacts that are present after the audit steps, and will record the failed fallback as an explicit F51-006 source-quality rejection rather than requiring the transient acquisition manifest.
+
+**Prevention:** publication steps must consume only artifacts explicitly guaranteed by the immediately preceding workflow contract.
