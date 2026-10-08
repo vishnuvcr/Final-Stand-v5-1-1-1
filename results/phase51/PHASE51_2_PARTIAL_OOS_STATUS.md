@@ -1,6 +1,6 @@
 # Phase 51-2 — Available-data partial OOS
 
-**Status: ACTIVE — SOURCE-MANIFEST CORRECTION READY**
+**Status: ACTIVE — OPPORTUNITY-CALENDAR AUDIT READY**
 
 ## Scope
 This study uses only the currently complete frozen option-data endpoint: **2026-04-21 through 2026-07-21**.
@@ -44,3 +44,12 @@ Run **37846264039** failed before numerical execution with an import/attribute e
 The wrapper has now been corrected to import `list_expiry_files()` directly from `phase43_vix_strategy_sweep.py`. No strategy rule, parameter, cost model or frozen endpoint was changed.
 
 Run 37846264039 is non-evidence. The next push-triggered Actions run is the validation attempt for this correction.
+
+  
+## Latest execution state
+
+Run **37846507265** reached the fail-closed validator with zero campaigns. The audit traced this to the frozen three-calendar-day entry rule combined with the all-Tuesday expiry set in the available partial window; no strategy P&L was produced.
+
+Runs **37846806366** and **37846815991** failed because their concurrent checkouts predated the verified source-gate reference artifact. They are repository-ordering non-evidence.
+
+The current branch now contains the verified Phase-51-1 source-gate reference artifact, and the wrapper is being retriggered from a commit that includes it.
