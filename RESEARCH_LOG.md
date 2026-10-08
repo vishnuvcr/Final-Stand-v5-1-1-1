@@ -1071,3 +1071,9 @@ The refreshed Hugging Face source was fully audited by GitHub Actions run 378429
 - Current public commercial evidence: OptionsData.shop advertises a NIFTY 1-minute full-chain archive through Sep-2026 and a 29-Jun-2026 to 25-Sep-2026 pack containing the missing frozen expiries. It is a paid archive; no purchase was made.
 - FNOTrader is retained as an independent backtest oracle with advertised 1-minute NIFTY history, not as a raw substitute.
 - The finite acquisition search therefore stops here until an authorized archive/token exists. The frozen OOS window is unchanged and no strategy P&L has been calculated.
+
+
+## 2026-10-09 — Phase 51-1G open-source alternatives audit
+The open-source track was reopened as requested. Public candidates were evaluated for actual raw 1-minute coverage of 2026-07-28 and 2026-08-04. Kaggle's free 1-minute NIFTY option-chain dataset is documented as ending 2026-03-24; bhav's offline sample ends Jun-2026; SauMStats documents a 2026 live-data layout but does not commit the live archive; pawan625 demonstrates broker-generated July-2026 option candles but does not expose an independent full raw archive; and the CodePyx bucket's advertised NIFTY Parquet path returned 404 in Actions run 37844364676.
+
+Decision: no open-source source is admitted. Frozen OOS remains unchanged; no P&L is calculated from partial/synthetic/oracle data.
