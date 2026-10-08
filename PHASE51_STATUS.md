@@ -60,3 +60,7 @@ Gate specification: results/phase51/PHASE51_1E_OPTIONSDATA_GATE.md
 
 Workflow: .github/workflows/phase51-1E-hf-options-gate.yml
 Validator: research/phase51_1E_hf_options_gate.py
+
+
+### 2026-10-09 — Phase 51-1E live HF re-audit
+**Current state: DATA-BLOCKED pending executable byte validation.** The live Hugging Face NIFTY directory now verifies both missing files: 2026-07-28 (commit dbc0596) and 2026-08-04 (commit 51ca58c). This supersedes the earlier stale rejection. The repository contains the automated gate workflow and validator, but this environment cannot directly consume HF/Xet binary Parquet bytes to independently execute the gate. Therefore no schema/session/equivalence PASS is claimed and no OOS P&L has been calculated.
