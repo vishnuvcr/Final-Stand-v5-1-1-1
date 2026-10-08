@@ -1,0 +1,129 @@
+name: Phase 50B - Far-OTM Geometry
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-far-otm-geometry
+    paths:
+      - trigger/phase50b_far_otm.start
+
+concurrency:
+  group: phase50b-far-otm
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 600
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
+      - name: Cache HF dataset
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-tt03-otm-hf-\u0024{{ runner.os }}-\u0024{{ hashFiles('research/phase50b_tt03_far_otm.py') }}
+          restore-keys: |
+            phase50b-tt03-otm-hf-\u0024{{ runner.os }}-
+      - name: Compile
+        run: python -m py_compile research/phase50b_tt03_far_otm.py
+      - name: Preflight frozen grid
+        run: |
+          python - <<'PY'
+          profiles={"BASE":[300.0,350.0,400.0],"OTM350":[350.0,400.0,450.0],"OTM400":[400.0,450.0,500.0]}
+          assert set(profiles)=={"BASE","OTM350","OTM400"}
+          assert profiles["BASE"]==[300.0,350.0,400.0]
+          print("Frozen TT03 geometry grid PASS",profiles)
+          PY
+      - name: Run BASE regression
+        env:
+          HF_TOKEN: \u0024{{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          TT03_GEOMETRY: BASE
+        run: python research/phase50b_tt03_far_otm.py
+      - name: Run OTM350
+        env:
+          HF_TOKEN: \u0024{{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          TT03_GEOMETRY: OTM350
+        run: python research/phase50b_tt03_far_otm.py
+      - name: Run OTM400
+        env:
+          HF_TOKEN: \u0024{{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          TT03_GEOMETRY: OTM400
+        run: python research/phase50b_tt03_far_otm.py
+      - name: Audit and freeze selection
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          import pandas as pd
+          root=Path("results/phase50b/tt03_far_otm")
+          profiles=["BASE","OTM350","OTM400"]
+          sums={}
+          for p in profiles:
+              d=json.loads((root/p/"summary.json").read_text())
+              sums[p]=d
+              assert d["coverage_rate"]>=0.95,(p,d)
+              assert d.get("candidate_trades",0)==d.get("trades",0)+d.get("coverage_exclusions",0)
+              er=pd.read_csv(root/p/"data_errors.csv")
+              assert len(er)==0,(p,er.head())
+          base=json.loads((Path("results/phase50b/tt03_dynamic_n_replay")/"summary.json").read_text())
+          reg=sums["BASE"]
+          for k in ["trades","candidate_trades","coverage_exclusions"]:
+              assert reg[k]==base[k],(k,reg[k],base[k])
+          for k in ["net","net50","net20","net20_50"]:
+              assert math.isclose(reg[k],base[k],rel_tol=0,abs_tol=1e-6),(k,reg[k],base[k])
+          dev=[]
+          for p in ["OTM350","OTM400"]:
+              tr=pd.read_csv(root/p/"tt03_trades.csv")
+              d=pd.to_datetime(tr["expiry"],utc=True)
+              devpart=tr[d<=pd.Timestamp("2023-12-31",tz="UTC")]
+              valpart=tr[(d>pd.Timestamp("2023-12-31",tz="UTC"))&(d<=pd.Timestamp("2025-12-31",tz="UTC"))]
+              holdpart=tr[d>pd.Timestamp("2025-12-31",tz="UTC")]
+              rec={"profile":p,
+                   "dev_trades":len(devpart),"dev_net":float(devpart.net.sum()),"dev_net50":float(devpart.net50.sum()),"dev_net20_50":float(devpart.net20_50.sum()),
+                   "val_trades":len(valpart),"val_net":float(valpart.net.sum()),"val_net50":float(valpart.net50.sum()),"val_net20_50":float(valpart.net20_50.sum()),
+                   "hold_trades":len(holdpart),"hold_net":float(holdpart.net.sum()),"hold_net50":float(holdpart.net50.sum()),"hold_net20_50":float(holdpart.net20_50.sum())}
+              dev.append(rec)
+          eligible=[x for x in dev if x["dev_net"]>0 and x["dev_net50"]>0 and x["dev_net20_50"]>0]
+          eligible.sort(key=lambda x:x["dev_net50"],reverse=True)
+          selected=eligible[0]["profile"] if eligible else None
+          decision="FROZEN_FOR_VALIDATION" if selected else "NO_FAR_OTM_CANDIDATE_PASSED_DEV"
+          payload={"frozen_grid":profiles,"baseline_regression_pass":True,"development_screen":dev,"selected_profile":selected,"decision":decision,
+                   "selection_rule":">=95% coverage; positive DEV net, DEV net50 and DEV net20_50; rank by DEV net50; freeze one mutation.",
+                   "holdout_protected":True}
+          (root/"selection.json").write_text(json.dumps(payload,indent=2))
+          print(json.dumps(payload,indent=2))
+          if selected:
+              s=next(x for x in dev if x["profile"]==selected)
+              assert s["val_net"]>0 and s["val_net50"]>0, f"Frozen candidate failed validation: {s}"
+              Path(root/f"VALIDATION_{selected}.json").write_text(json.dumps({"selected":s},indent=2))
+              print("VALIDATION ECONOMIC PASS",s)
+          else:
+              print("No mutation froze; finite far-OTM gate closes without a validation candidate.")
+          PY
+      - name: Publish far-OTM results
+        env:
+          GITHUB_TOKEN: \u0024{{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git add results/phase50b/tt03_far_otm
+          if git diff --cached --quiet; then
+            echo "No far-OTM changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT03 far-OTM geometry results"
+            git push origin HEAD:phase-50b-far-otm-geometry
+          fi
