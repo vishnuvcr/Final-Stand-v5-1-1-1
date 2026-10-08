@@ -1,0 +1,23 @@
+{
+  "strategy": "TT-06",
+  "status": "FAIL_COVERAGE",
+  "run_id": 37722386852,
+  "job_id": 113132915078,
+  "engine_revision": "50B-TT06-COVERAGE-V2",
+  "trades": 692,
+  "candidate_trades": 983,
+  "coverage_exclusions": 291,
+  "coverage_rate": 0.7039674465920651,
+  "session_exclusions": 3,
+  "data_errors": 0,
+  "pnl_evidence_eligible": false,
+  "promotion_eligible": false,
+  "downstream_use_of_pnl": false,
+  "reason": "Coverage rate below preregistered 95% mandatory-exit feasibility gate.",
+  "cost_outputs_diagnostic_only": {
+    "net": -907626.9252433976,
+    "net50": -959664.3878650963,
+    "net20": -988008.5252433976,
+    "net20_50": -1080236.7878650965
+  }
+}
