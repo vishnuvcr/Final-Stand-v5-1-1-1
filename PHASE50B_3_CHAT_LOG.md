@@ -18,3 +18,7 @@ No VIX threshold, strategy parameter, strike, DTE, stop, exit, or management rul
 
 ### Literature update
 The phase literature review records recent and established India-VIX/NIFTY evidence supporting regime conditioning as a testable hypothesis while explicitly rejecting literature claims as strategy evidence.
+
+## 2026-10-09 — Workflow launched
+
+After freezing the 28-hypothesis preregistration and writing the dedicated engine/workflow, the Phase 50B-3 Actions run **37848475527** was launched. The run is currently installing dependencies. No numerical result or regime inference has been accepted.
