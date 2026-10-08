@@ -145,16 +145,27 @@ for exp in COMMON_EXPIRIES:
     manifest["common_expiry_comparisons"].append({"stats":stats,"gate":gate})
 
 overall=all(x["gate"]["PASS"] for x in manifest["common_expiry_comparisons"])
-# Validate supplemental files have only their intended expiry and at least one full OOS session.
+# Validate supplemental files have only their intended expiry and non-empty ordered timestamps.
+supplemental_integrity = True
 for f in manifest["supplemental_source"]["files"]:
-    assert f["min_timestamp"] < f["max_timestamp"]
-assert overall
+    if not (f["min_timestamp"] < f["max_timestamp"]):
+        supplemental_integrity = False
+        f["integrity_failure"] = "min_timestamp is not before max_timestamp"
+overall = bool(overall and supplemental_integrity)
 
 manifest["PASS"]=bool(overall)
+manifest["failed_expiry_gates"]=[
+    {
+        "expiry": x["stats"]["expiry"],
+        "failed_checks":[k for k,v in x["gate"].items() if k != "PASS" and not v],
+        "stats": x["stats"],
+    }
+    for x in manifest["common_expiry_comparisons"] if not x["gate"]["PASS"]
+]
 Path("results/phase51").mkdir(parents=True,exist_ok=True)
 Path("results/phase51/options_augmentation_audit.json").write_text(json.dumps(manifest,indent=2))
 Path("results/phase51/validated_option_source.json").write_text(json.dumps({
-    "status":"PASS",
+    "status":"PASS" if overall else "FAIL",
     "original_source":manifest["original_source"],
     "missing_expiries":manifest["missing_expiries"],
     "supplemental_source":manifest["supplemental_source"],
@@ -162,3 +173,5 @@ Path("results/phase51/validated_option_source.json").write_text(json.dumps({
     "selection_basis":"data-quality evidence only; no OOS strategy P&L was inspected"
 },indent=2))
 print(json.dumps(manifest,indent=2))
+if not overall:
+    raise SystemExit("OPTIONS_AUGMENTATION_REJECTED: detailed audit persisted")
