@@ -1,0 +1,110 @@
+name: Phase 50B-4 - Far OTM Geometry
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-4-far-otm-geometry
+    paths:
+      - trigger/phase50b_4.start
+      - PHASE50B_4_FAR_OTM_PREREGISTRATION.md
+      - research/phase50b_tt03_otm_distance_replay.py
+
+concurrency:
+  group: phase50b-4-far-otm-geometry
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify_base:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify frozen BASE artifact
+        run: |
+          python - <<'PY'
+          import json, pandas as pd
+          from pathlib import Path
+          d=Path("results/phase50b/tt03_dynamic_n_replay")
+          s=json.loads((d/"summary.json").read_text())
+          assert s["engine_revision"]=="50B-TT03-WINDOW-V5", s
+          assert float(s["coverage_rate"])>=0.95, s
+          assert len(pd.read_csv(d/"data_errors.csv"))==0
+          tr=pd.read_csv(d/"tt03_trades.csv")
+          assert len(tr)>0 and set(["net","net50","net20","net20_50"]).issubset(tr.columns)
+          print("BASE verification PASS",s)
+          PY
+
+  replay:
+    needs: verify_base
+    strategy:
+      fail-fast: false
+      matrix:
+        distance: [350, 400]
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow matplotlib huggingface_hub
+      - name: Compile engine
+        run: python -m py_compile research/phase50b_tt03_otm_distance_replay.py
+      - name: HF cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase50b-4-otm-${{ matrix.distance }}-${{ runner.os }}-${{ hashFiles('research/phase50b_tt03_otm_distance_replay.py') }}
+          restore-keys: |
+            phase50b-4-otm-${{ matrix.distance }}-${{ runner.os }}-
+      - name: Run distance replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+          TT03_DISTANCE: ${{ matrix.distance }}
+        run: python research/phase50b_tt03_otm_distance_replay.py
+      - name: Audit distance replay
+        run: |
+          python - <<'PY'
+          import json, pandas as pd, os
+          from pathlib import Path
+          d=Path("results/phase50b/tt03_otm_distance")/("d"+os.environ["TT03_DISTANCE"])
+          s=json.loads((d/"summary.json").read_text())
+          tr=pd.read_csv(d/"tt03_trades.csv")
+          er=pd.read_csv(d/"data_errors.csv")
+          cg=pd.read_csv(d/"coverage_gaps.csv")
+          assert s["engine_revision"]=="50B-TT03-OTM-DIST-V1", s
+          assert s["trades"]==len(tr)
+          assert s["candidate_trades"]==len(tr)+len(cg)
+          assert len(er)==0, er.head()
+          assert s["coverage_rate"]>=0.95, s
+          assert s["trades"]>0, s
+          assert {"net","net50","net20","net20_50","distance_points"}.issubset(tr.columns)
+          assert tr["distance_points"].nunique()==1 and int(tr["distance_points"].iloc[0])==int(os.environ["TT03_DISTANCE"])
+          print("Distance audit PASS",s)
+          PY
+      - name: Upload distance artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-4-otm-${{ matrix.distance }}-${{ github.run_id }}
+          path: results/phase50b/tt03_otm_distance/d${{ matrix.distance }}
+      - name: Publish distance artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git fetch origin phase-50b-4-far-otm-geometry
+          git reset --hard origin/phase-50b-4-far-otm-geometry
+          mkdir -p results/phase50b/tt03_otm_distance
+          cp -R results/phase50b/tt03_otm_distance/d${{ matrix.distance }} results/phase50b/tt03_otm_distance/
+          git add results/phase50b/tt03_otm_distance/d${{ matrix.distance }}
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-4: publish OTM${{ matrix.distance }} replay"
+          git push origin HEAD:phase-50b-4-far-otm-geometry
