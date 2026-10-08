@@ -125,5 +125,5 @@ jobs:
             echo "No far-OTM changes."
           else
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish TT03 far-OTM geometry results"
-            git push origin HEAD:phase-50b-far-otm-geometry
+            git fetch origin phase-50b-far-otm-geometry\ngit rebase origin/phase-50b-far-otm-geometry\ngit push origin HEAD:phase-50b-far-otm-geometry
           fi
