@@ -78,6 +78,60 @@ for day, g in third.groupby(third.timestamp.dt.date):
     if rows < 300 or span < 360 or max_gap > 1:
         bad_days.append(item)
 
+# Direct common-period comparison against the original frozen primary source.
+from huggingface_hub import hf_hub_download
+try:
+    primary_path = ROOT.parent / "spot_primary.parquet"
+    if not primary_path.exists():
+        src_primary = hf_hub_download(
+            repo_id="thetrademarkk/india-index-options-1m",
+            filename="index/NIFTY.parquet",
+            repo_type="dataset",
+            token=os.environ.get("HF_TOKEN"),
+        )
+        primary_path.write_bytes(Path(src_primary).read_bytes())
+    primary_raw = pd.read_parquet(primary_path)
+    pts = pd.to_datetime(primary_raw["timestamp"], errors="coerce")
+    if getattr(pts.dt, "tz", None) is None:
+        pts = pts.dt.tz_localize("Asia/Kolkata")
+    else:
+        pts = pts.dt.tz_convert("Asia/Kolkata")
+    primary_n = pd.DataFrame({
+        "timestamp": pts,
+        "close": pd.to_numeric(primary_raw["close"], errors="coerce"),
+    })
+    primary_n = primary_n[(primary_n.timestamp >= OOS_START) & (primary_n.timestamp <= OOS_END)]
+    jp = third.merge(primary_n, on="timestamp", suffixes=("_third", "_primary"))
+    if len(jp) < 10000:
+        raise AssertionError(f"Insufficient third/primary overlap rows: {len(jp)}")
+    jp["abs_diff"] = (jp.close_third - jp.close_primary).abs()
+    jp["rel_bp"] = jp.abs_diff / jp.close_primary * 10000
+    jp["signed_diff"] = jp.close_third - jp.close_primary
+    primary_stats = {
+        "overlap_rows": int(len(jp)),
+        "overlap_first": str(jp.timestamp.min()),
+        "overlap_last": str(jp.timestamp.max()),
+        "median_abs_points": float(jp.abs_diff.median()),
+        "p95_abs_points": float(jp.abs_diff.quantile(0.95)),
+        "p99_abs_points": float(jp.abs_diff.quantile(0.99)),
+        "max_abs_points": float(jp.abs_diff.max()),
+        "median_rel_bp": float(jp.rel_bp.median()),
+        "p95_rel_bp": float(jp.rel_bp.quantile(0.95)),
+        "mean_signed_points": float(jp.signed_diff.mean()),
+        "median_signed_points": float(jp.signed_diff.median()),
+    }
+    primary_overlap_gate = {
+        "overlap_rows_ge_10000": primary_stats["overlap_rows"] >= 10000,
+        "median_abs_le_0_50": primary_stats["median_abs_points"] <= 0.50,
+        "p99_abs_le_3_00": primary_stats["p99_abs_points"] <= 3.00,
+        "p95_rel_bp_le_2_00": primary_stats["p95_rel_bp"] <= 2.00,
+        "abs_mean_signed_le_1_00": abs(primary_stats["mean_signed_points"]) <= 1.00,
+    }
+    primary_overlap_gate["PASS"] = all(primary_overlap_gate.values())
+except Exception as exc:
+    primary_stats = {}
+    primary_overlap_gate = {"PASS": False, "error": repr(exc)}
+
 # Reuse the independently cached fallback source when present. If the file
 # is not present locally, fetch it directly from Hugging Face only for audit.
 try:
@@ -156,6 +210,8 @@ out = {
     "day_audit": day_audit,
     "fallback_overlap": stats,
     "fallback_overlap_gate": overlap_gate,
+    "primary_overlap": primary_stats,
+    "primary_overlap_gate": primary_overlap_gate,
 }
 if 'fallback_error' in locals():
     out["fallback_error"] = fallback_error
@@ -163,7 +219,7 @@ if 'fallback_error' in locals():
 Path("results/phase51").mkdir(parents=True, exist_ok=True)
 Path("results/phase51/third_spot_audit.json").write_text(json.dumps(out, indent=2))
 Path("results/phase51/third_spot_gate.json").write_text(json.dumps({
-    "PASS": bool(len(bad_days) == 0 and overlap_gate["PASS"]),
+    "PASS": bool(len(bad_days) == 0 and overlap_gate["PASS"] and primary_overlap_gate["PASS"]),
     "third_source_session_gate": len(bad_days) == 0,
     "fallback_overlap_gate": overlap_gate,
 }, indent=2))
