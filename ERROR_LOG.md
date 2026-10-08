@@ -2387,3 +2387,27 @@ The pre-P&L overlap audit also showed that the supplemental source is only a par
 **External-source search:** public evidence confirms Upstox provides expired-contract 1-minute candles, but its expired-instrument APIs require an authenticated Upstox Plus account. Public FNOTrader material advertises a current NIFTY 1-minute archive, but no installed project integration is available to acquire its raw data. Daily historical pages (e.g. MoneyTicks / optionbacktesting.in) are insufficient for minute-level replay.
 
 **Required next acquisition:** authenticated 1-minute expired-option source reaching at least 2026-08-04, or a publicly downloadable dataset with equivalent provenance and full strike/time coverage. Until then Phase 51 remains DATA-BLOCKED and the frozen OOS window is unchanged.
+
+
+## 2026-10-09 — Phase 51-1 final source-gate closeout
+
+### F51-015 — Public option augmentation source failed the frozen replacement gate
+The tested supplemental source `thetrademarkk/india-index-options-1m` could not fill the missing 2026-07-28 and 2026-08-04 OOS blocks because both nominal files ended on 2026-07-02. Its common-expiry exact-row coverage versus the frozen RISSIN source was only 34.57% for 2026-07-07, 14.95% for 2026-07-14 and 4.60% for 2026-07-21, below the preregistered 80% coverage requirement.
+
+**Evidence status:** no TT-03 or TT-03 OTM350 OOS P&L was calculated.
+
+**Correction:** source rejected fail-closed; the frozen OOS window was preserved.
+
+### F51-016 — Authenticated Upstox recovery path blocked by missing repository secret
+Phase 51-1C source-gate workflow run **37839447686** reached the acquisition step but the required `UPSTOX_ACCESS_TOKEN` secret was not configured. No authenticated expired-option data were assumed.
+
+**Evidence status:** no OOS P&L or inference produced.
+
+**Correction:** Phase 51-1 stops on data availability rather than fabricating or shortening the OOS sample.
+
+### F51-017 — Options audit code required multiple pre-P&L implementation corrections
+During the independent option-source audit, the following non-evidence code defects were corrected before any source was accepted: stale full-file RISSIN reference after remote filtering, an `rr`/r variable typo in the common-expiry slice, and a semantically invalid assertion that an option file's first timestamp must equal its expiry date.
+
+**Evidence status:** all affected runs are non-evidence; the scientific gate remained fail-closed.
+
+**Prevention:** preserve detailed audit JSON even on gate failure, separate diagnostic generation from final enforcement, and treat contract-trading timestamps independently from expiry dates.
