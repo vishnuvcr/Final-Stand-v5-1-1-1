@@ -53,3 +53,10 @@ Action log: results/phase51/PHASE51_1D_CHAT_LOG.md
 **REGISTERED — awaiting authorized archive bytes.** Current catalog coverage explicitly contains 2026-07-28 and 2026-08-04. The free sample does not. A validation gate is registered before any OOS P&L: archive hash, exact expiry coverage, schema/timestamp/duplicate integrity, session continuity, common-expiry equivalence against RISSIN, and 95% mandatory replay coverage. No strategy result is calculated yet.
 
 Gate specification: results/phase51/PHASE51_1E_OPTIONSDATA_GATE.md
+
+
+### Phase 51-1E correction — current HF source state
+**REOPENED / VALIDATION IN PROGRESS.** Fresh audit of the public Hugging Face dataset found verified NIFTY files for both missing expiry dates: `2026-07-28.parquet` (commit dbc0596) and `2026-08-04.parquet` (commit 51ca58c). The earlier rejection was based on an older dataset state and is now superseded. No OOS P&L has been calculated. The newly registered GitHub Actions gate must pass actual file-byte integrity and common-expiry equivalence before replay.
+
+Workflow: .github/workflows/phase51-1E-hf-options-gate.yml
+Validator: research/phase51_1E_hf_options_gate.py
