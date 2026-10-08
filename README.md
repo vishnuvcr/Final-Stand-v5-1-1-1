@@ -1084,3 +1084,18 @@ A GitHub Actions workflow now acquires those two public files and runs the pre-P
 - [HF validator](research/phase51_1E_hf_options_gate.py)
 
 **Current status: VALIDATION IN PROGRESS — no OOS strategy P&L yet.**
+
+
+## Phase 51-1E — HF source closed with actual-byte rejection
+- GitHub Actions run **37842966411 PASS-as-audit / FAIL-as-data-gate** downloaded and audited the live HF files.
+- The files named 2026-07-28 and 2026-08-04 both actually end on **2026-07-02** and contain no observations on their named expiry days.
+- Common-expiry coverage versus frozen RISSIN: **34.57% / 14.95% / 4.60%** for 7-Jul / 14-Jul / 21-Jul; the 7-Jul p95 relative error was **14.79 bp**.
+- **Source rejected. No Phase-51 OOS P&L was calculated.** [Gate result](results/phase51/PHASE51_1E_HF_GATE_RESULT.md) · [Structured result](results/phase51/phase51_1e_hf_options_gate_result.json)
+
+## Phase 51-1F — Authorized options recovery
+- Dedicated branch: `phase-51-1F-authorized-options-recovery`.
+- Automated credential inventory found **no Upstox, Dhan or ICICI Breeze credentials** configured in repository secrets.
+- Upstox full-chain acquisition workflow is registered and fails closed when access is absent.
+- Current complete raw-data fallback is an **authorized commercial archive** such as OptionsData.shop; no purchase or access bypass has been attempted.
+- **Current status: DATA-BLOCKED at acquisition boundary.** Frozen OOS remains 2026-04-21 → 2026-08-04. TT-03 / TT-03 OTM350 OOS replay has not started.
+- [Phase 51-1F recovery plan](results/phase51/PHASE51_1F_AUTHORIZED_OPTIONS_RECOVERY.md) · [Phase 51 status](PHASE51_STATUS.md) · [Error log](ERROR_LOG.md)
