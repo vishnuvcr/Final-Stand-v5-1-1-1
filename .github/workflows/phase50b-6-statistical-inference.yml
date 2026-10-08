@@ -1,0 +1,70 @@
+name: Phase 50B-6 - Statistical Inference
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-statistical-inference
+    paths:
+      - trigger/phase50b_6.start
+      - research/phase50b6_statistical_inference.py
+      - results/phase50b/phase50b5_chronological_validation/**
+concurrency:
+  group: phase50b-6-statistical-inference
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  inference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas scipy statsmodels
+      - name: Preflight Phase 50B-5
+        run: |
+          set -euo pipefail
+          test -f results/phase50b/phase50b5_chronological_validation/chronological_strategy_summary.csv
+          test -f results/phase50b/phase50b5_chronological_validation/cross_checks.json
+          python - <<'PY'
+          import json, pandas as pd
+          p='results/phase50b/phase50b5_chronological_validation'
+          s=pd.read_csv(p+'/chronological_strategy_summary.csv')
+          assert set(s.strategy)=={'TT03','TT03_OTM350','TT04','TT05'}
+          c=json.load(open(p+'/cross_checks.json'))
+          assert all(x['accepted_total_crosscheck'] for x in c['checks'])
+          assert c['holdout_protected'] is True
+          PY
+          python -m py_compile research/phase50b6_statistical_inference.py
+      - name: Run preregistered inference
+        run: python research/phase50b6_statistical_inference.py
+      - name: Audit inference
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,pandas as pd
+          p='results/phase50b/phase50b6_statistical_inference'
+          r=pd.read_csv(p+'/hypothesis_results.csv')
+          assert len(r)==16
+          assert r.holm_reject.notna().all()
+          m=json.load(open(p+'/methodology.json'))
+          assert m['inference_population']=='DEV+VAL only (2021-2025)'
+          assert m['protected_holdout'].startswith('2026 descriptive only')
+          s=json.load(open(p+'/inference_summary.json'))
+          assert s['holdout_protected'] is True
+          print(r[['strategy','cost_model','n','mean','block_bootstrap_ci_low','permutation_p','holm_q','primary_positive']].to_string(index=False))
+          print(s)
+          PY
+      - name: Publish Phase 50B-6 results
+        run: |
+          set -euo pipefail
+          git add results/phase50b/phase50b6_statistical_inference
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-6: publish statistical inference"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-50b-statistical-inference
+          git rebase origin/phase-50b-statistical-inference
+          git push origin HEAD:phase-50b-statistical-inference
