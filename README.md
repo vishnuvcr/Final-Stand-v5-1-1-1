@@ -1020,3 +1020,7 @@ A dedicated branch `phase-50b-chronological-validation` now runs the next finite
 - Complete manuscript: FINAL_STAND_PHASE50B_MANUSCRIPT.md.
 - Six final figures published under results/phase50b/final_manuscript/.
 - **Terminal decision: NO PROMOTION.** No candidate passed the all-cost robustness criterion.
+
+
+## Phase 51 — Broker-Calibrated Execution + Fresh OOS Validation
+**ACTIVE.** Phase 50B is terminal with NO PROMOTION. Phase 51 begins a new independent finite protocol limited to frozen TT-03 and TT-03 OTM350. [Phase 51 plan](PHASE51_RESEARCH_PLAN.md) · [Phase 51 status](PHASE51_STATUS.md)
