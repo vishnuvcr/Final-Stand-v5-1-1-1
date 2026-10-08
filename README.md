@@ -1,3 +1,13 @@
+## Phase 51-1E — OptionsData.shop raw-data gate — REGISTERED / WAITING FOR AUTHORIZED BYTES
+
+The current NIFTY 1-minute commercial pack advertises coverage from **2026-06-29 through 2026-09-25**, which contains both missing frozen OOS expiries (**2026-07-28** and **2026-08-04**). The public free sample covers only 2026-09-15 through 2026-09-17 and cannot fill the frozen gap.
+
+The archive will not be accepted from catalogue claims alone. Actual authorized bytes must pass hash, exact expiry coverage, schema/timestamp/duplicate integrity, session continuity, common-expiry equivalence against RISSIN, and the existing 95% mandatory replay-coverage gate before any Phase-51 P&L.
+
+- [Phase 51-1E gate specification](results/phase51/PHASE51_1E_OPTIONSDATA_GATE.md)
+
+**Current decision: DATA-BLOCKED. No OOS strategy P&L has been calculated.**
+
 # Current Research Status — 2026-10-09
 
 ## Phase 51 — Broker-Calibrated Execution + Fresh OOS Validation — ACTIVE / DATA-BLOCKED
