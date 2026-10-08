@@ -1,0 +1,13 @@
+{
+  "phase": "51-1",
+  "oos_window": ["2026-04-21", "2026-08-04"],
+  "brokerage_scenarios": {"paytm_legacy": 10.0, "paytm_current_standard": 20.0},
+  "nse_equity_options_transaction_charge_per_crore_premium": 3553.0,
+  "stt_sale_option_rate_after_2026_04_01": 0.0015,
+  "sebi_turnover_fee_rate": 0.000001,
+  "stamp_duty_equity_options_buyer_rate": 0.00003,
+  "gst_rate_on_broker_services": 0.18,
+  "exercise_stt_applies": false,
+  "execution_stress": ["base", "plus25pct_cost", "plus50pct_cost", "adverse_one_tick_per_leg", "adverse_one_tick_plus50pct"],
+  "bid_ask_observed": false
+}
