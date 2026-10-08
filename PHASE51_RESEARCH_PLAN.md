@@ -160,3 +160,7 @@ The initial option source does not reach the frozen OOS endpoint. Before any str
 6. If the augmented source still fails the registered 95% replay coverage gate, Phase 51 stops with a data-availability/feasibility conclusion; the OOS window is not shortened.
 
 Independent augmentation candidate registered: thetrademarkk/india-index-options-1m, options/NIFTY/2026-07-28.parquet and options/NIFTY/2026-08-04.parquet.
+
+
+### 2026-10-09 — Phase 51-1B common-expiry equivalence threshold correction
+The common-expiry source-equivalence gate uses a scale-invariant minimum of 10,000 exact matched quote rows plus at least 80% coverage of the original source's comparable rows. The prior 100,000-row cutoff was removed because weekly expiries have materially different strike/contract populations; the correction was made before any OOS P&L or strategy selection.
