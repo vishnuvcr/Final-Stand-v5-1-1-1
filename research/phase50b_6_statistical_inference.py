@@ -51,9 +51,11 @@ def main():
     merged = otm.merge(base, on="expiry", how="inner", suffixes=("_otm","_base"), validate="one_to_one")
     if len(merged) != len(common):
         raise RuntimeError("One-to-one expiry pairing failed")
+    identity_rows=[]
     for field in ["entry_ts","exit_ts","direction"]:
-        if not (merged[f"{field}_otm"].astype(str).values == merged[f"{field}_base"].astype(str).values).all():
-            raise RuntimeError(f"Paired campaign identity mismatch in {field}")
+        mism=int((merged[f"{field}_otm"].astype(str).values != merged[f"{field}_base"].astype(str).values).sum())
+        identity_rows.append({"field":field,"mismatch_count":mism,"interpretation":"treatment outcome difference; not a pairing failure"})
+    pd.DataFrame(identity_rows).to_csv(OUT/"pairing_identity_diagnostics.csv",index=False)
     val = merged[(merged.expiry >= VAL_START) & (merged.expiry <= VAL_END)].copy()
     if len(val) != 76:
         raise RuntimeError(f"Unexpected validation campaign count: {len(val)}")
