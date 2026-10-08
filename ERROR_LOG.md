@@ -2392,3 +2392,15 @@ The pre-P&L overlap audit also showed that the supplemental source is only a par
 ## 2026-10-09 — Phase 51-1C authenticated-source gate
 ### F51-016 — Missing Upstox access secret
 Workflow run 37839447686 could not acquire the missing 2026-07-28 and 2026-08-04 expired NIFTY option contracts because UPSTOX_ACCESS_TOKEN is not configured in repository secrets. No source data or strategy P&L was fabricated.
+
+
+## 2026-10-09 — Phase 51-1D source audit
+
+### F51-016 — UI/backtest platforms cannot be promoted to raw-data sources without an authorized export/API
+StockMock, StockMojo, FNOTrader, QuantFlo and AlgoTest were checked as potential recovery sources. Their public documentation establishes minute-level historical option data/backtesting capability, but this audit did not establish an authorized bulk raw-data export/API for the frozen OOS blocks for this repository. Treating their UI outputs or opaque backtest numbers as if they were the missing raw tape would violate the preregistered source-equivalence requirement.
+
+**Evidence status:** no strategy P&L or inference was calculated.
+
+**Correction:** register these platforms as independent validation/oracle sources only. Prioritize authenticated Upstox raw acquisition and authorized OptionsData.shop raw Parquet. Retain NSE as the official licensed-data route.
+
+**Prevention:** platform existence or minute-level UI visibility is not sufficient evidence of a reproducible raw dataset; require documented authorized export/API access and a pre-P&L equivalence audit.
