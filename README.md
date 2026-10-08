@@ -1,32 +1,42 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
-## Phase 50B-4 — CLOSED / OTM350 FROZEN FOR STATISTICAL GATE
+## Phase 50B-6 — CLOSED / NO PROMOTION
 
-Phase 50B-4 completed the preregistered TT-03 far-OTM geometry comparison. OTM350 (350/400/450) and OTM400 (400/450/500) both passed 99.50% coverage and zero-data-error feasibility gates. OTM350 won the preregistered within-mutation development gate with DEV +50% stress net ₹32,213.01 versus ₹14,511.75 for OTM400.
+Phase 50B-6 performed the preregistered dependence-aware validation inference for frozen OTM350 versus fixed BASE.
 
-**Important:** BASE remains economically stronger. BASE aggregate net is ₹89,669.15 versus ₹69,552.06 for OTM350 and ₹48,998.58 for OTM400. OTM350 is therefore **frozen as a candidate for statistical comparison, not promoted over BASE**.
+**Primary result:** 76 validation expiry blocks; mean OTM350 minus BASE = **−₹73.88** per expiry; 95% paired-bootstrap CI **−₹282.26 to +₹149.36**; one-sided expiry-block sign-flip p = **0.7386**. OTM350 beat BASE on **10/76** expiry blocks; BASE won **66/76**.
+
+All registered cost variants remained unfavorable to OTM350:
+- +50% stress: mean difference −₹73.03; p = 0.7375
+- ₹20/order: mean difference −₹73.88; p = 0.7409
+- ₹20/order +50% stress: mean difference −₹73.03; p = 0.7381
+- Holm-adjusted secondary p-values: 1.0000
+
+The 2026 HOLD was protected and unused for selection or inference.
+
+**Decision: OTM350 is rejected as an improvement. BASE remains the canonical TT-03 control within this research chain. No further far-OTM tuning is permitted from this result.**
+
+- [Phase 50B-6 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-6-statistical-inference)
+- [Phase 50B-6 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/PHASE50B_6_PREREGISTRATION.md)
+- [Phase 50B-6 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/PHASE50B_6_RESEARCH_PLAN.md)
+- [Phase 50B-6 final report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/results/phase50b/PHASE50B_6_FINAL_REPORT.md)
+- [Phase 50B-6 statistical endpoints](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/results/phase50b/phase50b6_inference/statistical_endpoints.csv)
+- [Phase 50B-6 pairing diagnostics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/results/phase50b/phase50b6_inference/pairing_identity_diagnostics.csv)
+- [Phase 50B-6 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/PHASE50B_6_STATUS.md)
+- [Phase 50B-6 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-6-statistical-inference/PHASE50B_6_ERROR_LOG.md)
+- [Accepted statistical Actions run 37851668489](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37851668489)
+
+## Phase 50B-4 — CLOSED / FROZEN CANDIDATE
+
+Phase 50B-4 completed the preregistered TT-03 far-OTM geometry comparison. OTM350 and OTM400 both passed 99.50% coverage and zero-data-error feasibility gates. OTM350 won the preregistered within-mutation development gate with DEV +50% stress net ₹32,213.01 versus ₹14,511.75 for OTM400.
+
+**Important:** BASE remained economically stronger. OTM350 was frozen as a candidate for statistical comparison, not promoted over BASE.
 
 - [Phase 50B-4 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-50b-4-far-otm-geometry)
-- [Phase 50B-4 preregistration](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/PHASE50B_4_FAR_OTM_PREREGISTRATION.md)
-- [Phase 50B-4 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/PHASE50B_4_RESEARCH_PLAN.md)
 - [Phase 50B-4 final report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/results/phase50b/PHASE50B_4_FINAL_REPORT.md)
-- [Phase 50B-4 selection decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/results/phase50b/tt03_otm_distance/development_selection.json)
-- [Phase 50B-4 geometry comparison](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/results/phase50b/tt03_otm_distance/geometry_split_comparison.csv)
-- [Phase 50B-4 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/PHASE50B_4_STATUS.md)
-- [Phase 50B-4 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-50b-4-far-otm-geometry/PHASE50B_4_ERROR_LOG.md)
-- [Accepted Actions run 37850091712](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37850091712)
-
-### Cost robustness
-
-| Geometry | ₹10/order | ₹10/order +50% | ₹20/order | ₹20/order +50% |
-|---|---:|---:|---:|---:|
-| BASE | ₹89,669.15 | ₹82,074.11 | ₹75,509.15 | ₹60,834.11 |
-| OTM350 | ₹69,552.06 | ₹62,094.34 | ₹55,392.06 | ₹40,854.34 |
-| OTM400 | ₹48,998.58 | ₹41,636.62 | ₹34,838.58 | ₹20,396.62 |
-
-**Next planned phase:** Phase 50B-6 dependence-aware statistical inference of frozen OTM350 versus fixed BASE. 2026 HOLD remains protected from selection.
 
 ---
+
 
 ## Phase 50B-4 — Far-OTM Geometry — ACTIVE (2026-10-09)
 
