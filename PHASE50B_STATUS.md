@@ -678,3 +678,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Preflight has passed; numerical job **113132915078** is currently in progress.
 - The corrected engine is pinned to the same registered TT06 engine revision **50B-TT06-COVERAGE-V2**; only the expiry split-report timezone normalization changed.
 - No TT06 P&L, VIX inference, promotion decision or downstream TT07 launch is accepted until replay + artifact audit + publication all pass.
+
+## 2026-10-08 — TT06 terminal feasibility failure
+- Controlled rerun **37722386852** completed the TT06 replay but failed the frozen feasibility gate: **692/983 = 70.40%** complete coverage, with 291 coverage exclusions, 3 session exclusions and zero data errors.
+- The failure is scientific/eligibility classification, not a code crash: the artifact audit rejected the result because coverage was below 95%.
+- TT06 is now terminal **FAIL_COVERAGE**. Its P&L is diagnostic only and is closed to promotion, VIX conditioning, tuning and confirmatory inference.
+- Persisted terminal classification: `results/phase50b/tt06_intraday_asym_replay/terminal_classification.json`.
+- Per the candidate-local stopping rule, the finite research may continue with unrelated registered TT07. TT07 preflight was hardened to accept this persisted terminal failure while explicitly forbidding consumption of TT06 P&L.
+- TT07 is the next active candidate; no strategy has been promoted.
