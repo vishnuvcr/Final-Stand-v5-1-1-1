@@ -1,3 +1,4 @@
+# Phase 51-1E frozen-gap gate; workflow trigger checkpoint.
 from pathlib import Path
 import hashlib, json
 import pandas as pd
