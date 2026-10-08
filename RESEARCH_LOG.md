@@ -1010,3 +1010,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Direct overlap with original primary spot source: 16,467 rows; median absolute difference 0; p99 absolute difference about 0.767 NIFTY points; p95 relative difference about 0.042 bp; gate PASS.
 - Jitendra12421 fallback is rejected as a replay source because of material intraday gaps on 2026-05-25, 2026-06-25 and 2026-07-08, despite acceptable common-period price overlap.
 - No strategy OOS P&L has been calculated.
+
+
+## 2026-10-09 — Phase 51 resumed
+- Public supplemental option files were audited and rejected for endpoint coverage.
+- The frozen OOS window was preserved.
+- An authenticated acquisition path was prepared on branch phase-51-1C-authenticated-options-acquisition.
+- TT-03/OTM350 replay remains unstarted until complete minute-level option data is available.
