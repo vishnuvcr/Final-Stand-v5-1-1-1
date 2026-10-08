@@ -35,3 +35,7 @@ The original options file stops at expiry 2026-07-21. The 2026-07-28 and 2026-08
 
 ### Phase 51-1B — Options data gate
 Status: BLOCKED. The public supplemental files checked for the missing 2026-07-28 and 2026-08-04 expiries end on 2026-07-02. No OOS strategy result has been calculated.
+
+
+### Phase 51-1C — Authenticated source path prepared
+A dedicated branch `phase-51-1C-authenticated-options-acquisition` now contains the Upstox expired-option contract acquisition code for the two missing expiries. Upstox documents 1-minute expired-contract candles, but the API requires authenticated Plus access. No credentials are assumed, and no OOS P&L is being produced while the required minute data is unavailable.
