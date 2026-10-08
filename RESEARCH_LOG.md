@@ -1010,3 +1010,7 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Direct overlap with original primary spot source: 16,467 rows; median absolute difference 0; p99 absolute difference about 0.767 NIFTY points; p95 relative difference about 0.042 bp; gate PASS.
 - Jitendra12421 fallback is rejected as a replay source because of material intraday gaps on 2026-05-25, 2026-06-25 and 2026-07-08, despite acceptable common-period price overlap.
 - No strategy OOS P&L has been calculated.
+
+
+## 2026-10-09 — Phase 51-1C authenticated-source gate
+Upstox recovery path created for the two missing frozen OOS expiries. Workflow 37839447686 was blocked at credential acquisition because UPSTOX_ACCESS_TOKEN is not configured. The branch remains a dormant recovery path; the frozen OOS window and source-selection gates are unchanged.
