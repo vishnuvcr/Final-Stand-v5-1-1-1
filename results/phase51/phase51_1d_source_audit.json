@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-09",
+  "phase": "51-1D",
+  "frozen_oos": [
+    "2026-04-21",
+    "2026-08-04"
+  ],
+  "status": "DATA-BLOCKED",
+  "strategy_pnl_inspected": false,
+  "sources": [
+    {
+      "name": "StockMock",
+      "role": "oracle",
+      "status": "ORACLE_ONLY",
+      "minute_ohlc": true,
+      "raw_export_verified": false,
+      "notes": "Official terms say 1-min OHLC backtesting; same-week/same-month historical data; no documented public raw API/export found."
+    },
+    {
+      "name": "StockMojo",
+      "role": "oracle",
+      "status": "ORACLE_ONLY",
+      "minute_chain": true,
+      "expired_options": true,
+      "raw_export_verified": false,
+      "notes": "Official pages advertise 1-minute replay of OI, volume, premium, IV, Greeks; expired options; no documented public raw API/export found."
+    },
+    {
+      "name": "FNOTrader",
+      "role": "candidate_oracle",
+      "status": "AUTH_REQUIRED",
+      "minute_chain": true,
+      "raw_export_verified": false,
+      "notes": "Official docs advertise deep 1-minute NIFTY history and MCP access; no repo connector/account available in current environment."
+    },
+    {
+      "name": "Upstox",
+      "role": "raw",
+      "status": "AUTH_REQUIRED",
+      "minute_chain": true,
+      "expired_options": true,
+      "raw_export_verified": true,
+      "notes": "Official expired-contract and 1-minute expired historical candle endpoints; Plus required for expired candles."
+    },
+    {
+      "name": "OptionsData.shop",
+      "role": "raw",
+      "status": "COMMERCIAL_PURCHASE",
+      "minute_chain": true,
+      "expired_options": true,
+      "raw_export_verified": false,
+      "notes": "Catalog advertises full-chain 1-minute NIFTY Parquet 2023-Sep 2026, including the frozen gap; free sample is 2026-09 only."
+    },
+    {
+      "name": "NSE",
+      "role": "official_exchange",
+      "status": "LICENSED_DATA",
+      "minute_chain": true,
+      "raw_export_verified": true,
+      "notes": "Public contract-wise data is daily; 1-minute/5-minute snapshot and historical order/trade data are licensed/paid."
+    },
+    {
+      "name": "MoneyTicks",
+      "role": "raw",
+      "status": "NOT_FOR_SALE",
+      "minute_chain": true,
+      "expired_options": true,
+      "raw_export_verified": false,
+      "notes": "Advertises API/export 1-minute archive but states data access is not currently sold."
+    },
+    {
+      "name": "QuantFlo",
+      "role": "oracle",
+      "status": "ORACLE_ONLY",
+      "minute_chain": true,
+      "raw_export_verified": false,
+      "notes": "Advertises 1-minute options history since 2021 and net-of-cost backtests; no public raw export/API verified."
+    },
+    {
+      "name": "AlgoTest",
+      "role": "oracle",
+      "status": "ORACLE_ONLY",
+      "minute_chain": true,
+      "raw_export_verified": false,
+      "notes": "Official docs/video advertise minute-level historical option backtesting; no public raw export verified."
+    },
+    {
+      "name": "thetrademarkk/india-index-options-1m",
+      "role": "raw",
+      "status": "REJECTED",
+      "minute_chain": true,
+      "expired_options": true,
+      "raw_export_verified": true,
+      "notes": "Missing nominal 2026-07-28/08-04 files actually end 2026-07-02; overlap/coverage gate failed."
+    },
+    {
+      "name": "RISSIN HF NIFTY 1m options",
+      "role": "raw_primary",
+      "status": "INCOMPLETE",
+      "minute_chain": true,
+      "expired_options": true,
+      "raw_export_verified": true,
+      "notes": "Frozen primary source reaches only 2026-07-21 expiry."
+    }
+  ],
+  "next_action": "Run authorized Upstox acquisition if repository secret is configured; otherwise prioritize authorized OptionsData.shop access and FNOTrader oracle comparison."
+}
