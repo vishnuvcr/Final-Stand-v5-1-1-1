@@ -2223,3 +2223,20 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Recovery: hardened the publication step to fetch/rebase the current branch before pushing. This is an orchestration-only correction; frozen geometry, selection criteria and cost assumptions are unchanged.
 - Prevention: Actions publication must reconcile concurrent branch updates before pushing generated artifacts.
 \n\n## 2026-10-08 — Phase 50B-5 chronology run 37821975113\n\n### Error F50B-095 — Accepted-total cross-check used the wrong summary column names\n**Run:** 37821975113.\n\n**Symptom:** The OTM350 reconstruction and artifact audit passed, but the chronological-validation script stopped before producing its outputs with `KeyError: 'net'`.\n\n**Cause:** The summary builder prefixes every metric with its cost-model name, so the aggregate net field is `net_net`, not `net`. The cross-check incorrectly indexed the unprefixed names.\n\n**Evidence status:** Non-evidence CI/reporting failure only. No Phase 50B-5 numerical conclusion was accepted from this run.\n\n**Correction:** The cross-check now explicitly maps accepted totals to `{cost}_net` and records observed values from those fields. No trading rule, dataset, cost assumption, split, or selection criterion changed.\n\n**Prevention:** Cross-checks must validate the generated schema before indexing aggregate metrics; future phase scripts should use explicit schema assertions for every accepted evidence field.\n\n**Research impact:** None on prior accepted TT-03/TT-04/TT-05 evidence. Phase 50B-5 remains incomplete and must rerun from the frozen protocol.\n
+
+## 2026-10-08 — Phase 50B-5 run 37827007176
+
+### Error F50B-096 — Publish rebase lacked Git identity
+**Run:** 37827007176.
+
+**Symptom:** All numerical and audit steps passed, but publication failed during `git rebase` with `empty ident name`.
+
+**Cause:** Git identity was configured for the initial commit but not explicitly available when the rebase-created commit was generated.
+
+**Evidence status:** Numerical results are complete and audit-passed, but this run is not the authoritative published checkpoint.
+
+**Correction:** Configure the GitHub Actions bot name/email immediately before rebase. No research parameter, trade rule, split, cost model, or inference criterion changed.
+
+**Prevention:** Publication workflows must set Git identity immediately before commit/rebase operations.
+
+**Research impact:** None on numerical evidence.
