@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "strategies": [
+    "TT02",
+    "TT03",
+    "TT04",
+    "TT05"
+  ],
+  "modes": [
+    "LOW",
+    "NORMAL",
+    "HIGH",
+    "SPIKE",
+    "FALLING",
+    "RISING",
+    "HIGH_RISING"
+  ],
+  "hypotheses": 28,
+  "holdout_used_for_selection": false,
+  "holdout_used_for_inference": false,
+  "selection_rule": "NONE \u2014 all 28 registered strategy\u00d7VIX hypotheses retained",
+  "source_of_vix_state": "entry_timestamp_only",
+  "coverage_threshold": 0.95
+}
