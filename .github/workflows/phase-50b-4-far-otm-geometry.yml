@@ -73,6 +73,8 @@ jobs:
           TT03_DISTANCE: ${{ matrix.distance }}
         run: python research/phase50b_tt03_otm_distance_replay.py
       - name: Audit distance replay
+        env:
+          TT03_DISTANCE: ${{ matrix.distance }}
         run: |
           python - <<'PY'
           import json, pandas as pd, os
