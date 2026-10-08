@@ -1037,3 +1037,13 @@ Upstox recovery path created for the two missing frozen OOS expiries. Workflow 3
 - Registered an authorized-byte validation gate before any strategy P&L.
 - No purchase, credential bypass, or unauthorized download was attempted.
 - No OOS P&L, parameter tuning, or inference was performed.
+
+
+## 2026-10-09 — Phase 51-1E correction: HF dataset refresh discovered
+- Rechecked the previously rejected public Hugging Face source rather than assuming the earlier audit remained current.
+- Current NIFTY directory shows verified commits for `2026-07-28.parquet` and `2026-08-04.parquet`, both added on 2026-07-04.
+- The 2026-08-04 commit records LFS SHA-256 object `8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c` and LFS size 58,248 bytes.
+- The prior “ends at 2026-07-02” conclusion is therefore stale and has been explicitly superseded; no scientific result based on that old conclusion is retained.
+- Added GitHub Actions workflow `.github/workflows/phase51-1E-hf-options-gate.yml` with manual dispatch and push triggers.
+- Added validator `research/phase51_1E_hf_options_gate.py` to check exact target files, schema, timestamps, expiry, duplicates and endpoint dates.
+- No OOS P&L, strategy tuning, or inference has been performed.
