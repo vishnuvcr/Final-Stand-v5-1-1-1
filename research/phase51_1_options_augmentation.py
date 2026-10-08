@@ -73,14 +73,27 @@ def normalize_tmk(path, expected_expiry=None):
 def session_checks(df, expected_expiry):
     day = df[df["timestamp"].dt.strftime("%Y-%m-%d") == expected_expiry]
     if day.empty:
-        raise AssertionError(f"{expected_expiry}: no expiry-day observations")
+        return {
+            "session_pass": False,
+            "expiry_day_present": False,
+            "expiry_day_unique_timestamps": 0,
+            "expiry_day_first_time": None,
+            "expiry_day_last_time": None,
+            "reason": "no expiry-day observations",
+        }
     ts = day["timestamp"].sort_values()
     unique_ts = int(ts.nunique())
     first = str(ts.min().time())
     last = str(ts.max().time())
-    if unique_ts < 375 or first > "09:16:00" or last < "15:29:00":
-        raise AssertionError(f"{expected_expiry}: weak session coverage unique_ts={unique_ts} first={first} last={last}")
-    return {"expiry_day_unique_timestamps":unique_ts,"expiry_day_first_time":first,"expiry_day_last_time":last}
+    ok = unique_ts >= 375 and first <= "09:16:00" and last >= "15:29:00"
+    return {
+        "session_pass": bool(ok),
+        "expiry_day_present": True,
+        "expiry_day_unique_timestamps": unique_ts,
+        "expiry_day_first_time": first,
+        "expiry_day_last_time": last,
+        "reason": None if ok else f"weak session coverage unique_ts={unique_ts} first={first} last={last}",
+    }
 
 rpath=fetch(RISSIN[0],RISSIN[1],ROOT/"rissin_NIFTY_2026.parquet")
 r=normalize_rissin(rpath)
@@ -99,7 +112,9 @@ for exp in SUPP_EXPIRIES:
     d=normalize_tmk(p,exp)
     if d.empty: raise AssertionError(f"Supplemental expiry {exp} is empty")
     sess=session_checks(d,exp)
-    manifest["supplemental_source"]["files"].append({"expiry":exp,"filename":f"options/NIFTY/{exp}.parquet","sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"bytes":p.stat().st_size,"rows":int(len(d)),"expiry_values":sorted(d["expiry"].dropna().unique().tolist()),"min_timestamp":str(d.timestamp.min()),"max_timestamp":str(d.timestamp.max()),**sess})
+    manifest["supplemental_source"]["files"].append({"expiry":exp,"filename":f"options/NIFTY/{exp}.parquet","sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"bytes":p.stat().st_size,"rows":int(len(d)),"expiry_values":sorted(d["expiry"].dropna().unique().tolist()),"trading_days":sorted(d["timestamp"].dt.strftime("%Y-%m-%d").unique().tolist()),"min_timestamp":str(d.timestamp.min()),"max_timestamp":str(d.timestamp.max()),**sess})
+    if not sess["session_pass"]:
+        manifest.setdefault("quality_failures",[]).append({"expiry":exp,"reason":sess["reason"]})
 
 # Common-expiry source-equivalence audit, performed before any OOS P&L.
 for exp in COMMON_EXPIRIES:
@@ -137,7 +152,7 @@ for exp in COMMON_EXPIRIES:
     gate["PASS"]=all(gate.values())
     manifest["common_expiry_comparisons"].append({"stats":stats,"gate":gate})
 
-overall=all(x["gate"]["PASS"] for x in manifest["common_expiry_comparisons"])
+overall=all(x["gate"]["PASS"] for x in manifest["common_expiry_comparisons"]) and not manifest.get("quality_failures")
 # Validate supplemental files have only their intended expiry and at least one full OOS session.
 for f in manifest["supplemental_source"]["files"]:
     assert f["min_timestamp"] < f["max_timestamp"]
