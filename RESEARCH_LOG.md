@@ -136,3 +136,11 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-09 — Phase 51-1 source-gate closeout
 Phase 51-1 stopped fail-closed on data availability before any fresh OOS strategy P&L. Frozen OOS: 2026-04-21 to 2026-08-04. Validated spot source: technovusin/nifty50-historical-data. Primary option source reaches only 2026-07-21. Tested thetrademarkk supplemental option source failed endpoint and common-expiry coverage. Upstox authenticated recovery workflow 37839447686 was blocked because UPSTOX_ACCESS_TOKEN is not configured. No strategy promotion or OOS inference was made.
+
+
+## 2026-10-09 — Phase 51-2 partial-data calendar audit closeout
+- Separate branch `phase-51-2-available-data-partial-oos` was used so the incomplete full-window data gate was not silently relaxed.
+- Final accepted Actions run: **37847094909**.
+- Frozen available option interval: 2026-04-21 through 2026-07-21; 14 observed expiries.
+- Both frozen TT-03 BASE (300/350/400) and OTM350 (350/400/450) had 0 eligible campaigns because the frozen entry rule is exactly three calendar days before expiry and every observed expiry in this interval is Tuesday, making the scheduled entry date Saturday.
+- Result: no P&L, no inference, no ranking, no promotion. Phase 51 remains blocked on 2026-07-28 and 2026-08-04 option coverage.
