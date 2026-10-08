@@ -97,6 +97,8 @@ def session_checks(df, expected_expiry):
 
 rpath=fetch(RISSIN[0],RISSIN[1],ROOT/"rissin_NIFTY_2026.parquet")
 r=normalize_rissin(rpath)
+r_by_expiry={exp:r[r["expiry"]==exp].copy() for exp in COMMON_EXPIRIES}
+
 in_window=r[r["expiry"].isin(EXPECTED_EXPIRIES)]
 observed=sorted(in_window["expiry"].dropna().unique().tolist())
 missing=[e for e in EXPECTED_EXPIRIES if e not in observed]
@@ -120,8 +122,7 @@ for exp in SUPP_EXPIRIES:
 for exp in COMMON_EXPIRIES:
     rp=ROOT/f"rissin_common_{exp}.parquet"
     tp=fetch(TMK_BASE,f"options/NIFTY/{exp}.parquet",ROOT/f"tmk_common_{exp}.parquet")
-    rr=normalize_rissin(rpath)
-    rr=rr[rr["expiry"]==exp]
+    rr=r[r["expiry"]==exp].copy()
     tt=normalize_tmk(tp,exp)
     key=["timestamp","strike","option_type"]
     a=rr[key+["close"]].rename(columns={"close":"close_rissin"})
