@@ -93,13 +93,12 @@ def load_rissin_filtered_remote(expiries):
     return df
 
 r=load_rissin_filtered_remote(sorted(set(EXPECTED_EXPIRIES)))
-r=normalize_rissin(rpath)
 in_window=r[r["expiry"].isin(EXPECTED_EXPIRIES)]
 observed=sorted(in_window["expiry"].dropna().unique().tolist())
 missing=[e for e in EXPECTED_EXPIRIES if e not in observed]
 assert missing==SUPP_EXPIRIES, f"Unexpected missing expiry blocks: {missing}"
 
-manifest={"original_source":{"repo_id":RISSIN[0],"filename":RISSIN[1],"sha256":hashlib.sha256(rpath.read_bytes()).hexdigest(),"bytes":rpath.stat().st_size},
+manifest={"original_source":{"repo_id":RISSIN[0],"filename":RISSIN[1],"sha256":"bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73","bytes":394805617,"acquisition":"frozen Phase-51-1 source manifest; filtered equivalence rows read remotely from the same source file"},
           "expected_expiries":EXPECTED_EXPIRIES,"observed_expiries":observed,"missing_expiries":missing,
           "supplemental_source":{"repo_id":TMK_BASE,"files":[]},
           "common_expiry_comparisons":[]}
