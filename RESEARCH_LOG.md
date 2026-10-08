@@ -955,3 +955,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - TT-03 passed the statistical gate at net, net50 and net20 but failed net20_50 after Holm correction; TT-03 OTM350 passed net, net50 and net20 but failed net20_50. TT04 and TT05 did not pass any primary hypothesis.
 - No strategy met the preregistered all-cost robustness criterion. **No promotion.**
 - Phase 50B-7 is the final finite manuscript/decision phase.
+
+
+### 2026-10-09 — Phase 50B-7 initialized
+- Created dedicated branch phase-50b-final-manuscript from the completed statistical-inference branch.
+- Added the complete final manuscript, figure-generation script, final workflow and status file.
+- The final phase is terminal and contains no new strategy search.
