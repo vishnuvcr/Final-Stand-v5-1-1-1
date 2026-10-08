@@ -2367,3 +2367,9 @@ Run **37836313364** failed only in the freeze publication step because the workf
 **Evidence status:** scientific gates passed; no P&L affected.
 
 **Correction:** use the persisted JSON schema as emitted by the overlap audit (`details.fallback_source` and `details.gate`) in the freeze step.
+
+
+### F51-012 — Option augmentation run cancelled by concurrent branch publication
+Options gate run **37836222630** was cancelled during its audit while the spot-source validation workflow was publishing a new branch commit. No option augmentation result was accepted or used.
+
+**Correction:** rerun the options gate after the spot-source freeze is complete and the branch is stable.
