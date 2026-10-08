@@ -686,3 +686,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Persisted terminal classification: `results/phase50b/tt06_intraday_asym_replay/terminal_classification.json`.
 - Per the candidate-local stopping rule, the finite research may continue with unrelated registered TT07. TT07 preflight was hardened to accept this persisted terminal failure while explicitly forbidding consumption of TT06 P&L.
 - TT07 is the next active candidate; no strategy has been promoted.
+
+## 2026-10-08 — TT07 terminal feasibility failure
+- TT07 run **37746729676** completed replay but failed the preregistered coverage gate: **1/59 = 1.6949%** complete coverage, with 58 coverage exclusions, 1 entry exclusion, 2 transition-diagnostic rows and zero data errors.
+- The replay itself completed; Actions failed only at artifact audit because coverage was below 95%.
+- TT07 is terminal **FAIL_COVERAGE**. Its P&L is diagnostic only and is excluded from promotion, VIX conditioning, tuning and confirmatory inference.
+- Persisted terminal classification: `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
+- Non-fatal divide-by-zero warnings occurred in the implied-volatility Newton update; they did not alter the classification.
+- No scientific rule or cost assumption changed. TT07 is now closed under the candidate-local stopping rule; continue only with the next finite registered Phase-50B gate.
