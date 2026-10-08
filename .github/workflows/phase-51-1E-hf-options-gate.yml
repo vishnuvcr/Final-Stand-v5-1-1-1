@@ -34,3 +34,5 @@ jobs:
           path: |
             results/phase51/options_augmentation_audit.json
             results/phase51/validated_option_source.json
+
+# Persistent artifact policy: audit must write a manifest before failing.
