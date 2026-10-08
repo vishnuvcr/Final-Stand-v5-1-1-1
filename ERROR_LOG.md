@@ -2311,3 +2311,27 @@ Actions run **37835085807** downloaded the fallback successfully but stopped bec
 **Correction:** The gate now records exact first/last timestamps, session span and maximum internal gap for short days. A short day is accepted only when it still has at least 240 rows, spans at least 240 minutes and has no internal gap greater than five minutes. Tiny 30-row fragments will fail closed.
 
 **Prevention:** Session completeness tests must use temporal continuity and session-span invariants, not row count alone.
+
+
+## 2026-10-09 — Phase 51-1A source-quality finding
+
+### F51-006 — Independent fallback source contains material intraday gaps
+The corrected fallback audit exposed three suspicious OOS dates: 2026-05-25 has 277 rows from 09:15–15:29 with a 99-minute internal gap; 2026-06-25 has only 30 rows from 15:00–15:29; 2026-07-08 has only 30 rows from 15:00–15:29.
+
+**Evidence status:** no strategy P&L was calculated. The source remains rejected as a replay source until the gap is explained or an independent source passes the frozen replacement gate.
+
+**External calendar cross-check:** NSE's 2026 equity-derivatives holiday schedule lists 01-May, 28-May and 26-Jun in this OOS interval, not 25-May, 25-Jun or 08-Jul. NSE regular equity-market trading opens at 09:15. The observed 30-row fragments therefore are not explained by a scheduled market holiday. citeturn302243search0turn302243search12
+
+**Correction:** retain fail-closed behavior and perform source triangulation with an independent public NIFTY 1-minute dataset before any OOS replay.
+
+### F51-007 — Duplicate Phase-51-1A diagnostic runs from overlapping push triggers
+The workflow-file update and marker update both matched the workflow's branch/path trigger, producing two data-gate runs (37835369256 and 37835394540). No strategy P&L or promotion evidence was generated.
+
+**Correction:** treat the cleanest completed gate run as the audit reference and avoid additional marker commits unless a workflow-only change is required. The workflow itself remains manually runnable.
+
+### F51-008 — Plan update wrapper interpolation error
+A tool-orchestration string containing Markdown backticks failed with a JavaScript SyntaxError before any GitHub write occurred.
+
+**Evidence status:** tooling-only; no repository or numerical evidence changed.
+
+**Correction:** use plain-text generated sections without embedded template-literal delimiters for repository writes.
