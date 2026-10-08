@@ -703,3 +703,13 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Only OTM350/OTM400 may be selected; selection is DEV-only and fixed before validation/holdout.
 - Canonical GitHub Actions run: 37762837711.
 - Current numerical state: BASE regression replay executing; no geometry result accepted yet.
+
+
+## 2026-10-08 — Phase 50B-4 far-OTM geometry replay completed; publication recovery
+- Run **37762837711** completed BASE, OTM350 and OTM400 replays and the frozen selection audit successfully.
+- BASE regression passed against canonical TT-03, satisfying semantic-drift control.
+- Both mutations passed the preregistered development screen. **OTM350** ranked first by DEV net50 and was frozen for validation.
+- OTM350: DEV 121 trades / ₹36,634.92 net; net50 ₹32,213.01; net20_50 ₹19,362.81. VAL 76 / ₹27,811.50 net; net50 ₹24,895.99. HOLD 3 / ₹5,105.64 net (descriptive only).
+- OTM400: DEV 121 / ₹18,891.16 net; net50 ₹14,511.75; net20_50 ₹1,661.55. VAL 76 / ₹25,842.14; net50 ₹22,977.59. HOLD 3 / ₹4,265.28.
+- The run's final publication push failed non-fast-forward because the branch changed concurrently. This is F50B-094, with no scientific impact.
+- Publication recovery has been committed to the workflow: fetch/rebase current branch before pushing generated artifacts. The frozen OTM350 selection itself is not changed.
