@@ -1017,3 +1017,20 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The frozen OOS window was preserved.
 - An authenticated acquisition path was prepared on branch phase-51-1C-authenticated-options-acquisition.
 - TT-03/OTM350 replay remains unstarted until complete minute-level option data is available.
+
+
+## 2026-10-09 — Phase 51-1 final source-gate closeout
+
+Phase 51-1 stopped on the preregistered data-availability rule before any fresh OOS strategy P&L.
+
+- Frozen OOS window retained: 2026-04-21 through 2026-08-04.
+- Spot source validation: PASS using technovusin/nifty50-historical-data; 27,375 OOS minute rows and 16,467 common rows versus the original spot source with median absolute difference 0.
+- Original RISSIN option source reaches only expiry 2026-07-21.
+- Missing frozen OOS weekly expiries: 2026-07-28 and 2026-08-04.
+- thetrademarkk public option augmentation: REJECTED; both nominal missing-expiry files stop on 2026-07-02, and common-expiry coverage versus RISSIN is only 34.57%, 14.95% and 4.60% for 07-Jul, 14-Jul and 21-Jul respectively.
+- Authenticated Upstox recovery path: BLOCKED in run 37839447686 because UPSTOX_ACCESS_TOKEN is not configured.
+- Decision: NO OOS REPLAY / NO STRATEGY CONCLUSION / NO PROMOTION.
+- Phase 51-2 through 51-6 have not started.
+
+Formal report: results/phase51/PHASE51_1_SOURCE_GATE_REPORT.md.
+Structured decision: results/phase51/phase51_1_source_gate_final.json.
