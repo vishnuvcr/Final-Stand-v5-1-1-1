@@ -549,3 +549,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - BASE regression passed. OTM350 was selected and frozen for validation by the preregistered DEV rule.
 - The publication step then failed because the branch had advanced concurrently, causing a non-fast-forward push rejection. This is logged as F50B-094 and does not invalidate numerical evidence.
 - The workflow was corrected to reconcile the remote branch before publication. No scientific rule or frozen candidate was changed.
+
+
+## 2026-10-08 — User requested next phases
+- Re-read the Phase 50B plan, preregistration, status, research log, chat log and README before advancing.
+- Opened dedicated branch `phase-50b-chronological-validation` for 50B-5 chronological validation.
+- Registered a finite protocol for TT-03, frozen OTM350, TT-04 and TT-05. TT06/TT07 remain excluded from downstream P&L evidence.
+- Added the Phase 50B-5 engine/workflow and frozen protected-holdout rules. No new optimization was introduced.
