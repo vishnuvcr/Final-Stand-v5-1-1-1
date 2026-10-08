@@ -1,3 +1,21 @@
+## Phase 51-2 — Available-data partial OOS — CLOSED / NO ELIGIBLE CAMPAIGNS
+
+Phase 51-2 is closed as a **calendar/opportunity audit**, not as an economic strategy pass/fail. The frozen Phase-51-1 option source contains 14 observed expiries from **2026-04-21 through 2026-07-21**, all Tuesdays. The frozen TT-03 rule requires entry exactly three calendar days before expiry, so every scheduled entry date falls on Saturday. Both frozen TT-03 BASE (300/350/400) and OTM350 (350/400/450) therefore have **0 eligible campaigns** and no valid P&L sample.
+
+No costs, slippage, statistical inference, ranking, or promotion inference was applied to a zero-opportunity sample.
+
+- [Phase 51-2 status](results/phase51/PHASE51_2_PARTIAL_OOS_STATUS.md)
+- [Phase 51-2 report](results/phase51/PHASE51_2_PARTIAL_OOS_REPORT.md)
+- [Phase 51-2 action log](results/phase51/PHASE51_2_CHAT_LOG.md)
+- [Phase 51-2 error log](results/phase51/PHASE51_2_ERROR_LOG.md)
+- [d300 audit](results/phase51/partial_oos/d300/opportunity_audit.json)
+- [d350 audit](results/phase51/partial_oos/d350/opportunity_audit.json)
+- [final Actions run 37847094909](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37847094909)
+
+The complete Phase-51 window remains **2026-04-21 through 2026-08-04**, and the 2026-07-28 and 2026-08-04 option blocks remain unresolved. A future calendar-normalized three-trading-day interpretation must be a separately pre-registered research phase and must not be retrofitted into Phase 51.
+
+---
+
 ## Phase 50B — Expanded Prior-Strategy Universe — IN PROGRESS
 
 Phase 50B is the bounded continuation after Phase 50. It includes the user's seven supplied Tradetron strategies and previously developed strategy lineages discovered across the user's GitHub repositories.
