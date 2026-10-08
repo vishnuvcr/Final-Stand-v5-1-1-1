@@ -1,0 +1,26 @@
+name: Phase 51-1G Open Source Alternatives
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/phase51_1G_open_source_bucket_audit.py"
+      - ".github/workflows/phase51-1G-open-source-alternatives.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: python -m pip install -U pandas pyarrow huggingface_hub
+      - name: Audit CodePyx public bucket
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase51_1G_open_source_bucket_audit.py
+      - name: Upload audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase51-1G-open-source-audit
+          path: results/phase51/opensource_1g/
