@@ -1035,3 +1035,5 @@ A dedicated branch `phase-50b-chronological-validation` now runs the next finite
 - **Next phase:** authenticated expired-options acquisition gate, with automatic schema/coverage/hash validation and fail-closed behavior if the required source is unavailable.
 
 Key audit files: `PHASE51_RESEARCH_PLAN.md`, `PHASE51_STATUS.md`, and `ERROR_LOG.md`.
+
+- **Phase 51-1C branch:** `phase-51-1C-authenticated-options-acquisition` contains an Upstox expired-contract acquisition script. Upstox documents 1-minute expired-option candles, but authenticated Plus access is required; no credentials are assumed or fabricated.
