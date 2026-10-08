@@ -10,4 +10,5 @@
   "exercise_stt_applies": false,
   "execution_stress": ["base", "plus25pct_cost", "plus50pct_cost", "adverse_one_tick_per_leg", "adverse_one_tick_plus50pct"],
   "bid_ask_observed": false
+  ,"checkpoint": "registered"
 }
