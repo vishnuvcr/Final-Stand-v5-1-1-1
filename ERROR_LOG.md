@@ -2426,3 +2426,13 @@ The earlier Phase-51-1B rejection of thetrademarkk/india-index-options-1m was ba
 **Correction:** reopen the source and require actual-byte validation before accepting it.
 
 **Prevention:** every continuation must re-query the live external dataset index before carrying forward a prior source rejection when the source is actively maintained.
+
+
+## 2026-10-09 — F51-020 — Phase-51-1E validator used the wrong source schema
+The first Phase-51-1E validator assumed `datetime`, `expiry_date`, `strike_price`, and `right`. The actual downloaded Hugging Face NIFTY files use the RISSIN/TradeMarkk schema with `timestamp`, `expiry`, `strike`, and `option_type`. GitHub Actions proved both target files downloaded successfully before the validator failed with KeyError `datetime`.
+
+**Scientific impact:** none. No OOS P&L or inference was calculated. The failure was an implementation defect in the validation layer only.
+
+**Correction:** Phase 51-1E now reuses the established source-normalization/equivalence engine, with the preregistered 10,000 matched-row and 80% common-expiry coverage thresholds, the registered price-equivalence checks, explicit duplicate detection, and expiry-day session checks.
+
+**Prevention:** validators must consume the canonical schema already established by the frozen data manifest/source scripts rather than inventing column aliases independently. Schema discovery must run before field access and must be persisted in the audit artifact.
