@@ -64,3 +64,9 @@ Validator: research/phase51_1E_hf_options_gate.py
 
 ### 2026-10-09 — Phase 51-1E live HF re-audit
 **Current state: DATA-BLOCKED pending executable byte validation.** The live Hugging Face NIFTY directory now verifies both missing files: 2026-07-28 (commit dbc0596) and 2026-08-04 (commit 51ca58c). This supersedes the earlier stale rejection. The repository contains the automated gate workflow and validator, but this environment cannot directly consume HF/Xet binary Parquet bytes to independently execute the gate. Therefore no schema/session/equivalence PASS is claimed and no OOS P&L has been calculated.
+
+
+### 2026-10-09 — Phase 51-1E validator correction and live rerun
+The initial HF gate failed only because the validator expected `datetime`/ `expiry_date` fields that are not present in the actual source. Actions logs show both missing-expiry files downloaded successfully before the exception. The validator has been replaced with the established Phase-51 source normalization/equivalence engine, corrected to the registered 10,000-row/80% common-expiry threshold and explicit session/duplicate checks.
+
+**Current status: VALIDATION RUNNING.** No OOS P&L has been calculated.
