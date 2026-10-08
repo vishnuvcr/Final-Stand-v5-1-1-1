@@ -2466,3 +2466,9 @@ Scientific impact: none. No OOS P&L, tuning, or inference was calculated.
 Decision: do not fabricate access, bypass authentication, or substitute an oracle for raw data. The next valid route is an authorized commercial archive or a user-supplied licensed archive/token.
 
 Prevention: run the authorized-credential inventory before repeatedly launching expensive acquisition workflows.
+
+
+## 2026-10-09 — F51-024 — CodePyx public bucket does not expose advertised NIFTY option path
+Phase 51-1G GitHub Actions run 37844364676 attempted direct public downloads of options/NIFTY/2026-07-21.parquet, 2026-07-28.parquet and 2026-08-04.parquet from codepyx23/india-index-options-1m-bucket. The advertised path returned HTTP 404. No data bytes were acquired and no P&L was calculated.
+
+Prevention: distinguish a public bucket/catalog claim from an actually resolvable file path before treating it as an alternative source.
