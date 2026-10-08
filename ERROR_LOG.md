@@ -2206,3 +2206,11 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - The divide-by-zero RuntimeWarnings observed in the implied-volatility Newton update were non-fatal and did not cause the terminal classification; they are recorded as an implementation warning for future engine hardening, not as accepted evidence.
 - Terminal classification has been persisted at `results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json`.
 - No strategy rule, strike, stop, exit, cost model, lot size or VIX definition was changed.
+
+
+## F50B-093 — Live Actions log endpoint unavailable during TT-03 far-OTM run (2026-10-08)
+- Run: 37762837711; job: 113263197383.
+- Workflow state remained in_progress; the live job-log endpoint returned GitHub 404 BlobNotFound while BASE regression was executing.
+- No numerical result was inferred from the unavailable log.
+- Scientific impact: none; execution continues from the authoritative run state.
+- Action: rely on workflow job/run state and persisted artifacts only; do not retry or alter research code solely for this endpoint error.
