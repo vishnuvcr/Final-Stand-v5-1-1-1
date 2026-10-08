@@ -44,3 +44,17 @@ The free public sample covers 15–17 Sep 2026 and is useful for schema inspecti
 
 ## Decision priority
 If the authorized archive passes the common-expiry equivalence gate, it becomes the preferred missing-block raw source. If it fails, retain the data block and move to the next authorized source rather than altering the OOS window.
+
+
+## 2026-10-09 — Live-source re-audit
+The current live Hugging Face repository was rechecked rather than relying on the earlier rejection.
+
+Verified evidence:
+- `2026-07-28.parquet`: verified commit **dbc0596**, added 2026-07-04.
+- `2026-08-04.parquet`: verified commit **51ca58c**, added 2026-07-04.
+- The 2026-08-04 LFS pointer records SHA-256 `8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c` and remote size 58,248 bytes.
+- Dataset license shown by the source is **CC-BY-NC-4.0**.
+
+These facts establish current file existence and provenance, but **do not establish byte-level scientific acceptance**. The current ChatGPT environment cannot directly retrieve HF/Xet binary Parquet bytes, so schema/session/duplicate/equivalence results are not being fabricated. The repository workflow and validator remain the authoritative executable gate when GitHub Actions can run it.
+
+**Current decision: DATA-BLOCKED pending actual validator execution and common-expiry equivalence. No OOS P&L or tuning is permitted yet.**
