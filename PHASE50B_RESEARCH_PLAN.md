@@ -67,3 +67,17 @@ Frozen TT-03 geometry universe:
 3. OTM400: +400/+450/+500 and -400/-450/-500.
 
 Development selection is frozen before validation/holdout: among the two far-OTM mutations with >=95% coverage, require positive DEV net and DEV net under +50% friction stress and rank by DEV net50; freeze the single highest-ranked qualifying mutation. Validation requires positive net and positive net50; the protected 2026 HOLD is descriptive confirmation only and is never used to select the geometry.
+
+
+## 2026-10-08 — Phase 50B-5 chronological validation protocol freeze
+Phase 50B-5 is a finite chronological evaluation of the already-feasible candidates **TT-03**, **TT-04**, **TT-05**, plus the single frozen far-OTM candidate **TT-03 OTM350**. No additional strategy or parameter search is admitted in this phase.
+
+Protocol:
+1. Reconstruct/verify the frozen OTM350 trade series under the same source-semantic engine and cost model; this is artifact recovery/verification, not new tuning.
+2. Use expiry chronology for the fixed partitions: DEV 2021–2023, VAL 2024–2025, protected HOLD 2026.
+3. Report net, net50, net20 and net20_50; profit per completed trade; win rate; worst trade; cumulative chronological equity; maximum drawdown in ₹; and peak-to-trough equity drawdown percentage. These are descriptive/risk diagnostics and do not redefine the preregistered promotion rule.
+4. Do not use 2026 HOLD for selection, parameter choice, VIX threshold choice, or statistical hypothesis testing.
+5. Cross-check strategy-level totals against previously accepted summaries before any risk metric is published.
+6. A strategy remains eligible for 50B-6 only if its previously accepted feasibility state is valid and the OTM350 artifact passes the same >=95% coverage/zero-data-error gate. TT06/TT07 remain terminal FAIL_COVERAGE and their P&L is excluded.
+7. No capital-normalized return percentage is claimed from a trade-only file unless an explicit capital/margin denominator is available in the accepted evidence. The phase reports only the defensible chronological equity drawdown percentage until such a denominator is registered.
+8. Stopping rule: after this fixed comparison is complete, advance once to 50B-6 statistical inference; do not reopen the strategy universe based on descriptive rankings.
