@@ -56,3 +56,18 @@ The phase stops after the finite registered candidate universe has passed its ap
 
 ## Candidate-local stopping rule — 2026-10-07
 A strategy that fails a preregistered feasibility gate is closed for promotion, VIX conditioning, parameter tuning and confirmatory inference. That failure does **not** block unrelated strategies in the finite registered universe from being tested. Downstream workflows may continue only when the failed strategy has a terminal, persisted feasibility classification and the next strategy's workflow explicitly verifies that no failed candidate P&L is being consumed as evidence.
+
+
+## Preregistered 50B-4 amendment — TT-03 strike-distance sensitivity
+Before inspecting mutation results, TT-03 is registered as the only current candidate with an explicit natural strike-distance variable: its source-faithful ratio uses ±300 NIFTY points from ATM.
+
+Finite mutation universe:
+- distance = 200, 300, 400, 500, 600 NIFTY points;
+- same entry window, direction logic, expiry-day exit logic, historical lots, execution-price model and four cost models as TT-03;
+- no VIX threshold or other parameter tuning;
+- 300-point variant is the source-faithful control;
+- 2026 remains protected and is not used for mutation selection;
+- primary feasibility remains >=95% complete mandatory-exit quote coverage;
+- variants failing feasibility are terminal and their P&L is not used downstream.
+
+Selection rule, fixed before execution: among feasible variants, development is descriptive only; no variant is promoted from this stage. Chronological validation and protected holdout remain mandatory downstream gates.
