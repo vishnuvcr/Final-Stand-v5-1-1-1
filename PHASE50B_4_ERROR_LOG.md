@@ -8,3 +8,7 @@ Pre-execution controls:
 - OTM350 and OTM400 are the only mutations;
 - development selection is frozen before validation/holdout interpretation;
 - coverage and data-error gates remain fail-closed.
+
+## 2026-10-09 — Error F50B4-001
+
+Actions run 37848842347 stopped at BASE verification because pandas was absent from that job environment. No OTM numerical replay ran and no evidence was produced. A pandas install step was added to the verification job.
