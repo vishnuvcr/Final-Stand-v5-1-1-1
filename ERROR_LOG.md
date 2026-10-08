@@ -2255,3 +2255,7 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 **Correction:** The bootstrap now explicitly groups expiry dates but resamples only the numeric P&L vector. The permutation test, hypothesis family, cost models, seed, replicate counts, protected holdout and promotion criteria are unchanged.
 
 **Prevention:** Bootstrap routines must explicitly isolate the numeric statistic column before conversion to numpy and include a numeric-schema assertion.
+
+
+## 2026-10-09 — Phase 50B-6 corrected run 37832396945
+No new error. The corrected inference run passed all numerical, audit and publication gates. F50B-097 was the only Phase 50B-6 implementation defect and was corrected before accepted inference.
