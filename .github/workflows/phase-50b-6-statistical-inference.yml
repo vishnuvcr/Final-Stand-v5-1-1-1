@@ -1,0 +1,76 @@
+name: Phase 50B-6 - Statistical Inference
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-6-statistical-inference
+    paths:
+      - trigger/phase50b_6.start
+      - PHASE50B_6_RESEARCH_PLAN.md
+      - PHASE50B_6_PREREGISTRATION.md
+      - research/phase50b_6_statistical_inference.py
+
+concurrency:
+  group: phase50b-6-statistical-inference
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  infer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas
+      - name: Download frozen OTM350 artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/otm350
+          gh api /repos/vishnuvcr/Final-Stand-v5-1-1-1/actions/artifacts/11580799729/zip > /tmp/otm350.zip
+          unzip -q /tmp/otm350.zip -d /tmp/otm350
+          test -s /tmp/otm350/tt03_trades.csv
+          mkdir -p results/phase50b/otm350_artifact
+          cp /tmp/otm350/tt03_trades.csv results/phase50b/otm350_artifact/tt03_trades.csv
+      - name: Compile inference engine
+        run: python -m py_compile research/phase50b_6_statistical_inference.py
+      - name: Run preregistered inference
+        run: python research/phase50b_6_statistical_inference.py
+      - name: Audit inference
+        run: |
+          python - <<'PY'
+          import json, pandas as pd
+          from pathlib import Path
+          d=Path("results/phase50b/phase50b6_inference")
+          x=json.loads((d/"decision.json").read_text())
+          e=pd.read_csv(d/"statistical_endpoints.csv")
+          p=pd.read_csv(d/"validation_paired_expiry.csv")
+          assert x["treatment"]=="OTM350" and x["control"]=="BASE"
+          assert len(p)==76 and len(e)==4
+          assert x["holdout_used_for_selection_or_inference"] is False
+          print("Phase 50B-6 audit PASS")
+          print(json.dumps(x,indent=2))
+          PY
+      - name: Upload inference artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-6-statistical-inference-${{ github.run_id }}
+          path: results/phase50b/phase50b6_inference
+      - name: Publish inference artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git add results/phase50b/phase50b6_inference
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+users.noreply.github.com" commit -m "Phase 50B-6: publish statistical inference"
+          git pull --rebase origin phase-50b-6-statistical-inference
+          git push origin HEAD:phase-50b-6-statistical-inference
