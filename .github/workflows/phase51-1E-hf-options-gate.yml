@@ -1,0 +1,43 @@
+name: Phase 51-1E HF Options Gate
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/phase51_1E_hf_options_gate.py"
+      - ".github/workflows/phase51-1E-hf-options-gate.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: python -m pip install -U pandas pyarrow huggingface_hub
+      - name: Download frozen-gap NIFTY files
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'PY'
+          from huggingface_hub import hf_hub_download
+          from pathlib import Path
+          root=Path("data/phase51/hf_options")
+          root.mkdir(parents=True,exist_ok=True)
+          for d in ("2026-07-28","2026-08-04"):
+              p=hf_hub_download(
+                  repo_id="thetrademarkk/india-index-options-1m",
+                  repo_type="dataset",
+                  filename=f"options/NIFTY/{d}.parquet",
+                  token=__import__("os").environ.get("HF_TOKEN") or None,
+                  local_dir=str(root)
+              )
+              print(d, p)
+          PY
+      - name: Validate files
+        run: python research/phase51_1E_hf_options_gate.py
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase51-1E-hf-options-gate
+          path: results/phase51/hf_options_gate/
