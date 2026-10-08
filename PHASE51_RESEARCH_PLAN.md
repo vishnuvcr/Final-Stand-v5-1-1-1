@@ -133,3 +133,16 @@ Execution stress will be represented as:
 - deterministic adverse one-tick-per-leg execution where a valid tick-size rule is available;
 - combined adverse tick + 50% stress.
 Because historical bid/ask is absent, these are stress models, not reconstructed bid/ask fills.
+
+
+### 2026-10-09 — Phase 51-1 spot-source replacement rule
+
+The first frozen spot source failed endpoint coverage before OOS P&L inspection. To avoid either silent data repair or P&L-driven source selection, Phase 51-1 now permits an independent pre-P&L source replacement/triangulation gate only under these fixed rules:
+
+1. The source must be independent of the failed source and publicly reproducible.
+2. It must cover the full frozen OOS window at the required endpoint, have deterministic timestamp/duplicate integrity, and pass the same session-quality checks.
+3. Its common-period price series must agree with the already-frozen source at the preregistered overlap thresholds before it is used as the replay spot source.
+4. The replacement decision must be made entirely from data-quality evidence, before any strategy OOS P&L is inspected.
+5. If no source passes, Phase 51-4 stops with a data-availability limitation; the OOS window is not shortened.
+
+Independent triangulation source registered: public GitHub repository technovusin/nifty50-historical-data, cleaned NIFTY50 1-minute files for 2026-04 through 2026-08. It is a validation source only until the above gate passes.
