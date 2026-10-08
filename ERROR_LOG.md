@@ -2393,3 +2393,11 @@ The audit failed on `min_timestamp.startswith(expiry)` for a supplemental weekly
 **Evidence status:** no source was rejected on quote equivalence; the failure occurred after the common-source comparison logic.
 
 **Correction:** remove the prefix assertion and rely on the normalized expiry column, timestamp ordering and non-empty file checks already enforced by the loader.
+
+
+### F51-014 — Supplemental option timestamp assertion assumed midnight/date-prefix formatting
+The corrected options audit reached all source reads and equivalence calculations, then failed only on a validation assertion that required the stringified minimum timestamp to start exactly with the expiry date. The supplemental files can legitimately begin later in the trading session, so this assertion was invalid.
+
+**Evidence status:** no OOS P&L was calculated and no option source was accepted.
+
+**Correction:** validate that the supplemental minimum/maximum timestamps fall within the intended expiry trading date/session rather than requiring an exact string prefix.
