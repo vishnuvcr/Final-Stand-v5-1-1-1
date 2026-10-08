@@ -1,0 +1,83 @@
+{
+  "run_id": 37842966411,
+  "status": "FAIL_SOURCE_EQUIVALENCE_AND_ENDPOINT",
+  "source": "thetrademarkk/india-index-options-1m",
+  "primary_source": {
+    "repo_id": "rissin/nse-options-intraday",
+    "filename": "upstox_intraday/NIFTY/NIFTY_2026.parquet",
+    "sha256": "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73",
+    "bytes": 394805617
+  },
+  "supplemental_files": [
+    {
+      "expiry": "2026-07-28",
+      "filename": "options/NIFTY/2026-07-28.parquet",
+      "sha256": "f9c3a6d1e4498274644ccbfeb8aeb3d545fc2ce1a12b908f450360a643e40d17",
+      "bytes": 3990663,
+      "rows": 320359,
+      "min_timestamp": "2026-06-15 09:15:00+05:30",
+      "max_timestamp": "2026-07-02 15:30:00+05:30",
+      "expiry_day_present": false,
+      "quality_fail": "does_not_reach_expiry_2026-07-28"
+    },
+    {
+      "expiry": "2026-08-04",
+      "filename": "options/NIFTY/2026-08-04.parquet",
+      "sha256": "8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c",
+      "bytes": 58248,
+      "rows": 2646,
+      "min_timestamp": "2026-06-24 10:08:00+05:30",
+      "max_timestamp": "2026-07-02 15:29:00+05:30",
+      "expiry_day_present": false,
+      "quality_fail": "does_not_reach_expiry_2026-08-04"
+    }
+  ],
+  "common_expiry_comparison": [
+    {
+      "expiry": "2026-07-07",
+      "matched_rows": 336794,
+      "rissin_rows": 974139,
+      "coverage_vs_rissin": 0.3457350542376396,
+      "median_abs_points": 0.0,
+      "p95_abs_points": 0.1,
+      "p99_abs_points": 0.5,
+      "max_abs_points": 26.4,
+      "p95_rel_bp": 14.792899408285285,
+      "gate_pass": false
+    },
+    {
+      "expiry": "2026-07-14",
+      "matched_rows": 153174,
+      "rissin_rows": 1024336,
+      "coverage_vs_rissin": 0.1495349182299558,
+      "median_abs_points": 0.0,
+      "p95_abs_points": 0.0,
+      "p99_abs_points": 0.05,
+      "max_abs_points": 8.75,
+      "p95_rel_bp": 0.0,
+      "gate_pass": false
+    },
+    {
+      "expiry": "2026-07-21",
+      "matched_rows": 38578,
+      "rissin_rows": 837929,
+      "coverage_vs_rissin": 0.046039700261000634,
+      "median_abs_points": 0.0,
+      "p95_abs_points": 0.0,
+      "p99_abs_points": 0.0,
+      "max_abs_points": 81.35,
+      "p95_rel_bp": 0.0,
+      "gate_pass": false
+    }
+  ],
+  "registered_gates": {
+    "matched_rows_min": 10000,
+    "coverage_min": 0.80,
+    "median_abs_points_max": 0.05,
+    "p99_abs_points_max": 1.00,
+    "p95_relative_error_bp_max": 10.0,
+    "mean_signed_abs_points_max": 0.05
+  },
+  "oos_pnl_calculated": false,
+  "decision": "REJECT_SUPPLEMENTAL_SOURCE"
+}
