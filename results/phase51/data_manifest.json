@@ -1,0 +1,43 @@
+{
+  "sources": [
+    {
+      "repo_id": "rissin/nse-options-intraday",
+      "filename": "upstox_intraday/NIFTY/NIFTY_2026.parquet",
+      "sha256": "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73",
+      "bytes": 394805617
+    },
+    {
+      "repo_id": "thetrademarkk/india-index-options-1m",
+      "filename": "index/NIFTY.parquet",
+      "sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+      "bytes": 8383208
+    }
+  ],
+  "oos_window": [
+    "2026-04-21",
+    "2026-08-04"
+  ],
+  "option_rows_in_oos": 15525102,
+  "option_min_date": "2026-04-21",
+  "option_max_date": "2026-07-21",
+  "option_expiries": [
+    "2026-04-21",
+    "2026-04-28",
+    "2026-05-05",
+    "2026-05-12",
+    "2026-05-19",
+    "2026-05-26",
+    "2026-06-02",
+    "2026-06-09",
+    "2026-06-16",
+    "2026-06-23",
+    "2026-06-30",
+    "2026-07-07",
+    "2026-07-14",
+    "2026-07-21"
+  ],
+  "option_has_bid_ask": false,
+  "spot_rows_in_oos": 18300,
+  "spot_min_ts": "2026-04-21 09:00:00+05:30",
+  "spot_max_ts": "2026-07-02 15:30:00+05:30"
+}
