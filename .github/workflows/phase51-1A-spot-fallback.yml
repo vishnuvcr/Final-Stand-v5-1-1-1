@@ -7,6 +7,7 @@ on:
       - trigger/phase51_1_spot_fallback.start
       - research/phase51_1_spot_fallback.py
       - research/phase51_1_spot_overlap.py
+      - research/phase51_1_third_spot_audit.py
       - .github/workflows/phase51-1A-spot-fallback.yml
 permissions:
   contents: write
