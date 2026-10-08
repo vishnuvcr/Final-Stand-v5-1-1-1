@@ -1,0 +1,55 @@
+{
+  "checks": [
+    {
+      "strategy": "TT03",
+      "accepted_total_crosscheck": true,
+      "observed": {
+        "net": 89669.15492531851,
+        "net50": 82074.10738797774,
+        "net20": 75509.15492531851,
+        "net20_50": 60834.10738797775
+      },
+      "expected": {
+        "net": 89669.15,
+        "net50": 82074.11,
+        "net20": 75509.15,
+        "net20_50": 60834.11
+      }
+    },
+    {
+      "strategy": "TT04",
+      "accepted_total_crosscheck": true,
+      "observed": {
+        "net": 55582.71410759853,
+        "net50": 11429.946161398033,
+        "net20": -1718.0858924014883,
+        "net20_50": -74521.25383860199
+      },
+      "expected": {
+        "net": 55582.71,
+        "net50": 11429.95,
+        "net20": -1718.09,
+        "net20_50": -74521.25
+      }
+    },
+    {
+      "strategy": "TT05",
+      "accepted_total_crosscheck": true,
+      "observed": {
+        "net": 52337.890531183504,
+        "net50": 9429.085796775518,
+        "net20": -3546.9094688165187,
+        "net20_50": -74398.11420322448
+      },
+      "expected": {
+        "net": 52337.89,
+        "net50": 9429.09,
+        "net20": -3546.91,
+        "net20_50": -74398.11
+      }
+    }
+  ],
+  "holdout_protected": true,
+  "capital_normalized_return_claim": false,
+  "reason": "No consistent accepted capital/margin denominator exists in the trade-only artifacts; only chronological equity drawdown percentage is reported."
+}

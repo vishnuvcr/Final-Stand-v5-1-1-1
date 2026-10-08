@@ -1,0 +1,2 @@
+expiry,entry_ts,gap_type
+2022-03-10,2022-03-07 00:00:00+05:30,missing_entry_observation_in_10:00_to_10:05_window

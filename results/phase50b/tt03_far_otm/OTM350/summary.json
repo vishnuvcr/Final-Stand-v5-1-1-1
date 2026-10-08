@@ -1,0 +1,45 @@
+{
+  "strategy": "TT-03",
+  "engine_revision": "50B-TT03-OTM-GEOM-V1",
+  "geometry_profile": "OTM350",
+  "geometry": [
+    350.0,
+    400.0,
+    450.0
+  ],
+  "trades": 200,
+  "candidate_trades": 201,
+  "coverage_exclusions": 1,
+  "coverage_rate": 0.9950248756218906,
+  "session_exclusions": 1,
+  "net": 69552.05904936849,
+  "net50": 62094.33857405276,
+  "net20": 55392.0590493685,
+  "net20_50": 40854.33857405275,
+  "by_vix": [
+    {
+      "vix_state": "HIGH",
+      "trades": 7,
+      "net": 8100.051711520498,
+      "net50": 7806.4525672807495,
+      "mean": 1157.1502445029284,
+      "win_rate": 0.8571428571428571
+    },
+    {
+      "vix_state": "LOW",
+      "trades": 108,
+      "net": 9019.770688824994,
+      "net50": 5084.656033237495,
+      "mean": 83.51639526689809,
+      "win_rate": 0.6018518518518519
+    },
+    {
+      "vix_state": "NORMAL",
+      "trades": 85,
+      "net": 52432.236649023005,
+      "net50": 49203.22997353451,
+      "mean": 616.8498429296824,
+      "win_rate": 0.9058823529411765
+    }
+  ]
+}
