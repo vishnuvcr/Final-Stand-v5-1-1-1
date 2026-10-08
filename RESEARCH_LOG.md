@@ -1014,3 +1014,17 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 
 ## 2026-10-09 — Phase 51-1C authenticated-source gate
 Upstox recovery path created for the two missing frozen OOS expiries. Workflow 37839447686 was blocked at credential acquisition because UPSTOX_ACCESS_TOKEN is not configured. The branch remains a dormant recovery path; the frozen OOS window and source-selection gates are unchanged.
+
+
+## 2026-10-09 — Phase 51-1D external source audit
+- Responded to the continuation request to check StockMock, StockMojo and the other planned recovery sources before touching OOS P&L.
+- Audited StockMock, StockMojo, FNOTrader, Upstox, OptionsData.shop, NSE, MoneyTicks, QuantFlo and AlgoTest using current public documentation.
+- StockMock: 1-minute OHLC backtesting confirmed; no documented public raw export/API located; oracle-only.
+- StockMojo: minute-level historical/expired chain replay confirmed; no documented public raw export/API located; oracle-only.
+- FNOTrader: deep 1-minute NIFTY history and MCP-backed backtesting advertised; high-priority independent oracle, but no connector/account is available here.
+- Upstox: authenticated 1-minute expired candles are directly supported; current Phase-51 acquisition path remains blocked only by missing repository token.
+- OptionsData.shop: public catalog explicitly covers NIFTY full-chain 1-minute Parquet through Sep-2026; strongest commercial raw candidate, subject to authorized access and equivalence audit.
+- NSE: official daily contract-wise public history plus licensed 1-minute/5-minute snapshot and historical order/trade products.
+- MoneyTicks: 1-minute expired-options API/export advertised but currently not sold.
+- QuantFlo/AlgoTest: independent backtest oracles, not raw-data sources in this repository until export/API provenance is established.
+- Decision: Phase 51 remains DATA-BLOCKED; no OOS strategy P&L, parameter tuning, or source choice based on performance was performed.
