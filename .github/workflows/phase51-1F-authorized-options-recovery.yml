@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "research/phase51_1F_upstox_fullchain_acquisition.py"
+      - "research/phase51_1F_authorized_access_inventory.py"
       - ".github/workflows/phase51-1F-authorized-options-recovery.yml"
 
 jobs:
