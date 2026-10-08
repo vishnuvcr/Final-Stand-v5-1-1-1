@@ -512,3 +512,11 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - TT05 published evidence: 1,184/1,232 trades, 96.10% coverage, zero data errors; net ₹52,337.89 at ₹10/order, ₹9,429.09 at +50% friction, −₹3,546.91 at ₹20/order, and −₹74,398.11 at ₹20/order +50% stress. HOLD was −₹40,244.68.
 - The 404 was traced to workflow-dispatch requirements for workflow files on the default branch. TT06 was therefore launched through the repository-API trigger marker without altering scientific rules.
 - TT06 run 37675162843 is now queued.
+
+
+## 2026-10-08 — User resumed Phase 50B; TT06 failure diagnosed
+- User requested continuation.
+- TT06 run **37675162843** was inspected. Preflight and static audits passed, but numerical execution failed at DEV/VAL/HOLD split classification due to timezone-naive expiry timestamps versus timezone-aware split boundaries.
+- No scientific evidence was accepted from the failed run.
+- Corrected the TT06 reporting layer to localize expiry dates to the canonical project timezone. Scientific trading rules and cost model remain unchanged.
+- F50B-089 was recorded as the formal error log entry. A controlled rerun is next.
