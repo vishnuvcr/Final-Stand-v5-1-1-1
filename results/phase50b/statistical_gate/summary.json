@@ -1,0 +1,25 @@
+{
+  "hypotheses_tested": 28,
+  "holm_positive": 0,
+  "promotion_requires": [
+    "positive validation net",
+    "positive +50% cost-stress validation net",
+    ">=95% execution coverage",
+    "Holm-adjusted regime effect with bootstrap CI above zero",
+    "protected 2026 holdout confirmation"
+  ],
+  "holdout_is_protected": true,
+  "inference_excludes_holdout": true,
+  "inference_sample": "DEV+VAL only",
+  "cost_fields_fail_closed": true,
+  "registered_strategies": [
+    "TT01",
+    "TT02",
+    "TT03",
+    "TT04",
+    "TT05",
+    "TT06",
+    "TT07"
+  ],
+  "vix_mode_membership_reconstructed_from_entry_ts": true
+}
