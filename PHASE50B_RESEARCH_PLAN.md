@@ -56,3 +56,14 @@ The phase stops after the finite registered candidate universe has passed its ap
 
 ## Candidate-local stopping rule — 2026-10-07
 A strategy that fails a preregistered feasibility gate is closed for promotion, VIX conditioning, parameter tuning and confirmatory inference. That failure does **not** block unrelated strategies in the finite registered universe from being tested. Downstream workflows may continue only when the failed strategy has a terminal, persisted feasibility classification and the next strategy's workflow explicitly verifies that no failed candidate P&L is being consumed as evidence.
+
+
+## 2026-10-08 — 50B-4 far-OTM geometry preregistration freeze
+Far-OTM testing is limited to TT-03 because its source rule contains an explicit symmetric strike-distance geometry (ATM+300/+350/+400 for calls and ATM-300/-350/-400 for puts). TT-04 and TT-05 are ATM/premium-distance controls, not natural strike-distance candidates; TT-02 uses delta targets plus source-specific repair targets, so changing its deltas would simultaneously alter management semantics and is therefore not admitted without a separate registration.
+
+Frozen TT-03 geometry universe:
+1. BASE: +300/+350/+400 and -300/-350/-400 (source-faithful control; regression check only).
+2. OTM350: +350/+400/+450 and -350/-400/-450.
+3. OTM400: +400/+450/+500 and -400/-450/-500.
+
+Development selection is frozen before validation/holdout: among the two far-OTM mutations with >=95% coverage, require positive DEV net and DEV net under +50% friction stress and rank by DEV net50; freeze the single highest-ranked qualifying mutation. Validation requires positive net and positive net50; the protected 2026 HOLD is descriptive confirmation only and is never used to select the geometry.
