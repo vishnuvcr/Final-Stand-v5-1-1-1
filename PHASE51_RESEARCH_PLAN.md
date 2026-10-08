@@ -100,3 +100,36 @@ Failure means NO PROMOTION, with no further tuning inside Phase 51.
 
 ## Finite stopping rule
 Phase 51 ends after 51-6. It must not become an open-ended optimization loop.
+
+## 2026-10-09 — Phase 51-0 data/source freeze
+
+### Fresh OOS window
+The fresh OOS window is frozen as **2026-04-21 through 2026-08-04**, inclusive. It begins after the last Phase-50B TT-03 cached campaign on 2026-04-13 and is therefore not part of the Phase-50B selection/inference evidence. No OOS P&L was inspected before this window was frozen.
+
+### Frozen external data sources
+1. **Options:** Hugging Face dataset `rissin/nse-options-intraday`, NIFTY 1-minute Upstox expired-option candles, 2026 shard. The dataset documents NIFTY 1-minute coverage from October 2024 onward and columns for expiry, strike, option type, OHLC, volume and source.
+2. **Spot:** Hugging Face dataset `thetrademarkk/india-index-options-1m`, `index/NIFTY.parquet`, 1-minute NIFTY spot OHLC. This source is used only for ATM/strike selection and is not used to estimate option execution.
+3. **Primary exchange validation:** NSE historical contract-wise price/volume data and official derivatives reports remain the preferred validation source where directly accessible.
+
+### Execution-data limitation
+Neither selected public intraday dataset supplies historical bid/ask quotes. Therefore no synthetic bid/ask spread will be labelled as observed. Phase 51 may use deterministic adverse execution stresses, but a true historical bid/ask test remains unavailable unless a separately sourced order-book dataset passes the data audit.
+
+### Broker/cost freeze
+For 2026 OOS trades, the registered broker scenarios are:
+- legacy Paytm Money F&O brokerage: ₹10 per executed unique order;
+- current standard Paytm Money scenario: ₹20 per executed order for new accounts, retained as a conservative sensitivity scenario because Paytm Money's historical/current public pages document different client cohorts;
+- NSE equity-options transaction charge: ₹3,553 per crore of premium turnover (effective 2026-03-01);
+- STT on sale of options: 0.15% of premium for transactions on/after 2026-04-01;
+- SEBI turnover fee: 0.0001% of turnover;
+- equity-options stamp duty: 0.003% on buyer;
+- GST: 18% on broker services/eligible service charges.
+These rates are frozen before OOS replay. Exercise-related STT is not applied because the strategy exits intraday before exercise.
+
+### Cost/slippage stress freeze
+Execution stress will be represented as:
+- base observed-bar execution;
+- base + 25% execution-cost stress;
+- base + 50% execution-cost stress;
+- deterministic adverse one-tick-per-leg execution where a valid tick-size rule is available;
+- combined adverse tick + 50% stress.
+Because historical bid/ask is absent, these are stress models, not reconstructed bid/ask fills.
