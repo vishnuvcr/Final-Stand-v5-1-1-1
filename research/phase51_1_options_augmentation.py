@@ -69,7 +69,30 @@ def normalize_tmk(path, expected_expiry=None):
         df=df.sort_values(["timestamp","strike","option_type"]).drop_duplicates(["timestamp","strike","option_type"],keep="last")
     return df
 
-rpath=fetch(RISSIN[0],RISSIN[1],ROOT/"rissin_NIFTY_2026.parquet")
+def load_rissin_filtered_remote(expiries):
+    from huggingface_hub import HfFileSystem
+    import pyarrow as pa, pyarrow.dataset as ds, pyarrow.fs as pafs, pyarrow.compute as pc
+    fs = HfFileSystem(token=TOKEN)
+    pafs_fs = pa.fs.PyFileSystem(pafs.FSSpecHandler(fs))
+    path = "datasets/rissin/nse-options-intraday/upstox_intraday/NIFTY/NIFTY_2026.parquet"
+    dataset = ds.dataset(path, filesystem=pafs_fs, format="parquet")
+    filt = (pc.field("underlying") == "NIFTY") & (pc.field("granularity") == "1min") & pc.field("expiry").isin(expiries)
+    table = dataset.to_table(filter=filt, columns=["timestamp","expiry","strike","option_type","close"])
+    df = table.to_pandas()
+    df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
+    if getattr(df["timestamp"].dt,"tz",None) is None:
+        df["timestamp"] = df["timestamp"].dt.tz_localize("Asia/Kolkata")
+    else:
+        df["timestamp"] = df["timestamp"].dt.tz_convert("Asia/Kolkata")
+    df["expiry"] = pd.to_datetime(df["expiry"], errors="coerce").dt.strftime("%Y-%m-%d")
+    df["strike"] = pd.to_numeric(df["strike"], errors="coerce")
+    df["close"] = pd.to_numeric(df["close"], errors="coerce")
+    df["option_type"] = df["option_type"].astype(str).str.upper()
+    if df[["timestamp","expiry","strike","close"]].isna().any().any():
+        raise AssertionError("remote RISSIN filtered parse failure")
+    return df
+
+r=load_rissin_filtered_remote(sorted(set(EXPECTED_EXPIRIES)))
 r=normalize_rissin(rpath)
 in_window=r[r["expiry"].isin(EXPECTED_EXPIRIES)]
 observed=sorted(in_window["expiry"].dropna().unique().tolist())
