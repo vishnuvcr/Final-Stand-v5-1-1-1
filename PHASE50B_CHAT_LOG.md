@@ -520,3 +520,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - No scientific evidence was accepted from the failed run.
 - Corrected the TT06 reporting layer to localize expiry dates to the canonical project timezone. Scientific trading rules and cost model remain unchanged.
 - F50B-089 was recorded as the formal error log entry. A controlled rerun is next.
+
+
+## 2026-10-08 — TT06 corrected rerun active
+- Controlled rerun **37722386852** launched from marker commit **8b01fe3e862e3ba0ee8371542bae1623e5ead64c**.
+- Preflight has passed; numerical job **113132915078** is currently in progress.
+- The corrected engine is pinned to the same registered TT06 engine revision **50B-TT06-COVERAGE-V2**; only the expiry split-report timezone normalization changed.
+- No TT06 P&L, VIX inference, promotion decision or downstream TT07 launch is accepted until replay + artifact audit + publication all pass.
