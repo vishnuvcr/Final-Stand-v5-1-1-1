@@ -1,0 +1,99 @@
+name: Phase 50B - VIX Regime Statistical Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-50b-vix-statistical-gate
+    paths:
+      - trigger/phase50b_vix_gate.start
+
+concurrency:
+  group: phase50b-vix-statistical-gate
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
+      - name: Preflight eligible evidence boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("results/phase50b")
+          eligible=["tt02_calendar_replay","tt03_dynamic_n_replay","tt04_premium_match_replay","tt05_short_straddle_replay"]
+          for name in eligible:
+              s=root/name/"summary.json"
+              t=root/name
+              assert s.is_file(), f"missing {s}"
+              d=json.loads(s.read_text())
+              assert d.get("coverage_rate",0)>=0.95, (name,d)
+              assert d.get("data_errors",0)==0, (name,d)
+              assert any(t.glob("*_trades.csv")), name
+          for name in ["tt06_intraday_asym_replay","tt07_dynamic_ic_ratio_replay"]:
+              p=root/name/"terminal_classification.json"
+              if p.exists():
+                  d=json.loads(p.read_text())
+                  assert d["pnl_evidence_eligible"] is False, d
+                  assert d["downstream_use_of_pnl"] is False, d
+          print("VIX gate preflight PASS: only feasible candidates are eligible; TT06/TT07 P&L excluded.")
+          PY
+      - name: Compile statistical gate
+        run: python -m py_compile research/phase50b_statistical_gate.py
+      - name: Run preregistered VIX inference
+        env:
+          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase50b_statistical_gate.py
+      - name: Audit statistical outputs
+        run: |
+          set -euo pipefail
+          test -s results/phase50b/statistical_gate/summary.json
+          test -s results/phase50b/statistical_gate/vix_regime_inference.csv
+          test -s results/phase50b/statistical_gate/chronological_summary.csv
+          test -s results/phase50b/statistical_gate/coverage_summary.csv
+          python - <<'PY'
+          import json,pandas as pd
+          from pathlib import Path
+          root=Path("results/phase50b/statistical_gate")
+          s=json.loads((root/"summary.json").read_text())
+          inf=pd.read_csv(root/"vix_regime_inference.csv")
+          cov=pd.read_csv(root/"coverage_summary.csv")
+          assert s["holdout_is_protected"] is True
+          assert s["inference_excludes_holdout"] is True
+          assert s["inference_sample"]=="DEV+VAL only"
+          assert len(inf)==len(cov[cov.coverage_rate>=0.95])*7
+          assert "p_holm" in inf.columns and "robust_positive" in inf.columns
+          print("VIX statistical gate audit PASS")
+          print(s)
+          print(inf.groupby("strategy").robust_positive.sum())
+          PY
+      - name: Upload statistical artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase50b-vix-statistical-gate-\${{ github.run_id }}
+          path: results/phase50b/statistical_gate
+      - name: Publish statistical artifacts
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git add results/phase50b/statistical_gate
+          if git diff --cached --quiet; then
+            echo "No statistical-gate changes."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B: publish VIX statistical gate"
+            git push origin HEAD:phase-50b-vix-statistical-gate
+          fi
