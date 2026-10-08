@@ -184,3 +184,11 @@ Findings:
 8. QuantFlo and AlgoTest are suitable independent backtest oracles but were not shown to expose an authorized raw archive in public documentation.
 
 Decision: keep Phase 51 DATA-BLOCKED. No strategy P&L, strike tuning, source selection by performance, or OOS inference may occur until an authorized raw source passes the existing coverage/equivalence gate.
+
+
+### 2026-10-09 — Phase 51-1E OptionsData.shop commercial raw-data gate
+The current OptionsData.shop catalog was rechecked. Its NIFTY 1-minute last-three-month pack explicitly covers 2026-06-29 through 2026-09-25, which contains both missing frozen OOS expiries 2026-07-28 and 2026-08-04. The free sample covers only 2026-09-15 through 2026-09-17 and cannot fill the gap.
+
+A dedicated authorized-byte gate is registered. The downloaded archive must pass SHA capture, exact expiry presence, schema/timestamp/duplicate checks, session continuity, common-expiry equivalence against the frozen RISSIN source, and the existing 95% replay-coverage rule before any Phase-51 P&L can be calculated. Historical bid/ask remains unavailable from this source, so it cannot be presented as observed quote data.
+
+The research remains data-blocked until the actual authorized archive bytes are available. No OOS source will be selected from vendor marketing claims alone.
