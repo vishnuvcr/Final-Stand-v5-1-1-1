@@ -1,6 +1,6 @@
 # Phase 51-2 — Available-data partial OOS
 
-**Status: ACTIVE — NUMERICAL REPLAY**
+**Status: ACTIVE — CORRECTED REPLAY READY**
 
 ## Scope
 This study uses only the currently complete frozen option-data endpoint: **2026-04-21 through 2026-07-21**.
@@ -15,6 +15,13 @@ The implementation uses distance 300 and distance 350 respectively. No parameter
 
 ## Execution model
 Existing audited TT-03 V5 engine; one-tick execution stress; Paytm Money ₹10 and ₹20 brokerage scenarios; statutory charges; explicit coverage exclusions; no forward-fill or synthetic quote repair.
+
+## Latest execution state
+Runs **37845718056** and **37845741103** failed before numerical execution because the wrapper could not import the inherited replay module when invoked as a file.
+
+The wrapper has been corrected and the artifact output root has been isolated to `results/phase51/partial_oos`.
+
+These failed runs are non-evidence. The corrected branch push is expected to trigger the registered Actions replay automatically.
 
 ## Interpretation rule
 Positive partial-OOS results are evidence of performance over the available complete interval only. They cannot close the complete Phase-51 gate or establish endpoint confirmation for 2026-07-28 and 2026-08-04.
