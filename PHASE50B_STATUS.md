@@ -671,3 +671,10 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Corrected `research/phase50b_tt06_intraday_asym_replay.py` to localize expiry timestamps to `TZ` before split classification. Scientific trading rules and cost assumptions are unchanged.
 - This is the same reporting-layer class of defect previously caught in TT05; F50B-089 records it so the prevention rule is explicit.
 - A controlled TT06 rerun will be launched from the existing trigger marker after the correction is persisted.
+
+
+## 2026-10-08 — TT06 corrected rerun active
+- Controlled rerun **37722386852** launched from marker commit **8b01fe3e862e3ba0ee8371542bae1623e5ead64c**.
+- Preflight has passed; numerical job **113132915078** is currently in progress.
+- The corrected engine is pinned to the same registered TT06 engine revision **50B-TT06-COVERAGE-V2**; only the expiry split-report timezone normalization changed.
+- No TT06 P&L, VIX inference, promotion decision or downstream TT07 launch is accepted until replay + artifact audit + publication all pass.
