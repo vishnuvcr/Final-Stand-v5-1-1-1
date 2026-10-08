@@ -104,11 +104,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          STAGE=/tmp/phase50b4-d${{ matrix.distance }}
+          rm -rf "$STAGE"
+          cp -R results/phase50b/tt03_otm_distance/d${{ matrix.distance }} "$STAGE"
           git fetch origin phase-50b-4-far-otm-geometry
           git reset --hard origin/phase-50b-4-far-otm-geometry
           mkdir -p results/phase50b/tt03_otm_distance
-          cp -R results/phase50b/tt03_otm_distance/d${{ matrix.distance }} results/phase50b/tt03_otm_distance/
+          rm -rf results/phase50b/tt03_otm_distance/d${{ matrix.distance }}
+          cp -R "$STAGE" results/phase50b/tt03_otm_distance/d${{ matrix.distance }}
           git add results/phase50b/tt03_otm_distance/d${{ matrix.distance }}
           if git diff --cached --quiet; then exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Phase 50B-4: publish OTM${{ matrix.distance }} replay"
+          git pull --rebase origin phase-50b-4-far-otm-geometry
           git push origin HEAD:phase-50b-4-far-otm-geometry
