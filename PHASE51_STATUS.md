@@ -24,3 +24,10 @@ The first fallback acquisition gate (run 37835085807) was rejected before overla
 
 ### Phase 51-1 options completeness
 The frozen option source currently ends at expiry 2026-07-21, leaving 2026-07-28 and 2026-08-04 blocks absent from the first source. No OOS P&L is being calculated. An explicit pre-P&L augmentation and overlap gate has been registered.
+
+
+### Phase 51-1A — Spot source validation: PASS
+**Validated replay source:** technovusin/nifty50-historical-data (2026-04 through 2026-08 1-minute NIFTY). Full frozen OOS endpoint coverage and session integrity passed; direct overlap against the original primary source passed the registered thresholds. No OOS P&L has been calculated.
+
+### Phase 51-1B — Options completeness: PENDING RERUN
+The original options file stops at expiry 2026-07-21. The 2026-07-28 and 2026-08-04 blocks are being validated from an independent 1-minute options source before replay.
