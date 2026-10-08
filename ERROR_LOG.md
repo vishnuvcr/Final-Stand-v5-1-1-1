@@ -2217,3 +2217,13 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: removed the unintended escape from \${{ github.run_id }} in the workflow artifact name.
 - Scientific rule/cost model/data unchanged.
 - Rerun required to publish the already-computed gate outputs.
+
+
+## F50B-093 — TT03 OTM distance workflow pre-execution infrastructure failure (2026-10-08)
+- Run: 37755874617.
+- All five matrix jobs failed before numerical replay.
+- Defect 1: shared phase43 module imports matplotlib, but workflow dependency installation omitted matplotlib.
+- Defect 2: generated workflow contained escaped GitHub expressions, causing TT03_DISTANCE to be passed as a literal value such as \`\\300\`.
+- No trades were evaluated and no P&L evidence was produced.
+- Correction: add matplotlib and restore literal GitHub Actions expressions.
+- Scientific specification, distance set, execution model and cost models unchanged.
