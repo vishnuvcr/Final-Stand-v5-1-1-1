@@ -1058,3 +1058,7 @@ Upstox recovery path created for the two missing frozen OOS expiries. Workflow 3
 
 ## 2026-10-09 — Phase 51-1E endpoint-assertion correction
 Run 37842244545 downloaded and processed the HF/RISSIN data successfully but stopped at a validator assertion that incorrectly required the minimum timestamp of each supplemental expiry file to equal the expiry date. This has been corrected: pre-expiry observations are expected; the maximum timestamp must reach the named expiry, and expiry-day session coverage is evaluated separately.
+
+
+## 2026-10-09 — Phase 51-1E actual-byte HF source rejection
+The refreshed Hugging Face source was fully audited by GitHub Actions run 37842966411. The 2026-07-28 file contains 320,359 rows but only through 2026-07-02 15:30 IST; the 2026-08-04 file contains 2,646 rows but only through 2026-07-02 15:29 IST. Neither contains named-expiry-day observations. Common-expiry matched coverage versus the frozen RISSIN source was 34.57% (7-Jul), 14.95% (14-Jul), and 4.60% (21-Jul), all below the registered 80% threshold. The 7-Jul p95 relative error was 14.79 bp, above the registered 10 bp limit. The source is rejected for Phase-51 OOS augmentation. No OOS P&L was calculated.
