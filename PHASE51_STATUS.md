@@ -88,3 +88,9 @@ The finite recovery matrix has been exhausted for currently configured raw APIs.
 
 ### 2026-10-09 — Phase 51-1G Open-source alternatives audit
 Open-source recovery remains **DATA-BLOCKED** for the two missing frozen expiries. Audited candidates include Kaggle (reported coverage through 2026-03-24), bhav/Backtesting-NSE (offline sample through Jun-2026), SauMStats/nifty-options-data-engine (open engine but live Parquet archive not in repository), pawan625 HF Space (broker-generated cached candles, not independent raw archive), and CodePyx HF bucket (advertised path returned 404). No source has been admitted into OOS replay.
+
+
+### 2026-10-09 — Phase 51-1G final public-source exhaustion pass
+**COMPLETE — DATA-BLOCKED.** Exact-date public searches found no independent raw mirror covering both missing NIFTY expiries. The CodePyx 4-GB HF bucket remains non-reproducible for the required NIFTY expiry paths (HTTP 404 in the registered audit). Thetrademarkk filename/commit listings are not accepted because the actual downloaded bytes fail endpoint and common-expiry equivalence checks. No OOS P&L has been calculated.
+
+**Next admissible gate:** authorized raw archive/token or a newly discoverable independent public archive. The frozen OOS window remains 2026-04-21 through 2026-08-04 and will not be shortened or synthesized.
