@@ -663,3 +663,11 @@ The latest canonical replay is run 37572837253. The remaining computational bott
 - Split result: DEV 632 trades / ₹12,772.96 net; VAL 474 / ₹79,809.61; HOLD 78 / **−₹40,244.68**.
 - TT05 evidence is accepted for downstream registered analysis, but it is not a promotion decision. HOLD degradation and cost sensitivity remain material.
 - TT06 run **37675162843** has been launched through the audited marker path and is now queued.
+
+
+## 2026-10-08 — TT06 failure diagnosed; timezone-only correction prepared
+- TT06 run **37675162843** passed preflight and static checks but failed in post-replay DEV/VAL/HOLD split classification because expiry timestamps were timezone-naive while split boundaries were timezone-aware.
+- No TT06 artifact was audited or published; no numerical result from the failed run is accepted.
+- Corrected `research/phase50b_tt06_intraday_asym_replay.py` to localize expiry timestamps to `TZ` before split classification. Scientific trading rules and cost assumptions are unchanged.
+- This is the same reporting-layer class of defect previously caught in TT05; F50B-089 records it so the prevention rule is explicit.
+- A controlled TT06 rerun will be launched from the existing trigger marker after the correction is persisted.
