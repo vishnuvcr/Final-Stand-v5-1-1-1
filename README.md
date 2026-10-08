@@ -1071,3 +1071,16 @@ A dedicated branch `phase-50b-chronological-validation` now runs the next finite
 - **Next phase:** authenticated expired-options acquisition gate, with automatic schema/coverage/hash validation and fail-closed behavior if the required source is unavailable.
 
 Key audit files: `PHASE51_RESEARCH_PLAN.md`, `PHASE51_STATUS.md`, and `ERROR_LOG.md`.
+
+
+## Phase 51-1E — HF options source reopened (2026-10-09)
+
+A fresh audit found that the previously rejected `thetrademarkk/india-index-options-1m` source has been updated. Its verified NIFTY commit history now includes **2026-07-28.parquet** and **2026-08-04.parquet**, both added on 2026-07-04. The earlier Phase-51-1B rejection was therefore stale and is explicitly superseded.
+
+A GitHub Actions workflow now acquires those two public files and runs the pre-P&L validation gate. Acceptance still requires actual-byte schema/timestamp/duplicate/session checks plus common-expiry equivalence against the frozen RISSIN source. The dataset is CC-BY-NC-4.0; raw-file redistribution/storage will remain subject to that license.
+
+- [Phase 51-1E HF gate](results/phase51/PHASE51_1E_OPTIONSDATA_GATE.md)
+- [HF acquisition workflow](.github/workflows/phase51-1E-hf-options-gate.yml)
+- [HF validator](research/phase51_1E_hf_options_gate.py)
+
+**Current status: VALIDATION IN PROGRESS — no OOS strategy P&L yet.**
