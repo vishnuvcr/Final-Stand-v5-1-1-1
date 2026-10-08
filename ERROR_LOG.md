@@ -2373,3 +2373,17 @@ Run **37836313364** failed only in the freeze publication step because the workf
 Options gate run **37836222630** was cancelled during its audit while the spot-source validation workflow was publishing a new branch commit. No option augmentation result was accepted or used.
 
 **Correction:** rerun the options gate after the spot-source freeze is complete and the branch is stable.
+
+
+## 2026-10-09 — Phase 51-1B final options-source feasibility finding
+
+### F51-015 — Public supplemental NIFTY 1-minute files do not cover the frozen missing expiries
+The independent `thetrademarkk/india-index-options-1m` files named `2026-07-28.parquet` and `2026-08-04.parquet` were audited successfully at schema level, but their actual timestamps end on **2026-07-02 15:30 IST** and **2026-07-02 15:29 IST**, respectively. They therefore cannot supply the frozen OOS sessions for the 2026-07-28 and 2026-08-04 expiries.
+
+The pre-P&L overlap audit also showed that the supplemental source is only a partial subset of the original RISSIN rows for common expiries (34.6%, 15.0%, and 4.6% matched coverage for 7 Jul, 14 Jul and 21 Jul), so it is not a drop-in replacement for the frozen source. Price differences were generally small on matched rows, but 7 Jul also failed the registered p95-relative-error threshold.
+
+**Decision:** do not augment the frozen OOS with this source. No strategy P&L has been calculated for Phase 51 from incomplete option data.
+
+**External-source search:** public evidence confirms Upstox provides expired-contract 1-minute candles, but its expired-instrument APIs require an authenticated Upstox Plus account. Public FNOTrader material advertises a current NIFTY 1-minute archive, but no installed project integration is available to acquire its raw data. Daily historical pages (e.g. MoneyTicks / optionbacktesting.in) are insufficient for minute-level replay.
+
+**Required next acquisition:** authenticated 1-minute expired-option source reaching at least 2026-08-04, or a publicly downloadable dataset with equivalent provenance and full strike/time coverage. Until then Phase 51 remains DATA-BLOCKED and the frozen OOS window is unchanged.
