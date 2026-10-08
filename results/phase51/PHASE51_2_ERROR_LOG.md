@@ -58,3 +58,16 @@ The inherited TT-03 engine writes to `results/phase50b/tt03_otm_distance/d<dista
 **Correction:** the wrapper now imports `list_expiry_files` explicitly from `phase43_vix_strategy_sweep` and assigns that source-manifest function to the inherited engine's `expiry_dates` hook.
 
 **Prevention:** source-manifest helpers must be resolved from their defining module during phase-wrapper audit; do not assume incidental re-export.
+
+## 2026-10-09 — Error P51-2-005: zero-campaign run exposed validation/protocol mismatch
+
+**Affected workflow run:** 37846507265  
+**Affected jobs:** replay (300) and replay (350)
+
+**Finding:** after the source-manifest import correction, both jobs completed the wrapper but returned zero campaigns. The workflow treated zero campaigns as a failure because its validator required `trades > 0`.
+
+**Audit result:** the Phase-50B TT-03 replay specification fixes entry to exactly three calendar days before expiry. The Phase-51-1 frozen source-gate record shows every observed expiry in the available partial window 2026-04-21 through 2026-07-21 is a Tuesday. Therefore every scheduled entry date is Saturday, so there are no eligible entry campaigns.
+
+**Evidence status:** non-evidence. No OOS P&L was calculated.
+
+**Correction:** Phase 51-2 has been converted to a fail-closed opportunity-calendar audit for this partial window. A zero-campaign outcome is now represented explicitly as `NO_ELIGIBLE_CAMPAIGNS`, with coverage marked not applicable rather than as a zero percent coverage failure. No frozen strategy rule is changed.
