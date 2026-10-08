@@ -103,5 +103,31 @@
       "notes": "Frozen primary source reaches only 2026-07-21 expiry."
     }
   ],
-  "next_action": "Run authorized Upstox acquisition if repository secret is configured; otherwise prioritize authorized OptionsData.shop access and FNOTrader oracle comparison."
+  "next_action": "Run authorized Upstox acquisition if repository secret is configured; otherwise prioritize authorized OptionsData.shop access and FNOTrader oracle comparison.",
+  "date_checked": "2026-10-09",
+  "exact_gap_dates_verified_in_public_search_index": {
+    "stockmock": false,
+    "stockmojo": false
+  },
+  "notes": [
+    "Public documentation establishes minute-level historical capability for StockMock and StockMojo, but search-index evidence for the exact frozen gap dates was not found.",
+    "No browser/API session was used to bypass login, paywall, or access controls.",
+    "UI claims are not treated as raw-data equivalence evidence."
+  ],
+  "references": {
+    "stockmock_terms": "https://www.stockmock.in/terms-and-conditions.html",
+    "stockmock_home": "https://www.stockmock.in/",
+    "stockmojo_timeseries": "https://stockmojo.in/timeseries-option-chain/nifty",
+    "stockmojo_history": "https://stockmojo.in/historical-chart",
+    "fnotrader_faq": "https://www.fnotrader.com/faq",
+    "fnotrader_mcp": "https://mcp.fnotrader.com/mcp/reference/ui",
+    "upstox_contracts": "https://upstox.com/developer/api-documentation/get-expired-option-contracts/",
+    "upstox_candles": "https://upstox.com/developer/api-documentation/get-expired-historical-candle-data/",
+    "optionsdata": "https://optionsdata.shop/data/nifty-options-historical-data",
+    "nse_historical": "https://www.nseindia.com/report-detail/fo_eq_security",
+    "nse_realtime_snapshot": "https://www.nseindia.com/static/market-data/real-time-data-subscription",
+    "moneyticks": "https://moneyticks.com/",
+    "quantflo": "https://quantflo.com/",
+    "algotest": "https://docs.algotest.in/Time-Based-Algo-Trading/how-to-backtest/intraday/"
+  }
 }
