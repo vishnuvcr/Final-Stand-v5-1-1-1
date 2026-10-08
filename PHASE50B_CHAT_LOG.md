@@ -542,3 +542,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Persisted `terminal_classification.json` and recorded F50B-091. TT07 is closed to promotion, VIX conditioning, tuning and confirmatory inference.
 - A non-fatal divide-by-zero warning in the IV Newton update was noted for future engine hardening.
 - Continue to the next finite registered Phase-50B gate without consuming TT07 P&L.
+
+
+## 2026-10-08 — User requested proceed; far-OTM replay completed
+- Inspected run **37762837711**. BASE, OTM350 and OTM400 all completed and the audit/selection step passed.
+- BASE regression passed. OTM350 was selected and frozen for validation by the preregistered DEV rule.
+- The publication step then failed because the branch had advanced concurrently, causing a non-fast-forward push rejection. This is logged as F50B-094 and does not invalidate numerical evidence.
+- The workflow was corrected to reconcile the remote branch before publication. No scientific rule or frozen candidate was changed.
