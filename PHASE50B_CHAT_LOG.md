@@ -535,3 +535,10 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - TT06 is terminal FAIL_COVERAGE; its P&L is diagnostic only and cannot enter downstream inference or promotion.
 - Persisted terminal classification and hardened TT07 dependency gate were added.
 - Continuing to the independent registered TT07 candidate is allowed by the candidate-local stopping rule.
+
+## 2026-10-08 — User requested continuation; TT07 terminal classification
+- Inspected TT07 run **37746729676** after the replay completed.
+- Replay completed with 1/59 complete candidates (**1.69% coverage**), 58 coverage exclusions, 1 entry exclusion, zero data errors; artifact audit correctly rejected the result under the frozen 95% gate.
+- Persisted `terminal_classification.json` and recorded F50B-091. TT07 is closed to promotion, VIX conditioning, tuning and confirmatory inference.
+- A non-fatal divide-by-zero warning in the IV Newton update was noted for future engine hardening.
+- Continue to the next finite registered Phase-50B gate without consuming TT07 P&L.
