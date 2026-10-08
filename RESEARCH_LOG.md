@@ -1001,3 +1001,12 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - The initial rissin NIFTY 1-minute options file currently reaches only 2026-07-21 and therefore omits the 2026-07-28 and 2026-08-04 expiry blocks.
 - The missing blocks were detected before any OOS strategy P&L was calculated.
 - Thetrademarkk's NIFTY options directory explicitly contains 2026-07-28 and 2026-08-04 1-minute files, so an independent pre-P&L augmentation and overlap gate is now registered.
+
+
+## 2026-10-09 — Phase 51-1A spot source frozen
+- Spot-source replacement gate PASS.
+- Frozen replay spot source: technovusin/nifty50-historical-data, April through August 2026 1-minute NIFTY files.
+- Coverage: 27,375 OOS minute rows from 2026-04-21 09:15 IST through 2026-08-04 15:29 IST, with no bad days under the registered session-quality gate.
+- Direct overlap with original primary spot source: 16,467 rows; median absolute difference 0; p99 absolute difference about 0.767 NIFTY points; p95 relative difference about 0.042 bp; gate PASS.
+- Jitendra12421 fallback is rejected as a replay source because of material intraday gaps on 2026-05-25, 2026-06-25 and 2026-07-08, despite acceptable common-period price overlap.
+- No strategy OOS P&L has been calculated.
