@@ -6,6 +6,7 @@ on:
     paths:
       - trigger/phase51_1_options_augmentation.start
       - research/phase51_1_options_augmentation.py
+      - trigger/phase51_1B_force_rerun.start
 concurrency:
   group: phase51-1B-options-augmentation
   cancel-in-progress: false
