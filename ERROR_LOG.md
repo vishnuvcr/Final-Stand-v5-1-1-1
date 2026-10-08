@@ -2183,3 +2183,15 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Correction: changed the reporting-layer conversion to `pd.to_datetime(df.expiry).dt.tz_localize(TZ)`. Trading rules, quote selection, repair logic, exit logic, cost model, lot sizes and VIX capture are unchanged.
 - Recovery: a fresh TT06 run will be triggered from the existing marker path after the corrected engine is committed.
 - Prevention: all Phase-50B replay engines must normalize expiry columns to the canonical project timezone before any chronological split comparison.
+
+
+## F50B-090 — TT06 feasibility failure at 70.40% coverage (2026-10-08)
+- Run: **37722386852**; numerical job **113132915078**.
+- The corrected TT06 replay completed successfully and produced 692 trades from 983 candidate trades, with 291 coverage exclusions and 3 session exclusions. Coverage = **70.3967%**, below the frozen **95% mandatory-exit coverage gate**.
+- Cost outputs from the completed replay are diagnostic only: net **−₹907,626.93** at ₹10/order; net50 **−₹959,664.39**; net20 **−₹988,008.53**; net20_50 **−₹1,080,236.79**.
+- Chronological diagnostic splits were DEV 382 trades/−₹155,259.71, VAL 278/−₹327,254.08, HOLD 32/−₹425,113.13 at the base ₹10/order model. These are not inferential evidence because the feasibility gate failed.
+- The Actions failure occurred in the artifact audit solely because `coverage_rate >= 0.95` was false. Replay generation itself completed; no data-error assertion failed.
+- Scientific classification: **TT06 FAIL_COVERAGE**. Per the candidate-local stopping rule, TT06 is closed for promotion, VIX conditioning, parameter tuning and confirmatory inference. Its P&L must not be consumed as evidence by downstream candidates.
+- No trading rule, strike rule, stop, exit, cost model, lot size or VIX definition was changed to obtain this classification.
+- Prevention: persist the terminal classification before advancing to an unrelated registered candidate; downstream workflows must explicitly verify that TT06 P&L is excluded when TT06 is FAIL_COVERAGE.
+- Evidence status: **TT06 is not a valid Phase-50B evidence candidate and is not promotable.**
