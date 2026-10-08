@@ -578,3 +578,8 @@ The user requested continuation from the accepted TT-03 V5 PASS. Live run 376219
 - Final manuscript workflow 37832795304 passed all steps.
 - Complete manuscript, tables, appendices and six figures were published.
 - Terminal decision: **NO PROMOTION**. Phase 50B research is now stopped under its preregistered finite stopping rule.
+
+
+### 2026-10-09 — Phase 51 initialization
+- New Phase 51 registered after Phase 50B terminal NO-PROMOTION decision.
+- Scope is limited to frozen TT-03 and TT-03 OTM350; no hidden optimization.
