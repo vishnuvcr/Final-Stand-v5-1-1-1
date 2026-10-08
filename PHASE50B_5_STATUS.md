@@ -37,3 +37,9 @@ Capital-normalized return percentage is **not claimed** unless a consistent acce
 
 ## Current risks
 The OTM350 artifact was computed in the prior 50B-4 Actions run but was not persisted because of a repository publication race. Phase 50B-5 therefore reconstructs it from the identical frozen engine as an artifact-recovery step, not a new optimization.
+
+
+## Launch checkpoint — 2026-10-08
+Trigger commit: `8202482c18393c07a03b5ec817d8dfad0f0e8306`.
+Workflow: `.github/workflows/phase50b-5-chronological-validation.yml`.
+The phase has been triggered; no numerical result is accepted until reconstruction, audit and chronology cross-checks pass.
