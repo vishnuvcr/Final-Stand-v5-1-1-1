@@ -369,3 +369,16 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Verification:** Actions [37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed hand-calculated synthetic tests. Tests cover exact-bar/no-nearest matching, exact common timestamps, ₹1,293.50 known gross P&L for a one-lot option leg fixture, six ₹10/₹20 × 0/50/100 slippage scenarios, prior OI and range-proxy gates, TP trigger/next-open behavior, and fail-closed family/delta/futures eligibility. Initial run [37957499754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957499754) passed self-tests but failed writing the evidence manifest to a literal `$RUNNER_TEMP` path; the path was corrected and rerun passed.
 
 **Interpretation:** This validates generic kernel primitives only, not a full strategy-family resolver or real-data configuration replay. It does not alter Phase52 grid v1.3 domains/IDs; no real-market Phase52 variable-grid P&L exists and no candidate is promoted.
+
+
+### PA-015 — 2026-10-09 — Freeze a bounded historical baseline replay pilot
+
+**Purpose:** Test the data-backed replay integration on a small pre-registered subset, not to choose a winning strategy. The exact scope is frozen in `research/phase52/first_historical_pilot.json` before any historical pilot P&L.
+
+**Frozen subset:** 40 configuration IDs generated from the existing `phase52-grid-v1.3` enumerator; seven source-reconciled option-only families; `BASELINE` selector only; DTE=0; entry at 09:45/13:00 IST; ATM_OFFSET 1/3; one reference lot; `15:15_IST` exact exit; OHLC-range-proxy threshold 2.0; no hedges. Width variants 1/3 apply to vertical spreads and iron condor. The two single-pivot premium strategies (long straddle/strangle) have no width-dependent leg, so this small pilot includes width=1 only as the single nonredundant representative. No grid domains or IDs in v1.3 are changed.
+
+**Event universe:** From the pinned expiry/DTE/time audit, select six evenly spaced exact-index events in each development/validation × entry-time bucket, 24 event rows total. Event selection uses only target expiry, split, entry time and exact index timestamp; no option-leg outcomes/P&L are used to select dates. Every config is evaluated on the 12 events matching its entry time. The 2026 holdout is deliberately excluded and remains untouched.
+
+**Execution:** Exact option contract/timestamp/expiry rows, prior completed-minute OI≥100, valid OHLC, range-proxy pass, date-aware phase43 lot size and exact 15:15 same-day exit for every leg are mandatory. Missing any leg means an explicit exclusion and zero scenario rows. Evaluate ₹20 primary and ₹10 legacy brokerage with slippage 0/50/100%; statutorily assessed fees remain independent of the slippage stress. Hash the dataset revision, index/option source files, config manifest, scripts and replay protocol.
+
+**Inference boundary:** This is an engineering/coverage pilot with descriptive split reports only. No candidate ranking, statistical significance, promotion, holdout claim or commercial inference is permitted. Selector routers, ABS_DELTA, path/expiry exits, futures-dependent families and full-grid replay remain blocked until their own gates pass.
