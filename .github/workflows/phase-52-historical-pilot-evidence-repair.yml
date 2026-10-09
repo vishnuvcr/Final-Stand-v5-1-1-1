@@ -1,4 +1,5 @@
 name: Phase 52 — Historical Pilot Leg Evidence Repair
+# Bounded remediation run; frozen universe and 2% gate remain unchanged.
 
 on:
   workflow_dispatch:
