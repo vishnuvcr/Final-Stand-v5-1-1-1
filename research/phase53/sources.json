@@ -159,6 +159,196 @@
       "limitations": [
         "product plans/agreements required for broad access; no purchase authorized"
       ]
+    },
+    {
+      "id": "hf_rissin_intraday",
+      "name": "rissin/nse-options-intraday",
+      "class": "third_party_hf_dataset_license_unclear",
+      "url": "https://huggingface.co/datasets/rissin/nse-options-intraday",
+      "api_url": "https://huggingface.co/api/datasets/rissin/nse-options-intraday",
+      "license": "other; terms unclear pending resolution",
+      "expected_granularity": "1-minute OHLC and daily EOD; NIFTY/BANKNIFTY/SENSEX",
+      "expected_fields": [
+        "timestamp",
+        "underlying",
+        "expiry",
+        "strike",
+        "option_type",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "oi",
+        "source",
+        "granularity"
+      ],
+      "uses": [
+        "candidate OHLC cross-check from Oct 2024 to latest",
+        "daily EOD comparison"
+      ],
+      "limitations": [
+        "intraday OI and settlement are explicitly NaN for Upstox rows",
+        "not true quotes/depth",
+        "license shown as other; do not bulk download/use until terms are clarified",
+        "independence and field-level lineage must be checked"
+      ]
+    },
+    {
+      "id": "hf_artist23_nifty",
+      "name": "artist-23/nifty-options-data",
+      "class": "third_party_hf_dataset_license_missing",
+      "url": "https://huggingface.co/datasets/artist-23/nifty-options-data",
+      "api_url": "https://huggingface.co/api/datasets/artist-23/nifty-options-data",
+      "license": "not specified on dataset card as inspected 2026-10-10",
+      "expected_granularity": "one-minute-like timestamped option data; dates displayed from 2020-12-29 to 2025-12-26",
+      "expected_fields": [
+        "timestamp",
+        "OHLC",
+        "IV",
+        "volume",
+        "OI",
+        "strike_price",
+        "spot",
+        "date",
+        "expiry_type",
+        "strike_type",
+        "option_type"
+      ],
+      "uses": [
+        "schema/provenance audit only until licensed",
+        "potential source of OI if exact expiry identity and quality verified"
+      ],
+      "limitations": [
+        "no explicit data license identified",
+        "preview field list lacks full exact expiry date",
+        "viewer exposes suspicious extreme negative volume and extreme positive outliers that require raw-data quality triage",
+        "no bid/ask/depth documented"
+      ]
+    },
+    {
+      "id": "github_saumstats_engine",
+      "name": "SauMStats/nifty-options-data-engine",
+      "class": "public_code_external_data_not_in_repo",
+      "url": "https://github.com/SauMStats/nifty-options-data-engine",
+      "api_url": "https://api.github.com/repos/SauMStats/nifty-options-data-engine",
+      "license": "no explicit repository licence identified during source review",
+      "expected_granularity": "Kaggle 2024 files path and separate private/local 2026 live files; code query layer",
+      "expected_fields": [
+        "timestamp",
+        "expiry",
+        "strike",
+        "call_put",
+        "OHLC",
+        "volume",
+        "OI",
+        "spot"
+      ],
+      "uses": [
+        "pipeline/schema lead only"
+      ],
+      "limitations": [
+        "raw Kaggle archive is external/not bundled in repo; exact source/license unverified",
+        "repository assumes market_price=close; README says bid/ask unavailable",
+        "no confirmed historical quote/depth"
+      ]
+    },
+    {
+      "id": "zenodo_nifty_2017_2020",
+      "name": "Zenodo Nifty spot/futures/options one-minute data 2017-2020",
+      "class": "public_historical_ohlcv_candidate",
+      "url": "https://zenodo.org/records/10899828",
+      "license": "rights/license needs metadata verification before use",
+      "expected_granularity": "one-minute OHLCV; spot/futures/options, 2017-2020",
+      "expected_fields": [
+        "option type",
+        "strike",
+        "trade date",
+        "trade time",
+        "OHLC",
+        "volume"
+      ],
+      "uses": [
+        "old-period independent OHLC cross-check only"
+      ],
+      "limitations": [
+        "precedes all Phase 52 sampled events, which begin in 2021",
+        "description does not list OI",
+        "license and precise normalization not yet verified"
+      ]
+    },
+    {
+      "id": "paid_optionsdata_shop",
+      "name": "OptionsData.Shop minute historical options files",
+      "class": "paid_archive_not_free",
+      "url": "https://optionsdata.shop/",
+      "license": "commercial purchase terms; not purchased",
+      "expected_granularity": "advertised minute bars with full strike chain and OI (catalog date ranges vary)",
+      "uses": [
+        "possible future paid-source option if user separately authorizes purchase"
+      ],
+      "limitations": [
+        "not free",
+        "advertising says minute bars rather than historical quote snapshots; no bid/ask or Greeks documented in the examined pages",
+        "no purchase authorized"
+      ]
+    },
+    {
+      "id": "paid_moneyticks",
+      "name": "MoneyTicks expired-options archive",
+      "class": "paid_archive_not_free",
+      "url": "https://moneyticks.com/",
+      "license": "commercial purchase terms; not purchased",
+      "expected_granularity": "advertised expired option data/API since 2021 with LTP/OI",
+      "uses": [
+        "possible future paid OI source if user separately authorizes purchase"
+      ],
+      "limitations": [
+        "not free",
+        "no verified historical bid/ask/depth",
+        "no purchase authorized"
+      ]
+    },
+    {
+      "id": "nse_live_option_chain",
+      "name": "NSE current option chain webpage",
+      "class": "official_current_snapshot_not_historical",
+      "url": "https://www.nseindia.com/option-chain",
+      "license": "site terms restrict automated copying/aggregation; do not scrape",
+      "expected_granularity": "current snapshot only; bid/ask/size, IV, OI",
+      "uses": [
+        "document distinction between current quotes and archived historical quote coverage"
+      ],
+      "limitations": [
+        "no archived historical quote snapshot endpoint confirmed",
+        "do not scrape/copy or automate collection"
+      ]
+    },
+    {
+      "id": "hf_codepyx_mirror",
+      "name": "codepyx23/india-index-options-1m",
+      "class": "potential_mirror_not_independent",
+      "url": "https://huggingface.co/datasets/codepyx23/india-index-options-1m",
+      "api_url": "https://huggingface.co/api/datasets/codepyx23/india-index-options-1m",
+      "license": "must verify metadata; appears to duplicate TradeMarkk structure",
+      "expected_granularity": "1-minute OHLCV(+OI), NIFTY/BANKNIFTY/SENSEX",
+      "expected_fields": [
+        "timestamp",
+        "OHLC",
+        "volume",
+        "open_interest",
+        "strike",
+        "option_type",
+        "expiry"
+      ],
+      "uses": [
+        "lineage/fingerprint check only"
+      ],
+      "limitations": [
+        "likely mirror or derivative of pinned source; do not count as independent without hashes/history",
+        "same sparse options limitation in card",
+        "no bid/ask/depth documented"
+      ]
     }
   ]
 }
