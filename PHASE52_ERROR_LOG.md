@@ -74,3 +74,21 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.
 - Root cause: pending review of the failed job logs.
 - Status: OPEN.
+
+
+## F52-005 — Factor attribution self-test failed on assumed quantile bin labels — OPEN / patched before rerun
+
+- **Run:** 37925891660, job 113804605666, 2026-10-09.
+- **Observed:** Registry validation and deterministic config-ID self-test passed, reporting grid v1.3 with 9,379,584 configurations. The new factor-selector pilot then stopped during `self_test` with an assertion that the computed quantile boundaries for [1, 2, 3] must yield three labels. The test was brittle under the installed pandas 3.0.6 behavior.
+- **Impact:** The Phase45 trade matrix and Phase39 feature data were checked out but not analyzed. No Phase52 P&L, factor uplift or strategy promotion was produced.
+- **Correction:** Changed the test to use fixed bin edges [1.5, 2.5] and strengthened the assertion message. Production bin thresholds remain estimated exclusively from development data.
+- **Verification:** Pending rerun of workflow after main workflow file update. Keep failed run logs and append successful/failed rerun ID here.
+
+## F52-006 — Full finite-grid enumeration is large — DESIGN GATE / PRE-RESULT AMENDMENT
+
+- **Date:** 2026-10-09; before any Phase52 backtest result.
+- **Observed sizing:** grid v1.1 ~197,842,176; v1.2 36,008,064; current grid v1.3 9,379,584 applicable configurations.
+- **Impact:** At 25,000 configurations enumerated per daily run, the v1.3 queue takes about 376 runs merely to enumerate. This does not include numerical replay time.
+- **Correction/decision:** Preserve grid v1.3 rather than further pruning configurations after seeing performance. Use deterministic/resumable enumeration and record enumerated and backtested counts separately. Initial legacy selector pilot uses frozen existing outcomes as a first stage while structural replay engine is integrated. Any future parameter-space revision is versioned before the amended configurations are tested.
+- **Status:** OPEN until a source-faithful configuration replay engine is integrated and checkpoint distinguishes queued, enumerated and evaluated configs.
+
