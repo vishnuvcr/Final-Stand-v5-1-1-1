@@ -1032,3 +1032,11 @@ Phase 53 closed its source inventory with a NO-GO for a verified independent fre
 - [Phase 52 leg-evidence repair runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/historical_pilot_runner.py)
 
 **Current gate:** a stale parent CSV on the Phase 54 branch was replaced with the canonical Phase 52 v0.2.1 audit-provenance file (480 rows; source blob SHA 33c82a92e4546c4be10138dbf518ce0e51a83c03). Its existing range-excluded multi-leg records still lack complete evidence for every leg, so alternative threshold counts are withheld. The Phase 52 runner patch to retain all leg evidence on range exclusions is committed but requires a fresh historical pilot run and validation before Phase 54 can compute the sensitivity. No holdout was used, no strategy was promoted, and no live recommendation is made.
+
+
+## Phase 52 evidence-repair checkpoint — 2026-10-10
+
+The bounded historical pilot evidence repair remains **OPEN / NO PROMOTION**. Workflow [37990101556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990101556) passed the runner self-test and manifest refresh but stopped before replay because the environment lacked `matplotlib`; the checkpoint persistence step succeeded. The workflow now installs this missing dependency in commit [7d9f385](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/7d9f385cbe306b6b2cf1ee148d33d98dfc10a0ca), which should trigger another automatic run. No new replay metrics are accepted yet, and Phase 54 sensitivity remains gated on complete per-leg evidence.
+
+- [Phase 52 status and evidence log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md)
+- [Phase 52 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
