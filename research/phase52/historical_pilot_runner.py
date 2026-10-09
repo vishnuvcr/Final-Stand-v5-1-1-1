@@ -500,9 +500,17 @@ def replay_one(
             failed_leg = range_proxy_failure_leg(
                 leg, entry_result.row, oi_val, prior_ts, range_value, lot_size
             )
-            return event_record(event, conf, "EXCLUDED_OHLC_RANGE_PROXY",
-                                f"{leg['leg_id']}: OHLC high-low/open proxy {range_value} exceeds gate {cfg['liquidity_max_spread_pct']}",
-                                spot_open, lot_size, [*resolved_leg_rows, failed_leg], source_hash), []
+            # Preserve diagnostic evidence for every selected leg. Continue through
+            # the remaining legs so an alternate-threshold sensitivity can be
+            # computed without inventing missing-leg bars. The first failure still
+            # determines the canonical frozen-threshold status below.
+            resolved_leg_rows.append(failed_leg)
+            if "range_failure_reason" not in locals():
+                range_failure_reason = (
+                    f"{leg['leg_id']}: OHLC high-low/open proxy {range_value} exceeds gate "
+                    f"{cfg['liquidity_max_spread_pct']}"
+                )
+            continue
         exit_rows = exact_rows(option_frame, exit_ts, leg["expiry"], leg["option_type"], float(leg["strike"]))
         if len(exit_rows) != 1:
             return event_record(event, conf, "EXCLUDED_EXIT_LEG",
@@ -543,6 +551,10 @@ def replay_one(
             "exit_bar": exit_result.row,
             "exit_price_field": "open",
         })
+
+    if "range_failure_reason" in locals():
+        return event_record(event, conf, "EXCLUDED_OHLC_RANGE_PROXY", range_failure_reason,
+                            spot_open, lot_size, resolved_leg_rows, source_hash, exit_ts), []
 
     common = kernel.latest_common_timestamp(
         per_leg_timestamps, cutoff=exit_ts, not_before=entry_ts
