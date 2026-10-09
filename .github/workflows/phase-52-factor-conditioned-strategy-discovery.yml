@@ -1,5 +1,5 @@
 name: Phase 52 — Factor-Conditioned Strategy Discovery
-# Re-run after fixing binning, matching coverage, canonical aliases and serial-dependence-aware inference; see PA-004/PA-005.
+# Phase52 replay/data gates: point-in-time selectors, pinned base replay, lagged NSE EOD factors, and exact entry-time coverage (PA-004 to PA-006).
 
 on:
   workflow_dispatch:
