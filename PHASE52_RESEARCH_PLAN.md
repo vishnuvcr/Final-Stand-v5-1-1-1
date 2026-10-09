@@ -360,3 +360,12 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Verification:** Actions run [37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed hand-calculated synthetic unit tests: exact-bar/no-nearest matching, common timestamps, ₹1,293.50 known gross P&L on a one-leg fixture, six ₹10/₹20 × 0/50/100 slippage cost cases, prior-OI and OHLC-range gates, take-profit trigger/next-minute execution behavior, and fail-closed eligibility statuses. The first attempt [37957499754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957499754) failed only while writing its test manifest to a literal `$RUNNER_TEMP` path; the environment path was corrected and the rerun passed.
 
 **Interpretation:** This validates the kernel primitives only, not the end-to-end configuration replay worker. No real-market Phase52 variable-grid P&L exists, no configuration has been promoted, and v1.3 domains/IDs were unchanged. The next stage is to implement a source/specification-aware strategy-family resolver and use deterministic golden fixtures before any finite-grid result is accepted.
+
+
+### PA-014 — 2026-10-09 — Deterministic replay-kernel synthetic validation
+
+**Scope:** Added `research/phase52/replay_kernel.py` for exact timestamp/contract matching, common leg exits, OHLC validity, adverse entry/exit references, date-aware statutory fees, independent brokerage and slippage scenarios, prior-bar OI eligibility, OHLC-range proxy gating, next-minute common-open take-profit exits, and fail-closed data/specification gates.
+
+**Verification:** Actions [37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed hand-calculated synthetic tests. Tests cover exact-bar/no-nearest matching, exact common timestamps, ₹1,293.50 known gross P&L for a one-lot option leg fixture, six ₹10/₹20 × 0/50/100 slippage scenarios, prior OI and range-proxy gates, TP trigger/next-open behavior, and fail-closed family/delta/futures eligibility. Initial run [37957499754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957499754) passed self-tests but failed writing the evidence manifest to a literal `$RUNNER_TEMP` path; the path was corrected and rerun passed.
+
+**Interpretation:** This validates generic kernel primitives only, not a full strategy-family resolver or real-data configuration replay. It does not alter Phase52 grid v1.3 domains/IDs; no real-market Phase52 variable-grid P&L exists and no candidate is promoted.
