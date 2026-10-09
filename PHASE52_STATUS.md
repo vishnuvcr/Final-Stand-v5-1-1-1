@@ -1,8 +1,8 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — base replay and EOD factor build complete; exact intraday coverage audit rerun pending  
+**Overall:** OPEN — fixed-template and EOD factor diagnostics complete; configuration-wide event-coverage audit running; variable-grid replay not started  
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
-**Plan version:** 1.3 (pre-test amendments PA-001 to PA-003)  
+**Plan version:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-007  
 **Latest checkpoint:** 2026-10-09 (Asia/Kolkata)
 **Accepted finite grid:** phase52-grid-v1.3; 9,379,584 configurations (computed queue size, not tested count).
 
@@ -12,15 +12,15 @@
 | New branch | PASS | Dedicated branch exists. |
 | User repository inventory | IN PROGRESS | 40 accessible repositories inventoried. Continue root-document/code search by repository; several do not expose a root README through the connected file API and require alternative-path inspection. |
 | Literature/source discovery | IN PROGRESS | Initial sources include NSE India VIX/contract information, option-volume/OI literature, public GitHub strategy implementations and user-designated YouTube source tracks. Expand systematically and log each lead. |
-| Candidate registry | IN PROGRESS | 312 unique structure × selector hypothesis IDs: 52 families × 6 selector modes (not 300 claimed structural families); validate IDs, source lineage and risk tags. |
-| Data coverage and licensing | PARTIAL / REVIEW GATES OPEN | Base replay is complete only through expiry 2026-05-26 from the pinned CC BY-NC dataset; exact timestamp coverage audit is being rerun. Lagged daily EOD factor panel has 256/256 event rows and 0 archive path/file errors, but it is not intraday basis and NSE data rights still require review. |
-| Finite-grid enumeration | IN PROGRESS | Grid v1.3 has 9,379,584 configurations; 25,000 per day implies about 376 enumeration runs. Enumeration is not replay. |
-| Base-geometry replay | COMPLETE / DIAGNOSTIC ONLY | Existing Phase43/45 engines replayed at HF revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; 9,699 rows, 42 strategy labels, 256 expiries. This is not the 9,379,584-config variable replay. The full source expiry window is not yet reconciled. |
+| Candidate registry | VALIDATED / SPECIFICATION GATES OPEN | 312 hypotheses across 52 families × six selector modes pass registry checks. Fifteen families still require exact source/leg reconciliation and five diagnostic-only families cannot be promoted. |
+| Data coverage and licensing | PARTIAL / BLOCKED FOR FULL-WINDOW CLAIMS | Exact fixed-template audit completed in run 37931097834: 267 source expiry files vs 256 matrix expiries, 11 files not fully replayed; index series ends 2026-07-02. Phase51 2026-07-28/08-04 minute quote coverage remains unresolved. EOD panel is lagged daily only; rights review remains open. New config event universe checks 1,068 DTE/time events with exact 09:45/13:00 index ticks; option-leg/exit quote audit is the next gate. |
+| Finite-grid enumeration | IN PROGRESS — QUEUE ONLY | Grid v1.3 has 9,379,584 configurations. Latest persisted checkpoint is offset 210,000 (runs 37932520478); all emitted records remain ENUMERATED_NOT_BACKTESTED. |
+| Base-geometry replay | COMPLETE / DIAGNOSTIC ONLY | Pinned Phase43/45 replay: 9,699 rows, 42 strategy labels, 256 expiry events through 2026-05-26. It is not the 9,379,584-config variable replay, and the source window is partial. Empty Phase45 error file is now correctly recorded as zero rows. |
 | Legacy factor-selector pilot | VALIDATION-ONLY COMPLETE — NO PROMOTION | Run 37927040268 passed end-to-end: 6,617/9,699 rows matched (68.2%); all six policies lost on validation, VIX router Holm p=0.985; 2026 holdout not evaluated (13 matched expiries). |
 | Untouched OOS confirmation | NOT STARTED | Keep confirmation intervals protected before selection freeze. |
 | Promotion / live readiness | NOT STARTED | No strategy is promoted or approved for live execution. |
 | Manuscript and supplements | NOT STARTED | Produce after evidence and inference gates are complete. |
-| Recurring automation | ACTIVE / REPAIR CYCLE | Main branch workflow is manual + daily. Parser fixtures now pass for legacy and UDiFF schemas; run 37929888516 built the EOD factor panel. Coverage run 37930010915 stopped because the audit script was absent from the branch checkout; copied in commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`; rerun pending. |
+| Recurring automation | ACTIVE | Main workflow is manual + daily. Legacy/UDiFF+IDF parser tests pass (run 37931285866); source audit and EOD adapter corrected successfully (run 37931305395); exact fixed-template coverage report completed (run 37931097834); EOD selector run 37932492241 completed with no promotion. The workflow now also builds a separate DTE/time event inventory before variable replay. |
 
 ## Existing evidence carried forward (not Phase 52 evidence)
 
@@ -35,7 +35,7 @@ A green workflow alone is not a scientific pass. Every numerical result needs a 
 
 ## Latest action
 
-New phase branch created; plan version 1.0 and its seed logs are being committed. No numerical Phase 52 P&L has been calculated yet.
+Fixed-template replay and EOD selector diagnostics exist, but the 9,379,584-config grid has not been backtested. No strategy is promoted. The exact timestamp audit proves the fixed-template replay is partial. A new event inventory for DTE={0,7} and entry times={09:45,13:00} is being generated on run 37934339579, with explicit missing-index timestamps and no P&L. The full protocol is `PHASE52_REPLAY_PROTOCOL.md`.
 
 
 ## Bootstrap additions — 2026-10-09
@@ -154,3 +154,11 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
 - Daily EOD factor-selector: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; validation diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; report at results/phase52/daily_eod_selector/REPORT.md.
 - Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.
+
+
+## Verified selector/source checkpoint — 2026-10-09
+
+- EOD selector run [37932492241](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37932492241) completed with 256 matched base events and eight EOD modes. Best validation relative uplift diagnostic was volume-PCR +₹923/event, 95% block-bootstrap interval [-₹1,454,+₹3,436], Holm p=1.000; no selector is promoted. Holdout is unstable and several modes lose materially.
+- UDiFF `IDF` index-futures parsing is corrected and regression-tested. The corrected EOD manifest reports basis and futures OI available on 256/256 events, with same-contract futures OI change available on 255/256; this is lagged daily EOD only, not intraday traded-futures basis.
+- Replay protocol v1.0 and plan amendment PA-007 have been committed before configuration-grid P&L. Grid v1.3 domains were not changed.
+- Workflow [37934339579](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934339579) is running the new event universe: 267 expiry files × two DTE values × two exact entry times = 1,068 expected date/time events. This inventory checks exact index timestamps only; it does not count option-leg quotes as valid until each configuration's selected strikes are checked.
