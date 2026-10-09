@@ -461,10 +461,10 @@
       "exact bar matching; no nearest timestamp/contract substitution",
       "common exact timestamps across all legs",
       "valid OHLC and prior completed-bar OI gate",
-      "adverse open-fill price stress at 0/50/100% slippage",
-      "separate ₹20 primary and ₹10 sensitivity brokerage cases with date-aware statutory charges",
-      "next-minute common-open take-profit execution",
-      "fail-closed spec, delta, intraday-futures and exit-semantics gates"
+      "adverse entry/exit fills with 0/50/100 percent slippage cases",
+      "date-aware statutory charges independent from ₹20 primary / ₹10 sensitivity brokerage",
+      "next-minute exact common-open take-profit",
+      "fail-closed unresolved specifications, delta, intraday-futures and path-exit rules"
     ]
   },
   "replay_kernel_version": "phase52-replay-kernel-v0.1",
