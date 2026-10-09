@@ -111,9 +111,10 @@ def main() -> int:
 
     # Store outcomes, not raw quoted market data. Compress them for durable
     # repository storage and reproduce the exact file hash.
-    tmp = MATRIX.with_suffix(".csv.gz.tmp")
-    with matrix_csv.open("rb") as src, gzip.open(tmp, "wb", compresslevel=6, mtime=0) as dst:
-        shutil.copyfileobj(src, dst)
+    tmp = OUT / ".full_ready_made_trade_matrix.csv.gz.tmp"
+    with matrix_csv.open("rb") as src, tmp.open("wb") as raw_dst:
+        with gzip.GzipFile(fileobj=raw_dst, mode="wb", compresslevel=6, mtime=0) as dst:
+            shutil.copyfileobj(src, dst)
     tmp.replace(MATRIX)
 
     split_counts = df.groupby("split").size().to_dict()
