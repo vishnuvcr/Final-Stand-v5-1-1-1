@@ -18,3 +18,8 @@ Added a persistence guard to main and research-branch workflows: if the selected
 ## 2026-10-09 — Stale-output pathspec correction
 
 The stale-run guard now recreates the selected-strike output directory and adds a .gitkeep placeholder when no remote accepted result exists. This prevents the persistence step's explicit directory pathspec from failing after stale output is removed. Logged as F52-028; end-to-end verification remains pending.
+
+
+## 2026-10-09 19:00 IST — Queue checkpoint after persistence fix
+
+Run 37935663113 persisted the next 25,000 configuration IDs, moving the deterministic queue offset from 235,000 to 260,000 of 9,379,584. This is enumeration only, not backtesting. Its revised persistence step succeeded. The selected-strike audit still awaits a run with the latest point-in-time strike-ladder code.
