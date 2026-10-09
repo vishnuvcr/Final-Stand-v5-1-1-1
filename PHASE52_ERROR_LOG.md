@@ -225,3 +225,21 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Scope:** Build an inventory of target expiry × exact calendar DTE {0,7} × entry timestamp {09:45,13:00}, then audit exact NIFTY index timestamp presence. This addresses the event-time mismatch between the old fixed 10:00 event replay and the registered configuration grid.
 - **Interpretation:** Expected event rows and exact index ticks are coverage metadata, not P&L or tested configurations. Option-leg and exit-time quote availability still requires configuration-specific verification.
 - **Status:** RUNNING; final counts will be appended once the workflow result is available.
+
+
+## F52-019 — Broad event coverage is not selected-leg eligibility — DATA GATE OPEN
+
+- **Date:** 2026-10-09
+- **Workflow:** [37934719402](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934719402), successful audit.
+- **Observation:** The broad option coverage audit has 1,068 expected events, 1,012 exact index timestamps, 1,016 with option rows at entry, 1,012 with any OI≥100 contract, and 1,040 with a common-time expiry exit. Intersections reduce to 1,006 events with exact index + entry options + OI≥100, and 1,004 when broad expiry exit is also required. The holdout intersection is only 74/112.
+- **Root cause/impact:** Event-level row presence cannot establish the chosen strike/expiry/leg has a valid OHLC bar or executable exit. Running a grid now could silently assume untradeable legs or overstate coverage.
+- **Correction:** Treat this audit as a gate only. Next implement selected-contract resolution per configuration and exact entry/exit OHLC/fill validation. Reject missing legs; do not forward-fill, interpolate or replace with nearest strikes/timestamps. Keep broad counts separate from valid replay counts.
+- **Status:** OPEN; no P&L affected because no grid P&L was calculated.
+
+## F52-020 — Recent source expiry files exceed pinned index-series coverage — OPEN
+
+- **Date:** 2026-10-09
+- **Observation:** Option-file inventory extends through 2026-08-04, but pinned NIFTY index bars end 2026-07-02. Exact index entries are 80/112 in the holdout event universe; the broad index + option + OI + expiry-exit intersection is 74/112. July 28/August 4 remain unresolved.
+- **Impact:** The current dataset cannot support a complete, untouched 2026 holdout or full-window Phase51 claim.
+- **Correction/next step:** Search for authorised, hash-pinned point-in-time sources for the missing sessions/index bars; until found, report the holdout as blocked/partial and do not relax minimum sample or shorten the pre-registered window.
+- **Status:** OPEN / data-gated.
