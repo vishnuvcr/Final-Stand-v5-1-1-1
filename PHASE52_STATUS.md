@@ -88,3 +88,9 @@ First automatic workflow run 37924369419 failed in registry validation after its
 ## PA-005 — holdout coverage policy
 
 The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows extend through 2026-09-30. Therefore the 2026 holdout is not assumed to meet the 20-expiry/50% factor-feature coverage rule. The revised pilot can publish matched-sample development-tuning and 2024–25 validation comparisons only if those splits meet their gates; undercovered 2026 holdout is explicitly unevaluated, never imputed. A strategy still cannot be promoted without adequate untouched OOS confirmation.
+
+## Automated checkpoint — 2026-10-09 17:28:57 IST
+- Workflow run: 37927040268
+- Source leads newly recorded: 0.
+- Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
+- Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.

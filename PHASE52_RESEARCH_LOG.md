@@ -89,3 +89,12 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - **Correction:** Whitelist amended to reflect source outcome names while continuing to exclude naked/undefined-tail structures.
 - **Coverage policy:** Phase39 factor panel ends on 2026-04-24 but the Phase45 matrix extends through 2026-09-30. PA-005 lets the pilot report validation-only selector metrics if its matched sample passes, while withholding holdout inference when coverage/sample is insufficient.
 - **Inference:** Pilot uses circular moving-block bootstrap and block-level sign flips (block length 3 consecutive expiry observations) to account for short-range serial dependence. Results remain exploratory and subject to Holm correction across preregistered router families.
+
+## 2026-10-09 17:28:57 IST — Automated run 37927040268
+
+- Registry validation: PASS; hypotheses registered: 312; structure families: 52; selector modes: 6.
+- Finite configurations in grid phase52-grid-v1.3: 9,379,584; this run enumerated 25,000 configurations at offsets 35,000–59,999.
+- Source-discovery queries: 11; unique leads added: 0. Credential presence only (no values logged): {'HF_TOKEN': True, 'GITHUB_TOKEN': True, 'YOUTUBE_API_KEY': False}.
+- Queue status: ENUMERATED_NOT_BACKTESTED; enumeration complete: False. Enumerated configs are NOT backtests.
+- Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
+- The legacy factor-selector pilot is not the full Phase52 configuration sweep; futures/synthetic basis remains unavailable in its seed panel. No Phase52 candidate is promoted.\n
