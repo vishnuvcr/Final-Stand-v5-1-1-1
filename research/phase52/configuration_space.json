@@ -456,6 +456,18 @@
     "abs_delta_selection": "Use exact entry_ts minus one minute and only that prior completed option/index bar close for IV/delta; use prior-bar OI>=100 gate. Then require the same selected contract at exact entry_ts and use that bar open as the OHLC fill reference. Missing exact prior bar, IV or entry open means explicit exclusion.",
     "no_lookahead_review": "2026-10-09 code review found and corrected lookahead in the exploratory delta audit before any config-grid P&L. Prior selected-strike coverage counts are superseded pending rerun.",
     "oi_eligibility": "For entry-open fills, OI>=100 is tested on the exact prior completed one-minute option bar at entry_ts minus one minute. Entry-bar OI is diagnostic only. Require valid exact entry bar/open separately; missing prior OI is ineligible with no forward-fill.",
-    "point_in_time_audit": "PA-013: ATM-offset OI eligibility must be based on prior completed minute, not entry-bar OI."
-  }
+    "point_in_time_audit": "PA-013: ATM-offset OI eligibility must be based on prior completed minute, not entry-bar OI.",
+    "kernel_tested": [
+      "exact bar matching; no nearest timestamp/contract substitution",
+      "common exact timestamps across all legs",
+      "valid OHLC and prior completed-bar OI gate",
+      "adverse open-fill price stress at 0/50/100% slippage",
+      "separate ₹20 primary and ₹10 sensitivity brokerage cases with date-aware statutory charges",
+      "next-minute common-open take-profit execution",
+      "fail-closed spec, delta, intraday-futures and exit-semantics gates"
+    ]
+  },
+  "replay_kernel_version": "phase52-replay-kernel-v0.1",
+  "replay_kernel_test_run": "37957753452",
+  "replay_kernel_test_status": "SYNTHETIC_UNIT_TESTS_PASS; production configuration replay worker not implemented"
 }
