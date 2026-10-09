@@ -1,6 +1,8 @@
 # Phase 51-1J Status
 
-**State: RUNNING — TradingTick public source audit pending.**
+**State: RUNNING — selector-inspection correction deployed; fresh audit run pending.**
+
+The first browser-run artifact was not accepted: page navigation worked (HTTP 200), but a JavaScript syntax error in the selector-inspection snippet aborted selector/date checks. The script has been simplified and corrected; see T51-1J-002. No target date or raw intraday coverage was verified by that run.
 
 ## Public pages located
 - [Historical NIFTY option-chain download](https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php): expiry year/month/date, session-date and strike-range selectors. The page describes its primary historical-chain data as end-of-day and notes that daily snapshots omit intraday nuance.
