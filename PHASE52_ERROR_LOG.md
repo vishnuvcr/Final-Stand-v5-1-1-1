@@ -607,3 +607,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Job status: failure
 - No revised sensitivity accepted.
 - Status: OPEN.
+
+## F52-LEG-EVIDENCE-002 — range-exclusion per-leg evidence repair — RESOLVED
+
+- **Verified run:** [37990362985](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985); replay step, exact 480-row count validation, artifact upload and checkpoint persistence all succeeded.
+- **Root cause in failed attempts:** the earliest attempts were blocked by manifest fingerprint drift / escaped artifact expressions, a wrong manifest key assertion, and a missing `matplotlib` dependency. The last setup failure was corrected by installing `matplotlib`.
+- **Verified result:** 480 frozen config-event rows reconcile to 379 `EXCLUDED_OHLC_RANGE_PROXY`, 100 `BLOCKED_LEG_ELIGIBILITY`, and one `REPLAY_PASS`; no source read errors or replay exceptions. All 379 range-excluded rows now contain the expected complete set of selected-leg records; the single replay-pass row also has complete leg data.
+- **Scope of resolution:** this closes the specific omission of later legs after an OHLC-range exclusion. The 100 rows blocked at the resolver's prior-OI gate still contain only the leg(s) examined before early return in the Phase 52 canonical ledger. Their explicit observed OI failures are sufficient to keep them excluded in Phase 54; a full record for every leg is addressed separately by Phase 55.
+- **Scientific impact:** no strategy metric changed, no filter was relaxed, holdout untouched, and only one row passes at the frozen 2% threshold. No strategy or factor selector is promoted.
+- **Status:** RESOLVED for range-exclusion evidence; broader all-rows/all-legs invariant tracked in Phase 55.
