@@ -177,9 +177,17 @@ def collapse_predictions(test,states,mapping,fallback):
     a=pd.DataFrame(chosen).drop_duplicates("expiry_key");b=pd.DataFrame(fixed).drop_duplicates("expiry_key")
     return a,b,pred,episodes
 
-def run(trades_path,features_path,outdir):
+def run(trades_path,features_path,outdir,leakage_audit_path):
     outdir.mkdir(parents=True,exist_ok=True)
+    source_audit=json.loads(Path(leakage_audit_path).read_text())
+    if source_audit.get("status") != "PASS":
+        raise RuntimeError("Phase39 point-in-time feature audit did not PASS")
+    rules=source_audit.get("point_in_time_rules",{})
+    if rules.get("interpolation") != "forbidden" or rules.get("forward_fill") != "forbidden":
+        raise RuntimeError("Phase39 feature audit does not explicitly prohibit interpolation/forward fill")
     joined,audit,all_features=read_join(trades_path,features_path)
+    audit["source_feature_leakage_audit_status"]=source_audit.get("status")
+    audit["source_feature_rules"]=rules
     (outdir/"input_audit.json").write_text(json.dumps(audit,indent=2,allow_nan=False)+"\n")
     if audit["feature_match_rate"]<.90:raise RuntimeError(f"PIT feature match {audit['feature_match_rate']:.1%} below 90%")
     data=joined[joined.feature_matched&joined.net.notna()&joined.net50.notna()].copy()
@@ -256,7 +264,7 @@ def run(trades_path,features_path,outdir):
           "nonmissing_rate_by_split":{s:{c:float(data.loc[data.split==s,c].notna().mean()) if c in data else None for c in cols} for s in ["development","validation","holdout"]}}
     out={
       "status":"FACTOR_SELECTOR_PILOT_COMPLETE_NO_PROMOTION",
-      "input_sha256":{"trade_matrix":hashlib.sha256(Path(trades_path).read_bytes()).hexdigest(),"feature_panel":hashlib.sha256(Path(features_path).read_bytes()).hexdigest()},
+      "input_sha256":{"trade_matrix":hashlib.sha256(Path(trades_path).read_bytes()).hexdigest(),"feature_panel":hashlib.sha256(Path(features_path).read_bytes()).hexdigest()},\n      "source_feature_leakage_audit_status":source_audit.get("status"),
       "input_audit":audit,"risk_limited_strategy_universe":universe,"risk_limited_strategy_count":len(universe),
       "split_unique_expiries":{s:int(data.loc[data.split==s,"expiry_key"].nunique()) for s in ["development","validation","holdout"]},
       "development_fit_end":str(fit_end.date()),"development_tune_start":str(tune_start.date()),
@@ -291,8 +299,8 @@ def self_test():
     print("SELF_TEST_PASS: training-only binning and paired expiry metrics")
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--trades",type=Path,required=True);p.add_argument("--features",type=Path,required=True);p.add_argument("--out",type=Path,required=True);p.add_argument("--self-test",action="store_true");a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("--trades",type=Path,required=True);p.add_argument("--features",type=Path,required=True);p.add_argument("--leakage-audit",type=Path,required=True);p.add_argument("--out",type=Path,required=True);p.add_argument("--self-test",action="store_true");a=p.parse_args()
     if a.self_test:self_test()
-    s=run(a.trades,a.features,a.out)
+    s=run(a.trades,a.features,a.out,a.leakage_audit)
     print(json.dumps({"status":s["status"],"trade_rows":s["input_audit"]["trade_rows_input"],"feature_match_rate":s["input_audit"]["feature_match_rate"],"risk_limited_strategy_count":s["risk_limited_strategy_count"],"selected_feature_by_mode":s["selected_feature_by_mode"],"results_path":str(a.out)},indent=2,default=str))
 if __name__=="__main__": main()
