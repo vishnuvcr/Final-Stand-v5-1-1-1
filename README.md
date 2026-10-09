@@ -845,3 +845,6 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Concurrency safeguard:** Workflow persistence now checks whether the selected-strike auditor changed after a run checked out its source snapshot; stale selected-strike outputs are discarded/restored rather than overwriting newer evidence. Verification is pending. See [F52-027](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md).
+
+
+**Persistence guard refinement:** The stale-output guard now leaves a valid placeholder path when no accepted selected-strike output exists, avoiding a secondary git-add failure. This is logged as F52-028; workflow verification is still pending.
