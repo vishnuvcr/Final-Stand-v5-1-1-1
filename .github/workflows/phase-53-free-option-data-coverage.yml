@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase53-source-audit-\${{ github.ref }}
+  group: phase53-source-audit-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 30
     env:
       PHASE_BRANCH: phase-53-free-option-data-coverage-remediation
-      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
       - name: Checkout Phase 53 branch
         uses: actions/checkout@v4
@@ -50,7 +50,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase53-source-coverage-audit-\${{ github.run_id }}
+          name: phase53-source-coverage-audit-${{ github.run_id }}
           path: results/phase53/source_coverage_audit/
           if-no-files-found: warn
           retention-days: 90
@@ -145,6 +145,6 @@ jobs:
           echo "Checkpoint persistence failed after 3 attempts." >&2
           exit 1
         env:
-          JOB_STATUS: \${{ job.status }}
-          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
