@@ -1,4 +1,4 @@
-name: Phase 52 — Whole-Position Synthetic Integration Golden Tests
+name: Phase 52 — Whole-Position Synthetic Integration Golden Tests (rerun after fixture correction)
 
 on:
   workflow_dispatch:
