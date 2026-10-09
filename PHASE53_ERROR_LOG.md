@@ -1,0 +1,9 @@
+# Phase 53 error log
+
+## F53-INIT-001 — Coverage gate inherited from Phase 52 — OPEN BY DESIGN
+
+- **Date:** 2026-10-10.
+- **Evidence:** Phase 52 v0.2 produced only one eligible replay out of 480 planned rows. One hundred rows were blocked because strictly prior minute OI was zero; 379 failed the fixed OHLC high-low/open proxy.
+- **Impact:** no defensible factor-conditioned strategy ranking or efficacy inference can proceed from the current pilot.
+- **Action:** separate source-coverage phase; preserve all Phase 52 definitions and holdout. Explore actual source coverage, revisions/licensing, and exact contract keys; distinguish daily reports from intraday data.
+- **Status:** OPEN until Phase 53 completes the source/go-no-go audit.
