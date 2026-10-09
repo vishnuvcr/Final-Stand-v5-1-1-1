@@ -137,3 +137,12 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Reviewed latest pilot v0.1 report: 1/480 config-event rows executed; 274 blocked by duplicate exact contract rows; 205 excluded by the pre-registered OHLC high-low/open proxy. No performance inference is justified.
 - Patched v0.2 to remove only exact full-row duplicates after canonical normalization and record duplicate counts. Conflicting rows are retained and fail closed. Frozen sample/configurations/costs/filter unchanged; holdout untouched.
 - Added PA-015 to plan and logs. Workflow run 37980455805 passed self-test and plan stages; historical replay is in progress. Awaiting report and checking all costs, data hashes and 480-row reconciliation before any next performance step.
+
+## Resume — 2026-10-10 — Pilot v0.2 completion and OpenChart request
+
+- User requested resumption and an evaluation of https://github.com/marketcalls/openchart as a possible source for all options data.
+- Audited Phase52 plan/status/research/error/chat logs and repository workflow state before continuing.
+- Verified workflow 37980455805 completed the replay stage but failed in final persistence: 480 status rows reconciled (379 OHLC-range exclusions, 100 leg-eligibility blocks, one replay pass); six cost-scenario rows; 13 input files audited; zero source-file read errors; no holdout use. The workflow artifact is available as ID 11641042776.
+- Recorded a separate run summary and audit note. This is not a strategy result; coverage remains insufficient and no candidate is promoted.
+- Inspected OpenChart README, implementation, response normalization, license and public issues at a pinned revision. Registered a bounded, rate-limited probe for symbol discoverability, recent option bars and the two unresolved Phase 51 target windows. Only aggregate diagnostics are to be persisted; raw bars and tokens are excluded from the public repository.
+- Decision: OpenChart is an auxiliary source candidate only pending runtime, full-coverage, timestamp, independent-source and licensing checks. No strategy parameters, cost model, event universe or holdout boundary were changed.
