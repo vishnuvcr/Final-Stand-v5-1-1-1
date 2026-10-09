@@ -432,7 +432,20 @@ def _self_test() -> None:
     assert len(opts) == 2, f"expected 2 option rows, got {len(opts)}"
     assert len(futs) == 1, f"expected 1 futures row, got {len(futs)}"
     assert float(opts.loc[opts.option_type.eq("CE"), "open_interest"].iloc[0]) == 5000
-    print("SELF_TEST_PASS: legacy bhavcopy option/OI/futures schema")
+
+    # Tiny post-2024 UDiFF-format fixture; same factor interface must survive schema change.
+    csv_udiff = (
+        "TckrSymb,XpryDt,StrkPric,OptnTp,ClsPric,TtlTradgVol,OpnIntrst,FinInstrmTp\\n"
+        "NIFTY,2026-10-29,25000,CE,111,1001,5001,OPTIDX\\n"
+        "NIFTY,2026-10-29,25000,PE,96,1201,7001,OPTIDX\\n"
+        "NIFTY,2026-10-29,0,,25021,5001,90001,FUTIDX\\n"
+    ).encode()
+    opts2, futs2, meta2 = parse_bhavcopy(zip_bytes(csv_udiff), "2026-10-08")
+    assert len(opts2) == 2, f"expected 2 UDiFF option rows, got {len(opts2)}"
+    assert len(futs2) == 1, f"expected 1 UDiFF futures row, got {len(futs2)}"
+    assert meta2["schema"] == "udiff"
+    assert float(opts2.loc[opts2.option_type.eq("PE"), "open_interest"].iloc[0]) == 7001
+    print("SELF_TEST_PASS: legacy + UDiFF bhavcopy option/OI/futures schemas")
 
 
 def zip_bytes(csv: bytes) -> bytes:
