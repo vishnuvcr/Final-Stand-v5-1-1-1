@@ -249,6 +249,12 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
             "bytes_transferred": 0,
         })
 
+    pinned_revision_url = f"https://huggingface.co/api/datasets/{repo_id}/revision/{revision}"
+    revision_meta, revision_data = json_request(pinned_revision_url, token)
+    revision_confirmed = (
+        isinstance(revision_data, dict)
+        and str(revision_data.get("sha", "")).lower() == revision.lower()
+    )
     hf_listing_meta, hf_listing = listed_tree(repo_id, revision, token)
     inventory = None
     if hf_listing is not None:
@@ -262,7 +268,7 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
     real_quote_source = False  # None in the registered public sources advertises a free full historical quote/depth archive.
     all_hf = next((s for s in source_checks if s.get("source_id") == "hf_pinned"), {})
     api_hf = all_hf.get("api_metadata_probe", {})
-    dataset_revision_confirmed = api_hf.get("dataset_sha") == revision if api_hf else False
+    dataset_revision_confirmed = revision_confirmed
     metadata_completeness = sum(1 for s in source_checks if s.get("http_status") is not None)
     decision = "SOURCE_INVENTORY_COMPLETE_BUT_INTRADAY_QUOTE_NO_GO"
     if found == len(required):
@@ -293,6 +299,13 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
             "unknown_or_inaccessible_count": unknown,
             "coverage_status": data_status,
             "revision_confirmed_by_metadata": dataset_revision_confirmed,
+            "revision_metadata_probe": {
+                "url": revision_meta.get("url"),
+                "http_status": revision_meta.get("http_status"),
+                "reachable": revision_meta.get("reachable"),
+                "returned_sha": revision_data.get("sha") if isinstance(revision_data, dict) else None,
+                "error": revision_meta.get("error") or revision_meta.get("metadata_parse_error"),
+            },
             "required_file_checks": file_checks,
             "tree_listing": {
                 "status": "AVAILABLE" if hf_listing is not None else "INACCESSIBLE_OR_UNSUPPORTED",
