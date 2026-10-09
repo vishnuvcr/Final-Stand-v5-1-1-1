@@ -36,3 +36,11 @@ Every runtime or extraction failure must be recorded with run ID, cause, correct
 - **Correction/outcome:** Fresh-page logic and chart-series triggering are now applied; publication conflict was also fixed by preserving generated artifacts while resetting to the latest phase branch before publication.
 - **Evidence impact:** TradingTick public endpoints are rejected for Phase-51 intraday OOS P&L. No prices/P&L accepted. This does not rule out a paid or private archive outside the audited public endpoints.
 - **Next:** Assess authorized commercial archive/API access. No purchase or credential assumption without authorization.
+
+
+## T51-1J-005 — Free HF audit workflow setup failure — PATCHED / RETRY RUNNING
+
+- **Run:** [37916552983](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916552983).
+- **Cause:** setup-python's pip cache option requires a requirements.txt or pyproject.toml, neither exists at repository root. The setup step failed before downloading any source files. Artifact publication also attempted to git-add a nonexistent output directory.
+- **Correction:** removed setup-python pip caching (the HF cache remains separately configured) and made metadata publication tolerate a missing output directory. Triggered corrected run [37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582).
+- **Evidence impact:** no source files downloaded and no data conclusions drawn from failed run.
