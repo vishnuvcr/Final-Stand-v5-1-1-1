@@ -888,3 +888,8 @@ Artifacts: [summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phas
 ### Phase 52 audit-code corrections (2026-10-09)
 
 The prior ATM-offset coverage artifact from [run 37942202655](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37942202655) is superseded: code review found offsets mapped to ordinal strike ranks and the index close used as the ATM anchor. The corrected audit now uses exact-time NIFTY index open and modal strike-step arithmetic. The model-delta audit [run 37944408314](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37944408314) failed at self-test before any market-data analysis; its sigma and negative fixtures have been corrected, and delta selection now uses only exact prior completed one-minute closes with entry-open eligibility checked separately. Regression reruns are pending. These changes do not alter grid v1.3 domains. No configuration-grid P&L exists; no strategy is promoted.
+
+
+### Phase 52 PA-013: pre-entry OI gate
+
+A final timing audit found the selected-strike coverage script was using entry-bar OI for a trade simulated at that same bar's open. It has been patched to use the exact prior completed minute's OI for the >=100 gate, while checking current entry-bar open/OHLC separately; entry-bar OI is diagnostic only. The current workflow [37954806932](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37954806932) checked out the earlier code, so any selected-strike output from that run is not accepted as final. Fresh rerun required; no Phase52 grid P&L exists.
