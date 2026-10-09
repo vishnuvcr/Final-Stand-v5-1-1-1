@@ -1,18 +1,18 @@
 {
   "audit": "Phase 51-1J TradingTick public-source audit",
-  "created_utc": "2026-10-09T09:49:13.527208+00:00",
+  "created_utc": "2026-10-09T09:56:21.702969+00:00",
   "source": "https://tradingtick.in",
   "targets": [
     "2026-07-28",
     "2026-08-04"
   ],
-  "classification": "PUBLIC_PAGE_ACCESSIBLE_RAW_TARGET_DATA_NOT_VERIFIED",
+  "classification": "INTRADAY_PAYLOAD_CANDIDATE_REQUIRES_RAW_COVERAGE_REVIEW",
   "pnl_eligible": false,
   "pages": {
     "historical_chain": {
       "url": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
       "navigation_status": 200,
-      "error": "'value'",
+      "error": null,
       "initial_state": {
         "title": "Download Historical Nifty Option Chain Data | CSV & Excel Files",
         "url": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
@@ -37,7 +37,8 @@
           "Step-by-Step Guide to Analyzing This Data",
           "The Advantages and Disadvantages of Using Historical Option  Data",
           "Your Next Steps",
-          "NIFTY HISTORICAL  DATA"
+          "NIFTY HISTORICAL  DATA",
+          "Opt out of the sale or sharing of personal information"
         ],
         "buttons": [
           {
@@ -508,11 +509,11 @@
         "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Nifty Option Dashboard\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Option Chain Historical\n⬅ Previous\nNext ➡\nTurnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR\nTurnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR\n\n\n\t\n\t95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575\t\n\t\n\t\n\t\n\n1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11\n1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84\n10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37\n19680490\t1261472\t832715\t-323310\t119.05\t23850\t0.2\t-568230\t5219565\t6501861\t101000000\t23985.35\t6.27\n77188776\t4948061\t2937155\t-642850\t68.65\t23900\t0.6\t1164410\t13519415\t18346898\t285000000\t23985.35\t4.6\n231000000\t14829028\t9277060\t5550220\t19.6\t23950\t2.95\t12597910\t22580935\t35295089\t550000000\t23985.35\t2.43\n629000000\t40300828\t31166200\t18697185\t0.85\t24000\t27.3\t2452060\t16020030\t37388862\t584000000\t23985.35\t0.51\n393000000\t25118624\t13107575\t6866015\t0.25\t24050\t78.5\t1123590\t4020315\t10701584\t168000000\t23985.35\t0.31\n239000000\t15245129\t10908625\t486005\t0.2\t24100\t130.3\t-666185\t2858765\t4912449\t77285384\t23985.35\t0.26\n101000000\t6458519\t5204875\t-398190\t0.15\t24150\t180\t-151905\t418730\t1188407\t18771428\t23985.35\t0.08\n92670728\t5890841\t7875985\t-6862505\t0.15\t24200\t229.8\t-718445\t1517100\t728586\t11554834\t23985.35\t0.19\n38751268\t2458301\t4757935\t-1106105\t0.1\t24250\t279.9\t-36010\t340730\t120315\t1915887\t23985.35\t0.07\n35106728\t2222555\t6965725\t-3661840\t0.1\t24300\t326\t-361465\t597220\t101541\t1623602\t23985.35\t0.09\n\t\t\t\t\t\t\t\t\t\t\t\t\nShowing 1 to 13 of 13 entries\nNIFTY OPTION BACKTEST\nBear Call Spread\nNifty Bear Call Spread Strategy Backtest\nBear Put Spread\nNifty Bear Put Spread Strategy Backtest\nBull Call Spread\nNifty Bull Call Spread Strategy Backtest\nBull Put Spread\nNifty Bull Put Spread Strategy Backtest\nLong Call Backtest\nNifty Long Call Strategy Backtest\nLong Put Backtest\nNifty Long Put Strategy Backtest\nLong Straddle Backtest\nNifty Long Straddle Strategy Backtest\nLong Strangle Backtest\nNifty Long Strangle Strategy Backtest\nShort Call Backtest\nNifty Short Call Strategy Backtest\nShort Put Backtest\nNifty Short Put Strategy Backtest\nShort Straddle Backtest\nNifty Short Straddle Strategy Backtest\nShort Strangle Backtest\nNifty Short Strangle Strategy Backtest\nWhat is Nifty Option Chain Historical Data?\n\nAt its core, an option chain is a comprehensive table that lists all the available Call and Put option contracts for the Nifty 50 index at a specific point in time. When we add the word \"historical\" to it, we are referring to a snapshot of this table from a past trading session. So, nifty option chain historical data is essentially a detailed recor",
         "scripts": [
           {
-            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
             "inline": ""
           },
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js?bust=122881394",
+            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
@@ -592,27 +593,27 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxU5AjAf93DNpt2K-aIGzvGIwv0BZoKfzR7m7TPSii2Dymfqy5AcinIcxUUFL_5BS3yaRFzuQ919xPfmLhKJZlc3rvirb7FUZtq5joRkfqyFjmIzXxqvsmckQ5dTzOvVTBjxNSgghA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU4LDM3ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDIyOThdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjEyIl0sWzI3LCI4Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTU0MDUwNDZdXSJdLFsyOSwiZmFsc2UiXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWjMLcs30yL-5Ml0u2xu8-sOT9bRu-69W4eSI6UvjljK0AYb2uLnIGnZLvGvv1yQlTs3Su9B2ePTzgBKepIACz15X3P8xkarEH13tf4DW7m1wVdQ162rw9Wm3ewDurp_GNJ4rpH-w==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg1LDcyNDAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDldXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVFEXFc5r1BWFwBjDKhlCinqC0A3Fej04vcDJYDeJF-ycvz3KZl4VwQ53cEhSivM1WHE5x8ok6N-Gx79DO4HcqmB8yCHfjECmBBUtds1M0fdb7KfJ2ezqfMxnw7j5-pm3ikJq1jQg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDEyMDAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxU7VfzOcCEM7-Vj4oyCd8Xc4JhwNtFDEgkbweYG5EJKI1yn0fNacdHpXmBnTPATxU8PsV0HSnNkhXE70nGSjDcPQudFc6xa8yFa2XGDTqnAwzP8-3Dbwe-duKIgBpbK5Bvuib1ZCA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg1LDc5NjAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTFdXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDldXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdLFsxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTUzOTc4NSw3MzY5MDkwMDBdXV1dIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXNkuNBdA7ccoZ8V7hSeMUU1bTCavsiwQ25seRNovvnAgL4G3h9yhcq-ZN9yAnTC1ivuEyFwTinSz8Vt5m-UebfrKhQXQCwVSFyC0y7rYBz7e4GDLpS024g0GzUXssqqgGC0q4PZw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDE1OTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUuzr6jxq92WQKoCPk7ERVDBivwDBDyafFVQXH-mUHOlwNBBrXx5xatlp0Fb2mf1iqWDVGvxkaRBeaFu_VLbjgj4xocVA3nL6_Ll2zoPV0OKip3_3WC3-_3u4nZ8f7fQQk5KUaZmg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDU0OTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA5XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTUzNDAyNTIsOTUzNDAyNTRdXSJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3ODUsNzM2OTA5MDAwXV1dXSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUyMdJsmixLe2Kkn8vsoILvHvafksAz6J9ucu_bYjW1SMJoWvBYWZPyKnykrl-CfV-o7VTe_Utfghy9appC_fs-wAUqyRUlv5siLB8MVkqKWgcaNAchbKCv_I3_MycsRi2cEzU19A==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDIwMzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXjz6Fj6XmNAZq8dL1F3ucxo8-t-DyDeWVNv8Y9mIC22qYTzeXf--ADg9w6ngQoEQNvvpG7QLr-pbbNRuPSlc-eafb9xSX5BWzleTHTnxQsnIAsGQNporunzDu7LxUIzB50zoIdQA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDYyMDAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA5XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTUzNDAyNTIsOTUzNDAyNTRdXSJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3ODUsNzM2OTA5MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVE-HwC3OB3XJ2gq9VYmgf9cu-7GXIh60RnI4lCq63vNXUqVdYq_b58lUuU75TXsYacWzoM__RhHERu6FPvghUuDXylojWEUE7qPXkzQlbE1AmuJAwfIOyHrMtR1MXLD7urIm-FDA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDIzOTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXq15q-7GA9R60IhS39vvxNIpDEs69HiCPJ-rbXbJvguOl9iI0-T6SWtE59G2syteqt5enWpMwIXYwYkoihM4CUGKsJaBH_DLO_GKvfPO-PSrasGaesN0kIxuil_Awil3oNBk22jA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDY1NzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA5XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTUzNDAyNTIsOTUzNDAyNTRdXSJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3ODUsNzM2OTA5MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwxLFsxNzkxNTM5Nzg2LDYzNjUwNTAwMF0sMF1dIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVNAD2omVi7qSStcHKQ4Z47p05SwWFXoTEYZ3bZR5osmtDqZz2McDDOZcrjtmOXVN2Gpek5Aeeyklb3cPkZpUiBbsmys208GJsnzr9Lb5bDhsfp5Q3IOXjm2U5CMjSUrWrW8uJGCQ==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDI4MzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDIyOThdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjEyIl0sWzI3LCI4Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTU0MDUwNDZdXSJdLFsyOSwiZmFsc2UiXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXf4hO_Hfy-wZY8YQSjhhCs6s75dX11syOmmt7t_ihKbCy03krH2e2HBV8tQXCIQxJzuhkuf1llfWorx4UfvalZY1lqk2OU803pN6XEbiWmzQvJiw1ow9J4mzLk86o6laullbaSiw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDcyMzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDldXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdLFsxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTUzOTc4NSw3MzY5MDkwMDBdXV1dIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1Mzk3ODYsNTkxNDI0MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1Mzk3ODYsNjM2NTA1MDAwXSwwXV0iXV1d",
             "inline": ""
           },
           {
@@ -693,8 +694,789 @@
           }
         ]
       },
-      "selectors_by_target": {},
-      "request_count": 199,
+      "selectors_by_target": {
+        "2026-07-28": {
+          "attempts": [
+            {
+              "select_index": 0,
+              "id": "exYear",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026",
+                "value": "2026"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 1,
+              "id": "exMonth",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "July",
+                "value": "July"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 2,
+              "id": "exExpiry",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026-07-28",
+                "value": "2026-07-28"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 3,
+              "id": "exDate",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026-07-28",
+                "value": "2026-07-28"
+              },
+              "target": "2026-07-28"
+            }
+          ],
+          "selects_after": [
+            {
+              "index": 0,
+              "id": "exYear",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019",
+              "disabled": false,
+              "value": "2026",
+              "options": [
+                {
+                  "text": "Select Year",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2026",
+                  "value": "2026",
+                  "disabled": false
+                },
+                {
+                  "text": "2025",
+                  "value": "2025",
+                  "disabled": false
+                },
+                {
+                  "text": "2024",
+                  "value": "2024",
+                  "disabled": false
+                },
+                {
+                  "text": "2023",
+                  "value": "2023",
+                  "disabled": false
+                },
+                {
+                  "text": "2022",
+                  "value": "2022",
+                  "disabled": false
+                },
+                {
+                  "text": "2021",
+                  "value": "2021",
+                  "disabled": false
+                },
+                {
+                  "text": "2020",
+                  "value": "2020",
+                  "disabled": false
+                },
+                {
+                  "text": "2019",
+                  "value": "2019",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "id": "exMonth",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry Month\nSelect Month\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly",
+              "disabled": false,
+              "value": "July",
+              "options": [
+                {
+                  "text": "Select Month",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "January",
+                  "value": "January",
+                  "disabled": false
+                },
+                {
+                  "text": "February",
+                  "value": "February",
+                  "disabled": false
+                },
+                {
+                  "text": "March",
+                  "value": "March",
+                  "disabled": false
+                },
+                {
+                  "text": "April",
+                  "value": "April",
+                  "disabled": false
+                },
+                {
+                  "text": "May",
+                  "value": "May",
+                  "disabled": false
+                },
+                {
+                  "text": "June",
+                  "value": "June",
+                  "disabled": false
+                },
+                {
+                  "text": "July",
+                  "value": "July",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "id": "exExpiry",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry Date\nSelect Expiry\n2026-07-07\n2026-07-14\n2026-07-21\n2026-07-28",
+              "disabled": false,
+              "value": "2026-07-28",
+              "options": [
+                {
+                  "text": "Select Expiry",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-07",
+                  "value": "2026-07-07",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-14",
+                  "value": "2026-07-14",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-21",
+                  "value": "2026-07-21",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "exDate",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Date\nSelect Date\n2026-07-21\n2026-07-22\n2026-07-23\n2026-07-24\n2026-07-27\n2026-07-28",
+              "disabled": false,
+              "value": "2026-07-28",
+              "options": [
+                {
+                  "text": "Select Date",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-21",
+                  "value": "2026-07-21",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-22",
+                  "value": "2026-07-22",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-23",
+                  "value": "2026-07-23",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-24",
+                  "value": "2026-07-24",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-27",
+                  "value": "2026-07-27",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "atmRange",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Strike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)",
+              "disabled": false,
+              "value": "all",
+              "options": [
+                {
+                  "text": "All Strikes",
+                  "value": "all",
+                  "disabled": false
+                },
+                {
+                  "text": "±200 (4 Strikes)",
+                  "value": "200",
+                  "disabled": false
+                },
+                {
+                  "text": "±300 (6 Strikes)",
+                  "value": "300",
+                  "disabled": false
+                },
+                {
+                  "text": "±400 (8 Strikes)",
+                  "value": "400",
+                  "disabled": false
+                },
+                {
+                  "text": "±500 (10 Strikes)",
+                  "value": "500",
+                  "disabled": false
+                },
+                {
+                  "text": "±1000 (20 Strikes)",
+                  "value": "1000",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "id": "",
+              "name": "hocTable_length",
+              "aria": "",
+              "labels": [],
+              "parentText": "Show 102550100 entries",
+              "disabled": false,
+              "value": "100",
+              "options": [
+                {
+                  "text": "10",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "text": "25",
+                  "value": "25",
+                  "disabled": false
+                },
+                {
+                  "text": "50",
+                  "value": "50",
+                  "disabled": false
+                },
+                {
+                  "text": "100",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            }
+          ],
+          "target_option_scan": [
+            {
+              "index": 0,
+              "id": "exYear",
+              "name": "",
+              "labels": [],
+              "selected": "2026",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 1,
+              "id": "exMonth",
+              "name": "",
+              "labels": [],
+              "selected": "July",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 2,
+              "id": "exExpiry",
+              "name": "",
+              "labels": [],
+              "selected": "2026-07-28",
+              "contains_target": true,
+              "target_options": [
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "exDate",
+              "name": "",
+              "labels": [],
+              "selected": "2026-07-28",
+              "contains_target": true,
+              "target_options": [
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "atmRange",
+              "name": "",
+              "labels": [],
+              "selected": "all",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 5,
+              "id": "",
+              "name": "hocTable_length",
+              "labels": [],
+              "selected": "100",
+              "contains_target": false,
+              "target_options": []
+            }
+          ],
+          "visible_tables": [
+            {
+              "headers": [
+                "Turnover",
+                "Volume",
+                "OI",
+                "OI Change",
+                "Close",
+                "Strike",
+                "Close",
+                "OI Change",
+                "OI",
+                "Volume",
+                "Turnover",
+                "Spot",
+                "PCR"
+              ],
+              "rows": [
+                "Turnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR"
+              ],
+              "row_count": 1
+            },
+            {
+              "headers": [
+                "Turnover",
+                "Volume",
+                "OI",
+                "OI Change",
+                "Close",
+                "Strike",
+                "Close",
+                "OI Change",
+                "OI",
+                "Volume",
+                "Turnover",
+                "Spot",
+                "PCR"
+              ],
+              "rows": [
+                "Turnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR",
+                "95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575",
+                "1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11",
+                "1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84",
+                "10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37"
+              ],
+              "row_count": 15
+            },
+            {
+              "headers": [],
+              "rows": [
+                ""
+              ],
+              "row_count": 1
+            },
+            {
+              "headers": [
+                "✅ Advantages (Why It's Powerful)",
+                "⚠️ Disadvantages (The Limitations)"
+              ],
+              "rows": [
+                "✅ Advantages (Why It's Powerful)\t⚠️ Disadvantages (The Limitations)",
+                "Zero Financial Risk: You can test strategies without risking a single rupee. This is the safest way to learn.\tPast ≠ Future: Market conditions, regulations, and global macros change. What worked in the past may not work tomorrow.",
+                "Objectivity: Data eliminates emotions. It gives you hard numbers to base your decisions on, rather than gut feelings.\tData Overload: New traders can easily get overwhelmed by the sheer volume of numbers. It takes practice to filter out the noise.",
+                "Free Availability: You don't need expensive terminals. High-quality historical option chain data free options are available right here.\tTime-Consuming: Analyzing data and running calculations manually takes effort and patience.",
+                "Strategy Validation: Before deploying capital, you can validate your system across various market cycles—bull, bear, and sideways.\tMissing Intraday Nuance: Daily data hides the intraday volatility. A flat day could have had wild swings that the EOD snapshot misses."
+              ],
+              "row_count": 6
+            }
+          ],
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Nifty Option Dashboard\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nExpiry Date\nSelect Expiry\n2026-07-07\n2026-07-14\n2026-07-21\n2026-07-28\nDate\nSelect Date\n2026-07-21\n2026-07-22\n2026-07-23\n2026-07-24\n2026-07-27\n2026-07-28\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Op"
+        },
+        "2026-08-04": {
+          "attempts": [
+            {
+              "select_index": 0,
+              "id": "exYear",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026",
+                "value": "2026"
+              },
+              "target": "2026-08-04"
+            }
+          ],
+          "selects_after": [
+            {
+              "index": 0,
+              "id": "exYear",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019",
+              "disabled": false,
+              "value": "2026",
+              "options": [
+                {
+                  "text": "Select Year",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2026",
+                  "value": "2026",
+                  "disabled": false
+                },
+                {
+                  "text": "2025",
+                  "value": "2025",
+                  "disabled": false
+                },
+                {
+                  "text": "2024",
+                  "value": "2024",
+                  "disabled": false
+                },
+                {
+                  "text": "2023",
+                  "value": "2023",
+                  "disabled": false
+                },
+                {
+                  "text": "2022",
+                  "value": "2022",
+                  "disabled": false
+                },
+                {
+                  "text": "2021",
+                  "value": "2021",
+                  "disabled": false
+                },
+                {
+                  "text": "2020",
+                  "value": "2020",
+                  "disabled": false
+                },
+                {
+                  "text": "2019",
+                  "value": "2019",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "id": "exMonth",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry Month\nSelect Month",
+              "disabled": true,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Month",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "id": "exExpiry",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry Date\nSelect Expiry",
+              "disabled": true,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Expiry",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "exDate",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Date\nSelect Date",
+              "disabled": true,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Date",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "atmRange",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Strike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)",
+              "disabled": false,
+              "value": "all",
+              "options": [
+                {
+                  "text": "All Strikes",
+                  "value": "all",
+                  "disabled": false
+                },
+                {
+                  "text": "±200 (4 Strikes)",
+                  "value": "200",
+                  "disabled": false
+                },
+                {
+                  "text": "±300 (6 Strikes)",
+                  "value": "300",
+                  "disabled": false
+                },
+                {
+                  "text": "±400 (8 Strikes)",
+                  "value": "400",
+                  "disabled": false
+                },
+                {
+                  "text": "±500 (10 Strikes)",
+                  "value": "500",
+                  "disabled": false
+                },
+                {
+                  "text": "±1000 (20 Strikes)",
+                  "value": "1000",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "id": "",
+              "name": "hocTable_length",
+              "aria": "",
+              "labels": [],
+              "parentText": "Show 102550100 entries",
+              "disabled": false,
+              "value": "100",
+              "options": [
+                {
+                  "text": "10",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "text": "25",
+                  "value": "25",
+                  "disabled": false
+                },
+                {
+                  "text": "50",
+                  "value": "50",
+                  "disabled": false
+                },
+                {
+                  "text": "100",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            }
+          ],
+          "target_option_scan": [
+            {
+              "index": 0,
+              "id": "exYear",
+              "name": "",
+              "labels": [],
+              "selected": "2026",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 1,
+              "id": "exMonth",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 2,
+              "id": "exExpiry",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 3,
+              "id": "exDate",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 4,
+              "id": "atmRange",
+              "name": "",
+              "labels": [],
+              "selected": "all",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 5,
+              "id": "",
+              "name": "hocTable_length",
+              "labels": [],
+              "selected": "100",
+              "contains_target": false,
+              "target_options": []
+            }
+          ],
+          "visible_tables": [
+            {
+              "headers": [
+                "Turnover",
+                "Volume",
+                "OI",
+                "OI Change",
+                "Close",
+                "Strike",
+                "Close",
+                "OI Change",
+                "OI",
+                "Volume",
+                "Turnover",
+                "Spot",
+                "PCR"
+              ],
+              "rows": [
+                "Turnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR"
+              ],
+              "row_count": 1
+            },
+            {
+              "headers": [
+                "Turnover",
+                "Volume",
+                "OI",
+                "OI Change",
+                "Close",
+                "Strike",
+                "Close",
+                "OI Change",
+                "OI",
+                "Volume",
+                "Turnover",
+                "Spot",
+                "PCR"
+              ],
+              "rows": [
+                "Turnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR",
+                "95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575",
+                "1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11",
+                "1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84",
+                "10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37"
+              ],
+              "row_count": 15
+            },
+            {
+              "headers": [],
+              "rows": [
+                ""
+              ],
+              "row_count": 1
+            },
+            {
+              "headers": [
+                "✅ Advantages (Why It's Powerful)",
+                "⚠️ Disadvantages (The Limitations)"
+              ],
+              "rows": [
+                "✅ Advantages (Why It's Powerful)\t⚠️ Disadvantages (The Limitations)",
+                "Zero Financial Risk: You can test strategies without risking a single rupee. This is the safest way to learn.\tPast ≠ Future: Market conditions, regulations, and global macros change. What worked in the past may not work tomorrow.",
+                "Objectivity: Data eliminates emotions. It gives you hard numbers to base your decisions on, rather than gut feelings.\tData Overload: New traders can easily get overwhelmed by the sheer volume of numbers. It takes practice to filter out the noise.",
+                "Free Availability: You don't need expensive terminals. High-quality historical option chain data free options are available right here.\tTime-Consuming: Analyzing data and running calculations manually takes effort and patience.",
+                "Strategy Validation: Before deploying capital, you can validate your system across various market cycles—bull, bear, and sideways.\tMissing Intraday Nuance: Daily data hides the intraday volatility. A flat day could have had wild swings that the EOD snapshot misses."
+              ],
+              "row_count": 6
+            }
+          ],
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Bank Nifty Mood\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty "
+        }
+      },
+      "request_count": 1364,
       "initial_selects": [
         {
           "index": 0,
@@ -706,15 +1488,51 @@
           "disabled": false,
           "value": "",
           "options": [
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
+            {
+              "text": "Select Year",
+              "value": "",
+              "disabled": false
+            },
+            {
+              "text": "2026",
+              "value": "2026",
+              "disabled": false
+            },
+            {
+              "text": "2025",
+              "value": "2025",
+              "disabled": false
+            },
+            {
+              "text": "2024",
+              "value": "2024",
+              "disabled": false
+            },
+            {
+              "text": "2023",
+              "value": "2023",
+              "disabled": false
+            },
+            {
+              "text": "2022",
+              "value": "2022",
+              "disabled": false
+            },
+            {
+              "text": "2021",
+              "value": "2021",
+              "disabled": false
+            },
+            {
+              "text": "2020",
+              "value": "2020",
+              "disabled": false
+            },
+            {
+              "text": "2019",
+              "value": "2019",
+              "disabled": false
+            }
           ]
         },
         {
@@ -727,7 +1545,11 @@
           "disabled": true,
           "value": "",
           "options": [
-            {}
+            {
+              "text": "Select Month",
+              "value": "",
+              "disabled": false
+            }
           ]
         },
         {
@@ -740,7 +1562,11 @@
           "disabled": true,
           "value": "",
           "options": [
-            {}
+            {
+              "text": "Select Expiry",
+              "value": "",
+              "disabled": false
+            }
           ]
         },
         {
@@ -753,7 +1579,11 @@
           "disabled": true,
           "value": "",
           "options": [
-            {}
+            {
+              "text": "Select Date",
+              "value": "",
+              "disabled": false
+            }
           ]
         },
         {
@@ -766,12 +1596,36 @@
           "disabled": false,
           "value": "all",
           "options": [
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
+            {
+              "text": "All Strikes",
+              "value": "all",
+              "disabled": false
+            },
+            {
+              "text": "±200 (4 Strikes)",
+              "value": "200",
+              "disabled": false
+            },
+            {
+              "text": "±300 (6 Strikes)",
+              "value": "300",
+              "disabled": false
+            },
+            {
+              "text": "±400 (8 Strikes)",
+              "value": "400",
+              "disabled": false
+            },
+            {
+              "text": "±500 (10 Strikes)",
+              "value": "500",
+              "disabled": false
+            },
+            {
+              "text": "±1000 (20 Strikes)",
+              "value": "1000",
+              "disabled": false
+            }
           ]
         },
         {
@@ -784,10 +1638,26 @@
           "disabled": false,
           "value": "100",
           "options": [
-            {},
-            {},
-            {},
-            {}
+            {
+              "text": "10",
+              "value": "10",
+              "disabled": false
+            },
+            {
+              "text": "25",
+              "value": "25",
+              "disabled": false
+            },
+            {
+              "text": "50",
+              "value": "50",
+              "disabled": false
+            },
+            {
+              "text": "100",
+              "value": "100",
+              "disabled": false
+            }
           ]
         }
       ],
@@ -894,7 +1764,7 @@
     "expired_chart": {
       "url": "https://tradingtick.in/nifty/nifty-option-price-charts.php",
       "navigation_status": 200,
-      "error": "'value'",
+      "error": null,
       "initial_state": {
         "title": "Nifty Historical Option Charts | Visualize Past Call & Put Prices Weekly and Monthly Expiry",
         "url": "https://tradingtick.in/nifty/nifty-option-price-charts.php",
@@ -913,7 +1783,9 @@
           "Summary",
           "Advantages and Disadvantages of Historical Option Charts",
           "NIFTY OPTION BACKTEST",
-          "NIFTY HISTORICAL DATA"
+          "NIFTY HISTORICAL DATA",
+          "Opt out of the sale or sharing of personal information",
+          "Help us Keep Trading Tick Free ❤️"
         ],
         "buttons": [
           {
@@ -1013,18 +1885,14 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Nifty intraday charts\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trader education course\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts.\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful. Option chain explorer\n\nHow Traders Use His",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Track Commodities\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trading tools subscription\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts.\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful.\n\nHow Traders Use Historical Option Charts\n\n",
         "scripts": [
-          {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js?bust=122881394",
-            "inline": ""
-          },
           {
             "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js?bust=122881394",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
             "inline": ""
           },
           {
@@ -1100,23 +1968,15 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUouc47bIkJe4gZrfHgwsjT4SQNISrFXkn2Nj9SWSqcck8rSK7x7YPPhnpPI94AEuwEh7DYr-5luFaDl2Bo9A45ZRVrpg1UEzNh-55mVEI0eaA9Y7qIq-XyjfCVDI9rCfj1xhGSYA==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjUsODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTQyNl1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiMTMiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxX_x0yEUCrv2X3sdy7Dv6Ug61IeXtYGI5ObhSMbo3x9ks3pOD-jq5YrwYbGV1qVkVMBRXTyRtMXyW02fSRWfMTNluMQLwSn0rl5kGzeA3-kFqnSMwMvUVM3uGbv9i_pr0WesN5y4A==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MDQsNTA4MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3OTksNDk5ODU1MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5Nzg2LDYzNjUwNTAwMF0sMF1dIl0sWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDgzNV1dXSJdLFsyMywiMTc5MTUzOTc4NCJdLFszNSwiMTc5MTUzOTc4NSJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVQgUo7XZ05r7XTXR0GmwodpMESTtzR-41fmvSYFi_xHHWLb216uFlJIN7p8nAr9iDXZzJ5P7to4FWcyQuyE-DHWCROqQC3JvMPaYWnh3qDPpbj7RHnnhaIPfJNd9Wqe0QRlhXSiQ==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsMjcwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5LDZdLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNDI2XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMyJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVJa7tayzIi7Az6dM5vEDsCqdcGy4O3HRKqYM-M214_BB9FogfIa9aGfXYsU543g8-fUB2le1uPa9iAJNduEJPTlM7csNgXY1oX-HE6Us6IQGF07Ujxi-ECCXISCVoG0c_8glseFQ==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MDQsNTc5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk4MDQsNTIwODYxMDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5Nzg2LDYzNjUwNTAwMF0sMF1dIl0sWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDgzNV1dXSJdLFsyMywiMTc5MTUzOTc4NCJdLFszNSwiMTc5MTUzOTc4NSJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXC-wOF7G489Vtep9Z9V5h8NElYATQm6RAvpfjRk-n2iT-rsJ_UDUe2HDwX-UpIrU3ve5Aa_z9xqBEH9A9T_e2PchTDJ4H-Q_bsXuDNToFat9T-_2AvCEzY7g1o0ypZGexTRZ57EQ==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsNzUwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5LDYsMTBdLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNDI2XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMyJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
-            "inline": ""
-          },
-          {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVQdghdjmws6iIT0V9GfYCDn9GlQLYVuO6YdudxXzMzUcfDbJJ1hEYH_1B3fRnMBM6nI93wEuqV95OildUScEMZmG95_v8LP_8EBT1-bXlbFC095cJOyMcUNzP1LZyeN8-_V4jgsw==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsMTEyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTQyNl1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiMTMiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
-            "inline": ""
-          },
-          {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVtnGhDjmfdNElGG6UhXUIpakP8RCPGHvboXwYOY-qy1IFb0GK2mEIugR40_jwRGUR9O9hxiwpav8QLvZsnWe7g9piZJk6yZsLXQxY3iZwW1EdbcPH5vKJsPGy7WA5_JOqwIVgVyw==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsMTUyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMixbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNDI2XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMyJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUVvwLSCld5wbuXrO5Alrn5iHbQB5MkCc5L9nEln9WDy0--4haSU11bYPRQbcrWvoKiz_jAKXLCYgQyIpzYpf2pXd9aswpvqE49iKHlqtTvuMcXVUksN-gnj5EhLE9PV-WMoiuGWg==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MDUsMzQ2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTM5ODA0LDUyMDg2MTAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTc4Niw1OTE0MjQwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTUzOTc4Niw2MzY1MDUwMDBdLDBdXSJdLFs4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw4MzVdXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
@@ -1197,8 +2057,540 @@
           }
         ]
       },
-      "selectors_by_target": {},
-      "request_count": 345,
+      "selectors_by_target": {
+        "2026-07-28": {
+          "attempts": [
+            {
+              "select_index": 0,
+              "id": "exyear",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026",
+                "value": "2026"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 1,
+              "id": "exmonth",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "Jul",
+                "value": "Jul"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 2,
+              "id": "expiry",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026-07-28",
+                "value": "2026-07-28"
+              },
+              "target": "2026-07-28"
+            }
+          ],
+          "selects_after": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026",
+              "disabled": false,
+              "value": "2026",
+              "options": [
+                {
+                  "text": "Select Year",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2019",
+                  "value": "2019",
+                  "disabled": false
+                },
+                {
+                  "text": "2020",
+                  "value": "2020",
+                  "disabled": false
+                },
+                {
+                  "text": "2021",
+                  "value": "2021",
+                  "disabled": false
+                },
+                {
+                  "text": "2022",
+                  "value": "2022",
+                  "disabled": false
+                },
+                {
+                  "text": "2023",
+                  "value": "2023",
+                  "disabled": false
+                },
+                {
+                  "text": "2024",
+                  "value": "2024",
+                  "disabled": false
+                },
+                {
+                  "text": "2025",
+                  "value": "2025",
+                  "disabled": false
+                },
+                {
+                  "text": "2026",
+                  "value": "2026",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul",
+              "disabled": false,
+              "value": "Jul",
+              "options": [
+                {
+                  "text": "Select Month",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "Jan",
+                  "value": "Jan",
+                  "disabled": false
+                },
+                {
+                  "text": "Feb",
+                  "value": "Feb",
+                  "disabled": false
+                },
+                {
+                  "text": "Mar",
+                  "value": "Mar",
+                  "disabled": false
+                },
+                {
+                  "text": "Apr",
+                  "value": "Apr",
+                  "disabled": false
+                },
+                {
+                  "text": "May",
+                  "value": "May",
+                  "disabled": false
+                },
+                {
+                  "text": "Jun",
+                  "value": "Jun",
+                  "disabled": false
+                },
+                {
+                  "text": "Jul",
+                  "value": "Jul",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry\nSelect Expiry\n2026-07-28",
+              "disabled": false,
+              "value": "2026-07-28",
+              "options": [
+                {
+                  "text": "Select Expiry",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Option\nCE\nPE",
+              "disabled": false,
+              "value": "CE",
+              "options": [
+                {
+                  "text": "CE",
+                  "value": "CE",
+                  "disabled": false
+                },
+                {
+                  "text": "PE",
+                  "value": "PE",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Strike\nSelect Strike",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Strike",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            }
+          ],
+          "target_option_scan": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "labels": [],
+              "selected": "2026",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "labels": [],
+              "selected": "Jul",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "labels": [],
+              "selected": "2026-07-28",
+              "contains_target": true,
+              "target_options": [
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "labels": [],
+              "selected": "CE",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            }
+          ],
+          "selected_chart_test_contract": {
+            "status": "NO_STRIKE_OPTIONS"
+          },
+          "visible_tables": [
+            {
+              "headers": [
+                "Advantages",
+                "Disadvantages"
+              ],
+              "rows": [
+                "Advantages\tDisadvantages",
+                "Helps traders study previous option price movements using real market data.\tHistorical performance does not guarantee future results.",
+                "Useful for option trading strategy testing and backtesting.\tMarket conditions can change significantly over time.",
+                "Allows analysis of option premium decay before expiry.\tOld data may not reflect current volatility levels.",
+                "Helps understand how call and put options reacted during major market events.\tRequires proper interpretation to avoid incorrect conclusions."
+              ],
+              "row_count": 9
+            }
+          ],
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Nifty intraday charts\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\n2026-07-28\nOption\nCE\nPE\nStrike\nSelect Strike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty "
+        },
+        "2026-08-04": {
+          "attempts": [
+            {
+              "select_index": 0,
+              "id": "exyear",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026",
+                "value": "2026"
+              },
+              "target": "2026-08-04"
+            }
+          ],
+          "selects_after": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026",
+              "disabled": false,
+              "value": "2026",
+              "options": [
+                {
+                  "text": "Select Year",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2019",
+                  "value": "2019",
+                  "disabled": false
+                },
+                {
+                  "text": "2020",
+                  "value": "2020",
+                  "disabled": false
+                },
+                {
+                  "text": "2021",
+                  "value": "2021",
+                  "disabled": false
+                },
+                {
+                  "text": "2022",
+                  "value": "2022",
+                  "disabled": false
+                },
+                {
+                  "text": "2023",
+                  "value": "2023",
+                  "disabled": false
+                },
+                {
+                  "text": "2024",
+                  "value": "2024",
+                  "disabled": false
+                },
+                {
+                  "text": "2025",
+                  "value": "2025",
+                  "disabled": false
+                },
+                {
+                  "text": "2026",
+                  "value": "2026",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Month",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "Jan",
+                  "value": "Jan",
+                  "disabled": false
+                },
+                {
+                  "text": "Feb",
+                  "value": "Feb",
+                  "disabled": false
+                },
+                {
+                  "text": "Mar",
+                  "value": "Mar",
+                  "disabled": false
+                },
+                {
+                  "text": "Apr",
+                  "value": "Apr",
+                  "disabled": false
+                },
+                {
+                  "text": "May",
+                  "value": "May",
+                  "disabled": false
+                },
+                {
+                  "text": "Jun",
+                  "value": "Jun",
+                  "disabled": false
+                },
+                {
+                  "text": "Jul",
+                  "value": "Jul",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry\nSelect Expiry",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Expiry",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Option\nCE\nPE",
+              "disabled": false,
+              "value": "CE",
+              "options": [
+                {
+                  "text": "CE",
+                  "value": "CE",
+                  "disabled": false
+                },
+                {
+                  "text": "PE",
+                  "value": "PE",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Strike\nSelect Strike",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Strike",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            }
+          ],
+          "target_option_scan": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "labels": [],
+              "selected": "2026",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "labels": [],
+              "selected": "CE",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            }
+          ],
+          "selected_chart_test_contract": {
+            "status": "NO_STRIKE_OPTIONS"
+          },
+          "visible_tables": [
+            {
+              "headers": [
+                "Advantages",
+                "Disadvantages"
+              ],
+              "rows": [
+                "Advantages\tDisadvantages",
+                "Helps traders study previous option price movements using real market data.\tHistorical performance does not guarantee future results.",
+                "Useful for option trading strategy testing and backtesting.\tMarket conditions can change significantly over time.",
+                "Allows analysis of option premium decay before expiry.\tOld data may not reflect current volatility levels.",
+                "Helps understand how call and put options reacted during major market events.\tRequires proper interpretation to avoid incorrect conclusions."
+              ],
+              "row_count": 9
+            }
+          ],
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\nOption\nCE\nPE\nStrike\nSelect Strike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold"
+        }
+      },
+      "request_count": 780,
       "initial_selects": [
         {
           "index": 0,
@@ -1210,15 +2602,51 @@
           "disabled": false,
           "value": "",
           "options": [
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
+            {
+              "text": "Select Year",
+              "value": "",
+              "disabled": false
+            },
+            {
+              "text": "2019",
+              "value": "2019",
+              "disabled": false
+            },
+            {
+              "text": "2020",
+              "value": "2020",
+              "disabled": false
+            },
+            {
+              "text": "2021",
+              "value": "2021",
+              "disabled": false
+            },
+            {
+              "text": "2022",
+              "value": "2022",
+              "disabled": false
+            },
+            {
+              "text": "2023",
+              "value": "2023",
+              "disabled": false
+            },
+            {
+              "text": "2024",
+              "value": "2024",
+              "disabled": false
+            },
+            {
+              "text": "2025",
+              "value": "2025",
+              "disabled": false
+            },
+            {
+              "text": "2026",
+              "value": "2026",
+              "disabled": false
+            }
           ]
         },
         {
@@ -1253,8 +2681,16 @@
           "disabled": false,
           "value": "CE",
           "options": [
-            {},
-            {}
+            {
+              "text": "CE",
+              "value": "CE",
+              "disabled": false
+            },
+            {
+              "text": "PE",
+              "value": "PE",
+              "disabled": false
+            }
           ]
         },
         {
@@ -1382,7 +2818,7 @@
     "chart_data": {
       "url": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php",
       "navigation_status": 200,
-      "error": "'value'",
+      "error": null,
       "initial_state": {
         "title": "Nifty Option Charts Historical Data for last 7 years for all strikes",
         "url": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php",
@@ -1391,7 +2827,9 @@
           "Nifty Option Charts Historical Data",
           "NIFTY LIVE F&O",
           "Nifty Option Chart",
-          "NIFTY HISTORICAL F&O"
+          "NIFTY HISTORICAL F&O",
+          "Opt out of the sale or sharing of personal information",
+          "Help us Keep Trading Tick Free ❤️"
         ],
         "buttons": [
           {
@@ -1475,14 +2913,10 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry\n Historical PCR Data OLD PCR\nDATA \nNifty Historical PCR Data\n Futures Basis History OLD FUT\nBASIS HIST \nNifty Basis Historical Data\n Buy & Hold Call Option BUY HOLD\nCALL \nNifty Buy and Hold Call Option Until Expiry\n Buy & Hold Put Option BUY HOLD\nPUT\nNifty Buy and Hold Put Option Until Expiry\n\nOption Analytics websiteTrack Commodities\n\nCharts\nNifty Intraday\nNifty Expiry Day\nShare Price Target\nTick Screener\nBacktest\nNifty Short Straddle\nNifty Gap up\nNifty Gap Down\nStandard Deviation\nOption  Data\nOI Charts\nOld Option Chain\nOption Charts\nCompany\nAbout us\nContact us\nDisclaimer\nAffiliate Disclaimer\nPrivacy Policy\nConsent Policy\nTerms and Conditions\nDisclaimer: Trade at your own risk. we dont recommend buying and selling. we dont give tips.\n      \n© 2025 Copyright: Trading Tick",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry\n Historical PCR Data OLD PCR\nDATA \nNifty Historical PCR Data\n Futures Basis History OLD FUT\nBASIS HIST \nNifty Basis Historical Data\n Buy & Hold Call Option BUY HOLD\nCALL \nNifty Buy and Hold Call Option Until Expiry\n Buy & Hold Put Option BUY HOLD\nPUT\nNifty Buy and Hold Put Option Until Expiry\n\nOption Analytics websiteOption chain explorer\n\nCharts\nNifty Intraday\nNifty Expiry Day\nShare Price Target\nTick Screener\nBacktest\nNifty Short Straddle\nNifty Gap up\nNifty Gap Down\nStandard Deviation\nOption  Data\nOI Charts\nOld Option Chain\nOption Charts\nCompany\nAbout us\nContact us\nDisclaimer\nAffiliate Disclaimer\nPrivacy Policy\nConsent Policy\nTerms and Conditions\nDisclaimer: Trade at your own risk. we dont recommend buying and selling. we dont give tips.\n      \n© 2025 Copyright: Trading Tick\n\nBuilt for Traders, Supported by You\n\nHelp us Keep Trading Tick Free ❤️\n\nRunning Live Options Data & Analytics Requires High-Performance Servers & its expensive. We want to keep Trading Tick 100% FREE for you. All we ask is few seconds to view a Short ad.\n\nView Few-Sec Ad to Continue\nYour Few Sec Can Keep Trading Tick Free\nSubscribe to our newsletter\nSite-wide access for 30 Days",
         "scripts": [
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js?bust=122881394",
-            "inline": ""
-          },
-          {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js?bust=122881394",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
             "inline": ""
           },
           {
@@ -1542,23 +2976,15 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXS0iYJkUb624kWWeHn5Oy1LzogLG6dgtTUcTN8AjIimktoXiTobC7a_EawEr5KE3qGcMTdlOFX25GQj6nDJ6-YPdUaDgI4a2vTVgNLX_7ICz1DP9fiSb2RSS1lpqypb-c8MmubmQ==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzEsNTE2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTY3NF1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiNiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVWZXkS4Mf5jFFO8OpD8TrOJZcJNly-_5FNCqa1rvv8Aidk4gU9hmsykWdcCSEX1PgjVaF6HjdnihaXPN_UPYXnPa6o5E4diuiO1MKbVTMNk41dux8nKBpqtJxDOUyvFSO8zzL14w==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MjIsMTUyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTM5ODE2LDkzNTg2NDAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTc4Niw1OTE0MjQwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTUzOTc4Niw2MzY1MDUwMDBdLDBdXSJdLFs4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw4MjddXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUsfqCpE9KkagWNfWTvgj8n-Wrjc1WPzTGO3FVyAaRInrMCbpuKK801H3ucIkZObl-OW_7d-UZ5iYyXQIhMPTy1O9aSJZRdi1BicxMZY3levu_jbzl4VoQ859UoC_QdhDgaQLjNEA==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNDExMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MzU5LDE3NTgwODAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MzU5LDIxOTE5OTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE2NzRdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjYiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVCgTpkkqJQG5Ml83qbzQ8licvaWiIkCZKCrxlma05_lMG9vDwLC1TWt10-PcRO95wkCp2OY8x4tFF51YvtdP917ls7vUZuD5pddeHmWADQcuw2TCll-WH4Y0KyGBS5shVYdPSQMg==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MjIsMjE2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTM5ODIyLDE2MzMzNTAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTc4Niw1OTE0MjQwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTUzOTc4Niw2MzY1MDUwMDBdLDBdXSJdLFs4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw4MjddXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWk_IS01ew-wDv-1aXKdcQqy4_ZlCwU01JypK818rmj_bSSHoHMFZgbYuAknV67wU6ZnNZ4FuImZz2ssAIoQ-5gmIswKyQ_u6GAt0dz2xLvN--vl1wrH8yPj8MMxYRJgLUA5v0Kuw==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNDU4MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MzU5LDE3NTgwODAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MzU5LDIxOTE5OTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE2NzRdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjYiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
-            "inline": ""
-          },
-          {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWrxPGFTy3qYhJ7uJUBhGvUmUNvPRNp3e0kmOmvnfEoI1fcxIAxvTNhMRf8evsenLJly6yy5t4-BNB1LFywHMkNi6zcXcvyTyeFFrvETz3tcuQTW1OQKaQL3q8tfwv8WmAnhcfh-A==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNDk4MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MzU5LDE3NTgwODAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5MzU5LDIxOTE5OTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE2NzRdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjYiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
-            "inline": ""
-          },
-          {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVZK15pgqxk6T7gjCDqbn3TnHwh_9epC9vsQneM7H4SyZgWVLU-71tAIjv2pKifcrdyQSsBizkk1b36-qbhAmdad-YmWEXKDnjhpnoKq96nxUCuLkA2Bv-X9i7LvZ7w-_CWfAD-EA==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNTM3MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTY3NF1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiNiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUp8ZjUjWgvmemPCZLu8klzc2oo7NPzq42uxvbPU2wCmj6MXlynFmONpWxIH4EXzF6acUsJbEOAtzVP0zdwf_ZbALevnYzWykQowfsJUj-_aFnGfr2zfLDAB5PFygSG3BeEOtrAmQ==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MjIsOTI2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1sxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTUzOTgyMiwxNjMzMzUwMDBdXV1dIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1Mzk3ODYsNTkxNDI0MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1Mzk3ODYsNjM2NTA1MDAwXSwwXV0iXSxbOCwiYnJKSlF5bDVFd3ciXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsODI3XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
@@ -1615,8 +3041,1091 @@
           }
         ]
       },
-      "selectors_by_target": {},
-      "request_count": 305,
+      "selectors_by_target": {
+        "2026-07-28": {
+          "attempts": [
+            {
+              "select_index": 0,
+              "id": "exyear",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026",
+                "value": "2026"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 1,
+              "id": "exmonth",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "Jul",
+                "value": "Jul"
+              },
+              "target": "2026-07-28"
+            },
+            {
+              "select_index": 2,
+              "id": "expiry",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026-07-28",
+                "value": "2026-07-28"
+              },
+              "target": "2026-07-28"
+            }
+          ],
+          "selects_after": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026",
+              "disabled": false,
+              "value": "2026",
+              "options": [
+                {
+                  "text": "Select Year",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2019",
+                  "value": "2019",
+                  "disabled": false
+                },
+                {
+                  "text": "2020",
+                  "value": "2020",
+                  "disabled": false
+                },
+                {
+                  "text": "2021",
+                  "value": "2021",
+                  "disabled": false
+                },
+                {
+                  "text": "2022",
+                  "value": "2022",
+                  "disabled": false
+                },
+                {
+                  "text": "2023",
+                  "value": "2023",
+                  "disabled": false
+                },
+                {
+                  "text": "2024",
+                  "value": "2024",
+                  "disabled": false
+                },
+                {
+                  "text": "2025",
+                  "value": "2025",
+                  "disabled": false
+                },
+                {
+                  "text": "2026",
+                  "value": "2026",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul",
+              "disabled": false,
+              "value": "Jul",
+              "options": [
+                {
+                  "text": "Select Month",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "Jan",
+                  "value": "Jan",
+                  "disabled": false
+                },
+                {
+                  "text": "Feb",
+                  "value": "Feb",
+                  "disabled": false
+                },
+                {
+                  "text": "Mar",
+                  "value": "Mar",
+                  "disabled": false
+                },
+                {
+                  "text": "Apr",
+                  "value": "Apr",
+                  "disabled": false
+                },
+                {
+                  "text": "May",
+                  "value": "May",
+                  "disabled": false
+                },
+                {
+                  "text": "Jun",
+                  "value": "Jun",
+                  "disabled": false
+                },
+                {
+                  "text": "Jul",
+                  "value": "Jul",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry\nSelect Expiry\n2026-07-07\n2026-07-14\n2026-07-21\n2026-07-28",
+              "disabled": false,
+              "value": "2026-07-28",
+              "options": [
+                {
+                  "text": "Select Expiry",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-07",
+                  "value": "2026-07-07",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-14",
+                  "value": "2026-07-14",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-21",
+                  "value": "2026-07-21",
+                  "disabled": false
+                },
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Option\nCE\nPE",
+              "disabled": false,
+              "value": "CE",
+              "options": [
+                {
+                  "text": "CE",
+                  "value": "CE",
+                  "disabled": false
+                },
+                {
+                  "text": "PE",
+                  "value": "PE",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Strike\nSelect Strike\n21100\n21150\n21200\n21250\n21300\n21350\n21400\n21450\n21500\n21550\n21600\n21650\n21700\n21750\n21800\n21850\n21900\n21950\n22000\n22050\n22100\n22150\n22200\n2",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Strike",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "21100",
+                  "value": "21100",
+                  "disabled": false
+                },
+                {
+                  "text": "21150",
+                  "value": "21150",
+                  "disabled": false
+                },
+                {
+                  "text": "21200",
+                  "value": "21200",
+                  "disabled": false
+                },
+                {
+                  "text": "21250",
+                  "value": "21250",
+                  "disabled": false
+                },
+                {
+                  "text": "21300",
+                  "value": "21300",
+                  "disabled": false
+                },
+                {
+                  "text": "21350",
+                  "value": "21350",
+                  "disabled": false
+                },
+                {
+                  "text": "21400",
+                  "value": "21400",
+                  "disabled": false
+                },
+                {
+                  "text": "21450",
+                  "value": "21450",
+                  "disabled": false
+                },
+                {
+                  "text": "21500",
+                  "value": "21500",
+                  "disabled": false
+                },
+                {
+                  "text": "21550",
+                  "value": "21550",
+                  "disabled": false
+                },
+                {
+                  "text": "21600",
+                  "value": "21600",
+                  "disabled": false
+                },
+                {
+                  "text": "21650",
+                  "value": "21650",
+                  "disabled": false
+                },
+                {
+                  "text": "21700",
+                  "value": "21700",
+                  "disabled": false
+                },
+                {
+                  "text": "21750",
+                  "value": "21750",
+                  "disabled": false
+                },
+                {
+                  "text": "21800",
+                  "value": "21800",
+                  "disabled": false
+                },
+                {
+                  "text": "21850",
+                  "value": "21850",
+                  "disabled": false
+                },
+                {
+                  "text": "21900",
+                  "value": "21900",
+                  "disabled": false
+                },
+                {
+                  "text": "21950",
+                  "value": "21950",
+                  "disabled": false
+                },
+                {
+                  "text": "22000",
+                  "value": "22000",
+                  "disabled": false
+                },
+                {
+                  "text": "22050",
+                  "value": "22050",
+                  "disabled": false
+                },
+                {
+                  "text": "22100",
+                  "value": "22100",
+                  "disabled": false
+                },
+                {
+                  "text": "22150",
+                  "value": "22150",
+                  "disabled": false
+                },
+                {
+                  "text": "22200",
+                  "value": "22200",
+                  "disabled": false
+                },
+                {
+                  "text": "22250",
+                  "value": "22250",
+                  "disabled": false
+                },
+                {
+                  "text": "22300",
+                  "value": "22300",
+                  "disabled": false
+                },
+                {
+                  "text": "22350",
+                  "value": "22350",
+                  "disabled": false
+                },
+                {
+                  "text": "22400",
+                  "value": "22400",
+                  "disabled": false
+                },
+                {
+                  "text": "22450",
+                  "value": "22450",
+                  "disabled": false
+                },
+                {
+                  "text": "22500",
+                  "value": "22500",
+                  "disabled": false
+                },
+                {
+                  "text": "22550",
+                  "value": "22550",
+                  "disabled": false
+                },
+                {
+                  "text": "22600",
+                  "value": "22600",
+                  "disabled": false
+                },
+                {
+                  "text": "22650",
+                  "value": "22650",
+                  "disabled": false
+                },
+                {
+                  "text": "22700",
+                  "value": "22700",
+                  "disabled": false
+                },
+                {
+                  "text": "22750",
+                  "value": "22750",
+                  "disabled": false
+                },
+                {
+                  "text": "22800",
+                  "value": "22800",
+                  "disabled": false
+                },
+                {
+                  "text": "22850",
+                  "value": "22850",
+                  "disabled": false
+                },
+                {
+                  "text": "22900",
+                  "value": "22900",
+                  "disabled": false
+                },
+                {
+                  "text": "22950",
+                  "value": "22950",
+                  "disabled": false
+                },
+                {
+                  "text": "23000",
+                  "value": "23000",
+                  "disabled": false
+                },
+                {
+                  "text": "23050",
+                  "value": "23050",
+                  "disabled": false
+                },
+                {
+                  "text": "23100",
+                  "value": "23100",
+                  "disabled": false
+                },
+                {
+                  "text": "23150",
+                  "value": "23150",
+                  "disabled": false
+                },
+                {
+                  "text": "23200",
+                  "value": "23200",
+                  "disabled": false
+                },
+                {
+                  "text": "23250",
+                  "value": "23250",
+                  "disabled": false
+                },
+                {
+                  "text": "23300",
+                  "value": "23300",
+                  "disabled": false
+                },
+                {
+                  "text": "23350",
+                  "value": "23350",
+                  "disabled": false
+                },
+                {
+                  "text": "23400",
+                  "value": "23400",
+                  "disabled": false
+                },
+                {
+                  "text": "23450",
+                  "value": "23450",
+                  "disabled": false
+                },
+                {
+                  "text": "23500",
+                  "value": "23500",
+                  "disabled": false
+                },
+                {
+                  "text": "23550",
+                  "value": "23550",
+                  "disabled": false
+                },
+                {
+                  "text": "23600",
+                  "value": "23600",
+                  "disabled": false
+                },
+                {
+                  "text": "23650",
+                  "value": "23650",
+                  "disabled": false
+                },
+                {
+                  "text": "23700",
+                  "value": "23700",
+                  "disabled": false
+                },
+                {
+                  "text": "23750",
+                  "value": "23750",
+                  "disabled": false
+                },
+                {
+                  "text": "23800",
+                  "value": "23800",
+                  "disabled": false
+                },
+                {
+                  "text": "23850",
+                  "value": "23850",
+                  "disabled": false
+                },
+                {
+                  "text": "23900",
+                  "value": "23900",
+                  "disabled": false
+                },
+                {
+                  "text": "23950",
+                  "value": "23950",
+                  "disabled": false
+                },
+                {
+                  "text": "24000",
+                  "value": "24000",
+                  "disabled": false
+                },
+                {
+                  "text": "24050",
+                  "value": "24050",
+                  "disabled": false
+                },
+                {
+                  "text": "24100",
+                  "value": "24100",
+                  "disabled": false
+                },
+                {
+                  "text": "24150",
+                  "value": "24150",
+                  "disabled": false
+                },
+                {
+                  "text": "24200",
+                  "value": "24200",
+                  "disabled": false
+                },
+                {
+                  "text": "24250",
+                  "value": "24250",
+                  "disabled": false
+                },
+                {
+                  "text": "24300",
+                  "value": "24300",
+                  "disabled": false
+                },
+                {
+                  "text": "24350",
+                  "value": "24350",
+                  "disabled": false
+                },
+                {
+                  "text": "24400",
+                  "value": "24400",
+                  "disabled": false
+                },
+                {
+                  "text": "24450",
+                  "value": "24450",
+                  "disabled": false
+                },
+                {
+                  "text": "24500",
+                  "value": "24500",
+                  "disabled": false
+                },
+                {
+                  "text": "24550",
+                  "value": "24550",
+                  "disabled": false
+                },
+                {
+                  "text": "24600",
+                  "value": "24600",
+                  "disabled": false
+                },
+                {
+                  "text": "24650",
+                  "value": "24650",
+                  "disabled": false
+                },
+                {
+                  "text": "24700",
+                  "value": "24700",
+                  "disabled": false
+                },
+                {
+                  "text": "24750",
+                  "value": "24750",
+                  "disabled": false
+                },
+                {
+                  "text": "24800",
+                  "value": "24800",
+                  "disabled": false
+                },
+                {
+                  "text": "24850",
+                  "value": "24850",
+                  "disabled": false
+                },
+                {
+                  "text": "24900",
+                  "value": "24900",
+                  "disabled": false
+                },
+                {
+                  "text": "24950",
+                  "value": "24950",
+                  "disabled": false
+                },
+                {
+                  "text": "25000",
+                  "value": "25000",
+                  "disabled": false
+                },
+                {
+                  "text": "25050",
+                  "value": "25050",
+                  "disabled": false
+                },
+                {
+                  "text": "25100",
+                  "value": "25100",
+                  "disabled": false
+                },
+                {
+                  "text": "25150",
+                  "value": "25150",
+                  "disabled": false
+                },
+                {
+                  "text": "25200",
+                  "value": "25200",
+                  "disabled": false
+                },
+                {
+                  "text": "25250",
+                  "value": "25250",
+                  "disabled": false
+                },
+                {
+                  "text": "25300",
+                  "value": "25300",
+                  "disabled": false
+                },
+                {
+                  "text": "25350",
+                  "value": "25350",
+                  "disabled": false
+                },
+                {
+                  "text": "25400",
+                  "value": "25400",
+                  "disabled": false
+                },
+                {
+                  "text": "25450",
+                  "value": "25450",
+                  "disabled": false
+                },
+                {
+                  "text": "25500",
+                  "value": "25500",
+                  "disabled": false
+                },
+                {
+                  "text": "25550",
+                  "value": "25550",
+                  "disabled": false
+                },
+                {
+                  "text": "25600",
+                  "value": "25600",
+                  "disabled": false
+                },
+                {
+                  "text": "25650",
+                  "value": "25650",
+                  "disabled": false
+                },
+                {
+                  "text": "25700",
+                  "value": "25700",
+                  "disabled": false
+                },
+                {
+                  "text": "25750",
+                  "value": "25750",
+                  "disabled": false
+                },
+                {
+                  "text": "25800",
+                  "value": "25800",
+                  "disabled": false
+                },
+                {
+                  "text": "25850",
+                  "value": "25850",
+                  "disabled": false
+                },
+                {
+                  "text": "25900",
+                  "value": "25900",
+                  "disabled": false
+                },
+                {
+                  "text": "25950",
+                  "value": "25950",
+                  "disabled": false
+                },
+                {
+                  "text": "26000",
+                  "value": "26000",
+                  "disabled": false
+                },
+                {
+                  "text": "26050",
+                  "value": "26050",
+                  "disabled": false
+                },
+                {
+                  "text": "26100",
+                  "value": "26100",
+                  "disabled": false
+                },
+                {
+                  "text": "26150",
+                  "value": "26150",
+                  "disabled": false
+                },
+                {
+                  "text": "26200",
+                  "value": "26200",
+                  "disabled": false
+                },
+                {
+                  "text": "26250",
+                  "value": "26250",
+                  "disabled": false
+                },
+                {
+                  "text": "26300",
+                  "value": "26300",
+                  "disabled": false
+                }
+              ]
+            }
+          ],
+          "target_option_scan": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "labels": [],
+              "selected": "2026",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "labels": [],
+              "selected": "Jul",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "labels": [],
+              "selected": "2026-07-28",
+              "contains_target": true,
+              "target_options": [
+                {
+                  "text": "2026-07-28",
+                  "value": "2026-07-28",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "labels": [],
+              "selected": "CE",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            }
+          ],
+          "selected_chart_test_contract": {
+            "expiry": "2026-07-28",
+            "option": "CE",
+            "strike": "24000",
+            "visible_strikes": 105
+          },
+          "requests_after_strike_selection": [
+            {
+              "event": "request",
+              "page": "chart_data",
+              "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?year=2026&month=Jul&expiry=2026-07-28&option=CE&strike=24000&tf=1",
+              "method": "GET",
+              "resource_type": "fetch"
+            },
+            {
+              "event": "response",
+              "page": "chart_data",
+              "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?year=2026&month=Jul&expiry=2026-07-28&option=CE&strike=24000&tf=1",
+              "status": 200,
+              "resource_type": "fetch",
+              "content_type": "application/json",
+              "content_length": "350",
+              "actual_bytes": 1003,
+              "sha256": "fc0acfcfff80deb69c1076135d6e5f2f36d9d64f24f73835f10a7ffba33ec2fe",
+              "json_is_list": true,
+              "json_items": 6,
+              "json_first_item_keys": [
+                "time",
+                "open",
+                "high",
+                "low",
+                "close"
+              ]
+            }
+          ],
+          "visible_tables": [
+            {
+              "headers": [],
+              "rows": [
+                "",
+                ""
+              ],
+              "row_count": 2
+            }
+          ],
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\n2026-07-07\n2026-07-14\n2026-07-21\n2026-07-28\nOption\nCE\nPE\nStrike\nSelect Strike\n21100\n21150\n21200\n21250\n21300\n21350\n21400\n21450\n21500\n21550\n21600\n21650\n21700\n21750\n21800\n21850\n21900\n21950\n22000\n22050\n22100\n22150\n22200\n22250\n22300\n22350\n22400\n22450\n22500\n22550\n22600\n22650\n22700\n22750\n22800\n22850\n22900\n22950\n23000\n23050\n23100\n23150\n23200\n23250\n23300\n23350\n23400\n23450\n23500\n23550\n23600\n23650\n23700\n23750\n23800\n23850\n23900\n23950\n24000\n24050\n24100\n24150\n24200\n24250\n24300\n24350\n24400\n24450\n24500\n24550\n24600\n24650\n24700\n24750\n24800\n24850\n24900\n24950\n25000\n25050\n25100\n25150\n25200\n252"
+        },
+        "2026-08-04": {
+          "attempts": [
+            {
+              "select_index": 0,
+              "id": "exyear",
+              "name": "",
+              "label": [],
+              "selected": {
+                "text": "2026",
+                "value": "2026"
+              },
+              "target": "2026-08-04"
+            }
+          ],
+          "selects_after": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026",
+              "disabled": false,
+              "value": "2026",
+              "options": [
+                {
+                  "text": "Select Year",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "2019",
+                  "value": "2019",
+                  "disabled": false
+                },
+                {
+                  "text": "2020",
+                  "value": "2020",
+                  "disabled": false
+                },
+                {
+                  "text": "2021",
+                  "value": "2021",
+                  "disabled": false
+                },
+                {
+                  "text": "2022",
+                  "value": "2022",
+                  "disabled": false
+                },
+                {
+                  "text": "2023",
+                  "value": "2023",
+                  "disabled": false
+                },
+                {
+                  "text": "2024",
+                  "value": "2024",
+                  "disabled": false
+                },
+                {
+                  "text": "2025",
+                  "value": "2025",
+                  "disabled": false
+                },
+                {
+                  "text": "2026",
+                  "value": "2026",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "EX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Month",
+                  "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "Jan",
+                  "value": "Jan",
+                  "disabled": false
+                },
+                {
+                  "text": "Feb",
+                  "value": "Feb",
+                  "disabled": false
+                },
+                {
+                  "text": "Mar",
+                  "value": "Mar",
+                  "disabled": false
+                },
+                {
+                  "text": "Apr",
+                  "value": "Apr",
+                  "disabled": false
+                },
+                {
+                  "text": "May",
+                  "value": "May",
+                  "disabled": false
+                },
+                {
+                  "text": "Jun",
+                  "value": "Jun",
+                  "disabled": false
+                },
+                {
+                  "text": "Jul",
+                  "value": "Jul",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Expiry\nSelect Expiry",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Expiry",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Option\nCE\nPE",
+              "disabled": false,
+              "value": "CE",
+              "options": [
+                {
+                  "text": "CE",
+                  "value": "CE",
+                  "disabled": false
+                },
+                {
+                  "text": "PE",
+                  "value": "PE",
+                  "disabled": false
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "aria": "",
+              "labels": [],
+              "parentText": "Strike\nSelect Strike",
+              "disabled": false,
+              "value": "",
+              "options": [
+                {
+                  "text": "Select Strike",
+                  "value": "",
+                  "disabled": false
+                }
+              ]
+            }
+          ],
+          "target_option_scan": [
+            {
+              "index": 0,
+              "id": "exyear",
+              "name": "",
+              "labels": [],
+              "selected": "2026",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 1,
+              "id": "exmonth",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 2,
+              "id": "expiry",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 3,
+              "id": "option",
+              "name": "",
+              "labels": [],
+              "selected": "CE",
+              "contains_target": false,
+              "target_options": []
+            },
+            {
+              "index": 4,
+              "id": "strike",
+              "name": "",
+              "labels": [],
+              "selected": "",
+              "contains_target": false,
+              "target_options": []
+            }
+          ],
+          "selected_chart_test_contract": {
+            "status": "NO_STRIKE_OPTIONS"
+          },
+          "visible_tables": [],
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\nOption\nCE\nPE\nStrike\nSelect Strike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \n"
+        }
+      },
+      "request_count": 725,
       "initial_selects": [
         {
           "index": 0,
@@ -1628,15 +4137,51 @@
           "disabled": false,
           "value": "",
           "options": [
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
+            {
+              "text": "Select Year",
+              "value": "",
+              "disabled": false
+            },
+            {
+              "text": "2019",
+              "value": "2019",
+              "disabled": false
+            },
+            {
+              "text": "2020",
+              "value": "2020",
+              "disabled": false
+            },
+            {
+              "text": "2021",
+              "value": "2021",
+              "disabled": false
+            },
+            {
+              "text": "2022",
+              "value": "2022",
+              "disabled": false
+            },
+            {
+              "text": "2023",
+              "value": "2023",
+              "disabled": false
+            },
+            {
+              "text": "2024",
+              "value": "2024",
+              "disabled": false
+            },
+            {
+              "text": "2025",
+              "value": "2025",
+              "disabled": false
+            },
+            {
+              "text": "2026",
+              "value": "2026",
+              "disabled": false
+            }
           ]
         },
         {
@@ -1671,8 +4216,16 @@
           "disabled": false,
           "value": "CE",
           "options": [
-            {},
-            {}
+            {
+              "text": "CE",
+              "value": "CE",
+              "disabled": false
+            },
+            {
+              "text": "PE",
+              "value": "PE",
+              "disabled": false
+            }
           ]
         },
         {
@@ -1760,7 +4313,7 @@
     "Page metadata/date selectors do not prove target-session raw-row coverage.",
     "No P&L is calculated by this audit."
   ],
-  "network_events": 849,
+  "network_events": 2869,
   "same_origin_data_responses": [
     {
       "page": "historical_chain",
@@ -1780,11 +4333,75 @@
     },
     {
       "page": "historical_chain",
-      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=6977395532785467",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/fc7cf93ccd3fb3ecd760.json",
-      "bytes": 17962,
-      "sha256": "c5faf7df85cec101a543183395c9c7e70b4b1c0ff2a1caeeff4fd3406e85d6f2",
-      "content_type": "application/json; charset=UTF-8"
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/d27f9cd06b8fb15d586e.json",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/6e82c823bbca14c7e985.json",
+      "bytes": 57,
+      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=month&year=2026",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/26800bf4e73fdab910cd.json",
+      "bytes": 58,
+      "sha256": "24515b8af8e52afae474fceba54a29cd880fb3e34e9e7da024f00c339cf889a8",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=expiryDate&year=2026&month=July",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/e8499833b8daa2c33428.json",
+      "bytes": 53,
+      "sha256": "160b5ec06197c3f6b1aaa5e233265563aae0541d9ed4a0326a5360f58877d507",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=date&expiry=2026-07-28",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/ab3b55b3fb497898d793.json",
+      "bytes": 79,
+      "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=date&expiry=2026-07-28",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/ab3b55b3fb497898d793.json",
+      "bytes": 79,
+      "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=2026-07-28&date=2026-07-28",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/194d74140a3f64a96d6a.json",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/d27f9cd06b8fb15d586e.json",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/6e82c823bbca14c7e985.json",
+      "bytes": 57,
+      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
+      "content_type": "application/json; charset=utf-8"
     },
     {
       "page": "expired_chart",
@@ -1796,11 +4413,51 @@
     },
     {
       "page": "expired_chart",
-      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=3621478824605715",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/8ca67ccb1f57fcf4bd99.json",
-      "bytes": 17938,
-      "sha256": "c8f77cce9e6c35e60a1bf27c060678c841db6402355f4e9e45b6f7c1cad83e5a",
-      "content_type": "application/json; charset=UTF-8"
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/835ea36db2dd2b746490.json",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=months&year=2026",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/e62658147961041b51ff.json",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=expiries&year=2026&month=Jul",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/3a3d37f213999674a4a7.json",
+      "bytes": 27,
+      "sha256": "ea31011d5b20f9da485ba4ac2becdfa3c75d53e4ca0ec46051a501c4ffe7c46a",
+      "content_type": "application/json"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=strikes&year=2026&month=Jul&expiry=2026-07-28&option=CE",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/64d400393fd99e0b94d8.json",
+      "bytes": 14,
+      "sha256": "a80e5d153fd4ae285b118aa4fd6566549abf7a1ea51a4f8a0adae873f6d46964",
+      "content_type": "application/json"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/835ea36db2dd2b746490.json",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=months&year=2026",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/e62658147961041b51ff.json",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json"
     },
     {
       "page": "chart_data",
@@ -1812,13 +4469,593 @@
     },
     {
       "page": "chart_data",
-      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=251249146875170",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/3e8e420718825b640a07.json",
-      "bytes": 18370,
-      "sha256": "feb0d504c9c9c9be0a68f8e4c70a56da83074dd4c9455d3693c7a3fe0c43e880",
-      "content_type": "application/json; charset=UTF-8"
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/8814b423ef4f46fa8b84.json",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=months&year=2026",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/23d42d2a86e396bdbef9.json",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=expiries&year=2026&month=Jul",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/e0ba0a437e9d9d43cb22.json",
+      "bytes": 66,
+      "sha256": "6eaa23ba6e7176a2c93ef832002cf310034f066b91972d09494e7545e3ed761c",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=strikes&year=2026&month=Jul&expiry=2026-07-28&option=CE",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/d055bd292258fca40138.json",
+      "bytes": 853,
+      "sha256": "704204fd2940b0c53a7f519cfc1d1b7c28a8bba2784191376982825321c861e5",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?year=2026&month=Jul&expiry=2026-07-28&option=CE&strike=24000&tf=1",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/0df940a53e66d7e29839.json",
+      "bytes": 1003,
+      "sha256": "fc0acfcfff80deb69c1076135d6e5f2f36d9d64f24f73835f10a7ffba33ec2fe",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/8814b423ef4f46fa8b84.json",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=months&year=2026",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/23d42d2a86e396bdbef9.json",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json"
     }
   ],
-  "target_date_selectable_in_any_control": false,
-  "intraday_timestamp_in_observed_data_response": false
+  "response_reviews": [
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "expiry_used",
+        "date_used",
+        "data"
+      ],
+      "row_count": 105,
+      "row_keys": [
+        "Option",
+        "OI",
+        "OI_Change",
+        "Volume",
+        "Turnover",
+        "Close",
+        "Strike",
+        "ATM",
+        "PE_Close",
+        "PE_Turnover",
+        "PE_Volume",
+        "PE_OI_Change",
+        "PE_OI",
+        "PE_Option",
+        "Spot",
+        "PCR"
+      ],
+      "first_row_sample": {
+        "Option": "CE",
+        "OI": 10530,
+        "OI_Change": -3835,
+        "Volume": 132,
+        "Turnover": 2060,
+        "Close": 2877.7,
+        "Strike": 21100,
+        "ATM": -2900,
+        "PE_Close": 0.1,
+        "PE_Turnover": 1135296,
+        "PE_Volume": 82777,
+        "PE_OI_Change": -1032460,
+        "PE_OI": 1287195,
+        "PE_Option": "PE",
+        "Spot": 23985.35,
+        "PCR": 122.24
+      },
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
+      "bytes": 57,
+      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 8,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "expiry_used",
+        "date_used",
+        "data"
+      ],
+      "row_count": 105,
+      "row_keys": [
+        "Option",
+        "OI",
+        "OI_Change",
+        "Volume",
+        "Turnover",
+        "Close",
+        "Strike",
+        "ATM",
+        "PE_Close",
+        "PE_Turnover",
+        "PE_Volume",
+        "PE_OI_Change",
+        "PE_OI",
+        "PE_Option",
+        "Spot",
+        "PCR"
+      ],
+      "first_row_sample": {
+        "Option": "CE",
+        "OI": 10530,
+        "OI_Change": -3835,
+        "Volume": 132,
+        "Turnover": 2060,
+        "Close": 2877.7,
+        "Strike": 21100,
+        "ATM": -2900,
+        "PE_Close": 0.1,
+        "PE_Turnover": 1135296,
+        "PE_Volume": 82777,
+        "PE_OI_Change": -1032460,
+        "PE_OI": 1287195,
+        "PE_Option": "PE",
+        "Spot": 23985.35,
+        "PCR": 122.24
+      },
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
+      "bytes": 57,
+      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 8,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=month&year=2026",
+      "bytes": 58,
+      "sha256": "24515b8af8e52afae474fceba54a29cd880fb3e34e9e7da024f00c339cf889a8",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 7,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=expiryDate&year=2026&month=July",
+      "bytes": 53,
+      "sha256": "160b5ec06197c3f6b1aaa5e233265563aae0541d9ed4a0326a5360f58877d507",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 4,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=date&expiry=2026-07-28",
+      "bytes": 79,
+      "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 6,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=date&expiry=2026-07-28",
+      "bytes": 79,
+      "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 6,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=2026-07-28&date=2026-07-28",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "expiry_used",
+        "date_used",
+        "data"
+      ],
+      "row_count": 105,
+      "row_keys": [
+        "Option",
+        "OI",
+        "OI_Change",
+        "Volume",
+        "Turnover",
+        "Close",
+        "Strike",
+        "ATM",
+        "PE_Close",
+        "PE_Turnover",
+        "PE_Volume",
+        "PE_OI_Change",
+        "PE_OI",
+        "PE_Option",
+        "Spot",
+        "PCR"
+      ],
+      "first_row_sample": {
+        "Option": "CE",
+        "OI": 10530,
+        "OI_Change": -3835,
+        "Volume": 132,
+        "Turnover": 2060,
+        "Close": 2877.7,
+        "Strike": 21100,
+        "ATM": -2900,
+        "PE_Close": 0.1,
+        "PE_Turnover": 1135296,
+        "PE_Volume": 82777,
+        "PE_OI_Change": -1032460,
+        "PE_OI": 1287195,
+        "PE_Option": "PE",
+        "Spot": 23985.35,
+        "PCR": 122.24
+      },
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "expiry_used",
+        "date_used",
+        "data"
+      ],
+      "row_count": 105,
+      "row_keys": [
+        "Option",
+        "OI",
+        "OI_Change",
+        "Volume",
+        "Turnover",
+        "Close",
+        "Strike",
+        "ATM",
+        "PE_Close",
+        "PE_Turnover",
+        "PE_Volume",
+        "PE_OI_Change",
+        "PE_OI",
+        "PE_Option",
+        "Spot",
+        "PCR"
+      ],
+      "first_row_sample": {
+        "Option": "CE",
+        "OI": 10530,
+        "OI_Change": -3835,
+        "Volume": 132,
+        "Turnover": 2060,
+        "Close": 2877.7,
+        "Strike": 21100,
+        "ATM": -2900,
+        "PE_Close": 0.1,
+        "PE_Turnover": 1135296,
+        "PE_Volume": 82777,
+        "PE_OI_Change": -1032460,
+        "PE_OI": 1287195,
+        "PE_Option": "PE",
+        "Spot": 23985.35,
+        "PCR": 122.24
+      },
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
+      "bytes": 57,
+      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
+      "content_type": "application/json; charset=utf-8",
+      "top_level_type": "list",
+      "row_count": 8,
+      "first_row_keys": [],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "years"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "years"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=months&year=2026",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "months"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=expiries&year=2026&month=Jul",
+      "bytes": 27,
+      "sha256": "ea31011d5b20f9da485ba4ac2becdfa3c75d53e4ca0ec46051a501c4ffe7c46a",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "expiries"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=strikes&year=2026&month=Jul&expiry=2026-07-28&option=CE",
+      "bytes": 14,
+      "sha256": "a80e5d153fd4ae285b118aa4fd6566549abf7a1ea51a4f8a0adae873f6d46964",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "strikes"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "years"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=months&year=2026",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "months"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "years"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "years"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=months&year=2026",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "months"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=expiries&year=2026&month=Jul",
+      "bytes": 66,
+      "sha256": "6eaa23ba6e7176a2c93ef832002cf310034f066b91972d09494e7545e3ed761c",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "expiries"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=strikes&year=2026&month=Jul&expiry=2026-07-28&option=CE",
+      "bytes": 853,
+      "sha256": "704204fd2940b0c53a7f519cfc1d1b7c28a8bba2784191376982825321c861e5",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "strikes"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?year=2026&month=Jul&expiry=2026-07-28&option=CE&strike=24000&tf=1",
+      "bytes": 1003,
+      "sha256": "fc0acfcfff80deb69c1076135d6e5f2f36d9d64f24f73835f10a7ffba33ec2fe",
+      "content_type": "application/json",
+      "top_level_type": "list",
+      "row_count": 6,
+      "first_row_keys": [
+        "time",
+        "open",
+        "high",
+        "low",
+        "close"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": true
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "years"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=months&year=2026",
+      "bytes": 215,
+      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
+      "content_type": "application/json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "months"
+      ],
+      "contains_iso_intraday_timestamp": false,
+      "contains_clock_time_label": false,
+      "has_time_axis_keys": false
+    }
+  ],
+  "target_presence_by_control": {
+    "2026-07-28": {
+      "expiry_selector": true,
+      "session_date_selector": true,
+      "chart_expiry_selector": true
+    },
+    "2026-08-04": {
+      "expiry_selector": false,
+      "session_date_selector": false,
+      "chart_expiry_selector": false
+    }
+  },
+  "target_date_selectable_in_any_control": true,
+  "intraday_timestamp_in_observed_data_response": true
 }
