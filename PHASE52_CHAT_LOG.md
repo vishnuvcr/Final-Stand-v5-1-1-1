@@ -31,3 +31,8 @@ The generated initial matrix is 52 structure families × six selector modes = 31
 ## 2026-10-09 — First factor-selector pilot and correction
 
 The main Actions workflow passed registry validation and finite-grid audit (312 hypotheses; 9,379,584 configurations under grid v1.3) but stopped at the newly added selector-pilot self-test. No data analysis was performed. The failed assertion was a brittle expectation about quantile bins under the installed pandas version; the test now uses fixed edges and remains pre-analysis. The event is logged as F52-005; full-grid queue sizing is F52-006 and remains an explicit compute caveat.
+
+
+## 2026-10-09 — Coverage diagnostic and matched-sample amendment
+
+Actions run 37926165354 passed the factor-selector unit test but stopped before metric analysis because 68.2% of outcome rows matched a same-expiry prior feature record (initial blanket cutoff was 90%). Added PA-004 prior to any factor-performance calculation: test matched rows only, require ≥50% coverage in each split and ≥20 matched expiries in validation/holdout, report all coverage gaps, and do not impute missing features. The same run's branch checkpoint push was rejected due to a non-fast-forward update; the workflow now rebases before push, without force pushing.
