@@ -1,27 +1,21 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
-## Phase 51-3 — Available-data OOS sweep — POST-FIX RETRY PENDING (2026-10-09)
+## Phase 51-3 — Available-data OOS sweep — SOURCE-FAITHFUL REPLAY READY (2026-10-09)
 
-The first run started successfully but failed in TT-02 because the replay summary referenced an undefined `TT02_ENGINE_REV`. The exact traceback was captured in run [37879416000](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879416000); main orchestrator run [37879632246](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879632246) also started before the patch reached its checkout and failed with the same defect. Its diagnostic artifact was retained, but it is not accepted P&L evidence.
+The previous green workflow run was rejected during scientific self-audit because the inherited replay engines still used the rejected Phase-43 options source and stale expiry registry. **No P&L from that run is evidence.**
 
-**Correction committed on the Phase-51-3 branch:** defined `TT02_ENGINE_REV = "50B-TT02-COVERAGE-V3"` and replaced the vectorized implied-volatility step's eager division with a masked divide for valid-vega rows. Strategy rules, parameters and valid Newton updates are unchanged.
+A primary-source adapter is now committed on the Phase-51-3 branch. It injects the frozen RISSIN NIFTY 1-minute options Parquet (SHA-256 locked), the previously validated Technovusin NIFTY 1-minute spot source, and an expiry universe derived directly from observed primary NIFTY 1-minute rows. The strategy rules, entry/exit logic, costs, and slippage assumptions are unchanged.
 
-Candidate observations from the failed diagnostic run, strictly **not accepted P&L evidence**:
-- **TT-04:** 22/22 completed candidates, 100% coverage, zero row-level data errors; quality gate PASS, but clean replay and artifact audit still required.
-- **TT-05:** 17/20 completed candidates, 85% coverage, zero row-level data errors; **FAIL_COVERAGE** under the preregistered >=95% threshold. It remains excluded.
-- **TT-02:** summary failed on the missing metadata constant; the post-fix replay is required.
+The main orchestrator now caches the validated spot repository and enforces the source manifest before accepting the replay. The next run is the first scientifically admissible Phase-51-3 replay.
 
-The corrected wrapper now prints/stores tracebacks, classifies each candidate's coverage/data-error gate, and the main orchestrator uploads diagnostics even after failure. A finite completion marker stops scheduled runs after the finite phase succeeds; manual dispatch remains available.
-
-The diagnostic interval stays **2026-04-21 to 2026-07-21** and does not replace the final Phase-51 window **2026-04-21 to 2026-08-04**. Expiries **2026-07-28 and 2026-08-04** remain unresolved. No parameter tuning, statistical promotion, or live-trading recommendation is authorized.
+The partial diagnostic window remains **2026-04-21 through 2026-07-21**. This does not replace the full Phase-51 OOS window **2026-04-21 through 2026-08-04**; the 2026-07-28 and 2026-08-04 option blocks remain unresolved.
 
 - [Phase 51-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-3-available-data-strategy-sweep)
 - [Phase 51-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_STATUS.md)
 - [Phase 51-3 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_ERROR_LOG.md)
-- [Phase 51-3 chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_CHAT_LOG.md)
 - [Phase 51-3 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_RESEARCH_PLAN.md)
-- [Main-branch orchestrator](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase-51-3-orchestrator.yml)
-- [Phase 51-3 PR #18](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/18)
+- [Phase 51-3 source adapter](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/research/phase51_3_primary_source_adapter.py)
+
 
 ## Phase 51-1I — CLOSED / DATA-BLOCKED
 
