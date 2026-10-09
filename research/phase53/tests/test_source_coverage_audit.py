@@ -28,18 +28,22 @@ class SourceRegistryTests(unittest.TestCase):
         ]
         required = ["options/NIFTY/2021-05-27.parquet", "index/NIFTY.parquet"]
         result = audit.assess_inventory(items, required)
-        self.assertEqual(result["present_count"], 2)
-        self.assertEqual(result["missing_count"], 0)
+        self.assertEqual(result["listed_matching_count"], 2)
+        self.assertEqual(result["not_listed_in_returned_metadata_count"], 0)
+        self.assertTrue(result["metadata_listing_proves_missing"])
         self.assertEqual(result["file_metadata"][0]["size_bytes"], 100)
 
     def test_missing_metadata_listing_is_not_conflated_with_no_files(self) -> None:
         # assess_inventory is only used after a successful API listing. Its result
         # explicitly marks a known listing; unknown API failure is represented as null.
-        known_empty = audit.assess_inventory([], ["index/NIFTY.parquet"])
-        self.assertTrue(known_empty["listing_complete"])
-        self.assertEqual(known_empty["missing_count"], 1)
-        unknown_listing = None
-        self.assertIsNone(unknown_listing)
+        partial = audit.assess_inventory([], ["index/NIFTY.parquet"], listing_complete=False)
+        self.assertFalse(partial["listing_complete"])
+        self.assertEqual(partial["not_listed_in_returned_metadata_count"], 1)
+        self.assertFalse(partial["metadata_listing_proves_missing"])
+        self.assertIn("UNKNOWN", partial["interpretation"])
+        # Only a known complete listing can establish an unlisted path.
+        complete = audit.assess_inventory([], ["index/NIFTY.parquet"], listing_complete=True)
+        self.assertTrue(complete["metadata_listing_proves_missing"])
 
     def test_duplicate_listing_paths_are_detected(self) -> None:
         items = [
