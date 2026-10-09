@@ -1,0 +1,273 @@
+{
+  "schema_version": "phase52-openchart-probe-v1",
+  "created_at_ist": "2026-10-10T01:17:03.573202+05:30",
+  "source": {
+    "repository": "https://github.com/marketcalls/openchart",
+    "upstream_commit": "a207108890c96a9830b35a8d15442c896ea0a9d6",
+    "openchart_package_version": "0.2.0"
+  },
+  "purpose": "Bounded data-discovery/coverage probe only; not strategy P&L",
+  "raw_market_data_persisted": false,
+  "api_request_trace": [
+    {
+      "host": "www.nseindia.com",
+      "path": "/",
+      "method": "GET",
+      "http_status": 403,
+      "content_type": "text/html",
+      "content_length_bytes": "370",
+      "retry_after": null,
+      "elapsed_seconds": 0.099
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges/symbolsDynamic",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.767
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges/symbolsDynamic",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.709
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges/symbolsDynamic",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.75
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges/symbolsDynamic",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.848
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges/symbolsDynamic",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.881
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges/symbolsDynamic",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.84
+    }
+  ],
+  "search_probes": [
+    {
+      "query": "NIFTY",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "query_symbol_match_rows": 19,
+      "query_description_match_rows": 19,
+      "normalized_result_sha256": "6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837",
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "current_nifty_fo",
+      "segment": "FO"
+    },
+    {
+      "query": "NIFTY",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "query_symbol_match_rows": 19,
+      "query_description_match_rows": 19,
+      "normalized_result_sha256": "6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837",
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "current_nifty_idx_control",
+      "segment": "IDX"
+    },
+    {
+      "query": "NIFTY26OCT",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "query_symbol_match_rows": 0,
+      "query_description_match_rows": 0,
+      "normalized_result_sha256": "6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837",
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "current_option_month",
+      "segment": "FO"
+    },
+    {
+      "query": "NIFTY2612020400CE",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "query_symbol_match_rows": 0,
+      "query_description_match_rows": 0,
+      "normalized_result_sha256": "6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837",
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "documented_known_option",
+      "segment": "FO"
+    },
+    {
+      "query": "NIFTY26JUL",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "query_symbol_match_rows": 0,
+      "query_description_match_rows": 0,
+      "normalized_result_sha256": "6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837",
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "phase51_missing_2026_07_28",
+      "segment": "FO"
+    },
+    {
+      "query": "NIFTY26AUG",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "query_symbol_match_rows": 0,
+      "query_description_match_rows": 0,
+      "normalized_result_sha256": "6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837",
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "phase51_missing_2026_08_04",
+      "segment": "FO"
+    }
+  ],
+  "historical_probes": [],
+  "limitations": [
+    "A single short probe cannot establish complete contract/expiry coverage or oldest backfill date.",
+    "The package exposes OHLCV only; OI, bid/ask, trade prints, depth and Greeks are not returned by its documented DataFrame schema.",
+    "Symbol-search failure and no-result responses can both become empty DataFrames in the upstream library; inspect HTTP trace before interpreting empty results.",
+    "Returned timestamps are timezone-naive after upstream processing; verify clock convention against authoritative session anchors.",
+    "No raw OHLCV, full symbol dump or token values are saved to the repository.",
+    "NSE data usage/storage/redistribution terms must be checked separately from the MIT license of this client library."
+  ],
+  "http_summary": {
+    "requests_observed": 7,
+    "http_status_counts": {
+      "200": 6,
+      "403": 1
+    },
+    "http_errors_or_rate_limits": 1,
+    "response_bodies_saved": false
+  },
+  "decision": {
+    "primary_source_eligible": false,
+    "status": "SOURCE_PROBE_INCONCLUSIVE_OR_NO_RECENT_OPTION_BARS",
+    "recent_option_bars_returned": false,
+    "target_date_windows_with_any_bars": 0,
+    "target_date_windows_tested": 2,
+    "interpretation": "Even a positive result only justifies a larger contract/time coverage audit. Do not use this source as sole backtest data or fill missing records yet."
+  }
+}
