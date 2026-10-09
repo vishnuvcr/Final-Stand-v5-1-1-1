@@ -153,13 +153,15 @@ def main() -> int:
             # Resolve the strike ladder only from contracts actually present at
             # this exact entry timestamp; future-listed strikes must not leak in.
             ordered, atm_idx = select_ranked_strikes(entry["strike"].dropna().unique().tolist(), spot)
+            atm = ordered[atm_idx] if atm_idx >= 0 else np.nan
+            step = modal_step(entry)
             exit_1515_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
             exit_1515 = by_ts.get(exit_1515_ts, empty)
             expiry_exit_ts = pd.Timestamp(expiry_exit) if expiry_exit is not None else None
             exit_expiry = by_ts.get(expiry_exit_ts, empty) if expiry_exit_ts is not None else empty
             for offset in OFFSETS:
-                rank = atm_idx + offset
-                strike = ordered[rank] if 0 <= rank < len(ordered) else np.nan
+                # `offset` means a true strike-step count, not an ordinal rank among available contracts.
+                strike = float(round(atm + offset * step, 8)) if np.isfinite(atm) and step is not None and step > 0 else np.nan
                 for typ in ("CE","PE"):
                     er = entry[(entry["option_type"] == typ) & (entry["strike"] == strike)] if np.isfinite(strike) else entry.iloc[0:0]
                     r15 = exit_1515[(exit_1515["option_type"] == typ) & (exit_1515["strike"] == strike)] if np.isfinite(strike) else exit_1515.iloc[0:0]
@@ -170,11 +172,13 @@ def main() -> int:
                     out_rows.append({
                         "event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),
                         "entry_dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),
-                        "spot_at_entry":float(spot) if np.isfinite(spot) else np.nan,"atm_strike":ordered[atm_idx] if 0 <= atm_idx < len(ordered) else np.nan,
-                        "strike_rank_offset":offset,"selected_strike":float(strike) if np.isfinite(strike) else np.nan,"option_type":typ,
+                        "spot_at_entry_open":float(spot) if np.isfinite(spot) else np.nan,"atm_strike":float(atm) if np.isfinite(atm) else np.nan,
+                        "modal_strike_step":float(step) if step is not None else np.nan,"strike_step_offset":offset,
+                        "theoretical_strike":float(strike) if np.isfinite(strike) else np.nan,
+                        "selected_strike":float(strike) if np.isfinite(strike) and len(er) == 1 else np.nan,"option_type":typ,
                         "index_exact_entry":bool(ev.index_has_exact_entry_timestamp),"entry_row_count":len(er),
                         "entry_ohlc_valid":bool(len(er)==1 and er.iloc[0]["valid_ohlc"]),"entry_oi":float(er.iloc[0]["open_interest"]) if len(er)==1 and pd.notna(er.iloc[0]["open_interest"]) else np.nan,
-                        "entry_oi_ge_100":bool(entry_ok),"exit_1515_ohlc_valid":bool(exit15_ok),
+                        "entry_oi_ge_100":bool(entry_ok),"strike_exact_entry_present":bool(np.isfinite(strike) and len(er) == 1),"exit_1515_ohlc_valid":bool(exit15_ok),
                         "expiry_exit_ts":expiry_exit_ts.isoformat() if expiry_exit_ts is not None else None,"expiry_exit_ohlc_valid":bool(exit_exp_ok),
                         "abs_delta_selection_status":"BLOCKED_NO_VALIDATED_POINT_IN_TIME_DELTA_RESOLVER","pnl_status":"NOT_BACKTESTED"
                     })
