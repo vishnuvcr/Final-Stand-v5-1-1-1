@@ -43,7 +43,7 @@ jobs:
           import json
           from pathlib import Path
           m=json.loads(Path("results/phase52/historical_pilot/pilot_manifest.json").read_text())
-          assert m["configuration_count"]==40 and m["expected_event_rows"]==480
+          assert m["configuration_count"]==40 and m["planned_config_event_rows"]==480
           assert len(m["event_ids"])==24
           print("Frozen universe identities checked; only code/file fingerprints refreshed.")
           PY
@@ -96,7 +96,7 @@ jobs:
           git commit -m "Phase52 preserve full leg evidence run $GITHUB_RUN_ID"
           for attempt in 1 2 3; do
             git fetch origin "$PHASE_BRANCH"
-            git rebase origin/"$PHASE_BRANCH" || { git rebase --abort || true; exit 1; }
+            git rebase origin/"$PHASE_BRANCH" || { git rebase --abort || true; }
             git push origin "$PHASE_BRANCH" && exit 0
           done
           exit 1
