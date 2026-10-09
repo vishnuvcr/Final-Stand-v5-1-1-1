@@ -296,10 +296,59 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
     )
     hf_listing_meta, hf_listing = listed_tree(repo_id, revision, token)
     inventory = None
+    metadata_listing_complete = bool(hf_listing_meta.get("listing_complete"))
     if hf_listing is not None:
-        inventory = assess_inventory(
-            hf_listing, required, listing_complete=bool(hf_listing_meta.get("listing_complete"))
+        inventory = assess_inventory(hf_listing, required, listing_complete=metadata_listing_complete)
+        # A syntactically successful tree response is not enough: if it does not
+        # actually enumerate every required path that HEAD resolves, label the tree
+        # inventory incomplete, not as evidence that the paths are missing.
+        metadata_listing_complete = bool(
+            metadata_listing_complete
+            and inventory["listed_matching_count"] == len(required)
         )
+        inventory["listing_complete"] = metadata_listing_complete
+        inventory["metadata_listing_proves_missing"] = metadata_listing_complete
+        if not metadata_listing_complete:
+            inventory["interpretation"] = (
+                "Returned tree metadata did not enumerate all selected paths; unlisted paths are not confirmed missing. "
+                "Direct pinned-path HEAD checks take precedence for path existence."
+            )
+
+    # Compare the likely HF mirror by immutable content ETags on matching paths.
+    # This is metadata-only: HEAD requests, no Parquet bytes downloaded.
+    mirror = next((s for s in source_checks if s.get("source_id") == "hf_codepyx_mirror"), {})
+    mirror_revision = (mirror.get("api_metadata_probe") or {}).get("dataset_sha")
+    mirror_file_checks: list[dict[str, Any]] = []
+    if mirror_revision:
+        for primary_file in file_checks:
+            path = primary_file["path"]
+            url = f"https://huggingface.co/datasets/codepyx23/india-index-options-1m/resolve/{mirror_revision}/{path}"
+            info = request_url(url, "HEAD", token, timeout=25.0)
+            primary_etag = str(primary_file.get("etag") or "").strip('"').lower()
+            mirror_etag = str(info.get("etag") or "").strip('"').lower()
+            mirror_file_checks.append({
+                "path": path,
+                "http_status": info.get("http_status"),
+                "reachable": info.get("reachable"),
+                "content_length": info.get("content_length"),
+                "primary_etag_sha256_candidate": primary_etag or None,
+                "mirror_etag_sha256_candidate": mirror_etag or None,
+                "same_content_etag": bool(primary_etag and mirror_etag and primary_etag == mirror_etag),
+                "error": info.get("error"),
+                "bytes_transferred": 0,
+            })
+    mirror_accessible = sum(1 for x in mirror_file_checks if x.get("http_status") and 200 <= x["http_status"] < 400)
+    mirror_same = sum(1 for x in mirror_file_checks if x["same_content_etag"])
+    if not mirror_revision:
+        mirror_verdict = "UNKNOWN_NO_REVISION_METADATA"
+    elif mirror_same == len(required):
+        mirror_verdict = "IDENTICAL_CONTENT_MIRROR_NOT_INDEPENDENT"
+    elif mirror_same > 0:
+        mirror_verdict = "PARTIAL_IDENTICAL_CONTENT_REQUIRE_PROVENANCE_REVIEW"
+    elif mirror_accessible == 0:
+        mirror_verdict = "MATCHING_PATHS_UNAVAILABLE_AT_MIRROR"
+    else:
+        mirror_verdict = "NO_IDENTICAL_ETAGS_FOUND_NOT_YET_PROOF_OF_INDEPENDENCE"
 
     file_statuses = [row["http_status"] for row in file_checks]
     known = [x for x in file_statuses if isinstance(x, int)]
@@ -348,9 +397,19 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
                 "error": revision_meta.get("error") or revision_meta.get("metadata_parse_error"),
             },
             "required_file_checks": file_checks,
+            "mirror_comparison": {
+                "candidate_repo": "codepyx23/india-index-options-1m",
+                "candidate_revision": mirror_revision,
+                "verdict": mirror_verdict,
+                "required_path_count": len(required),
+                "matching_path_accessible_count": mirror_accessible,
+                "same_content_etag_count": mirror_same,
+                "path_checks": mirror_file_checks,
+                "interpretation": "Equal ETags are strong evidence of identical file content at the resolved path; differing repo commit SHA alone does not establish independent data.",
+            },
             "tree_listing": {
                 "status": (
-                    "AVAILABLE_COMPLETE" if hf_listing is not None and hf_listing_meta.get("listing_complete")
+                    "AVAILABLE_COMPLETE" if hf_listing is not None and metadata_listing_complete
                     else "AVAILABLE_PARTIAL" if hf_listing is not None
                     else "INACCESSIBLE_OR_UNSUPPORTED"
                 ),
