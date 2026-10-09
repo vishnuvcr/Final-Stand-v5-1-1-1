@@ -799,17 +799,20 @@ Phase 52 tests whether VIX, Greeks/IV/skew, OI/volume/PCR, spot/futures/syntheti
 - [Phase status and gates](PHASE52_STATUS.md) — current blockers and evidence boundary.
 - [312-hypothesis registry](research/phase52/strategy_registry.csv) — structure × selector matrix.
 - [Strategy leg specifications](research/phase52/strategy_specifications.csv) — standardized variants and source-reconciliation blockers.
-- [Finite configuration grid](research/phase52/configuration_space.json) — `phase52-grid-v1.1`, deterministic search dimensions and Paytm Money cost/stress scenarios.
+- [Finite configuration grid](research/phase52/configuration_space.json) — `phase52-grid-v1.3`, deterministic search dimensions and Paytm Money cost/stress scenarios.
 - [User-repository audit queue](research/phase52/repository_audit.csv) — inventory of all 40 repositories; inventory is not equivalent to a completed source-code audit.
 - [Initial literature and source ledger](PHASE52_LITERATURE_REVIEW.md) — papers, NSE data sources, YouTube and public-code leads.
 - [Research log](PHASE52_RESEARCH_LOG.md) · [Error log](PHASE52_ERROR_LOG.md) · [conversation/decision log](PHASE52_CHAT_LOG.md).
 - [Main-branch scheduled/manual workflow](.github/workflows/phase-52-factor-conditioned-strategy-discovery.yml) — daily at 03:30 UTC (09:00 IST) and manually runnable; uses a bounded configuration shard and source discovery. A scheduled run does not claim P&L.
 - [Deterministic registry/grid validator and shard enumerator](research/phase52/validate_registry.py) · [recurring public source discovery](research/phase52/source_discovery.py).
 
-**Important:** The current runner is a discovery/queue bootstrap, not the numerical replay engine. All 312 hypotheses remain `REGISTERED_NOT_TESTED`. Source/coverage/licensing and exact-leg specifications must pass before backtesting. The Phase 51 missing option sessions (2026-07-28 and 2026-08-04) remain unresolved and are not silently filled or excluded from its original full-window claim. No strategy is promoted to live trading by this branch.
+**Important:** The current runner now includes a legacy factor-selector pilot, but not the full Phase52 parameter replay. The pilot's first execution stopped at its self-test before data analysis; the binning test was patched and is awaiting a rerun. All 312 hypotheses remain `REGISTERED_NOT_TESTED` until their applicable structures/configurations receive source-faithful replay. Grid enumeration is not a tested-configuration count. The Phase 51 missing option sessions (2026-07-28 and 2026-08-04) remain unresolved and are not silently filled or excluded from its original full-window claim. No strategy is promoted to live trading by this branch.
 
 
 
 ### Phase 52 latest checkpoint — 2026-10-09
 
 The first complete GitHub Actions retry succeeded: [run 37924369419](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37924369419). Registry/specification/grid validation passed; 32 unique Hugging Face/GitHub source leads were added; 10,000 of 9,379,584 finite-grid configurations were deterministically enumerated and checkpointed. This is **not** 10,000 backtests. The numerical replay engine and point-in-time data/coverage audit remain not started; no Phase 52 profitability result or strategy promotion exists. Fresh YouTube API discovery is pending an optional `YOUTUBE_API_KEY` secret.
+
+
+**Latest research checkpoint (2026-10-09):** the first Actions execution passed the registry/grid audit (312 hypotheses; grid v1.3 = 9,379,584 configurations) but stopped before market-data analysis due to a brittle factor-binning self-test. The test was patched before any P&L calculations; the failure is recorded in [F52-005](PHASE52_ERROR_LOG.md). The grid-size feasibility decision is logged as [F52-006](PHASE52_ERROR_LOG.md). A legacy outcome-matrix selector test is the first numerical stage; NIFTY futures basis and true synthetic-future divergence are not present in that seed feature panel and will not be claimed as tested.
