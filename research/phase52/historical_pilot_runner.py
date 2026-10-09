@@ -347,8 +347,9 @@ def load_cached_inputs(revision: str, expiries: Sequence[str], token: str | None
             "revision": revision,
             "sha256": digest,
             "bytes": int(path.stat().st_size),
-            "rows_source_after_normalization": rows_before_exact_dedup,
+            "rows_before_exact_dedup": rows_before_exact_dedup,
             "exact_duplicate_rows_removed": exact_duplicate_rows_removed,
+            "rows_after_exact_dedup": int(len(frame)),
             "rows": int(len(frame)),
             "timestamp_min": frame["timestamp"].min().isoformat() if len(frame) else None,
             "timestamp_max": frame["timestamp"].max().isoformat() if len(frame) else None,
@@ -359,12 +360,41 @@ def load_cached_inputs(revision: str, expiries: Sequence[str], token: str | None
     return index, option_frames, source_audit
 
 
+
+def range_proxy_failure_leg(
+    leg: Mapping[str, Any], entry_row: Mapping[str, Any], prior_oi: float,
+    prior_ts: Any, range_value: float, lot_size: int,
+) -> dict[str, Any]:
+    """Preserve the exact failed contract and measured OHLC values in exclusion rows."""
+    return {
+        "leg_id": str(leg["leg_id"]),
+        "side": str(leg["side"]),
+        "option_type": str(leg["option_type"]),
+        "anchor": str(leg.get("anchor", "")),
+        "relative_offset_steps": int(leg.get("relative_offset_steps", 0)),
+        "strike": float(leg["strike"]),
+        "expiry": canonical_expiry(leg["expiry"]),
+        "expiry_role": str(leg.get("expiry_role", "near")),
+        "quantity_lots": int(leg["quantity_lots"]),
+        "lot_size": int(lot_size),
+        "entry_open": float(entry_row["open"]),
+        "entry_high": float(entry_row["high"]),
+        "entry_low": float(entry_row["low"]),
+        "prior_oi": float(prior_oi),
+        "prior_oi_timestamp": as_ist_timestamp(prior_ts).isoformat(),
+        "entry_range_proxy_pct": float(range_value),
+        "entry_status": "PASS",
+        "prior_oi_status": "PASS",
+        "range_proxy_status": "EXCLUDED",
+        "exit_status": "NOT_TESTED",
+    }
+
 def event_record(event: Mapping[str, Any], conf: Mapping[str, Any], status: str, reason: str,
                  spot: float | None = None, lot: int | None = None, legs: Sequence[Mapping[str, Any]] = (),
                  source_hash: str | None = None, exit_ts: Any | None = None) -> dict[str, Any]:
     cfg = conf["configuration"]
     return {
-        "pilot_version": "phase52-historical-base-pilot-v0.2",
+        "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
         "grid_version": conf["grid_version"],
         "configuration_id": conf["configuration_id"],
         "candidate_id": conf["candidate_id"],
@@ -467,9 +497,12 @@ def replay_one(
             entry_result.row, float(cfg["liquidity_max_spread_pct"])
         )
         if not range_ok:
+            failed_leg = range_proxy_failure_leg(
+                leg, entry_result.row, oi_val, prior_ts, range_value, lot_size
+            )
             return event_record(event, conf, "EXCLUDED_OHLC_RANGE_PROXY",
                                 f"{leg['leg_id']}: OHLC high-low/open proxy {range_value} exceeds gate {cfg['liquidity_max_spread_pct']}",
-                                spot_open, lot_size, resolved_leg_rows, source_hash), []
+                                spot_open, lot_size, [*resolved_leg_rows, failed_leg], source_hash), []
         exit_rows = exact_rows(option_frame, exit_ts, leg["expiry"], leg["option_type"], float(leg["strike"]))
         if len(exit_rows) != 1:
             return event_record(event, conf, "EXCLUDED_EXIT_LEG",
@@ -492,11 +525,15 @@ def replay_one(
         per_leg_timestamps.append(contract_bars["timestamp"].tolist())
         resolved_leg_rows.append({
             "leg_id": leg["leg_id"], "side": leg["side"], "option_type": leg["option_type"],
+            "anchor": str(leg.get("anchor", "")),
+            "relative_offset_steps": int(leg.get("relative_offset_steps", 0)),
             "strike": float(leg["strike"]), "expiry": canonical_expiry(leg["expiry"]),
+            "expiry_role": str(leg.get("expiry_role", "near")),
             "quantity_lots": int(leg["quantity_lots"]), "lot_size": lot_size,
             "entry_open": float(entry_result.row["open"]), "exit_open": float(exit_result.row["open"]),
             "prior_oi": float(oi_val), "prior_oi_timestamp": prior_ts.isoformat(),
-            "entry_range_proxy_pct": range_value, "entry_status": "PASS", "exit_status": "PASS",
+            "entry_range_proxy_pct": range_value, "entry_status": "PASS", "prior_oi_status": "PASS",
+            "range_proxy_status": "PASS", "exit_status": "PASS",
         })
         leg_inputs.append({
             "side": leg["side"],
