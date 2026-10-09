@@ -439,3 +439,13 @@ First run failed closed on code-fingerprint drift and exposed escaped workflow e
 - Job status: success
 - Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
 - Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
+
+## Latest verified replay evidence — 2026-10-10
+
+- Canonical evidence-repair run: [37990362985](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985); replay, validation, artifact upload and persistence succeeded.
+- Accepted v0.2.1 ledger: 480 rows; 40 frozen configurations × 24 development/validation events; 379 `EXCLUDED_OHLC_RANGE_PROXY`, 100 `BLOCKED_LEG_ELIGIBILITY`, 1 `REPLAY_PASS`; zero replay exceptions and zero source file errors.
+- Payload audit: the 379 range-excluded rows and the single replay pass preserve complete selected-leg records. The 100 OI-blocked rows each contain a conclusive required-leg prior-OI failure (observed prior OI below 100), but remaining strategy legs are not all audited in this Phase 52 artifact.
+- Phase 54 consumed the matching ledger byte-for-byte and completed its preregistered 11-threshold coverage sensitivity in [run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101). Results are coverage-only; see the linked Phase 54 report on its branch.
+- **Scientific conclusion unchanged:** only 1/480 row passed the frozen 2% gate. This does not establish profitability. No factor selector is validated and no strategy is promoted.
+- **Next bounded engineering task:** Phase 55 now closes the remaining full-leg-audit gap for the 100 resolver-level OI blocks. It keeps the grid, source revision, 2% baseline, costs, splits and holdout unchanged. Current Phase 55 rerun: [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521); full row/leg validation remains pending.
+- Ledger blob SHA: `dc0d600be6bd96da6e016623f6b5f4ffaef9a644`; pinned source revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`.
