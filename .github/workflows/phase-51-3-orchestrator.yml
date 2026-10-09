@@ -1,6 +1,8 @@
 name: Phase 51-3 Orchestrator
 
 on:
+  schedule:
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   pull_request:
     branches: [main]
