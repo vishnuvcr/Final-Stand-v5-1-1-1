@@ -816,3 +816,8 @@ The first complete GitHub Actions retry succeeded: [run 37924369419](https://git
 
 
 **Latest research checkpoint (2026-10-09):** the first Actions execution passed the registry/grid audit (312 hypotheses; grid v1.3 = 9,379,584 configurations) but stopped before market-data analysis due to a brittle factor-binning self-test. The test was patched before any P&L calculations; the failure is recorded in [F52-005](PHASE52_ERROR_LOG.md). The grid-size feasibility decision is logged as [F52-006](PHASE52_ERROR_LOG.md). A legacy outcome-matrix selector test is the first numerical stage; NIFTY futures basis and true synthetic-future divergence are not present in that seed feature panel and will not be claimed as tested.
+
+
+### Phase 52 selector screen — current result (2026-10-09)
+
+The corrected recurring workflow completed successfully in [run 37927040268](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927040268). The point-in-time join matched 6,617 of 9,699 legacy Phase45 trade rows (68.2%). All six development-selected factor policies had negative 2024–25 validation net P&L. The VIX router was least negative at -₹63,547, but its +₹1,411 per-expiry relative stress uplift had a 95% paired block-bootstrap CI of [-₹915,+₹4,290] and Holm-adjusted p=0.985. This is not statistically significant. The 2026 holdout was not evaluated because only 13 expiry observations matched. No selector or strategy is promoted. The 9,379,584 finite-grid configuration queue is still largely queued/enumerated, not backtested.
