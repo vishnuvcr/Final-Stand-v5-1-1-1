@@ -2,6 +2,8 @@ name: Phase 51-3 Orchestrator
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
     paths:
@@ -59,10 +61,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin phase-51-3-available-data-strategy-sweep
+          tmp=$(mktemp -d)
+          cp -R results/phase51/available_oos "$tmp/available_oos"
           git checkout -B phase-51-3-available-data-strategy-sweep origin/phase-51-3-available-data-strategy-sweep
           rm -rf results/phase51/available_oos
           mkdir -p results/phase51
-          cp -R "$GITHUB_WORKSPACE/results/phase51/available_oos" results/phase51/
+          cp -R "$tmp/available_oos" results/phase51/
           git add results/phase51/available_oos
           git diff --cached --quiet || git commit -m "Phase 51-3: publish available-data OOS results"
           git push origin HEAD:phase-51-3-available-data-strategy-sweep
