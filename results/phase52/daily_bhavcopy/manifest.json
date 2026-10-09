@@ -1,6 +1,6 @@
 {
   "status": "DAILY_EOD_FACTOR_BUILD_WITH_COVERAGE_AUDIT",
-  "created_at_utc": "2026-10-09T12:38:02.534500+00:00",
+  "created_at_utc": "2026-10-09T12:40:04.880448+00:00",
   "hf_option_dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "hf_index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
   "nse_fno_archive_repo": "SantoshSrinivas79/NSE-FNO-Data-bank",
@@ -48,24 +48,24 @@
       "non_null_fraction": 0.984375
     },
     "front_future_basis_bps": {
-      "non_null_rows": 161,
+      "non_null_rows": 256,
       "feature_rows": 256,
-      "non_null_fraction": 0.62890625
+      "non_null_fraction": 1.0
     },
     "front_future_volume": {
-      "non_null_rows": 161,
+      "non_null_rows": 256,
       "feature_rows": 256,
-      "non_null_fraction": 0.62890625
+      "non_null_fraction": 1.0
     },
     "front_future_open_interest": {
-      "non_null_rows": 161,
+      "non_null_rows": 256,
       "feature_rows": 256,
-      "non_null_fraction": 0.62890625
+      "non_null_fraction": 1.0
     },
     "front_future_open_interest_change_pct_1d": {
-      "non_null_rows": 160,
+      "non_null_rows": 255,
       "feature_rows": 256,
-      "non_null_fraction": 0.625
+      "non_null_fraction": 0.99609375
     }
   },
   "futures_basis_type": "prior-session front-month NIFTY futures EOD close minus same-session NIFTY index EOD close; not intraday lead-lag",
