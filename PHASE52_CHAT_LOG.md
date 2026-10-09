@@ -109,3 +109,12 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Deterministic replay kernel tests passed (run 37957753452). First run 37957499754 failed to write its manifest after SELF_TEST_PASS due to a literal runner-temp path; corrected and verified.
 - The finite configuration queue is at 360,000 / 9,379,584 enumerated, not backtested. No Phase52 grid P&L and no promotion.
 - Next: source/specification-aware family-template resolver, exact multi-leg combination, common exits, and end-to-end golden fixtures before the first real-data configuration slice.
+
+
+## User said “Resume” — 2026-10-09 22:38 IST
+
+- Resumed by auditing latest successful/failed Actions runs, current branch source, protocol and status/error/research logs.
+- Template resolver synthetic test [37959442745](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37959442745) and kernel/fee parity [37958266044](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37958266044) had passed separately.
+- Reviewed resolver quantities against protocol and found reference-lot scaling absent; patched before historical configuration P&L and added scaling self-tests.
+- Initial integrated run 37960340815 failed because the butterfly fixture accidentally supplied an explicit [1,1] ratio. Corrected fixture; successful run 37960484240 passed all stages.
+- Current state remains synthetic engineering validation only: 45 option-only templates, 270 synthetic cost scenarios, no historic Phase52 grid P&L, no promotion. Next step is a tightly bounded historical replay pilot with strict source/leg/cost manifests.
