@@ -22,3 +22,11 @@
 - Rows with prior-OI-qualified selections: 3892
 - Exact entry fill bars available: 2232
 - Model delta is diagnostic only; no P&L or promotion.
+
+
+## 2026-10-09 — Step 2.8: Corrected strike/delta audits and deterministic kernel tests accepted
+
+- **ATM_OFFSET run:** [37956261518](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956261518), successful. Corrected selected-strike summary hashes the current script and protocol. All 267 source option files were read without errors. Of 27,768 strike-offset/type rows, 10,552 had prior OI≥100, 10,501 had both prior OI and valid exact entry OHLC, and 10,405 also had exact-index and valid expiry-exit support.
+- **ABS_DELTA run:** [37956675818](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956675818), successful. All 4,272 pre-registered target-delta/type checks across 267 expiry files were emitted with zero source errors. 232 rows had no exact prior-minute input; 148 had no prior-OI-qualified candidate; 3,892 passed the OI gate; 2,232 had valid exact entry bars. IV/delta is European Black–Scholes estimation at 6% rate, zero dividend yield, not exchange-published Greek.
+- **Kernel run:** [37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed synthetic exact-bar, common timestamp, OI, fill/slippage, cost, range proxy, TP and fail-closed tests. The first run 37957499754 was an infrastructure path failure after `SELF_TEST_PASS`, resolved by using the runner-temp environment variable.
+- **Decision:** PA-011/012/013 audit fixes are verified. No Phase52 configuration P&L exists. Next is the source-reconciled family parser and end-to-end leg combination/exit/cost golden fixtures; the full finite grid remains a queue, not backtest results.
