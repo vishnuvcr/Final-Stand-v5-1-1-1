@@ -1,7 +1,7 @@
 {
   "phase": "54",
   "status": "OHLC_REFERENCE_SENSITIVITY_COMPLETE_NON_EXECUTABLE",
-  "created_at_utc": "2026-10-09T20:32:46.247739+00:00",
+  "created_at_utc": "2026-10-09T20:33:02.724238+00:00",
   "input": {
     "path": "results/phase52/historical_pilot/event_replay.csv",
     "row_count": 480,
