@@ -31,3 +31,12 @@ The full Phase-51 OOS interval remains 2026-04-21 through 2026-08-04. The 2026-0
 
 ## Next bounded step
 Proceed to a vendor/authorized-API access feasibility check for the two missing sessions (e.g., commercial full-chain archive or an authorized broker API). Do not purchase data or assume credentials without user authorization. If no authorized source is available, close the data-recovery subphase as blocked and retain the partial-OOS results as descriptive only.
+# Phase 51-1J Free Source Status
+
+**State: FREE SOURCE CANDIDATE AUDIT RUNNING — NOT YET DATA-ACCEPTED.**
+
+Public Hugging Face history lists both target files: [2026-07-28](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/commit/dbc0596) and [2026-08-04](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/commit/51ca58c). The dataset card specifies CC BY-NC 4.0 and warns that option coverage is partial. File presence does not prove required contracts or minute coverage.
+
+Automated metadata-only audit: [run 37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582). The preceding run 37916552983 failed before downloads due to a workflow setup assumption and is logged in the error log; the workflow was patched and retriggered.
+
+No raw source files are committed to the repository. No P&L has been calculated from this candidate. Phase 51 remains blocked until both sessions pass timestamp, coverage, data-integrity, provenance and licence checks.
