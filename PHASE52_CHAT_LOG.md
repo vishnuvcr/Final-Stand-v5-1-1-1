@@ -218,3 +218,10 @@ User requested that issues be resolved. Investigation identified a material v0.1
 - Job status: success
 - Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
 - Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
+
+## User continuation — 2026-10-10 — Phase 52/54 checkpoint and next audit gate
+
+- Phase 52 evidence-repair run [37990362985](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985) passed replay, 480-row validation, artifact upload and persistence. All 379 OHLC-range exclusions now contain complete selected-leg payloads; 100 resolver-level prior-OI blocks retain a conclusive required-leg OI failure but do not yet include every selected leg.
+- Phase 54 consumed the byte-identical corrected ledger and passed [run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101): coverage by 2, 3, 4, 5, 6, 8, 10, 12, 15, 20 and 1000% OHLC range thresholds was 1, 1, 8, 24, 55, 91, 150, 227, 298, 345 and 380 rows. Fixed prior-OI blockers=100 at every threshold; each threshold reconciled to 480.
+- Interpretation: coverage-only diagnostic. Candle range is not a bid/ask spread; no profitability, fill, exit or strategy superiority conclusion. No holdout or promotion.
+- To satisfy Phase 55's stricter every-selected-leg audit, the strategy resolver and runner were changed to continue after OI failures, retain all legs and record NOT_TESTED/pass/fail states where supported; the regression suite adds a multi-leg OI-failure case. Frozen source/grid/costs/splits/thresholds stay unchanged. Full rerun is ongoing in [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521).
