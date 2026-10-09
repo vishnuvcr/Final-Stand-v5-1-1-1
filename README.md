@@ -858,3 +858,6 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Queue checkpoint:** Run [37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) advanced deterministic configuration enumeration to offset 260,000 of 9,379,584. This is enumeration only; the full variable-grid backtest remains unstarted.
+
+
+**Strategy-specification progress (PA-010):** Source review of the Phase45 strategy plan and sweep code reconciled exact leg geometry for 11 named presets (condors, butterflies, Reverse Jade Lizard, Range Forward, Bear Risk Reversal, Batman and Double Plateau). Specification blockers are reduced to four genuinely unresolved families: Calendar Trap, Iron-Condor-to-Ratio transition, conversion/reversal, and futures-basis overlay. Registry revalidation is pending; this is not a backtest result. See [Phase52 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_RESEARCH_PLAN.md) and [strategy specification registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/strategy_specifications.csv).
