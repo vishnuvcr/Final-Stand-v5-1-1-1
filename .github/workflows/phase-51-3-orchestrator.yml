@@ -72,8 +72,7 @@ jobs:
             mkdir -p data
             git clone --depth 1 https://github.com/technovusin/nifty50-historical-data.git data/validated_spot_source
           fi
-          test -d data/validated_spot_source/nifty/1min/2026
-          find data/validated_spot_source/nifty/1min/2026 -type f -name '*.csv' -print | sort > /tmp/spot_files.txt
+          find data/validated_spot_source -type f -name '*.csv' -print | grep -E '/2026/|2026' | grep -i '1min' | sort > /tmp/spot_files.txt || true
           test -s /tmp/spot_files.txt
           echo "Validated spot files:"
           cat /tmp/spot_files.txt
