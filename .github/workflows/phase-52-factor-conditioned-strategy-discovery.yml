@@ -78,7 +78,7 @@ jobs:
 
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
-          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit results/phase52/daily_eod_selector results/phase52/configuration_event_universe
+          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit results/phase52/daily_eod_selector results/phase52/configuration_event_universe results/phase52/option_quote_coverage
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
       - name: Install replay and audit dependencies
@@ -117,6 +117,12 @@ jobs:
 
       - name: Build exact timestamp event universe for the finite config grid
         run: python research/phase52/configuration_event_universe.py
+
+      - name: Test option quote coverage audit semantics
+        run: python research/phase52/option_quote_coverage_audit.py --self-test-only
+
+      - name: Audit all exact option entry/exit bar availability across the config event universe
+        run: python research/phase52/option_quote_coverage_audit.py
 
       - name: Audit exact 10:00 entry-timestamp coverage by option expiry
         run: python research/phase52/expiry_coverage_audit.py
@@ -220,6 +226,7 @@ jobs:
           coverage_report = json.loads(Path("results/phase52/coverage_audit/summary.json").read_text())
           bhavcopy_manifest = json.loads(Path("results/phase52/daily_bhavcopy/manifest.json").read_text())
           event_universe = json.loads(Path("results/phase52/configuration_event_universe/summary.json").read_text())
+          option_quote_audit = json.loads(Path("results/phase52/option_quote_coverage/summary.json").read_text())
           eod_selector_manifest = json.loads(Path("results/phase52/daily_eod_selector/manifest.json").read_text())
           import pandas as pd
           eod_selector_rows = pd.read_csv("results/phase52/daily_eod_selector/selector_results.csv")
@@ -236,7 +243,8 @@ jobs:
             f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
             f"- Pinned base replay: {base_manifest['status']}; revision={base_manifest['dataset_revision']}; trade rows={base_manifest['trade_rows']}; strategies={base_manifest['strategies']}; license gate={base_manifest['license_gate']}.\n"
-            f"- Configuration event universe: {event_universe['status']}; source expiries={event_universe['source_option_expiry_files']}; expected grid events={event_universe['expected_event_count']}; exact index entry ticks={event_universe['exact_index_entry_timestamp_count']}; missing exact index ticks={event_universe['events_without_exact_index_entry_timestamp']}; no option-leg audit/P&L yet.\n"
+            f"- Configuration event universe: {event_universe['status']}; source expiries={event_universe['source_option_expiry_files']}; expected grid events={event_universe['expected_event_count']}; exact index entry ticks={event_universe['exact_index_entry_timestamp_count']}; missing exact index ticks={event_universe['events_without_exact_index_entry_timestamp']}.\n"
+            f"- Exact option bar coverage: {option_quote_audit['status']}; event rows audited={option_quote_audit['event_rows_with_audit_results']}/{option_quote_audit['expected_event_rows']}; events with option rows at exact entry={option_quote_audit['events_with_any_option_row_at_exact_entry']}; entries with OI-qualified contracts={option_quote_audit['events_with_any_oi_eligible_contract_at_entry']}; source file errors={option_quote_audit['source_file_errors']}; config-specific legs still require replay-worker checks.\n"
             f"- Fixed 10:00 coverage audit: {coverage_report['status']}; source expiries={coverage_report['option_expiry_files_in_scope']}; base matrix expiries={coverage_report['unique_expiries_in_base_matrix']}; last source expiry={coverage_report['last_source_option_expiry']}; last matrix expiry={coverage_report['last_matrix_expiry']}; missing/unreplayed={coverage_report['source_expiry_rows_not_fully_replayed']}.\n"
             f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
             f"- Prior-session NSE EOD factor build: {bhavcopy_manifest['status']}; event coverage={bhavcopy_manifest['feature_event_coverage']:.1%}; missing archive paths={bhavcopy_manifest['missing_archive_paths']}; file errors={bhavcopy_manifest['archive_file_errors']}; not intraday futures basis.\n"
@@ -282,6 +290,7 @@ jobs:
             research/phase52/results/factor_attribution
             results/phase52/base_replay
             results/phase52/configuration_event_universe
+            results/phase52/option_quote_coverage
             results/phase52/coverage_audit
             results/phase52/data_readiness
             results/phase52/daily_bhavcopy
@@ -298,7 +307,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
