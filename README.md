@@ -855,3 +855,6 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Persistence guard refinement:** The stale-output guard now leaves a valid placeholder path when no accepted selected-strike output exists, avoiding a secondary git-add failure. This is logged as F52-028; workflow verification is still pending.
+
+
+**Queue checkpoint:** Run [37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) advanced deterministic configuration enumeration to offset 260,000 of 9,379,584. This is enumeration only; the full variable-grid backtest remains unstarted.
