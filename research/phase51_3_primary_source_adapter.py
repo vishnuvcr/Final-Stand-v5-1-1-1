@@ -33,9 +33,10 @@ def prepare():
     sha = _sha256(p)
     if size != EXPECTED_BYTES or sha != EXPECTED_SHA256:
         raise RuntimeError(f"Primary option source integrity mismatch: bytes={size}, sha256={sha}")
-    spot_files = sorted(glob.glob(str(SPOT_ROOT / "nifty" / "1min" / "2026" / "*.csv")))
+    spot_files = sorted(glob.glob(str(SPOT_ROOT / "**" / "*.csv"), recursive=True))
+    spot_files = [f for f in spot_files if "2026" in f and "1min" in f.lower()]
     if not spot_files:
-        raise RuntimeError(f"No validated 2026 1-minute NIFTY spot files under {SPOT_ROOT}")
+        raise RuntimeError(f"No validated 2026 1-minute NIFTY spot CSVs under {SPOT_ROOT}")
     return p, spot_files
 
 _OPTIONS_PATH = None
