@@ -278,8 +278,8 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Root cause:** The workflow's commit was rebased onto concurrent human-authored research updates and Git reported a content conflict in `PHASE52_STATUS.md`. The older workflow had no safe append-only conflict resolver.
 - **Impact:** The event-universe audit output was generated, but that run could not push its checkpoint. No strategy P&L was accepted from this run.
 - **Correction:** Added bounded fetch/rebase/push retries and a restricted conflict-union resolver for append-only status/research/error logs. It refuses to auto-resolve conflicts in code or result data.
-- **Verification:** Run [37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) is testing the revised workflow but has remained in the exact option-coverage step without a fresh GitHub job update. A later run is queued behind it. End-to-end persistence is not yet verified.
-- **Status:** PATCHED IN WORKFLOW; verification pending.
+- **Verification:** Run [37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) completed successfully after the revised bounded rebase/push path; audit outputs and checkpoint persisted without a failed step.
+- **Status:** RESOLVED for the tested status/log conflict path. Non-log result-file conflicts remain fail-closed.
 
 
 ## F52-025 — Stale workflow run blocked selected-strike validation queue — MITIGATION RUNNING
@@ -299,3 +299,11 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction:** ATM and rank-offset selection now uses only strikes present at the exact entry timestamp, with exact timestamp keying and OI/OHLC gates applied to that timestamp's rows.
 - **Impact:** No P&L or selected-strike result has been accepted. The currently running workflow may have checked out the earlier draft; its output must be treated as superseded unless the run provenance proves it used the patched commit.
 - **Status:** PATCHED IN SOURCE; end-to-end verification required on the patched commit.
+
+
+## F52-025 — Stale workflow run blocked selected-strike validation queue — MITIGATION IN PROGRESS
+
+- **Date:** 2026-10-09
+- **Observation:** Run 37935663113 remained in broad option coverage longer than the prior successful run, and the next run stayed pending under the original concurrency group.
+- **Correction:** Versioned the workflow concurrency group to `phase52-factor-conditioned-strategy-discovery-v2`; run [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472) started in the new group. Another old-group run 37936777969 also began, so duplicate audit outputs must be reconciled by code revision and hashes.
+- **Status:** MITIGATION IN PROGRESS; run 37937318538 is queued and is expected to use the latest point-in-time strike-ladder correction.
