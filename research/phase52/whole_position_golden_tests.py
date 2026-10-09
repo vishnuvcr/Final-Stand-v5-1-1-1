@@ -221,7 +221,7 @@ def _self_test() -> dict[str, Any]:
     assert ratio_position["status"] == "SYNTHETIC_WHOLE_POSITION_PASS", ratio_position
     assert ratio_position["lot_quantities"] == [4, 2], ratio_position["lot_quantities"]
 
-    butterfly_cfg = dict(BASE_CONFIG, leg_ratio=[1, 1], reference_lots_per_leg=2)
+    butterfly_cfg = dict(BASE_CONFIG, reference_lots_per_leg=2)
     butterfly_resolved = resolve_position("BULL_BUTTERFLY", butterfly_cfg, event, entry, prior, expiries)
     butterfly_position = replay_synthetic_position(butterfly_resolved, butterfly_cfg, entry, prior, exit_chain)
     assert butterfly_position["lot_quantities"] == [2, 4, 2], butterfly_position["lot_quantities"]
