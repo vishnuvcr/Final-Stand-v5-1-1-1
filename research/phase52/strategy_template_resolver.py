@@ -612,11 +612,15 @@ def resolve_template(
 
     if exclusions:
         first = exclusions[0]
+        if first.get("status") == "PRIOR_OI_MISSING_OR_BELOW_GATE":
+            row_reason = "a required selected leg lacks exact prior-bar OI at or above 100"
+        else:
+            row_reason = str(first.get("detail", "a required selected leg failed exact entry/OI eligibility"))
         return {
             "status": "BLOCKED_LEG_ELIGIBILITY",
             "family_id": family_id,
             "template_rule_id": rule_id,
-            "reason": str(first.get("detail", "a required selected leg failed exact entry/OI eligibility")),
+            "reason": row_reason,
             "leg_exclusions": exclusions,
             "audit_legs": audit_legs,
             "legs": resolved_legs,
