@@ -88,3 +88,8 @@ The initial ATM-offset coverage artifact used rank offsets among available strik
 ### PA-013 — 2026-10-09 — Make ATM-offset OI eligibility strictly prior-bar
 
 The ATM-offset coverage audit originally used the entry-timestamp OI field while separately treating the same bar's open as the fill price. Because a minute bar's OI snapshot may only be available on/after bar completion, this is not safe as a known-at-open eligibility gate. The corrected audit uses OI from the exact prior completed minute (entry_ts minus one minute) for the OI>=100 rule, requires a valid exact entry-time OHLC bar separately, and reports the entry-bar OI as diagnostics only. If the prior-minute target contract/OI row is absent, the leg fails this gate instead of carrying forward a previous value or using current-bar OI. No P&L has been computed and the v1.3 grid is unchanged.
+
+
+## 9. Kernel-tested execution and accounting primitives
+
+Synthetic kernel tests are green in [run 37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452). The tested primitives refuse nearest-timestamp/strike substitution, require valid exact contract OHLC bars, use only prior-bar OI for entry eligibility, use exact common timestamps for multi-leg exits, apply adverse slippage to each leg fill, and calculate statutory fees independently of the brokerage/slippage scenarios. A high-low/open liquidity statistic is explicitly an OHLC range proxy, not bid/ask spread. A take-profit signal is recognized on completed portfolio P&L and must fill at the next exact common-minute open. These tests are synthetic unit evidence only; they do not imply that the strategy-family resolver, source data coverage or full-grid runner has passed.
