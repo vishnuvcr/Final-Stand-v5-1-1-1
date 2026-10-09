@@ -1,10 +1,10 @@
 {
-  "pilot_version": "phase52-historical-base-pilot-v0.2",
+  "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
   "status": "PREREGISTERED_BEFORE_HISTORICAL_PNL",
   "created_at_ist": "2026-10-10",
   "parent_grid_version": "phase52-grid-v1.3",
   "replay_protocol": "phase52-replay-v1.0",
-  "intent": "Engineering rerun to verify exact whole-row duplicate normalization on pinned historical files. The frozen 40 configurations and 24 events are unchanged; no strategy selection/promotion. Only byte-identical full-row duplicates are removed after canonical type/timestamp/numeric normalization. Conflicting rows for the same contract/time remain blocked.",
+  "intent": "Audit-schema correction after v0.2 artifact reconciliation: retain exact resolved contract metadata, option type, strike, anchor/offset, prior-OI timestamp and measured OHLC high/low/open in range-proxy exclusion rows, and name pre-/post-dedup row counts unambiguously. The frozen 40 configurations, 24 selected events, OI>=100 gate, 2% OHLC range proxy, entry/exit timestamps, costs, splits, and holdout treatment are unchanged; no strategy selection or promotion.",
   "market_data": {
     "dataset": "thetrademarkk/india-index-options-1m",
     "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
