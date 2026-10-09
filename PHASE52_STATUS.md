@@ -16,7 +16,7 @@
 | Data coverage and licensing | NOT STARTED / GATED | Preserve the Phase 51 gap for 2026-07-28 and 2026-08-04. No P&L until timestamp/contract coverage and licensing pass. |
 | Finite-grid enumeration | IN PROGRESS | Grid v1.3 has 9,379,584 configurations; 25,000 per day implies about 376 enumeration runs. Enumeration is not replay. |
 | Replay engine/data integration | NOT STARTED | Reuse existing audited engines where semantics match; otherwise implement source-faithful generic multi-leg replay and independent tests. |
-| Legacy factor-selector pilot | IMPLEMENTED; SELF-TEST FAILED | Run 37925891660 found a brittle unit-test assumption before data analysis; fixed in commit 50fac930 and pending rerun. No factor P&L conclusion yet. |
+| Legacy factor-selector pilot | VALIDATION-ONLY COMPLETE — NO PROMOTION | Run 37925891660 found a brittle unit-test assumption before data analysis; fixed in commit 50fac930 and pending rerun. No factor P&L conclusion yet. |
 | Untouched OOS confirmation | NOT STARTED | Keep confirmation intervals protected before selection freeze. |
 | Promotion / live readiness | NOT STARTED | No strategy is promoted or approved for live execution. |
 | Manuscript and supplements | NOT STARTED | Produce after evidence and inference gates are complete. |
@@ -94,3 +94,15 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Source leads newly recorded: 0.
 - Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
 - Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.
+
+
+## Latest verified checkpoint — 2026-10-09, run 37927040268
+
+- **Workflow:** [37927040268](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927040268) completed successfully. Registry validation, selector pilot self-test, source discovery, finite-grid checkpoint, status/log append and branch persistence all passed.
+- **Source-feature leakage audit:** PASS. Existing point-in-time rules prohibit option-chain timestamp mismatch, interpolation, forward fill and use of control-direction/outcome fields as features.
+- **Legacy selector pilot input:** 9,699 Phase45 outcome rows; 477 Phase39 feature snapshots; 6,617 rows matched point-in-time to a same-expiry feature record (68.22%). Matched coverage: development 76.63%/102 expiries; validation 58.47%/60 expiries; 2026 holdout 61.90%/13 expiries.
+- **Validation-only conclusion:** All six selected factor policies had negative total validation net P&L. The VIX router was least bad with net `-₹63,547` and legacy 1.5× all-cost stress `-₹64,634`; paired mean stress-uplift versus the fixed baseline was `+₹1,411/expiry`, 95% block-bootstrap CI `[-₹915, +₹4,290]`, one-sided p `0.1642`, Holm-adjusted p `0.9850`. Its uplift is not statistically significant; its total net remains negative. Other policies also failed to outperform the baseline with adjusted significance.
+- **2026 holdout:** Not evaluated. Only 13 expiry sessions have matched legacy feature snapshots, below the preregistered 20-expiry threshold. No holdout or confirmation claim.
+- **Interpretation:** This is an exploratory legacy-outcome selector screen, not a test of all 312 hypotheses or the 9,379,584 registered variable configurations. No candidate is promoted.
+- **Next gate:** implement the source-faithful variable-configuration replay engine. The finite queue advances from offset 35,000 to 60,000 in this run; its records are still enumeration, not backtests.
+- **Known limits:** current seed factor panel includes VIX, IV/Greeks, OI/PCR, spot, global-market and sentiment proxies, but it does not supply verified intraday traded-futures basis or a true synthetic-futures lead/lag panel. Current 2026 RISSIN intraday OI is not available for OI-based replay; legacy HF data license is CC BY-NC 4.0 and is research-only pending rights review.
