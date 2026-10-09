@@ -425,3 +425,22 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **ABS_DELTA:** [Run 37956675818](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956675818) produced the corrected prior-minute/model-IV summary with code/protocol fingerprints, 267/267 files, zero source errors, and no current-bar close lookahead. Only 2,232/4,272 selected delta/type rows had a valid exact entry-bar fill reference; 3,892 rows passed predecision OI.
 - **Inference:** These successful audits mean only that the coverage/model-selection scans executed cleanly. Missing exact entry bars and the incomplete index tail remain explicit. They are not completed strategy legs, P&L, or promotion evidence.
 - **Status:** Audit implementation defect gate closed; production strategy resolver and complete grid P&L remain not started.
+
+
+## F52-039 — Replay-kernel evidence manifest wrote to literal runner-temp path — RESOLVED
+
+- **Date:** 2026-10-09.
+- **Initial run:** [37957499754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957499754).
+- **Observed:** Synthetic kernel assertions printed `SELF_TEST_PASS`, but the following Python manifest writer addressed `$RUNNER_TEMP/phase52-kernel-test/manifest.json` as a literal path and raised FileNotFoundError.
+- **Impact:** The first overall workflow was red although its tests had passed; the evidence manifest was not written. No market data or P&L was involved.
+- **Correction:** Manifest path now uses `os.environ["RUNNER_TEMP"]`.
+- **Verification:** [Run 37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed and uploaded test evidence. Self-test covered exact bar matching, common timestamps, prior-bar OI, ₹1,293.50 hand-computed gross P&L, six brokerage/slippage cases, OHLC-range proxy, TP next-open, and fail-closed config gates.
+- **Status:** RESOLVED.
+
+## F52-040 — Closure of PA-011/PA-012/PA-013 coverage implementation defects — VERIFIED; full replay still blocked
+
+- **Date:** 2026-10-09.
+- **ATM-offset:** [Run 37956261518](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956261518) emitted the corrected code/protocol fingerprinted result across all 267 source files with zero source errors. It uses exact-time NIFTY open, exact-time modal strike spacing, true strike-step arithmetic, and OI from the exact prior minute.
+- **ABS_DELTA:** [Run 37956675818](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956675818) emitted a fingerprinted diagnostic result for all 4,272 checks with zero file errors, prior-bar-only input semantics, and a separate exact entry-bar open gate. Only 2,232 selection rows have valid entry fill bars.
+- **Inference:** These close the audit-code defects, not the market-data or strategy profitability gates. They are not evidence of returns or that every configured multi-leg position is executable.
+- **Status:** Coverage-audit implementation gate resolved; end-to-end configuration strategy runner and full finite-grid P&L are still not implemented.
