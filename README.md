@@ -11,6 +11,9 @@
 
 ---
 
+**Next authorized-data candidate:** [Options Data NIFTY 1-minute options catalog](https://optionsdata.shop/data/nifty-options-historical-data) advertises OHLCV + OI for all traded strikes through October 2026, with a 2026 calendar-year options pack listed at ₹2,999. The free sample is only 15–17 September 2026 and does not prove the two missing sessions exist in the selected pack. This is an independent vendor, not exchange-affiliated; no bid/ask or Greeks are included. [Vendor feasibility addendum](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1J-tradingtick-source-audit/results/phase51/phase51_1J_tradingtick/VENDOR_FEASIBILITY_ADDENDUM.md). **No purchase made**; exact target-date/contract coverage and licence/storage terms must be confirmed before acquisition. Raw licensed files must not be published to the public repo unless explicitly permitted.
+
+
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
 ## Phase 51 full-window OOS — DATA-BLOCKED (freshness re-audit 2026-10-09)
