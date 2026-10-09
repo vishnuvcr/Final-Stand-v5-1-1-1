@@ -122,9 +122,11 @@ def main() -> int:
         )
         append(ROOT / "PHASE52_ERROR_LOG.md", error_block)
 
+    # Source code and the preregistered plan are already versioned before this run.
+    # Persist only its outputs and append-only docs; never stage an older checkout of
+    # source files if a manual correction landed while an Actions run was executing.
     branch_commit = persist_repo(ROOT, BRANCH, LOG_PATHS + [
-        "research/phase52/first_historical_pilot.json", "research/phase52/historical_pilot_runner.py",
-        "research/phase52/persist_historical_pilot.py", "results/phase52/historical_pilot"
+        "results/phase52/historical_pilot"
     ], f"Phase52 historical pilot checkpoint run {RUN_ID}")
 
     main_repo = ROOT / "main-docs"
