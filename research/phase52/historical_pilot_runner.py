@@ -333,6 +333,13 @@ def load_cached_inputs(revision: str, expiries: Sequence[str], token: str | None
             # The dataset's immutable file path is the expiry key for this partition.
             frame["expiry"] = expiry
         frame = frame.dropna(subset=["timestamp", "strike"]).sort_values(["timestamp", "option_type", "strike"], kind="stable")
+        rows_before_exact_dedup = int(len(frame))
+        # Remove only rows identical across every source column after canonical
+        # timestamp/type/numeric normalization. Conflicting rows for the same
+        # timestamp/expiry/type/strike are deliberately retained and fail closed
+        # in exact_rows()/select_exact_bar(); never average or pick one.
+        frame = frame.drop_duplicates(keep="first").reset_index(drop=True)
+        exact_duplicate_rows_removed = rows_before_exact_dedup - int(len(frame))
         option_frames[expiry] = frame
         source_audit.append({
             "source_type": "OPTION_EXPIRY",
@@ -340,6 +347,8 @@ def load_cached_inputs(revision: str, expiries: Sequence[str], token: str | None
             "revision": revision,
             "sha256": digest,
             "bytes": int(path.stat().st_size),
+            "rows_source_after_normalization": rows_before_exact_dedup,
+            "exact_duplicate_rows_removed": exact_duplicate_rows_removed,
             "rows": int(len(frame)),
             "timestamp_min": frame["timestamp"].min().isoformat() if len(frame) else None,
             "timestamp_max": frame["timestamp"].max().isoformat() if len(frame) else None,
@@ -355,7 +364,7 @@ def event_record(event: Mapping[str, Any], conf: Mapping[str, Any], status: str,
                  source_hash: str | None = None, exit_ts: Any | None = None) -> dict[str, Any]:
     cfg = conf["configuration"]
     return {
-        "pilot_version": "phase52-historical-base-pilot-v0.1",
+        "pilot_version": "phase52-historical-base-pilot-v0.2",
         "grid_version": conf["grid_version"],
         "configuration_id": conf["configuration_id"],
         "candidate_id": conf["candidate_id"],
@@ -822,7 +831,7 @@ def self_test() -> None:
         "configuration_ids_sha256":sha256_text("\n".join(x["configuration_id"] for x in configs)),
         "event_count":len(events),
         "event_ids_sha256":sha256_text("\n".join(events["event_id"].astype(str))),
-        "checks":["exact v1.3 enumerator identities","pilot config filter","event sample fixed before P&L","holdout excluded","OHLC range-proxy gate","missing exact contract fails closed"],
+        "checks":["exact v1.3 enumerator identities","pilot config filter","event sample fixed before P&L","holdout excluded","exact whole-row duplicate removal only","conflicting duplicate contract bars fail closed","OHLC range-proxy gate","missing exact contract fails closed"],
         "historical_data_downloaded":False,
         "pnl_computed":False,
     },indent=2))
