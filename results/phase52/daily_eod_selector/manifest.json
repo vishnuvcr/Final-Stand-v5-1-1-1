@@ -1,0 +1,58 @@
+{
+  "status": "EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION",
+  "created_at_utc": "2026-10-09T12:50:32.727275+00:00",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "base_matrix_sha256": "76b12c6723affbd33cdd736b04e5bba4172cdd5a1ffe9c04b081f69038a081d1",
+  "eod_feature_manifest_sha256": "901d26fbdcc873310b4967efcb9aa56688f34401a06d5f171f38f0df0a7c396c",
+  "eod_features_sha256_gzip": "bbdfe91dc3af418f8165ba0545d0bff6b0d1d9bd8bd67bef5c4002ba1e18b342",
+  "event_rows": 256,
+  "base_matrix_rows": 9699,
+  "matched_event_rows": 256,
+  "selected_baseline_strategy": "buy_call",
+  "selected_modes_from_development_tuning": {
+    "EOD_CALL_OI_CHANGE": [
+      "option_call_oi_near_atm_change_pct_1d"
+    ],
+    "EOD_FUTURES_BASIS": [
+      "front_future_basis_bps"
+    ],
+    "EOD_FUTURES_OI_CHANGE": [
+      "front_future_open_interest_change_pct_1d"
+    ],
+    "EOD_OI_PCR": [
+      "option_oi_pcr_near_atm_5steps"
+    ],
+    "EOD_OI_X_BASIS": [
+      "option_oi_pcr_near_atm_5steps",
+      "front_future_basis_bps"
+    ],
+    "EOD_PUT_OI_CHANGE": [
+      "option_put_oi_near_atm_change_pct_1d"
+    ],
+    "EOD_VOLUME_PCR": [
+      "option_volume_pcr_near_atm_5steps"
+    ],
+    "EOD_VOLUME_X_BASIS": [
+      "option_volume_pcr_near_atm_5steps",
+      "front_future_basis_bps"
+    ]
+  },
+  "training_and_selection": "early 70% of development fits the feature cutpoints and state mappings; later 30% of development tunes which feature recipe each mode uses; 2024-25 validation and 2026 holdout are not used to fit feature thresholds or strategy maps",
+  "cost_labels": {
+    "net50": "Inherited Phase45 scenario scales all modeled charges to 1.5×; it is not a pure slippage-only stress.",
+    "net100": "Arithmetic extrapolation 2×net50 − net for sensitivity only; not an independently rebuilt cost ledger."
+  },
+  "interpretation": "The daily EOD selector panel is exploratory only. It does not establish intraday futures lead-lag, does not repair missing one-minute option quotes, and is not commercial evidence while NSE data rights are unresolved.",
+  "limitations": [
+    "Only 256 replay events from the pinned legacy HF market source; this is not the full source expiry window.",
+    "Daily EOD OI/PCR and futures basis are lagged proxies, not intraday factors.",
+    "The options dataset is CC BY-NC 4.0 and NSE bhavcopy data remains subject to NSE/rightsholder terms.",
+    "No selector is promoted; any positive result requires adequate validation, untouched holdout and independent source-authorized replay."
+  ],
+  "outputs": [
+    "development_tuning.csv",
+    "selector_results.csv",
+    "factor_coverage.csv",
+    "trades_<mode>_<split>.csv"
+  ]
+}

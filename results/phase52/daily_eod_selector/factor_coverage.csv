@@ -1,0 +1,7 @@
+factor,events,non_null_events,coverage,coverage_development,coverage_validation,coverage_holdout
+front_future_basis_bps,256,256,1.0,1.0,1.0,1.0
+front_future_open_interest_change_pct_1d,256,255,0.99609375,0.9924812030075187,1.0,1.0
+option_call_oi_near_atm_change_pct_1d,256,251,0.98046875,0.9699248120300752,0.9901960784313726,1.0
+option_oi_pcr_near_atm_5steps,256,252,0.984375,0.9699248120300752,1.0,1.0
+option_put_oi_near_atm_change_pct_1d,256,251,0.98046875,0.9699248120300752,0.9901960784313726,1.0
+option_volume_pcr_near_atm_5steps,256,252,0.984375,0.9699248120300752,1.0,1.0
