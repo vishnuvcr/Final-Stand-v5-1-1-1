@@ -1,12 +1,12 @@
-threshold_pct,planned_config_event_rows,rows_meeting_prior_oi_entry_data_and_range_gate,share_of_planned_pct,rejected_for_prior_oi,unassessable_missing_leg_details,rejected_for_entry_data,rejected_for_range_proxy,families_with_at_least_one_qualified_row,note
-2,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-3,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-4,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-5,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-6,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-8,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-10,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-12,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-15,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-20,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
-1000,480,0,0.0,107,373,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+threshold_pct,computable,eligible_rows,share_of_planned_pct,reason
+2,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+3,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+4,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+5,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+6,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+8,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+10,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+12,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+15,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+20,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.
+1000,False,,,Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.

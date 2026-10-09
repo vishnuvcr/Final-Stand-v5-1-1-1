@@ -1,7 +1,7 @@
 {
   "phase": "54",
-  "status": "OHLC_REFERENCE_SENSITIVITY_COMPLETE_NON_EXECUTABLE",
-  "created_at_utc": "2026-10-09T20:34:06.207747+00:00",
+  "status": "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE",
+  "created_at_utc": "2026-10-09T20:36:54.066975+00:00",
   "input": {
     "path": "results/phase52/historical_pilot/event_replay.csv",
     "row_count": 480,
@@ -13,7 +13,20 @@
   "frozen_rules": {
     "baseline_range_proxy_pct": 2,
     "prior_minute_oi_minimum": 100,
-    "thresholds_are_sensitivity_only": true,
+    "thresholds_preregistered": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      10,
+      12,
+      15,
+      20,
+      1000
+    ],
+    "threshold_sensitivity_computed": false,
     "holdout_used": false,
     "raw_data_downloaded": false,
     "historical_pnl_recalculated": false,
@@ -25,167 +38,106 @@
     "EXCLUDED_OHLC_RANGE_PROXY": 379,
     "REPLAY_PASS": 1
   },
-  "status_counts_by_split": {
-    "development": {
-      "EXCLUDED_OHLC_RANGE_PROXY": 239,
-      "REPLAY_PASS": 1
-    },
-    "validation": {
-      "BLOCKED_LEG_ELIGIBILITY": 100,
-      "EXCLUDED_OHLC_RANGE_PROXY": 140
-    }
+  "leg_payload_detail_counts": {
+    "BLOCKED_LEG_ELIGIBILITY::COMPLETE_LEG_PAYLOAD": 20,
+    "BLOCKED_LEG_ELIGIBILITY::PARTIAL_LEG_PAYLOAD": 80,
+    "EXCLUDED_OHLC_RANGE_PROXY::EMPTY_LEG_PAYLOAD": 373,
+    "EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD": 6,
+    "REPLAY_PASS::COMPLETE_LEG_PAYLOAD": 1
   },
-  "strict_prior_oi_fail_row_count": 107,
-  "unassessable_missing_leg_detail_row_count": 373,
+  "complete_leg_payload_rows": 21,
+  "incomplete_leg_payload_rows": 459,
+  "empty_leg_payload_rows": 373,
+  "partial_leg_payload_rows": 86,
+  "range_excluded_rows_with_complete_leg_payload": 0,
+  "strict_prior_oi_blocked_rows_by_parent_status": 100,
+  "range_excluded_rows_by_parent_status": 379,
+  "replay_pass_rows_by_parent_status": 1,
   "threshold_sensitivity": [
     {
       "threshold_pct": 2,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 3,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 4,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 5,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 6,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 8,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 10,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 12,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 15,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 20,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     },
     {
       "threshold_pct": 1000,
-      "planned_config_event_rows": 480,
-      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
-      "share_of_planned_pct": 0.0,
-      "rejected_for_prior_oi": 107,
-      "unassessable_missing_leg_details": 373,
-      "rejected_for_entry_data": 0,
-      "rejected_for_range_proxy": 0,
-      "families_with_at_least_one_qualified_row": 0,
-      "qualified_rows_by_family": {},
-      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage."
     }
   ],
   "interpretation": [
+    "The 480-row parent status reconciliation is retained: 100 BLOCKED_LEG_ELIGIBILITY, 379 EXCLUDED_OHLC_RANGE_PROXY, and 1 REPLAY_PASS.",
+    "A 373-row empty leg payload and partial payloads on range-excluded multi-leg strategies prevent faithful recalculation at alternate thresholds.",
+    "The exclusion reason may identify one failing leg, but the persisted payload does not necessarily include every leg's OHLC/OI values. That is insufficient to determine whether a row would pass a different threshold.",
+    "No alternative threshold eligibility counts are reported. The correct next step is to repair the Phase 52 audit output to preserve all selected legs for every exclusion, then rerun this preregistered sensitivity.",
     "The OHLC high-low/open percentage is a candle-range proxy, not a quoted spread or executable liquidity measure.",
-    "Relaxing this threshold changes only a diagnostic eligibility count; it does not establish valid exits, fills, profitability or strategy superiority.",
-    "Rows blocked by missing/zero strictly prior-minute OI remain blocked under every threshold.",
-    "This output is not a backtest and cannot be used to promote a strategy or tune a live selector."
+    "This is not a backtest; no exits, fills, costs, P&L, strategy superiority or promotion can be inferred."
   ]
 }

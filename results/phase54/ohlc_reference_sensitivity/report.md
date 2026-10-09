@@ -1,28 +1,33 @@
-# Phase 54 OHLC-reference sensitivity
+# Phase 54 OHLC-reference sensitivity feasibility audit
 
-**Non-executable diagnostic only. No P&L was recalculated and no strategy was promoted.**
+**BLOCKED: alternate-threshold eligibility is not computable from the stored parent output. No P&L was recalculated.**
 
 - Input rows: 480
 - Baseline statuses: {"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}
-- Strict prior-minute OI failure rows: 107
-- Rows without per-leg detail (not reclassifiable by this sensitivity): 373
+- Complete per-leg payload rows: 21
+- Incomplete per-leg payload rows: 459
+- Empty leg payload rows: 373
+- Partial leg payload rows: 86
+- Range-excluded rows with complete leg payload: 0
 
-| OHLC range threshold (%) | Rows passing prior-OI + entry-data + range checks | % of 480 | OI rejected | Missing leg detail | Entry-data rejected | Range rejected |
-|---:|---:|---:|---:|---:|---:|---:|
-| 2 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 3 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 4 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 5 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 6 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 8 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 10 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 12 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 15 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 20 | 0 | 0.00% | 107 | 373 | 0 | 0 |
-| 1000 | 0 | 0.00% | 107 | 373 | 0 | 0 |
+| Threshold (%) | Sensitivity computable? | Result |
+|---:|:---:|---|
+| 2 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 3 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 4 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 5 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 6 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 8 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 10 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 12 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 15 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 20 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
+| 1000 | No | Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage. |
 
 ## Interpretation
+- The 480-row parent status reconciliation is retained: 100 BLOCKED_LEG_ELIGIBILITY, 379 EXCLUDED_OHLC_RANGE_PROXY, and 1 REPLAY_PASS.
+- A 373-row empty leg payload and partial payloads on range-excluded multi-leg strategies prevent faithful recalculation at alternate thresholds.
+- The exclusion reason may identify one failing leg, but the persisted payload does not necessarily include every leg's OHLC/OI values. That is insufficient to determine whether a row would pass a different threshold.
+- No alternative threshold eligibility counts are reported. The correct next step is to repair the Phase 52 audit output to preserve all selected legs for every exclusion, then rerun this preregistered sensitivity.
 - The OHLC high-low/open percentage is a candle-range proxy, not a quoted spread or executable liquidity measure.
-- Relaxing this threshold changes only a diagnostic eligibility count; it does not establish valid exits, fills, profitability or strategy superiority.
-- Rows blocked by missing/zero strictly prior-minute OI remain blocked under every threshold.
-- This output is not a backtest and cannot be used to promote a strategy or tune a live selector.
+- This is not a backtest; no exits, fills, costs, P&L, strategy superiority or promotion can be inferred.
