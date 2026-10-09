@@ -264,7 +264,8 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
           "nonmissing_rate_by_split":{s:{c:float(data.loc[data.split==s,c].notna().mean()) if c in data else None for c in cols} for s in ["development","validation","holdout"]}}
     out={
       "status":"FACTOR_SELECTOR_PILOT_COMPLETE_NO_PROMOTION",
-      "input_sha256":{"trade_matrix":hashlib.sha256(Path(trades_path).read_bytes()).hexdigest(),"feature_panel":hashlib.sha256(Path(features_path).read_bytes()).hexdigest()},\n      "source_feature_leakage_audit_status":source_audit.get("status"),
+      "input_sha256":{"trade_matrix":hashlib.sha256(Path(trades_path).read_bytes()).hexdigest(),"feature_panel":hashlib.sha256(Path(features_path).read_bytes()).hexdigest()},
+      "source_feature_leakage_audit_status":source_audit.get("status"),
       "input_audit":audit,"risk_limited_strategy_universe":universe,"risk_limited_strategy_count":len(universe),
       "split_unique_expiries":{s:int(data.loc[data.split==s,"expiry_key"].nunique()) for s in ["development","validation","holdout"]},
       "development_fit_end":str(fit_end.date()),"development_tune_start":str(tune_start.date()),
@@ -294,7 +295,7 @@ def self_test():
     x=pd.DataFrame({"v":[1.,2.,3.]});e=edges_from(x,"v");b=bins(x,"v",e)
     assert list(b)==["LOW","MID","HIGH"]
     x1=pd.DataFrame({"expiry_key":["a","a"],"strategy":["x","y"],"net50":[1.,2.],"net":[1.,2.],"net100":[1.,2.],"expiry_date":pd.to_datetime(["2026-01-01","2026-01-01"])})
-    m=metrics(x1,x1.iloc[[0]])
+    m=metrics(x1.iloc[[1]],x1.iloc[[0]])
     assert m["n"]==1 and m["paired_mean_uplift_net50"]==1.0
     print("SELF_TEST_PASS: training-only binning and paired expiry metrics")
 
