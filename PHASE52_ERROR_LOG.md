@@ -342,3 +342,13 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Issue:** This run checked out the earlier strike-ladder implementation, which sourced candidate strikes from the full expiry file rather than the exact entry-time contract set. Therefore a green step is not a valid scientific pass.
 - **Handling:** Mark the run's selected-strike output stale and do not use its counts. The workflow now compares the auditor against the remote branch before persistence and discards/restores stale output. The next queued run should use the point-in-time correction and reconciled PA-010 strategy specs.
 - **Status:** NOT ACCEPTED; patched-source rerun pending.
+
+
+## F52-032 — Concurrent generated-result conflicts blocked checkpoint persistence — PATCHED IN WORKFLOW
+
+- **Date:** 2026-10-09
+- **Run:** [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472).
+- **Symptom:** The data/audit steps completed, but persistence failed because two workflow runs had concurrently changed generated artifacts (queue checkpoint, source ledger, manifests, coverage summaries and EOD outputs). The conflict resolver correctly refused to overwrite non-log files.
+- **Root cause:** Temporary concurrency-group versioning allowed two old/new group runs to overlap. Both started from the same branch snapshot and attempted to persist the same generated paths.
+- **Correction:** Restored one shared concurrency group and extended the conflict resolver narrowly: append-only status/research/error logs are unioned; conflicts under generated-result directories preserve the already-persisted remote version so the losing deterministic shard can be re-emitted. Conflicts in source/code files still fail closed. The new shared-group run will wait for the older run to finish.
+- **Status:** PATCHED IN MAIN AND BRANCH WORKFLOWS; end-to-end verification pending.
