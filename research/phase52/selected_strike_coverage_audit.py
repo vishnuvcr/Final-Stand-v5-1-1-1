@@ -80,6 +80,8 @@ def _self_test() -> None:
     frame = pd.DataFrame({"open":[10, 10], "high":[12, 9], "low":[8, 11], "close":[11, 10]})
     assert valid_ohlc(frame).tolist() == [True, False]
     assert select_ranked_strikes([], 22000) == ([], -1)
+    ladder = pd.DataFrame({"option_type":["CE","CE","CE","PE","PE","PE"],"strike":[22000,22050,22100,22000,22050,22100]})
+    assert modal_step(ladder) == 50.0
     ts = pd.Timestamp("2021-05-27T09:45:00+05:30")
     assert ts.isoformat() == "2021-05-27T09:45:00+05:30"
 
@@ -128,8 +130,6 @@ def main() -> int:
             # offset × option-type loops.
             by_ts = {stamp: frame for stamp, frame in df.groupby("timestamp", sort=False)}
             empty = df.iloc[0:0]
-            strikes, _ = select_ranked_strikes(df["strike"].dropna().unique().tolist(), 1.0)
-            strikes = sorted(strikes)
             target_day = pd.Timestamp(expiry, tz=TZ).normalize()
             expiry_rows = df[(df["timestamp"] >= target_day) & (df["timestamp"] <= target_day + pd.Timedelta(hours=15, minutes=29))]
             if expiry_rows.empty:
@@ -138,7 +138,7 @@ def main() -> int:
                 counts = expiry_rows.pivot_table(index="timestamp", columns="option_type", values="strike", aggfunc="count", fill_value=0)
                 both = counts[(counts.get("CE", 0) > 0) & (counts.get("PE", 0) > 0)] if "CE" in counts and "PE" in counts else counts.iloc[0:0]
                 expiry_exit = both.index.max() if len(both) else None
-            file_audit.append({"expiry":expiry,"file":filename,"sha256":digest,"bytes":int(p.stat().st_size),"rows":int(len(df)),"strike_count":len(strikes),"expiry_exit_common_ts":expiry_exit.isoformat() if expiry_exit is not None else None,"status":"PASS"})
+            file_audit.append({"expiry":expiry,"file":filename,"sha256":digest,"bytes":int(p.stat().st_size),"rows":int(len(df)),"strike_count":int(df["strike"].nunique()),"expiry_exit_common_ts":expiry_exit.isoformat() if expiry_exit is not None else None,"status":"PASS"})
         except Exception as exc:
             failures.append({"expiry":str(expiry),"error_type":type(exc).__name__})
             file_audit.append({"expiry":expiry,"file":filename,"status":"SOURCE_ERROR","error_type":type(exc).__name__})
