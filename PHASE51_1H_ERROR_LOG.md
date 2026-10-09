@@ -13,3 +13,7 @@ Scientific boundary:
 Actions run 37876578965 failed in the validator because the current downloaded Parquet did not contain the expected datetime column. The validator attempted to parse the missing field before recording the schema, which prevented a clean scientific gate result. No strategy P&L was produced and no source was accepted.
 
 Correction: the validator now records the full column list and missing required fields first, then fails closed without attempting timestamp parsing when the schema is incomplete.
+
+## 2026-10-09 — Correction P51-1H-002: source schema differs but is canonically mappable
+
+The current public files use timestamp/expiry/strike/option_type rather than datetime/expiry_date/strike_price/right. This is a schema-label difference, not by itself a scientific data failure. The validator was corrected to record the raw schema and apply a transparent column-name mapping only for validation. Raw bytes are unchanged and no values are synthesized.
