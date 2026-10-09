@@ -1,7 +1,7 @@
 {
   "status": "FROZEN_PILOT_MANIFEST_BEFORE_HISTORICAL_REPLAY",
-  "created_at_utc": "2026-10-09T20:55:01.457355+00:00",
-  "source_branch_commit": "3d0b13001751e88671f887b765c92447066b6110",
+  "created_at_utc": "2026-10-09T20:57:32.444960+00:00",
+  "source_branch_commit": "7d9f385cbe306b6b2cf1ee148d33d98dfc10a0ca",
   "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
   "grid_version": "phase52-grid-v1.3",
   "historical_pnl_not_yet_computed_at_manifest_creation": true,

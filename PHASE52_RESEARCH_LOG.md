@@ -557,3 +557,10 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - Job status: failure
 - Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
 - Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
+
+## Leg-evidence repair run 37990362985
+
+- Run: [37990362985](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985)
+- Job status: success
+- Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
+- Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
