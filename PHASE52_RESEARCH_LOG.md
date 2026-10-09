@@ -224,3 +224,12 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - **Interpretation:** This is only broad event/contract-universe coverage. It is not selected-strike coverage and not P&L. Every configured leg must still pass exact strike, expiry, timestamp, OHLC-range, OI, and exit-fill eligibility. No interpolation or nearest-tick substitution is permitted.
 - **Important holdout limitation:** The pinned index source ends 2026-07-02. Although the option expiry-file inventory reaches 2026-08-04, several recent files have no corresponding exact entry/exit rows; 2026-07-28 and 2026-08-04 remain data-gated.
 - **Decision:** Do not launch the full configuration-grid replay yet. Implement and validate the configuration-specific leg eligibility/fill engine first, and protect holdout from configuration tuning.
+
+
+## 2026-10-09 18:52 IST — Step 2.5: Add selected-strike eligibility gate
+
+- **Reason:** The completed broad event audit explicitly states it cannot establish exact strike/leg tradability.
+- **Change:** Added `research/phase52/selected_strike_coverage_audit.py` and wired it into both main and phase-branch workflows. It checks nearest-ATM strike-rank offsets -6..+6 for CE/PE, exact entry bars, valid OHLC, OI≥100, exact 15:15 exit bars and common target-expiry exit bars. It writes a compressed event/offset/type matrix and source hashes, without P&L.
+- **Data guard:** Absolute-delta selection is explicitly marked blocked until a validated point-in-time delta/IV resolver is implemented; no delta is guessed from close prices.
+- **Engineering correction:** Timestamp lookup was changed to a per-file timestamp index to avoid repeated full-file scans; output directory is created before the workflow step so failure logging can persist.
+- **Status:** Code is committed; self-test and end-to-end audit are pending the next Actions run. No result is accepted yet and no configuration P&L is calculated.
