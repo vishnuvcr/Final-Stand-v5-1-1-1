@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "grid_version": "phase52-grid-v1.3",
-  "status": "PREREGISTERED_NOT_YET_EXPANDED_OR_TESTED",
+  "status": "PREREGISTERED; 360000_CONFIGURATIONS_ENUMERATED; HISTORICAL_GRID_PNL_NOT_STARTED",
   "interpretation": "Exhaustive only across this published finite applicable grid; not every mathematically possible real-valued parameter. Every accepted grid expansion requires a versioned amendment before running that grid.",
   "candidate_cartesian_product": "Each of 52 families × 6 selector modes = 312 candidate hypotheses; each candidate expands only dimensions listed by its parameter_group. BASELINE candidates must not depend on feature thresholds.",
   "general_domains": {
@@ -469,5 +469,19 @@
   },
   "replay_kernel_version": "phase52-replay-kernel-v0.1",
   "replay_kernel_test_run": "37957753452",
-  "replay_kernel_test_status": "SYNTHETIC_UNIT_TESTS_PASS; production configuration replay worker not implemented"
+  "replay_kernel_test_status": "SYNTHETIC_UNIT_TESTS_PASS; production configuration replay worker not implemented",
+  "template_resolver_version": "phase52-template-resolver-v0.1",
+  "template_resolver_test_run": "37960484240",
+  "template_resolver_test_status": "PASS_SYNTHETIC_ONLY; 45 option-only templates resolved; 7 template rows explicitly blocked; no historical data or P&L used",
+  "whole_position_golden_test_version": "phase52-whole-position-golden-v0.1",
+  "whole_position_golden_test_run": "37960484240",
+  "whole_position_golden_test_status": "PASS_SYNTHETIC_ONLY; 45 option-only templates costed × 6 brokerage/slippage cases; no historical P&L",
+  "historical_configuration_backtests_completed": 0,
+  "production_configuration_replay_status": "NOT_IMPLEMENTED; historical grid remains blocked pending source-aware bounded runner and explicit exit/selector gates",
+  "last_synthetic_test_artifact": {
+    "run_id": 37960484240,
+    "artifact_id": 11631323294,
+    "artifact_name": "phase52-whole-position-integration-37960484240",
+    "zip_sha256": "99dbb8486d95dfc8538f684249fa3b7cfde3300f41a576630bae33fa7d0a1253"
+  }
 }
