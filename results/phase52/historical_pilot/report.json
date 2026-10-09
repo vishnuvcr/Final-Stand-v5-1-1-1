@@ -1,6 +1,6 @@
 {
   "status": "HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS",
-  "created_at_utc": "2026-10-09T21:04:45.677281+00:00",
+  "created_at_utc": "2026-10-09T21:25:27.362998+00:00",
   "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
   "historical_pnl_calculated": true,
   "production_or_promotion_eligible": false,
