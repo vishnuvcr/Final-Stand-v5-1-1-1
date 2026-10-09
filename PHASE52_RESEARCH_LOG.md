@@ -42,3 +42,8 @@ Because PA-010 changed 11 strategy-specification rows while older workflows were
 ## 2026-10-09 — Selected-strike audit first execution (stale source snapshot; not accepted)
 
 Run 37937164472 reports the selected ATM-offset strike audit step itself as successful, but the run checked out the auditor before PA-026/F52-026 changed strike-ladder resolution to contracts present at the exact entry timestamp. Therefore its selected-strike output is explicitly not accepted as evidence. The persistence guard should discard that output when the source hash differs from the current branch. The queued run 37938099763 is expected to validate the patched script and the PA-010 specification snapshot.
+
+
+## 2026-10-09 — Concurrent result collision and persistence correction
+
+Run 37937164472's broad coverage and selected-strike steps completed at the process level, but the final persistence step failed because another run wrote the same generated files. This was not a strategy-test failure; no selected-strike result from its stale source snapshot is accepted. Restored one shared concurrency group and changed the resolver to preserve the already-persisted remote version for conflicts inside generated-result directories, while merging append-only logs and refusing source/code conflicts. F52-032 records the correction. The next queued run must verify end-to-end persistence.
