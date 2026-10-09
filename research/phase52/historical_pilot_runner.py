@@ -48,6 +48,14 @@ OUT = ROOT / "results" / "phase52" / "historical_pilot"
 HF_REPO = "thetrademarkk/india-index-options-1m"
 TZ = "Asia/Kolkata"
 EXPECTED_CONFIG_COUNT = 40
+EXPECTED_LEGS_BY_FAMILY = {
+    "BUY_CALL": 1, "BUY_PUT": 1, "BULL_CALL_SPREAD": 2, "BEAR_CALL_SPREAD": 2,
+    "SHORT_IRON_CONDOR": 4, "LONG_STRADDLE": 2, "LONG_STRANGLE": 2,
+}
+AUDITED_LEG_STATUSES = {
+    "EXCLUDED_ENTRY_LEG", "EXCLUDED_PRIOR_OI", "EXCLUDED_OHLC_RANGE_PROXY",
+    "EXCLUDED_EXIT_LEG", "EXCLUDED_NO_COMMON_EXIT", "REPLAY_PASS",
+}
 
 if str(PHASE) not in sys.path:
     sys.path.insert(0, str(PHASE))
@@ -632,6 +640,37 @@ def replay_one(
     return record, scenarios
 
 
+def validate_leg_audit_payloads(rows: Sequence[Mapping[str, Any]]) -> None:
+    """Fail closed if any post-resolution status drops a selected strategy leg."""
+    failures = []
+    for row in rows:
+        status = str(row.get("status", ""))
+        if status not in AUDITED_LEG_STATUSES:
+            continue
+        family = str(row.get("family_id", ""))
+        expected = EXPECTED_LEGS_BY_FAMILY.get(family)
+        try:
+            legs = json.loads(str(row.get("resolved_legs_json", "[]")))
+        except (json.JSONDecodeError, TypeError):
+            legs = []
+        ids = [str(leg.get("leg_id", "")) for leg in legs if isinstance(leg, dict)]
+        if expected is None or len(legs) != expected or len(ids) != expected or len(set(ids)) != expected or any(not x for x in ids):
+            failures.append({
+                "configuration_id": row.get("configuration_id"),
+                "event_id": row.get("event_id"),
+                "family_id": family,
+                "status": status,
+                "expected_legs": expected,
+                "observed_legs": len(legs) if isinstance(legs, list) else None,
+                "leg_ids": ids,
+            })
+    if failures:
+        raise RuntimeError(
+            "Leg-audit payload completeness invariant failed: "
+            + json.dumps(failures[:10], sort_keys=True)
+        )
+
+
 def summarize(replay: pd.DataFrame, costs: pd.DataFrame) -> pd.DataFrame:
     if replay.empty:
         return pd.DataFrame()
@@ -726,6 +765,7 @@ def build_outputs(
             event_rows.append(outcome)
             cost_rows.extend(scenarios)
 
+    validate_leg_audit_payloads(event_rows)
     replay_df = pd.DataFrame(event_rows)
     cost_df = pd.DataFrame(cost_rows)
     OUT.mkdir(parents=True, exist_ok=True)
