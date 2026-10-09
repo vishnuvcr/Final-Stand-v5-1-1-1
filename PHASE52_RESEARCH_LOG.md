@@ -527,3 +527,10 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Frozen plan: research/phase52/first_historical_pilot.json; runner: research/phase52/historical_pilot_runner.py.
 - No hidden reasoning or secret values are recorded. Workflow logs/artifacts preserve operational errors.
+
+## Leg-evidence repair run \37989502259
+
+- Run: [\37989502259](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/\37989502259)
+- Job status: \failure
+- Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
+- Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.

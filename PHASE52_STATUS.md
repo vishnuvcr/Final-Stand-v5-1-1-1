@@ -399,3 +399,10 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Run:** [37984566094](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37984566094); job=success; self-test=success; plan-only=success; replay=success.
 - **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+
+## Leg-evidence repair run \37989502259
+
+- Run: [\37989502259](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/\37989502259)
+- Job status: \failure
+- Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
+- Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.

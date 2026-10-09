@@ -577,3 +577,10 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Code correction:** `persist_historical_pilot.py` now retries fetch/rebase/push races up to three times; it unions both sides only for allowlisted append-only log/README conflicts, retains an already-persisted remote artifact when same-path results collide, refuses source-code conflicts, and never force-pushes.
 - **Remaining issue:** research coverage remains insufficient at 1/480 executed rows. The second run [37984566094](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37984566094) validates the v0.2.1 audit metadata correction. Source coverage remediation is the next phase, not a reason to loosen filters.
 - **Status:** persistence RESOLVED; scientific coverage gate OPEN; no strategy promotion.
+
+## F52-LEG-EVIDENCE-\37989502259 — replay/persistence failure
+
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/\37989502259
+- Job status: \failure
+- No revised sensitivity accepted.
+- Status: OPEN.
