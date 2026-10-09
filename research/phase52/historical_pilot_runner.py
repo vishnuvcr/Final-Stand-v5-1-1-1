@@ -478,71 +478,123 @@ def replay_one(
     resolved_leg_rows: list[dict[str, Any]] = []
     per_leg_timestamps = []
     for leg in result["legs"]:
+        resolved_leg_rows.append({
+            "leg_id": str(leg["leg_id"]), "side": str(leg["side"]),
+            "option_type": str(leg["option_type"]),
+            "anchor": str(leg.get("anchor", "")),
+            "relative_offset_steps": int(leg.get("relative_offset_steps", 0)),
+            "strike": float(leg["strike"]), "expiry": canonical_expiry(leg["expiry"]),
+            "expiry_role": str(leg.get("expiry_role", "near")),
+            "quantity_lots": int(leg["quantity_lots"]), "lot_size": lot_size,
+            "entry_status": "NOT_TESTED", "prior_oi_status": "NOT_TESTED",
+            "range_proxy_status": "NOT_TESTED", "exit_status": "NOT_TESTED",
+        })
+    audit_by_leg_id = {str(row["leg_id"]): row for row in resolved_leg_rows}
+    first_failure: tuple[str, str] | None = None
+
+    for leg in result["legs"]:
+        audit = audit_by_leg_id[str(leg["leg_id"])]
         entry_result = kernel.select_exact_bar(
             option_frame, entry_ts, leg["expiry"], leg["option_type"], float(leg["strike"])
         )
-        if entry_result.status != "PASS" or entry_result.row is None:
-            return event_record(event, conf, "EXCLUDED_ENTRY_LEG", f"{leg['leg_id']}: {entry_result.status}: {entry_result.detail}",
-                                spot_open, lot_size, resolved_leg_rows, source_hash), []
-        prior_ts = entry_ts - pd.Timedelta(minutes=1)
-        prior = exact_rows(option_frame, prior_ts, leg["expiry"], leg["option_type"], float(leg["strike"]))
-        if len(prior) != 1:
-            return event_record(event, conf, "EXCLUDED_PRIOR_OI", f"{leg['leg_id']}: expected one exact prior-minute OI row, found {len(prior)}",
-                                spot_open, lot_size, resolved_leg_rows, source_hash), []
-        oi_ok, oi_val = kernel.prior_oi_eligible(prior.iloc[0].to_dict(), 100.0)
-        if not oi_ok:
-            return event_record(event, conf, "EXCLUDED_PRIOR_OI", f"{leg['leg_id']}: prior-minute OI missing/below 100; value={oi_val}",
-                                spot_open, lot_size, resolved_leg_rows, source_hash), []
-        range_ok, range_value = kernel.passes_range_proxy_gate(
-            entry_result.row, float(cfg["liquidity_max_spread_pct"])
-        )
-        if not range_ok:
-            failed_leg = range_proxy_failure_leg(
-                leg, entry_result.row, oi_val, prior_ts, range_value, lot_size
+        entry_ok = entry_result.status == "PASS" and entry_result.row is not None
+        if not entry_ok:
+            audit.update({
+                "entry_status": entry_result.status,
+                "entry_detail": entry_result.detail,
+                "prior_oi_status": "NOT_TESTED",
+                "range_proxy_status": "NOT_TESTED",
+                "exit_status": "NOT_TESTED",
+            })
+            if first_failure is None:
+                first_failure = ("EXCLUDED_ENTRY_LEG",
+                                 f"{leg['leg_id']}: {entry_result.status}: {entry_result.detail}")
+        else:
+            entry_row = entry_result.row
+            audit.update({
+                "entry_open": float(entry_row["open"]),
+                "entry_high": float(entry_row["high"]),
+                "entry_low": float(entry_row["low"]),
+                "entry_status": "PASS",
+            })
+            prior_ts = entry_ts - pd.Timedelta(minutes=1)
+            prior = exact_rows(option_frame, prior_ts, leg["expiry"], leg["option_type"], float(leg["strike"]))
+            audit["prior_oi_timestamp"] = prior_ts.isoformat()
+            audit["prior_oi_rows_found"] = int(len(prior))
+            if len(prior) != 1:
+                audit["prior_oi_status"] = "MISSING" if len(prior) == 0 else "DUPLICATE"
+                audit["prior_oi"] = None
+                if first_failure is None:
+                    first_failure = (
+                        "EXCLUDED_PRIOR_OI",
+                        f"{leg['leg_id']}: expected one exact prior-minute OI row, found {len(prior)}",
+                    )
+            else:
+                oi_ok, oi_val = kernel.prior_oi_eligible(prior.iloc[0].to_dict(), 100.0)
+                audit["prior_oi"] = float(oi_val) if oi_val is not None and math.isfinite(float(oi_val)) else None
+                audit["prior_oi_status"] = "PASS" if oi_ok else "MISSING_OR_BELOW_GATE"
+                if not oi_ok and first_failure is None:
+                    first_failure = (
+                        "EXCLUDED_PRIOR_OI",
+                        f"{leg['leg_id']}: prior-minute OI missing/below 100; value={oi_val}",
+                    )
+            range_ok, range_value = kernel.passes_range_proxy_gate(
+                entry_row, float(cfg["liquidity_max_spread_pct"])
             )
-            return event_record(event, conf, "EXCLUDED_OHLC_RANGE_PROXY",
-                                f"{leg['leg_id']}: OHLC high-low/open proxy {range_value} exceeds gate {cfg['liquidity_max_spread_pct']}",
-                                spot_open, lot_size, [*resolved_leg_rows, failed_leg], source_hash), []
+            audit["entry_range_proxy_pct"] = float(range_value)
+            audit["range_proxy_status"] = "PASS" if range_ok else "EXCLUDED"
+            if not range_ok and first_failure is None:
+                first_failure = (
+                    "EXCLUDED_OHLC_RANGE_PROXY",
+                    f"{leg['leg_id']}: OHLC high-low/open proxy {range_value} exceeds gate {cfg['liquidity_max_spread_pct']}",
+                )
+
+        # Exit evidence is collected even after an entry/OI/range failure so every
+        # selected leg has a complete audit row. It cannot turn a failed row into a pass.
         exit_rows = exact_rows(option_frame, exit_ts, leg["expiry"], leg["option_type"], float(leg["strike"]))
+        audit["exit_rows_found"] = int(len(exit_rows))
         if len(exit_rows) != 1:
-            return event_record(event, conf, "EXCLUDED_EXIT_LEG",
-                                f"{leg['leg_id']}: expected one exact 15:15 exit bar, found {len(exit_rows)}",
-                                spot_open, lot_size, resolved_leg_rows, source_hash, exit_ts), []
+            audit["exit_status"] = "MISSING" if len(exit_rows) == 0 else "DUPLICATE"
+            if first_failure is None:
+                first_failure = (
+                    "EXCLUDED_EXIT_LEG",
+                    f"{leg['leg_id']}: expected one exact 15:15 exit bar, found {len(exit_rows)}",
+                )
+            continue
         exit_result = kernel.select_exact_bar(
             option_frame, exit_ts, leg["expiry"], leg["option_type"], float(leg["strike"])
         )
         if exit_result.status != "PASS" or exit_result.row is None:
-            return event_record(event, conf, "EXCLUDED_EXIT_LEG",
-                                f"{leg['leg_id']}: {exit_result.status}: {exit_result.detail}",
-                                spot_open, lot_size, resolved_leg_rows, source_hash, exit_ts), []
-        # Common-time check across all bars for this contract. The protocol requires exact 15:15,
-        # not a latest-common fallback; this also rejects inconsistent data timestamps.
+            audit["exit_status"] = exit_result.status
+            audit["exit_detail"] = exit_result.detail
+            if first_failure is None:
+                first_failure = (
+                    "EXCLUDED_EXIT_LEG",
+                    f"{leg['leg_id']}: {exit_result.status}: {exit_result.detail}",
+                )
+            continue
+        audit["exit_status"] = "PASS"
+        audit["exit_open"] = float(exit_result.row["open"])
         contract_bars = option_frame.loc[
             option_frame["expiry"].astype(str).eq(canonical_expiry(leg["expiry"]))
             & option_frame["option_type"].astype(str).str.upper().eq(str(leg["option_type"]).upper())
             & pd.to_numeric(option_frame["strike"], errors="coerce").eq(float(leg["strike"]))
         ]
         per_leg_timestamps.append(contract_bars["timestamp"].tolist())
-        resolved_leg_rows.append({
-            "leg_id": leg["leg_id"], "side": leg["side"], "option_type": leg["option_type"],
-            "anchor": str(leg.get("anchor", "")),
-            "relative_offset_steps": int(leg.get("relative_offset_steps", 0)),
-            "strike": float(leg["strike"]), "expiry": canonical_expiry(leg["expiry"]),
-            "expiry_role": str(leg.get("expiry_role", "near")),
-            "quantity_lots": int(leg["quantity_lots"]), "lot_size": lot_size,
-            "entry_open": float(entry_result.row["open"]), "exit_open": float(exit_result.row["open"]),
-            "prior_oi": float(oi_val), "prior_oi_timestamp": prior_ts.isoformat(),
-            "entry_range_proxy_pct": range_value, "entry_status": "PASS", "prior_oi_status": "PASS",
-            "range_proxy_status": "PASS", "exit_status": "PASS",
-        })
-        leg_inputs.append({
-            "side": leg["side"],
-            "quantity_lots": int(leg["quantity_lots"]),
-            "lot_size": lot_size,
-            "entry_bar": entry_result.row,
-            "exit_bar": exit_result.row,
-            "exit_price_field": "open",
-        })
+        if entry_ok:
+            leg_inputs.append({
+                "side": leg["side"],
+                "quantity_lots": int(leg["quantity_lots"]),
+                "lot_size": lot_size,
+                "entry_bar": entry_result.row,
+                "exit_bar": exit_result.row,
+                "exit_price_field": "open",
+            })
+
+    if first_failure is not None:
+        failure_status, failure_reason = first_failure
+        return event_record(event, conf, failure_status, failure_reason,
+                            spot_open, lot_size, resolved_leg_rows, source_hash, exit_ts), []
 
     common = kernel.latest_common_timestamp(
         per_leg_timestamps, cutoff=exit_ts, not_before=entry_ts
