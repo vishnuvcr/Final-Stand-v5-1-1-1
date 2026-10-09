@@ -61,6 +61,18 @@ def select_ranked_strikes(strikes: list[float], spot: float) -> tuple[list[float
     return ordered, atm_idx
 
 
+def modal_step(snapshot: pd.DataFrame) -> float | None:
+    """Modal strike gap from the exact entry-time snapshot, as in Phase43."""
+    gaps = []
+    for typ in ("CE", "PE"):
+        strikes = np.sort(pd.to_numeric(snapshot.loc[snapshot["option_type"].astype(str).str.upper().eq(typ), "strike"], errors="coerce").dropna().unique())
+        diffs = np.round(np.diff(strikes), 8)
+        diffs = diffs[diffs > 0]
+        if len(diffs):
+            values, counts = np.unique(diffs, return_counts=True)
+            gaps.append(float(values[np.argmax(counts)]))
+    return gaps[0] if gaps else None
+
 def _self_test() -> None:
     strikes, idx = select_ranked_strikes([22000, 22100, 22200, 22300], 22150)
     assert strikes[idx] == 22100  # deterministic lower-strike tie break
