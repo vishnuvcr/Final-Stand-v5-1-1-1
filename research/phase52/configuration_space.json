@@ -404,5 +404,47 @@
     "derived_value_timestamp_match": "exact timestamp and same strike/expiry; otherwise unavailable",
     "spread_gate": "liquidity_max_spread_pct remains an explicit finite strategy/execution configuration dimension",
     "stale_quote_policy": "no trade; never forward-fill or interpolate tradable option prices"
+  },
+  "replay_protocol_version": "phase52-replay-v1.0",
+  "replay_protocol_path": "PHASE52_REPLAY_PROTOCOL.md",
+  "execution_semantics": {
+    "grid_domains_changed": false,
+    "event_universe": "Pinned option-expiry files; target expiry date defines split; entry calendar date is expiry minus configured 0 or 7 days; no rolling holidays/weekends.",
+    "entry_policy": "Exact 09:45 or 13:00 IST option/index bar timestamp only; one-minute bar OPEN used for entry; no current-bar CLOSE signal, interpolation, nearest timestamp or forward fill.",
+    "minute_data_disclaimer": "OHLCV(+OI) bars are not tick-level bid/ask/order-book data; 15-second quote age is not verifiable from minute bars.",
+    "liquidity_max_spread_pct": "Applied to 100*(high-low)/open at the exact entry bar as an intrabar-range liquidity proxy; never described as observed bid-ask spread.",
+    "selector_semantics": "BASELINE takes every data-eligible opportunity; other selector modes are fixed-family entry filters with abstention, not hidden strategy replacement.",
+    "specification_gate": "PHASE45_TEMPLATE_REQUIRES_RECONCILIATION and SPECIFICATION_BLOCKED configurations emit explicit BLOCKED_SPECIFICATION records; diagnostic-only families cannot be promoted.",
+    "futures_gate": "Configurations needing actual intraday traded-futures quotes/hedges are blocked unless a synchronized intraday futures feed is independently audited; daily EOD basis is only a lagged proxy.",
+    "costs": {
+      "brokerage_inr_per_order": [
+        10,
+        20
+      ],
+      "base_adverse_slippage_inr_per_leg_per_fill": 0.05,
+      "slippage_stress_percent": [
+        0,
+        50,
+        100
+      ],
+      "stress_interpretation": "0/50/100 means ₹0.05/₹0.075/₹0.10 adverse slippage per leg per fill; statutory charges remain fixed and date-aware under this stress.",
+      "reference_capital_inr": 600000
+    },
+    "promotion_gates": {
+      "minimum_exact_entry_exit_event_coverage": 0.95,
+      "minimum_validation_expiry_events": 30,
+      "minimum_untouched_holdout_expiry_events": 20,
+      "must_pass_costs": [
+        "INR_10_ORDER",
+        "INR_20_ORDER"
+      ],
+      "must_pass_slippage_stresses_percent": [
+        0,
+        50,
+        100
+      ],
+      "must_pass_inference": "Paired block-bootstrap CI above zero and Holm-adjusted familywise p<0.05",
+      "must_have_rights_cleared_independent_replay": true
+    }
   }
 }
