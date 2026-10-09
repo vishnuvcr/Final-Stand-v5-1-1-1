@@ -472,3 +472,13 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** Research code/results were unaffected, but status/log readability and auditability were degraded.
 - **Correction:** Normalized newline separators in both Markdown files; existing research content and historical entries were preserved. Future writes should use real newlines, and post-update line-count/escape checks are added to the release checklist.
 - **Status:** RESOLVED in this checkpoint.
+
+## F52-HIST-37962192723 — Bounded historical pilot failed or did not produce an accepted report
+
+- **Date:** 2026-10-09T16:58:30.925413+00:00
+- **Workflow:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723
+- **Stage outcomes:** self-test=success; plan-only=success; replay=failure; job=failure.
+- **Observation:** Historical pilot report missing or workflow non-success. Do not infer P&L from partial artifacts.
+- **Impact:** No result from this run is accepted unless report.json exists, input/source hashes match the frozen manifest and the overall job succeeds.
+- **Next:** inspect the failing step log, fix the root cause, rerun with a new run ID, and preserve this entry.
+- **Status:** OPEN / FAILED RUN PRESERVED.

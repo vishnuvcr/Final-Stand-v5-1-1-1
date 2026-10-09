@@ -901,3 +901,11 @@ The corrected ATM-offset audit passed in [run 37956261518](https://github.com/vi
 ## Phase 52 — whole-position integration passed (2026-10-09)
 
 The latest synthetic engineering gate passed in [Actions run 37960484240](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960484240), with [workflow definition](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase-52-whole-position-integration.yml) and [whole-position test harness](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/whole_position_golden_tests.py). Source-bound resolver tests and the canonical Phase43 fee-parity/kernel tests pass. All 45 supported option-only templates were resolved and run through synthetic exact entry/exit bars, prior-minute OI and six brokerage/slippage cases each (270 synthetic scenario rows). Missing exits, low OI, missing entry legs, reference-lot scaling and no-common-timestamp cases fail closed. The earlier run [37960340815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960340815) failed due to an erroneous test ratio override; the fixture was corrected and the rerun passed. These are **synthetic-only results**, not historical backtests. Grid v1.3 remains 360,000/9,379,584 enumerated and zero historical config rows backtested. No strategy is promoted; historical replay still requires a production runner, exact source/leg checks and rights/holdout gates.
+
+## Phase 52 bounded historical pilot — run 37962192723
+
+- **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
+- **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Event-level exclusions and six cost cases are in results/phase52/historical_pilot/.
+- Primary market data are CC BY-NC 4.0 and the pilot is not commercial/live evidence.

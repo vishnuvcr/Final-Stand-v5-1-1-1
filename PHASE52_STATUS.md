@@ -1,6 +1,6 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — source-bound resolver and whole-position synthetic integration passed; historical configuration-grid P&L remains blocked pending the data-backed replay worker, full exit/selector implementation and source/holdout gates  
+**Overall:** OPEN — bounded historical pilot did not complete cleanly; see run-specific failure log; no result accepted
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
 **Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-014  
 **Latest checkpoint:** 2026-10-09 (Asia/Kolkata)
@@ -316,3 +316,9 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Grid:** v1.3 remains 9,379,584 finite configurations; 360,000 have been enumerated, and zero historical Phase52 grid configurations have been backtested. Queue enumeration is not strategy evidence.
 - **Data / rights gates:** pinned intraday index history ends 2026-07-02, the 2026-07-28 and 2026-08-04 sessions remain unresolved, and the primary historical options data is CC BY-NC 4.0. Results are research-only; no commercial/live-readiness conclusion is allowed.
 - **Next:** implement a data-backed limited runner and exact configuration-specific strike/exit/cost manifest. Do not launch the finite grid until non-supported selectors and exits fail closed, option legs have exact coverage, and runner/inference artifacts are reproducible.
+
+## Bounded historical pilot checkpoint
+
+- **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
+- **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.

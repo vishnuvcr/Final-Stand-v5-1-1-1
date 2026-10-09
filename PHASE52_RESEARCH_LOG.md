@@ -435,3 +435,11 @@ Run 37937164472's broad coverage and selected-strike steps completed at the proc
 - **Critical boundary:** all integration P&L is synthetic fixture arithmetic. No historical option data was accessed by this workflow, no Phase52 grid configuration P&L exists, and no candidate is promoted.
 - **Formatting audit:** status/research log escaped newline issue corrected as F52-023.
 - **Next planned stage:** implement a bounded historical replay pilot for a small preregistered sample of ATM_OFFSET, BASELINE, fixed 15:15 exit and exact source contracts. Before any historical P&L, require actual per-leg entry/exit validation on downloaded pinned option/index data, date-aware lot sizing/cost parity, explicit per-event exclusions and source-hash/engine-hash manifests. ABS_DELTA, selector routers, DTE/exit variants, unresolved specs and actual futures-dependent templates remain blocked until their dedicated gates are implemented.
+
+## 2026-10-09T16:58:30.925413+00:00 — Bounded historical pilot run 37962192723
+
+- **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
+- **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Frozen plan: research/phase52/first_historical_pilot.json; runner: research/phase52/historical_pilot_runner.py.
+- No hidden reasoning or secret values are recorded. Workflow logs/artifacts preserve operational errors.

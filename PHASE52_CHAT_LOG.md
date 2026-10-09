@@ -118,3 +118,9 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Reviewed resolver quantities against protocol and found reference-lot scaling absent; patched before historical configuration P&L and added scaling self-tests.
 - Initial integrated run 37960340815 failed because the butterfly fixture accidentally supplied an explicit [1,1] ratio. Corrected fixture; successful run 37960484240 passed all stages.
 - Current state remains synthetic engineering validation only: 45 option-only templates, 270 synthetic cost scenarios, no historic Phase52 grid P&L, no promotion. Next step is a tightly bounded historical replay pilot with strict source/leg/cost manifests.
+
+## User continuation / automated action — run 37962192723
+
+- **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
+- **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
