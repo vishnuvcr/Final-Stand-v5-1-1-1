@@ -91,7 +91,7 @@ def main() -> int:
     index["timestamp"] = to_ist(index["timestamp"])
     index["close"] = pd.to_numeric(index["close"], errors="coerce")
     index = index.dropna(subset=["timestamp", "close"]).drop_duplicates("timestamp", keep="last")
-    spot_map = dict(zip(index["timestamp"].astype(str), index["close"].astype(float)))
+    spot_map = dict(zip(index["timestamp"].map(lambda x: x.isoformat()), index["close"].astype(float)))
 
     out_rows: list[dict[str, Any]] = []
     file_audit: list[dict[str, Any]] = []
