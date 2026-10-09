@@ -1,6 +1,6 @@
 # Phase 51-3 Status
 
-**State:** PRIMARY-SOURCE ADAPTER READY — awaiting clean source-faithful replay.
+**State:** SOURCE-FAITHFUL RETRY IN PROGRESS — orchestrator run 37882057283 uses the hardened recursive spot-source discovery.
 
 The prior green workflow run [37879953815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879953815) was rejected after self-audit because the inherited engines used the rejected Phase-43 options source and stale expiry registry. No P&L from that run is accepted.
 
