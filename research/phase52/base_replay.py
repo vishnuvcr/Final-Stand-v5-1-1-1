@@ -14,6 +14,7 @@ import importlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -41,6 +42,39 @@ def sha256(path: Path) -> str:
 def write_json(path: Path, obj: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(obj, indent=2, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
+
+
+def phase52_provenance() -> dict[str, Any]:
+    def file_hash(relative: str) -> str | None:
+        path = ROOT / relative
+        return sha256(path) if path.exists() else None
+    try:
+        branch_commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True,
+            capture_output=True, text=True
+        ).stdout.strip()
+    except Exception:
+        branch_commit = None
+    return {
+        "phase52_checkout_commit_at_manifest_write": branch_commit,
+        "phase43_replay_script_sha256": file_hash("research/phase43_vix_strategy_sweep.py"),
+        "phase45_replay_script_sha256": file_hash("research/phase45_ready_made_sweep.py"),
+        "base_replay_runner_sha256": file_hash("research/phase52/base_replay.py"),
+        "script_hash_timing": "hashes identify files at manifest write/refresh; upstream commit IDs below identify original engine source lineage",
+    }
+
+
+def error_file_summary(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {"rows": None, "status": "MISSING"}
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    if not raw.strip():
+        return {"rows": 0, "status": "EMPTY_NO_ERROR_ROWS"}
+    try:
+        frame = pd.read_csv(path)
+        return {"rows": int(len(frame)), "status": "PARSED"}
+    except Exception:
+        return {"rows": None, "status": "UNREADABLE"}
 
 
 def main() -> int:
@@ -74,8 +108,16 @@ def main() -> int:
     if MATRIX.exists() and prior.get("dataset_revision") == revision and not args.force:
         check = sha256(MATRIX)
         if check == prior.get("trade_matrix_sha256"):
-            print(json.dumps({"status": "REUSED_PINNED_BASE_REPLAY", "dataset_revision": revision,
-                              "rows": prior.get("trade_rows"), "sha256": check, "path": str(MATRIX)}, indent=2))
+            err_summary = error_file_summary(OUT / "phase45_data_errors.csv")
+            prior["phase45_data_error_rows"] = err_summary["rows"]
+            prior["phase45_data_error_file_status"] = err_summary["status"]
+            prior["current_file_provenance"] = phase52_provenance()
+            write_json(MANIFEST, prior)
+            print(json.dumps({"status": "REUSED_PINNED_BASE_REPLAY",
+                              "dataset_revision": revision, "rows": prior.get("trade_rows"),
+                              "sha256": check, "path": str(MATRIX),
+                              "phase45_data_error_file_status": err_summary["status"],
+                              "phase45_data_error_rows": err_summary["rows"]}, indent=2))
             return 0
 
     # These imported accepted engines are called only after a single immutable
@@ -122,12 +164,8 @@ def main() -> int:
     expiry_dates = sorted(pd.to_datetime(df["expiry"], errors="coerce").dropna().dt.strftime("%Y-%m-%d").unique())
     entry_dates = sorted(pd.to_datetime(df["entry_ts"], errors="coerce").dropna().dt.strftime("%Y-%m-%d").unique())
     errors_path = Path("results/phase45_ready_made/data_errors.csv")
-    errors_count = 0
-    if errors_path.exists():
-        try:
-            errors_count = max(0, len(pd.read_csv(errors_path)))
-        except Exception:
-            errors_count = -1
+    error_summary = error_file_summary(errors_path)
+    errors_count = error_summary["rows"]
 
     report = {
         "schema_version": "1.0",
@@ -157,6 +195,8 @@ def main() -> int:
         "rows_by_split": split_counts,
         "rows_by_strategy": strategy_counts,
         "phase45_data_error_rows": errors_count,
+        "phase45_data_error_file_status": error_summary["status"],
+        "current_file_provenance": phase52_provenance(),
         "cost_semantics": "Inherited Phase45 net is after brokerage and date-aware charges; net50 is its legacy 1.5x-all-modeled-cost scenario. This is not a pure slippage-only stress. Phase52 confirmation must also report fixed statutory charges with adverse slippage stress.",
         "interpretation": "Base-geometry replay only. This does not enumerate or test the complete Phase52 configuration grid and does not promote any strategy. The source dataset declares CC BY-NC 4.0; do not use this source as sole evidence for any commercial deployment.",
     }
