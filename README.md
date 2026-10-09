@@ -977,3 +977,9 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 - Leg payload rows audited=380; cost rows=6; source revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5.
 - No holdout use, raw data committed, or strategy promotion.
 - [Plan](PHASE55_RESEARCH_PLAN.md) · [Status](PHASE55_STATUS.md) · [Audit](results/phase52/historical_pilot/phase55_audit.json)
+
+## Phase 56 OHLC price-reference P&L sensitivity — run 37995733702
+
+- Run: [37995733702](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37995733702); workflow status=failure; report accepted=False; observed report status=REPORT_MISSING_OR_INVALID.
+- No Phase56 result accepted until scenario counts, frozen thresholds and invariants pass.
+- [Plan](PHASE56_RESEARCH_PLAN.md) · [Status](PHASE56_STATUS.md) · [Results](results/phase56/ohlc_pnl_sensitivity/report.md)

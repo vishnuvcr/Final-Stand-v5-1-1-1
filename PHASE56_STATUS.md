@@ -21,3 +21,8 @@ The parent ledger is expected to reconcile to 379 `EXCLUDED_OHLC_RANGE_PROXY`, 1
 - [ ] Close after the finite matrix; no further optimization in this phase.
 
 **Scientific prior:** this is a price-reference sensitivity, not an executable backtest. An OHLC range proxy is not a quoted bid/ask spread; no result is promotable.
+
+## Run checkpoint 37995733702
+
+- Run: [37995733702](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37995733702); workflow status=failure; report accepted=False; observed report status=REPORT_MISSING_OR_INVALID.
+- No Phase56 result accepted until scenario counts, frozen thresholds and invariants pass.
