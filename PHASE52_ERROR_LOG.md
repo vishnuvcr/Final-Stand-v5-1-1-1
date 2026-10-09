@@ -21,3 +21,21 @@ This is an append-only ledger. For every software failure, coverage failure, sou
 ## Error-log protocol
 
 Any registry-validation failure, duplicate configuration ID, quote coverage gap, look-ahead defect, event timestamp mismatch, transaction-cost reconciliation issue, failed workflow, invalid inference or rejected data source gets a new F52-NNN entry. Resolution must include a testable correction and a rerun reference. Failed or superseded outputs remain archived and are never mixed with accepted evidence.
+
+
+## F52-003 — Candidate count / grid-size correction made before first test — RESOLVED
+
+- **Date:** 2026-10-09
+- **Observation:** The first candidate-array draft contained 52 structure families, not the 50 initially used in the planning arithmetic.
+- **Impact:** None to numerical evidence; no Phase 52 replay had started.
+- **Correction:** Retained all 52 families and all six factor-selector modes, making 312 hypotheses. Appended plan amendment PA-001, changed finite grid to version 1.1 before any result and recorded that every applicable grid combination remains queued.
+- **Verification required:** Automatic validation checks 312+ unique candidate IDs and an exact 52-family × six-mode matrix. Status: RESOLVED IN SPECIFICATION; run verification still pending GitHub Actions.
+
+## F52-004 — Potential source-discovery API-key leakage — PREVENTED
+
+- **Date:** 2026-10-09
+- **Observation:** YouTube Data API puts its key in a query parameter; persisting the raw request URL or raw exception could expose the secret.
+- **Impact:** No source-discovery run had occurred and no credential was recorded.
+- **Correction:** The discovery client strips key/token parameters before logging and records only safe endpoint/query metadata; network error messages are reduced to exception class to prevent accidental URL/credential leakage. Credential values are never printed.
+- **Regression gate:** Inspect stored `query_url` values and scan artifacts for known secret patterns; any exposure blocks publication and requires credential rotation.
+- **Status:** PATCHED BEFORE FIRST RUN.
