@@ -166,9 +166,9 @@ def main() -> None:
     args = parser.parse_args()
     if args.self_test_only:
         sample = [
-            {"configuration_id":"c1","event_id":"e1","status":"EXCLUDED_OHLC_RANGE_PROXY","split":"development",
+            {"configuration_id":"c1","event_id":"e1","status":"EXCLUDED_OHLC_RANGE_PROXY","split":"development","family_id":"BEAR_CALL_SPREAD",
              "resolved_legs_json":json.dumps([{"prior_oi_status":"PASS","prior_oi":500,"entry_status":"PASS","entry_range_proxy_pct":2.5}])},
-            {"configuration_id":"c2","event_id":"e1","status":"BLOCKED_LEG_ELIGIBILITY","split":"development",
+            {"configuration_id":"c2","event_id":"e1","status":"BLOCKED_LEG_ELIGIBILITY","split":"development","family_id":"BUY_CALL",
              "resolved_legs_json":json.dumps([{"prior_oi_status":"FAIL","prior_oi":0,"entry_status":"PASS","entry_range_proxy_pct":1.0}])},
         ]
         result = analyze(sample)
@@ -183,8 +183,12 @@ def main() -> None:
     write_outputs(result, args.output)
     print(json.dumps({"status":result["status"],"rows":result["input"]["row_count"],
       "baseline_status_counts":result["baseline_status_counts"],
-      "sensitivity":[{"threshold_pct":x["threshold_pct"],"qualified":x["rows_meeting_prior_oi_entry_data_and_range_gate"]}
-      for x in result["threshold_sensitivity"]],"output":str(args.output)}, indent=2))
+      "complete_leg_payload_rows":result["complete_leg_payload_rows"],
+      "incomplete_leg_payload_rows":result["incomplete_leg_payload_rows"],
+      "empty_leg_payload_rows":result["empty_leg_payload_rows"],
+      "partial_leg_payload_rows":result["partial_leg_payload_rows"],
+      "threshold_sensitivity_computed":result["frozen_rules"]["threshold_sensitivity_computed"],
+      "output":str(args.output)}, indent=2))
 
 if __name__ == "__main__":
     main()
