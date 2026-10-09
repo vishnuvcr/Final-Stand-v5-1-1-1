@@ -519,3 +519,28 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** the project cannot assume this source fills every contract/session, factor input or execution-price requirement. Absence of fields cannot be substituted with inferred values.
 - **Correction / next step:** run bounded low-frequency probe, verify target sessions 2026-07-28 and 2026-08-04 against an independent archive, audit expected-vs-observed contract coverage and timestamps, and confirm NSE data-use/storage terms. Preserve raw market data outside the public repo until permitted.
 - **Status:** SOURCE CANDIDATE ONLY / NOT ACCEPTED.
+
+## F52-OPENCHART-002 — Dynamic symbol search returns index-only identical result set — OPEN / SOURCE BLOCKER
+
+- **Date:** 2026-10-10.
+- **Evidence:** Final bounded run [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873), report `results/phase52/openchart_probe/runs/37982673873/probe_report.json`.
+- **Observation:** The FO query for NIFTY and the IDX control returned the same 20 rows. Four further FO queries (current-month option prefix, the README's documented option example, and the two missing-session prefixes) also returned the identical normalized result fingerprint `6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837`; every result was typed Index. No options or futures were identified. Charting search returned HTTP 200, while the cookie/homepage request returned HTTP 403.
+- **Impact:** The current `NSEData.search()` implementation cannot discover the requested option contract universe in this test. No history request was made, so this is not proof that the underlying historical endpoint itself cannot return bars.
+- **Correction / next step:** Do not use this wrapper for Phase 52 instrument discovery until request/query semantics are repaired and verified. Alternatively, use a trusted, independently verified contract/token master and test `historical_direct()` for known exact contracts. Then reconcile complete expiry/strike/date coverage, OHLC/timestamps, required factor inputs and permitted data retention.
+- **Status:** OPEN / SOURCE NOT ACCEPTED FOR ALL-OPTIONS ACQUISITION.
+
+## F52-OPENCHART-003 — First source-probe report under-specified instrument classification — RESOLVED FOR DIAGNOSTICS
+
+- **Date:** 2026-10-10.
+- **Observation:** The initial report counted options/futures but did not include the distribution of returned `type` labels, query-match counts or a normalized-result fingerprint. A zero option count alone could not distinguish a classification bug from irrelevant/search-insensitive results.
+- **Correction:** Expanded the probe to report type histograms, CE/PE/FUT suffix counts, query-match counts and a SHA-256 fingerprint of only symbol/type/exchange fields; raw symbols, descriptions, tokens and OHLCV remain unpersisted.
+- **Verification:** Final run [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) shows all six result sets are identically index-only.
+- **Status:** RESOLVED AS A DIAGNOSTIC DEFECT; underlying source blocker remains open.
+
+## F52-OPENCHART-004 — Planned target windows were initially labeled as tested — RESOLVED
+
+- **Date:** 2026-10-10.
+- **Observation:** An earlier report field `target_date_windows_tested=2` could imply history requests occurred, even when `historical_probes` was empty.
+- **Correction:** The report schema now distinguishes `target_date_windows_planned` from `target_date_windows_with_history_requests`.
+- **Verification:** Final run [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) records 2 planned windows and 0 history requests.
+- **Status:** RESOLVED IN REPORT SCHEMA.
