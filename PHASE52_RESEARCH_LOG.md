@@ -39,3 +39,11 @@ Append every completed research step, regardless of outcome. Preserve source ref
 ## 2026-10-09 — First Actions gate failure and correction
 
 Run 37924369419: deterministic Cartesian unranking self-test passed. Registry validation then failed because the first strategy-specification CSV had a missing `family_name` column in data rows. No source-discovery or configuration-enumeration step ran. The CSV was rebuilt to six columns for all 52 rows and the validator hardened against null fields. Rerun still required; no backtest evidence was generated.
+
+## 2026-10-09 17:07:23 IST — Automated run 37924369419
+
+- Registry validation: PASS; hypotheses registered: 312; structure families: 52; selector modes: 6.
+- Finite configurations in grid phase52-grid-v1.3: 9,379,584; this run enumerated 10,000 configurations at offsets 0–9,999.
+- Source-discovery queries: 11; unique leads added: 32. Credential presence only (no values logged): {'HF_TOKEN': True, 'GITHUB_TOKEN': True, 'YOUTUBE_API_KEY': False}.
+- Queue status: ENUMERATED_NOT_BACKTESTED; enumeration complete: False. Enumerated configs are NOT backtests.
+- Numerical replay remains gated until explicit leg specs, point-in-time data coverage/licensing and a source-faithful replay engine pass their audits. No P&L or strategy promotion is inferred from this run.
