@@ -1,26 +1,29 @@
 # Phase 51-1H Status
 
-**State: PRIOR AUDIT DATA-BLOCKED; FRESHNESS RE-AUDIT REQUESTED (not yet accepted).**
+**CLOSED — DATA-BLOCKED / PUBLIC HF SOURCE REJECTED; FRESHNESS RE-AUDIT COMPLETED.**
 
 ## Frozen missing blocks
 - 2026-07-28
 - 2026-08-04
 
-## Prior accepted audit
-Actions run 37876719483.
+## Latest accepted byte audit
+[Actions run 37912433753](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37912433753) re-downloaded both files after a current public index showed a newer visible commit. The downloaded hashes and sizes were unchanged from the prior audit.
 
-## Prior findings (still authoritative until new raw-byte audit passes)
-- 2026-07-28 file: 3,990,663 bytes; 320,359 rows; actual data ends 2026-07-02 15:30 IST.
-- 2026-08-04 file: 58,248 bytes; 2,646 rows; actual data ends 2026-07-02 15:29 IST.
-- Both contained the requested expiry value but not the requested trading session.
-- Zero duplicate contract-minute keys after transparent schema mapping.
-- No OOS P&L was calculated.
+| Target expiry file | Bytes | Rows | Actual timestamp range | Target trading date present? |
+|---|---:|---:|---|---|
+| 2026-07-28 | 3,990,663 | 320,359 | 2026-06-15 09:15 to 2026-07-02 15:30 IST | No |
+| 2026-08-04 | 58,248 | 2,646 | 2026-06-24 10:08 to 2026-07-02 15:29 IST | No |
 
-## Freshness signal
-The current public Hugging Face index displays a newer visible commit `51ca58c` with an `options/NIFTY/2026-08-04.parquet` path. This may reflect a dataset update but does not itself prove that the file contains target-date trading observations. A fresh Actions audit was requested by updating `trigger/phase51_1H.start` to `rerun-4 public dataset freshness audit 2026-10-09`.
+- 2026-07-28 SHA-256: `f9c3a6d1e4498274644ccbfeb8aeb3d545fc2ce1a12b908f450360a643e40d17`
+- 2026-08-04 SHA-256: `8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c`
+- Both schema mappings passed; bad timestamp/expiry counts and duplicate contract-minute keys were zero.
+- Both files contain the target expiry value, but neither contains the target trade date. No P&L was calculated.
 
-## Acceptance requirements
-The new run must verify exact downloaded bytes, schema mapping, valid timestamps/expiry values, target trading date present for both files, zero duplicate contract-minute keys, and full target-session coverage before the data gate can change. Until then, the phase remains data-blocked and no P&L is authorized.
+## Decision
+**DATA-BLOCKED remains in force.** The current public HF index/file listing did not translate into new target-session observations. The full Phase-51 OOS window must not be shortened and missing prices must not be synthesized or forward-filled.
 
-## External source context
-StockMock and StockMojo remain research/oracle context only; no reproducible raw archive has been accepted from them.
+## Next viable routes
+1. Configure an authorized Upstox Plus, Dhan or ICICI Breeze API credential and rerun the preregistered raw-data recovery workflow; or
+2. Obtain an authorized archive containing both target sessions from a vendor such as [OptionsData.shop NIFTY 1-minute full-chain archive](https://optionsdata.shop/data/nifty-options-historical-data), then validate exact raw bytes, timestamps, contract coverage and provenance before use.
+
+No paid data has been purchased and no credentials were added. StockMock/StockMojo remain oracle/context platforms only, not accepted raw data.
