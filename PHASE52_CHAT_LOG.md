@@ -92,3 +92,11 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Corrected to prior completed minute OI>=100 and an independent exact entry-bar OHLC/open check, with no forward-fill.
 - Current factor run 37954806932 checked out the earlier code; its selected-strike output is not accepted for the final gate. Delta run 37954839508 remains queued to follow it; next step is rerun selected strike under PA-013 and delta under PA-012/013.
 - Grid unchanged, no Phase52 configuration P&L, no promotion.
+
+
+## User said “Resume” / “Ok proceed” — 2026-10-09 21:xx IST
+
+- Confirmed the corrected ATM-offset scan completed in 37956261518: 27,768 offset/type rows over 267 files, 10,552 prior OI-qualified rows, 10,501 with exact entry OHLC, and 10,405 with exact-index/expiry-exit support. Coverage only; no P&L.
+- Confirmed the prior-bar ABS_DELTA scan completed in 37956675818: 4,272 checks, 232 missing exact prior minutes, 148 no OI-qualified candidate, 3,892 predecision OI-qualified, 2,232 valid exact entry bars. Model delta only; no P&L.
+- Synthetic replay kernel test passed in 37957753452. The first run 37957499754 had a literal runner-temp manifest path failure after self-tests passed; corrected and rerun.
+- Phase52 is now past the separate coverage-audit test gate but still has no configuration-level P&L. Next: implement template-aware strategy resolver and whole-position replay fixtures; retain no-promotion conclusion until real validation/holdout and costs/inference gates pass.
