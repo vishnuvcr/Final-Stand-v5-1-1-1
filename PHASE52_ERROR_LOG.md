@@ -179,7 +179,7 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Root cause:** The audit script had been committed to the default branch because the file-create call omitted the target branch; the Phase52 workflow intentionally checks out `phase-52-factor-conditioned-strategy-discovery`.
 - **Scientific impact:** The exact-10:00 expiry coverage audit did not run. No coverage conclusion is claimed and the partial base replay remains only diagnostic until this gate emits a report.
 - **Correction:** Copied the exact script into the Phase52 research branch in commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`. The next workflow run should execute the existing gate without changing the pre-registered strategy grid.
-- **Status:** Code-path correction complete; rerun needed to resolve the scientific coverage gate.
+- **Status:** RESOLVED in run [37931097834](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37931097834). The report now explicitly identifies the 11 source-expiry files not fully replayed; full-window coverage remains scientifically blocked.
 
 
 ## F52-014 — Base-replay empty error CSV misread as −1 errors — RESOLVED IN CODE / MANIFEST REFRESH PENDING
@@ -188,4 +188,40 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Observation:** The accepted Phase43/45 engines wrote a headerless/empty data-errors CSV. The base replay wrapper's generic CSV reader treated that as an exception and stored `phase45_data_error_rows: -1`.
 - **Impact:** No replay P&L row was affected, but the audit field was ambiguous and incorrect.
 - **Correction:** `research/phase52/base_replay.py` now classifies an empty/whitespace-only data-error file as zero rows with status `EMPTY_NO_ERROR_ROWS`, records source-code SHA256 provenance, and refreshes this metadata when reusing a valid pinned matrix. Next run must refresh the manifest and verify `phase45_data_error_rows = 0`.
-- **Status:** PATCHED; refresh pending.
+- **Status:** RESOLVED; manifest refreshed by successful workflow [37931097834](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37931097834), with `phase45_data_error_rows=0` and `phase45_data_error_file_status=EMPTY_NO_ERROR_ROWS`.
+
+
+## F52-015 — UDiFF IDF index futures omitted by the first daily-bhavcopy parser — RESOLVED
+
+- **Date:** 2026-10-09
+- **Observed:** The first UDiFF parsing path looked for instrument labels containing `FUT`, while current NSE UDiFF classifies index futures as `IDF`. The initial EOD factor manifest therefore showed futures basis/OI on only 161 of 256 replay events (62.9%) despite no missing archive files.
+- **Impact:** Futures-basis/OI coverage was understated; early EOD outputs using the old classification are superseded diagnostic artifacts. The 100% event-row count was not equivalent to 100% futures-factor coverage.
+- **Correction:** Adapter now recognizes `IDF` and legacy `FUTIDX` as NIFTY index futures; the regression fixture uses UDiFF `IDF`. The latest parser regression [37931285866](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37931285866) passed, and corrected EOD source run [37931305395](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37931305395) reports front-futures basis and OI on 256/256 events and same-contract OI change on 255/256.
+- **Limit:** These remain strictly prior-session EOD features, not intraday traded futures quotes or basis lead/lag.
+- **Status:** RESOLVED; regression and corrected feature manifest verified.
+  
+## F52-016 — UDiFF self-test fixture used literal backslash-n text instead of CSV line breaks — RESOLVED
+
+- **Date:** 2026-10-09
+- **Run:** [37929373094](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929373094).
+- **Observed:** The new-format fixture was encoded as a single CSV header string containing literal `\\n`, so parsing returned zero option rows and the self-test failed.
+- **Correction:** Replaced the escaped literal with actual newline escapes. Regression [37929475685](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929475685) passed legacy + UDiFF schema parsing; the later regression [37931285866](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37931285866) also verified the `IDF` futures mapping.
+- **Scientific impact:** No accepted factor P&L used the failed fixture run; outputs were not considered evidence.
+- **Status:** RESOLVED.
+
+## F52-017 — Parser test ran before numeric dependencies were installed; persistence named a nonexistent output path — RESOLVED
+
+- **Date:** 2026-10-09
+- **Runs:** [37929186683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929186683) and [37929613349](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929613349).
+- **Observed:** The parser self-test ran before `numpy` was available, and an error-path `git add` failed when `results/phase52/daily_bhavcopy` had not been created.
+- **Correction:** Moved the regression step after dependency installation and ensured all output directories are created before failure logging/persistence.
+- **Verification:** Full workflow [37929888516](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929888516) passed, followed by subsequent successful runs.
+- **Status:** RESOLVED.
+
+## F52-018 — Configuration event universe introduced before any grid backtest — AUDIT PENDING
+
+- **Date:** 2026-10-09
+- **Workflow:** [37934339579](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934339579).
+- **Scope:** Build an inventory of target expiry × exact calendar DTE {0,7} × entry timestamp {09:45,13:00}, then audit exact NIFTY index timestamp presence. This addresses the event-time mismatch between the old fixed 10:00 event replay and the registered configuration grid.
+- **Interpretation:** Expected event rows and exact index ticks are coverage metadata, not P&L or tested configurations. Option-leg and exit-time quote availability still requires configuration-specific verification.
+- **Status:** RUNNING; final counts will be appended once the workflow result is available.
