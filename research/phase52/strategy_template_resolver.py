@@ -26,7 +26,7 @@ from typing import Any, Mapping, Sequence
 import numpy as np
 import pandas as pd
 
-from replay_kernel import as_ist, config_data_gate, select_exact_bar, valid_ohlc, prior_oi_eligible
+from replay_kernel import as_ist, config_data_gate, select_exact_bar, valid_ohlc, prior_oi_eligible, passes_range_proxy_gate
 
 ROOT = Path(__file__).resolve().parents[2]
 SPECS_PATH = ROOT / "research" / "phase52" / "strategy_specifications.csv"
@@ -520,52 +520,110 @@ def resolve_template(
         draft["quantity_lots"] = int(draft["quantity_lots"]) * reference_lots
         draft["reference_lots_per_leg"] = reference_lots
 
-    # Resolve every exact entry bar and prior completed-minute OI record for the
-    # actual strike/expiry/type; no nearest strike, interpolation, or OI fill.
+    # Resolve every selected leg. Keep evaluating later legs after entry/OI failures
+    # so a blocked multi-leg strategy still has a complete audit payload.
     resolved_legs = []
     exclusions = []
+    audit_legs = []
+    exit_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
+    range_gate_pct = float(config.get("liquidity_max_spread_pct", 2.0))
+
     for draft in leg_drafts:
+        audit: dict[str, Any] = {
+            **draft,
+            "entry_status": "NOT_TESTED",
+            "prior_oi_status": "NOT_TESTED",
+            "range_proxy_status": "NOT_TESTED",
+            "exit_status": "NOT_TESTED",
+            "prior_oi_timestamp": (entry_ts - pd.Timedelta(minutes=1)).isoformat(),
+        }
+
         bar_result = select_exact_bar(
             entry_chain, entry_ts, draft["expiry"], draft["option_type"], draft["strike"]
         )
         if bar_result.status != "PASS" or bar_result.row is None:
-            exclusions.append({"leg_id": draft["leg_id"], "status": bar_result.status, "detail": bar_result.detail, **draft})
-            return {
-                "status": "BLOCKED_LEG_ELIGIBILITY",
-                "family_id": family_id,
-                "template_rule_id": rule_id,
-                "reason": "a required exact selected-strike entry bar is unavailable or invalid",
-                "leg_exclusions": exclusions,
-                "legs": [],
-                "pnl_computed": False,
-                "promotable": False,
-            }
-        oi_ok, oi, oi_status = exact_prior_oi(
-            prior_chain, entry_ts, draft["expiry"], draft["option_type"], draft["strike"], MIN_OI
+            audit.update({
+                "entry_status": bar_result.status,
+                "entry_detail": bar_result.detail,
+                "status": bar_result.status,
+            })
+            exclusions.append({
+                **draft,
+                "status": bar_result.status,
+                "detail": bar_result.detail,
+                "entry_status": bar_result.status,
+                "prior_oi_status": "NOT_TESTED",
+            })
+        else:
+            entry_bar = bar_result.row
+            audit.update({
+                "entry_status": "PASS",
+                "entry_open": float(entry_bar["open"]),
+                "entry_high": float(entry_bar["high"]),
+                "entry_low": float(entry_bar["low"]),
+                "entry_close": float(entry_bar["close"]),
+                "entry_ohlc": {
+                    key: float(entry_bar[key]) for key in ("open", "high", "low", "close")
+                },
+            })
+
+            range_ok, range_value = passes_range_proxy_gate(entry_bar, range_gate_pct)
+            audit["entry_range_proxy_pct"] = float(range_value) if range_value is not None else None
+            audit["range_proxy_status"] = "PASS" if range_ok else "EXCLUDED"
+
+            oi_ok, oi, oi_status = exact_prior_oi(
+                prior_chain, entry_ts, draft["expiry"], draft["option_type"], draft["strike"], MIN_OI
+            )
+            audit["prior_oi"] = float(oi) if oi is not None and math.isfinite(float(oi)) else None
+            audit["prior_oi_status"] = "PASS" if oi_ok else "FAIL"
+            audit["status"] = "PASS" if oi_ok else oi_status
+            if not oi_ok:
+                audit["prior_oi_detail"] = oi_status
+                exclusions.append({
+                    **draft,
+                    "status": oi_status,
+                    "detail": f"{draft['leg_id']}: prior-minute OI gate failed ({oi_status}); value={oi}",
+                    "prior_oi": audit["prior_oi"],
+                    "prior_oi_status": "FAIL",
+                })
+            else:
+                resolved_legs.append({
+                    **draft,
+                    "entry_ts": entry_ts.isoformat(),
+                    "entry_open": float(entry_bar["open"]),
+                    "entry_ohlc": {
+                        key: float(entry_bar[key]) for key in ("open", "high", "low", "close")
+                    },
+                    "prior_oi_ts": (entry_ts - pd.Timedelta(minutes=1)).isoformat(),
+                    "prior_open_interest": float(oi),
+                    "prior_oi_status": "PASS",
+                })
+
+        # Exit is independent evidence: collect it even after entry/OI failures.
+        exit_result = select_exact_bar(
+            entry_chain, exit_ts, draft["expiry"], draft["option_type"], draft["strike"]
         )
-        if not oi_ok:
-            exclusions.append({"leg_id": draft["leg_id"], "status": oi_status, "prior_oi": oi, **draft})
-            return {
-                "status": "BLOCKED_LEG_ELIGIBILITY",
-                "family_id": family_id,
-                "template_rule_id": rule_id,
-                "reason": "a required selected leg lacks exact prior-bar OI at or above 100",
-                "leg_exclusions": exclusions,
-                "legs": [],
-                "pnl_computed": False,
-                "promotable": False,
-            }
-        resolved_legs.append({
-            **draft,
-            "entry_ts": entry_ts.isoformat(),
-            "entry_open": float(bar_result.row["open"]),
-            "entry_ohlc": {
-                key: float(bar_result.row[key]) for key in ("open","high","low","close")
-            },
-            "prior_oi_ts": (entry_ts - pd.Timedelta(minutes=1)).isoformat(),
-            "prior_open_interest": float(oi),
-            "prior_oi_status": "PASS",
-        })
+        audit["exit_status"] = exit_result.status
+        if exit_result.status == "PASS" and exit_result.row is not None:
+            audit["exit_open"] = float(exit_result.row["open"])
+        else:
+            audit["exit_detail"] = exit_result.detail
+        audit_legs.append(audit)
+
+    if exclusions:
+        first = exclusions[0]
+        return {
+            "status": "BLOCKED_LEG_ELIGIBILITY",
+            "family_id": family_id,
+            "template_rule_id": rule_id,
+            "reason": str(first.get("detail", "a required selected leg failed exact entry/OI eligibility")),
+            "leg_exclusions": exclusions,
+            "audit_legs": audit_legs,
+            "legs": resolved_legs,
+            "pnl_computed": False,
+            "promotable": False,
+        }
+
     diagnostic = gate == "DIAGNOSTIC_ONLY"
     return {
         "status": "DIAGNOSTIC_ONLY_TEMPLATE_RESOLVED" if diagnostic else "TEMPLATE_RESOLVED_ENTRY_GATES_PASS",
