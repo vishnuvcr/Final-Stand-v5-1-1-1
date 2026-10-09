@@ -8,6 +8,7 @@ acceptance or evidence of strategy profitability.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -157,7 +158,9 @@ def _safe_search_metadata(frame: pd.DataFrame, query: str) -> dict[str, Any]:
             "future_rows": 0,
             "option_suffix_rows": 0,
             "future_suffix_rows": 0,
-            "target_month_contract_rows": 0,
+            "query_symbol_match_rows": 0,
+            "query_description_match_rows": 0,
+            "normalized_result_sha256": None,
             "status": "EMPTY_OR_REQUEST_FAILED",
         }
     records = frame.fillna("").to_dict(orient="records")
@@ -169,8 +172,21 @@ def _safe_search_metadata(frame: pd.DataFrame, query: str) -> dict[str, Any]:
         for key, value in type_col.fillna("").astype(str).value_counts(dropna=False).items()
     }
     symbols = frame["symbol"].fillna("").astype(str) if "symbol" in frame.columns else pd.Series(dtype=str)
+    descriptions = frame["description"].fillna("").astype(str) if "description" in frame.columns else pd.Series(dtype=str)
+    query_upper = query.upper().strip()
     option_suffix_rows = int(symbols.str.upper().str.contains(r"(?:CE|PE)\s*$", regex=True).sum())
     future_suffix_rows = int(symbols.str.upper().str.contains(r"FUT\s*$", regex=True).sum())
+    safe_rows = [
+        {
+            "symbol": str(row.get("symbol", "")),
+            "type": str(row.get("type", "")),
+            "exchange": str(row.get("exchange", "")),
+        }
+        for row in records
+    ]
+    fingerprint = hashlib.sha256(
+        json.dumps(safe_rows, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
     return {
         "query": query,
         "returned_rows": int(len(frame)),
@@ -180,10 +196,13 @@ def _safe_search_metadata(frame: pd.DataFrame, query: str) -> dict[str, Any]:
         "future_rows": int(len(futures)),
         "option_suffix_rows": option_suffix_rows,
         "future_suffix_rows": future_suffix_rows,
+        "query_symbol_match_rows": int(symbols.str.upper().str.contains(re.escape(query_upper), regex=True).sum()) if query_upper else None,
+        "query_description_match_rows": int(descriptions.str.upper().str.contains(re.escape(query_upper), regex=True).sum()) if query_upper else None,
+        "normalized_result_sha256": fingerprint,
         "target_month_contract_rows": int(sum(
-            1 for r in options if query.upper() in str(r.get("symbol", "")).upper()
+            1 for r in options if query_upper in str(r.get("symbol", "")).upper()
         )),
-        # Do not save contract symbols, scripcodes/tokens, or raw search listings.
+        # Do not save contract symbols, scripcodes/tokens, descriptions, or raw search listings.
         "blank_symbol_rows": int((symbols.str.strip() == "").sum()) if len(symbols) else None,
         "rows_with_scripcode": int(frame["scripcode"].notna().sum()) if "scripcode" in frame.columns else None,
         "status": "SYMBOLS_RETURNED",
@@ -206,7 +225,7 @@ def attach_http_trace(client: NSEData, minimum_interval_seconds: float = 1.25) -
             last_request_at[0] = time.monotonic()
             trace.append({
                 "host": re.sub(r"^https?://", "", request.url).split("/")[0],
-                "path": "/" + "/".join(re.sub(r"^https?://[^/]+", "", request.url).split("/")[1:3]),
+                "path": "/" + "/".join(re.sub(r"^https?://[^/]+", "", request.url).split("/")[1:4]),
                 "method": request.method,
                 "http_status": int(response.status_code),
                 "content_type": response.headers.get("Content-Type"),
@@ -286,20 +305,27 @@ def run_probe(out_dir: Path) -> dict[str, Any]:
     }
     frames: dict[str, pd.DataFrame] = {}
 
-    query_plan = [("current_nifty_fo", "NIFTY")] + [
-        (target["label"], target["query"]) for target in OLD_TARGETS
+    query_plan = [
+        ("current_nifty_fo", "NIFTY", "FO"),
+        ("current_nifty_idx_control", "NIFTY", "IDX"),
+        ("current_option_month", "NIFTY26OCT", "FO"),
+        ("documented_known_option", "NIFTY2612020400CE", "FO"),
+        ("phase51_missing_2026_07_28", "NIFTY26JUL", "FO"),
+        ("phase51_missing_2026_08_04", "NIFTY26AUG", "FO"),
     ]
-    for label, query in query_plan:
+    for label, query, segment in query_plan:
         try:
-            frame = client.search(query, "FO")
+            frame = client.search(query, segment)
             frames[label] = frame if frame is not None else pd.DataFrame()
             metadata = _safe_search_metadata(frames[label], query)
             metadata["label"] = label
+            metadata["segment"] = segment
             report["search_probes"].append(metadata)
         except Exception as exc:
             report["search_probes"].append({
                 "label": label,
                 "query": query,
+                "segment": segment,
                 "status": "EXCEPTION",
                 "exception_type": type(exc).__name__,
                 "exception": str(exc)[:300],
@@ -310,20 +336,32 @@ def run_probe(out_dir: Path) -> dict[str, Any]:
     if recent_end > now_ist:
         recent_end -= timedelta(days=1)
     recent_start = recent_end - timedelta(days=10)
-    current_frame = frames.get("current_nifty_fo", pd.DataFrame())
-    current_rows = (
-        current_frame.fillna("").to_dict(orient="records")
-        if current_frame is not None and not current_frame.empty else []
-    )
-    current_options = [r for r in current_rows if _is_option_row(r)]
-    current_options.sort(key=lambda r: str(r.get("symbol", "")))
     probes_to_fetch: list[dict[str, Any]] = []
-    if current_options:
+    for search_label in ["current_option_month", "current_nifty_fo"]:
+        frame = frames.get(search_label, pd.DataFrame())
+        records = frame.fillna("").to_dict(orient="records") if frame is not None and not frame.empty else []
+        options = [r for r in records if _is_option_row(r)]
+        options.sort(key=lambda r: str(r.get("symbol", "")))
+        if options:
+            probes_to_fetch.append({
+                "label": "recent_listed_nifty_option",
+                "record": options[0],
+                "start": recent_start,
+                "end": recent_end,
+            })
+            break
+
+    # The example token in upstream README is a stale contract candidate only.
+    known_frame = frames.get("documented_known_option", pd.DataFrame())
+    known_records = known_frame.fillna("").to_dict(orient="records") if known_frame is not None and not known_frame.empty else []
+    known_options = [r for r in known_records if _is_option_row(r)]
+    known_options.sort(key=lambda r: str(r.get("symbol", "")))
+    if known_options:
         probes_to_fetch.append({
-            "label": "recent_listed_nifty_option",
-            "record": current_options[0],
-            "start": recent_start,
-            "end": recent_end,
+            "label": "historical_known_option_example",
+            "record": known_options[0],
+            "start": datetime(2026, 1, 19, 9, 15, tzinfo=IST),
+            "end": datetime(2026, 1, 21, 15, 30, tzinfo=IST),
         })
 
     for target in OLD_TARGETS:
