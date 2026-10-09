@@ -1,4 +1,4 @@
-name: Phase 52 — Bounded Historical BASELINE Pilot
+name: Phase 52 — Bounded Historical BASELINE Pilot (revision-fingerprinted rerun)
 
 on:
   workflow_dispatch:
