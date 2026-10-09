@@ -363,3 +363,37 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Interpretation:** Coverage is reported at individual selected ATM-offset leg-event level, not full strategy level. It does not establish all legs in a multi-leg strategy can execute, does not test path-dependent exits, and contains no P&L. The two 2026-07-28/2026-08-04 sessions still have no usable expiry exit bars in this pinned source; full holdout remains blocked.
 - **Remaining gate:** ABS_DELTA configurations are still blocked until the separate point-in-time IV/delta resolver passes regression and coverage tests. The pinned dataset is CC BY-NC 4.0, so any research outputs from it remain non-commercial/research-only pending rights review.
 - **Status:** ATM-offset source coverage audit PASS; variable-grid replay NOT STARTED; no strategy promotion.
+
+
+## F52-034 — Selected-strike offsets used rank instead of configured strike steps — SUPERSEDED / CORRECTED CODE AWAITING RERUN
+
+- **Date:** 2026-10-09.
+- **Affected output:** selected ATM-offset coverage artifact from run [37942202655](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37942202655); 27,768 leg-event rows.
+- **Observed:** The script advanced by ordinal rank in the available strike list rather than by `atm_offset_steps × modal strike spacing`. A missing/intermittent listed strike could change the effective offset, so rows did not faithfully represent grid offsets 1 and 3.
+- **Impact:** Coverage counts were not exact evidence for the registered ATM-offset configurations. The script had no P&L output, so no profitability result is affected.
+- **Correction:** Compute modal strike gap from the exact entry-time option snapshot (Phase43 helper semantics), resolve ATM from that snapshot using exact-time NIFTY index `open`, then target exact arithmetic strike `ATM + offset × step`. If the exact contract is absent, record missing.
+- **Status:** PATCHED in main and research branch; a regression and fresh workflow output are pending. Old counts must not be reused as current coverage.
+
+## F52-035 — ATM-offset audit used index close instead of registered entry open — SUPERSEDED / CORRECTED CODE AWAITING RERUN
+
+- **Date:** 2026-10-09.
+- **Observed:** The previous strike coverage screen used the NIFTY index bar `close` at the configured entry timestamp as its ATM anchor. The frozen protocol specifies the index bar `open` at that timestamp for selection; using the close is incompatible with an open-fill decision.
+- **Impact:** Selected ATM anchors and strike coverage for that audit could differ from the registered config semantics. No P&L was calculated in that audit.
+- **Correction:** Index reader and `spot_map` now use exact-timestamp `open`. The regression includes a 50-point modal-step fixture and verifies the target arithmetic.
+- **Status:** PATCHED; rerun pending.
+
+## F52-036 — Delta resolver regression fixture used 180 volatility and invalid below-intrinsic case — RESOLVED IN CODE / RERUN PENDING
+
+- **Date:** 2026-10-09.
+- **Run:** [37944408314](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37944408314), failed before any market-data delta audit.
+- **Root causes:** The synthetic known-IV test used `sigma=180.0` instead of `0.18`; the negative test used a call strike above spot, so premium 0.01 was not below intrinsic.
+- **Correction:** Synthetic IV is now 18%; the negative test is an in-the-money call with strike 21,900 versus spot 22,000 and premium 0.01.
+- **Status:** Corrected in main and branch code; the regression rerun must pass before any delta coverage result is accepted.
+
+## F52-037 — Delta strike selector used same-entry-bar close (lookahead against open fill) — CORRECTED / RERUN PENDING
+
+- **Date:** 2026-10-09.
+- **Observed:** The first delta-selection audit solved IV/delta using the entry-bar option close and same-time index close, then described it as point-in-time at the bar open.
+- **Impact:** The model-based strike choice would have used information unavailable at the OHLC open fill. This is an audit-engine timing error; no Phase52 grid P&L was computed.
+- **Correction:** Delta selection now uses exact prior completed one-minute option/index closes at `entry_ts − 1 minute`, checks OI from that prior bar, and separately requires the selected contract to have a valid exact entry-time OHLC bar/open. No nearest-minute fallback is used; missing exact prior data are recorded.
+- **Status:** PATCHED; full audit rerun pending.
