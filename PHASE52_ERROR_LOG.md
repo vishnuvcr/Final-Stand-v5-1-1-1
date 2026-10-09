@@ -500,3 +500,22 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** This is an intrabar range proxy, not quoted spread, so it must not be interpreted as a liquidity or executable-fill measurement. The current preregistered 2% threshold is retained as a conservative OHLC data-quality exclusion to avoid outcome-informed relaxation.
 - **Next:** Seek point-in-time bid/ask or trade/quote data. Until then, report the exclusion separately and do not claim live liquidity validation.
 - **Status:** OPEN / methodology limitation.
+
+## F52-HIST-PERSIST-37980455805 — Pilot replay succeeded but checkpoint persistence failed
+
+- **Date:** 2026-10-10.
+- **Workflow:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805
+- **Observed:** self-test, plan and replay steps succeeded; the report showed 480 reconciled statuses (379 OHLC-range exclusions, 100 leg-eligibility blocks, 1 replay pass) and six cost scenario rows. The job then failed in persistence.
+- **Root cause:** persist_historical_pilot.py committed log/status edits from its checked-out snapshot and attempted to rebase onto a newer branch tip. The three shared files PHASE52_STATUS.md, PHASE52_RESEARCH_LOG.md and PHASE52_CHAT_LOG.md had changed remotely, so the automatic rebase conflicted. Artifact ID 11641042776 was uploaded before this failure.
+- **Scientific impact:** no replay exception or source-file error was reported; the coverage result is still only an engineering diagnostic, not a usable profitability sample. Do not infer success from the artifact upload or the replay-stage status alone.
+- **Correction path:** preserve the run summary under a unique run-specific filename; fix persistence to read the latest branch version and append idempotently after fetching it, or isolate generated results from shared-log updates. Run a regression or successful checkpoint write before the next pilot workflow.
+- **Status:** OPEN / WORKFLOW PERSISTENCE DEFECT; source and replay outcomes remain separately reported.
+
+## F52-OPENCHART-001 — OpenChart cannot yet be treated as a complete historical options source
+
+- **Date:** 2026-10-10.
+- **Source:** https://github.com/marketcalls/openchart at pinned commit a207108890c96a9830b35a8d15442c896ea0a9d6.
+- **Observed:** inspected client schema returns OHLCV for one selected instrument; no exposed historical all-strike chain API, OI, Greeks, bid/ask, depth or trade-by-trade feed was found. Full expired-contract discovery, oldest history and timestamp convention remain unverified. Public issue list includes data access/rate-limit complaints.
+- **Impact:** the project cannot assume this source fills every contract/session, factor input or execution-price requirement. Absence of fields cannot be substituted with inferred values.
+- **Correction / next step:** run bounded low-frequency probe, verify target sessions 2026-07-28 and 2026-08-04 against an independent archive, audit expected-vs-observed contract coverage and timestamps, and confirm NSE data-use/storage terms. Preserve raw market data outside the public repo until permitted.
+- **Status:** SOURCE CANDIDATE ONLY / NOT ACCEPTED.
