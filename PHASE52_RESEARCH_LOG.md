@@ -119,3 +119,15 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - Data capability audit: PASS_METADATA_AND_SAMPLE_AUDIT_WITH_REVIEW_GATES; sampled source files=2; factor availability and licensing limits retained.
 - Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
 - The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.
+
+## 2026-10-09 17:58:30 IST — Automated run 37929888516
+
+- Registry validation: PASS; hypotheses registered: 312; structure families: 52; selector modes: 6.
+- Finite configurations in grid phase52-grid-v1.3: 9,379,584; this run enumerated 25,000 configurations at offsets 85,000–109,999.
+- Source-discovery queries: 11; unique leads added: 0. Credential presence only (no values logged): {'HF_TOKEN': True, 'GITHUB_TOKEN': True, 'YOUTUBE_API_KEY': False}.
+- Queue status: ENUMERATED_NOT_BACKTESTED; enumeration complete: False. Enumerated configs are NOT backtests.
+- Pinned base replay: BASE_GEOMETRY_REPLAY_COMPLETE_NOT_FACTOR_PROMOTION; revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5; trade rows=9699; strategies=42; license gate=RESEARCH_ONLY_NONCOMMERCIAL_SOURCE.
+- Data capability audit: PASS_METADATA_AND_SAMPLE_AUDIT_WITH_REVIEW_GATES; sampled source files=2; factor availability and licensing limits retained.
+- Prior-session NSE EOD factor build: DAILY_EOD_FACTOR_BUILD_WITH_COVERAGE_AUDIT; event coverage=100.0%; missing archive paths=0; file errors=0; not intraday futures basis.
+- Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
+- The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.
