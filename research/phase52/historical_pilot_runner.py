@@ -389,6 +389,21 @@ def range_proxy_failure_leg(
         "exit_status": "NOT_TESTED",
     }
 
+def initial_leg_audit_rows(legs: Sequence[Mapping[str, Any]], lot_size: int) -> list[dict[str, Any]]:
+    """Create one auditable record per selected leg before any gate can return."""
+    return [{
+        "leg_id": str(leg["leg_id"]), "side": str(leg["side"]),
+        "option_type": str(leg["option_type"]),
+        "anchor": str(leg.get("anchor", "")),
+        "relative_offset_steps": int(leg.get("relative_offset_steps", 0)),
+        "strike": float(leg["strike"]), "expiry": canonical_expiry(leg["expiry"]),
+        "expiry_role": str(leg.get("expiry_role", "near")),
+        "quantity_lots": int(leg["quantity_lots"]), "lot_size": int(lot_size),
+        "entry_status": "NOT_TESTED", "prior_oi_status": "NOT_TESTED",
+        "range_proxy_status": "NOT_TESTED", "exit_status": "NOT_TESTED",
+    } for leg in legs]
+
+
 def event_record(event: Mapping[str, Any], conf: Mapping[str, Any], status: str, reason: str,
                  spot: float | None = None, lot: int | None = None, legs: Sequence[Mapping[str, Any]] = (),
                  source_hash: str | None = None, exit_ts: Any | None = None) -> dict[str, Any]:
@@ -475,20 +490,8 @@ def replay_one(
     exit_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
     lot_size = int(phase43.lot_size_for_expiry(pd.Timestamp(expiry, tz=TZ)))
     leg_inputs: list[dict[str, Any]] = []
-    resolved_leg_rows: list[dict[str, Any]] = []
+    resolved_leg_rows = initial_leg_audit_rows(result["legs"], lot_size)
     per_leg_timestamps = []
-    for leg in result["legs"]:
-        resolved_leg_rows.append({
-            "leg_id": str(leg["leg_id"]), "side": str(leg["side"]),
-            "option_type": str(leg["option_type"]),
-            "anchor": str(leg.get("anchor", "")),
-            "relative_offset_steps": int(leg.get("relative_offset_steps", 0)),
-            "strike": float(leg["strike"]), "expiry": canonical_expiry(leg["expiry"]),
-            "expiry_role": str(leg.get("expiry_role", "near")),
-            "quantity_lots": int(leg["quantity_lots"]), "lot_size": lot_size,
-            "entry_status": "NOT_TESTED", "prior_oi_status": "NOT_TESTED",
-            "range_proxy_status": "NOT_TESTED", "exit_status": "NOT_TESTED",
-        })
     audit_by_leg_id = {str(row["leg_id"]): row for row in resolved_leg_rows}
     first_failure: tuple[str, str] | None = None
 
