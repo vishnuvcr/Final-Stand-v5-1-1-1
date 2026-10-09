@@ -8,13 +8,15 @@
 - [Pilot audit note](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot/v0.2-run-37980455805-audit.md)
 - [Phase 52 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
 
-## OpenChart source feasibility — auxiliary candidate only
+## OpenChart source feasibility — NOT ACCEPTED for all-options acquisition
 
-Static inspection of [marketcalls/openchart](https://github.com/marketcalls/openchart) finds individual-instrument historical OHLCV support including 1-minute bars, but not a documented complete historical all-strike chain API, OI, Greeks, bid/ask or depth. Expired-contract discoverability, oldest history, timestamp convention and rate-limit behaviour need a bounded runtime probe. The MIT license covers the client software, not NSE data rights; raw bars are not committed pending data-use review.
+The final bounded probe [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) passed as a workflow but returned the same 20 index rows for all six search/query combinations, including FO and IDX controls. No options/futures were discovered, and no historical option-bar request was made. The homepage cookie request returned HTTP 403 while all six charting symbol-search calls returned HTTP 200. **Do not use the current wrapper as the Phase 52 all-options source.**
 
-- [OpenChart feasibility audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_OPENCHART_AUDIT.md)
-- [OpenChart probe code](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/openchart_source_probe.py)
-- [Phase 52 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery)
+- [Full audit and gate list](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_OPENCHART_AUDIT.md)
+- [Aggregate-only final probe report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/openchart_probe/runs/37982673873/probe_report.json)
+- [Probe code](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/openchart_source_probe.py) · [manual/automatic workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/.github/workflows/phase-52-openchart-source-probe.yml)
+
+The run did not exercise historical bars: no contract/token was found. Direct-token history remains unverified. Raw market data were not committed, and no strategy/grid/cost/holdout setting changed.
 
 ---
 
