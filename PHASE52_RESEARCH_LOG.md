@@ -13,3 +13,8 @@ Run 37935663113 completed successfully after the conflict-safe persistence chang
 ## 2026-10-09 — Prevent stale audit output overwrite
 
 Added a persistence guard to main and research-branch workflows: if the selected-strike auditor changed on the remote research branch after a run checked out its snapshot, that run's selected-strike output is discarded (or the remote result state restored) rather than overwriting corrected results. This protects against the two earlier in-flight runs. Verification remains pending; no selected-strike output is accepted until the patched self-test and provenance gate pass.
+
+
+## 2026-10-09 — Stale-output pathspec correction
+
+The stale-run guard now recreates the selected-strike output directory and adds a .gitkeep placeholder when no remote accepted result exists. This prevents the persistence step's explicit directory pathspec from failing after stale output is removed. Logged as F52-028; end-to-end verification remains pending.
