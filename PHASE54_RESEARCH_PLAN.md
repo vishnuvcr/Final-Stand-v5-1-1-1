@@ -47,7 +47,7 @@ Descriptive counts and percentages only. No p-values, confidence intervals or pe
 Log failures with run URL, exact step, root cause, correction, regression test and verification run. Never synthesize missing rows or force-push over concurrent logs.
 
 ## Status
-Plan frozen; implementation committed; workflow execution and results pending verification. Live execution and strategy promotion are prohibited.
+**COMPLETE** — accepted coverage-sensitivity report from run [37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101). Unit tests, self-test, 480-row reconciliation, 11-threshold monotonicity/invariance checks, artifact upload and log persistence passed. This finite phase is closed. Live execution and strategy promotion remain prohibited.
 
 ## Plan amendment PA-54-001 — conclusive hard-block classification (2026-10-10)
 
