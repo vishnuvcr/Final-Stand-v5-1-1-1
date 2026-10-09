@@ -84,3 +84,11 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Delta run 37944408314 failed at self-test before data audit. Fixed synthetic sigma units and below-intrinsic test; also changed delta selection to use prior-bar close data and exact entry-open fill eligibility.
 - Updated protocol and pre-registered plan amendments PA-011/PA-012 without changing v1.3 grid domains.
 - No variable-grid configuration P&L exists, and no strategy is promoted.
+
+
+## Resume / “Ok proceed” checkpoint — PA-013 (2026-10-09)
+
+- Follow-up timing audit found selected-strike OI eligibility still used same-entry-bar OI while simulating entry at that bar's open.
+- Corrected to prior completed minute OI>=100 and an independent exact entry-bar OHLC/open check, with no forward-fill.
+- Current factor run 37954806932 checked out the earlier code; its selected-strike output is not accepted for the final gate. Delta run 37954839508 remains queued to follow it; next step is rerun selected strike under PA-013 and delta under PA-012/013.
+- Grid unchanged, no Phase52 configuration P&L, no promotion.
