@@ -1,8 +1,8 @@
 # Phase 51-1J Status
 
-**State: RUNNING — selector-inspection correction deployed; fresh audit run pending.**
+**State: RUNNING — second-stage target-isolated browser audit pending.**
 
-The first browser-run artifact was not accepted: page navigation worked (HTTP 200), but a JavaScript syntax error in the selector-inspection snippet aborted selector/date checks. The script has been simplified and corrected; see T51-1J-002. No target date or raw intraday coverage was verified by that run.
+The initial failed browser manifests are non-evidence. A corrected run confirmed all three public pages load (HTTP 200) and populated selectors are visible. The July 28 expiry is listed in the historical-chain and historical-chart selectors; the chain returned a 41,899-byte JSON snapshot with 15 visible table rows. That response appears to be a single chain snapshot, not intraday rows. The first corrected script failed to reset cascading controls before the second target, so August 4 is not yet resolved. A fresh-target rerun now resets the page for each date and selects a representative strike on chart pages to observe their public chart-data request.
 
 ## Public pages located
 - [Historical NIFTY option-chain download](https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php): expiry year/month/date, session-date and strike-range selectors. The page describes its primary historical-chain data as end-of-day and notes that daily snapshots omit intraday nuance.
