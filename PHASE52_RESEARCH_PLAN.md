@@ -414,3 +414,15 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 
 **Interpretation:** No historical option-data request was issued: no option token was discovered. The final report separately records two target-date windows planned and zero target windows with a historical request. The symbol-discovery wrapper is blocked for Phase 52 use until corrected and independently validated. Do not classify the absence of search results as absence of underlying NSE data, and do not promote OpenChart as a complete source. No strategy grid/configuration/cost/split/holdout changed.
 
+### PA-018 — 2026-10-10 — Resume planned Phase 52 replay work; close OpenChart exploration
+
+The user explicitly ended the OpenChart source investigation. Preserve its negative runtime finding for audit history, but perform no further OpenChart requests or code changes unless explicitly requested.
+
+**Next research sequence (bounded, ordered):**
+1. Repair pilot checkpoint persistence so the next run merges against the current branch tip and does not lose or conflict with append-only research/status/chat logs. Add an idempotency/regression test and record persistence outcome separately from replay outcome.
+2. Audit all 480 v0.2 event-status rows by first exclusion reason and contract/source key. Specifically decompose the 379 `EXCLUDED_OHLC_RANGE_PROXY` rows and 100 `BLOCKED_LEG_ELIGIBILITY` rows by configuration, event, expiry, option type, strike offset, missing/duplicate/conflicting bars, OI availability, and the measured OHLC proxy. Do not reinterpret exclusions as losses.
+3. Trace source rows for a small, deterministic sample of each dominant exclusion category to the pinned input files and exact timestamps. Do not relax the 2% proxy, alter the event universe, or drop exclusions just to raise coverage.
+4. If the root cause is source geometry/selection or timestamp mapping, correct only the demonstrated defect, add a regression fixture, and rerun the same frozen 40×24 pilot under a new run ID. If the source truly lacks the required data, report the coverage limitation and stop that replay path.
+5. Only after full 480-row status reconciliation, accepted hashes, zero unresolved software/data errors and meaningful executed coverage, proceed to a larger development/validation replay with unchanged costs and no holdout access.
+
+No strategy is promoted from the current 1/480 execution. No changes to the frozen grid, configurations, cost assumptions, splits or holdout. This amendment is a workflow/coverage investigation, not strategy optimization.
