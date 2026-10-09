@@ -391,13 +391,40 @@ def main() -> int:
         prev_opts, prev_futs = daily.get(prev, (pd.DataFrame(), pd.DataFrame()))
         prev_row = summarize_event(prev, "", type("Event", (), {"expiry": ev["expiry"], "entry_ts": ev["entry_ts"], "split": ev["split"]}),
                                    prev_opts, prev_futs, spot_map)
-        for col in ("option_call_oi_near_atm", "option_put_oi_near_atm", "front_future_open_interest"):
+        for col in ("option_call_oi_near_atm", "option_put_oi_near_atm"):
             now_val, prev_val = row.get(col, np.nan), prev_row.get(col, np.nan)
             row[col + "_change_pct_1d"] = (now_val / prev_val - 1.0) * 100.0 if np.isfinite(now_val) and np.isfinite(prev_val) and prev_val > 0 else np.nan
+
+        # Preserve contract identity across the day-on-day futures OI comparison.
+        # Do not compare an expiring front month against the newly rolled contract.
+        front_expiry = row.get("front_future_expiry")
+        matched_prev_future = prev_futs[prev_futs.expiry.astype(str).eq(str(front_expiry))] if front_expiry and not prev_futs.empty else pd.DataFrame()
+        prev_future_oi = float(matched_prev_future.iloc[0].open_interest) if not matched_prev_future.empty and np.isfinite(matched_prev_future.iloc[0].open_interest) else np.nan
+        now_future_oi = row.get("front_future_open_interest", np.nan)
+        row["front_future_open_interest_change_pct_1d"] = (
+            (now_future_oi / prev_future_oi - 1.0) * 100.0
+            if np.isfinite(now_future_oi) and np.isfinite(prev_future_oi) and prev_future_oi > 0
+            else np.nan
+        )
+        row["front_future_oi_change_contract_matched"] = bool(np.isfinite(prev_future_oi))
         row["archive_commit"] = source_commit
         feature_rows.append(row)
     features = pd.DataFrame(feature_rows)
     source_audit = pd.DataFrame(source_records)
+    factor_coverage = {}
+    for col in [
+        "nifty_spot_eod", "option_target_expiry_rows",
+        "option_oi_pcr_near_atm_5steps", "option_volume_pcr_near_atm_5steps",
+        "option_call_oi_near_atm", "option_put_oi_near_atm",
+        "front_future_basis_bps", "front_future_volume",
+        "front_future_open_interest", "front_future_open_interest_change_pct_1d",
+    ]:
+        values = pd.to_numeric(features[col], errors="coerce") if col in features else pd.Series(dtype=float)
+        factor_coverage[col] = {
+            "non_null_rows": int(values.notna().sum()),
+            "feature_rows": int(len(features)),
+            "non_null_fraction": float(values.notna().mean()) if len(values) else 0.0,
+        }
     audit_path = OUT / "archive_source_audit.csv"
     feature_path = OUT / "event_factors.csv.gz"
     gaps_path = OUT / "coverage_gaps.csv"
@@ -423,6 +450,7 @@ def main() -> int:
         "missing_archive_paths": int(missing_paths),
         "archive_file_errors": int(failed_files),
         "gap_rows": int(len(gaps)),
+        "factor_nonnull_coverage": factor_coverage,
         "futures_basis_type": "prior-session front-month NIFTY futures EOD close minus same-session NIFTY index EOD close; not intraday lead-lag",
         "feature_timing": "strictly prior available index session to the event entry date; feature session is at least one trading session before entry; no fills from event-day EOD",
         "outputs": {
