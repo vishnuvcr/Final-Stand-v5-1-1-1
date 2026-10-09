@@ -997,7 +997,7 @@ Phase 53 must establish exact source revision/file coverage and distinguish offi
 
 ## Phase 54 — OHLC-reference sensitivity (non-executable)
 
-Phase 53 closed with a bounded NO-GO for free independent historical bid/ask/depth data. Phase 54 is a separate branch and does not treat candle range as spread, recompute P&L, or promote any strategy. It measures how many of the frozen 480 Phase 52 configuration-event rows satisfy prior-minute OI and entry-data gates under preregistered OHLC range thresholds.
+Phase 53 closed with a bounded NO-GO for free independent historical bid/ask/depth data. Phase 54 is a separate branch and does not treat candle range as spread, recompute P&L, or promote any strategy. It audits whether the frozen Phase 52 output retains complete per-leg evidence needed to calculate threshold sensitivity. The first valid audit found 373 empty leg payloads and partial payloads among other exclusions, so alternate-threshold counts are blocked rather than imputed.
 
 - [Phase 54 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_RESEARCH_PLAN.md)
 - [Phase 54 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md)
@@ -1006,3 +1006,16 @@ Phase 53 closed with a bounded NO-GO for free independent historical bid/ask/dep
 - [Manual and push-triggered workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/.github/workflows/phase-54-ohcl-reference-sensitivity.yml)
 
 The workflow reports eligibility counts only. Exit validity, executable fills, transaction-cost profitability and strategy superiority are not tested in this phase; holdout remains untouched.
+
+
+## Phase 55 — Complete leg-audit payload repair
+
+Phase 54 showed that the stored event replay output was not sufficiently detailed to calculate alternate OHLC thresholds without inventing leg values. Phase 55 repairs the Phase 52 runner to preserve one audit record per selected leg, continue checking remaining legs after the first failure, and fail closed if a leg is omitted.
+
+- [Phase 55 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_RESEARCH_PLAN.md)
+- [Phase 55 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_STATUS.md)
+- [Phase 55 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_ERROR_LOG.md)
+- [Runner regression tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/research/phase52/tests/test_historical_pilot_leg_audit.py)
+- [Cached manual/automatic pilot workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/.github/workflows/phase-55-leg-audit-payload-repair.yml)
+
+The workflow reruns the same frozen 480-row pilot against the pinned revision, validates expected leg counts and cost rows, and caches the Hugging Face files by revision. Raw market data is not committed; no holdout or strategy promotion is allowed.
