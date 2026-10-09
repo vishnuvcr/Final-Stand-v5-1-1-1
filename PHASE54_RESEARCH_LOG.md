@@ -133,3 +133,10 @@
 - Range-excluded rows with complete leg payload=0.
 - Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; alternate thresholds are not computed because parent output lacks complete leg-level evidence.
 - No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
+
+
+## Step 2 — 2026-10-10 — Evidence completeness audit
+- Final accepted workflow: [37988143410](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988143410), all tests, artifact upload and checkpoint persistence passed.
+- Parent input SHA-256: ca60e4b1757b1b6cb7fa94b495eff73e08da481fbe3952a19808a10dfdac19db; 480 rows; parent status counts 100 OI blocks, 379 range exclusions, 1 pass.
+- Payload audit: 21 complete rows, 459 incomplete rows, 373 empty leg payloads, 86 partial payloads, and zero range-excluded rows with complete leg payload.
+- Decision: no alternate threshold results accepted. The earlier numerical sensitivity output is invalidated because it used incomplete leg evidence. Phase 55 must repair and rerun the source runner before sensitivity can be computed.
