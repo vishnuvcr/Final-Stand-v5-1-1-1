@@ -75,3 +75,11 @@ First automatic workflow run 37924369419 failed in registry validation after its
 - The deterministic queue has 9,379,584 finite configurations in grid v1.3; the prior checkpoint was at 10,000 enumerated combinations under the previous workflow version. The current scheduled runner aims at 25,000 configurations per run. None of these enumeration counts represent completed replay results.
 - The first factor-selector pilot checked out the Phase45 legacy trade matrix and Phase39 feature panel, installed pandas/numpy, then failed at the self-test on a quantile-bin boundary assumption. The data analysis did not run. The test now uses fixed values away from the threshold boundaries. Waiting for automatic workflow rerun.
 - **Research result status:** no Phase52 factor-selection profitability or uplift result has yet been accepted. Legacy risk-limited template outcomes will be tested after the self-test passes and the as-of join reaches at least 90% coverage. Futures basis, true synthetic-future divergence, timestamped news and corporate actions remain data-gated.
+
+
+## Coverage gate revision — PA-004 (2026-10-09)
+
+- Workflow run 37926165354 passed selector self-tests but reported 68.2% as-of feature match overall. No selector metrics were calculated; the pilot stopped at the coverage gate.
+- Coverage does not imply an incorrect price or failed strategy. The legacy outcome matrix contains expiry sessions for which the Phase39 option-factor panel has no same-expiry feature snapshot.
+- The pilot now records coverage by development/validation/holdout; it may proceed only when each split is at least 50% matched and validation/holdout have at least 20 matched expiry sessions. Every reported comparison uses the same matched expiry keys for selector and baseline, and there is no imputation. Otherwise a coverage-only report is written without factor P&L.
+- This is a documented exploratory matched-sample protocol, not a claim of full feature coverage. Futures/synthetic-futures remain untested until source data exist.
