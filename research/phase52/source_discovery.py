@@ -39,13 +39,17 @@ def request_json(url: str, headers: dict[str, str] | None = None) -> Any:
 
 
 def run_query(label: str, query: str, url: str, headers: dict[str, str] | None = None) -> dict[str, Any]:
+    # Never persist query-string credentials such as the YouTube API key.
+    parsed = urllib.parse.urlsplit(url)
+    safe_query = [(k, v) for k, v in urllib.parse.parse_qsl(parsed.query) if k.lower() not in {"key", "token", "access_token", "api_key"}]
+    safe_url = urllib.parse.urlunsplit((parsed.scheme, parsed.netloc, parsed.path, urllib.parse.urlencode(safe_query), ""))
     try:
         payload = request_json(url, headers)
-        return {"source_type": label, "query": query, "query_url": url, "status": "OK", "payload": payload}
+        return {"source_type": label, "query": query, "query_url": safe_url, "status": "OK", "payload": payload}
     except urllib.error.HTTPError as exc:
-        return {"source_type": label, "query": query, "query_url": url, "status": "HTTP_ERROR", "http_status": exc.code}
+        return {"source_type": label, "query": query, "query_url": safe_url, "status": "HTTP_ERROR", "http_status": exc.code}
     except Exception as exc:
-        return {"source_type": label, "query": query, "query_url": url, "status": "ERROR", "error_type": type(exc).__name__, "error": str(exc)[:300]}
+        return {"source_type": label, "query": query, "query_url": safe_url, "status": "ERROR", "error_type": type(exc).__name__}
 
 
 def discover() -> dict[str, Any]:
