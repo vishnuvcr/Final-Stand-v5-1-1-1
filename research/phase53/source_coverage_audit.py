@@ -160,7 +160,7 @@ def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[st
     # listings only when each returned JSON successfully. Fallback to a recursive
     # root listing only if both directory endpoints are inaccessible.
     urls = [
-        f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/options/NIFTY?recursive=false&expand=true",
+        f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/options/NIFTY?recursive=false&expand=true&limit=1000",
         f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/index?recursive=false&expand=true",
     ]
     attempted = []
@@ -180,7 +180,7 @@ def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[st
             "listing_complete": success_count == len(urls),
             "http_status": 200,
         }, combined
-    root_url = f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}?recursive=true&expand=false"
+    root_url = f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}?recursive=true&expand=false&limit=1000"
     meta, data = json_request(root_url, token)
     attempted.append(meta)
     if isinstance(data, list):
