@@ -839,3 +839,6 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Pre-run audit note:** During code review, a timestamp-key format mismatch in the new selected-strike auditor was caught and patched before accepting any output; it is recorded as F52-023 in the [Phase52 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md). Selected-strike coverage is still pending a fresh Actions self-test/full run.
+
+
+**Workflow self-audit update:** The previously failing status-log persistence step passed in [run 37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) after the safe rebase/push fix. A point-in-time strike-ladder issue was caught before accepting selected-strike results and patched; see [F52-026](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md). Two earlier runs are using older code snapshots; [run 37937318538](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937318538) is queued to validate the corrected script. No selected-strike result or configuration P&L is accepted yet.
