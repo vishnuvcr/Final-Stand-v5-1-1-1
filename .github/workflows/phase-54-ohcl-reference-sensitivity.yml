@@ -37,6 +37,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Remove stale report output
+        run: rm -rf results/phase54/ohlc_reference_sensitivity
       - name: Regression tests
         run: |
           python -m unittest discover -s research/phase54/tests -v
