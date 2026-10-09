@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 from datetime import datetime, timezone
 from pathlib import Path
@@ -89,11 +90,12 @@ def main() -> int:
         repo_id=HF_REPO, filename="index/NIFTY.parquet", repo_type="dataset",
         revision=revision, token=token
     ))
-    index = pd.read_parquet(index_path, columns=["timestamp", "close"])
+    index = pd.read_parquet(index_path, columns=["timestamp", "open", "close"])
     index["timestamp"] = to_ist(index["timestamp"])
+    index["open"] = pd.to_numeric(index["open"], errors="coerce")
     index["close"] = pd.to_numeric(index["close"], errors="coerce")
-    index = index.dropna(subset=["timestamp", "close"]).drop_duplicates("timestamp", keep="last")
-    spot_map = dict(zip(index["timestamp"].map(lambda x: x.isoformat()), index["close"].astype(float)))
+    index = index.dropna(subset=["timestamp", "open", "close"]).drop_duplicates("timestamp", keep="last")
+    spot_map = dict(zip(index["timestamp"].map(lambda x: x.isoformat()), index["open"].astype(float)))
 
     out_rows: list[dict[str, Any]] = []
     file_audit: list[dict[str, Any]] = []
