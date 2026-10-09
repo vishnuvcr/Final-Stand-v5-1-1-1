@@ -19,6 +19,12 @@ for d in targets:
     df=pd.read_parquet(p)
     item["rows"]=len(df); item["columns"]=list(df.columns)
     item["missing_columns"]=sorted(required-set(df.columns))
+    if item["missing_columns"]:
+        item["schema_pass"]=False
+        item["pass"]=False
+        report["targets"][d]=item
+        continue
+    item["schema_pass"]=True
     ts=pd.to_datetime(df["datetime"],errors="coerce"); ex=pd.to_datetime(df["expiry_date"],errors="coerce")
     item["bad_datetime"]=int(ts.isna().sum()); item["bad_expiry"]=int(ex.isna().sum())
     item["min_datetime"]=str(ts.min()); item["max_datetime"]=str(ts.max())
@@ -26,7 +32,7 @@ for d in targets:
     item["duplicate_keys"]=int(df.duplicated(["datetime","expiry_date","strike_price","right"]).sum())
     item["target_expiry_present"]=d in item["expiry_values"]
     item["target_trade_date_present"]=d in {str(x.date()) for x in ts.dropna().unique()}
-    item["pass"]=not item["missing_columns"] and item["bad_datetime"]==0 and item["bad_expiry"]==0 and item["duplicate_keys"]==0 and item["target_expiry_present"] and item["target_trade_date_present"]
+    item["pass"]=item["schema_pass"] and item["bad_datetime"]==0 and item["bad_expiry"]==0 and item["duplicate_keys"]==0 and item["target_expiry_present"] and item["target_trade_date_present"]
     report["targets"][d]=item
 
 report["coverage_pass"]=all(x["pass"] for x in report["targets"].values())
