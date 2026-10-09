@@ -52,13 +52,56 @@ jobs:
       - name: Validate output row counts and leg evidence
         run: |
           python - <<'PY'
-          import csv, json
+          import csv, json, math
+          from collections import Counter
           from pathlib import Path
           p=Path("results/phase52/historical_pilot")
           rows=list(csv.DictReader((p/"event_replay.csv").open(newline="",encoding="utf-8")))
           assert len(rows)==480, f"expected 480 rows, got {len(rows)}"
+          expected_status={"EXCLUDED_OHLC_RANGE_PROXY":379,"BLOCKED_LEG_ELIGIBILITY":100,"REPLAY_PASS":1}
+          status_counts=dict(Counter(r["status"] for r in rows))
+          assert status_counts==expected_status, f"unexpected parent statuses: {status_counts}"
+          family_legs={"BUY_CALL":1,"BUY_PUT":1,"BULL_CALL_SPREAD":2,"BEAR_CALL_SPREAD":2,
+                       "SHORT_IRON_CONDOR":4,"LONG_STRADDLE":2,"LONG_STRANGLE":2}
+          range_rows=pass_rows=hard_oi_rows=0
+          for row in rows:
+              try:
+                  legs=json.loads(row.get("resolved_legs_json") or "[]")
+              except Exception as exc:
+                  raise AssertionError(f"malformed leg JSON for {row.get('event_id')}: {exc}")
+              if row["status"] in {"EXCLUDED_OHLC_RANGE_PROXY","REPLAY_PASS"}:
+                  expected=family_legs[row["family_id"]]
+                  assert len(legs)==expected, (
+                      f"{row['status']} {row['family_id']} {row['event_id']}: expected {expected} legs, got {len(legs)}")
+                  for leg in legs:
+                      assert leg.get("leg_id") and leg.get("option_type") and leg.get("strike") is not None
+                      oi=leg.get("prior_oi")
+                      assert isinstance(oi,(int,float)) and math.isfinite(oi) and oi>=100, (
+                          f"non-passing OI evidence in {row['event_id']} leg {leg.get('leg_id')}")
+                      assert leg.get("prior_oi_status")=="PASS", f"OI status not PASS: {row['event_id']} {leg.get('leg_id')}"
+                      assert leg.get("entry_status")=="PASS", f"entry status not PASS: {row['event_id']} {leg.get('leg_id')}"
+                      rg=leg.get("entry_range_proxy_pct")
+                      assert isinstance(rg,(int,float)) and math.isfinite(rg) and rg>=0, (
+                          f"invalid range proxy: {row['event_id']} {leg.get('leg_id')}")
+                  if row["status"]=="EXCLUDED_OHLC_RANGE_PROXY": range_rows+=1
+                  else: pass_rows+=1
+              elif row["status"]=="BLOCKED_LEG_ELIGIBILITY":
+                  assert "prior-bar OI" in (row.get("exclusion_reason") or ""), (
+                      f"eligibility block lacks an explicit prior-OI hard blocker: {row.get('event_id')}")
+                  assert any(isinstance(l,dict) and l.get("status")=="PRIOR_OI_MISSING_OR_BELOW_GATE"
+                             and isinstance(l.get("prior_oi"),(int,float)) and l["prior_oi"]<100 for l in legs), (
+                      f"no observed hard OI failure in {row.get('event_id')}")
+                  hard_oi_rows+=1
+              else:
+                  raise AssertionError(f"unexpected status {row['status']}")
+          assert (range_rows,pass_rows,hard_oi_rows)==(379,1,100)
           report=json.loads((p/"report.json").read_text())
-          print(json.dumps({"rows":len(rows),"status_counts":report.get("status_counts"),"version":report.get("pilot_version")},indent=2))
+          assert report.get("planned_config_event_rows")==480
+          assert report.get("source_file_errors")==0
+          print(json.dumps({"rows":len(rows),"status_counts":status_counts,
+              "complete_range_exclusion_rows":range_rows,"complete_replay_pass_rows":pass_rows,
+              "conclusive_hard_oi_block_rows":hard_oi_rows,"source_file_errors":report.get("source_file_errors"),
+              "version":report.get("pilot_version")},indent=2))
           PY
       - name: Upload audited pilot output
         if: always()
