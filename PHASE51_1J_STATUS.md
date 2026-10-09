@@ -40,3 +40,15 @@ Public Hugging Face history lists both target files: [2026-07-28](https://huggin
 Automated metadata-only audit: [run 37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582). The preceding run 37916552983 failed before downloads due to a workflow setup assumption and is logged in the error log; the workflow was patched and retriggered.
 
 No raw source files are committed to the repository. No P&L has been calculated from this candidate. Phase 51 remains blocked until both sessions pass timestamp, coverage, data-integrity, provenance and licence checks.
+
+
+## Free HF audit result — 2026-10-09 — CLOSED / REJECTED FOR TARGET SESSIONS
+
+Run [37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582) succeeded. Both files downloaded, but both contain no rows on the named target trading date:
+- 2026-07-28 file: 320,359 rows, timestamps 2026-06-15 09:15 to 2026-07-02 15:30 IST; target-date rows 0; 105 strikes; CE/PE; expiry metadata 2026-07-28; zero duplicate timestamp-contract keys.
+- 2026-08-04 file: 2,646 rows, timestamps 2026-06-24 10:08 to 2026-07-02 15:29 IST; target-date rows 0; 46 strikes; CE/PE; expiry metadata 2026-08-04; zero duplicate timestamp-contract keys.
+
+This reproduces the stale-file problem in the previously audited RISSIN/HF data. The files are **not usable for either target session**, despite expiry metadata and file names. Raw files were not committed. No P&L calculated. Continue to a bounded search of genuinely independent free sources; Phase 51 stays blocked.
+
+- [Report](results/phase51/phase51_1J_free_hf_audit/REPORT.md)
+- [Manifest](results/phase51/phase51_1J_free_hf_audit/manifest.json)
