@@ -36,13 +36,13 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase51-1J-tradingtick-audit-\${{ github.run_id }}
+          name: phase51-1J-tradingtick-audit-${{ github.run_id }}
           path: results/phase51/phase51_1J_tradingtick/
           if-no-files-found: warn
       - name: Publish source-audit artifacts to phase branch
         if: success()
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
