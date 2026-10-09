@@ -411,7 +411,7 @@
     "spread_gate": "liquidity_max_spread_pct remains an explicit finite strategy/execution configuration dimension",
     "stale_quote_policy": "no trade; never forward-fill or interpolate tradable option prices"
   },
-  "replay_protocol_version": "phase52-replay-v1.0 amended by PA-011/PA-012",
+  "replay_protocol_version": "phase52-replay-v1.0 amended by PA-011/PA-012/PA-013",
   "replay_protocol_path": "PHASE52_REPLAY_PROTOCOL.md",
   "execution_semantics": {
     "grid_domains_changed": false,
@@ -454,6 +454,8 @@
     },
     "strike_selection": "ATM_OFFSET: select nearest ATM from contracts present at the exact entry timestamp using exact-time NIFTY index open; derive modal strike gap from that exact-time option snapshot using Phase43 helper semantics; strike = ATM + signed offset_steps × modal_step. Never use ordinal rank or replace a missing target strike.",
     "abs_delta_selection": "Use exact entry_ts minus one minute and only that prior completed option/index bar close for IV/delta; use prior-bar OI>=100 gate. Then require the same selected contract at exact entry_ts and use that bar open as the OHLC fill reference. Missing exact prior bar, IV or entry open means explicit exclusion.",
-    "no_lookahead_review": "2026-10-09 code review found and corrected lookahead in the exploratory delta audit before any config-grid P&L. Prior selected-strike coverage counts are superseded pending rerun."
+    "no_lookahead_review": "2026-10-09 code review found and corrected lookahead in the exploratory delta audit before any config-grid P&L. Prior selected-strike coverage counts are superseded pending rerun.",
+    "oi_eligibility": "For entry-open fills, OI>=100 is tested on the exact prior completed one-minute option bar at entry_ts minus one minute. Entry-bar OI is diagnostic only. Require valid exact entry bar/open separately; missing prior OI is ineligible with no forward-fill.",
+    "point_in_time_audit": "PA-013: ATM-offset OI eligibility must be based on prior completed minute, not entry-bar OI."
   }
 }
