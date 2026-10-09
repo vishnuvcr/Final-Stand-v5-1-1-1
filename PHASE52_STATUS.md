@@ -10,3 +10,5 @@
 - **Latest queue checkpoint:** 260,000/9,379,584 deterministic configuration IDs enumerated (run 37935663113); still zero configurations backtested by this queue.
 
 - **PA-010 source reconciliation:** 11 named Phase45 presets now have exact leg maps recorded in the spec CSV and are no longer blocked on source ambiguity. This is a specification correction only; registry validation must pass before replay.
+
+- **Stale registry protection:** The workflow now checks the specification CSV revision before persisting registry_audit.json and preserves the remote audit if an older run used the pre-PA-010 file. Verification is pending.
