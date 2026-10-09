@@ -18,17 +18,20 @@ from typing import Any, Iterable
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "research" / "phase52" / "strategy_registry.csv"
 SPACE = ROOT / "research" / "phase52" / "configuration_space.json"
+SPECS = ROOT / "research" / "phase52" / "strategy_specifications.csv"
 
 
-def read_inputs() -> tuple[list[dict[str, str]], dict[str, Any]]:
+def read_inputs() -> tuple[list[dict[str, str]], dict[str, Any], list[dict[str, str]]]:
     with REGISTRY.open(newline="", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
     with SPACE.open(encoding="utf-8") as fh:
         space = json.load(fh)
-    return rows, space
+    with SPECS.open(newline="", encoding="utf-8") as fh:
+        specs = list(csv.DictReader(fh))
+    return rows, space, specs
 
 
-def validate(rows: list[dict[str, str]], space: dict[str, Any]) -> list[str]:
+def validate(rows: list[dict[str, str]], space: dict[str, Any], specs: list[dict[str, str]]) -> list[str]:
     errors: list[str] = []
     required = {
         "candidate_id", "family_id", "family_name", "selector_mode",
@@ -46,6 +49,22 @@ def validate(rows: list[dict[str, str]], space: dict[str, Any]) -> list[str]:
     if any(not value.strip() for value in ids):
         errors.append("blank candidate_id")
     families = {r.get("family_id", "") for r in rows}
+    spec_families = {s.get("family_id", "") for s in specs}
+    required_specs = {"family_id", "family_name", "leg_template", "specification_status", "source_ref", "risk_notes"}
+    if not specs:
+        errors.append("strategy specification registry is empty")
+    else:
+        spec_missing_columns = required_specs.difference(specs[0].keys())
+        if spec_missing_columns:
+            errors.append("missing strategy specification columns: " + ", ".join(sorted(spec_missing_columns)))
+    if len(spec_families) != len(specs):
+        errors.append("duplicate family_id in strategy specification registry")
+    if spec_families != families:
+        errors.append("strategy specification family IDs do not exactly match candidate registry")
+    for spec in specs:
+        for field in required_specs:
+            if not spec.get(field, "").strip():
+                errors.append(f"{spec.get('family_id', '?')} has blank strategy specification field {field}")
     modes = {r.get("selector_mode", "") for r in rows}
     if len(rows) != len(families) * len(modes):
         errors.append(f"registry is not a complete family × selector matrix: rows={len(rows)}, families={len(families)}, modes={len(modes)}")
@@ -153,7 +172,7 @@ def config_id(grid_version: str, candidate_id: str, config: dict[str, Any]) -> s
     return hashlib.sha256(key.encode("utf-8")).hexdigest()[:20]
 
 
-def audit(rows: list[dict[str, str]], space: dict[str, Any]) -> dict[str, Any]:
+def audit(rows: list[dict[str, str]], space: dict[str, Any], specs: list[dict[str, str]]) -> dict[str, Any]:
     per_mode = {}
     total = 0
     per_family_group = {}
@@ -162,9 +181,14 @@ def audit(rows: list[dict[str, str]], space: dict[str, Any]) -> dict[str, Any]:
         per_mode[r["selector_mode"]] = per_mode.get(r["selector_mode"], 0) + n
         per_family_group[r["family_id"]] = per_family_group.get(r["family_id"], 0) + n
         total += n
+    spec_counts = {}
+    for s in specs:
+        spec_counts[s["specification_status"]] = spec_counts.get(s["specification_status"], 0) + 1
     return {
         "grid_version": space["grid_version"],
         "status": "CONFIGURATION_ENUMERATION_ONLY_NO_BACKTEST_RESULTS",
+        "strategy_specification_status_counts": spec_counts,
+        "families_blocked_from_numerical_replay_until_reconciled": [s["family_id"] for s in specs if s["specification_status"] in {"SPECIFICATION_BLOCKED", "PHASE45_TEMPLATE_REQUIRES_RECONCILIATION"}],
         "candidate_hypotheses": len(rows),
         "structure_families": len({r["family_id"] for r in rows}),
         "selector_modes": len({r["selector_mode"] for r in rows}),
@@ -244,12 +268,12 @@ def main() -> int:
     args = parser.parse_args()
     if args.self_test:
         self_test()
-    rows, space = read_inputs()
-    errors = validate(rows, space)
+    rows, space, specs = read_inputs()
+    errors = validate(rows, space, specs)
     if errors:
         print(json.dumps({"status": "REGISTRY_INVALID", "errors": errors}, indent=2), file=sys.stderr)
         return 2
-    report = audit(rows, space)
+    report = audit(rows, space, specs)
     report["registry_validation"] = "PASS"
     report["warnings"] = [
         "Configuration enumeration is not a backtest.",
