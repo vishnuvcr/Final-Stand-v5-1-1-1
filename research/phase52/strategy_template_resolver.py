@@ -450,6 +450,13 @@ def resolve_template(
     width = int(config.get("wing_width_steps", 1))
     if width <= 0:
         return blocked("BLOCKED_INVALID_WING_WIDTH", family_id, "wing width must be positive")
+    raw_reference_lots = config.get("reference_lots_per_leg", 1)
+    try:
+        reference_lots = int(raw_reference_lots)
+    except (TypeError, ValueError):
+        return blocked("BLOCKED_INVALID_REFERENCE_LOTS", family_id, "reference_lots_per_leg must be a positive integer")
+    if reference_lots < 1 or float(raw_reference_lots) != reference_lots:
+        return blocked("BLOCKED_INVALID_REFERENCE_LOTS", family_id, "reference_lots_per_leg must be a positive integer")
     rules = RULES[family_id]
 
     # Bind the strike anchors. For ABS_DELTA, the source audit covered only 0.15/0.30;
@@ -505,6 +512,13 @@ def resolve_template(
             leg_drafts[0]["quantity_lots"] = r1
         if len(leg_drafts) >= 2:
             leg_drafts[1]["quantity_lots"] = r2
+
+    # Apply the global reference-lot scale after ratio overrides. Keep the base
+    # template quantity and the pre-scale quantity explicit for auditability.
+    for draft in leg_drafts:
+        draft["quantity_before_reference_lot_scale"] = int(draft["quantity_lots"])
+        draft["quantity_lots"] = int(draft["quantity_lots"]) * reference_lots
+        draft["reference_lots_per_leg"] = reference_lots
 
     # Resolve every exact entry bar and prior completed-minute OI record for the
     # actual strike/expiry/type; no nearest strike, interpolation, or OI fill.
@@ -575,7 +589,7 @@ def resolve_template(
         "anchors": anchors,
         "wing_width_steps": width,
         "leg_ratio": list(ratio) if ratio is not None else None,
-        "reference_lots_per_leg": int(config.get("reference_lots_per_leg", 1)),
+        "reference_lots_per_leg": reference_lots,
         "legs": resolved_legs,
         "pnl_computed": False,
         "promotable": False,
@@ -703,6 +717,15 @@ def self_test() -> dict[str, Any]:
     ratio_conf = dict(base, leg_ratio=[2,1])
     ratio = resolve_template("CALL_RATIO_SPREAD",ratio_conf,event,entry,prior,expiry_list,specs,manifest)
     assert [x["quantity_lots"] for x in ratio["legs"]] == [2,1]
+    scaled = resolve_template("CALL_RATIO_SPREAD",dict(base,leg_ratio=[2,1],reference_lots_per_leg=2),
+        event,entry,prior,expiry_list,specs,manifest)
+    assert [x["quantity_lots"] for x in scaled["legs"]] == [4,2], scaled
+    butterfly_scaled = resolve_template("BULL_BUTTERFLY",dict(base,reference_lots_per_leg=2),
+        event,entry,prior,expiry_list,specs,manifest)
+    assert [x["quantity_lots"] for x in butterfly_scaled["legs"]] == [2,4,2], butterfly_scaled
+    bad_reference_lots = resolve_template("BUY_CALL",dict(base,reference_lots_per_leg=0),
+        event,entry,prior,expiry_list,specs,manifest)
+    assert bad_reference_lots["status"] == "BLOCKED_INVALID_REFERENCE_LOTS", bad_reference_lots
 
     # Center structures share the call-side strike for CE+PE; OTM anchors split.
     straddle = resolved["LONG_STRADDLE"]
