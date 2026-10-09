@@ -26,3 +26,13 @@ Every runtime or extraction failure must be recorded with run ID, cause, correct
 - **Bug:** The first loop re-used the same page for both target dates, so the second date was not independently set after the July state. It also did not select a strike, so it never invoked the chart-series data request.
 - **Correction:** Reload the target page before each date, capture each target's expiry/date selector independently, select a representative CE strike nearest 24,000 on chart pages if available, capture its ordinary same-origin response, and review returned JSON schema/clock-time fields. Limit response file capture to the TradingTick origin. Workflow triggers only on its marker to avoid duplicate runs; publisher checks out the latest phase branch before replacing result artifacts.
 - **Evidence status:** The July 28 chain endpoint is confirmed as a point-in-time option-chain snapshot. Whether the historical chart API returns a full intraday time series and whether 2026-08-04 is available remains unverified until the next run. No P&L is allowed.
+
+
+## T51-1J-004 — Fresh target-isolated audit finds no intraday payload / August 4 not listed — CLOSED / SOURCE REJECTED
+
+- **Run:** [37915320571](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37915320571), terminal success; artifact publication succeeded.
+- **Observed:** All three public pages returned HTTP 200. The 2026-07-28 expiry appeared in controls, but no intraday-like timestamp was found in the observed same-origin payloads. The chain data is snapshot/daily-context, not an evidenced one-minute contract series. The 2026-08-04 date was not present in tested selectors after fresh page reloads.
+- **Cause of earlier uncertainty:** Prior scripts leaked cascading selector state between dates and failed to trigger chart-series requests. The corrected run isolated each target and selected a representative strike when available.
+- **Correction/outcome:** Fresh-page logic and chart-series triggering are now applied; publication conflict was also fixed by preserving generated artifacts while resetting to the latest phase branch before publication.
+- **Evidence impact:** TradingTick public endpoints are rejected for Phase-51 intraday OOS P&L. No prices/P&L accepted. This does not rule out a paid or private archive outside the audited public endpoints.
+- **Next:** Assess authorized commercial archive/API access. No purchase or credential assumption without authorization.
