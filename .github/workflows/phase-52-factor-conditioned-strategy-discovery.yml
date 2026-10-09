@@ -184,6 +184,7 @@ jobs:
             research/phase52/results/registry_audit.json
             research/phase52/results/config_queue/checkpoint.json
             research/phase52/results/source_discovery/latest.json
+            research/phase52/results/factor_attribution
             ${{ runner.temp }}/phase52_config_shard.jsonl
             ${{ runner.temp }}/phase52_emit_report.json
           if-no-files-found: warn
@@ -202,4 +203,7 @@ jobs:
             exit 0
           fi
           git commit -m "Phase 52 automated research checkpoint $GITHUB_RUN_ID"
+          # Another accepted result/status commit may arrive after checkout. Rebase this
+          # run's durable checkpoint instead of overwriting or force-pushing remote work.
+          git pull --rebase origin "$PHASE_BRANCH"
           git push origin "$PHASE_BRANCH"
