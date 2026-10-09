@@ -10,20 +10,21 @@ assert spec.loader is not None
 spec.loader.exec_module(mod)
 
 class Phase54Tests(unittest.TestCase):
-    def test_threshold_only_changes_range_gate_and_not_prior_oi(self):
+    def test_partial_leg_payload_blocks_threshold_estimation(self):
         rows = [
             {"configuration_id":"a","event_id":"e","status":"EXCLUDED_OHLC_RANGE_PROXY","split":"development",
-             "family_id":"BUY_CALL","resolved_legs_json":json.dumps([
-                 {"prior_oi_status":"PASS","prior_oi":500,"entry_status":"PASS","entry_range_proxy_pct":5.5}])},
+             "family_id":"BEAR_CALL_SPREAD","resolved_legs_json":json.dumps([
+                 {"leg_id":"L1","prior_oi":500,"entry_status":"PASS","entry_range_proxy_pct":5.5}])},
             {"configuration_id":"b","event_id":"e","status":"BLOCKED_LEG_ELIGIBILITY","split":"development",
-             "family_id":"BUY_PUT","resolved_legs_json":json.dumps([
-                 {"prior_oi_status":"FAIL","prior_oi":0,"entry_status":"PASS","entry_range_proxy_pct":1.0}])},
+             "family_id":"BUY_CALL","resolved_legs_json":json.dumps([
+                 {"leg_id":"L1","prior_oi":0,"status":"PRIOR_OI_MISSING_OR_BELOW_GATE"}])},
         ]
         out = mod.analyze(rows)
-        self.assertEqual(out["threshold_sensitivity"][0]["rows_meeting_prior_oi_entry_data_and_range_gate"], 0)
-        at_six = next(x for x in out["threshold_sensitivity"] if x["threshold_pct"] == 6)
-        self.assertEqual(at_six["rows_meeting_prior_oi_entry_data_and_range_gate"], 1)
-        self.assertEqual(at_six["rejected_for_prior_oi"], 1)
+        self.assertEqual(out["status"], "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE")
+        self.assertEqual(out["complete_leg_payload_rows"], 1)
+        self.assertEqual(out["partial_leg_payload_rows"], 1)
+        self.assertFalse(out["threshold_sensitivity"][0]["computable"])
+        self.assertIsNone(out["threshold_sensitivity"][0]["eligible_rows"])
         self.assertFalse(out["frozen_rules"]["historical_pnl_recalculated"])
         self.assertFalse(out["frozen_rules"]["live_execution_or_promotion_allowed"])
 
