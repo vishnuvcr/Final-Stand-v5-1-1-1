@@ -1,5 +1,5 @@
 from __future__ import annotations
-import asyncio, hashlib, json, re
+import asyncio, hashlib, json, re, shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse, urljoin
@@ -8,6 +8,7 @@ from playwright.async_api import async_playwright
 ROOT = Path("results/phase51/phase51_1J_tradingtick")
 ROOT.mkdir(parents=True, exist_ok=True)
 DEBUG = ROOT / "responses"
+if DEBUG.exists(): shutil.rmtree(DEBUG)
 DEBUG.mkdir(exist_ok=True)
 BASE = "https://tradingtick.in"
 PAGES = {
@@ -118,6 +119,90 @@ def script_endpoints(js):
                 out.add(s)
     return sorted(out)[:200]
 
+def parse_timestamp_ist(value):
+    from zoneinfo import ZoneInfo
+    ist = ZoneInfo("Asia/Kolkata")
+    try:
+        if isinstance(value, (int, float)):
+            value = float(value)
+            if value > 1e12: value /= 1000.0
+            if value > 1e9:
+                return datetime.fromtimestamp(value, tz=timezone.utc).astimezone(ist)
+        if isinstance(value, str):
+            raw = value.strip()
+            if raw.isdigit():
+                return parse_timestamp_ist(int(raw))
+            normalized = raw.replace("Z", "+00:00")
+            dt = datetime.fromisoformat(normalized)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=ist)
+            return dt.astimezone(ist)
+    except Exception:
+        return None
+    return None
+
+def summarize_public_payload(page, url, body, content_type):
+    # Keep only provenance/schema/time-granularity metadata; do not persist raw premium/OI data.
+    out = {"page": page, "url": url, "bytes": len(body), "sha256": sha(body),
+           "content_type": content_type, "payload_kind": "NON_JSON"}
+    try:
+        obj = json.loads(body.decode("utf-8", errors="replace"))
+    except Exception:
+        out["body_preview"] = body[:80].decode("utf-8", errors="replace")
+        return out
+    out["top_level_type"] = type(obj).__name__
+    rows = []
+    if isinstance(obj, dict):
+        out["top_level_keys"] = list(obj.keys())[:80]
+        if isinstance(obj.get("data"), list):
+            rows = obj["data"]
+    elif isinstance(obj, list):
+        rows = obj
+    out["row_count"] = len(rows) if rows else (len(obj) if isinstance(obj, list) else 0)
+    if rows and isinstance(rows[0], dict):
+        out["row_keys"] = list(rows[0].keys())[:80]
+    timestamp_values = []
+    time_field = None
+    candidate_fields = ("timestamp", "datetime", "time", "date_time", "ts", "date")
+    for row in rows:
+        if not isinstance(row, dict): continue
+        field = next((k for k in candidate_fields if k in row), None)
+        if field is None: continue
+        if time_field is None: time_field = field
+        dt = parse_timestamp_ist(row.get(field))
+        if dt is not None: timestamp_values.append(dt)
+    out["timestamp_field"] = time_field
+    out["timestamp_count_parsed"] = len(timestamp_values)
+    if timestamp_values:
+        stamps = sorted(timestamp_values)
+        per_day = {}
+        for dt in stamps: per_day.setdefault(dt.date().isoformat(), []).append(dt)
+        same_day_deltas = []
+        for vals in per_day.values():
+            vals.sort()
+            same_day_deltas += [(b-a).total_seconds() for a,b in zip(vals, vals[1:]) if b>a]
+        max_rows_per_day = max(len(v) for v in per_day.values())
+        out["timestamp_min_ist"] = stamps[0].isoformat()
+        out["timestamp_max_ist"] = stamps[-1].isoformat()
+        out["distinct_timestamp_dates"] = len(per_day)
+        out["max_rows_per_local_date"] = max_rows_per_day
+        out["median_same_day_interval_seconds"] = float(sorted(same_day_deltas)[len(same_day_deltas)//2]) if same_day_deltas else None
+        out["daily_bar_pattern"] = max_rows_per_day == 1 and len(per_day) >= 2
+        out["intraday_resolution_confirmed"] = (max_rows_per_day >= 5 and bool(same_day_deltas)
+                                                   and min(same_day_deltas) <= 3600
+                                                   and any(dt.hour != 0 or dt.minute != 0 for dt in stamps))
+    else:
+        out["intraday_resolution_confirmed"] = False
+    if out.get("intraday_resolution_confirmed"):
+        out["granularity_classification"] = "INTRADAY_TIMESTAMPED"
+    elif out.get("daily_bar_pattern"):
+        out["granularity_classification"] = "DAILY_BARS"
+    elif rows and not timestamp_values:
+        out["granularity_classification"] = "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
+    else:
+        out["granularity_classification"] = "UNKNOWN_OR_FILTER_METADATA"
+    return out
+
 async def main():
   async with async_playwright() as p:
     browser=await p.chromium.launch(headless=True)
@@ -140,19 +225,15 @@ async def main():
           if resp.status==200 and urlparse(resp.url).netloc==urlparse(BASE).netloc and (req.resource_type in ("xhr","fetch") or any(x in ctype.lower() for x in ["application/json","text/csv","spreadsheet","excel","octet-stream"])):
             body=await resp.body(); rec["actual_bytes"]=len(body); rec["sha256"]=sha(body)
             if len(body)<=12000000 and (req.resource_type in ("xhr","fetch") or "json" in ctype.lower() or "csv" in ctype.lower()):
-              ext=".json" if "json" in ctype.lower() else ".csv" if "csv" in ctype.lower() else ".txt"
-              nm=hashlib.sha256((slug+resp.url).encode()).hexdigest()[:20]+ext
-              (DEBUG/nm).write_bytes(body)
-              files_seen.append({"page":slug,"url":resp.url,"path":str(DEBUG/nm),"bytes":len(body),
-                                 "sha256":sha(body),"content_type":ctype})
-              try:
-                obj=json.loads(body.decode("utf-8",errors="replace"))
-                if isinstance(obj,dict): rec["json_top_keys"]=list(obj.keys())[:100]
-                elif isinstance(obj,list):
-                  rec["json_is_list"]=True; rec["json_items"]=len(obj)
-                  rec["json_first_item_keys"]=list(obj[0].keys())[:100] if obj and isinstance(obj[0],dict) else None
-              except Exception: rec["body_preview"]=body[:180].decode("utf-8",errors="replace")
-        except Exception: pass
+              summary=summarize_public_payload(slug,resp.url,body,ctype)
+              files_seen.append(summary)
+              rec["payload_kind"]=summary.get("granularity_classification",summary.get("top_level_type","non-json"))
+              rec["payload_row_count"]=summary.get("row_count")
+              rec["payload_timestamp_field"]=summary.get("timestamp_field")
+              rec["payload_intraday_resolution_confirmed"]=summary.get("intraday_resolution_confirmed",False)
+        except Exception as e:
+          # Preserve the failure in metadata rather than silently mistaking it for a clean response.
+          network_all.append({"event":"response-audit-error","page":slug,"url":getattr(resp,"url","")[:1000],"error":str(e)[:250]})
       page.on("request",on_request); page.on("response",on_response)
       entry={"url":url,"navigation_status":None,"error":None,"initial_state":{},"selectors_by_target":{},"request_count":0}
       try:
@@ -223,15 +304,16 @@ async def main():
       await page.close()
     manifest["network_events"]=len(network_all)
     manifest["same_origin_data_responses"]=files_seen
-    any_target_option=False
-    any_intraday_payload=False
+    any_intraday_payload=any(x.get("intraday_resolution_confirmed",False) for x in files_seen)
     eod_hint=False
     for slug,pdata in manifest["pages"].items():
-      if slug=="historical_chain":
-        blob=json.dumps(pdata).lower()
-        if "end-of-day" in blob or "eod" in blob: eod_hint=True
+      if slug=="historical_chain" and ("end-of-day" in json.dumps(pdata).lower() or "eod" in json.dumps(pdata).lower()):
+        eod_hint=True
+    any_target_option=False
+    for slug,pdata in manifest["pages"].items():
       for scan in pdata.get("selectors_by_target",{}).values():
-        if any(x.get("contains_target") for x in scan.get("target_option_scan",[])): any_target_option=True
+        if any(x.get("contains_target") for x in scan.get("target_option_scan",[])):
+          any_target_option=True
     target_presence={}
     for target in TARGETS:
       presence={"expiry_selector":False,"session_date_selector":False,"chart_expiry_selector":False}
@@ -242,44 +324,25 @@ async def main():
           if sc.get("contains_target") and ("date" in ident or "session" in ident): presence["session_date_selector"]=True
           if sc.get("contains_target") and slug in ("expired_chart","chart_data"): presence["chart_expiry_selector"]=True
       target_presence[target]=presence
-    response_reviews=[]
-    for f in files_seen:
-      review={"page":f["page"],"url":f["url"],"bytes":f["bytes"],"sha256":f["sha256"],"content_type":f["content_type"]}
-      if f["path"].endswith((".csv",".json")):
-        try:
-          obj=json.loads(Path(f["path"]).read_text(errors="ignore"))
-          review["top_level_type"]=type(obj).__name__
-          if isinstance(obj,dict):
-            review["top_level_keys"]=list(obj.keys())[:80]
-            rows=obj.get("data")
-            if isinstance(rows,list):
-              review["row_count"]=len(rows)
-              review["row_keys"]=list(rows[0].keys())[:80] if rows and isinstance(rows[0],dict) else []
-              if rows and isinstance(rows[0],dict):
-                review["first_row_sample"]={k:rows[0][k] for k in list(rows[0])[:18]}
-          elif isinstance(obj,list):
-            review["row_count"]=len(obj)
-            review["first_row_keys"]=list(obj[0].keys())[:80] if obj and isinstance(obj[0],dict) else []
-          raw=json.dumps(obj,ensure_ascii=False)
-          has_iso=bool(re.search(r"20\d{2}[-/]\d{2}[-/]\d{2}[ T]\d{2}:\d{2}",raw))
-          hhmm=bool(re.search(r'"(?:0[9]|1[0-5]):[0-5]\d(?::[0-5]\d)?"',raw))
-          keys=set(review.get("top_level_keys",[]))|set(review.get("row_keys",[]))|set(review.get("first_row_keys",[]))
-          time_keys=any(str(k).lower() in {"timestamp","datetime","time","times","labels","x"} for k in keys)
-          review["contains_iso_intraday_timestamp"]=has_iso
-          review["contains_clock_time_label"]=hhmm
-          review["has_time_axis_keys"]=time_keys
-          if has_iso or hhmm or time_keys: any_intraday_payload=True
-        except Exception as e: review["parse_error"]=str(e)[:200]
-      response_reviews.append(review)
-    manifest["response_reviews"]=response_reviews
     manifest["target_presence_by_control"]=target_presence
     manifest["target_date_selectable_in_any_control"]=any_target_option
     manifest["intraday_timestamp_in_observed_data_response"]=any_intraday_payload
-    if any_intraday_payload: manifest["classification"]="INTRADAY_PAYLOAD_CANDIDATE_REQUIRES_RAW_COVERAGE_REVIEW"
-    elif any_target_option: manifest["classification"]="DATE_VISIBLE_DATA_NOT_VERIFIED"
-    elif eod_hint: manifest["classification"]="EOD_CONTEXT_ONLY_OR_RAW_DOWNLOAD_UNVERIFIED"
-    else: manifest["classification"]="PUBLIC_PAGE_ACCESSIBLE_RAW_TARGET_DATA_NOT_VERIFIED"
-    manifest["pnl_eligible"]=False
+    manifest["raw_response_bodies_persisted"]=False
+    both_chart_expiries=all(target_presence.get(d,{}).get("chart_expiry_selector",False) for d in TARGETS)
+    july_support=target_presence.get("2026-07-28",{}).get("expiry_selector",False)
+    aug_support=target_presence.get("2026-08-04",{}).get("expiry_selector",False)
+    if any_intraday_payload and both_chart_expiries:
+      manifest["classification"]="INTRADAY_PAYLOAD_CANDIDATE_REQUIRES_RAW_COVERAGE_REVIEW"
+    elif any_intraday_payload:
+      manifest["classification"]="PARTIAL_INTRADAY_CANDIDATE_INCOMPLETE_TARGET_EXPIRIES"
+    elif july_support and not aug_support:
+      manifest["classification"]="2026_07_28_SNAPSHOT_OR_DAILY_BARS_ONLY__2026_08_04_NOT_LISTED"
+    elif any_target_option:
+      manifest["classification"]="DATE_VISIBLE_DATA_NOT_INTRADAY_VERIFIED"
+    elif eod_hint:
+      manifest["classification"]="EOD_CONTEXT_ONLY_OR_RAW_DOWNLOAD_UNVERIFIED"
+    else:
+      manifest["classification"]="PUBLIC_PAGE_ACCESSIBLE_RAW_TARGET_DATA_NOT_VERIFIED"
     (ROOT/"manifest.json").write_text(json.dumps(manifest,indent=2,ensure_ascii=False))
     (ROOT/"network.json").write_text(json.dumps(network_all,indent=2,ensure_ascii=False))
     report=["# Phase 51-1J TradingTick Browser Audit","",f"**Classification:** {manifest['classification']}","",
@@ -294,7 +357,7 @@ async def main():
         hits=[x for x in scan.get("target_option_scan",[]) if x.get("contains_target")]
         report.append(f"- {target}: attempted selections={len(scan.get('attempts',[]))}; controls containing this date={len(hits)}")
       report.append("")
-    report += ["## Data-response manifest","","See manifest.json, network.json, and responses/ for response metadata and small public JSON/CSV response copies. Only responses served by ordinary browser requests are represented. No authenticated or protected route was accessed."]
+    report += ["## Data-response manifest","","See manifest.json and network.json for public response provenance, schema, row-count, timestamp and granularity summaries. Raw response bodies/prices are not persisted. No authenticated or protected route was accessed."]
     (ROOT/"REPORT.md").write_text("\n".join(report)+"\n")
     await browser.close()
 
