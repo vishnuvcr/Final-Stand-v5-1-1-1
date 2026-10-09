@@ -63,9 +63,11 @@ def analyze(rows: list[dict[str, str]]) -> dict[str, Any]:
     threshold_rows = []
     for threshold in THRESHOLDS:
         qualified = []
-        rejected_oi = rejected_entry_data = rejected_range = 0
+        rejected_oi = rejected_entry_data = rejected_range = missing_leg_details = 0
         for row, legs, prior_ok, entry_data_ok, max_range in parsed:
-            if not legs or not prior_ok:
+            if not legs:
+                missing_leg_details += 1
+            elif not prior_ok:
                 rejected_oi += 1
             elif not entry_data_ok:
                 rejected_entry_data += 1
@@ -79,14 +81,16 @@ def analyze(rows: list[dict[str, str]]) -> dict[str, Any]:
             "planned_config_event_rows": len(rows),
             "rows_meeting_prior_oi_entry_data_and_range_gate": len(qualified),
             "share_of_planned_pct": round(100 * len(qualified) / len(rows), 4),
-            "rejected_for_prior_oi_or_missing_legs": rejected_oi,
+            "rejected_for_prior_oi": rejected_oi,
+            "unassessable_missing_leg_details": missing_leg_details,
             "rejected_for_entry_data": rejected_entry_data,
             "rejected_for_range_proxy": rejected_range,
             "families_with_at_least_one_qualified_row": len(by_family),
             "qualified_rows_by_family": dict(sorted(by_family.items())),
             "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated.",
         })
-    oi_fail_rows = [row for row, legs, prior_ok, _, _ in parsed if not legs or not prior_ok]
+    oi_fail_rows = [row for row, legs, prior_ok, _, _ in parsed if legs and not prior_ok]
+    missing_leg_detail_rows = [row for row, legs, _, _, _ in parsed if not legs]
     status_split = defaultdict(Counter)
     for row in rows:
         status_split[row.get("split", "UNKNOWN")][row.get("status", "MISSING")] += 1
@@ -110,6 +114,7 @@ def analyze(rows: list[dict[str, str]]) -> dict[str, Any]:
         "baseline_status_counts": dict(sorted(baseline_status.items())),
         "status_counts_by_split": {k: dict(sorted(v.items())) for k, v in sorted(status_split.items())},
         "strict_prior_oi_fail_row_count": len(oi_fail_rows),
+        "unassessable_missing_leg_detail_row_count": len(missing_leg_detail_rows),
         "threshold_sensitivity": threshold_rows,
         "interpretation": [
             "The OHLC high-low/open percentage is a candle-range proxy, not a quoted spread or executable liquidity measure.",
@@ -123,8 +128,8 @@ def write_outputs(result: dict[str, Any], out_dir: Path = OUT) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     fields = ["threshold_pct", "planned_config_event_rows", "rows_meeting_prior_oi_entry_data_and_range_gate",
-              "share_of_planned_pct", "rejected_for_prior_oi_or_missing_legs", "rejected_for_entry_data",
-              "rejected_for_range_proxy", "families_with_at_least_one_qualified_row", "note"]
+              "share_of_planned_pct", "rejected_for_prior_oi", "unassessable_missing_leg_details",
+              "rejected_for_entry_data", "rejected_for_range_proxy", "families_with_at_least_one_qualified_row", "note"]
     with (out_dir / "threshold_sensitivity.csv").open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=fields)
         writer.writeheader()
@@ -135,14 +140,15 @@ def write_outputs(result: dict[str, Any], out_dir: Path = OUT) -> None:
         "**Non-executable diagnostic only. No P&L was recalculated and no strategy was promoted.**", "",
         f"- Input rows: {result['input']['row_count']}",
         f"- Baseline statuses: {json.dumps(result['baseline_status_counts'], sort_keys=True)}",
-        f"- Strict prior-minute OI failure rows: {result['strict_prior_oi_fail_row_count']}", "",
-        "| OHLC range threshold (%) | Rows passing prior-OI + entry-data + range checks | % of 480 | Prior-OI/legs rejected | Entry-data rejected | Range rejected |",
-        "|---:|---:|---:|---:|---:|---:|",
+        f"- Strict prior-minute OI failure rows: {result['strict_prior_oi_fail_row_count']}",
+        f"- Rows without per-leg detail (not reclassifiable by this sensitivity): {result['unassessable_missing_leg_detail_row_count']}", "",
+        "| OHLC range threshold (%) | Rows passing prior-OI + entry-data + range checks | % of 480 | OI rejected | Missing leg detail | Entry-data rejected | Range rejected |",
+        "|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in result["threshold_sensitivity"]:
         lines.append(f"| {row['threshold_pct']} | {row['rows_meeting_prior_oi_entry_data_and_range_gate']} | "
-                     f"{row['share_of_planned_pct']:.2f}% | {row['rejected_for_prior_oi_or_missing_legs']} | "
-                     f"{row['rejected_for_entry_data']} | {row['rejected_for_range_proxy']} |")
+                     f"{row['share_of_planned_pct']:.2f}% | {row['rejected_for_prior_oi']} | "
+                     f"{row['unassessable_missing_leg_details']} | {row['rejected_for_entry_data']} | {row['rejected_for_range_proxy']} |")
     lines.extend(["", "## Interpretation", *[f"- {x}" for x in result["interpretation"]], ""])
     (out_dir / "report.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -161,7 +167,7 @@ def main() -> None:
         result = analyze(sample)
         assert result["threshold_sensitivity"][0]["rows_meeting_prior_oi_entry_data_and_range_gate"] == 0
         assert result["threshold_sensitivity"][1]["rows_meeting_prior_oi_entry_data_and_range_gate"] == 1
-        assert result["threshold_sensitivity"][0]["rejected_for_prior_oi_or_missing_legs"] == 1
+        assert result["threshold_sensitivity"][0]["rejected_for_prior_oi"] == 1
         print("Phase 54 self-test PASS")
         return
     result = analyze(read_rows())
