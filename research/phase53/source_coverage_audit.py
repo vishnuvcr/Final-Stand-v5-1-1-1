@@ -47,9 +47,11 @@ def assess_inventory(items: Iterable[dict[str, Any]], required_paths: list[str])
         if not isinstance(name, str) or not name:
             continue
         # Normalize API responses that list only paths relative to the requested folder.
-        by_path[name.lstrip("/")] = item
-        if name in by_path and name not in required_paths:
-            pass
+        normalized = name.lstrip("/")
+        if normalized in by_path and normalized not in duplicates:
+            duplicates.append(normalized)
+        else:
+            by_path[normalized] = item
     # Permit either full dataset-relative paths or basename results from a folder listing.
     present: list[str] = []
     missing: list[str] = []
@@ -154,23 +156,49 @@ def json_request(url: str, token: str | None = None) -> tuple[dict[str, Any], An
 
 
 def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[str, Any], list[dict[str, Any]] | None]:
-    # Hugging Face Hub tree endpoint supports path + revision query. Keep fallback
-    # forms because the API routing changed across hub versions.
+    # Query the option and index directories independently, then combine metadata
+    # listings only when each returned JSON successfully. Fallback to a recursive
+    # root listing only if both directory endpoints are inaccessible.
     urls = [
         f"https://huggingface.co/api/datasets/{repo_id}/tree/options/NIFTY?recursive=false&expand=true&revision={revision}",
         f"https://huggingface.co/api/datasets/{repo_id}/tree/index?recursive=false&expand=true&revision={revision}",
-        f"https://huggingface.co/api/datasets/{repo_id}/tree?recursive=true&expand=false&revision={revision}",
     ]
     attempted = []
+    combined: list[dict[str, Any]] = []
+    success_count = 0
     for url in urls:
         meta, data = json_request(url, token)
         attempted.append(meta)
         if isinstance(data, list):
-            # Return the first successful listing; if it is the NIFTY folder listing,
-            # it may need a separate index listing. The caller uses HEAD per required path.
-            return {"attempts": attempted, "successful_url": url, "http_status": meta.get("http_status")}, data
-    return {"attempts": attempted, "successful_url": None, "http_status": None}, None
-
+            combined.extend(data)
+            success_count += 1
+    if success_count:
+        return {
+            "attempts": attempted,
+            "successful_url_count": success_count,
+            "expected_directory_count": len(urls),
+            "listing_complete": success_count == len(urls),
+            "http_status": 200,
+        }, combined
+    root_url = f"https://huggingface.co/api/datasets/{repo_id}/tree?recursive=true&expand=false&revision={revision}"
+    meta, data = json_request(root_url, token)
+    attempted.append(meta)
+    if isinstance(data, list):
+        return {
+            "attempts": attempted,
+            "successful_url_count": 1,
+            "expected_directory_count": len(urls),
+            "listing_complete": True,
+            "root_listing_fallback": True,
+            "http_status": meta.get("http_status"),
+        }, data
+    return {
+        "attempts": attempted,
+        "successful_url_count": 0,
+        "expected_directory_count": len(urls),
+        "listing_complete": False,
+        "http_status": None,
+    }, None
 
 def source_probe(source: dict[str, Any], token: str | None) -> dict[str, Any]:
     result = request_url(source["url"], "GET", token, read_limit=24_000)
