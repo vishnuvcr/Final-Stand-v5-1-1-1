@@ -244,6 +244,25 @@ def paired_validation_test(diff: np.ndarray, seed: int = 5218, reps: int = 5000,
     p = (1 + int(np.sum(null_means >= x.mean()))) / (reps + 1)
     return float(np.quantile(boot_means, .025)), float(np.quantile(boot_means, .975)), float(p)
 
+def self_test() -> None:
+    fixture = pd.DataFrame({
+        "expiry_key": ["2026-01-01", "2026-01-01"],
+        "entry_ts": pd.to_datetime(["2025-12-25 10:00", "2025-12-25 10:00"]).tz_localize(TZ),
+        "strategy": ["bear_call_spread", "buy_call"],
+        "net": [100.0, -50.0], "net50": [80.0, -70.0],
+        "net100": [60.0, -90.0], "state": ["LOW", "LOW"],
+    })
+    mapping = {"LOW": "bear_call_spread", "UNAVAILABLE": "buy_call"}
+    selected = collapse_by_event(fixture, "state", mapping, "buy_call")
+    assert len(selected) == 1 and selected.iloc[0].strategy == "bear_call_spread"
+    baseline = fixture[fixture.strategy.eq("buy_call")].copy()
+    m = metrics(selected, baseline.assign(expiry_key="2026-01-01"), "fixture", "validation")
+    assert m["events"] == 1 and m["net_pnl_rupees"] == 100.0
+    assert bins(pd.Series([1.0, 2.0, np.nan]), [1.5])[0] == "LOW"
+    assert bins(pd.Series([1.0, 2.0, np.nan]), [1.5])[1] == "HIGH"
+    print("SELF_TEST_PASS: point-in-time EOD bins, per-event strategy routing, and paired metrics")
+
+
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     trades, eod, bm, em = load_inputs()
@@ -341,8 +360,6 @@ def main() -> int:
     eval_results = []
     eval_ledgers: dict[tuple[str,str], pd.DataFrame] = {}
     coverage_rows = []
-    for feature in sorted({f for v in chosen.values() for f in eval(v)}):
-        pass
     for mode, feat_json in sorted(chosen.items()):
         candidate = tuple(json.loads(feat_json) if isinstance(feat_json, str) else feat_json)
         dev_z, edges = make_state_features(full_dev_rows, full_dev_events, candidate)
@@ -505,4 +522,8 @@ def main() -> int:
     return 0
 
 if __name__ == "__main__":
+    import sys
+    if "--self-test-only" in sys.argv:
+        self_test()
+        raise SystemExit(0)
     raise SystemExit(main())
