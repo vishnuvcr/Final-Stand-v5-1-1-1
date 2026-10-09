@@ -2,6 +2,12 @@ name: Phase 51-3 - Available Data Strategy Sweep
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - trigger/phase51_3.start
+      - research/phase51_3_available_data_sweep.py
+      - PHASE51_3_RESEARCH_PLAN.md
   push:
     branches:
       - phase-51-3-available-data-strategy-sweep
@@ -67,6 +73,7 @@ jobs:
           name: phase51-3-available-oos-${{ github.run_id }}
           path: results/phase51/available_oos
       - name: Publish results
+        if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
