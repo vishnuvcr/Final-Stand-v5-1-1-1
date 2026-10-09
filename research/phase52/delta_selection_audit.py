@@ -170,11 +170,13 @@ def main() -> int:
                 entry_ts = entry_ts.tz_localize(TZ)
             else:
                 entry_ts = entry_ts.tz_convert(TZ)
-            spot = spot_map.get(entry_ts.isoformat(), math.nan)
-            entry = by_ts.get(entry_ts, empty)
-            tau = (expiry_ts - entry_ts).total_seconds() / YEAR_SECONDS
+            selection_ts = entry_ts - pd.Timedelta(minutes=1)
+            spot = spot_map.get(selection_ts.isoformat(), math.nan)
+            selection_snapshot = by_ts.get(selection_ts, empty)
+            entry_fill = by_ts.get(entry_ts, empty)
+            tau = (expiry_ts - selection_ts).total_seconds() / YEAR_SECONDS
             eligible: list[dict[str, Any]] = []
-            for contract in entry.itertuples(index=False):
+            for contract in selection_snapshot.itertuples(index=False):
                 typ = str(contract.option_type).upper()
                 strike = float(contract.strike) if pd.notna(contract.strike) else math.nan
                 premium = float(contract.close) if pd.notna(contract.close) else math.nan
@@ -193,9 +195,21 @@ def main() -> int:
                 for target in TARGET_ABS_DELTAS:
                     selected = min(contracts, key=lambda x: (abs(abs(x["delta"])-target), x["strike"])) if contracts else None
                     if selected is None:
-                        rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":None,"spot":spot if math.isfinite(spot) else None,"premium_close":None,"implied_vol":None,"model_delta":None,"entry_oi":None,"entry_oi_ge_100":False,"status":"NO_VALID_IV_CONTRACT","model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
+                        rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"selection_ts":selection_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":None,"spot_prior_close":spot if math.isfinite(spot) else None,"predecision_premium_close":None,"implied_vol":None,"model_delta":None,"predecision_oi":None,"predecision_oi_ge_100":False,"entry_bar_open":None,"entry_bar_ohlc_valid":False,"entry_bar_oi":None,"entry_fill_bar_available":False,"status":"NO_VALID_PRE_ENTRY_IV_CONTRACT","model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
                         continue
-                    rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":selected["strike"],"spot":spot,"premium_close":selected["premium"],"implied_vol":selected["iv"],"model_delta":selected["delta"],"entry_oi":selected["oi"],"entry_oi_ge_100":math.isfinite(selected["oi"]) and selected["oi"]>=MIN_OI,"status":"MODEL_DELTA_SELECTED" if math.isfinite(selected["oi"]) and selected["oi"]>=MIN_OI else "MODEL_DELTA_SELECTED_OI_GATE_FAIL","model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
+                    fill_rows = entry_fill[(entry_fill["option_type"] == typ) & (entry_fill["strike"] == selected["strike"])]
+                    fill_row = fill_rows.iloc[0] if len(fill_rows) == 1 else None
+                    fill_valid = fill_row is not None and valid_ohlc(fill_row)
+                    fill_open = float(fill_row["open"]) if fill_valid else None
+                    entry_oi = float(fill_row["open_interest"]) if fill_row is not None and pd.notna(fill_row["open_interest"]) else None
+                    pre_oi_ok = math.isfinite(selected["oi"]) and selected["oi"] >= MIN_OI
+                    if not pre_oi_ok:
+                        status = "MODEL_DELTA_SELECTED_PREDECISION_OI_GATE_FAIL"
+                    elif not fill_valid:
+                        status = "MODEL_DELTA_SELECTED_ENTRY_FILL_UNAVAILABLE"
+                    else:
+                        status = "MODEL_DELTA_SELECTED_ENTRY_BAR_PASS"
+                    rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"selection_ts":selection_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":selected["strike"],"spot_prior_close":spot,"predecision_premium_close":selected["premium"],"implied_vol":selected["iv"],"model_delta":selected["delta"],"predecision_oi":selected["oi"],"predecision_oi_ge_100":pre_oi_ok,"entry_bar_open":fill_open,"entry_bar_ohlc_valid":bool(fill_valid),"entry_bar_oi":entry_oi,"entry_fill_bar_available":bool(fill_valid),"status":status,"model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
     OUT.mkdir(parents=True, exist_ok=True)
     detail = pd.DataFrame(rows)
     detail.to_csv(OUT/"delta_selection.csv", index=False)
@@ -209,9 +223,10 @@ def main() -> int:
         "expected_selection_rows":int(events["event_id"].nunique()*len(TARGET_ABS_DELTAS)*2),
         "selection_rows":int(len(detail)),"selected_rows":int(detail["status"].isin(["MODEL_DELTA_SELECTED","MODEL_DELTA_SELECTED_OI_GATE_FAIL"]).sum()),
         "no_valid_iv_rows":int((detail["status"]=="NO_VALID_IV_CONTRACT").sum()),
-        "oi_qualified_rows":int(detail["entry_oi_ge_100"].sum()),
-        "model":{"type":"European Black-Scholes","rate_continuous":RATE,"dividend_yield":DIVIDEND_YIELD,"expiry_timestamp":"15:30 Asia/Kolkata","premium_input":"same-timestamp minute OHLC close, not bid/ask","delta_source":"model-estimated, not exchange-published"},
-        "limitations":["Model estimates are not exchange Greeks.","Minute-bar closes are not executable bid/ask quotes; no slippage-adjusted P&L is computed.","Model assumptions (6% rate, zero dividend yield, expiry at 15:30 IST) must be stress-tested before strategy replay.","Same-pivot multi-leg structures must follow the frozen replay protocol and use call-side delta anchor where specified.","This is strike-selection coverage only; no P&L or strategy promotion."],
+        "predecision_oi_qualified_rows":int(detail["predecision_oi_ge_100"].sum()) if "predecision_oi_ge_100" in detail else 0,
+        "entry_fill_bar_available_rows":int(detail["entry_fill_bar_available"].sum()) if "entry_fill_bar_available" in detail else 0,
+        "model":{"type":"European Black-Scholes","rate_continuous":RATE,"dividend_yield":DIVIDEND_YIELD,"expiry_timestamp":"15:30 Asia/Kolkata","decision_timestamp":"exact prior one-minute bar close at entry_ts minus one minute","premium_input":"prior completed option-bar OHLC close; never the current entry-bar close","spot_input":"prior completed NIFTY index-bar close; never the current entry-bar close","execution_reference":"exact entry-timestamp option-bar open if present and OHLC-valid","delta_source":"model-estimated, not exchange-published"},
+        "limitations":["Model estimates are not exchange Greeks.","Prior minute-bar closes are model inputs, not executable bid/ask quotes; entry open is only an OHLC simulation reference.","Model assumptions (6% rate, zero dividend yield, expiry at 15:30 IST) must be stress-tested before strategy replay.","Same-pivot multi-leg structures must follow the frozen replay protocol and use call-side delta anchor where specified.","This is strike-selection coverage only; no P&L or strategy promotion."],
         "outputs":{"detail":"results/phase52/delta_selection_audit/delta_selection.csv","source_audit":"results/phase52/delta_selection_audit/source_file_audit.csv","source_errors":"results/phase52/delta_selection_audit/source_errors.csv"}
     }
     (OUT/"summary.json").write_text(json.dumps(summary,indent=2)+"\n",encoding="utf-8")
