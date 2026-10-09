@@ -392,6 +392,7 @@ def replay_one(
     spec_rows: list[dict[str, str]],
     template_manifest: Mapping[str, Any],
     phase43: Any,
+    registry_row: Mapping[str, str],
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     cfg = conf["configuration"]
     expiry = canonical_expiry(event["expiry"])
@@ -407,11 +408,6 @@ def replay_one(
     spot_open = float(idx_rows.iloc[0]["open"]) if pd.notna(idx_rows.iloc[0]["open"]) else math.nan
     if not math.isfinite(spot_open) or spot_open <= 0:
         return event_record(event, conf, "EXCLUDED_INDEX_ENTRY", "exact index open is absent/nonpositive", source_hash=source_hash), []
-
-    selected_candidate = next(x for x in conf["registry_row"]) if False else None
-    registry_row = next((r for r in grid.read_inputs()[0] if r["candidate_id"] == conf["candidate_id"]), None)
-    if registry_row is None:
-        return event_record(event, conf, "BLOCKED_CANDIDATE_REGISTRY", "candidate ID not found in current registry", spot_open, source_hash=source_hash), []
 
     entry_event = {
         "expiry": expiry,
@@ -601,7 +597,7 @@ def build_outputs(
             else:
                 try:
                     outcome, scenarios = replay_one(normalized_event, config, index, option_frames,
-                                                    source_hashes, specs, template_manifest, phase43)
+                                                    source_hashes, specs, template_manifest, phase43, registry[config["candidate_id"]])
                 except Exception as exc:
                     outcome = event_record(normalized_event, config, "ERROR_REPLAY_EXCEPTION",
                                            f"{type(exc).__name__}: {str(exc)[:500]}")
