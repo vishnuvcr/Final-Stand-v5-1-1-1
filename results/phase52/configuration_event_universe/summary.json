@@ -1,6 +1,6 @@
 {
   "status": "CONFIGURATION_EVENT_UNIVERSE_BUILT_WITH_EXPLICIT_COVERAGE_GAPS",
-  "created_at_utc": "2026-10-09T13:30:54.301170+00:00",
+  "created_at_utc": "2026-10-09T13:45:05.829138+00:00",
   "dataset": "thetrademarkk/india-index-options-1m",
   "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
