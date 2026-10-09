@@ -482,3 +482,21 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** No result from this run is accepted unless report.json exists, input/source hashes match the frozen manifest and the overall job succeeds.
 - **Next:** inspect the failing step log, fix the root cause, rerun with a new run ID, and preserve this entry.
 - **Status:** OPEN / FAILED RUN PRESERVED.
+
+
+## F52-HIST-DUP-001 — Byte-identical duplicate option rows obstructed the first historical pilot
+
+- **Date:** 2026-10-10
+- **Evidence:** Pilot v0.1 report at `results/phase52/historical_pilot/report.json`; 274/480 config-event rows blocked with duplicate exact contract bars, 205/480 excluded by the OHLC high-low/open proxy, one row replayed.
+- **Root cause:** The runner required exactly one row for each contract/time but did not remove byte-identical full-row duplicates in the normalized pinned source partition.
+- **Correction:** v0.2 removes only full-row duplicates after canonical normalization and logs counts per source file. Duplicate rows that differ in any column are retained and fail closed; no averaging, nearest-bar substitution or conflict selection is permitted.
+- **Scientific impact:** v0.1 is an engineering diagnostic with insufficient effective sample and cannot support any profitability claim. v0.2 is coverage debugging only; frozen events/configurations/costs are unchanged.
+- **Status:** PATCHED; regression and workflow rerun pending.
+
+## F52-HIST-LIQ-001 — OHLC range proxy is not observed bid/ask spread
+
+- **Date:** 2026-10-10
+- **Observation:** Pilot's `liquidity_max_spread_pct=2` is implemented as `100*(high-low)/open`.
+- **Impact:** This is an intrabar range proxy, not quoted spread, so it must not be interpreted as a liquidity or executable-fill measurement. The current preregistered 2% threshold is retained as a conservative OHLC data-quality exclusion to avoid outcome-informed relaxation.
+- **Next:** Seek point-in-time bid/ask or trade/quote data. Until then, report the exclusion separately and do not claim live liquidity validation.
+- **Status:** OPEN / methodology limitation.
