@@ -1,8 +1,8 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — fixed-template and EOD factor diagnostics complete; configuration-wide event-coverage audit running; variable-grid replay not started  
+**Overall:** OPEN — configuration event and broad option-bar coverage audited; variable-grid P&L remains blocked pending leg-specific replay-engine validation  
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
-**Plan version:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-007  
+**Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-008  
 **Latest checkpoint:** 2026-10-09 (Asia/Kolkata)
 **Accepted finite grid:** phase52-grid-v1.3; 9,379,584 configurations (computed queue size, not tested count).
 
@@ -13,8 +13,8 @@
 | User repository inventory | IN PROGRESS | 40 accessible repositories inventoried. Continue root-document/code search by repository; several do not expose a root README through the connected file API and require alternative-path inspection. |
 | Literature/source discovery | IN PROGRESS | Initial sources include NSE India VIX/contract information, option-volume/OI literature, public GitHub strategy implementations and user-designated YouTube source tracks. Expand systematically and log each lead. |
 | Candidate registry | VALIDATED / SPECIFICATION GATES OPEN | 312 hypotheses across 52 families × six selector modes pass registry checks. Fifteen families still require exact source/leg reconciliation and five diagnostic-only families cannot be promoted. |
-| Data coverage and licensing | PARTIAL / BLOCKED FOR FULL-WINDOW CLAIMS | Exact fixed-template audit completed in run 37931097834: 267 source expiry files vs 256 matrix expiries, 11 files not fully replayed; index series ends 2026-07-02. Phase51 2026-07-28/08-04 minute quote coverage remains unresolved. EOD panel is lagged daily only; rights review remains open. New config event universe checks 1,068 DTE/time events with exact 09:45/13:00 index ticks; option-leg/exit quote audit is the next gate. |
-| Finite-grid enumeration | IN PROGRESS — QUEUE ONLY | Grid v1.3 has 9,379,584 configurations. Latest persisted checkpoint is offset 210,000 (runs 37932520478); all emitted records remain ENUMERATED_NOT_BACKTESTED. |
+| Data coverage and licensing | PARTIAL / PROMOTION BLOCKED | Run 37934719402 audited 267 option files / 1,068 grid events. Exact index tick: 1,012/1,068 (94.8%); broad option row at entry: 1,016; any contract with OI≥100: 1,012; exact index + OI-qualified option entry: 1,006; adding target-expiry exit bar: 1,004/1,068 (94.0%). Zero source-file errors. Holdout coverage with index+OI+expiry-exit is 74/112 (66.1%). The option/index source tail ends 2026-07-02. Per-selected-leg quote verification is still required. CC BY-NC source license blocks commercial promotion. |
+| Finite-grid enumeration | IN PROGRESS — QUEUE ONLY | Grid v1.3 has 9,379,584 configurations. Run 37934719402 advanced the checkpoint to offset 235,000; emitted records are ENUMERATED_NOT_BACKTESTED, not P&L tests. Any replay must have its own offset-0 ledger and cost outputs. |
 | Base-geometry replay | COMPLETE / DIAGNOSTIC ONLY | Pinned Phase43/45 replay: 9,699 rows, 42 strategy labels, 256 expiry events through 2026-05-26. It is not the 9,379,584-config variable replay, and the source window is partial. Empty Phase45 error file is now correctly recorded as zero rows. |
 | Legacy factor-selector pilot | VALIDATION-ONLY COMPLETE — NO PROMOTION | Run 37927040268 passed end-to-end: 6,617/9,699 rows matched (68.2%); all six policies lost on validation, VIX router Holm p=0.985; 2026 holdout not evaluated (13 matched expiries). |
 | Untouched OOS confirmation | NOT STARTED | Keep confirmation intervals protected before selection freeze. |
@@ -35,7 +35,7 @@ A green workflow alone is not a scientific pass. Every numerical result needs a 
 
 ## Latest action
 
-Fixed-template replay and EOD selector diagnostics exist, but the 9,379,584-config grid has not been backtested. No strategy is promoted. The exact timestamp audit proves the fixed-template replay is partial. A new event inventory for DTE={0,7} and entry times={09:45,13:00} is being generated on run 37934339579, with explicit missing-index timestamps and no P&L. The full protocol is `PHASE52_REPLAY_PROTOCOL.md`.
+Fixed-template replay and EOD selector diagnostics exist, but the 9,379,584-config grid has not been backtested. No strategy is promoted. The exact timestamp audit proves the fixed-template replay is partial. A new event inventory for DTE={0,7} and entry times={09:45,13:00} is being generated on run 37934339579, with explicit missing-index timestamps and no P&L. The full protocol is `PHASE52_REPLAY_PROTOCOL.md`. Broad event/option coverage is 1,004/1,068 (94.0%), below the 95% promotion gate; holdout strict broad coverage is only 74/112 (66.1%). No Phase52 grid P&L has been computed.
 
 
 ## Bootstrap additions — 2026-10-09
@@ -169,3 +169,15 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
 - Daily EOD factor-selector: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; validation diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; report at results/phase52/daily_eod_selector/REPORT.md.
 - Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.
+
+
+## Configuration-grid coverage gate — 2026-10-09 (verified)
+
+- **Run:** [37934719402](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934719402), success.
+- **Pinned source:** `thetrademarkk/india-index-options-1m`, revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; 267 target-expiry files.
+- **Expected events:** 1,068 = 267 expiries × DTE {0,7} × entry times {09:45,13:00}. Index has exact entry timestamp for 1,012; 56 missing.
+- **Option files:** 267/267 audited, zero file errors. Option data has some row at exact entry for 1,016 events and at least one OI≥100 contract for 1,012. Strict intersection with exact index entry is 1,006; adding target-expiry exit bar gives 1,004/1,068 (94.0%).
+- **Split gate:** strict broad coverage is development 526/540 (97.4%), validation 404/416 (97.1%), holdout 74/112 (66.1%). Holdout fails both the 95% coverage gate and the minimum 20-event holdout gate after exclusions.
+- **Data warning:** The source index/option history ends 2026-07-02 even though expiry files have names through 2026-08-04. The files labeled 2026-07-28 and 2026-08-04 contain no target entry-day quotes. No silent date rolling or interpolation allowed.
+- **Meaning:** These are event/broad-contract-universe counts, not per-configuration selected-leg fills or P&L. Variable grid replay is not yet run.
+- **Cost amendment:** PA-008 sets ₹20/order primary and ₹10/order legacy sensitivity; no parameter grid dimensions changed.
