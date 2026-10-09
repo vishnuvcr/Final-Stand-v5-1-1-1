@@ -3,3 +3,8 @@
 ## 2026-10-09 — Pre-acceptance correction: point-in-time strike ladder
 
 During review of the selected-strike auditor, changed ATM/rank-offset selection to use only strikes present at the exact entry timestamp. Using the entire expiry file could expose later-listed strikes and violate point-in-time selection. F52-026 records the correction. The currently active workflow may have checked out the earlier draft; its output will not be accepted unless provenance confirms the patched code. No P&L is affected because the audit is coverage-only.
+
+
+## 2026-10-09 — Workflow persistence regression passed
+
+Run 37935663113 completed successfully after the conflict-safe persistence change. The formerly failing checkpoint step now passes; no unresolved non-log conflict was auto-resolved. The selected-strike audit is separate: two earlier workflow runs are active on older snapshots and their output will not be accepted as evidence for the patched point-in-time strike ladder; run 37937318538 is queued to test the latest branch version.
