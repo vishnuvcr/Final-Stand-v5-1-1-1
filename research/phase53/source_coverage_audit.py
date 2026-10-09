@@ -160,8 +160,8 @@ def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[st
     # listings only when each returned JSON successfully. Fallback to a recursive
     # root listing only if both directory endpoints are inaccessible.
     urls = [
-        f"https://huggingface.co/api/datasets/{repo_id}/tree/options/NIFTY?recursive=false&expand=true&revision={revision}",
-        f"https://huggingface.co/api/datasets/{repo_id}/tree/index?recursive=false&expand=true&revision={revision}",
+        f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/options/NIFTY?recursive=false&expand=true",
+        f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/index?recursive=false&expand=true",
     ]
     attempted = []
     combined: list[dict[str, Any]] = []
@@ -180,7 +180,7 @@ def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[st
             "listing_complete": success_count == len(urls),
             "http_status": 200,
         }, combined
-    root_url = f"https://huggingface.co/api/datasets/{repo_id}/tree?recursive=true&expand=false&revision={revision}"
+    root_url = f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}?recursive=true&expand=false"
     meta, data = json_request(root_url, token)
     attempted.append(meta)
     if isinstance(data, list):
@@ -368,7 +368,7 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({
-        "status": report["status"], "output": str(args.output.relative_to(ROOT)),
+        "status": report["status"], "output": str(args.output.resolve().relative_to(ROOT.resolve())),
         "required_paths": report["summary"]["required_paths"],
         "head_accessible": report["summary"]["required_paths_accessible_by_head"],
         "head_404": report["summary"]["required_paths_404"],
