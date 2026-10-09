@@ -342,3 +342,12 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Correction:** Fix the regression volatility scale to 18% and use an in-the-money call for the below-intrinsic negative fixture. Delta selection now uses only the exact prior completed one-minute bar (entry timestamp minus one minute): option close and NIFTY index close for model-IV/delta, prior-bar OI for the OI gate, then the exact entry-time option open for entry-bar eligibility. Missing exact prior data or entry fills must be excluded, never moved to a nearby minute.
 
 **Evidence status:** The old delta run [37944408314](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37944408314) failed at self-test and its audit did not run. The corrected code still requires regression and full coverage reruns. Model deltas remain estimates under a European Black–Scholes model (6% rate, zero dividend yield), not exchange-published Greeks. No grid domain or configuration ID changed.
+
+
+### PA-013 — 2026-10-09 — Point-in-time open-interest eligibility for entry-open fills
+
+**Finding:** The ATM-offset coverage audit had been marking a leg OI-eligible using OI from the same minute bar whose open was used as the entry fill reference. This can use a completed-bar field at a time when the simulated order executes at the bar open.
+
+**Correction:** Use the OI field from the exact prior completed minute (entry_ts minus one minute) for the >=100 contract eligibility gate. The selected strike must then have a unique, OHLC-valid exact entry-time bar. Current entry-bar OI is recorded only as a diagnostic field. Missing prior contract/OI values are a failed eligibility gate; do not forward-fill or silently substitute.
+
+**Timing / impact:** This amendment is based on bar information-timing consistency, before any Phase52 configuration P&L is calculated. It does not change the frozen grid version, configuration IDs, or parameter values. The selected-strike audit output from any code version using same-entry-bar OI for eligibility is superseded; rerun after the patch.
