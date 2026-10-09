@@ -616,7 +616,12 @@ def analyze(
         if float(twenty["net_pnl_inr"]) > float(ten["net_pnl_inr"]) + 1e-8:
             raise AssertionError("Net P&L improved when per-order brokerage rose from ₹10 to ₹20")
 
-    severe_passes = sum(1 for row in robustness_screen if row["passes_severe_cost_screen"])
+    severe_pass_config_threshold_pairs = sum(
+        1 for row in robustness_screen if row["passes_severe_cost_screen"]
+    )
+    severe_passes = len({
+        row["configuration_id"] for row in robustness_screen if row["passes_severe_cost_screen"]
+    })
     return {
         "phase": "56",
         "status": (
@@ -651,6 +656,7 @@ def analyze(
         "family_summary_rows": len(family_summary),
         "robustness_screen_rows": len(robustness_screen),
         "configurations_passing_severe_cost_screen_any_threshold": severe_passes,
+        "configuration_threshold_pairs_passing_severe_cost_screen": severe_pass_config_threshold_pairs,
         "invariants": {
             "phase54_eligibility_counts_reproduced": (
                 tuple(expected_by_threshold[t] for t in THRESHOLDS) == EXPECTED_ELIGIBLE_COUNTS
@@ -840,7 +846,8 @@ def main() -> None:
         "threshold_summary_rows": result["threshold_summary_rows"],
         "configuration_summary_rows": result["configuration_summary_rows"],
         "family_summary_rows": result["family_summary_rows"],
-        "severe_cost_screen_passes": result["configurations_passing_severe_cost_screen_any_threshold"],
+        "severe_cost_screen_passes_unique_configurations": result["configurations_passing_severe_cost_screen_any_threshold"],
+        "severe_cost_screen_passes_config_threshold_pairs": result["configuration_threshold_pairs_passing_severe_cost_screen"],
         "output": str(args.output),
     }, indent=2))
 
