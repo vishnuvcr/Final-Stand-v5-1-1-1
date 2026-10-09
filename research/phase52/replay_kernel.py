@@ -115,6 +115,64 @@ def latest_common_timestamp(
     return max(eligible) if eligible else None
 
 
+def prior_oi_eligible(prior_bar: Mapping[str, Any] | None, min_oi: float = 100.0) -> tuple[bool, float | None]:
+    """Only a prior completed bar can establish OI eligibility for an entry-open fill."""
+    if prior_bar is None or prior_bar.get("open_interest") is None:
+        return False, None
+    try:
+        oi = float(prior_bar["open_interest"])
+    except (TypeError, ValueError):
+        return False, None
+    if not math.isfinite(oi):
+        return False, None
+    return oi >= float(min_oi), oi
+
+
+def intrabar_range_proxy_pct(row: Mapping[str, Any]) -> float | None:
+    """Explicit OHLC high-low range proxy; this is not an observed bid/ask spread."""
+    try:
+        op, hi, lo = (float(row[k]) for k in ("open", "high", "low"))
+    except (KeyError, TypeError, ValueError):
+        return None
+    if not all(math.isfinite(v) for v in (op, hi, lo)) or op <= 0 or hi < lo:
+        return None
+    return 100.0 * (hi - lo) / op
+
+
+def passes_range_proxy_gate(row: Mapping[str, Any], max_range_pct: float) -> tuple[bool, float | None]:
+    proxy = intrabar_range_proxy_pct(row)
+    if proxy is None or not math.isfinite(float(max_range_pct)) or float(max_range_pct) < 0:
+        return False, proxy
+    return proxy <= float(max_range_pct), proxy
+
+
+def take_profit_exit_timestamp(
+    entry_timestamp: Any,
+    completed_portfolio_pnl: Mapping[Any, float],
+    common_next_minute_opens: Iterable[Any],
+    finite_max_profit: float,
+    target_fraction: float = 0.5,
+) -> tuple[pd.Timestamp | None, str]:
+    """Use completed close only to trigger, then require the very next minute's common open."""
+    entry_ts = as_ist(entry_timestamp)
+    if not math.isfinite(float(finite_max_profit)) or float(finite_max_profit) <= 0:
+        return None, "BLOCKED_NONFINITE_MAX_PROFIT"
+    fraction = float(target_fraction)
+    if not math.isfinite(fraction) or not 0 < fraction <= 1:
+        return None, "BLOCKED_INVALID_TP_FRACTION"
+    threshold = fraction * float(finite_max_profit)
+    normalized = {as_ist(ts): float(pnl) for ts, pnl in completed_portfolio_pnl.items()}
+    opens = {as_ist(ts) for ts in common_next_minute_opens}
+    for ts in sorted(t for t in normalized if t > entry_ts):
+        value = normalized[ts]
+        if math.isfinite(value) and value >= threshold:
+            nxt = ts + pd.Timedelta(minutes=1)
+            if nxt not in opens:
+                return None, "TP_TRIGGERED_NEXT_MINUTE_COMMON_OPEN_MISSING"
+            return nxt, "TP_TRIGGERED_NEXT_MINUTE_OPEN"
+    return None, "TP_NOT_TRIGGERED"
+
+
 def adverse_fill(reference_price: float, action: str, slippage_inr: float) -> float:
     """Adverse premium-price adjustment; action BUY pays up, SELL sells lower."""
     px = float(reference_price)
@@ -334,12 +392,34 @@ def self_test() -> None:
         assert case["fees_brokerage_inr"] == 2*case["brokerage_per_order_inr"]
         assert case["fees_total_inr"] >= case["fees_brokerage_inr"]
 
-    # 5. Defined-risk / selector gates fail closed on data absent from the source.
+    # 5. Prior-bar OI and OHLC liquidity proxy are explicit, separate gates.
+    ok, oi = prior_oi_eligible({"open_interest": 150})
+    assert ok and oi == 150
+    assert prior_oi_eligible({"open_interest": 99}) == (False, 99.0)
+    assert prior_oi_eligible(None) == (False, None)
+    proxy_ok, proxy = passes_range_proxy_gate({"open":100,"high":102,"low":99}, 3.0)
+    assert proxy_ok and abs(proxy - 3.0) < 1e-12
+    assert passes_range_proxy_gate({"open":100,"high":103,"low":99}, 2.0)[0] is False
+    assert "not an observed bid/ask" in intrabar_range_proxy_pct.__doc__
+
+    # 6. TP rule uses a completed close only to trigger and the exact next-minute open to fill.
+    tp, tp_status = take_profit_exit_timestamp(
+        "2026-04-01 09:45:00+05:30",
+        {"2026-04-01 09:46:00+05:30":49.0,"2026-04-01 09:47:00+05:30":51.0},
+        ["2026-04-01 09:48:00+05:30"], 100.0, 0.5)
+    assert tp == pd.Timestamp("2026-04-01 09:48:00+05:30") and tp_status == "TP_TRIGGERED_NEXT_MINUTE_OPEN"
+    no_next, no_next_status = take_profit_exit_timestamp(
+        "2026-04-01 09:45:00+05:30", {"2026-04-01 09:46:00+05:30":60.0},
+        ["2026-04-01 09:48:00+05:30"], 100.0, 0.5)
+    assert no_next is None and no_next_status == "TP_TRIGGERED_NEXT_MINUTE_COMMON_OPEN_MISSING"
+    assert take_profit_exit_timestamp("2026-04-01 09:45:00+05:30", {}, [], math.inf)[1] == "BLOCKED_NONFINITE_MAX_PROFIT"
+
+    # 7. Specification/risk/delta/futures gates fail closed.
     assert config_data_gate("SPECIFICATION_BLOCKED","CALENDAR_TRAP","ATM_OFFSET","NONE","15:15_IST","DEFINED_RISK")[0] == "BLOCKED_SPECIFICATION"
     assert config_data_gate("STANDARD_VARIANT_PREREGISTERED","BUY_CALL","ABS_DELTA","NONE","15:15_IST","DEFINED_RISK")[0] == "BLOCKED_DELTA_RESOLVER"
-    assert config_data_gate("STANDARD_VARIANT_PREREGISTERED","FUTURES_BASIS_SPREAD","ATM_OFFSET","NONE","15:15_IST","DEFINED_RISK")[0] == "BLOCKED_SPECIFICATION"
-    assert config_data_gate("DIAGNOSTIC_ONLY_UNDEFINED_RISK","SELL_CALL","ATM_OFFSET","NONE","15:15_IST","DIAGNOSTIC")[0] == "BLOCKED_SPECIFICATION" if False else True
-    print("SELF_TEST_PASS: exact-bar gate, common timestamp, hand P&L, 6 cost cases, fail-closed eligibility")
+    assert config_data_gate("STANDARD_VARIANT_PREREGISTERED","FUTURES_BASIS_SPREAD","ATM_OFFSET","NONE","15:15_IST","DEFINED_RISK")[0] == "BLOCKED_INTRADAY_FUTURES"
+    assert config_data_gate("DIAGNOSTIC_ONLY_UNDEFINED_RISK","SELL_CALL","ATM_OFFSET","NONE","15:15_IST","DIAGNOSTIC")[0] == "DIAGNOSTIC_ONLY"
+    print("SELF_TEST_PASS: exact bars, common exits, prior OI, range-proxy gate, hand P&L, 6 cost cases, TP path, fail-closed config gates")
 
 
 def main() -> int:
