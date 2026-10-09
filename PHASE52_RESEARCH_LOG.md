@@ -499,3 +499,8 @@ Run 37937164472's broad coverage and selected-strike steps completed at the proc
 - The next work is engineering and coverage diagnosis, not strategy optimization: (1) repair pilot checkpoint persistence after run 37980455805's rebase conflicts; (2) decompose all 480 statuses by exact first failure and source/contract/time; (3) trace representative failures to pinned source rows; (4) only correct demonstrated source/mapping/software defects and rerun the same frozen sample.
 - Current pilot remains 379/480 OHLC-range exclusions, 100/480 leg-eligibility blocks, 1/480 executed. Exclusions are not losses. No relaxation of the preregistered 2% OHLC proxy, no changes to the event/configuration/cost/split definitions, and no holdout access.
 - Promotion, statistical inference and full-grid factor-router claims remain blocked until usable coverage and reproducible replay gates pass.
+
+
+## 2026-10-10 — Evidence integrity checkpoint
+
+Inspection of the committed historical-pilot report found a provenance inconsistency: `report.json` and its event CSVs identify `phase52-historical-base-pilot-v0.1` with counts 274 blocked / 205 excluded / 1 replay pass, while the later v0.2 checkpoint in conversation records 100 blocked / 379 excluded / 1 pass. The report and CSVs currently inspected agree with each other but are not enough to establish the v0.2 totals. Treat the counts as unresolved until the matching run artifact is reconciled. Do not infer profitability or loosen the frozen 2% OHLC proxy.
