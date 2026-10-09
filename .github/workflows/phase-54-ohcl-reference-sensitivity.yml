@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase54-ohcl-sensitivity-\${{ github.ref }}
+  group: phase54-ohcl-sensitivity-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -26,6 +26,13 @@ jobs:
         with:
           ref: phase-54-ohcl-reference-sensitivity
           fetch-depth: 0
+      - name: Refresh latest branch tip before running
+        shell: bash
+        run: |
+          git fetch origin phase-54-ohcl-reference-sensitivity
+          git checkout phase-54-ohcl-reference-sensitivity
+          git reset --hard origin/phase-54-ohcl-reference-sensitivity
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -40,7 +47,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase54-ohcl-sensitivity-\${{ github.run_id }}
+          name: phase54-ohcl-sensitivity-${{ github.run_id }}
           path: results/phase54/ohlc_reference_sensitivity/
           if-no-files-found: warn
           retention-days: 90
@@ -49,7 +56,7 @@ jobs:
         shell: bash
         env:
           PHASE_BRANCH: phase-54-ohcl-reference-sensitivity
-          JOB_STATUS: \${{ job.status }}
+          JOB_STATUS: ${{ job.status }}
         run: |
           set -euo pipefail
           python - <<'PY'
