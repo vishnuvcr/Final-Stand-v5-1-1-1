@@ -788,3 +788,23 @@ TT-04 V3 remains the active numerical replay. A separate dormant performance-onl
 
 This initial setup checkpoint is superseded by the current Phase 51-3 retry status near the top of this README. The first run did start; it failed in TT-02 and its console P&L figures were not accepted as evidence.
 
+## Phase 52 — Factor-Conditioned Strategy Discovery (opened 2026-10-09)
+
+**Branch:** [phase-52-factor-conditioned-strategy-discovery](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery)  
+**Current state:** OPEN — source-discovery and configuration-queue bootstrap; no Phase 52 profitability result or strategy promotion.
+
+Phase 52 tests whether VIX, Greeks/IV/skew, OI/volume/PCR, spot/futures/synthetic-futures basis, market regimes, liquidity and available cross-market/event context improve *which* option structure/configuration to select or when to abstain. The preregistered matrix contains **312 hypotheses** (52 structure families × 6 selector modes) and a finite, versioned grid. It will enumerate the grid deterministically and preserve all cost scenarios and negative results.
+
+- [Research plan and version amendments](PHASE52_RESEARCH_PLAN.md) — objectives, hypotheses, finite-grid scope, methodology and promotion gates.
+- [Phase status and gates](PHASE52_STATUS.md) — current blockers and evidence boundary.
+- [312-hypothesis registry](research/phase52/strategy_registry.csv) — structure × selector matrix.
+- [Strategy leg specifications](research/phase52/strategy_specifications.csv) — standardized variants and source-reconciliation blockers.
+- [Finite configuration grid](research/phase52/configuration_space.json) — `phase52-grid-v1.1`, deterministic search dimensions and Paytm Money cost/stress scenarios.
+- [User-repository audit queue](research/phase52/repository_audit.csv) — inventory of all 40 repositories; inventory is not equivalent to a completed source-code audit.
+- [Initial literature and source ledger](PHASE52_LITERATURE_REVIEW.md) — papers, NSE data sources, YouTube and public-code leads.
+- [Research log](PHASE52_RESEARCH_LOG.md) · [Error log](PHASE52_ERROR_LOG.md) · [conversation/decision log](PHASE52_CHAT_LOG.md).
+- [Main-branch scheduled/manual workflow](.github/workflows/phase-52-factor-conditioned-strategy-discovery.yml) — daily at 03:30 UTC (09:00 IST) and manually runnable; uses a bounded configuration shard and source discovery. A scheduled run does not claim P&L.
+- [Deterministic registry/grid validator and shard enumerator](research/phase52/validate_registry.py) · [recurring public source discovery](research/phase52/source_discovery.py).
+
+**Important:** The current runner is a discovery/queue bootstrap, not the numerical replay engine. All 312 hypotheses remain `REGISTERED_NOT_TESTED`. Source/coverage/licensing and exact-leg specifications must pass before backtesting. The Phase 51 missing option sessions (2026-07-28 and 2026-08-04) remain unresolved and are not silently filled or excluded from its original full-window claim. No strategy is promoted to live trading by this branch.
+
