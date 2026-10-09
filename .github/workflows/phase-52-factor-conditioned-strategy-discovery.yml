@@ -66,12 +66,12 @@ jobs:
           python-version: "3.12"
 
       - name: Restore pinned market-data caches
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             ~/.cache/huggingface/hub
             ~/.cache/phase52/nse_fno_bhavcopy
-          key: phase52-market-data-cache-${{ runner.os }}-v2
+          key: phase52-market-data-cache-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
             phase52-market-data-cache-${{ runner.os }}-
             phase52-hf-cache-${{ runner.os }}-
@@ -228,6 +228,15 @@ jobs:
         run: |
           mkdir -p research/phase52/results
           printf "\n## F52-AUTO-%s — Automated workflow failure\n\n- Date: %s\n- Run: https://github.com/%s/actions/runs/%s\n- Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.\n- Root cause: pending review of the failed job logs.\n- Status: OPEN.\n" "$GITHUB_RUN_ID" "$(date -u +%F)" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE52_ERROR_LOG.md
+
+      - name: Save partial or complete market-data cache even if a later gate fails
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/phase52/nse_fno_bhavcopy
+          key: phase52-market-data-cache-${{ runner.os }}-${{ github.run_id }}
 
       - name: Upload audit and deterministic configuration shard
         if: always()
