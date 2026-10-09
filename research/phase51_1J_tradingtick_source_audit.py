@@ -137,7 +137,7 @@ async def main():
           rec={"event":"response","page":slug,"url":resp.url[:1000],"status":resp.status,
                "resource_type":req.resource_type,"content_type":ctype,"content_length":headers.get("content-length","")}
           local_net.append(rec); network_all.append(rec)
-          if resp.status==200 and (req.resource_type in ("xhr","fetch") or any(x in ctype.lower() for x in ["application/json","text/csv","spreadsheet","excel","octet-stream"])):
+          if resp.status==200 and urlparse(resp.url).netloc==urlparse(BASE).netloc and (req.resource_type in ("xhr","fetch") or any(x in ctype.lower() for x in ["application/json","text/csv","spreadsheet","excel","octet-stream"])):
             body=await resp.body(); rec["actual_bytes"]=len(body); rec["sha256"]=sha(body)
             if len(body)<=12000000 and (req.resource_type in ("xhr","fetch") or "json" in ctype.lower() or "csv" in ctype.lower()):
               ext=".json" if "json" in ctype.lower() else ".csv" if "csv" in ctype.lower() else ".txt"
@@ -179,10 +179,38 @@ async def main():
             script_reports.append({"inline":True,"bytes":len(js.encode()),"sha256":sha(js.encode()),"endpoints":script_endpoints(js)})
         entry["scripts"]=script_reports
         for target in TARGETS:
-          entry["selectors_by_target"][target]=await try_change(page,target)
-          try: await page.wait_for_load_state("networkidle",timeout=5000)
+          # Reset to a fresh page: cascading selectors must not inherit July state when checking August.
+          await page.goto(url,wait_until="domcontentloaded",timeout=45000)
+          try: await page.wait_for_load_state("networkidle",timeout=12000)
           except Exception: pass
-          await page.wait_for_timeout(900)
+          await page.wait_for_timeout(650)
+          entry["selectors_by_target"][target]=await try_change(page,target)
+          try: await page.wait_for_load_state("networkidle",timeout=7000)
+          except Exception: pass
+          await page.wait_for_timeout(650)
+          # Select one actual strike in each historical-chart page to trigger its normal chart-data request.
+          if slug in ("expired_chart","chart_data"):
+            try:
+              snap=await select_snapshot(page)
+              strike_sel=next((x for x in snap if re.search(r"strike",x.get("id","")+" "+x.get("name",""))),None)
+              if strike_sel:
+                valid=[]
+                for opt in strike_sel.get("options",[]):
+                  try: valid.append((abs(float(opt["value"])-24000.0),opt))
+                  except Exception: pass
+                if valid:
+                  chosen=sorted(valid,key=lambda z:z[0])[0][1]
+                  before=len(local_net)
+                  await page.locator("select").nth(strike_sel["index"]).select_option(value=chosen["value"],timeout=3000)
+                  try: await page.wait_for_load_state("networkidle",timeout=7000)
+                  except Exception: pass
+                  await page.wait_for_timeout(1800)
+                  entry["selectors_by_target"][target]["selected_chart_test_contract"]={"expiry":target,"option":"CE","strike":chosen["value"],"visible_strikes":len(valid)}
+                  entry["selectors_by_target"][target]["requests_after_strike_selection"]=local_net[before:]
+                else:
+                  entry["selectors_by_target"][target]["selected_chart_test_contract"]={"status":"NO_STRIKE_OPTIONS"}
+            except Exception as e:
+              entry["selectors_by_target"][target]["chart_strike_test_error"]=str(e)[:300]
           entry["selectors_by_target"][target]["visible_tables"]=await page.locator("table").evaluate_all("""ts => ts.slice(0,15).map(t => ({
             headers:Array.from(t.querySelectorAll('thead th')).map(e=>(e.innerText||'').trim()),
             rows:Array.from(t.querySelectorAll('tr')).slice(0,5).map(r=>(r.innerText||'').trim().slice(0,500)),
@@ -204,10 +232,47 @@ async def main():
         if "end-of-day" in blob or "eod" in blob: eod_hint=True
       for scan in pdata.get("selectors_by_target",{}).values():
         if any(x.get("contains_target") for x in scan.get("target_option_scan",[])): any_target_option=True
+    target_presence={}
+    for target in TARGETS:
+      presence={"expiry_selector":False,"session_date_selector":False,"chart_expiry_selector":False}
+      for slug,pdata in manifest["pages"].items():
+        for sc in pdata.get("selectors_by_target",{}).get(target,{}).get("target_option_scan",[]):
+          ident=(sc.get("id","")+" "+sc.get("name","")).lower()
+          if sc.get("contains_target") and ("expiry" in ident or "exp" in ident): presence["expiry_selector"]=True
+          if sc.get("contains_target") and ("date" in ident or "session" in ident): presence["session_date_selector"]=True
+          if sc.get("contains_target") and slug in ("expired_chart","chart_data"): presence["chart_expiry_selector"]=True
+      target_presence[target]=presence
+    response_reviews=[]
     for f in files_seen:
+      review={"page":f["page"],"url":f["url"],"bytes":f["bytes"],"sha256":f["sha256"],"content_type":f["content_type"]}
       if f["path"].endswith((".csv",".json")):
-        text=Path(f["path"]).read_text(errors="ignore")[:500000]
-        if re.search(r"20\d{2}[-/]\d{2}[-/]\d{2}[ T]\d{2}:\d{2}",text): any_intraday_payload=True
+        try:
+          obj=json.loads(Path(f["path"]).read_text(errors="ignore"))
+          review["top_level_type"]=type(obj).__name__
+          if isinstance(obj,dict):
+            review["top_level_keys"]=list(obj.keys())[:80]
+            rows=obj.get("data")
+            if isinstance(rows,list):
+              review["row_count"]=len(rows)
+              review["row_keys"]=list(rows[0].keys())[:80] if rows and isinstance(rows[0],dict) else []
+              if rows and isinstance(rows[0],dict):
+                review["first_row_sample"]={k:rows[0][k] for k in list(rows[0])[:18]}
+          elif isinstance(obj,list):
+            review["row_count"]=len(obj)
+            review["first_row_keys"]=list(obj[0].keys())[:80] if obj and isinstance(obj[0],dict) else []
+          raw=json.dumps(obj,ensure_ascii=False)
+          has_iso=bool(re.search(r"20\\d{2}[-/]\\d{2}[-/]\\d{2}[ T]\\d{2}:\\d{2}",raw))
+          hhmm=bool(re.search(r'"(?:0[9]|1[0-5]):[0-5]\\d(?::[0-5]\\d)?"',raw))
+          keys=set(review.get("top_level_keys",[]))|set(review.get("row_keys",[]))|set(review.get("first_row_keys",[]))
+          time_keys=any(str(k).lower() in {"timestamp","datetime","time","times","labels","x"} for k in keys)
+          review["contains_iso_intraday_timestamp"]=has_iso
+          review["contains_clock_time_label"]=hhmm
+          review["has_time_axis_keys"]=time_keys
+          if has_iso or hhmm or time_keys: any_intraday_payload=True
+        except Exception as e: review["parse_error"]=str(e)[:200]
+      response_reviews.append(review)
+    manifest["response_reviews"]=response_reviews
+    manifest["target_presence_by_control"]=target_presence
     manifest["target_date_selectable_in_any_control"]=any_target_option
     manifest["intraday_timestamp_in_observed_data_response"]=any_intraday_payload
     if any_intraday_payload: manifest["classification"]="INTRADAY_PAYLOAD_CANDIDATE_REQUIRES_RAW_COVERAGE_REVIEW"
