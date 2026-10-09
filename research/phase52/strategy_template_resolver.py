@@ -567,10 +567,6 @@ def resolve_template(
                 },
             })
 
-            range_ok, range_value = passes_range_proxy_gate(entry_bar, range_gate_pct)
-            audit["entry_range_proxy_pct"] = float(range_value) if range_value is not None else None
-            audit["range_proxy_status"] = "PASS" if range_ok else "EXCLUDED"
-
             oi_ok, oi, oi_status = exact_prior_oi(
                 prior_chain, entry_ts, draft["expiry"], draft["option_type"], draft["strike"], MIN_OI
             )
@@ -599,18 +595,33 @@ def resolve_template(
                     "prior_oi_status": "PASS",
                 })
 
-        # Exit is independent evidence: collect it even after entry/OI failures.
-        exit_result = select_exact_bar(
-            entry_chain, exit_ts, draft["expiry"], draft["option_type"], draft["strike"]
-        )
-        audit["exit_status"] = exit_result.status
-        if exit_result.status == "PASS" and exit_result.row is not None:
-            audit["exit_open"] = float(exit_result.row["open"])
-        else:
-            audit["exit_detail"] = exit_result.detail
         audit_legs.append(audit)
 
     if exclusions:
+        # Only excluded rows need resolver-side range/exit diagnostics. For fully
+        # resolved rows the runner performs these exact checks once downstream.
+        # This avoids doubling the heavier per-contract timestamp scans on passes.
+        for audit in audit_legs:
+            if audit.get("entry_status") == "PASS":
+                range_row = {
+                    "open": audit.get("entry_open"),
+                    "high": audit.get("entry_high"),
+                    "low": audit.get("entry_low"),
+                }
+                range_ok, range_value = passes_range_proxy_gate(range_row, range_gate_pct)
+                audit["entry_range_proxy_pct"] = (
+                    float(range_value) if range_value is not None else None
+                )
+                audit["range_proxy_status"] = "PASS" if range_ok else "EXCLUDED"
+            exit_result = select_exact_bar(
+                entry_chain, exit_ts, audit["expiry"], audit["option_type"], audit["strike"]
+            )
+            audit["exit_status"] = exit_result.status
+            if exit_result.status == "PASS" and exit_result.row is not None:
+                audit["exit_open"] = float(exit_result.row["open"])
+            else:
+                audit["exit_detail"] = exit_result.detail
+
         first = exclusions[0]
         if first.get("status") == "PRIOR_OI_MISSING_OR_BELOW_GATE":
             row_reason = "a required selected leg lacks exact prior-bar OI at or above 100"
