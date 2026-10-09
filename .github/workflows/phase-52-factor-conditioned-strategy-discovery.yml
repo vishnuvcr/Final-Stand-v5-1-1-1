@@ -237,6 +237,7 @@ jobs:
           bhavcopy_manifest = json.loads(Path("results/phase52/daily_bhavcopy/manifest.json").read_text())
           event_universe = json.loads(Path("results/phase52/configuration_event_universe/summary.json").read_text())
           option_quote_audit = json.loads(Path("results/phase52/option_quote_coverage/summary.json").read_text())
+          selected_strike_audit = json.loads(Path("results/phase52/selected_strike_coverage/summary.json").read_text())
           eod_selector_manifest = json.loads(Path("results/phase52/daily_eod_selector/manifest.json").read_text())
           import pandas as pd
           eod_selector_rows = pd.read_csv("results/phase52/daily_eod_selector/selector_results.csv")
@@ -255,6 +256,7 @@ jobs:
             f"- Pinned base replay: {base_manifest['status']}; revision={base_manifest['dataset_revision']}; trade rows={base_manifest['trade_rows']}; strategies={base_manifest['strategies']}; license gate={base_manifest['license_gate']}.\n"
             f"- Configuration event universe: {event_universe['status']}; source expiries={event_universe['source_option_expiry_files']}; expected grid events={event_universe['expected_event_count']}; exact index entry ticks={event_universe['exact_index_entry_timestamp_count']}; missing exact index ticks={event_universe['events_without_exact_index_entry_timestamp']}.\n"
             f"- Exact option bar coverage: {option_quote_audit['status']}; event rows audited={option_quote_audit['event_rows_with_audit_results']}/{option_quote_audit['expected_event_rows']}; events with option rows at exact entry={option_quote_audit['events_with_any_option_row_at_exact_entry']}; entries with OI-qualified contracts={option_quote_audit['events_with_any_oi_eligible_contract_at_entry']}; source file errors={option_quote_audit['source_file_errors']}; config-specific legs still require replay-worker checks.\n"
+            f"- Selected ATM-offset leg audit: {selected_strike_audit['status']}; files={selected_strike_audit['source_expiry_files_audited']}/{selected_strike_audit['source_expiry_files_expected']}; leg-event rows={selected_strike_audit['option_type_rows']}; OI-qualified entries={selected_strike_audit['entry_oi_ge_100_rows']}; exact-index+OI+expiry-exit rows={selected_strike_audit['exact_entry_and_expiry_exit_rows']}; source errors={selected_strike_audit['source_file_errors']}; ABS_DELTA remains blocked; no P&L.\n"
             f"- Fixed 10:00 coverage audit: {coverage_report['status']}; source expiries={coverage_report['option_expiry_files_in_scope']}; base matrix expiries={coverage_report['unique_expiries_in_base_matrix']}; last source expiry={coverage_report['last_source_option_expiry']}; last matrix expiry={coverage_report['last_matrix_expiry']}; missing/unreplayed={coverage_report['source_expiry_rows_not_fully_replayed']}.\n"
             f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
             f"- Prior-session NSE EOD factor build: {bhavcopy_manifest['status']}; event coverage={bhavcopy_manifest['feature_event_coverage']:.1%}; missing archive paths={bhavcopy_manifest['missing_archive_paths']}; file errors={bhavcopy_manifest['archive_file_errors']}; not intraday futures basis.\n"
@@ -267,6 +269,7 @@ jobs:
             f"\n## Automated checkpoint — {stamp}\n- Workflow run: {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n"
             f"- Source leads newly recorded: {source_report.get('new_unique_source_leads_added', 0)}.\n"
             f"- Configurations enumerated in this run: {checkpoint['last_shard_size']:,} of {checkpoint['total_configurations']:,} finite-grid combinations. This is queue enumeration only, not strategy testing.\n"
+            f"- Selected ATM-offset audit: {selected_strike_audit['status']}; {selected_strike_audit['option_type_rows']:,} leg-event rows; strict exact-index/OI/expiry-exit rows={selected_strike_audit['exact_entry_and_expiry_exit_rows']:,}; no P&L.\n"
             f"- Daily EOD factor-selector: {eod_selector_manifest['status']}; validation diagnostic={best_eod_summary}; report at results/phase52/daily_eod_selector/REPORT.md.\n"
             f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\n"
           )
@@ -338,7 +341,7 @@ jobs:
               rm -f research/phase52/results/registry_audit.json
             fi
           fi
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/selected_strike_coverage results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
