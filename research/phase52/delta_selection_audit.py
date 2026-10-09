@@ -191,11 +191,12 @@ def main() -> int:
                 delta = bs_delta(spot, strike, tau, iv, RATE, DIVIDEND_YIELD, typ)
                 eligible.append({"type":typ,"strike":strike,"premium":premium,"oi":oi,"iv":iv,"delta":delta,"iv_status":iv_status})
             for typ in ("CE", "PE"):
-                contracts = [x for x in eligible if x["type"] == typ]
+                all_type_contracts = [x for x in eligible if x["type"] == typ]
+                contracts = [x for x in all_type_contracts if math.isfinite(x["oi"]) and x["oi"] >= MIN_OI]
                 for target in TARGET_ABS_DELTAS:
                     selected = min(contracts, key=lambda x: (abs(abs(x["delta"])-target), x["strike"])) if contracts else None
                     if selected is None:
-                        rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"selection_ts":selection_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":None,"spot_prior_close":spot if math.isfinite(spot) else None,"predecision_premium_close":None,"implied_vol":None,"model_delta":None,"predecision_oi":None,"predecision_oi_ge_100":False,"entry_bar_open":None,"entry_bar_ohlc_valid":False,"entry_bar_oi":None,"entry_fill_bar_available":False,"status":"NO_VALID_PRE_ENTRY_IV_CONTRACT","model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
+                        rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"selection_ts":selection_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":None,"spot_prior_close":spot if math.isfinite(spot) else None,"predecision_premium_close":None,"implied_vol":None,"model_delta":None,"predecision_oi":None,"predecision_oi_ge_100":False,"entry_bar_open":None,"entry_bar_ohlc_valid":False,"entry_bar_oi":None,"entry_fill_bar_available":False,"status":("NO_PREDECISION_OI_ELIGIBLE_IV_CONTRACT" if any(x["type"] == typ for x in eligible) else "NO_VALID_PRE_ENTRY_IV_CONTRACT"),"model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
                         continue
                     fill_rows = entry_fill[(entry_fill["option_type"] == typ) & (entry_fill["strike"] == selected["strike"])]
                     fill_row = fill_rows.iloc[0] if len(fill_rows) == 1 else None
@@ -221,8 +222,9 @@ def main() -> int:
         "index_file_sha256":sha256_file(index_path),"source_expiry_files_expected":int(events["expiry"].nunique()),
         "source_expiry_files_audited":int(len(file_audit)),"source_file_errors":len(errors),
         "expected_selection_rows":int(events["event_id"].nunique()*len(TARGET_ABS_DELTAS)*2),
-        "selection_rows":int(len(detail)),"selected_rows":int(detail["status"].isin(["MODEL_DELTA_SELECTED","MODEL_DELTA_SELECTED_OI_GATE_FAIL"]).sum()),
-        "no_valid_iv_rows":int((detail["status"]=="NO_VALID_IV_CONTRACT").sum()),
+        "selection_rows":int(len(detail)),"selected_rows":int(detail["status"].isin(["MODEL_DELTA_SELECTED_ENTRY_BAR_PASS","MODEL_DELTA_SELECTED_ENTRY_FILL_UNAVAILABLE","MODEL_DELTA_SELECTED_PREDECISION_OI_GATE_FAIL"]).sum()),
+        "no_valid_iv_rows":int((detail["status"]=="NO_VALID_PRE_ENTRY_IV_CONTRACT").sum()),
+        "no_predecision_oi_eligible_contract_rows":int((detail["status"]=="NO_PREDECISION_OI_ELIGIBLE_IV_CONTRACT").sum()),
         "predecision_oi_qualified_rows":int(detail["predecision_oi_ge_100"].sum()) if "predecision_oi_ge_100" in detail else 0,
         "entry_fill_bar_available_rows":int(detail["entry_fill_bar_available"].sum()) if "entry_fill_bar_available" in detail else 0,
         "model":{"type":"European Black-Scholes","rate_continuous":RATE,"dividend_yield":DIVIDEND_YIELD,"expiry_timestamp":"15:30 Asia/Kolkata","decision_timestamp":"exact prior one-minute bar close at entry_ts minus one minute","premium_input":"prior completed option-bar OHLC close; never the current entry-bar close","spot_input":"prior completed NIFTY index-bar close; never the current entry-bar close","execution_reference":"exact entry-timestamp option-bar open if present and OHLC-valid","delta_source":"model-estimated, not exchange-published"},
