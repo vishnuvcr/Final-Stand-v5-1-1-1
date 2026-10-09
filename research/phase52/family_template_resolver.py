@@ -126,8 +126,6 @@ def evaluate_strike_expression(
             amount = float(params["O"])
         else:
             amount = float(token) * float(numeric_offset_scale)
-        if not amount.is_integer() if isinstance(amount, float) else False:
-            pass
         total += sign * amount * float(modal_step)
     return float(round(total, 8))
 
@@ -232,7 +230,7 @@ def self_test() -> None:
     blocked = resolve_family({**spec,"family_id":"CALENDAR_TRAP","specification_status":"SPECIFICATION_BLOCKED"})
     assert blocked.status == "BLOCKED_SPECIFICATION" and not blocked.legs
     futures = resolve_family({**spec,"family_id":"FUTURES_BASIS_SPREAD"})
-    assert futures.status == "BLOCKED_SPECIFICATION"
+    assert futures.status == "BLOCKED_INTRADAY_FUTURES"
     carry = resolve_family({**spec,"family_id":"LONG_SYNTHETIC_FUTURE",
                             "leg_template":"BUY 1 CE K; SELL 1 PE K"})
     assert carry.status == "BLOCKED_CARRY_MODEL"
