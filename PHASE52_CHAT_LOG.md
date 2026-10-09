@@ -166,3 +166,10 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 ## User instruction — 2026-10-10
 
 User requested that issues be resolved. Investigation identified a material v0.1/v0.2 pilot-count provenance mismatch in addition to the known concurrent checkpoint persistence failure. The discrepancy is explicitly logged; no fabricated correction or strategy conclusion is made.
+
+## User continuation — 2026-10-10 (artifact-level diagnosis)
+
+- User directed the research to continue and resolve issues without further intervention.
+- Retrieved run 37980455805's actual artifact and verified the v0.2 480-row status counts. The previous v0.1 vs v0.2 difference was a version labeling/provenance issue, not contradictory rows.
+- Root causes: 100 rows have prior OI = 0 and are blocked under the frozen prior-OI gate; 379 fail the frozen OHLC range proxy, whose observed range is 2.38%–44.44%. Only one development row replayed and its modeled net P&L is negative under every cost scenario. No strategy promotion.
+- Persistence writer and regression test updated on the research branch. Workflow validation run 37983999726 is underway. Continue to Phase 53 only as data coverage/source validation unless usable replay coverage is achieved.
