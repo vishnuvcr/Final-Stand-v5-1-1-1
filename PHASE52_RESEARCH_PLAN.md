@@ -222,4 +222,9 @@ This initial plan is the frozen version 1.0. A change to scope, finite grids, hy
 
 Before any numerical replay, the generated registry was reconciled against this plan. It contains **52 distinct structure families × 6 selector modes = 312 hypotheses**, not 50 × 6 = 300. All 52 families are retained because the extras include additional futures/synthetic-futures, protection and ratio/calendar families. The minimum target remains exceeded; no candidate was dropped based on P&L.
 
-The finite parameter grid was also frozen at `phase52-grid-v1.1` before results: a finite coarse grid is exhaustively enumerated in deterministic resumable shards; costs are evaluated side-by-side for each configuration rather than optimized as a parameter. The amendment does not relax statistical or cost gates and does not change any prior phase result. Any further expansion requires a new version before the expanded grid is evaluated.
+The finite parameter grid was also frozen at `phase52-grid-v1.3` before results: a finite coarse grid is exhaustively enumerated in deterministic resumable shards; costs are evaluated side-by-side for each configuration rather than optimized as a parameter. The amendment does not relax statistical or cost gates and does not change any prior phase result. Any further expansion requires a new version before the expanded grid is evaluated.
+
+
+## PA-002 — Grid v1.3 audit record — 2026-10-09
+
+The successful first complete bootstrap run shows the committed finite grid identifier is `phase52-grid-v1.3`, with **9,379,584 applicable configurations** across the 312 registered hypotheses. The scheduled/manual runner emits 10,000 deterministic configuration records per default run and checkpoints the next offset. This is queue enumeration only, not 9.38 million backtests. Every cost scenario is evaluated side-by-side for each configuration. Any future domain/grid expansion must be versioned before it is evaluated.
