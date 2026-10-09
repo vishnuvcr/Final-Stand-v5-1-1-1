@@ -130,3 +130,10 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - **Run:** [37962948690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962948690); job=success; self-test=success; plan-only=success; replay=success.
 - **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+
+
+## Resume — 2026-10-10 01:00 IST
+
+- Reviewed latest pilot v0.1 report: 1/480 config-event rows executed; 274 blocked by duplicate exact contract rows; 205 excluded by the pre-registered OHLC high-low/open proxy. No performance inference is justified.
+- Patched v0.2 to remove only exact full-row duplicates after canonical normalization and record duplicate counts. Conflicting rows are retained and fail closed. Frozen sample/configurations/costs/filter unchanged; holdout untouched.
+- Added PA-015 to plan and logs. Workflow run 37980455805 passed self-test and plan stages; historical replay is in progress. Awaiting report and checking all costs, data hashes and 480-row reconciliation before any next performance step.
