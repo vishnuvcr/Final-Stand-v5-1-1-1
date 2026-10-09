@@ -406,3 +406,22 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** Coverage can be overstated if the OI field is only observed after the bar completes; no P&L was calculated in the audit.
 - **Correction:** Check OI>=100 on the exact prior completed one-minute bar at entry_ts minus one minute, require a unique valid exact entry bar/open independently, retain current-bar OI as diagnostic only, and fail closed when prior OI is missing. No OI forward-fill is permitted.
 - **Status:** Code patched on main and research branch. The currently running factor workflow checked out the earlier commit and is not accepted for this selected-leg gate. Rerun after that run finishes; delta audit queued afterward.
+
+
+## F52-039 — Replay-kernel test manifest used literal runner-temp path — RESOLVED
+
+- **Date:** 2026-10-09.
+- **Initial run:** [37957499754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957499754).
+- **Observed:** The deterministic replay-kernel self-test printed `SELF_TEST_PASS`, but its following manifest writer tried to create `$RUNNER_TEMP/phase52-kernel-test/manifest.json` as a literal relative path and exited with FileNotFoundError. Thus the overall workflow failed although the kernel assertions passed.
+- **Correction:** Python manifest path now resolves `os.environ["RUNNER_TEMP"]` and writes inside the created output directory.
+- **Verification:** [Run 37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) completed successfully, wrote evidence and uploaded its artifact. Kernel tests: exact bar selection, common exit timestamps, hand-computed gross P&L, six cost combinations, prior OI gate, liquidity-range proxy, TP next-open execution, blocked family/data gates.
+- **Scientific impact:** No real-market P&L existed in either run. This was test-evidence persistence only.
+- **Status:** RESOLVED.
+
+## F52-040 — Closure of prior ATM/delta coverage-audit timing defects — VERIFIED, P&L STILL BLOCKED
+
+- **Date:** 2026-10-09.
+- **ATM-offset:** [Run 37956261518](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956261518) produced the corrected summary with code/protocol fingerprints, 267/267 files, zero source errors, exact-time index open/modal strike steps, and prior-completed-minute OI eligibility. Prior output from run 37942202655 remains superseded.
+- **ABS_DELTA:** [Run 37956675818](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956675818) produced the corrected prior-minute/model-IV summary with code/protocol fingerprints, 267/267 files, zero source errors, and no current-bar close lookahead. Only 2,232/4,272 selected delta/type rows had a valid exact entry-bar fill reference; 3,892 rows passed predecision OI.
+- **Inference:** These successful audits mean only that the coverage/model-selection scans executed cleanly. Missing exact entry bars and the incomplete index tail remain explicit. They are not completed strategy legs, P&L, or promotion evidence.
+- **Status:** Audit implementation defect gate closed; production strategy resolver and complete grid P&L remain not started.
