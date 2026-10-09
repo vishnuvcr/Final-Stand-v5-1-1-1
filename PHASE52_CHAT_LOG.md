@@ -59,3 +59,11 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Daily NSE bhavcopy supplement completed with 256/256 event rows, 512 processed prior-session archives, and zero missing archive paths/file errors/gap rows. It is lagged daily EOD only, not intraday futures basis.
 - Run 37930010915 failed because the exact-timestamp coverage audit file existed on main rather than the Phase52 branch. Copied into the research branch, commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`; coverage result is still pending. No unsupported coverage conclusion accepted.
 - Next: rerun the exact-entry coverage audit; refresh cached EOD factors with contract-matched OI-change coverage; then decide whether the admissible data support registered variable-config replay.
+
+
+## User said “Resume” — 2026-10-09 18:49 IST
+
+- Resumed after network interruption and checked current Actions state.
+- Run 37934719402 finished successfully. Exact broad option/OI audit: 1,068 event rows audited, 267 expiry files, zero source errors; 1,012 exact index ticks, 1,012 events with any OI≥100 contract, 1,040 with common-time target-expiry CE/PE exit bars; strict broad intersection 1,004 events. This is not selected-strike eligibility or P&L.
+- Latest finite-grid queue checkpoint offset is 235,000/9,379,584, still ENUMERATED_NOT_BACKTESTED.
+- Current decision: continue into configuration-specific leg eligibility and executable-fill replay tests; no candidate is promoted and the holdout remains data-gated.
