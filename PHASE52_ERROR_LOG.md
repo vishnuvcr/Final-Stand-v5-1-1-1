@@ -591,3 +591,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Job status: \failure
 - No revised sensitivity accepted.
 - Status: OPEN.
+
+
+## F52-LEG-EVIDENCE-001 — First repair run failure
+
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37989502259
+- Failure: frozen pilot manifest rejected `file_hashes` drift after the runner patch; artifact upload also failed because escaped GitHub expressions produced a backslash in the artifact name.
+- Correction: Phase 52 workflow now refreshes the manifest only after checking 40 configurations and 24 frozen event identities, then replays; GitHub expression escaping and artifact missing-file handling were corrected.
+- Verification queued: run 37989827840 on commit 75d1d3135831c42e93f617dab396cc58d8e33d80.
+- Status: OPEN until replay and artifact validation succeed.
