@@ -1,16 +1,17 @@
 {
-  "pilot_version": "phase52-historical-base-pilot-v0.1",
+  "pilot_version": "phase52-historical-base-pilot-v0.2",
   "status": "PREREGISTERED_BEFORE_HISTORICAL_PNL",
-  "created_at_ist": "2026-10-09",
+  "created_at_ist": "2026-10-10",
   "parent_grid_version": "phase52-grid-v1.3",
   "replay_protocol": "phase52-replay-v1.0",
-  "intent": "Limited source/data/leg/exit/cost integration pilot only. Not intended to select or promote a profitable strategy; no hypothesis significance or winner ranking is reported.",
+  "intent": "Engineering rerun to verify exact whole-row duplicate normalization on pinned historical files. The frozen 40 configurations and 24 events are unchanged; no strategy selection/promotion. Only byte-identical full-row duplicates are removed after canonical type/timestamp/numeric normalization. Conflicting rows for the same contract/time remain blocked.",
   "market_data": {
     "dataset": "thetrademarkk/india-index-options-1m",
     "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
     "declared_license": "CC BY-NC 4.0",
     "usage": "Research-only; no commercial/live evidence.",
-    "cache": "Hugging Face cache restored/saved by GitHub Actions; source data hashes are recorded per file. Raw market data are not committed to the public repository."
+    "cache": "Hugging Face cache restored/saved by GitHub Actions; source data hashes are recorded per file. Raw market data are not committed to the public repository.",
+    "duplicate_policy": "Remove only exact duplicate rows across all columns after canonical normalization. Do not collapse conflicting duplicate contract bars; reject them. Record per-file source-row count, deduplicated row count and exact duplicate count."
   },
   "configuration_filter": {
     "family_ids": [
@@ -102,19 +103,21 @@
     "cost_scenarios.csv with all six brokerage/slippage scenarios for each successfully executed event",
     "config_split_summary.csv with descriptive-only split aggregates, executed/eligible counts, exclusions and all costs",
     "source_file_audit.csv with per-file SHA256, revision, size and row/timestamp extent",
-    "report.md stating that this is an engineering pilot, not a selector efficacy test or confirmation study"
+    "report.md stating that this is an engineering pilot, not a selector efficacy test or confirmation study",
+    "source_file_audit.csv with rows_source_after_normalization and exact_duplicate_rows_removed"
   ],
   "promotion_policy": {
     "promoted_candidates": 0,
     "strategy_ranking": "NONE; outputs are implementation/coverage diagnostics only.",
     "inference": "No p-values, optimization, winner selection, or holdout claim from this pilot.",
-    "next_gate": "Only after this workflow passes its source/code fingerprint guard can wider development/validation replay be planned. Actual selector routers, alternate exit rules and holdout remain separate gates."
+    "next_gate": "Compare v0.2 event status counts with v0.1 only as an engineering coverage diagnostic. Do not compare or rank P&L. If duplicate conflicts remain dominant, investigate source fidelity; do not average/pick rows. Keep 2% OHLC-range proxy as a data-quality exclusion only, never describe it as observed bid/ask spread."
   },
   "pilot_exclusions": [
     "No factor router runs because historical point-in-time selector execution is not integrated into the whole-position worker.",
     "No ABS_DELTA runs in this pilot; model-delta audit still has only 2,232/4,272 selections with entry bars and must be bound to the resolver under a dedicated gate.",
     "No take-profit or expiry-exit variants; only exact 15:15 exit is integrated end-to-end.",
     "No holdout performance; holdout remains untouched.",
-    "No real intraday futures/hedge/synthetic-futures strategies."
+    "No real intraday futures/hedge/synthetic-futures strategies.",
+    "The 2% high-low/open threshold is an OHLC range proxy and not an observed bid/ask spread; results are not executable-liquidity evidence."
   ]
 }
