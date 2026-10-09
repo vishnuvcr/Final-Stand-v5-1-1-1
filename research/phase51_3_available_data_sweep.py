@@ -1,3 +1,4 @@
+import csv
 import importlib
 from pathlib import Path
 import json, traceback
@@ -28,6 +29,32 @@ def run_one(name, modname):
     d = json.loads(summary_path.read_text())
     d["phase51_3_window"] = [START, END]
     d["partial_oos_only"] = True
+
+    # Coverage and row-level data errors are candidate outcomes, not wrapper
+    # exceptions. Record them explicitly so one failed candidate does not hide
+    # the remaining diagnostics.
+    error_file = out / "data_errors.csv"
+    if error_file.exists():
+        with error_file.open("r", newline="", encoding="utf-8") as fh:
+            data_error_count = max(0, sum(1 for row in csv.reader(fh) if row) - 1)
+    else:
+        data_error_count = None
+    coverage_rate = float(d.get("coverage_rate", 0.0) or 0.0)
+    coverage_status = "PASS" if coverage_rate >= 0.95 else "FAIL_COVERAGE"
+    data_error_status = (
+        "PASS" if data_error_count == 0 else
+        "FAIL_DATA_ERRORS" if data_error_count is not None else
+        "FAIL_MISSING_DATA_ERROR_AUDIT"
+    )
+    d["phase51_3_gate"] = {
+        "coverage_threshold": 0.95,
+        "coverage_rate": coverage_rate,
+        "coverage_status": coverage_status,
+        "data_error_count": data_error_count,
+        "data_error_status": data_error_status,
+        "replay_quality_gate": "PASS" if coverage_status == "PASS" and data_error_status == "PASS" else "FAIL",
+        "final_full_window_validation": False,
+    }
     summary_path.write_text(json.dumps(d, indent=2))
     return d
 
@@ -40,10 +67,19 @@ def main():
         except Exception:
             errors[name] = traceback.format_exc()
     OUTROOT.mkdir(parents=True, exist_ok=True)
-    (OUTROOT/"sweep_summary.json").write_text(json.dumps({"window":[START,END],"results":results,"errors":errors}, indent=2))
+    report = {
+        "window": [START, END],
+        "partial_oos_only": True,
+        "expected_candidates": [name for name, _ in CANDIDATES],
+        "results": results,
+        "errors": errors,
+    }
+    (OUTROOT/"sweep_summary.json").write_text(json.dumps(report, indent=2))
+    # Print all captured tracebacks into Actions logs. The workflow also uploads
+    # whatever diagnostics exist even when this command returns non-zero.
+    print(json.dumps(report, indent=2), flush=True)
     if errors:
-        raise SystemExit("Candidate engine failures occurred; see sweep_summary.json")
-    print(json.dumps(results, indent=2))
+        raise SystemExit(f"{len(errors)} candidate engine(s) failed; traceback(s) are above and stored in sweep_summary.json")
 
 if __name__ == "__main__":
     main()
