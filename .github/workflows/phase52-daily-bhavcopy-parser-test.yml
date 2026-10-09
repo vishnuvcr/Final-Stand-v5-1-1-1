@@ -1,4 +1,4 @@
-name: Phase 52 — NSE Daily Bhavcopy Parser Regression Test
+name: Phase 52 — NSE Legacy/UDiFF and IDF Futures Parser Regression Test
 
 on:
   workflow_dispatch:
