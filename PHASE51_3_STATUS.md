@@ -10,3 +10,6 @@ No strategy rules, strikes, entry timing, stops, exits, costs, or slippage assum
 
 ## Next step
 Run the frozen replay engines through the Phase-51-3 wrapper workflow, audit artifacts, publish results, and classify each candidate.
+
+## Orchestration
+The main-branch orchestrator is configured to execute this branch on PR synchronization because the connector does not expose workflow-dispatch. The research branch remains unmerged.
