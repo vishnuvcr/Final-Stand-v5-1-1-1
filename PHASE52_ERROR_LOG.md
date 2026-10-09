@@ -341,7 +341,7 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Run:** 37937164472; the selected-strike audit step completed successfully at the process level.
 - **Issue:** This run checked out the earlier strike-ladder implementation, which sourced candidate strikes from the full expiry file rather than the exact entry-time contract set. Therefore a green step is not a valid scientific pass.
 - **Handling:** Mark the run's selected-strike output stale and do not use its counts. The workflow now compares the auditor against the remote branch before persistence and discards/restores stale output. The next queued run should use the point-in-time correction and reconciled PA-010 strategy specs.
-- **Status:** NOT ACCEPTED; patched-source rerun pending.
+- **Status:** Superseded by F52-033: the patched-source rerun [37942202655](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37942202655) passed the exact-entry strike-ladder guard; only its accepted summary and files are retained. The earlier counts remain rejected.
 
 
 ## F52-032 — Concurrent generated-result conflicts blocked checkpoint persistence — PATCHED IN WORKFLOW
@@ -352,3 +352,14 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Root cause:** Temporary concurrency-group versioning allowed two old/new group runs to overlap. Both started from the same branch snapshot and attempted to persist the same generated paths.
 - **Correction:** Restored one shared concurrency group and extended the conflict resolver narrowly: append-only status/research/error logs are unioned; conflicts under generated-result directories preserve the already-persisted remote version so the losing deterministic shard can be re-emitted. Conflicts in source/code files still fail closed. The new shared-group run will wait for the older run to finish.
 - **Status:** PATCHED IN MAIN AND BRANCH WORKFLOWS; end-to-end verification pending.
+
+
+## F52-033 — Selected-strike audit corrected and rerun — ATM-OFFSET COVERAGE ACCEPTED; DELTA STILL BLOCKED
+
+- **Date:** 2026-10-09
+- **Authoritative workflow:** [37942202655](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37942202655), completed successfully after the corrected source was checked out.
+- **Correction verified:** The strike ladder is now resolved from contracts present at the exact entry timestamp, not all strikes appearing anywhere in the expiry file. This prevents future-listed contracts from leaking into historical strike selection. Timestamp-indexed lookups preserve exact timestamps; no nearest timestamp or interpolation is used.
+- **Result:** 267/267 option expiry files audited; zero file errors; all 1,068 expected events represented; 27,768 event × offset × option-type rows across offsets -6..+6; 11,222 leg rows meet the entry OI≥100 gate; 15,718 leg rows have valid target-expiry exit OHLC; 11,108 leg rows satisfy exact index + entry OI + valid target-expiry exit.
+- **Interpretation:** Coverage is reported at individual selected ATM-offset leg-event level, not full strategy level. It does not establish all legs in a multi-leg strategy can execute, does not test path-dependent exits, and contains no P&L. The two 2026-07-28/2026-08-04 sessions still have no usable expiry exit bars in this pinned source; full holdout remains blocked.
+- **Remaining gate:** ABS_DELTA configurations are still blocked until the separate point-in-time IV/delta resolver passes regression and coverage tests. The pinned dataset is CC BY-NC 4.0, so any research outputs from it remain non-commercial/research-only pending rights review.
+- **Status:** ATM-offset source coverage audit PASS; variable-grid replay NOT STARTED; no strategy promotion.
