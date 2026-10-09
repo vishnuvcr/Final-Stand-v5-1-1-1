@@ -867,3 +867,6 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Selected-strike audit caution:** The selected-strike step in run 37937164472 completed, but it used the pre-correction strike-ladder source and is explicitly not accepted. The workflow guard should prevent its results from being published as current; a patched-source rerun is queued in run 37938099763.
+
+
+**Workflow concurrency correction:** Run [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472) completed its audit steps but failed at persistence because parallel runs collided on generated artifacts. One shared concurrency group has been restored; the resolver preserves existing remote result files on collisions and merges only append-only logs, while source/code conflicts still fail closed. See [F52-032](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md). Verification pending.
