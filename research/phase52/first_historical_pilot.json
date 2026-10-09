@@ -35,10 +35,13 @@
       1,
       3
     ],
-    "wing_width_steps": [
-      1,
-      3
-    ],
+    "wing_width_steps": {
+      "values": [
+        1,
+        3
+      ],
+      "applicability": "Use [1,3] only for BULL_CALL_SPREAD, BEAR_CALL_SPREAD and SHORT_IRON_CONDOR. For LONG_STRADDLE and LONG_STRANGLE the resolver template has no width-dependent leg; include only width=1 as the non-redundant representative, to avoid falsely treating duplicate geometries as distinct pilot strategies. This is a pilot subset, not a change to grid v1.3."
+    },
     "leg_ratio_applicable_only": [
       [
         1,
@@ -106,5 +109,12 @@
     "strategy_ranking": "NONE; outputs are implementation/coverage diagnostics only.",
     "inference": "No p-values, optimization, winner selection, or holdout claim from this pilot.",
     "next_gate": "Only after this workflow passes its source/code fingerprint guard can wider development/validation replay be planned. Actual selector routers, alternate exit rules and holdout remain separate gates."
-  }
+  },
+  "pilot_exclusions": [
+    "No factor router runs because historical point-in-time selector execution is not integrated into the whole-position worker.",
+    "No ABS_DELTA runs in this pilot; model-delta audit still has only 2,232/4,272 selections with entry bars and must be bound to the resolver under a dedicated gate.",
+    "No take-profit or expiry-exit variants; only exact 15:15 exit is integrated end-to-end.",
+    "No holdout performance; holdout remains untouched.",
+    "No real intraday futures/hedge/synthetic-futures strategies."
+  ]
 }
