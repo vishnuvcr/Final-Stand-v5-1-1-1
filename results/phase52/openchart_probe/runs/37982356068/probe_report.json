@@ -1,0 +1,150 @@
+{
+  "schema_version": "phase52-openchart-probe-v1",
+  "created_at_ist": "2026-10-10T01:15:49.181229+05:30",
+  "source": {
+    "repository": "https://github.com/marketcalls/openchart",
+    "upstream_commit": "a207108890c96a9830b35a8d15442c896ea0a9d6",
+    "openchart_package_version": "0.2.0"
+  },
+  "purpose": "Bounded data-discovery/coverage probe only; not strategy P&L",
+  "raw_market_data_persisted": false,
+  "api_request_trace": [
+    {
+      "host": "www.nseindia.com",
+      "path": "/",
+      "method": "GET",
+      "http_status": 403,
+      "content_type": "text/html",
+      "content_length_bytes": "368",
+      "retry_after": null,
+      "elapsed_seconds": 0.087
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.486
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.332
+    },
+    {
+      "host": "charting.nseindia.com",
+      "path": "/v1/exchanges",
+      "method": "POST",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "content_length_bytes": "3163",
+      "retry_after": null,
+      "elapsed_seconds": 0.351
+    }
+  ],
+  "search_probes": [
+    {
+      "query": "NIFTY",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "current_nifty_fo"
+    },
+    {
+      "query": "NIFTY26JUL",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "phase51_missing_2026_07_28"
+    },
+    {
+      "query": "NIFTY26AUG",
+      "returned_rows": 20,
+      "columns": [
+        "symbol",
+        "scripcode",
+        "description",
+        "type",
+        "exchange"
+      ],
+      "instrument_type_counts": {
+        "Index": 20
+      },
+      "option_rows": 0,
+      "future_rows": 0,
+      "option_suffix_rows": 0,
+      "future_suffix_rows": 0,
+      "target_month_contract_rows": 0,
+      "blank_symbol_rows": 0,
+      "rows_with_scripcode": 20,
+      "status": "SYMBOLS_RETURNED",
+      "label": "phase51_missing_2026_08_04"
+    }
+  ],
+  "historical_probes": [],
+  "limitations": [
+    "A single short probe cannot establish complete contract/expiry coverage or oldest backfill date.",
+    "The package exposes OHLCV only; OI, bid/ask, trade prints, depth and Greeks are not returned by its documented DataFrame schema.",
+    "Symbol-search failure and no-result responses can both become empty DataFrames in the upstream library; inspect HTTP trace before interpreting empty results.",
+    "Returned timestamps are timezone-naive after upstream processing; verify clock convention against authoritative session anchors.",
+    "No raw OHLCV, full symbol dump or token values are saved to the repository.",
+    "NSE data usage/storage/redistribution terms must be checked separately from the MIT license of this client library."
+  ],
+  "http_summary": {
+    "requests_observed": 4,
+    "http_status_counts": {
+      "200": 3,
+      "403": 1
+    },
+    "http_errors_or_rate_limits": 1,
+    "response_bodies_saved": false
+  },
+  "decision": {
+    "primary_source_eligible": false,
+    "status": "SOURCE_PROBE_INCONCLUSIVE_OR_NO_RECENT_OPTION_BARS",
+    "recent_option_bars_returned": false,
+    "target_date_windows_with_any_bars": 0,
+    "target_date_windows_tested": 2,
+    "interpretation": "Even a positive result only justifies a larger contract/time coverage audit. Do not use this source as sole backtest data or fill missing records yet."
+  }
+}
