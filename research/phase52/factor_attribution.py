@@ -203,14 +203,18 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
     (outdir/"input_audit.json").write_text(json.dumps(audit,indent=2,allow_nan=False)+"\n")
     # PA-004: preserve and report point-in-time feature overlap rather than requiring
     # 90% of all legacy rows. This is allowed only as an exploratory matched-sample pilot:
-    # >=50% overall and within each split, plus >=20 matched expiries in validation/holdout.
-    # All paired comparisons use only feature-matched rows; missing intervals are not imputed.
+    # >=50% overall and separately in development/validation, plus >=20 matched
+    # validation expiries. Holdout is reported only if it independently meets that same
+    # coverage/sample threshold; otherwise it remains explicitly unevaluated.
     low_coverage = audit["feature_match_rate"] < .50
-    for split_name, block in audit.get("feature_match_by_split", {}).items():
+    for split_name in {"development", "validation"}:
+        block = audit.get("feature_match_by_split", {}).get(split_name, {"coverage": 0.0, "matched_unique_expiries": 0})
         if block["coverage"] < .50:
             low_coverage = True
-        if split_name in {"validation", "holdout"} and block["matched_unique_expiries"] < 20:
+        if split_name == "validation" and block["matched_unique_expiries"] < 20:
             low_coverage = True
+    holdout_coverage = audit.get("feature_match_by_split", {}).get("holdout", {"coverage": 0.0, "matched_unique_expiries": 0})
+    holdout_ready = holdout_coverage["coverage"] >= .50 and holdout_coverage["matched_unique_expiries"] >= 20
     if low_coverage:
         blocked = {
           "status": "BLOCKED_LOW_FEATURE_COVERAGE_NO_PERFORMANCE_ANALYSIS",
@@ -225,7 +229,7 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
     data=joined[joined.feature_matched&joined.net.notna()&joined.net50.notna()].copy()
     universe=strategy_universe(data);data=data[data.strategy.isin(universe)].copy()
     dev=data[data.split=="development"].copy();val=data[data.split=="validation"].copy();hold=data[data.split=="holdout"].copy()
-    if min(len(dev),len(val),len(hold))==0:raise RuntimeError(f"empty split after filters: dev={len(dev)}, val={len(val)}, hold={len(hold)}")
+    if min(len(dev),len(val))==0:raise RuntimeError(f"empty required split after filters: dev={len(dev)}, val={len(val)}, hold={len(hold)}")
     dates=np.array(sorted(pd.to_datetime(dev.entry_date).dropna().unique()))
     if len(dates)<30:raise RuntimeError(f"too few development dates for sequential fit/tune: {len(dates)}")
     cut=max(10,min(len(dates)-5,int(len(dates)*.70)));fit_end=pd.Timestamp(dates[cut-1]);tune_start=pd.Timestamp(dates[cut])
@@ -278,13 +282,21 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
             state_map={s:multi_bins(x,spec[1],em) for s,x in [("development",dev),("validation",val),("holdout",hold)]}
             desc={"features":[f1,f2],"development_only_quantile_cutpoints":em}
         mapping=fit_map(dev,universe,dev_state if spec=="VIX" else state_map["development"],baseline)
-        for split,test in [("development_in_sample",dev),("validation",val),("holdout",hold)]:
+        test_sets=[("development_in_sample",dev),("validation",val)]
+        if holdout_ready:
+            test_sets.append(("holdout",hold))
+        for split,test in test_sets:
             a,b,pred,episodes=collapse_predictions(test,state_map["development" if split=="development_in_sample" else ("validation" if split=="validation" else "holdout")],mapping,baseline)
-            m=metrics(a,b);m.update({"mode":mode,"selected_feature":label,"split":split,"fixed_baseline_strategy":baseline,"routing_rule":desc,
+            m=metrics(a,b);m.update({"mode":mode,"selected_feature":label,"split":split,"result_status":"DESCRIPTIVE_OR_VALIDATION_ONLY_NO_PROMOTION","fixed_baseline_strategy":baseline,"routing_rule":desc,
              "strategy_distribution":a.strategy.value_counts().to_dict() if len(a) else {},"n_expiries_available":int(test.expiry_key.nunique())})
             results.append(m)
             if len(a):
                 a=a.copy();a["mode"]=mode;a["selected_feature"]=label;a["evaluation_split"]=split;selected_trades.append(a)
+        if not holdout_ready:
+            results.append({"mode":mode,"selected_feature":label,"split":"holdout","result_status":"HOLDOUT_NOT_EVALUATED_LOW_FEATURE_COVERAGE_OR_SAMPLE",
+              "fixed_baseline_strategy":baseline,"n":0,"net":None,"net50":None,"net100":None,"paired_mean_uplift_net50":None,
+              "paired_bootstrap_ci95_lo":None,"paired_bootstrap_ci95_hi":None,"paired_signflip_p_one_sided":None,
+              "n_expiries_available":int(hold.expiry_key.nunique()),"strategy_distribution":{}})
     rd=pd.DataFrame(results)
     vi=rd.split=="validation"
     rd.loc[vi,"holm_p_uplift_net50"]=holm(rd.loc[vi,"paired_signflip_p_one_sided"].tolist())
@@ -295,17 +307,18 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
         avail[group]={"available":[c for c in cols if c in data.columns],"missing":[c for c in cols if c not in data.columns],
           "nonmissing_rate_by_split":{s:{c:float(data.loc[data.split==s,c].notna().mean()) if c in data else None for c in cols} for s in ["development","validation","holdout"]}}
     out={
-      "status":"FACTOR_SELECTOR_PILOT_COMPLETE_NO_PROMOTION",
+      "status":"FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION" if not holdout_ready else "FACTOR_SELECTOR_PILOT_COMPLETE_NO_PROMOTION",
       "input_sha256":{"trade_matrix":hashlib.sha256(Path(trades_path).read_bytes()).hexdigest(),"feature_panel":hashlib.sha256(Path(features_path).read_bytes()).hexdigest()},
       "source_feature_leakage_audit_status":source_audit.get("status"),
       "input_audit":audit,"risk_limited_strategy_universe":universe,"risk_limited_strategy_count":len(universe),
       "split_unique_expiries":{s:int(data.loc[data.split==s,"expiry_key"].nunique()) for s in ["development","validation","holdout"]},
+      "holdout_evaluated":bool(holdout_ready),"holdout_coverage_gate":holdout_coverage,
       "development_fit_end":str(fit_end.date()),"development_tune_start":str(tune_start.date()),
       "fixed_baseline_strategy_dev_fit":baseline_fit,"fixed_baseline_strategy_dev_all":baseline,
       "selected_feature_by_mode":features_by_mode,"factor_availability":avail,
       "not_available_in_seed_panel":["NIFTY futures basis/OI/volume","synchronized synthetic-future divergence","NSE/BSE breadth","timestamp-verified intraday news","point-in-time corporate-action feed"],
       "cost_stress_notes":"The +100% cost stress is derived as 2*net50-net because source costs were multiplied linearly; ₹20/order Paytm Money sensitivity is not available from this frozen outcome matrix.",
-      "limitations":["This is a factor selector screen on legacy fixed-entry/expiry-exit outcomes, not the full Phase52 config grid.","Only explicitly risk-limited legacy strategy labels are eligible; unknown/undefined-tail templates are excluded.","FII/DII availability was reported missing through development/validation in the previous Phase39 leakage audit; no primary selector claim is made for those features.","The source matrix does not contain futures basis or matched synthetic-future series. SPOT_PROXY_ONLY is not a futures test.","The 2026 holdout has relatively few expiry opportunities, so uncertainty remains high.","No result implies profitability in all regimes or authorizes live trading."] }
+      "limitations":["This is a factor selector screen on legacy fixed-entry/expiry-exit outcomes, not the full Phase52 config grid.","Only explicitly risk-limited legacy strategy labels are eligible; unknown/undefined-tail templates are excluded.","FII/DII availability was reported missing through development/validation in the previous Phase39 leakage audit; no primary selector claim is made for those features.","The source matrix does not contain futures basis or matched synthetic-future series. SPOT_PROXY_ONLY is not a futures test.","The 2026 holdout is evaluated only if its feature coverage is >=50% and at least 20 expiry sessions; otherwise the pilot does not make a holdout performance claim.","No result implies profitability in all regimes or authorizes live trading."] }
     (outdir/"summary.json").write_text(json.dumps(out,indent=2,default=str,allow_nan=False)+"\n")
     lines=["# Phase 52 — Legacy Factor-Selector Pilot","","Status: exploratory selector screen only; no promotion.",
       "",f"- Legacy trade rows: {audit['trade_rows_input']:,}; matched point-in-time rows: {audit['trade_rows_with_asof_feature_match']:,} ({audit['feature_match_rate']:.1%}).",
