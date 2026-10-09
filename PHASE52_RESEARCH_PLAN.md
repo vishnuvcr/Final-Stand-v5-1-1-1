@@ -426,3 +426,21 @@ The user explicitly ended the OpenChart source investigation. Preserve its negat
 5. Only after full 480-row status reconciliation, accepted hashes, zero unresolved software/data errors and meaningful executed coverage, proceed to a larger development/validation replay with unchanged costs and no holdout access.
 
 No strategy is promoted from the current 1/480 execution. No changes to the frozen grid, configurations, cost assumptions, splits or holdout. This amendment is a workflow/coverage investigation, not strategy optimization.
+
+
+### PA-019 — 2026-10-10 — Close persistence gate; route inadequate coverage to a separate source-validation phase
+
+**Verified Phase 52 evidence.** The v0.2 artifact from workflow run 37980455805 was retrieved and verified at artifact level. Its report, manifest and complete CSV agree on 480 rows: 379 range-proxy exclusions, 100 prior-OI blocks, and 1 replay pass. The older v0.1 result stored under the same paths is an older version, not a competing report. The provenance discrepancy is closed. The persistence regression suite passed and workflow 37983999726 completed with replay and persistence successful.
+
+**Audit schema defect found and corrected in v0.2.1.** Rows rejected by the OHLC proxy did not preserve the selected leg's strike, option type, anchor/relative offset and exact OHLC values in resolved_legs_json; source audit column names also described pre-dedup counts ambiguously. The new audit-only revision preserves the failed leg and marks exit status NOT_TESTED, adds explicit pre-/post-exact-dedup row counts, and leaves every strategy gate and sampling rule unchanged. It has a regression test and is being validated in run 37984566094.
+
+**Evidence-based handoff:** the v0.2 row-status problem is coverage/data, not a replay exception. The 100 OI blocks all have prior OI=0.0, all in validation, at five event IDs; the 379 range-proxy rows exceed the frozen 2% gate with observed ratios 2.38%–44.44%. Because the field is an OHLC range proxy rather than a bid-ask observation, do not claim it measures spreads or fillability. Do not relax it in the existing replay.
+
+**Next phase, on a separate branch (Phase 53): free-source data coverage/quality remediation.** Before any broader factor-conditioned profitability replay:
+1. Compare the pinned Hugging Face dataset and any claimed mirror by revision, schema, contract/time coverage and sampled file hashes; do not count a mirror as independent until proven distinct.
+2. Validate official NSE free daily F&O reports (UDiFF bhavcopy, NCL/combined OI, participant-wise OI, FII derivatives statistics) and official BSE historical derivatives reports as daily factor/control sources only; do not forward-fill end-of-day OI into intraday prior-bar features or introduce lookahead.
+3. Audit public GitHub datasets/pipelines by checking actual downloadable data versus sample files, license and authentication: OptionVault's public code/sample is not the same as free access to the advertised full licensed dataset; an API connector requiring brokerage credentials is not an unauthenticated public source.
+4. Measure exact entry/prior-OI/exit coverage, duplicate/conflicting contracts, timestamp continuity, positive OI availability and actual bid/ask or quote availability on the same selected events. Keep the current 2% range proxy results immutable as a reference arm.
+5. Create a newly preregistered alternative execution-quality protocol only if actual bid/ask/market-depth observations can be sourced; never relabel OHLC range as spread. Keep sources/licensing and Paytm Money fee schedule current, and model brokerage, STT, exchange charges, SEBI/IPFT charges, GST, stamp duty, slippage and stress in all eventual strategy replays.
+
+**Phase 52 decision gate:** only 1/480 rows executed, so there is no meaningful sample for strategy ranking or statistical inference. Phase 52 is not promotion-ready. Phase 53 can conclude a data-source go/no-go; only after it provides a defensible, reproducible coverage set can a later phase evaluate factor conditioning with a non-holdout development/validation sample. Holdout remains untouched.
