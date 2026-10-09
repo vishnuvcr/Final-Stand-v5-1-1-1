@@ -1,0 +1,56 @@
+name: Phase 52 — Whole-Position Synthetic Integration Golden Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase-52-whole-position-integration.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase52-whole-position-integration
+  cancel-in-progress: false
+
+jobs:
+  whole-position:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout frozen Phase52 research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deterministic test dependencies
+        run: python -m pip install --disable-pip-version-check --no-input numpy pandas matplotlib huggingface_hub
+
+      - name: Run source-bound resolver golden tests after lot-scaling fix
+        run: |
+          mkdir -p results/phase52/whole_position_golden
+          python research/phase52/strategy_template_resolver.py --self-test --report results/phase52/whole_position_golden/resolver.json
+
+      - name: Run synthetic whole-position tests across all supported option templates
+        run: |
+          python research/phase52/whole_position_golden_tests.py --self-test --report results/phase52/whole_position_golden/whole_position.json
+
+      - name: Reconfirm canonical kernel and Phase43 fee parity
+        run: |
+          python research/phase52/replay_engine_core.py --self-test --report results/phase52/whole_position_golden/kernel_fee_parity.json
+
+      - name: Upload whole-position integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-whole-position-integration-${{ github.run_id }}
+          path: results/phase52/whole_position_golden/*.json
+          if-no-files-found: warn
+          retention-days: 30
