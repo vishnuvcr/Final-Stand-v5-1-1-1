@@ -1,0 +1,54 @@
+name: Phase 51-1J TradingTick Public Data Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-51-1J-tradingtick-source-audit
+    paths:
+      - trigger/phase51_1J.start
+      - research/phase51_1J_tradingtick_source_audit.py
+      - .github/workflows/phase51-1J-tradingtick-source-audit.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase51-1J-tradingtick-source-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install browser audit dependencies
+        run: |
+          python -m pip install --no-input playwright
+          python -m playwright install --with-deps chromium
+      - name: Inspect public TradingTick pages and selectors
+        run: python research/phase51_1J_tradingtick_source_audit.py
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase51-1J-tradingtick-audit-\${{ github.run_id }}
+          path: results/phase51/phase51_1J_tradingtick/
+          if-no-files-found: warn
+      - name: Publish source-audit artifacts to phase branch
+        if: success()
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase51/phase51_1J_tradingtick
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase 51-1J: publish TradingTick source audit"
+          git pull --rebase origin phase-51-1J-tradingtick-source-audit
+          git push origin HEAD:phase-51-1J-tradingtick-source-audit
