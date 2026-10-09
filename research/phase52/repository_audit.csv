@@ -1,0 +1,41 @@
+repository,default_branch,initial_classification,README_or_source_access,audit_state,priority,next_action
+vishnuvcr/qullamaggie-scanner,main,stock scanner,not yet inspected,INVENTORIED,low,inspect rules for convertible entry-condition ideas
+vishnuvcr/qullamagie-backtest,main,stock backtest,not yet inspected,INVENTORIED,medium,inspect strategy and cost rules
+vishnuvcr/ML-trade,main,ML trading,README fetch returned 404,INVENTORIED,medium,try alternate README casing and inspect source paths
+vishnuvcr/Universal-ML-Trade,main,ML trading,README fetch returned 404,INVENTORIED,medium,try alternate README casing and inspect source paths
+vishnuvcr/ML-to-Pine,main,ML to Pine,README fetch returned 404,INVENTORIED,low,inspect scripts and rule definitions
+vishnuvcr/GBDT-trade-signal,main,GBDT signal,README fetch returned 404,INVENTORIED,medium,try alternate README casing and inspect source paths
+vishnuvcr/Institutional-Algorithmic-Trading-System,main,algorithmic trading,not yet inspected,INVENTORIED,medium,inspect entry exit risk and data assumptions
+vishnuvcr/market-gainer-predictor,main,market predictor,README fetch returned 404,INVENTORIED,low,inspect signal definitions and labels
+vishnuvcr/market-gainer-predictor-specificity-prioritised,main,market predictor,README fetch returned 404,INVENTORIED,low,inspect signal definitions and labels
+vishnuvcr/market-gainer-predictor-specificity-precision-prioritised,main,market predictor,README fetch returned 404,INVENTORIED,low,inspect signal definitions and labels
+vishnuvcr/research-ML-trading,main,ML research,README fetch returned 404,INVENTORIED,medium,inspect protocol and candidate models
+vishnuvcr/btst-strategy-lab,main,BTST rule research,README accessible,DISCOVERY_SEED,medium,adapt only if entry timing and instrument data are suitable
+vishnuvcr/ML-trading-v2,main,ML trading,not yet inspected,INVENTORIED,low,inspect source tree and feature definitions
+vishnuvcr/btst-composite-regime-lab,main,regime lab,not yet inspected,INVENTORIED,medium,inspect composite regimes for transferable factors
+vishnuvcr/Surge-identifier,main,surge/flow signals,not yet inspected,INVENTORIED,medium,inspect for volume/OI/price condition hypotheses
+vishnuvcr/Iron_condor,main,NIFTY iron-condor paper pipeline,README accessible,PRIORITY_SOURCE,high,freeze Success V1 config and compare futures reference/entry delay/margin rules
+vishnuvcr/CPR-,main,CPR/Camarilla levels,README accessible,PRIORITY_SOURCE,medium,inspect virgin CPR and multi-timeframe trigger rules
+vishnuvcr/market-inefficiency,main,derivatives market inefficiency,README accessible,PRIORITY_SOURCE,high,inspect hypothesis registry and research controls
+vishnuvcr/Nifty,main,NIFTY expiry forecasting/Batman/adaptive,README accessible,PRIORITY_SOURCE,high,extract Batman/adaptive entry and exit variants
+vishnuvcr/MC-ML_scalping-intraday-BTST-swing,main,MC/ML trading,README accessible,DISCOVERY_SEED,medium,extract validated entry-condition families only
+vishnuvcr/Timesfm-trading,main,forecast/regime/options protocol,README accessible,PRIORITY_SOURCE,high,inspect Phase 5 IV/OI/Greeks and Phase 6 cross-market scopes
+vishnuvcr/MC-OPTIONS-INDEPENDENT-BACKTEST-MC1,main,options independent backtest,not yet inspected,PRIORITY_SOURCE,high,inspect correctness gates and P&L conventions
+vishnuvcr/MC-OPTIONS-MARGIN-REDUCTION-MC2,main,options margin reduction,not yet inspected,PRIORITY_SOURCE,high,extract margin/hedge structure alternatives
+vishnuvcr/MC-OPTIONS-VERIFICATION-MC3,main,options verification,not yet inspected,PRIORITY_SOURCE,high,inspect independent verification controls
+vishnuvcr/MinDip-Stage-1,main,momentum/dip entry,not yet inspected,INVENTORIED,low,check whether any signals apply to index option selectors
+vishnuvcr/NoDip-Stage-1,main,momentum/dip entry,not yet inspected,INVENTORIED,low,check whether any signals apply to index option selectors
+vishnuvcr/1-10,main,stock/index strategy,not yet inspected,INVENTORIED,low,inspect strategy docs and rules
+vishnuvcr/Paper-Trade-v1,main,paper trading,not yet inspected,INVENTORIED,medium,inspect execution realism and prospective logging
+vishnuvcr/Daily-Options,main,options research and YouTube strategy program,README accessible,PRIORITY_SOURCE,high,import source-backed structure/entry/IV/OI/Greek hypotheses and preserve rejected tests
+vishnuvcr/Options-Payoff-v1,main,option payoff tooling,not yet inspected,INVENTORIED,medium,inspect payoff/structure semantics and risk labels
+vishnuvcr/Final-stand-v1,main,504 option configurations,README accessible,PRIORITY_SOURCE,high,inspect phase 22 configuration/validation protocol
+vishnuvcr/Final-stand-v2,main,NIFTY weekly option directional strategy,README accessible,PRIORITY_SOURCE,high,reconstruct OTM4/5/6 structures and their condition/exits
+vishnuvcr/Final-stand-v3,main,options strategy research,README accessible,PRIORITY_SOURCE,high,extract dynamic re-centering and payoff exits
+vishnuvcr/Final-Stand-v4,main,options strategy research,README accessible,PRIORITY_SOURCE,high,inspect branch strategy revisions and selector study
+vishnuvcr/TM-TRADE-1,main,trading app/system,not yet inspected,INVENTORIED,low,inspect strategy rules if present
+vishnuvcr/Iron-condor-to-ratio-v1,main,YouTube transition strategy,README accessible,PRIORITY_SOURCE,high,freeze source transcript and 0.30/0.10 delta transition logic
+vishnuvcr/Iron-condor-to-ratio-v2,main,YouTube transition strategy,README accessible,PRIORITY_SOURCE,high,reconcile implementation/spec variants with v1
+vishnuvcr/Option-intraday-v1,main,current-week call plus next-week put,README accessible,PRIORITY_SOURCE,high,read frozen strategy spec and terminal decision
+vishnuvcr/Naked-option-v1,main,directional option buying,README accessible,PRIORITY_SOURCE,high,extract independently accepted model/feature candidates but preserve retired ones
+vishnuvcr/DASHCAM-V1,main,dashboard/tooling,not yet inspected,INVENTORIED,low,inspect only if market strategy logic exists
