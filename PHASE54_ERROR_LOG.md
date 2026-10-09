@@ -10,3 +10,11 @@ No Phase 54 errors recorded at plan creation. Append any workflow/test/persisten
 - Fix: replace Phase 54 copy with canonical v0.2.1 CSV (source file blob SHA 33c82a92e4546c4be10138dbf518ce0e51a83c03; 480 rows; 533,125 bytes).
 - Remaining gate: multi-leg range exclusions still contain partial evidence in canonical parent output. Phase 52 runner patch f484d6672f3bb06088adb5aab2888a0a682f1683 must be exercised in a fresh historical pilot before sensitivity can be computed.
 - Status: input mismatch closed; evidence completeness gate OPEN.
+
+## F54-RUN-37992224177 — workflow/report failure
+
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992224177
+- Job status: failure
+- Report present: False
+- No result or strategy conclusion accepted.
+- Status: OPEN.

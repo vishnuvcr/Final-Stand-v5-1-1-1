@@ -23,3 +23,7 @@
 - The corrected v0.2.1 replay has 480 rows with statuses 379 EXCLUDED_OHLC_RANGE_PROXY, 100 BLOCKED_LEG_ELIGIBILITY and 1 REPLAY_PASS. Payloads contain one leg in 474 rows and two legs in 6 rows, so many multi-leg range exclusions still lack all selected legs' diagnostic evidence.
 - No alternate threshold counts are accepted until every selected leg's exact entry/prior-OI evidence is preserved. The Phase 52 runner has been patched to continue through remaining legs after a range-proxy failure and preserve their evidence before returning the canonical exclusion; this patch is not yet verified by a fresh Phase 52 replay.
 - Next step: trigger/execute the Phase 52 historical pilot from its dedicated workflow, inspect all 480 payloads and compare hashes; then rerun Phase 54 sensitivity. Do not infer profitability or promote a strategy from this coverage study.
+
+## Run checkpoint 37992224177
+
+- Run: [37992224177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992224177); workflow job status=failure. Report missing; no conclusion accepted.
