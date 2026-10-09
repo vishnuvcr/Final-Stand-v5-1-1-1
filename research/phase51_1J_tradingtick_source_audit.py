@@ -39,7 +39,12 @@ def target_hit(vals, date):
     return any(p in s for p in patterns)
 
 async def select_snapshot(page):
-    js = "els => Array.from(els, (e,i) => ({index:i,id:e.id||'',name:e.name||'',aria:e.getAttribute('aria-label')||'',labels:[],parentText:(e.parentElement && e.parentElement.innerText || '').trim().slice(0,160),disabled:!!e.disabled,value:e.value||'',options:Array.from(e.options).map(o=>({text:(o.textContent||'').trim(),value:o.value,disabled:!!o.disabled}).slice ? {text:(o.textContent||'').trim(),value:o.value,disabled:!!o.disabled} : {})}))"
+    js = """els => Array.from(els, (e,i) => ({
+      index:i, id:e.id||"", name:e.name||"", aria:e.getAttribute("aria-label")||"",
+      labels:[], parentText:(e.parentElement && e.parentElement.innerText || "").trim().slice(0,160),
+      disabled:!!e.disabled, value:e.value||"",
+      options:Array.from(e.options).map(o => ({text:(o.textContent||"").trim(),value:o.value,disabled:!!o.disabled})).slice(0,400)
+    }))"""
     return await page.locator("select").evaluate_all(js)
 
 async def page_state(page):
