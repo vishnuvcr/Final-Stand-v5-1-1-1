@@ -1,0 +1,110 @@
+{
+  "pilot_version": "phase52-historical-base-pilot-v0.1",
+  "status": "PREREGISTERED_BEFORE_HISTORICAL_PNL",
+  "created_at_ist": "2026-10-09",
+  "parent_grid_version": "phase52-grid-v1.3",
+  "replay_protocol": "phase52-replay-v1.0",
+  "intent": "Limited source/data/leg/exit/cost integration pilot only. Not intended to select or promote a profitable strategy; no hypothesis significance or winner ranking is reported.",
+  "market_data": {
+    "dataset": "thetrademarkk/india-index-options-1m",
+    "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+    "declared_license": "CC BY-NC 4.0",
+    "usage": "Research-only; no commercial/live evidence.",
+    "cache": "Hugging Face cache restored/saved by GitHub Actions; source data hashes are recorded per file. Raw market data are not committed to the public repository."
+  },
+  "configuration_filter": {
+    "family_ids": [
+      "BUY_CALL",
+      "BUY_PUT",
+      "BULL_CALL_SPREAD",
+      "BEAR_CALL_SPREAD",
+      "LONG_STRADDLE",
+      "LONG_STRANGLE",
+      "SHORT_IRON_CONDOR"
+    ],
+    "selector_mode": "BASELINE",
+    "entry_dte_calendar_days": [
+      0
+    ],
+    "entry_time_ist": [
+      "09:45",
+      "13:00"
+    ],
+    "strike_selection": "ATM_OFFSET",
+    "atm_offset_steps": [
+      1,
+      3
+    ],
+    "wing_width_steps": [
+      1,
+      3
+    ],
+    "leg_ratio_applicable_only": [
+      [
+        1,
+        1
+      ]
+    ],
+    "reference_lots_per_leg": [
+      1
+    ],
+    "exit_rule": "15:15_IST",
+    "liquidity_max_spread_pct": [
+      2
+    ],
+    "hedge_mode": "NONE",
+    "expected_configuration_count": 40,
+    "configuration_ids": "Generated only from the exact phase52-grid-v1.3 Cartesian enumerator and frozen filter; no new dimensions are introduced."
+  },
+  "event_sampling": {
+    "source": "results/phase52/configuration_event_universe/expected_events.csv",
+    "target_expiries_only": true,
+    "entry_dte_calendar_days": 0,
+    "entry_time_ist": [
+      "09:45",
+      "13:00"
+    ],
+    "only_exact_index_entry_timestamp": true,
+    "split_definition": "Development: target expiry <= 2023-12-31; validation: target expiry 2024-01-01 through 2025-12-31; holdout from 2026-01-01 onward.",
+    "events_per_split_per_entry_time": 6,
+    "expected_event_rows": 24,
+    "deterministic_rule": "Within each development/validation × entry-time bucket, sort by target expiry and event_id, then select six evenly spaced rows using rounded linspace positions. No option-leg availability or strategy P&L is used to choose the events.",
+    "holdout": "Deliberately excluded from performance output; it remains untouched and data-gated."
+  },
+  "execution": {
+    "eligible_exit_rule_only": "15:15_IST on the entry/target-expiry date with an exact 15:15 bar for every resolved leg.",
+    "exact_timestamps_only": true,
+    "no_nearest_quote_or_strike": true,
+    "no_forward_fill_or_interpolation": true,
+    "prior_oi": "Unique exact T-1 minute selected-contract row with OI >= 100; entry-bar OI is diagnostic only.",
+    "fill_reference": "exact option-bar OPEN with adverse slippage; minute OHLC is a simulation reference, not bid/ask or tick execution.",
+    "liquidity_gate": "100*(high-low)/open is an OHLC range proxy, not observed spread.",
+    "unsupported_modes": "All factor routers except BASELINE, ABS_DELTA until the audited resolver is fully bound into the production runner, non-15:15 exits, hedges and intraday-futures-dependent families remain fail-closed.",
+    "costs": {
+      "brokerage_primary_inr_per_order": 20,
+      "brokerage_legacy_sensitivity_inr_per_order": 10,
+      "adverse_slippage_inr_per_leg_fill_base": 0.05,
+      "slippage_stress_percent": [
+        0,
+        50,
+        100
+      ],
+      "statutory_charges": "Date-aware kernel schedule, independently calculated and not scaled by slippage stress.",
+      "reference_capital_inr": 600000
+    }
+  },
+  "required_outputs": [
+    "pilot_manifest.json with source/script/protocol fingerprints and all exact configuration/event IDs",
+    "event_replay.csv with one status row per configuration/event including every exclusion reason",
+    "cost_scenarios.csv with all six brokerage/slippage scenarios for each successfully executed event",
+    "config_split_summary.csv with descriptive-only split aggregates, executed/eligible counts, exclusions and all costs",
+    "source_file_audit.csv with per-file SHA256, revision, size and row/timestamp extent",
+    "report.md stating that this is an engineering pilot, not a selector efficacy test or confirmation study"
+  ],
+  "promotion_policy": {
+    "promoted_candidates": 0,
+    "strategy_ranking": "NONE; outputs are implementation/coverage diagnostics only.",
+    "inference": "No p-values, optimization, winner selection, or holdout claim from this pilot.",
+    "next_gate": "Only after this workflow passes its source/code fingerprint guard can wider development/validation replay be planned. Actual selector routers, alternate exit rules and holdout remain separate gates."
+  }
+}
