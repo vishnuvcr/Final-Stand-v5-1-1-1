@@ -135,8 +135,10 @@ def main() -> int:
             if entry_ts.tzinfo is None: entry_ts = entry_ts.tz_localize(TZ)
             else: entry_ts = entry_ts.tz_convert(TZ)
             spot = spot_map.get(entry_ts.isoformat(), np.nan)
-            ordered, atm_idx = select_ranked_strikes(strikes, spot)
             entry = by_ts.get(entry_ts, empty)
+            # Resolve the strike ladder only from contracts actually present at
+            # this exact entry timestamp; future-listed strikes must not leak in.
+            ordered, atm_idx = select_ranked_strikes(entry["strike"].dropna().unique().tolist(), spot)
             exit_1515_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
             exit_1515 = by_ts.get(exit_1515_ts, empty)
             expiry_exit_ts = pd.Timestamp(expiry_exit) if expiry_exit is not None else None
