@@ -161,3 +161,8 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Action: close OpenChart exploration for now; retain the audit record but do not run further probes.
 - Resume the existing Phase 52 plan. First fix historical pilot persistence; then decompose the 480 v0.2 statuses and trace source/contract/timestamp reasons for 379 OHLC-proxy exclusions and 100 leg-eligibility blocks.
 - Keep all exclusions explicit and separate from losses. Do not change the frozen 40 configurations, 24 events, cost model, 2% proxy, splits or holdout. No candidate promotion from 1 execution.
+
+
+## User instruction — 2026-10-10
+
+User requested that issues be resolved. Investigation identified a material v0.1/v0.2 pilot-count provenance mismatch in addition to the known concurrent checkpoint persistence failure. The discrepancy is explicitly logged; no fabricated correction or strategy conclusion is made.
