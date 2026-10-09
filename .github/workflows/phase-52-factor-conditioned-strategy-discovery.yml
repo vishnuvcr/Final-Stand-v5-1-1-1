@@ -6,7 +6,7 @@ on:
       shard_size:
         description: "Maximum configuration records to enumerate (enumeration is not a backtest)"
         required: false
-        default: "10000"
+        default: "25000"
         type: string
   schedule:
     - cron: "30 3 * * *"
@@ -41,6 +41,18 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      - name: Checkout frozen Phase45 trade outcomes and audited Phase39 feature panel
+        uses: actions/checkout@v4
+        with:
+          repository: vishnuvcr/Final-Stand-v5-1-1-1
+          ref: phase-45-exhaustive-ready-made-strategies
+          path: phase45-source
+          sparse-checkout: |
+            results/phase45_ready_made/full_ready_made_trade_matrix.csv
+            results/phase39_features/point_in_time_features.csv
+            results/phase39_features/leakage_audit_v2.json
+            results/phase39_features/model_feature_manifest.csv
+          sparse-checkout-cone-mode: false
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -51,6 +63,16 @@ jobs:
           mkdir -p research/phase52/results
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
+      - name: Install factor-selector pilot dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy
+
+      - name: Run point-in-time factor-selector pilot on frozen outcomes
+        run: |
+          python research/phase52/factor_attribution.py --self-test \
+            --trades phase45-source/results/phase45_ready_made/full_ready_made_trade_matrix.csv \
+            --features phase45-source/results/phase39_features/point_in_time_features.csv \
+            --leakage-audit phase45-source/results/phase39_features/leakage_audit_v2.json \
+            --out research/phase52/results/factor_attribution
       - name: Search public Hugging Face and GitHub catalogs, and YouTube if API key exists
         run: python research/phase52/source_discovery.py
 
@@ -70,7 +92,7 @@ jobs:
               OFFSET="$(python -c 'import json; print(json.load(open("'"$CHECKPOINT"'")).get("next_offset", 0))')"
             fi
           fi
-          LIMIT="${INPUT_SHARD_SIZE:-10000}"
+          LIMIT="${INPUT_SHARD_SIZE:-25000}"
           if ! [[ "$LIMIT" =~ ^[0-9]+$ ]] || [ "$LIMIT" -lt 1 ] || [ "$LIMIT" -gt 25000 ]; then
             echo "shard_size must be an integer from 1 to 25000" >&2
             exit 2
@@ -125,20 +147,23 @@ jobs:
           audit = json.loads(Path("research/phase52/results/registry_audit.json").read_text())
           checkpoint = json.loads(Path("research/phase52/results/config_queue/checkpoint.json").read_text())
           source_report = json.loads(Path("research/phase52/results/source_discovery/latest.json").read_text())
+            research/phase52/results/factor_attribution
+          factor_report = json.loads(Path("research/phase52/results/factor_attribution/summary.json").read_text())
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
             f"- Registry validation: {audit['registry_validation']}; hypotheses registered: {audit['candidate_hypotheses']}; structure families: {audit['structure_families']}; selector modes: {audit['selector_modes']}.\n"
             f"- Finite configurations in grid {audit['grid_version']}: {audit['configuration_count']:,}; this run enumerated {checkpoint['last_shard_size']:,} configurations at offsets {checkpoint['last_start_offset']:,}–{checkpoint['next_offset'] - 1:,}.\n"
             f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
-            "- Numerical replay remains gated until explicit leg specs, point-in-time data coverage/licensing and a source-faithful replay engine pass their audits. No P&L or strategy promotion is inferred from this run.\n"
+            f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report['risk_limited_strategy_count']}; chosen features={factor_report['selected_feature_by_mode']}.\\n"
+            "- The legacy factor-selector pilot is not the full Phase52 configuration sweep; futures/synthetic basis remains unavailable in its seed panel. No Phase52 candidate is promoted.\\n"
           )
           Path("PHASE52_RESEARCH_LOG.md").open("a", encoding="utf-8").write(msg)
           Path("PHASE52_STATUS.md").open("a", encoding="utf-8").write(
             f"\n## Automated checkpoint — {stamp}\n- Workflow run: {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n"
             f"- Source leads newly recorded: {source_report.get('new_unique_source_leads_added', 0)}.\n"
             f"- Configurations enumerated in this run: {checkpoint['last_shard_size']:,} of {checkpoint['total_configurations']:,} finite-grid combinations. This is queue enumeration only, not strategy testing.\n"
-            "- Numerical replay/data gate: OPEN / NOT PASSED. No strategy is promoted.\n"
+            f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\\n"
           )
           PY
 
