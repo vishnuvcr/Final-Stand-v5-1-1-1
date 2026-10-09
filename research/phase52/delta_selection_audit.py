@@ -114,7 +114,7 @@ def _self_test() -> None:
         assert status == "PASS" and iv is not None and abs(iv - v) < 1e-7, (typ, iv, status)
         delta = bs_delta(s, k, t, iv, r, q, typ)
         assert 0 <= delta <= 1 if typ == "CE" else -1 <= delta <= 0
-    assert implied_vol(22000, 22100, t, 0.01, r, q, "CE")[1] == "PREMIUM_BELOW_INTRINSIC"
+    assert implied_vol(22000, 21900, t, 0.01, r, q, "CE")[1] == "PREMIUM_BELOW_INTRINSIC"
     assert implied_vol(22000, 22100, 0, 5, r, q, "CE")[1] == "NONPOSITIVE_INPUT_OR_EXPIRED"
 
 
