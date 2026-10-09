@@ -124,7 +124,7 @@ def main() -> int:
     errors = []
     try:
         requested_revision = os.environ.get("PHASE52_HF_REVISION", "").strip()
-        old = api.dataset_info(HF_OLD, revision=requested_revision or None)
+        old = api.dataset_info(HF_OLD, revision=requested_revision) if requested_revision else api.dataset_info(HF_OLD)
         old_rev = str(old.sha)
         old_files = set(api.list_repo_files(HF_OLD, repo_type="dataset", revision=old_rev))
         old_license = safe_license(old)
