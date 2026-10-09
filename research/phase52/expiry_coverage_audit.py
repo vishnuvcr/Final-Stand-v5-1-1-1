@@ -63,6 +63,7 @@ def main() -> int:
     index = index.dropna(subset=["timestamp"]).drop_duplicates("timestamp").sort_values("timestamp")
     exact_ticks = set(index["timestamp"].tolist())
     session_days = sorted(index["timestamp"].dt.normalize().unique().tolist())
+    latest_index_session = max(session_days) if session_days else None
 
     trades = pd.read_csv(MATRIX, compression="gzip", usecols=["expiry", "entry_ts", "strategy"])
     trades["expiry_date"] = pd.to_datetime(trades["expiry"], errors="coerce").dt.strftime("%Y-%m-%d")
@@ -94,7 +95,15 @@ def main() -> int:
             "coverage_status": None,
             "coverage_reason": None,
         }
-        if len(prior) < 4:
+        if latest_index_session is not None and expiry.normalize() > latest_index_session:
+            # Do not use the fourth-from-last date in an outdated index series
+            # as though it were the fourth prior session to a later expiry.
+            record["coverage_status"] = "UNREPLAYABLE_INDEX_SERIES_ENDS_BEFORE_EXPIRY"
+            record["coverage_reason"] = (
+                f"Index series ends {latest_index_session.date()}, before expiry {expiry.date()}; "
+                "the last four prior sessions cannot be established from this source. No extrapolation."
+            )
+        elif len(prior) < 4:
             record["coverage_status"] = "EXCLUDED"
             record["coverage_reason"] = "FEWER_THAN_FOUR_PRIOR_INDEX_SESSIONS"
         else:
@@ -152,6 +161,7 @@ def main() -> int:
         "last_matrix_expiry": max(observed_matrix_dates) if observed_matrix_dates else None,
         "index_timestamp_min": str(index.timestamp.min()) if len(index) else None,
         "index_timestamp_max": str(index.timestamp.max()) if len(index) else None,
+        "latest_index_session_date": str(pd.Timestamp(latest_index_session).date()) if latest_index_session is not None else None,
         "sessions_with_exact_10am_ticks": int(sum(1 for d in session_days if d + pd.Timedelta(hours=10) in exact_ticks)),
         "source_expiry_rows_with_exact_entry_tick": has_exact,
         "source_expiry_rows_with_matrix_outcome": matrix_rows,
