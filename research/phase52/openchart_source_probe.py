@@ -433,7 +433,11 @@ def run_probe(out_dir: Path) -> dict[str, Any]:
         ),
         "recent_option_bars_returned": recent_hits,
         "target_date_windows_with_any_bars": target_dates_returned,
-        "target_date_windows_tested": len(OLD_TARGETS),
+        "target_date_windows_planned": len(OLD_TARGETS),
+        "target_date_windows_with_history_requests": sum(
+            1 for p in report["historical_probes"]
+            if p.get("label") in {target["label"] for target in OLD_TARGETS}
+        ),
         "interpretation": (
             "Even a positive result only justifies a larger contract/time coverage audit. "
             "Do not use this source as sole backtest data or fill missing records yet."
