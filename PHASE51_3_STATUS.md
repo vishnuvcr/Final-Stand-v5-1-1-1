@@ -1,41 +1,24 @@
 # Phase 51-3 Status
 
-**State:** POST-FIX EXECUTION IN PROGRESS — main orchestrator run [37879953815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879953815) started after the metadata and masked-division patches. No output has passed audit yet.
+**State:** SCIENTIFIC SOURCE-GATE FAILURE FOUND — correcting the adapter before accepting any Phase-51-3 P&L. The workflow run [37879953815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879953815) passed software execution, audit, upload, and publication, but the post-run research audit found that the inherited engines were still using the rejected alternative source and a stale expiry registry. Therefore **all numerical P&L from that run is NON-EVIDENCE**, despite the workflow's green status.
 
-The phase evaluates only the frozen Phase-50B candidate set on the complete currently available 2026-04-21 to 2026-07-21 option interval. This is a partial-OOS diagnostic, not final Phase-51 validation.
+## Self-audit finding
 
-## Latest diagnostic execution
+- The Phase-51-3 plan freezes primary options source `rissin/nse-options-intraday / upstox_intraday/NIFTY/NIFTY_2026.parquet` and validated NIFTY spot source `technovusin/nifty50-historical-data`.
+- The inherited Phase-50B engines instead call the Phase-43 loader for `thetrademarkk/india-index-options-1m` and obtain eligible expiries from `results/phase43_vix/strategy_trade_matrix_all_splits.csv`.
+- That alternative source was already rejected in Phase 51-1 because its nominal July/August expiry files fail endpoint/overlap gates. The inherited expiry registry also failed to expose the complete frozen partial-window expiry schedule.
+- Consistent with this defect, the supposedly 2026-04-21 through 2026-07-21 replay had no completed TT-02 or TT-04 rows after May and no candidate rows spanning the last two months. The mechanical engine coverage rate counted only entries that were visible to this incomplete universe; it did not prove window-wide opportunity coverage.
 
-Runs [37879416000](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879416000) and [37879632246](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879632246) both used a checkout from before the metadata fix reached the runner. They failed with:
+This is a research implementation error, not a strategy result. The green workflow status certifies only that the prior code executed and its local artifact checks passed; it does **not** validate source lineage or candidate completeness.
 
-`NameError: name 'TT02_ENGINE_REV' is not defined`
+## Corrective work
 
-The result-summary code referenced a missing engine-revision constant. This is metadata-only and does not indicate that the frozen TT-02 trading rules or raw option prices failed. The branch now defines `TT02_ENGINE_REV = "50B-TT02-COVERAGE-V3"` (commit `a25c7eedb4b6f1d66374d09a1d0567ba30ec758b`).
+The wrapper is being changed to inject the frozen RISSIN raw option file, the hash-locked validated spot source, and an expiry schedule derived from the actual primary dataset. The known missing 2026-07-28 chain will be an explicit terminal boundary; 2026-08-04 remains outside the partial window and unresolved for full Phase-51 validation. TT-02's denominator will be based on the preregistered expected weekly expiry campaigns so an absent entry chain cannot artificially inflate coverage.
 
-The second attempt also exposed the full traceback and uploaded a diagnostic artifact. That artifact is useful for debugging, but it is not accepted P&L evidence because its replay used the code before the fix and the workflow failed.
+## Current accepted evidence
 
-The same replay emitted divide-by-zero/overflow warnings because NumPy evaluated a vectorized division eagerly inside `np.where`. This implementation warning was corrected with a masked divide for valid positive-vega entries; valid Newton updates remain unchanged (commit `e33a022b7601de71ea652e4f62bb9dd34f530168`).
+There is **no accepted Phase-51-3 P&L yet**. The previous run's artifact is retained in GitHub Actions for audit at [run 37879953815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879953815), artifact `phase51-3-available-oos-37879953815` (artifact ID 11594226978), but it is explicitly source-mismatched/non-evidence.
 
-## Candidate observations from failed runs — not accepted P&L evidence
+## Scientific boundaries
 
-- **TT-04:** 22/22 completed candidates, 100% coverage, zero recorded row-level data errors. Its replay-quality gate was PASS, but the failed workflow did not publish an accepted full artifact set; its P&L remains unaccepted pending a clean rerun and artifact audit.
-- **TT-05:** 17/20 completed candidates, 85% coverage, zero recorded row-level data errors. It fails the preregistered >=95% coverage gate and remains excluded even though it produced descriptive P&L.
-- **TT-02:** metadata exception prevented summary generation in the pre-fix runs; the candidate must be rerun after the metadata fix.
-
-All P&L emitted by the failed attempts is **NON-EVIDENCE**.
-
-## Corrections applied
-
-- Defined the missing TT-02 engine revision metadata constant without altering strategy rules or parameters.
-- Masked invalid Newton-step divisions to eliminate spurious divide-by-zero/overflow warnings from invalid-vega rows.
-- Wrapper records each candidate's >=95% coverage and zero-data-error quality gate and prints full exception tracebacks.
-- Main orchestrator audits even after a failed run and uploads diagnostic files on failure.
-- Finite-phase marker prevents repeated scheduled runs after successful completion; manual dispatch remains available.
-
-## Scientific boundaries and next step
-
-No strategy rules, strikes, entry timing, stops, exits, costs, or slippage assumptions have been tuned. Paytm Money ₹10/order and ₹20/order scenarios with +50% friction stress remain the frozen cost cases.
-
-The full Phase-51 OOS window remains **2026-04-21 through 2026-08-04**. Expiries **2026-07-28 and 2026-08-04** remain unresolved and require an authorized raw-data route.
-
-Next: run the frozen sweep after the TT-02 metadata fix, verify persisted row-level error/coverage files, publish the quality-gated diagnostic results, and close this finite phase without promoting a strategy. No statistical inference, tuning, live promotion, or full-window validation is authorized here.
+The diagnostic window remains **2026-04-21 through 2026-07-21**; it is not the final frozen OOS window of **2026-04-21 through 2026-08-04**. The missing expiries remain **2026-07-28 and 2026-08-04**. The phase is descriptive only, requires >=95% candidate coverage and zero data errors for an eligible candidate, and may not promote a strategy. No source gaps may be silently dropped or imputed.
