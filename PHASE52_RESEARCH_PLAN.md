@@ -283,3 +283,12 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Cost semantics:** Base adverse option slippage remains ₹0.05 per leg per fill; the registered 0/50/100 stress levels mean ₹0.05/₹0.075/₹0.10 per leg per fill. Brokerage is ₹10/order with ₹20/order sensitivity. Date-aware statutory fees/taxes remain fixed in these slippage stresses; they are not multiplied by the slippage stress. The prior fixed-template `net50` field is a different legacy all-cost multiplier and must not be conflated with this grid's slippage-only stress.
 
 **No post-result grid tuning:** This amendment relies on quote granularity, source schema, and specification/engineering audit only. It adds no parameter value, removes no v1.3 domain, and is frozen before the first configuration-grid P&L run.
+
+
+### PA-008 — 2026-10-09 — Make Paytm Money brokerage scenario conservative and explicit
+
+**Evidence:** Paytm Money's official 18-Dec-2024 pricing update states a flat ₹20 brokerage charge across segments from 15-Jan-2025: https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/. A separate F&O FAQ still says ₹10 per executed order: https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web. The public documentation is not fully consistent, and plan-specific fees may differ.
+
+**Change:** For all future configuration-grid replays, ₹20/order is the primary conservative brokerage scenario and ₹10/order is a legacy-plan sensitivity. Both are computed side by side for the same fills; neither is an optimizable dimension. The grid version remains `phase52-grid-v1.3`; no configurations or threshold domains are added or removed. The existing fixed-template Phase43/45 results using ₹10/order remain historical diagnostics and must not be re-labelled as ₹20/order results.
+
+**Rationale / timing:** This amendment is based only on official published fee documents and occurs before any grid-configuration P&L is calculated. Exact user's account tariff remains to be verified before deployment consideration.
