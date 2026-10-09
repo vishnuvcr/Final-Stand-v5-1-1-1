@@ -1,0 +1,179 @@
+name: Phase 52 — Factor-Conditioned Strategy Discovery
+
+on:
+  workflow_dispatch:
+    inputs:
+      shard_size:
+        description: "Maximum configuration records to enumerate (enumeration is not a backtest)"
+        required: false
+        default: "10000"
+        type: string
+  schedule:
+    - cron: "30 3 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase-52-factor-conditioned-strategy-discovery.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase52-factor-conditioned-strategy-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover-and-queue:
+    name: Discover sources and advance bounded configuration queue
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      INPUT_SHARD_SIZE: ${{ github.event.inputs.shard_size }}
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate registry, specs, grid and deterministic enumerator
+        run: |
+          mkdir -p research/phase52/results
+          python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
+
+      - name: Search public Hugging Face and GitHub catalogs, and YouTube if API key exists
+        run: python research/phase52/source_discovery.py
+
+      - name: Emit next reproducible configuration shard
+        id: shard
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHECKPOINT="research/phase52/results/config_queue/checkpoint.json"
+          AUDIT="research/phase52/results/registry_audit.json"
+          mkdir -p research/phase52/results/config_queue
+          GRID="$(python -c 'import json; print(json.load(open("'"$AUDIT"'"))["grid_version"])')"
+          OFFSET=0
+          if [ -f "$CHECKPOINT" ]; then
+            OLD_GRID="$(python -c 'import json; print(json.load(open("'"$CHECKPOINT"'")).get("grid_version", ""))')"
+            if [ "$OLD_GRID" = "$GRID" ]; then
+              OFFSET="$(python -c 'import json; print(json.load(open("'"$CHECKPOINT"'")).get("next_offset", 0))')"
+            fi
+          fi
+          LIMIT="${INPUT_SHARD_SIZE:-10000}"
+          if ! [[ "$LIMIT" =~ ^[0-9]+$ ]] || [ "$LIMIT" -lt 1 ] || [ "$LIMIT" -gt 25000 ]; then
+            echo "shard_size must be an integer from 1 to 25000" >&2
+            exit 2
+          fi
+          echo "start_offset=$OFFSET" >> "$GITHUB_OUTPUT"
+          echo "limit=$LIMIT" >> "$GITHUB_OUTPUT"
+          python research/phase52/validate_registry.py --emit-shard "$RUNNER_TEMP/phase52_config_shard.jsonl" --offset "$OFFSET" --limit "$LIMIT" > "$RUNNER_TEMP/phase52_emit_report.json"
+          EMITTED="$(wc -l < "$RUNNER_TEMP/phase52_config_shard.jsonl" | tr -d ' ')"
+          NEXT=$((OFFSET + EMITTED))
+          TOTAL="$(python -c 'import json; print(json.load(open("'"$AUDIT"'"))["configuration_count"])')"
+          SHA="$(sha256sum "$RUNNER_TEMP/phase52_config_shard.jsonl" | awk '{print $1}')"
+          COMPLETE=false
+          if [ "$NEXT" -ge "$TOTAL" ]; then COMPLETE=true; fi
+          export GRID OFFSET LIMIT EMITTED NEXT TOTAL SHA COMPLETE
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          record = {
+            "grid_version": os.environ["GRID"],
+            "next_offset": int(os.environ["NEXT"]),
+            "last_start_offset": int(os.environ["OFFSET"]),
+            "last_shard_size": int(os.environ["EMITTED"]),
+            "requested_shard_size": int(os.environ["LIMIT"]),
+            "total_configurations": int(os.environ["TOTAL"]),
+            "shard_sha256": os.environ["SHA"],
+            "configuration_enumeration_complete": os.environ["COMPLETE"] == "true",
+            "status": "ENUMERATED_NOT_BACKTESTED",
+            "last_run_id": os.environ.get("GITHUB_RUN_ID", ""),
+            "updated_at_utc": datetime.now(timezone.utc).isoformat(),
+            "interpretation": "The offset records deterministic grid enumeration only. It is not a completed replay count and must not be reported as a number of tested strategies."
+          }
+          with open("research/phase52/results/config_queue/checkpoint.json", "w", encoding="utf-8") as fh:
+            json.dump(record, fh, indent=2)
+            fh.write("\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+            fh.write(f"emitted={record['last_shard_size']}\n")
+            fh.write(f"next_offset={record['next_offset']}\n")
+            fh.write(f"total={record['total_configurations']}\n")
+            fh.write(f"complete={str(record['configuration_enumeration_complete']).lower()}\n")
+          PY
+
+      - name: Append research and status checkpoint
+        if: success()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          from pathlib import Path
+          stamp = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S IST")
+          audit = json.loads(Path("research/phase52/results/registry_audit.json").read_text())
+          checkpoint = json.loads(Path("research/phase52/results/config_queue/checkpoint.json").read_text())
+          source_report = json.loads(Path("research/phase52/results/source_discovery/latest.json").read_text())
+          msg = (
+            f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
+            f"- Registry validation: {audit['registry_validation']}; hypotheses registered: {audit['candidate_hypotheses']}; structure families: {audit['structure_families']}; selector modes: {audit['selector_modes']}.\n"
+            f"- Finite configurations in grid {audit['grid_version']}: {audit['configuration_count']:,}; this run enumerated {checkpoint['last_shard_size']:,} configurations at offsets {checkpoint['last_start_offset']:,}–{checkpoint['next_offset'] - 1:,}.\n"
+            f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
+            f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
+            "- Numerical replay remains gated until explicit leg specs, point-in-time data coverage/licensing and a source-faithful replay engine pass their audits. No P&L or strategy promotion is inferred from this run.\n"
+          )
+          Path("PHASE52_RESEARCH_LOG.md").open("a", encoding="utf-8").write(msg)
+          Path("PHASE52_STATUS.md").open("a", encoding="utf-8").write(
+            f"\n## Automated checkpoint — {stamp}\n- Workflow run: {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n"
+            f"- Source leads newly recorded: {source_report.get('new_unique_source_leads_added', 0)}.\n"
+            f"- Configurations enumerated in this run: {checkpoint['last_shard_size']:,} of {checkpoint['total_configurations']:,} finite-grid combinations. This is queue enumeration only, not strategy testing.\n"
+            "- Numerical replay/data gate: OPEN / NOT PASSED. No strategy is promoted.\n"
+          )
+          PY
+
+      - name: Record failure without accepting partial outputs as evidence
+        if: failure()
+        shell: bash
+        run: |
+          mkdir -p research/phase52/results
+          printf "\n## F52-AUTO-%s — Automated workflow failure\n\n- Date: %s\n- Run: https://github.com/%s/actions/runs/%s\n- Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.\n- Root cause: pending review of the failed job logs.\n- Status: OPEN.\n" "$GITHUB_RUN_ID" "$(date -u +%F)" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE52_ERROR_LOG.md
+
+      - name: Upload audit and deterministic configuration shard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-discovery-${{ github.run_id }}
+          path: |
+            research/phase52/results/registry_audit.json
+            research/phase52/results/config_queue/checkpoint.json
+            research/phase52/results/source_discovery/latest.json
+            ${{ runner.temp }}/phase52_config_shard.jsonl
+            ${{ runner.temp }}/phase52_emit_report.json
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Persist source ledger, checkpoints, status and errors to research branch
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results
+          if git diff --cached --quiet; then
+            echo "No branch state changed."
+            exit 0
+          fi
+          git commit -m "Phase 52 automated research checkpoint $GITHUB_RUN_ID"
+          git push origin "$PHASE_BRANCH"
