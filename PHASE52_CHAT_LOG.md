@@ -11,7 +11,7 @@ User requested a new research branch investigating whether VIX, Greeks, OI, spot
 - Created the isolated branch phase-52-factor-conditioned-strategy-discovery.
 - Read Phase 45/46 prior strategy-discovery records, Phase 50B status, Phase 51-3 logs/results and current README before starting.
 - Preserve prior NO PROMOTION decisions; previous partial-OOS TT-04/TT-05 results are not reused as Phase 52 evidence.
-- Formal target: 300 unique structure × factor-selector hypothesis records, with a separately versioned finite per-family configuration grid.
+- Formal registry: 312 unique structure × factor-selector hypotheses (52 structures × 6 modes), with a separately versioned finite per-family configuration grid.
 - Factors include India VIX dynamics, Greeks/IV/skew, OI/volume/PCR, spot/futures/synthetic futures/basis, trend/range, liquidity, available global markets, FII/DII, event/news/corporate-action context.
 - Finite exhaustive domain must be stated honestly. Continuous values cannot be literally enumerated; all combinations in the published applicable finite grid are to be queued and processed through resumable bounded jobs.
 - Costs must include Paytm Money brokerage, applicable charges/taxes, adverse slippage and stress cases.
@@ -21,3 +21,8 @@ User requested a new research branch investigating whether VIX, Greeks, OI, spot
 ## Next action
 
 Finish registry/config-grid generation and validation, complete prioritized source-path audits, then add the main-branch scheduled/manual orchestrator and branch-local manual workflow. No hidden reasoning is recorded.
+
+
+## 2026-10-09 — Registry/grid pre-test amendment
+
+The generated initial matrix is 52 structure families × six selector modes = 312 hypotheses, which exceeds the user's 200–300 target without discarding any registered family. Plan and finite grid advanced to version 1.1 *before any numerical replay*. Each configuration evaluates every cost scenario. Some native named presets remain blocked pending exact-leg reconciliation, and no profitability claim is made from registration or enumeration.
