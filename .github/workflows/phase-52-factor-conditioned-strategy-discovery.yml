@@ -78,7 +78,7 @@ jobs:
 
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
-          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy
+          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
       - name: Install replay and audit dependencies
@@ -111,6 +111,9 @@ jobs:
             "license_gate": manifest["license_gate"]
           }, indent=2))
           PY
+
+      - name: Audit exact 10:00 entry-timestamp coverage by option expiry
+        run: python research/phase52/expiry_coverage_audit.py
 
       - name: Audit pinned source schema, OI, quote timestamps and factor availability
         run: python research/phase52/data_readiness_audit.py
@@ -202,6 +205,7 @@ jobs:
           factor_report = json.loads(Path("research/phase52/results/factor_attribution/summary.json").read_text())
           base_manifest = json.loads(Path("results/phase52/base_replay/manifest.json").read_text())
           data_audit = json.loads(Path("results/phase52/data_readiness/source_capability_audit.json").read_text())
+          coverage_report = json.loads(Path("results/phase52/coverage_audit/summary.json").read_text())
           bhavcopy_manifest = json.loads(Path("results/phase52/daily_bhavcopy/manifest.json").read_text())
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
@@ -210,6 +214,7 @@ jobs:
             f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
             f"- Pinned base replay: {base_manifest['status']}; revision={base_manifest['dataset_revision']}; trade rows={base_manifest['trade_rows']}; strategies={base_manifest['strategies']}; license gate={base_manifest['license_gate']}.\n"
+            f"- Expiry timestamp coverage: {coverage_report['status']}; source expiries={coverage_report['option_expiry_files_in_scope']}; matrix expiries={coverage_report['unique_expiries_in_base_matrix']}; last source expiry={coverage_report['last_source_option_expiry']}; last matrix expiry={coverage_report['last_matrix_expiry']}; missing/unreplayed={coverage_report['source_expiry_rows_not_fully_replayed']}.\n"
             f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
             f"- Prior-session NSE EOD factor build: {bhavcopy_manifest['status']}; event coverage={bhavcopy_manifest['feature_event_coverage']:.1%}; missing archive paths={bhavcopy_manifest['missing_archive_paths']}; file errors={bhavcopy_manifest['archive_file_errors']}; not intraday futures basis.\n"
             f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report.get('risk_limited_strategy_count', 0)}; chosen features={factor_report.get('selected_feature_by_mode', {})}.\n"
@@ -251,6 +256,7 @@ jobs:
             research/phase52/results/source_discovery/latest.json
             research/phase52/results/factor_attribution
             results/phase52/base_replay
+            results/phase52/coverage_audit
             results/phase52/data_readiness
             results/phase52/daily_bhavcopy
             ${{ runner.temp }}/phase52_config_shard.jsonl
@@ -265,7 +271,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
