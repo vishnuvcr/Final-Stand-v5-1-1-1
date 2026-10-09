@@ -65,21 +65,25 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Restore pinned Hugging Face dataset cache
+      - name: Restore pinned market-data caches
         uses: actions/cache@v4
         with:
-          path: ~/.cache/huggingface/hub
-          key: phase52-hf-cache-${{ runner.os }}-v1
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/phase52/nse_fno_bhavcopy
+          key: phase52-market-data-cache-${{ runner.os }}-v2
           restore-keys: |
+            phase52-market-data-cache-${{ runner.os }}-
             phase52-hf-cache-${{ runner.os }}-
 
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
           mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
+          python research/phase52/daily_bhavcopy_adapter.py --self-test --self-test-only
 
       - name: Install replay and audit dependencies
-        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy matplotlib
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy matplotlib requests
 
       - name: Reproduce frozen Phase 43/45 base geometry at a pinned HF revision
         env:
@@ -108,6 +112,9 @@ jobs:
 
       - name: Audit pinned source schema, OI, quote timestamps and factor availability
         run: python research/phase52/data_readiness_audit.py
+
+      - name: Build strictly lagged NSE daily OI and futures EOD factors
+        run: python research/phase52/daily_bhavcopy_adapter.py
 
       - name: Run point-in-time factor-selector pilot on frozen outcomes
         run: |
@@ -193,6 +200,7 @@ jobs:
           factor_report = json.loads(Path("research/phase52/results/factor_attribution/summary.json").read_text())
           base_manifest = json.loads(Path("results/phase52/base_replay/manifest.json").read_text())
           data_audit = json.loads(Path("results/phase52/data_readiness/source_capability_audit.json").read_text())
+          bhavcopy_manifest = json.loads(Path("results/phase52/daily_bhavcopy/manifest.json").read_text())
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
             f"- Registry validation: {audit['registry_validation']}; hypotheses registered: {audit['candidate_hypotheses']}; structure families: {audit['structure_families']}; selector modes: {audit['selector_modes']}.\n"
@@ -201,6 +209,7 @@ jobs:
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
             f"- Pinned base replay: {base_manifest['status']}; revision={base_manifest['dataset_revision']}; trade rows={base_manifest['trade_rows']}; strategies={base_manifest['strategies']}; license gate={base_manifest['license_gate']}.\n"
             f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
+            f"- Prior-session NSE EOD factor build: {bhavcopy_manifest['status']}; event coverage={bhavcopy_manifest['feature_event_coverage']:.1%}; missing archive paths={bhavcopy_manifest['missing_archive_paths']}; file errors={bhavcopy_manifest['archive_file_errors']}; not intraday futures basis.\n"
             f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report.get('risk_limited_strategy_count', 0)}; chosen features={factor_report.get('selected_feature_by_mode', {})}.\n"
             "- The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.\n"
           )
@@ -232,6 +241,7 @@ jobs:
             research/phase52/results/factor_attribution
             results/phase52/base_replay
             results/phase52/data_readiness
+            results/phase52/daily_bhavcopy
             ${{ runner.temp }}/phase52_config_shard.jsonl
             ${{ runner.temp }}/phase52_emit_report.json
           if-no-files-found: warn
@@ -244,7 +254,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/data_readiness
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
