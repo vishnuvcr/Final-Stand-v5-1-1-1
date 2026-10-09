@@ -53,18 +53,45 @@ def inspect_parquet(repo_id: str, revision: str, filename: str, token: str | Non
         result["bytes"] = Path(path).stat().st_size
         result["sha256"] = sha256(path)
         result["columns"] = list(pf.schema_arrow.names)
+        result["total_rows_metadata"] = int(pf.metadata.num_rows)
+        result["row_groups_total"] = int(pf.num_row_groups)
         usecols = [c for c in [
             "timestamp", "date", "expiry", "strike", "option_type", "close",
             "volume", "open_interest", "oi", "underlying", "granularity", "source"
         ] if c in pf.schema_arrow.names]
-        frame = pd.read_parquet(path, columns=usecols)
+        # Sample row groups rather than materialising the full multi-year index
+        # history in Actions memory. Option expiry files with modest row counts
+        # may still be fully covered by these first/middle/last row groups.
+        if pf.num_row_groups:
+            sample_groups = sorted(set([0, pf.num_row_groups // 2, pf.num_row_groups - 1]))
+            frames = [pf.read_row_group(g, columns=usecols).to_pandas() for g in sample_groups]
+            frame = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=usecols)
+        else:
+            sample_groups = []
+            frame = pd.DataFrame(columns=usecols)
+        result["sample_row_groups_read"] = sample_groups
         result["sample_rows_read"] = int(len(frame))
-        result["timestamp_min"] = None
-        result["timestamp_max"] = None
+        result["timestamp_sample_min"] = None
+        result["timestamp_sample_max"] = None
+        result["timestamp_metadata_min"] = None
+        result["timestamp_metadata_max"] = None
         if "timestamp" in frame.columns and len(frame):
             ts = pd.to_datetime(frame["timestamp"], errors="coerce")
-            result["timestamp_min"] = str(ts.min())
-            result["timestamp_max"] = str(ts.max())
+            result["timestamp_sample_min"] = str(ts.min())
+            result["timestamp_sample_max"] = str(ts.max())
+        # Row-group statistics, when present, provide full-file min/max without
+        # reading every row. Keep the sample and metadata facts distinct.
+        if "timestamp" in pf.schema_arrow.names:
+            col_index = pf.schema_arrow.names.index("timestamp")
+            mins, maxs = [], []
+            for rg_idx in range(pf.num_row_groups):
+                stats = pf.metadata.row_group(rg_idx).column(col_index).statistics
+                if stats is not None and stats.has_min_max:
+                    mins.append(stats.min)
+                    maxs.append(stats.max)
+            if mins:
+                result["timestamp_metadata_min"] = str(min(mins))
+                result["timestamp_metadata_max"] = str(max(maxs))
         for col in ("open_interest", "oi", "volume", "close"):
             if col in frame.columns:
                 vals = pd.to_numeric(frame[col], errors="coerce")
@@ -96,7 +123,8 @@ def main() -> int:
     api = HfApi(token=token)
     errors = []
     try:
-        old = api.dataset_info(HF_OLD)
+        requested_revision = os.environ.get("PHASE52_HF_REVISION", "").strip()
+        old = api.dataset_info(HF_OLD, revision=requested_revision or None)
         old_rev = str(old.sha)
         old_files = set(api.list_repo_files(HF_OLD, repo_type="dataset", revision=old_rev))
         old_license = safe_license(old)
