@@ -8,3 +8,8 @@ During review of the selected-strike auditor, changed ATM/rank-offset selection 
 ## 2026-10-09 — Workflow persistence regression passed
 
 Run 37935663113 completed successfully after the conflict-safe persistence change. The formerly failing checkpoint step now passes; no unresolved non-log conflict was auto-resolved. The selected-strike audit is separate: two earlier workflow runs are active on older snapshots and their output will not be accepted as evidence for the patched point-in-time strike ladder; run 37937318538 is queued to test the latest branch version.
+
+
+## 2026-10-09 — Prevent stale audit output overwrite
+
+Added a persistence guard to main and research-branch workflows: if the selected-strike auditor changed on the remote research branch after a run checked out its snapshot, that run's selected-strike output is discarded (or the remote result state restored) rather than overwriting corrected results. This protects against the two earlier in-flight runs. Verification remains pending; no selected-strike output is accepted until the patched self-test and provenance gate pass.
