@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Selected-strike OHLC/OI coverage audit for ATM-offset legs; no P&L.
 
-Audits exact contract bars for strike-rank offsets -6..+6 around nearest ATM
+Audits exact contract bars for strike-step offsets -6..+6 around nearest ATM
 for every preregistered event. ABS_DELTA resolution is deliberately not inferred
 from minute close prices; it needs a separate validated point-in-time IV/delta
 method. This audit is not a substitute for per-configuration fill replay.
@@ -82,6 +82,10 @@ def _self_test() -> None:
     assert select_ranked_strikes([], 22000) == ([], -1)
     ladder = pd.DataFrame({"option_type":["CE","CE","CE","PE","PE","PE"],"strike":[22000,22050,22100,22000,22050,22100]})
     assert modal_step(ladder) == 50.0
+    ordered, idx = select_ranked_strikes([22000, 22050, 22100, 22200], 22125)
+    atm = ordered[idx]
+    target = atm + 3 * modal_step(ladder)
+    assert target == 22250 and target not in ladder["strike"].tolist()
     ts = pd.Timestamp("2021-05-27T09:45:00+05:30")
     assert ts.isoformat() == "2021-05-27T09:45:00+05:30"
 
