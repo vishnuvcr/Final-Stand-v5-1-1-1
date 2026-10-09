@@ -92,3 +92,21 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction/decision:** Preserve grid v1.3 rather than further pruning configurations after seeing performance. Use deterministic/resumable enumeration and record enumerated and backtested counts separately. Initial legacy selector pilot uses frozen existing outcomes as a first stage while structural replay engine is integrated. Any future parameter-space revision is versioned before the amended configurations are tested.
 - **Status:** OPEN until a source-faithful configuration replay engine is integrated and checkpoint distinguishes queued, enumerated and evaluated configs.
 
+
+
+## F52-007 — Phase39 feature-panel overlap below initial 90% gate — PARTIALLY RESOLVED BY PRE-RESULT AMENDMENT
+
+- **Run:** 37926165354, job 113805513686; 2026-10-09.
+- **Observation:** Selector self-test passed. The as-of feature join found 68.2% of legacy trade-matrix rows with a same-expiry prior feature record no older than 24 hours; this was below the initial 90% blanket gate.
+- **Scientific impact:** Selector metric computation did not run. No factor P&L/return/uplift has been produced or accepted. The input-audit file was written locally but the branch push was rejected in the same run because the branch changed after checkout.
+- **Interpretation:** The legacy strategy matrix contains expiries without a corresponding row in the Phase39 feature panel. A missing feature is not neutral, is not forward-filled, and does not establish that a trading strategy fails.
+- **Correction (PA-004, before factor-performance calculation):** Use an explicitly matched sample only when coverage is at least 50% overall and for each split, and at least 20 matched expiry sessions are available in validation and holdout. Report row/expiry coverage by split. If these gates fail, emit coverage-only artifacts and continue the rest of the workflow without inference.
+- **Status:** PATCHED; awaiting rerun. The <90% full-panel coverage remains a limitation and must be visible in any pilot manuscript.
+
+## F52-008 — Concurrent branch update rejected workflow checkpoint push — PATCHED
+
+- **Run:** 37926165354.
+- **Observation:** Actions attempted to push a checkpoint while the remote Phase52 branch had advanced since checkout; Git rejected the non-fast-forward push. This happened while Phase52 logs/status were being updated in parallel during setup.
+- **Impact:** The factor input-audit artifact was uploaded to Actions but not persisted at its intended branch path in that run; no scientific result was lost because the analysis had stopped at the coverage gate.
+- **Correction:** Workflow now rebases its committed checkpoint on the current remote Phase52 branch before pushing. Failure logs retain the rejected run. If a rebase conflict occurs, the run must remain failed and logged; never force-push/rewrite earlier outcomes.
+- **Status:** PATCHED; verify on the next run.
