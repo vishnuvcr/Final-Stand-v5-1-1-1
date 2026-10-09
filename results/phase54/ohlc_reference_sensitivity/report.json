@@ -1,0 +1,187 @@
+{
+  "phase": "54",
+  "status": "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE",
+  "created_at_utc": "2026-10-09T21:16:21.196741+00:00",
+  "input": {
+    "path": "results/phase52/historical_pilot/event_replay.csv",
+    "row_count": 480,
+    "source_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+    "input_sha256": "5052dcf08c20fe0bb921db2172ee7845327112a836145fe2eb91732015901abf",
+    "parent_grid": "phase52-grid-v1.3",
+    "parent_pilot": "phase52-historical-base-pilot-v0.2.1-audit-provenance"
+  },
+  "frozen_rules": {
+    "baseline_range_proxy_pct": 2,
+    "prior_minute_oi_minimum": 100,
+    "thresholds_preregistered": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      10,
+      12,
+      15,
+      20,
+      1000
+    ],
+    "threshold_sensitivity_computed": false,
+    "holdout_used": false,
+    "raw_data_downloaded": false,
+    "historical_pnl_recalculated": false,
+    "bid_ask_spread_observed": false,
+    "live_execution_or_promotion_allowed": false
+  },
+  "baseline_status_counts": {
+    "BLOCKED_LEG_ELIGIBILITY": 100,
+    "EXCLUDED_OHLC_RANGE_PROXY": 379,
+    "REPLAY_PASS": 1
+  },
+  "leg_payload_detail_counts": {
+    "BLOCKED_LEG_ELIGIBILITY::KNOWN_HARD_OI_BLOCK": 100,
+    "EXCLUDED_OHLC_RANGE_PROXY::COMPLETE_LEG_PAYLOAD": 81,
+    "EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD": 298,
+    "REPLAY_PASS::COMPLETE_LEG_PAYLOAD": 1
+  },
+  "complete_leg_payload_rows": 82,
+  "incomplete_leg_payload_rows": 398,
+  "empty_leg_payload_rows": 0,
+  "partial_leg_payload_rows": 298,
+  "known_hard_oi_block_rows": 100,
+  "range_excluded_rows_with_complete_leg_payload": 81,
+  "strict_prior_oi_blocked_rows_by_parent_status": 100,
+  "range_excluded_rows_by_parent_status": 379,
+  "replay_pass_rows_by_parent_status": 1,
+  "sensitivity_block_reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD",
+  "threshold_sensitivity": [
+    {
+      "threshold_pct": 2,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 3,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 4,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 5,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 6,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 8,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 10,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 12,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 15,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 20,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    },
+    {
+      "threshold_pct": 1000,
+      "computable": false,
+      "eligible_rows": null,
+      "share_of_planned_pct": null,
+      "oi_or_legs_rejected_rows": null,
+      "entry_data_rejected_rows": null,
+      "range_rejected_rows": null,
+      "reconciliation_total": null,
+      "reason": "Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD"
+    }
+  ],
+  "family_coverage": [],
+  "interpretation": [
+    "This run did not compute alternate-threshold counts because at least one row lacked sufficient per-leg evidence to classify safely.",
+    "A multi-leg row cannot be assumed eligible from a partial leg payload; the audit fails closed unless an observed prior-OI failure conclusively rejects the whole strategy at every threshold.",
+    "The OHLC high-low/open percentage is a candle-range proxy, not a quoted bid/ask spread or executable liquidity measure.",
+    "This is not a backtest: no exits, fills, fees, costs, P&L, strategy superiority or promotion can be inferred."
+  ]
+}

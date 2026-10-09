@@ -1225,3 +1225,12 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 
 - Run: [37992224177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992224177); workflow job status=failure. Report missing; no conclusion accepted.
 - [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)
+
+## Phase 54 OHLC-reference sensitivity — run 37992405659
+
+- Run: [37992405659](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992405659); workflow job status=success.
+- Input rows=480; input SHA-256=5052dcf08c20fe0bb921db2172ee7845327112a836145fe2eb91732015901abf; baseline statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Complete leg payload rows=82; incomplete=398; explicit hard prior-OI blockers=100; range-excluded rows with complete legs=81.
+- Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; threshold results: NOT COMPUTED; incomplete/non-conclusive per-leg evidence gate remains closed.
+- Candle range is not a bid/ask spread. No P&L, fills, exits or commercial/live strategy promotion inferred; holdout untouched.
+- [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)
