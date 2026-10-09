@@ -19,7 +19,9 @@ RISK_LIMITED = {
  "long_straddle","long_strangle","bull_condor","bear_condor","bull_butterfly","bear_butterfly",
  "long_iron_condor","long_iron_butterfly","double_plateau","strip","strap",
  "long_atm_call_butterfly","long_atm_put_butterfly","short_iron_butterfly","short_iron_condor",
- "call_broken_wing_butterfly","put_broken_wing_butterfly","long_call_calendar","long_put_calendar"
+ "call_broken_wing_butterfly","put_broken_wing_butterfly","long_call_calendar","long_put_calendar",
+ "bull_call_debit","bear_put_debit","bull_put_credit","bear_call_credit","long_call_butterfly","long_put_butterfly",
+ "iron_butterfly","iron_condor","call_broken_wing","put_broken_wing","call_backspread","put_backspread","call_calendar","put_calendar"
 }
 FACTOR_FEATURES = {
  "GREEKS_SURFACE_ROUTER":["atm_ce_delta","atm_pe_delta","atm_ce_iv","atm_pe_iv","atm_iv_skew","candidate_iv_skew_25","iv_term_premium_ratio","atm_straddle","call_25_delta","put_25_delta"],
@@ -136,12 +138,21 @@ def fit_map(train,universe,state,fallback,min_n=8):
         mapping[str(st)]=str(q.groupby("strategy").net50.mean().idxmax()) if len(q) and st!="UNAVAILABLE" else fallback
     return mapping
 
-def paired_test(d,seed=5201,reps=5000):
+def paired_test(d,seed=5201,reps=5000,block_len=3):
+    # Circular moving-block bootstrap preserves short-range serial dependence
+    # across consecutive expiry observations. Sign-flip nulls use the same block
+    # length rather than assuming every adjacent expiry is independent.
     x=np.asarray(d,float);x=x[np.isfinite(x)]
     if len(x)<8:return None,None,None
-    rng=np.random.default_rng(seed);idx=rng.integers(0,len(x),(reps,len(x)))
-    means=x[idx].mean(1);signs=rng.choice([-1.,1.],(reps,len(x)))
-    p=(1+int((signs*x).mean(1).__ge__(x.mean()).sum()))/(reps+1)
+    rng=np.random.default_rng(seed);n=len(x);block_len=max(1,min(block_len,n//2));blocks=int(math.ceil(n/block_len))
+    starts=rng.integers(0,n,size=(reps,blocks))
+    offsets=np.arange(block_len)
+    idx=((starts[:,:,None]+offsets[None,None,:])%n).reshape(reps,-1)[:,:n]
+    means=x[idx].mean(axis=1)
+    block_ids=np.minimum(np.arange(n)//block_len,blocks-1)
+    signs=rng.choice(np.array([-1.0,1.0]),size=(reps,blocks))
+    null=(x[None,:]*signs[:,block_ids]).mean(axis=1)
+    p=(1+int(np.sum(null>=float(x.mean()))))/(reps+1)
     return float(np.quantile(means,.025)),float(np.quantile(means,.975)),float(p)
 
 def metrics(selected,baseline):
@@ -318,7 +329,9 @@ def self_test():
     x1=pd.DataFrame({"expiry_key":["a","a"],"strategy":["x","y"],"net50":[1.,2.],"net":[1.,2.],"net100":[1.,2.],"expiry_date":pd.to_datetime(["2026-01-01","2026-01-01"])})
     m=metrics(x1.iloc[[1]],x1.iloc[[0]])
     assert m["n"]==1 and m["paired_mean_uplift_net50"]==1.0
-    print("SELF_TEST_PASS: training-only binning and paired expiry metrics")
+    ci,hi,p=paired_test(np.array([1.,2.,1.,2.,1.,2.,1.,2.,1.,2.,1.,2.]))
+    assert ci is not None and hi is not None and p is not None
+    print("SELF_TEST_PASS: training-only binning, complete risk-limited aliases and block-paired expiry metrics")
 
 def main():
     p=argparse.ArgumentParser();p.add_argument("--trades",type=Path,required=True);p.add_argument("--features",type=Path,required=True);p.add_argument("--leakage-audit",type=Path,required=True);p.add_argument("--out",type=Path,required=True);p.add_argument("--self-test",action="store_true");a=p.parse_args()
