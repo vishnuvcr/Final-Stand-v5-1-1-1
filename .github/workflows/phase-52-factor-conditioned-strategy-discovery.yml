@@ -319,6 +319,8 @@ jobs:
               git checkout "origin/$PHASE_BRANCH" -- results/phase52/selected_strike_coverage
             else
               rm -rf results/phase52/selected_strike_coverage
+              mkdir -p results/phase52/selected_strike_coverage
+              touch results/phase52/selected_strike_coverage/.gitkeep
             fi
           fi
           git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
