@@ -212,3 +212,15 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - EOD selector pilot: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; matched events=256; fixed development baseline=buy_call; best validation uplift diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; no promotion.
 - Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
 - The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.
+
+
+## 2026-10-09 18:49 IST — Step 2.4: Exact option/OI broad event coverage audit
+
+- **Workflow:** [37934719402](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934719402), completed successfully; 25,000 more configuration IDs enumerated only (checkpoint offset 235,000 of 9,379,584).
+- **Pinned input:** `thetrademarkk/india-index-options-1m` revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; all 267 option expiry files audited; zero source file errors.
+- **Expected event universe:** 1,068 target-expiry × DTE {0,7} × entry-time {09:45,13:00} events. All 1,068 have broad option coverage audit records.
+- **Counts:** exact index timestamp 1,012; any option rows at exact entry 1,016; both CE and PE 1,016; at least one contract with OI≥100 1,012; 15:15 same-day exit rows 1,016; target-expiry common-time CE+PE exit 1,040.
+- **Intersections:** exact index + option rows + OI≥100 = 1,006; same plus broad expiry exit = 1,004. By split, stricter broad expiry-exit intersection is development 526/540, validation 404/416, holdout 74/112.
+- **Interpretation:** This is only broad event/contract-universe coverage. It is not selected-strike coverage and not P&L. Every configured leg must still pass exact strike, expiry, timestamp, OHLC-range, OI, and exit-fill eligibility. No interpolation or nearest-tick substitution is permitted.
+- **Important holdout limitation:** The pinned index source ends 2026-07-02. Although the option expiry-file inventory reaches 2026-08-04, several recent files have no corresponding exact entry/exit rows; 2026-07-28 and 2026-08-04 remain data-gated.
+- **Decision:** Do not launch the full configuration-grid replay yet. Implement and validate the configuration-specific leg eligibility/fill engine first, and protect holdout from configuration tuning.
