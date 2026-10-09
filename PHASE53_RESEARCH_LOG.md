@@ -107,3 +107,14 @@
 - Source registry rows=16; pinned required files=13; HEAD accessible=13; 404=0; unknown=0.
 - Audit decision=SOURCE_INVENTORY_COMPLETE_BUT_INTRADAY_QUOTE_NO_GO; confirmed free full-history bid/ask/depth=False.
 - Raw market bars downloaded=False; strategy backtest run=False; holdout used=False.
+
+
+## 2026-10-10 — Step 3: Source-gate conclusion and Phase54 handoff
+
+- Final successful workflow: [37986608468](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37986608468). Unit tests, source metadata probes, artifact upload and idempotent persistence succeeded.
+- Registry: 16 candidates (source pages/API metadata only; no raw option data downloaded), with the live NSE option-chain endpoint intentionally skipped under anti-aggregation terms. Fifteen of fifteen actively probed pages responded; one endpoint was skipped by policy.
+- Pinned primary dataset revision confirmed: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5. The complete Hugging Face tree enumerated 267 NIFTY option files and 3 index files; all 13 selected paths were enumerated and all 13 direct HEAD checks returned 200; zero 404s and zero unknown statuses.
+- Source fingerprinting of codepyx23 mirror: 13/13 matching content ETags. Reject it as an independent source despite its distinct repository commit SHA.
+- Alternative source results: rissin intraday OI is documented as unavailable/NaN and licence is “other”; artist-23 API does not provide an explicit licence and preview does not expose an exact expiry date; Zenodo 2017–2020 coverage is outside the selected cohort and its description lists no OI; public code/credentialed APIs and paid archives do not qualify as free full-history quote evidence. NSE/BSE daily files remain EOD controls, not historical bid/ask/depth.
+- Decision: Phase53 completed the source inventory but did not find a lawful, free and independent source that solves exact prior-minute OI plus historical quote/depth coverage. NO-GO for true historical spread/depth validation. Do not loosen Phase52's 2% OHLC range proxy or relabel it as bid/ask spread.
+- Next: Phase54 will be separately preregistered to run an OHLC-reference sensitivity on the frozen 40-configuration/24-event cohort, with candle range measured descriptively rather than called a spread. It will retain exact prior-OI and exact exit checks, report any additional exclusions, include all six cost and slippage scenarios, and label fills non-executable. Holdout remains untouched; no promotion.
