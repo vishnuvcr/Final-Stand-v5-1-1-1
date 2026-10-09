@@ -268,3 +268,18 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Interpretation:** This produces *lagged daily EOD* OI/PCR and futures-basis proxies only. It is not intraday futures basis, does not establish synthetic-future lead/lag, cannot recover missing 1-minute option quotes for Phase 51, and cannot support claims about intraday futures-market inefficiency. It does not change the frozen phase52-grid-v1.3 or permit a parameter-grid change after seeing outcomes.
 
 **Pre-performance tests:** Both legacy and UDiFF parser fixtures must pass; tree completeness must be verified; no archive row is accepted without NIFTY symbol / option or futures type checks; prior-session mapping must be strictly earlier than entry; each raw archive must have a ZIP signature and SHA-256; output must report per-split event coverage and missing reasons before any P&L analysis.
+
+
+### PA-007 — 2026-10-09 — Freeze configuration-level replay semantics before grid P&L
+
+**Reason:** The fixed-template base replay and the lagged EOD selector are separate exploratory studies, but neither constitutes testing the 9,379,584 finite grid configurations. A code/data-eligibility gate is required before replaying that grid. The domains and values of `phase52-grid-v1.3` are unchanged by this protocol amendment; it fixes their operational meanings before configuration-level P&L is calculated.
+
+**Protocol:** See `PHASE52_REPLAY_PROTOCOL.md` (protocol version `phase52-replay-v1.0`). In brief: event dates come from the pinned dataset's exact option-expiry files; DTE=0/7 is interpreted as exact calendar-day subtraction; entries are only at exact 09:45/13:00 IST timestamps with one-minute OHLC-open fills; there is no rolling to another date, nearest quote, interpolation or forward fill; validation/holdout splits follow the Phase45 expiry-date boundaries; selector modes gate entry/abstain for the registered strategy family rather than silently switch to another family; all Paytm Money charge and slippage cases are evaluated together.
+
+**Data limitation disclosed:** The underlying source is minute OHLCV(+OI), not tick-level bid/ask or market-by-order data. The parameter `liquidity_max_spread_pct` therefore gates an explicitly labelled intrabar high-low range proxy, not an observed bid/ask spread. A 15-second quote-age claim cannot be verified from these minute bars. No result may be presented as tick-level executable evidence. The lagged NSE futures-basis proxy is not an intraday traded-futures quote feed.
+
+**Eligibility:** Families tagged `PHASE45_TEMPLATE_REQUIRES_RECONCILIATION` or `SPECIFICATION_BLOCKED` receive explicit blocked records pending source/leg reconciliation. Diagnostic-only families may be replayed for diagnosis but can never be promoted. Families that require unprovided intraday futures quotes or hedges are blocked for those configurations rather than approximated with index spot or daily EOD basis.
+
+**Cost semantics:** Base adverse option slippage remains ₹0.05 per leg per fill; the registered 0/50/100 stress levels mean ₹0.05/₹0.075/₹0.10 per leg per fill. Brokerage is ₹10/order with ₹20/order sensitivity. Date-aware statutory fees/taxes remain fixed in these slippage stresses; they are not multiplied by the slippage stress. The prior fixed-template `net50` field is a different legacy all-cost multiplier and must not be conflated with this grid's slippage-only stress.
+
+**No post-result grid tuning:** This amendment relies on quote granularity, source schema, and specification/engineering audit only. It adds no parameter value, removes no v1.3 domain, and is frozen before the first configuration-grid P&L run.
