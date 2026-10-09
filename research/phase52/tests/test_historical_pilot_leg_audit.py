@@ -81,7 +81,7 @@ class LegAuditPayloadTests(unittest.TestCase):
 
         first = baseline["legs"][0]
         failed_prior = prior.copy()
-        times = runner.resolver.as_ist(failed_prior["timestamp"])
+        times = runner.resolver.pd.to_datetime(failed_prior["timestamp"], errors="coerce")
         mask = (
             times.eq(runner.resolver.as_ist(event["entry_ts"]) - runner.resolver.pd.Timedelta(minutes=1))
             & failed_prior["expiry"].astype(str).eq(first["expiry"])
