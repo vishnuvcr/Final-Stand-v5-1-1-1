@@ -8,6 +8,7 @@ on:
     paths:
       - ".github/workflows/phase-55-leg-audit-payload-repair.yml"
       - "research/phase52/historical_pilot_runner.py"
+      - "research/phase52/strategy_template_resolver.py"
       - "research/phase52/tests/test_historical_pilot_leg_audit.py"
 
 permissions:
@@ -79,7 +80,7 @@ jobs:
           expected = {"BUY_CALL":1,"BUY_PUT":1,"BULL_CALL_SPREAD":2,"BEAR_CALL_SPREAD":2,
                       "SHORT_IRON_CONDOR":4,"LONG_STRADDLE":2,"LONG_STRANGLE":2}
           leg_statuses = {"EXCLUDED_ENTRY_LEG","EXCLUDED_PRIOR_OI","EXCLUDED_OHLC_RANGE_PROXY",
-                          "EXCLUDED_EXIT_LEG","EXCLUDED_NO_COMMON_EXIT","REPLAY_PASS"}
+                          "EXCLUDED_EXIT_LEG","EXCLUDED_NO_COMMON_EXIT","BLOCKED_LEG_ELIGIBILITY","REPLAY_PASS"}
           for row in rows:
               counts[row["status"]] = counts.get(row["status"], 0) + 1
               if row["status"] in leg_statuses:
