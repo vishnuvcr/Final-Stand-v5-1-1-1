@@ -28,6 +28,45 @@ def git(args: list[str], cwd: Path) -> str:
     result = subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True)
     return result.stdout.strip()
 
+def merge_conflict_markers(lines: list[str], path_name: str) -> list[str]:
+    """Union both sides of a Git conflict in append-only documentation.
+
+    This helper is intentionally line-based and is only called for the explicitly
+    whitelisted append-only logs/README. Source code and data conflicts are never
+    resolved with this function.
+    """
+    merged: list[str] = []
+    i = 0
+    while i < len(lines):
+        if not lines[i].startswith("<<<<<<< "):
+            merged.append(lines[i])
+            i += 1
+            continue
+        i += 1
+        ours: list[str] = []
+        while i < len(lines) and lines[i] != "=======":
+            if lines[i].startswith(("<<<<<<< ", ">>>>>>> ")):
+                raise RuntimeError(f"Nested/malformed conflict in {path_name}")
+            ours.append(lines[i])
+            i += 1
+        if i >= len(lines):
+            raise RuntimeError(f"Malformed conflict in {path_name}: missing =======")
+        i += 1
+        theirs: list[str] = []
+        while i < len(lines) and not lines[i].startswith(">>>>>>> "):
+            if lines[i] == "=======" or lines[i].startswith("<<<<<<< "):
+                raise RuntimeError(f"Nested/malformed conflict in {path_name}")
+            theirs.append(lines[i])
+            i += 1
+        if i >= len(lines):
+            raise RuntimeError(f"Malformed conflict in {path_name}: missing >>>>>>>")
+        i += 1
+        merged.extend(ours)
+        seen = set(ours)
+        merged.extend(line for line in theirs if line not in seen)
+    return merged
+
+
 def persist_repo(cwd: Path, branch: str, paths: list[str], message: str) -> str:
     available: list[str] = []
     for item in paths:
@@ -41,14 +80,70 @@ def persist_repo(cwd: Path, branch: str, paths: list[str], message: str) -> str:
     git(["config", "user.name", "github-actions[bot]"], cwd)
     git(["config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], cwd)
     git(["add", *sorted(set(available))], cwd)
-    staged = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=cwd).returncode == 1
-    if not staged:
+    staged_rc = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=cwd).returncode
+    if staged_rc == 0:
         return "NO_CHANGES"
+    if staged_rc != 1:
+        raise RuntimeError("Unable to inspect staged checkpoint changes")
     git(["commit", "-m", message], cwd)
-    git(["fetch", "origin", branch], cwd)
-    subprocess.run(["git", "rebase", f"origin/{branch}"], cwd=cwd, check=True)
-    git(["push", "origin", branch], cwd)
-    return git(["rev-parse", "HEAD"], cwd)
+
+    append_only_docs = {
+        "PHASE52_STATUS.md", "PHASE52_ERROR_LOG.md",
+        "PHASE52_RESEARCH_LOG.md", "PHASE52_CHAT_LOG.md", "README.md",
+    }
+    # Retry races, but never force-push. On a rebase conflict, union only the
+    # known append-only docs; retain an already-persisted remote result collision.
+    for attempt in range(1, 4):
+        git(["fetch", "origin", branch], cwd)
+        rebase = subprocess.run(
+            ["git", "rebase", f"origin/{branch}"], cwd=cwd,
+            capture_output=True, text=True,
+        )
+        if rebase.returncode != 0:
+            conflicts = subprocess.run(
+                ["git", "diff", "--name-only", "--diff-filter=U"],
+                cwd=cwd, capture_output=True, text=True, check=True,
+            ).stdout.splitlines()
+            unexpected = [
+                name for name in conflicts
+                if name not in append_only_docs
+                and not name.startswith("results/phase52/historical_pilot/")
+            ]
+            if not conflicts or unexpected:
+                subprocess.run(["git", "rebase", "--abort"], cwd=cwd, capture_output=True, text=True)
+                if attempt < 3 and not unexpected:
+                    continue
+                raise RuntimeError(
+                    f"Refusing unsafe rebase resolution; conflicts={conflicts}; "
+                    f"unexpected={unexpected}; stderr={rebase.stderr.strip()}"
+                )
+            for name in conflicts:
+                if name.startswith("results/phase52/historical_pilot/"):
+                    # Concurrent run already published an artifact with this path.
+                    subprocess.run(["git", "checkout", "--ours", "--", name], cwd=cwd, check=True)
+                    continue
+                path = cwd / name
+                resolved = merge_conflict_markers(
+                    path.read_text(encoding="utf-8").splitlines(), name
+                )
+                path.write_text("\n".join(resolved) + "\n", encoding="utf-8")
+            git(["add", *conflicts], cwd)
+            continued = subprocess.run(
+                ["git", "-c", "core.editor=true", "rebase", "--continue"],
+                cwd=cwd, capture_output=True, text=True,
+            )
+            if continued.returncode != 0:
+                subprocess.run(["git", "rebase", "--abort"], cwd=cwd, capture_output=True, text=True)
+                raise RuntimeError(f"Safe conflict resolution could not continue rebase: {continued.stderr.strip()}")
+        push = subprocess.run(
+            ["git", "push", "origin", branch], cwd=cwd,
+            capture_output=True, text=True,
+        )
+        if push.returncode == 0:
+            return git(["rev-parse", "HEAD"], cwd)
+        if attempt == 3:
+            raise RuntimeError(f"Could not persist checkpoint after three safe push/rebase attempts: {push.stderr.strip()}")
+    raise RuntimeError("Unreachable checkpoint persistence state")
 
 def main() -> int:
     now = datetime.now(timezone.utc).isoformat()
