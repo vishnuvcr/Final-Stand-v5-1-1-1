@@ -8,12 +8,6 @@ on:
         required: false
         default: "10000"
         type: string
-  schedule:
-    - cron: "30 3 * * *"
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/phase-52-factor-conditioned-strategy-discovery.yml"
 
 permissions:
   contents: write
