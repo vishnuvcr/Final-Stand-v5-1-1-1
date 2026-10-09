@@ -1,7 +1,7 @@
 # Phase 52 Research Plan — Factor-Conditioned Options Strategy Discovery
 
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
-**Status at initialization:** OPEN — registry/governance bootstrap  
+**Status at initialization:** OPEN — ongoing source discovery, legacy selector pilot, and exhaustive finite-grid replay queue  
 **Protocol type:** Open-ended recurring research; every individual Actions run is bounded and auditable  
 **Primary instrument:** NIFTY index options, with verified NIFTY spot and futures reference series; cross-index replication is secondary  
 **Broker cost model:** Paytm Money, date-aware statutory charges, conservative slippage and fill-stress scenarios
@@ -50,7 +50,7 @@ All are falsifiable hypotheses. None is assumed true, and a high in-sample profi
 
 ## 4. Scope and candidate universe
 
-The initial registry contains 312 candidate hypotheses: 52 base structures × 6 selector modes. The six selector modes are:
+The initial registry contains 312 candidate hypotheses: 52 base structures × 6 selector modes. The legacy factor-selector pilot is a first sequential test on frozen Phase45 outcomes and Phase39 as-of features; it does not substitute for replaying all 312 registered hypotheses and their variable configurations. The six selector modes are:
 1. unconditional/base control;
 2. India VIX level/trend/percentile/term-state router;
 3. Greeks/IV/skew/gamma/theta router;
@@ -64,7 +64,7 @@ Naked, unlimited-loss or execution-fragile structures may be analysed as labelle
 
 ## 5. Parameter space and exhaustive-search interpretation
 
-Parameter domains are finite and versioned in research/phase52/configuration_space.json. The registered dimensions include:
+Parameter domains are finite and versioned in research/phase52/configuration_space.json. The current accepted pre-test grid is phase52-grid-v1.3. The validator computes 9,379,584 applicable configurations; this is a queue size, not a count of tested configurations. The registered dimensions include:
 - entry time and entry condition;
 - days to expiry and weekly/monthly expiry pairing;
 - strike selection by ATM offset or target delta;
@@ -208,6 +208,7 @@ When a survivor appears, continue the overall search while running a separate st
 - research/phase52/configuration_space.json — finite configuration domains.
 - research/phase52/repository_audit.csv — inventory of all connected-account repositories and source-audit state.
 - research/phase52/validate_registry.py — local validation of the registry and grid.
+- research/phase52/factor_attribution.py — point-in-time legacy outcome factor-selector pilot, with development tuning, 2024–25 validation and 2026 holdout.
 - research/phase52/results/ — manifests, audit output, shard results, tables and figures.
 - .github/workflows/phase-52-factor-conditioned-strategy-discovery.yml — bounded scheduled/manual runner, surfaced on the default branch and in this phase branch.
 
@@ -228,3 +229,17 @@ The finite parameter grid was also frozen at `phase52-grid-v1.3` before results:
 ## PA-002 — Grid v1.3 audit record — 2026-10-09
 
 The successful first complete bootstrap run shows the committed finite grid identifier is `phase52-grid-v1.3`, with **9,379,584 applicable configurations** across the 312 registered hypotheses. The scheduled/manual runner emits 10,000 deterministic configuration records per default run and checkpoints the next offset. This is queue enumeration only, not 9.38 million backtests. Every cost scenario is evaluated side-by-side for each configuration. Any future domain/grid expansion must be versioned before it is evaluated.
+
+
+## Plan version history and pre-test amendments
+
+### PA-001 — 2026-10-09 — Candidate universe count correction
+The registry contains 52 distinct structure families × six selector modes = 312 hypotheses. All 52 families were retained; no candidate was dropped based on P&L. The versioned finite-grid requirement remains.
+
+### PA-002 — 2026-10-09 — Finite-grid computation feasibility (before numerical results)
+Pre-test validator sizing found the original finite-grid draft was too large for a useful recurring queue: grid v1.1 had approximately 197,842,176 configurations; v1.2 had 36,008,064. Before any Phase52 numerical results existed, grid v1.3 reduced the finite domains and froze stale-quote/minimum-OI rules as execution/data gates rather than tunable alpha parameters. Grid v1.3 contains 9,379,584 applicable configurations. At the default 25,000 enumerated configurations per daily run, this represents about 376 runs to *enumerate* the queue alone. Enumeration does not equal backtesting; the runner must separately record actual evaluated configurations. All combinations remaining inside grid v1.3 remain in scope. Subsequent changes require an amendment before the amended grid is tested.
+
+### PA-003 — 2026-10-09 — Add an initial legacy factor-selector pilot
+Before full grid replay, add a first-stage test on the existing frozen Phase45 per-expiry trade-outcome matrix joined to the Phase39 point-in-time feature panel. The pilot trains selectors chronologically inside development, chooses one feature per factor group using only the later development-tuning segment, and then reports validation and holdout separately. It uses only a predeclared risk-limited legacy-strategy subset and blocks data if the Phase39 leakage audit or as-of feature join fails. This is evidence from a legacy fixed-entry/expiry-exit matrix only. It does not claim the 312 Phase52 hypotheses or variable configurations have all been backtested. Futures basis and exact-time synthetic-future divergence remain unavailable in this seed panel and are explicitly NOT TESTED.
+
+The plan is now **version 1.3**. No strategy-performance thresholds were relaxed and no grid change was informed by P&L.
