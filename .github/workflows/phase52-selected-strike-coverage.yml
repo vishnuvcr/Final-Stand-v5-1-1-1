@@ -46,6 +46,15 @@ jobs:
       - name: Install audit dependencies
         run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub
 
+      - name: Remove prior audit outputs to prevent stale-summary acceptance
+        run: |
+          mkdir -p results/phase52/selected_strike_coverage
+          rm -f results/phase52/selected_strike_coverage/summary.json
+          rm -f results/phase52/selected_strike_coverage/atm_offset_leg_coverage.csv.gz
+          rm -f results/phase52/selected_strike_coverage/source_file_audit.csv
+          rm -f results/phase52/selected_strike_coverage/source_errors.csv
+          touch results/phase52/selected_strike_coverage/.gitkeep
+
       - name: Run strike-step and prior-bar OI regression tests
         run: |
           mkdir -p results/phase52/selected_strike_coverage
