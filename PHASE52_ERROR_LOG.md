@@ -316,3 +316,11 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction:** Workflow persistence now compares the selected-strike auditor in the checked-out research branch with the current remote branch. If the source changed during the run, it discards only that run's stale selected-strike output (or restores the remote result state) while preserving other outputs. It fails closed for non-log conflicts.
 - **Verification:** Guard added to main and branch workflows; next Actions run must confirm the guard and patched self-test execute successfully.
 - **Status:** PATCHED IN WORKFLOW; verification pending.
+
+
+## F52-028 — Stale-output cleanup could leave an invalid Git pathspec — PATCHED BEFORE VERIFICATION
+
+- **Date:** 2026-10-09
+- **Observation:** The stale-result guard removes the selected-strike output directory when the remote branch has no accepted output. The persistence step later stages that directory by path, so an absent/empty directory could cause a second persistence failure.
+- **Correction:** After removing stale output when no remote result exists, recreate the directory and add a .gitkeep placeholder. The pathspec therefore remains valid and no stale CSV is committed.
+- **Status:** PATCHED IN MAIN AND BRANCH WORKFLOWS; end-to-end verification pending.
