@@ -23,3 +23,12 @@ The stale-run guard now recreates the selected-strike output directory and adds 
 ## 2026-10-09 19:00 IST — Queue checkpoint after persistence fix
 
 Run 37935663113 persisted the next 25,000 configuration IDs, moving the deterministic queue offset from 235,000 to 260,000 of 9,379,584. This is enumeration only, not backtesting. Its revised persistence step succeeded. The selected-strike audit still awaits a run with the latest point-in-time strike-ladder code.
+
+
+## 2026-10-09 — Step 2.6: Reconcile Phase45 named strategy templates
+
+- **Source audit:** Read the exact leg arrays in research/phase45_ready_made_sweep.py and the corresponding definitions in PHASE45_RESEARCH_PLAN.md on branch phase-45-exhaustive-ready-made-strategies.
+- **Families resolved:** Long Iron Condor, Long Iron Butterfly, Bull Condor, Bear Condor, Bull Butterfly, Bear Butterfly, Reverse Jade Lizard, Range Forward, Bear Risk Reversal, Batman and Double Plateau.
+- **Change:** Updated their strategy-specification rows to STANDARD_VARIANT_PREREGISTERED and documented source-defined geometry in PA-010. The named preset remains a separate baseline; variable configurations remain distinct IDs.
+- **Impact:** Specification blockers fall from 15 families to four genuinely blocked families: Calendar Trap, Iron-Condor-to-Ratio transition, conversion/reversal, and futures-basis overlay. Three diagnostic-only families remain non-promotable. No P&L was calculated and grid domains did not change.
+- **Verification:** Next workflow must validate the revised CSV/registry. In-flight runs checked out earlier specs and cannot be used as validation for this change.
