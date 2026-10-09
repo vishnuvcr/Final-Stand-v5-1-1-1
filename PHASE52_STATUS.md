@@ -12,3 +12,5 @@
 - **PA-010 source reconciliation:** 11 named Phase45 presets now have exact leg maps recorded in the spec CSV and are no longer blocked on source ambiguity. This is a specification correction only; registry validation must pass before replay.
 
 - **Stale registry protection:** The workflow now checks the specification CSV revision before persisting registry_audit.json and preserves the remote audit if an older run used the pre-PA-010 file. Verification is pending.
+
+- **First selected-strike run:** The selected-strike step in run 37937164472 completed at the process level, but it used the pre-correction strike ladder and is explicitly NOT ACCEPTED. The persistence guard and queued run 37938099763 are intended to enforce the corrected point-in-time source and PA-010 registry.
