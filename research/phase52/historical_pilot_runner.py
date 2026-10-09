@@ -304,7 +304,9 @@ def load_cached_inputs(revision: str, expiries: Sequence[str], token: str | None
         "status": "PASS",
     }]
     need_cols = ["timestamp", "option_type", "strike", "open", "high", "low", "close", "open_interest"]
-    for expiry in sorted(set(map(canonical_expiry, expiries))):
+    unique_expiries = sorted(set(map(canonical_expiry, expiries)))
+    print(json.dumps({"event":"PILOT_SOURCE_LOAD_START","revision":revision,"option_expiry_files":len(unique_expiries)}),flush=True)
+    for file_no, expiry in enumerate(unique_expiries, start=1):
         name = f"options/NIFTY/{expiry}.parquet"
         path = Path(hf_hub_download(repo_id=HF_REPO, filename=name, repo_type="dataset", revision=revision, token=token))
         digest = sha256_file(path)
@@ -341,6 +343,8 @@ def load_cached_inputs(revision: str, expiries: Sequence[str], token: str | None
             "timestamp_max": frame["timestamp"].max().isoformat() if len(frame) else None,
             "status": "PASS",
         })
+        if file_no % 3 == 0 or file_no == len(unique_expiries):
+            print(json.dumps({"event":"PILOT_SOURCE_LOAD_PROGRESS","files_done":file_no,"files_total":len(unique_expiries),"expiry":expiry,"rows":int(len(frame))}),flush=True)
     return index, option_frames, source_audit
 
 
@@ -586,8 +590,11 @@ def build_outputs(
     registry = {row["candidate_id"]: row for row in rows}
     event_rows: list[dict[str, Any]] = []
     cost_rows: list[dict[str, Any]] = []
-    for config in configs:
+    for config_no, config in enumerate(configs, start=1):
         candidate = registry[config["candidate_id"]]
+        print(json.dumps({"event":"PILOT_CONFIG_START","config_no":config_no,"config_total":len(configs),
+                          "configuration_id":config["configuration_id"],"family_id":config["family_id"],
+                          "entry_time_ist":config["configuration"]["entry_time_ist"]}),flush=True)
         matching_events = events[events["entry_time_ist"].astype(str).eq(config["configuration"]["entry_time_ist"])]
         for _, event in matching_events.iterrows():
             normalized_event = event.to_dict()
@@ -760,6 +767,9 @@ def run_historical() -> dict[str, Any]:
     if revision != pilot["market_data"]["revision"]:
         raise RuntimeError(f"Base replay manifest revision {revision} differs from frozen pilot revision")
     token = os.getenv("HF_TOKEN") or None
+    print(json.dumps({"event":"PILOT_REPLAY_START","configurations":len(configs),"events":len(events),
+                      "config_event_rows":int(sum((events["entry_time_ist"].astype(str)==c["configuration"]["entry_time_ist"]).sum() for c in configs)),
+                      "revision":revision}),flush=True)
     expiry_files = events["expiry"].astype(str).unique().tolist()
     index, option_frames, source_audit = load_cached_inputs(revision, expiry_files, token)
     option_hashes = {
