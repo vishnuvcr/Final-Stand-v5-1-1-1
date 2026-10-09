@@ -243,3 +243,19 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** The current dataset cannot support a complete, untouched 2026 holdout or full-window Phase51 claim.
 - **Correction/next step:** Search for authorised, hash-pinned point-in-time sources for the missing sessions/index bars; until found, report the holdout as blocked/partial and do not relax minimum sample or shorten the pre-registered window.
 - **Status:** OPEN / data-gated.
+
+
+## F52-021 — Absolute-delta strike resolution is not yet evidence-backed — OPEN / SPECIFICATION GATE
+
+- **Date:** 2026-10-09
+- **Observation:** The finite grid contains `ABS_DELTA` strike selection, but the pinned minute option files do not supply an independently validated point-in-time delta field in the coverage audit. Inferring delta from one close without an explicit IV solver, timestamp-safe underlying/expiry inputs and regression tests would introduce an unverified model assumption.
+- **Impact:** ABS_DELTA configurations cannot enter replay yet. Do not silently replace them with ATM-offset selections.
+- **Correction:** Added a separate selected-strike coverage audit for ATM-offset ranks -6..+6. Keep ABS_DELTA blocked until a tested point-in-time IV/delta resolver is designed and validated; if not possible from licensed inputs, report those grid cells as structurally blocked rather than silently shrinking or relabelling the grid.
+- **Status:** OPEN; first selected-strike audit self-test/full run pending.
+
+## F52-022 — Selected-strike audit performance hardening before first run — PATCHED / TEST PENDING
+
+- **Date:** 2026-10-09
+- **Observation:** Initial audit draft repeatedly filtered the full expiry dataframe for each event × strike offset × option type, which could make the 267-file sweep unnecessarily slow.
+- **Correction:** Build an exact-timestamp-to-frame index once per expiry file and use it for entry/exit lookups. Ensure output directory exists before the workflow runs so a failed audit can still be logged.
+- **Verification:** Awaiting self-test and end-to-end Actions result. If runtime remains excessive, optimize only after preserving identical row counts and exact timestamp semantics.
