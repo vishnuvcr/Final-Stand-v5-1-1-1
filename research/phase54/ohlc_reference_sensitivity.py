@@ -16,6 +16,10 @@ INPUT = ROOT / "results/phase52/historical_pilot/event_replay.csv"
 OUT = ROOT / "results/phase54/ohlc_reference_sensitivity"
 THRESHOLDS = (2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 1000)
 MIN_PRIOR_OI = 100
+EXPECTED_LEGS = {
+    "BUY_CALL": 1, "BUY_PUT": 1, "BULL_CALL_SPREAD": 2, "BEAR_CALL_SPREAD": 2,
+    "SHORT_IRON_CONDOR": 4, "LONG_STRADDLE": 2, "LONG_STRANGLE": 2,
+}
 
 def read_rows(path: Path = INPUT) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as fh:
@@ -36,67 +40,57 @@ def number(value: Any) -> float | None:
     return result if math.isfinite(result) else None
 
 def analyze(rows: list[dict[str, str]]) -> dict[str, Any]:
+    """Audit whether stored rows contain enough complete leg evidence for a valid sensitivity."""
     if not rows:
         raise ValueError("Phase 52 event_replay.csv contains no data rows")
-    required = {"configuration_id", "event_id", "status", "resolved_legs_json", "split"}
+    required = {"configuration_id", "event_id", "status", "resolved_legs_json", "split", "family_id"}
     missing = required - set(rows[0])
     if missing:
         raise ValueError(f"Phase 52 event replay missing required columns: {sorted(missing)}")
     baseline_status = Counter(row.get("status", "MISSING") for row in rows)
-    parsed = []
+    detail_status = Counter()
+    details = []
     for row in rows:
         legs = legs_for(row)
+        expected = EXPECTED_LEGS.get(row.get("family_id", ""))
+        complete = bool(legs) and expected is not None and len(legs) == expected and all(
+            isinstance(leg, dict) and leg.get("leg_id") for leg in legs
+        )
         if not legs:
-            parsed.append((row, legs, False, False, None))
-            continue
-        prior_ok = all(
-            leg.get("prior_oi_status") == "PASS" and (number(leg.get("prior_oi")) or 0) >= MIN_PRIOR_OI
-            for leg in legs
-        )
-        entry_data_ok = all(
-            leg.get("entry_status") == "PASS" and number(leg.get("entry_range_proxy_pct")) is not None
-            for leg in legs
-        )
-        ranges = [number(leg.get("entry_range_proxy_pct")) for leg in legs]
-        max_range = max((x for x in ranges if x is not None), default=None)
-        parsed.append((row, legs, prior_ok, entry_data_ok, max_range))
-    threshold_rows = []
-    for threshold in THRESHOLDS:
-        qualified = []
-        rejected_oi = rejected_entry_data = rejected_range = missing_leg_details = 0
-        for row, legs, prior_ok, entry_data_ok, max_range in parsed:
-            if not legs:
-                missing_leg_details += 1
-            elif not prior_ok:
-                rejected_oi += 1
-            elif not entry_data_ok:
-                rejected_entry_data += 1
-            elif max_range is None or max_range > threshold:
-                rejected_range += 1
-            else:
-                qualified.append(row)
-        by_family = Counter(row.get("family_id", "UNKNOWN") for row in qualified)
-        threshold_rows.append({
-            "threshold_pct": threshold,
-            "planned_config_event_rows": len(rows),
-            "rows_meeting_prior_oi_entry_data_and_range_gate": len(qualified),
-            "share_of_planned_pct": round(100 * len(qualified) / len(rows), 4),
-            "rejected_for_prior_oi": rejected_oi,
-            "unassessable_missing_leg_details": missing_leg_details,
-            "rejected_for_entry_data": rejected_entry_data,
-            "rejected_for_range_proxy": rejected_range,
-            "families_with_at_least_one_qualified_row": len(by_family),
-            "qualified_rows_by_family": dict(sorted(by_family.items())),
-            "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated.",
-        })
-    oi_fail_rows = [row for row, legs, prior_ok, _, _ in parsed if legs and not prior_ok]
-    missing_leg_detail_rows = [row for row, legs, _, _, _ in parsed if not legs]
-    status_split = defaultdict(Counter)
-    for row in rows:
-        status_split[row.get("split", "UNKNOWN")][row.get("status", "MISSING")] += 1
+            detail = "EMPTY_LEG_PAYLOAD"
+        elif expected is None:
+            detail = "UNKNOWN_EXPECTED_LEG_COUNT"
+        elif len(legs) < expected:
+            detail = "PARTIAL_LEG_PAYLOAD"
+        elif len(legs) > expected:
+            detail = "LEG_COUNT_EXCEEDS_EXPECTED"
+        else:
+            detail = "COMPLETE_LEG_PAYLOAD"
+        detail_status[(row.get("status", "MISSING"), detail)] += 1
+        details.append({"row": row, "legs": legs, "expected": expected, "complete": complete, "detail": detail})
+
+    complete_rows = [x for x in details if x["complete"]]
+    incomplete_rows = [x for x in details if not x["complete"]]
+    complete_range_exclusions = sum(
+        x["row"].get("status") == "EXCLUDED_OHLC_RANGE_PROXY" for x in complete_rows
+    )
+    missing_leg_payload = sum(x["detail"] == "EMPTY_LEG_PAYLOAD" for x in details)
+    partial_leg_payload = sum(x["detail"] == "PARTIAL_LEG_PAYLOAD" for x in details)
+    oi_blocked = baseline_status.get("BLOCKED_LEG_ELIGIBILITY", 0)
+    range_excluded = baseline_status.get("EXCLUDED_OHLC_RANGE_PROXY", 0)
+    replay_pass = baseline_status.get("REPLAY_PASS", 0)
+
+    threshold_rows = [{
+        "threshold_pct": threshold,
+        "computable": False,
+        "eligible_rows": None,
+        "share_of_planned_pct": None,
+        "reason": "Not computed: parent event_replay output does not preserve complete per-leg evidence for every row. Replaying the threshold from partial payload would invent leg coverage.",
+    } for threshold in THRESHOLDS]
+
     return {
         "phase": "54",
-        "status": "OHLC_REFERENCE_SENSITIVITY_COMPLETE_NON_EXECUTABLE",
+        "status": "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "input": {
             "path": str(INPUT.relative_to(ROOT)), "row_count": len(rows),
@@ -107,50 +101,63 @@ def analyze(rows: list[dict[str, str]]) -> dict[str, Any]:
         },
         "frozen_rules": {
             "baseline_range_proxy_pct": 2, "prior_minute_oi_minimum": MIN_PRIOR_OI,
-            "thresholds_are_sensitivity_only": True, "holdout_used": False,
-            "raw_data_downloaded": False, "historical_pnl_recalculated": False,
-            "bid_ask_spread_observed": False, "live_execution_or_promotion_allowed": False,
+            "thresholds_preregistered": list(THRESHOLDS),
+            "threshold_sensitivity_computed": False,
+            "holdout_used": False, "raw_data_downloaded": False,
+            "historical_pnl_recalculated": False, "bid_ask_spread_observed": False,
+            "live_execution_or_promotion_allowed": False,
         },
         "baseline_status_counts": dict(sorted(baseline_status.items())),
-        "status_counts_by_split": {k: dict(sorted(v.items())) for k, v in sorted(status_split.items())},
-        "strict_prior_oi_fail_row_count": len(oi_fail_rows),
-        "unassessable_missing_leg_detail_row_count": len(missing_leg_detail_rows),
+        "leg_payload_detail_counts": {
+            f"{status}::{detail}": count
+            for (status, detail), count in sorted(detail_status.items())
+        },
+        "complete_leg_payload_rows": len(complete_rows),
+        "incomplete_leg_payload_rows": len(incomplete_rows),
+        "empty_leg_payload_rows": missing_leg_payload,
+        "partial_leg_payload_rows": partial_leg_payload,
+        "range_excluded_rows_with_complete_leg_payload": complete_range_exclusions,
+        "strict_prior_oi_blocked_rows_by_parent_status": oi_blocked,
+        "range_excluded_rows_by_parent_status": range_excluded,
+        "replay_pass_rows_by_parent_status": replay_pass,
         "threshold_sensitivity": threshold_rows,
         "interpretation": [
+            "The 480-row parent status reconciliation is retained: 100 BLOCKED_LEG_ELIGIBILITY, 379 EXCLUDED_OHLC_RANGE_PROXY, and 1 REPLAY_PASS.",
+            "A 373-row empty leg payload and partial payloads on range-excluded multi-leg strategies prevent faithful recalculation at alternate thresholds.",
+            "The exclusion reason may identify one failing leg, but the persisted payload does not necessarily include every leg's OHLC/OI values. That is insufficient to determine whether a row would pass a different threshold.",
+            "No alternative threshold eligibility counts are reported. The correct next step is to repair the Phase 52 audit output to preserve all selected legs for every exclusion, then rerun this preregistered sensitivity.",
             "The OHLC high-low/open percentage is a candle-range proxy, not a quoted spread or executable liquidity measure.",
-            "Relaxing this threshold changes only a diagnostic eligibility count; it does not establish valid exits, fills, profitability or strategy superiority.",
-            "Rows blocked by missing/zero strictly prior-minute OI remain blocked under every threshold.",
-            "This output is not a backtest and cannot be used to promote a strategy or tune a live selector.",
+            "This is not a backtest; no exits, fills, costs, P&L, strategy superiority or promotion can be inferred.",
         ],
     }
+
 
 def write_outputs(result: dict[str, Any], out_dir: Path = OUT) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "report.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
-    fields = ["threshold_pct", "planned_config_event_rows", "rows_meeting_prior_oi_entry_data_and_range_gate",
-              "share_of_planned_pct", "rejected_for_prior_oi", "unassessable_missing_leg_details",
-              "rejected_for_entry_data", "rejected_for_range_proxy", "families_with_at_least_one_qualified_row", "note"]
     with (out_dir / "threshold_sensitivity.csv").open("w", newline="", encoding="utf-8") as fh:
+        fields = ["threshold_pct", "computable", "eligible_rows", "share_of_planned_pct", "reason"]
         writer = csv.DictWriter(fh, fieldnames=fields)
         writer.writeheader()
-        for row in result["threshold_sensitivity"]:
-            writer.writerow({k: row[k] for k in fields})
+        writer.writerows(result["threshold_sensitivity"])
     lines = [
-        "# Phase 54 OHLC-reference sensitivity", "",
-        "**Non-executable diagnostic only. No P&L was recalculated and no strategy was promoted.**", "",
+        "# Phase 54 OHLC-reference sensitivity feasibility audit", "",
+        "**BLOCKED: alternate-threshold eligibility is not computable from the stored parent output. No P&L was recalculated.**", "",
         f"- Input rows: {result['input']['row_count']}",
         f"- Baseline statuses: {json.dumps(result['baseline_status_counts'], sort_keys=True)}",
-        f"- Strict prior-minute OI failure rows: {result['strict_prior_oi_fail_row_count']}",
-        f"- Rows without per-leg detail (not reclassifiable by this sensitivity): {result['unassessable_missing_leg_detail_row_count']}", "",
-        "| OHLC range threshold (%) | Rows passing prior-OI + entry-data + range checks | % of 480 | OI rejected | Missing leg detail | Entry-data rejected | Range rejected |",
-        "|---:|---:|---:|---:|---:|---:|---:|",
+        f"- Complete per-leg payload rows: {result['complete_leg_payload_rows']}",
+        f"- Incomplete per-leg payload rows: {result['incomplete_leg_payload_rows']}",
+        f"- Empty leg payload rows: {result['empty_leg_payload_rows']}",
+        f"- Partial leg payload rows: {result['partial_leg_payload_rows']}",
+        f"- Range-excluded rows with complete leg payload: {result['range_excluded_rows_with_complete_leg_payload']}", "",
+        "| Threshold (%) | Sensitivity computable? | Result |",
+        "|---:|:---:|---|",
     ]
     for row in result["threshold_sensitivity"]:
-        lines.append(f"| {row['threshold_pct']} | {row['rows_meeting_prior_oi_entry_data_and_range_gate']} | "
-                     f"{row['share_of_planned_pct']:.2f}% | {row['rejected_for_prior_oi']} | "
-                     f"{row['unassessable_missing_leg_details']} | {row['rejected_for_entry_data']} | {row['rejected_for_range_proxy']} |")
+        lines.append(f"| {row['threshold_pct']} | No | {row['reason']} |")
     lines.extend(["", "## Interpretation", *[f"- {x}" for x in result["interpretation"]], ""])
     (out_dir / "report.md").write_text("\n".join(lines), encoding="utf-8")
+
 
 def main() -> None:
     parser = argparse.ArgumentParser()
