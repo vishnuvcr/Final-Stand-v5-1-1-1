@@ -1,0 +1,240 @@
+name: Phase 56 — OHLC Price-Reference P&L Sensitivity (Non-Executable)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-56-ohlc-pnl-sensitivity
+    paths:
+      - ".github/workflows/phase-56-ohlc-pnl-sensitivity.yml"
+      - "research/phase56/**"
+      - "research/phase52/replay_kernel.py"
+      - "results/phase52/historical_pilot/event_replay.csv"
+      - "results/phase52/historical_pilot/report.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase56-ohcl-price-reference-sensitivity
+  cancel-in-progress: false
+
+jobs:
+  sensitivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PHASE_BRANCH: phase-56-ohlc-pnl-sensitivity
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-56-ohlc-pnl-sensitivity
+          fetch-depth: 0
+      - name: Refresh latest branch tip
+        shell: bash
+        run: |
+          git fetch origin "$PHASE_BRANCH"
+          git checkout "$PHASE_BRANCH"
+          git reset --hard "origin/$PHASE_BRANCH"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install minimal local-analysis dependencies
+        run: python -m pip install --disable-pip-version-check --no-input numpy pandas
+      - name: Syntax validation
+        run: python -m py_compile research/phase56/ohlc_pnl_sensitivity.py research/phase52/replay_kernel.py
+      - name: Regression tests
+        run: python -m unittest discover -s research/phase56/tests -v
+      - name: Deterministic cost and gate self-test
+        run: python research/phase56/ohlc_pnl_sensitivity.py --self-test-only
+      - name: Run frozen 480-row price-reference sensitivity
+        run: python research/phase56/ohlc_pnl_sensitivity.py
+      - name: Validate fixed scenario matrix and cost invariants
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+
+          out = Path("results/phase56/ohlc_pnl_sensitivity")
+          report = json.loads((out / "report.json").read_text(encoding="utf-8"))
+          expected_thresholds = {
+              "2":1, "3":1, "4":8, "5":24, "6":55, "8":91,
+              "10":150, "12":227, "15":298, "20":345, "1000":380
+          }
+          assert report["status"] == "OHLC_PRICE_REFERENCE_PNL_SENSITIVITY_COMPLETE_NON_EXECUTABLE", report["status"]
+          assert report["input"]["row_count"] == 480
+          assert report["input"]["pinned_dataset_revision"] == "0f4800e43e6f96cec0794369d78eb4d3c4211ef5"
+          assert report["parent_status_counts"] == {
+              "BLOCKED_LEG_ELIGIBILITY":100,
+              "EXCLUDED_OHLC_RANGE_PROXY":379,
+              "REPLAY_PASS":1
+          }, report["parent_status_counts"]
+          assert report["configuration_count"] == 40
+          assert report["event_identity_count"] == 24
+          assert report["full_leg_payload_rows"] == 480
+          assert report["complete_range_excluded_rows"] == 379
+          assert report["explicit_hard_oi_block_rows"] == 100
+          assert report["complete_replay_pass_rows"] == 1
+          assert report["threshold_eligible_rows"] == expected_thresholds, report["threshold_eligible_rows"]
+          assert report["threshold_summary_rows"] == 132
+          assert report["configuration_summary_rows"] == 5280
+          assert report["family_summary_rows"] == 924
+          assert report["robustness_screen_rows"] == 440
+          assert report["trade_scenario_rows"] == 18960
+          assert report["invariants"]["phase54_eligibility_counts_reproduced"] is True
+          assert report["invariants"]["all_rows_have_full_leg_payload"] is True
+          assert report["invariants"]["oi_blockers_remain_ineligible"] is True
+          assert report["invariants"]["gross_pnl_nonincreasing_with_slippage"] is True
+          assert report["invariants"]["net_pnl_nonincreasing_when_brokerage_increases"] is True
+          assert report["invariants"]["scenario_eligibility_unchanged_by_cost"] is True
+          assert report["invariants"]["holdout_used"] is False
+          assert report["invariants"]["bid_ask_or_depth_observed"] is False
+          assert report["invariants"]["live_execution_or_promotion_allowed"] is False
+          row_expectations = {
+              "threshold_summary.csv":132,
+              "configuration_summary.csv":5280,
+              "family_summary.csv":924,
+              "robustness_screen.csv":440,
+              "eligibility_by_threshold.csv":5280,
+              "trade_scenarios.csv":18960,
+          }
+          for name, expected in row_expectations.items():
+              with (out / name).open(newline="",encoding="utf-8") as fh:
+                  observed = sum(1 for _ in csv.DictReader(fh))
+              assert observed == expected, (name,observed,expected)
+          blocked = []
+          with (out / "trade_scenarios.csv").open(newline="",encoding="utf-8") as fh:
+              for row in csv.DictReader(fh):
+                  assert row["source_price_reference"] == "exact_option_bar_open_not_bid_ask"
+                  assert row["executable_fill_claim"] == "False"
+                  assert row["pnl_status"] == "NON_EXECUTABLE_OHLC_PRICE_REFERENCE_SENSITIVITY"
+                  assert row["event_id"]
+                  assert row["brokerage_per_order_inr"] in {"10.0","20.0"}
+          print(json.dumps({
+              "status":report["status"],
+              "input_sha256":report["input"]["input_sha256"],
+              "threshold_eligible_rows":report["threshold_eligible_rows"],
+              "trade_scenario_rows":report["trade_scenario_rows"],
+              "threshold_summary_rows":report["threshold_summary_rows"],
+              "configuration_summary_rows":report["configuration_summary_rows"],
+              "family_summary_rows":report["family_summary_rows"],
+              "severe_cost_screen_passes_unique_configurations":report["configurations_passing_severe_cost_screen_any_threshold"],
+              "severe_cost_screen_passes_config_threshold_pairs":report["configuration_threshold_pairs_passing_severe_cost_screen"]
+          },indent=2))
+          PY
+      - name: Upload detailed sensitivity artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase56-ohlc-pnl-sensitivity-${{ github.run_id }}
+          path: results/phase56/ohlc_pnl_sensitivity/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist status, research, error, chat and README checkpoints
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          run_id = os.environ["GITHUB_RUN_ID"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
+          workflow_status = os.environ.get("JOB_STATUS", "unknown")
+          report_path = Path("results/phase56/ohlc_pnl_sensitivity/report.json")
+          report = None
+          if report_path.exists():
+              try:
+                  report = json.loads(report_path.read_text(encoding="utf-8"))
+              except Exception:
+                  report = None
+
+          accepted = (
+              workflow_status == "success"
+              and report is not None
+              and report.get("status") == "OHLC_PRICE_REFERENCE_PNL_SENSITIVITY_COMPLETE_NON_EXECUTABLE"
+              and report.get("input", {}).get("row_count") == 480
+              and report.get("trade_scenario_rows") == 18960
+              and report.get("threshold_summary_rows") == 132
+              and report.get("configuration_summary_rows") == 5280
+              and report.get("family_summary_rows") == 924
+              and report.get("robustness_screen_rows") == 440
+          )
+          if accepted:
+              summary = (
+                  f"- Run: [{run_id}]({run_url}); workflow=success; report=accepted; status={report['status']}.\n"
+                  f"- Input rows=480; SHA-256={report['input']['input_sha256']}; pinned revision={report['input']['pinned_dataset_revision']}.\n"
+                  f"- Parent statuses={json.dumps(report['parent_status_counts'],sort_keys=True)}; complete leg payloads={report['full_leg_payload_rows']}.\n"
+                  f"- Eligible rows by threshold={json.dumps(report['threshold_eligible_rows'],sort_keys=True)}.\n"
+                  f"- Output matrix: 132 threshold/cost summaries; 5,280 configuration summaries; 924 family summaries; "
+                  f"18,960 non-executable price-reference trade scenarios; 440 severe-cost configuration-threshold screens.\n"
+                  f"- Configurations passing the severe-cost screen at any threshold={report['configurations_passing_severe_cost_screen_any_threshold']}; "
+                  f"passing configuration-threshold pairs={report['configuration_threshold_pairs_passing_severe_cost_screen']}.\n"
+                  "- All costs/slippage are modeled assumptions; candle range is not bid/ask spread; no holdout used and no strategy is promoted.\n"
+              )
+          else:
+              status = report.get("status") if report else "REPORT_MISSING_OR_INVALID"
+              summary = (
+                  f"- Run: [{run_id}]({run_url}); workflow status={workflow_status}; report accepted=False; "
+                  f"observed report status={status}.\n"
+                  "- No Phase56 result accepted until scenario counts, frozen thresholds and invariants pass.\n"
+              )
+
+          for filename, heading in [
+              ("PHASE56_STATUS.md", f"## Run checkpoint {run_id}"),
+              ("PHASE56_RESEARCH_LOG.md", f"## Run checkpoint {run_id}"),
+              ("PHASE56_CHAT_LOG.md", f"## Automated run {run_id}"),
+          ]:
+              path = Path(filename)
+              path.write_text(
+                  path.read_text(encoding="utf-8").rstrip() + "\n\n" + heading + "\n\n" + summary,
+                  encoding="utf-8"
+              )
+
+          if not accepted:
+              path = Path("PHASE56_ERROR_LOG.md")
+              path.write_text(
+                  path.read_text(encoding="utf-8").rstrip()
+                  + f"\n\n## F56-RUN-{run_id} — workflow or output validation failure\n\n"
+                  + f"- Run: {run_url}\n- Workflow status: {workflow_status}\n"
+                  + f"- Report accepted: False; report present: {report is not None}\n"
+                  + "- No result or strategy conclusion accepted.\n- Status: OPEN.\n",
+                  encoding="utf-8"
+              )
+
+          readme = Path("README.md")
+          readme.write_text(
+              readme.read_text(encoding="utf-8").rstrip()
+              + f"\n\n## Phase 56 OHLC price-reference P&L sensitivity — run {run_id}\n\n"
+              + summary
+              + "- [Plan](PHASE56_RESEARCH_PLAN.md) · [Status](PHASE56_STATUS.md) · "
+                "[Results](results/phase56/ohlc_pnl_sensitivity/report.md)\n",
+              encoding="utf-8"
+          )
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE56_STATUS.md PHASE56_RESEARCH_LOG.md PHASE56_ERROR_LOG.md PHASE56_CHAT_LOG.md README.md
+          if [[ -d results/phase56/ohlc_pnl_sensitivity ]]; then
+            git add results/phase56/ohlc_pnl_sensitivity
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase56 P&L sensitivity checkpoint $GITHUB_RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            if git rebase origin/"$PHASE_BRANCH"; then
+              if git push origin "$PHASE_BRANCH"; then exit 0; fi
+            else
+              echo "Rebase conflict; refusing to overwrite research logs." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+          done
+          exit 1
