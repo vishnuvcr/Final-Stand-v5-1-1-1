@@ -54,7 +54,7 @@ EXPECTED_LEGS_BY_FAMILY = {
 }
 AUDITED_LEG_STATUSES = {
     "EXCLUDED_ENTRY_LEG", "EXCLUDED_PRIOR_OI", "EXCLUDED_OHLC_RANGE_PROXY",
-    "EXCLUDED_EXIT_LEG", "EXCLUDED_NO_COMMON_EXIT", "REPLAY_PASS",
+    "EXCLUDED_EXIT_LEG", "EXCLUDED_NO_COMMON_EXIT", "BLOCKED_LEG_ELIGIBILITY", "REPLAY_PASS",
 }
 
 if str(PHASE) not in sys.path:
@@ -485,15 +485,25 @@ def replay_one(
         "spot_open": spot_open,
         "spot_timestamp": entry_ts,
     }
+    exit_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
+    lot_size = int(phase43.lot_size_for_expiry(pd.Timestamp(expiry, tz=TZ)))
     result = resolver.resolve_template(
         conf["family_id"], cfg, entry_event, option_frame, option_frame,
         sorted(option_frames.keys()), spec_rows, template_manifest,
         risk_class=registry_row["risk_class"],
     )
     if result.get("status") not in {"TEMPLATE_RESOLVED_ENTRY_GATES_PASS", "DIAGNOSTIC_ONLY_TEMPLATE_RESOLVED"}:
+        payload = result.get("audit_legs") or result.get("leg_exclusions", [])
+        for leg_audit in payload:
+            if isinstance(leg_audit, dict):
+                leg_audit.setdefault("lot_size", lot_size)
+                leg_audit.setdefault("exit_status", "NOT_TESTED")
+                leg_audit.setdefault("range_proxy_status", "NOT_TESTED")
+                leg_audit.setdefault("entry_status", "NOT_TESTED")
+                leg_audit.setdefault("prior_oi_status", "NOT_TESTED")
         return event_record(event, conf, result.get("status", "BLOCKED_TEMPLATE"),
                             str(result.get("reason", result.get("gate_reason", "template resolver blocked"))),
-                            spot_open, source_hash=source_hash, legs=result.get("leg_exclusions", [])), []
+                            spot_open, lot_size, payload, source_hash, exit_ts), []
 
     exit_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
     lot_size = int(phase43.lot_size_for_expiry(pd.Timestamp(expiry, tz=TZ)))
