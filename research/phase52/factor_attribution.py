@@ -187,6 +187,11 @@ def collapse_predictions(test,states,mapping,fallback):
             v=lookup.loc[(key,fallback)];fixed.append(v.iloc[0] if isinstance(v,pd.DataFrame) else v)
         except KeyError:continue
     a=pd.DataFrame(chosen).drop_duplicates("expiry_key");b=pd.DataFrame(fixed).drop_duplicates("expiry_key")
+    # Use identical expiry support for both the routed strategy and fixed baseline.
+    # Do not let an expiry with a missing baseline outcome inflate selector totals.
+    common=set(a["expiry_key"]) & set(b["expiry_key"])
+    a=a[a["expiry_key"].isin(common)].sort_values("expiry_date").reset_index(drop=True)
+    b=b[b["expiry_key"].isin(common)].sort_values("expiry_date").reset_index(drop=True)
     return a,b,pred,episodes
 
 def run(trades_path,features_path,outdir,leakage_audit_path):
@@ -324,12 +329,13 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
       "",f"- Legacy trade rows: {audit['trade_rows_input']:,}; matched point-in-time rows: {audit['trade_rows_with_asof_feature_match']:,} ({audit['feature_match_rate']:.1%}).",
       f"- Recognized risk-limited legacy strategies: {len(universe)}.",
       f"- Development fit ends {fit_end.date()}; tuning starts {tune_start.date()}; 2024–25 validation and 2026 holdout were not used to fit the selected feature/mapping.",
-      f"- Fixed baseline chosen on development: {baseline}.","","## Results","","| Mode | Chosen feature | Split | N expiries | Net ₹ | Net +50% stress ₹ | Net +100% modelled stress ₹ | Mean uplift vs fixed ₹/expiry | 95% paired CI | Holm p |",
+      f"- Fixed baseline chosen on development: {baseline}.","","## Results","","| Mode | Chosen feature | Split | N expiries | Net ₹ | Net +50% stress ₹ | Net +100% modelled stress ₹ | Mean uplift vs fixed ₹/expiry | 95% block-bootstrap CI | Raw one-sided p | Holm-adjusted p |",
       "|---|---|---|---:|---:|---:|---:|---:|---|---:|"]
     for _,r in rd.iterrows():
         ci="—" if pd.isna(r.get("paired_bootstrap_ci95_lo")) else f"[{r['paired_bootstrap_ci95_lo']:.0f}, {r['paired_bootstrap_ci95_hi']:.0f}]"
+        rawp=r.get("paired_signflip_p_one_sided",np.nan)
         hp=r.get("holm_p_uplift_net50",np.nan)
-        lines.append(f"| {r['mode']} | {r['selected_feature']} | {r['split']} | {r.get('n',0)} | {r.get('net',np.nan):.0f} | {r.get('net50',np.nan):.0f} | {r.get('net100',np.nan):.0f} | {r.get('paired_mean_uplift_net50',np.nan):.0f} | {ci} | {hp:.4f} |")
+        lines.append(f"| {r['mode']} | {r['selected_feature']} | {r['split']} | {r.get('n',0)} | {r.get('net',np.nan):.0f} | {r.get('net50',np.nan):.0f} | {r.get('net100',np.nan):.0f} | {r.get('paired_mean_uplift_net50',np.nan):.0f} | {ci} | {rawp:.4f} | {hp:.4f} |")
     lines += ["","## Untested factor blocks","",
       "The audited legacy feature panel lacks synchronized NIFTY futures basis/OI/volume and exact-timestamp synthetic-future data. Those factors are not tested here. News, corporate actions and breadth are likewise unavailable. A daily sentiment feature is only a proxy and is not equivalent to timestamped news.",
       "","This run is a first out-of-sample selection screen over available frozen outcomes. It does not mean all 312 registered hypotheses or all finite parameter combinations have been replayed. No candidate is promoted from this pilot."]
