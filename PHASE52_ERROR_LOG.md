@@ -127,3 +127,11 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** A full 2026 holdout selector evaluation might lack 20 matched expiry sessions or minimum 50% coverage.
 - **Correction:** Under PA-005, only the validation split must meet validation coverage/sample gates to run the exploratory pilot; holdout is tested only if its separate gate passes. Otherwise explicitly emit no holdout performance metrics and preserve the missing coverage as a limitation.
 - **Status:** PATCHED before selector P&L analysis.
+
+## F52-AUTO-37926908847 — Automated workflow failure
+
+- Date: 2026-10-09
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37926908847
+- Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.
+- Root cause: pending review of the failed job logs.
+- Status: OPEN.

@@ -1,0 +1,393 @@
+{
+  "status": "FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION",
+  "input_sha256": {
+    "trade_matrix": "7c287ce4c3e958a40e2472d9c0391d2f6d8afa43ecc153b380be603ca44894d0",
+    "feature_panel": "2ae9558062a67a11d7e7d1ba3cfea15a7b847e95a91fbce2a8e72fc075a1efc1"
+  },
+  "source_feature_leakage_audit_status": "PASS",
+  "input_audit": {
+    "trade_rows_input": 9699,
+    "feature_rows_input": 477,
+    "trade_rows_with_asof_feature_match": 6617,
+    "feature_match_rate": 0.6822352819878338,
+    "feature_match_by_split": {
+      "development": {
+        "rows": 5058,
+        "matched_rows": 3876,
+        "coverage": 0.7663107947805456,
+        "matched_unique_expiries": 102
+      },
+      "holdout": {
+        "rows": 798,
+        "matched_rows": 494,
+        "coverage": 0.6190476190476191,
+        "matched_unique_expiries": 13
+      },
+      "validation": {
+        "rows": 3843,
+        "matched_rows": 2247,
+        "coverage": 0.5846994535519126,
+        "matched_unique_expiries": 60
+      }
+    },
+    "median_feature_lag_minutes": 0.04,
+    "max_feature_lag_minutes": 1.48,
+    "source_strategies": [
+      "batman",
+      "bear_butterfly",
+      "bear_call_spread",
+      "bear_condor",
+      "bear_put_spread",
+      "bull_butterfly",
+      "bull_call_spread",
+      "bull_condor",
+      "bull_put_spread",
+      "buy_call",
+      "buy_put",
+      "call_backspread",
+      "call_broken_wing_butterfly",
+      "call_ratio_spread",
+      "double_plateau",
+      "jade_lizard",
+      "long_atm_call_butterfly",
+      "long_atm_put_butterfly",
+      "long_call_calendar",
+      "long_iron_butterfly",
+      "long_iron_condor",
+      "long_put_calendar",
+      "long_straddle",
+      "long_strangle",
+      "long_synthetic_future",
+      "put_backspread",
+      "put_broken_wing_butterfly",
+      "put_ratio_spread",
+      "range_forward",
+      "reverse_call_calendar",
+      "reverse_jade_lizard",
+      "reverse_put_calendar",
+      "risk_reversal",
+      "sell_call",
+      "sell_put",
+      "short_iron_butterfly",
+      "short_iron_condor",
+      "short_straddle",
+      "short_strangle",
+      "short_synthetic_future",
+      "strap",
+      "strip"
+    ],
+    "risk_limited_strategies_available": [
+      "bear_butterfly",
+      "bear_call_spread",
+      "bear_condor",
+      "bear_put_spread",
+      "bull_butterfly",
+      "bull_call_spread",
+      "bull_condor",
+      "bull_put_spread",
+      "buy_call",
+      "buy_put",
+      "call_backspread",
+      "call_broken_wing_butterfly",
+      "double_plateau",
+      "long_atm_call_butterfly",
+      "long_atm_put_butterfly",
+      "long_call_calendar",
+      "long_iron_butterfly",
+      "long_iron_condor",
+      "long_put_calendar",
+      "long_straddle",
+      "long_strangle",
+      "put_backspread",
+      "put_broken_wing_butterfly",
+      "short_iron_butterfly",
+      "short_iron_condor",
+      "strap",
+      "strip"
+    ],
+    "source_feature_leakage_audit_status": "PASS",
+    "source_feature_rules": {
+      "option_chain": "exact entry timestamp",
+      "intraday_nifty": "timestamp <= entry timestamp",
+      "daily_and_external": "strictly prior available session/date",
+      "interpolation": "forbidden",
+      "forward_fill": "forbidden",
+      "control_direction_as_feature": "forbidden",
+      "counterfactual_target_as_feature": "forbidden"
+    }
+  },
+  "risk_limited_strategy_universe": [
+    "bear_butterfly",
+    "bear_call_spread",
+    "bear_condor",
+    "bear_put_spread",
+    "bull_butterfly",
+    "bull_call_spread",
+    "bull_condor",
+    "bull_put_spread",
+    "buy_call",
+    "buy_put",
+    "call_backspread",
+    "call_broken_wing_butterfly",
+    "double_plateau",
+    "long_atm_call_butterfly",
+    "long_atm_put_butterfly",
+    "long_iron_butterfly",
+    "long_iron_condor",
+    "long_straddle",
+    "long_strangle",
+    "put_backspread",
+    "put_broken_wing_butterfly",
+    "short_iron_butterfly",
+    "short_iron_condor",
+    "strap",
+    "strip"
+  ],
+  "risk_limited_strategy_count": 25,
+  "split_unique_expiries": {
+    "development": 102,
+    "validation": 60,
+    "holdout": 13
+  },
+  "holdout_evaluated": false,
+  "holdout_coverage_gate": {
+    "rows": 798,
+    "matched_rows": 494,
+    "coverage": 0.6190476190476191,
+    "matched_unique_expiries": 13
+  },
+  "development_fit_end": "2023-02-17",
+  "development_tune_start": "2023-02-24",
+  "fixed_baseline_strategy_dev_fit": "buy_call",
+  "fixed_baseline_strategy_dev_all": "buy_call",
+  "selected_feature_by_mode": {
+    "GLOBAL_SENTIMENT_PROXY": "global_NASDAQ_ret1",
+    "GREEKS_SURFACE_ROUTER": "atm_pe_iv",
+    "MULTI_FACTOR_ROUTER": "TREND_X_IV_SKEW",
+    "OI_FLOW_ROUTER": "near_atm_oi_pcr",
+    "SPOT_PROXY_ONLY": "nifty_ma_gap_15m",
+    "VIX_ROUTER": "India_VIX_state"
+  },
+  "factor_availability": {
+    "GREEKS_SURFACE_ROUTER": {
+      "available": [
+        "atm_ce_delta",
+        "atm_pe_delta",
+        "atm_ce_iv",
+        "atm_pe_iv",
+        "atm_iv_skew",
+        "candidate_iv_skew_25",
+        "iv_term_premium_ratio",
+        "atm_straddle",
+        "call_25_delta",
+        "put_25_delta"
+      ],
+      "missing": [],
+      "nonmissing_rate_by_split": {
+        "development": {
+          "atm_ce_delta": 1.0,
+          "atm_pe_delta": 1.0,
+          "atm_ce_iv": 1.0,
+          "atm_pe_iv": 1.0,
+          "atm_iv_skew": 1.0,
+          "candidate_iv_skew_25": 1.0,
+          "iv_term_premium_ratio": 0.00980392156862745,
+          "atm_straddle": 1.0,
+          "call_25_delta": 1.0,
+          "put_25_delta": 1.0
+        },
+        "validation": {
+          "atm_ce_delta": 1.0,
+          "atm_pe_delta": 1.0,
+          "atm_ce_iv": 1.0,
+          "atm_pe_iv": 1.0,
+          "atm_iv_skew": 1.0,
+          "candidate_iv_skew_25": 1.0,
+          "iv_term_premium_ratio": 0.016914749661705007,
+          "atm_straddle": 1.0,
+          "call_25_delta": 1.0,
+          "put_25_delta": 1.0
+        },
+        "holdout": {
+          "atm_ce_delta": 1.0,
+          "atm_pe_delta": 1.0,
+          "atm_ce_iv": 1.0,
+          "atm_pe_iv": 1.0,
+          "atm_iv_skew": 1.0,
+          "candidate_iv_skew_25": 1.0,
+          "iv_term_premium_ratio": 0.07692307692307693,
+          "atm_straddle": 1.0,
+          "call_25_delta": 1.0,
+          "put_25_delta": 1.0
+        }
+      }
+    },
+    "OI_FLOW_ROUTER": {
+      "available": [
+        "atm_pcr_oi",
+        "candidate_oi_pcr_25",
+        "near_atm_oi_pcr",
+        "atm_pcr_volume",
+        "near_atm_volume_pcr",
+        "atm_ce_oi",
+        "atm_pe_oi",
+        "call_25_oi",
+        "put_25_oi"
+      ],
+      "missing": [],
+      "nonmissing_rate_by_split": {
+        "development": {
+          "atm_pcr_oi": 1.0,
+          "candidate_oi_pcr_25": 1.0,
+          "near_atm_oi_pcr": 1.0,
+          "atm_pcr_volume": 1.0,
+          "near_atm_volume_pcr": 1.0,
+          "atm_ce_oi": 1.0,
+          "atm_pe_oi": 1.0,
+          "call_25_oi": 1.0,
+          "put_25_oi": 1.0
+        },
+        "validation": {
+          "atm_pcr_oi": 1.0,
+          "candidate_oi_pcr_25": 1.0,
+          "near_atm_oi_pcr": 1.0,
+          "atm_pcr_volume": 1.0,
+          "near_atm_volume_pcr": 1.0,
+          "atm_ce_oi": 1.0,
+          "atm_pe_oi": 1.0,
+          "call_25_oi": 1.0,
+          "put_25_oi": 1.0
+        },
+        "holdout": {
+          "atm_pcr_oi": 1.0,
+          "candidate_oi_pcr_25": 1.0,
+          "near_atm_oi_pcr": 1.0,
+          "atm_pcr_volume": 1.0,
+          "near_atm_volume_pcr": 1.0,
+          "atm_ce_oi": 1.0,
+          "atm_pe_oi": 1.0,
+          "call_25_oi": 1.0,
+          "put_25_oi": 1.0
+        }
+      }
+    },
+    "SPOT_PROXY_ONLY": {
+      "available": [
+        "nifty_ret_15m",
+        "nifty_ret_60m",
+        "nifty_daily_ret_1d",
+        "nifty_daily_ret_5d",
+        "nifty_ma_gap_15m",
+        "nifty_rv_15m",
+        "nifty_rv_60m",
+        "nifty_range_15m"
+      ],
+      "missing": [],
+      "nonmissing_rate_by_split": {
+        "development": {
+          "nifty_ret_15m": 1.0,
+          "nifty_ret_60m": 1.0,
+          "nifty_daily_ret_1d": 1.0,
+          "nifty_daily_ret_5d": 0.9901960784313726,
+          "nifty_ma_gap_15m": 1.0,
+          "nifty_rv_15m": 1.0,
+          "nifty_rv_60m": 1.0,
+          "nifty_range_15m": 1.0
+        },
+        "validation": {
+          "nifty_ret_15m": 1.0,
+          "nifty_ret_60m": 1.0,
+          "nifty_daily_ret_1d": 1.0,
+          "nifty_daily_ret_5d": 1.0,
+          "nifty_ma_gap_15m": 1.0,
+          "nifty_rv_15m": 1.0,
+          "nifty_rv_60m": 1.0,
+          "nifty_range_15m": 1.0
+        },
+        "holdout": {
+          "nifty_ret_15m": 1.0,
+          "nifty_ret_60m": 1.0,
+          "nifty_daily_ret_1d": 1.0,
+          "nifty_daily_ret_5d": 1.0,
+          "nifty_ma_gap_15m": 1.0,
+          "nifty_rv_15m": 1.0,
+          "nifty_rv_60m": 1.0,
+          "nifty_range_15m": 1.0
+        }
+      }
+    },
+    "GLOBAL_SENTIMENT_PROXY": {
+      "available": [
+        "global_SP500_ret1",
+        "global_NASDAQ_ret1",
+        "global_VIX_ret1",
+        "global_NIKKEI_ret1",
+        "global_SENSEX_ret1",
+        "global_GOLD_ret1",
+        "global_CRUDE_ret1",
+        "global_USDINR_ret1",
+        "sent_sent_mean",
+        "sent_sent_pos",
+        "sent_sent_neg"
+      ],
+      "missing": [],
+      "nonmissing_rate_by_split": {
+        "development": {
+          "global_SP500_ret1": 0.9803921568627451,
+          "global_NASDAQ_ret1": 0.9803921568627451,
+          "global_VIX_ret1": 0.9803921568627451,
+          "global_NIKKEI_ret1": 0.9411764705882353,
+          "global_SENSEX_ret1": 0.9215686274509803,
+          "global_GOLD_ret1": 0.9803921568627451,
+          "global_CRUDE_ret1": 0.9803921568627451,
+          "global_USDINR_ret1": 1.0,
+          "sent_sent_mean": 1.0,
+          "sent_sent_pos": 1.0,
+          "sent_sent_neg": 1.0
+        },
+        "validation": {
+          "global_SP500_ret1": 0.881596752368065,
+          "global_NASDAQ_ret1": 0.881596752368065,
+          "global_VIX_ret1": 0.881596752368065,
+          "global_NIKKEI_ret1": 0.8985115020297699,
+          "global_SENSEX_ret1": 0.86468200270636,
+          "global_GOLD_ret1": 0.8985115020297699,
+          "global_CRUDE_ret1": 0.8985115020297699,
+          "global_USDINR_ret1": 0.983085250338295,
+          "sent_sent_mean": 1.0,
+          "sent_sent_pos": 1.0,
+          "sent_sent_neg": 1.0
+        },
+        "holdout": {
+          "global_SP500_ret1": 0.9230769230769231,
+          "global_NASDAQ_ret1": 0.9230769230769231,
+          "global_VIX_ret1": 0.9230769230769231,
+          "global_NIKKEI_ret1": 0.9230769230769231,
+          "global_SENSEX_ret1": 0.7692307692307693,
+          "global_GOLD_ret1": 0.9230769230769231,
+          "global_CRUDE_ret1": 0.9230769230769231,
+          "global_USDINR_ret1": 1.0,
+          "sent_sent_mean": 1.0,
+          "sent_sent_pos": 1.0,
+          "sent_sent_neg": 1.0
+        }
+      }
+    }
+  },
+  "not_available_in_seed_panel": [
+    "NIFTY futures basis/OI/volume",
+    "synchronized synthetic-future divergence",
+    "NSE/BSE breadth",
+    "timestamp-verified intraday news",
+    "point-in-time corporate-action feed"
+  ],
+  "cost_stress_notes": "The +100% cost stress is derived as 2*net50-net because source costs were multiplied linearly; \u20b920/order Paytm Money sensitivity is not available from this frozen outcome matrix.",
+  "limitations": [
+    "This is a factor selector screen on legacy fixed-entry/expiry-exit outcomes, not the full Phase52 config grid.",
+    "Only explicitly risk-limited legacy strategy labels are eligible; unknown/undefined-tail templates are excluded.",
+    "FII/DII availability was reported missing through development/validation in the previous Phase39 leakage audit; no primary selector claim is made for those features.",
+    "The source matrix does not contain futures basis or matched synthetic-future series. SPOT_PROXY_ONLY is not a futures test.",
+    "The 2026 holdout is evaluated only if its feature coverage is >=50% and at least 20 expiry sessions; otherwise the pilot does not make a holdout performance claim.",
+    "No result implies profitability in all regimes or authorizes live trading."
+  ]
+}
