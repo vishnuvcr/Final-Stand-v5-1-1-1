@@ -132,18 +132,18 @@ def summarize_bars(
 
 
 def _is_option_row(row: dict[str, Any]) -> bool:
-    symbol = str(row.get("symbol", ""))
+    symbol = str(row.get("symbol", "")).strip().upper()
     instrument_type = str(row.get("type", "")).strip().lower()
     # Be tolerant to singular/plural type labels and exchange suffix spacing.
     return ("option" in instrument_type) or bool(
-        re.search(r"(?:^|[\\s:_-])(CE|PE)\\s*$", symbol.upper())
+        re.search(r"(?:^|[\s:_-])(CE|PE)\s*$", symbol)
     )
 
 
 def _is_future_row(row: dict[str, Any]) -> bool:
     symbol = str(row.get("symbol", "")).strip().upper()
     instrument_type = str(row.get("type", "")).strip().lower()
-    return ("future" in instrument_type) or bool(re.search(r"FUT\\s*$", symbol))
+    return ("future" in instrument_type) or bool(re.search(r"FUT\s*$", symbol))
 
 
 def _safe_search_metadata(frame: pd.DataFrame, query: str) -> dict[str, Any]:
@@ -151,27 +151,41 @@ def _safe_search_metadata(frame: pd.DataFrame, query: str) -> dict[str, Any]:
         return {
             "query": query,
             "returned_rows": 0,
+            "columns": [str(c) for c in frame.columns] if frame is not None else [],
+            "instrument_type_counts": {},
             "option_rows": 0,
             "future_rows": 0,
+            "option_suffix_rows": 0,
+            "future_suffix_rows": 0,
             "target_month_contract_rows": 0,
             "status": "EMPTY_OR_REQUEST_FAILED",
         }
     records = frame.fillna("").to_dict(orient="records")
     options = [r for r in records if _is_option_row(r)]
-    futures = [
-        r for r in records
-        if "future" in str(r.get("type", "")).lower()
-        or str(r.get("symbol", "")).upper().endswith("FUT")
-    ]
+    futures = [r for r in records if _is_future_row(r)]
+    type_col = frame["type"] if "type" in frame.columns else pd.Series(dtype=str)
+    type_counts = {
+        (str(key) if str(key).strip() else "<blank>"): int(value)
+        for key, value in type_col.fillna("").astype(str).value_counts(dropna=False).items()
+    }
+    symbols = frame["symbol"].fillna("").astype(str) if "symbol" in frame.columns else pd.Series(dtype=str)
+    option_suffix_rows = int(symbols.str.upper().str.contains(r"(?:CE|PE)\s*$", regex=True).sum())
+    future_suffix_rows = int(symbols.str.upper().str.contains(r"FUT\s*$", regex=True).sum())
     return {
         "query": query,
         "returned_rows": int(len(frame)),
+        "columns": [str(c) for c in frame.columns],
+        "instrument_type_counts": type_counts,
         "option_rows": int(len(options)),
         "future_rows": int(len(futures)),
+        "option_suffix_rows": option_suffix_rows,
+        "future_suffix_rows": future_suffix_rows,
         "target_month_contract_rows": int(sum(
             1 for r in options if query.upper() in str(r.get("symbol", "")).upper()
         )),
         # Do not save contract symbols, scripcodes/tokens, or raw search listings.
+        "blank_symbol_rows": int((symbols.str.strip() == "").sum()) if len(symbols) else None,
+        "rows_with_scripcode": int(frame["scripcode"].notna().sum()) if "scripcode" in frame.columns else None,
         "status": "SYMBOLS_RETURNED",
     }
 
