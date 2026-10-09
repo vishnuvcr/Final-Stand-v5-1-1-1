@@ -18,18 +18,23 @@ for d in targets:
     item={"path":str(p),"sha256":hashlib.sha256(raw).hexdigest(),"size_bytes":len(raw)}
     df=pd.read_parquet(p)
     item["rows"]=len(df); item["columns"]=list(df.columns)
-    item["missing_columns"]=sorted(required-set(df.columns))
+    rename={"timestamp":"datetime","expiry":"expiry_date","strike":"strike_price","option_type":"right"}
+    canonical=df.rename(columns=rename).copy()
+    item["source_columns"]=list(df.columns)
+    item["canonical_columns"]=list(canonical.columns)
+    item["column_mapping"]=rename
+    item["missing_columns"]=sorted(required-set(canonical.columns))
     if item["missing_columns"]:
         item["schema_pass"]=False
         item["pass"]=False
         report["targets"][d]=item
         continue
     item["schema_pass"]=True
-    ts=pd.to_datetime(df["datetime"],errors="coerce"); ex=pd.to_datetime(df["expiry_date"],errors="coerce")
+    ts=pd.to_datetime(canonical["datetime"],errors="coerce"); ex=pd.to_datetime(canonical["expiry_date"],errors="coerce")
     item["bad_datetime"]=int(ts.isna().sum()); item["bad_expiry"]=int(ex.isna().sum())
     item["min_datetime"]=str(ts.min()); item["max_datetime"]=str(ts.max())
     item["expiry_values"]=sorted({str(x.date()) for x in ex.dropna().unique()})
-    item["duplicate_keys"]=int(df.duplicated(["datetime","expiry_date","strike_price","right"]).sum())
+    item["duplicate_keys"]=int(canonical.duplicated(["datetime","expiry_date","strike_price","right"]).sum())
     item["target_expiry_present"]=d in item["expiry_values"]
     item["target_trade_date_present"]=d in {str(x.date()) for x in ts.dropna().unique()}
     item["pass"]=item["schema_pass"] and item["bad_datetime"]==0 and item["bad_expiry"]==0 and item["duplicate_keys"]==0 and item["target_expiry_present"] and item["target_trade_date_present"]
