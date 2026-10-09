@@ -1,0 +1,46 @@
+name: Phase 52 — NSE Daily Bhavcopy Parser Regression Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase52-daily-bhavcopy-parser-test.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase52-bhavcopy-parser-test
+  cancel-in-progress: false
+
+jobs:
+  parser-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Checkout research branch adapter
+        uses: actions/checkout@v4
+        with:
+          repository: vishnuvcr/Final-Stand-v5-1-1-1
+          ref: phase-52-factor-conditioned-strategy-discovery
+          path: phase52-source
+          sparse-checkout: |
+            research/phase52/daily_bhavcopy_adapter.py
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install parser test dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy requests huggingface_hub
+
+      - name: Verify legacy F&O schema and OI/futures extraction
+        run: python phase52-source/research/phase52/daily_bhavcopy_adapter.py --self-test --self-test-only
