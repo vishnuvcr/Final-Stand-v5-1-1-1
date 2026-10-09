@@ -1243,3 +1243,12 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 - Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; threshold results: NOT COMPUTED; incomplete/non-conclusive per-leg evidence gate remains closed.
 - Candle range is not a bid/ask spread. No P&L, fills, exits or commercial/live strategy promotion inferred; holdout untouched.
 - [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)
+
+## Phase 54 OHLC-reference sensitivity — run 37992502101
+
+- Run: [37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101); workflow job status=success.
+- Input rows=480; input SHA-256=47904fac8b5fedc5fdca81af6cd555886f27ecec444d68403e4d2a5ccdb5621f; baseline statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Complete leg payload rows=380; incomplete=100; explicit hard prior-OI blockers=100; range-excluded rows with complete legs=379.
+- Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_COMPUTED_COVERAGE_ONLY; threshold results: 2%: 1/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=379); 3%: 1/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=379); 4%: 8/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=372); 5%: 24/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=356); 6%: 55/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=325); 8%: 91/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=289); 10%: 150/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=230); 12%: 227/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=153); 15%: 298/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=82); 20%: 345/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=35); 1000%: 380/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=0)
+- Candle range is not a bid/ask spread. No P&L, fills, exits or commercial/live strategy promotion inferred; holdout untouched.
+- [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)

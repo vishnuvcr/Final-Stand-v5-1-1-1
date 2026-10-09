@@ -1,12 +1,12 @@
 threshold_pct,computable,eligible_rows,share_of_planned_pct,oi_or_legs_rejected_rows,entry_data_rejected_rows,range_rejected_rows,reconciliation_total,reason
-2,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-3,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-4,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-5,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-6,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-8,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-10,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-12,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-15,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-20,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
-1000,False,,,,,,,Not computed: 298 rows lack complete per-leg eligibility/range evidence and are not conclusively rejected by an explicit observed prior-OI failure. Example: fe6add04f5cb79f886ae::01f752daf3bb0e90d7b1::EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD
+2,True,1,0.208333,100,0,379,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+3,True,1,0.208333,100,0,379,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+4,True,8,1.666667,100,0,372,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+5,True,24,5.0,100,0,356,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+6,True,55,11.458333,100,0,325,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+8,True,91,18.958333,100,0,289,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+10,True,150,31.25,100,0,230,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+12,True,227,47.291667,100,0,153,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+15,True,298,62.083333,100,0,82,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+20,True,345,71.875,100,0,35,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.
+1000,True,380,79.166667,100,0,0,480,Computed from complete leg payloads; known prior-OI failures remain excluded at every threshold.

@@ -1,31 +1,33 @@
-# Phase 54 OHLC-reference sensitivity feasibility audit
+# Phase 54 OHLC-reference sensitivity results
 
-**BLOCKED: alternate-threshold eligibility is not computable from the stored parent output.**
+**COMPUTED — coverage sensitivity only. No P&L or executable liquidity claim.**
 
 - Input rows: 480
-- Input SHA-256: 5052dcf08c20fe0bb921db2172ee7845327112a836145fe2eb91732015901abf
+- Input SHA-256: 47904fac8b5fedc5fdca81af6cd555886f27ecec444d68403e4d2a5ccdb5621f
 - Baseline statuses: {"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}
-- Complete per-leg payload rows: 82
-- Incomplete per-leg payload rows: 398
+- Complete per-leg payload rows: 380
+- Incomplete per-leg payload rows: 100
 - Explicit hard prior-OI blockers with sufficient evidence to reject the full strategy: 100
-- Range-excluded rows with complete leg payload: 81
+- Range-excluded rows with complete leg payload: 379
 
 | Threshold (%) | Eligible | Eligible (%) | OI/leg rejected | Entry-data rejected | Range rejected | Reconciled rows |
 |---:|---:|---:|---:|---:|---:|---:|
-| 2 | — | — | — | — | — | — |
-| 3 | — | — | — | — | — | — |
-| 4 | — | — | — | — | — | — |
-| 5 | — | — | — | — | — | — |
-| 6 | — | — | — | — | — | — |
-| 8 | — | — | — | — | — | — |
-| 10 | — | — | — | — | — | — |
-| 12 | — | — | — | — | — | — |
-| 15 | — | — | — | — | — | — |
-| 20 | — | — | — | — | — | — |
-| 1000 | — | — | — | — | — | — |
+| 2 | 1 | 0.208 | 100 | 0 | 379 | 480 |
+| 3 | 1 | 0.208 | 100 | 0 | 379 | 480 |
+| 4 | 8 | 1.667 | 100 | 0 | 372 | 480 |
+| 5 | 24 | 5.000 | 100 | 0 | 356 | 480 |
+| 6 | 55 | 11.458 | 100 | 0 | 325 | 480 |
+| 8 | 91 | 18.958 | 100 | 0 | 289 | 480 |
+| 10 | 150 | 31.250 | 100 | 0 | 230 | 480 |
+| 12 | 227 | 47.292 | 100 | 0 | 153 | 480 |
+| 15 | 298 | 62.083 | 100 | 0 | 82 | 480 |
+| 20 | 345 | 71.875 | 100 | 0 | 35 | 480 |
+| 1000 | 380 | 79.167 | 100 | 0 | 0 | 480 |
 
 ## Interpretation
-- This run did not compute alternate-threshold counts because at least one row lacked sufficient per-leg evidence to classify safely.
-- A multi-leg row cannot be assumed eligible from a partial leg payload; the audit fails closed unless an observed prior-OI failure conclusively rejects the whole strategy at every threshold.
+- Threshold counts are descriptive eligibility/coverage diagnostics only; they do not validate executable fills, bid/ask spread, exits or profitability.
+- The 100 rows explicitly blocked by observed prior-bar OI below the fixed minimum remain rejected at every threshold. The remaining leg payload is unnecessary for those rows because one required leg failure is sufficient to reject the complete multi-leg strategy.
+- Every range-excluded row and the single baseline replay-pass row has a complete selected-leg payload; alternate thresholds were computed only from those leg-specific OI, entry-status and range-proxy fields.
 - The OHLC high-low/open percentage is a candle-range proxy, not a quoted bid/ask spread or executable liquidity measure.
-- This is not a backtest: no exits, fills, fees, costs, P&L, strategy superiority or promotion can be inferred.
+- No P&L, fill, exit, transaction-cost, Sharpe, drawdown or strategy ranking calculations were performed; no holdout used and no strategy promoted.
+- The pinned source is declared CC BY-NC 4.0; commercial/live strategy promotion remains prohibited by the source-license and execution-data gates.
