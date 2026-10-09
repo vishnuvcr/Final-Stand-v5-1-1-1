@@ -121,3 +121,12 @@ User requested research continuation. Phase 53 had completed a free-source audit
 - Range-excluded rows with complete leg payload=0.
 - Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; alternate thresholds are not computed because parent output lacks complete leg-level evidence.
 - No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
+
+## Automated run 37988153104
+
+- Run: [37988153104](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988153104); workflow job status=success.
+- Input rows=480; baseline statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Complete leg payload rows=21; incomplete=459; empty payloads=373; partial payloads=86.
+- Range-excluded rows with complete leg payload=0.
+- Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; alternate thresholds are not computed because parent output lacks complete leg-level evidence.
+- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
