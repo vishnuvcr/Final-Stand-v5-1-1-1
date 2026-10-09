@@ -2,7 +2,7 @@
 
 **Overall:** OPEN — bootstrap and source inventory  
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
-**Plan version:** 1.0  
+**Plan version:** 1.1 (pre-test amendment PA-001)  
 **Latest checkpoint:** 2026-10-09 (Asia/Kolkata)
 
 | Gate | State | Evidence / next action |
@@ -11,7 +11,7 @@
 | New branch | PASS | Dedicated branch exists. |
 | User repository inventory | IN PROGRESS | 40 accessible repositories inventoried. Continue root-document/code search by repository; several do not expose a root README through the connected file API and require alternative-path inspection. |
 | Literature/source discovery | IN PROGRESS | Initial sources include NSE India VIX/contract information, option-volume/OI literature, public GitHub strategy implementations and user-designated YouTube source tracks. Expand systematically and log each lead. |
-| Candidate registry | IN PROGRESS | Target: 300 unique structure × selector hypothesis IDs (not 300 claimed structural families); validate IDs, source lineage and risk tags. |
+| Candidate registry | IN PROGRESS | 312 unique structure × selector hypothesis IDs: 52 families × 6 selector modes (not 300 claimed structural families); validate IDs, source lineage and risk tags. |
 | Data coverage and licensing | NOT STARTED / GATED | Preserve the Phase 51 gap for 2026-07-28 and 2026-08-04. No P&L until timestamp/contract coverage and licensing pass. |
 | Full config enumeration | NOT STARTED | Freeze finite grids, enumerate applicable Cartesian products into resumable deterministic shards. |
 | Replay engine/data integration | NOT STARTED | Reuse existing audited engines where semantics match; otherwise implement source-faithful generic multi-leg replay and independent tests. |
@@ -35,3 +35,12 @@ A green workflow alone is not a scientific pass. Every numerical result needs a 
 ## Latest action
 
 New phase branch created; plan version 1.0 and its seed logs are being committed. No numerical Phase 52 P&L has been calculated yet.
+
+
+## Bootstrap additions — 2026-10-09
+
+- Registered 52 explicit strategy-family rows in `research/phase52/strategy_specifications.csv`; ambiguous native presets remain blocked for replay until source code/leg geometry is reconciled.
+- Frozen finite grid version `phase52-grid-v1.1`; cost/stress scenarios are a per-configuration evaluation output, not an optimizable axis.
+- Added deterministic Cartesian configuration enumerator and registry/specification audit. It does not calculate strategy P&L.
+- Added recurring/manual discovery runner for public Hugging Face/GitHub catalogs and YouTube when `YOUTUBE_API_KEY` is configured.
+- **Current gate:** source discovery + configuration queue bootstrap. Source-faithful numerical replay is still NOT STARTED; all 312 hypotheses remain REGISTERED_NOT_TESTED.
