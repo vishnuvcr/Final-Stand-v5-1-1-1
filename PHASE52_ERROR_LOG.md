@@ -397,3 +397,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** The model-based strike choice would have used information unavailable at the OHLC open fill. This is an audit-engine timing error; no Phase52 grid P&L was computed.
 - **Correction:** Delta selection now uses exact prior completed one-minute option/index closes at `entry_ts − 1 minute`, checks OI from that prior bar, and separately requires the selected contract to have a valid exact entry-time OHLC bar/open. No nearest-minute fallback is used; missing exact prior data are recorded.
 - **Status:** PATCHED; full audit rerun pending.
+
+
+## F52-038 — ATM-offset OI gate used same-entry-bar OI for an open fill — PATCHED / RERUN PENDING
+
+- **Date:** 2026-10-09.
+- **Observed:** The selected ATM-offset audit read OI from the exact entry-time bar and then checked it as an eligibility gate while separately assuming an entry fill at that bar's open.
+- **Impact:** Coverage can be overstated if the OI field is only observed after the bar completes; no P&L was calculated in the audit.
+- **Correction:** Check OI>=100 on the exact prior completed one-minute bar at entry_ts minus one minute, require a unique valid exact entry bar/open independently, retain current-bar OI as diagnostic only, and fail closed when prior OI is missing. No OI forward-fill is permitted.
+- **Status:** Code patched on main and research branch. The currently running factor workflow checked out the earlier commit and is not accepted for this selected-leg gate. Rerun after that run finishes; delta audit queued afterward.
