@@ -60,7 +60,15 @@ def main() -> int:
     if MANIFEST.exists():
         try: manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         except Exception: manifest = None
-    outcome = "PASS" if JOB_STATUS == "success" and report and report.get("historical_pnl_calculated") else "FAILED_OR_INCOMPLETE"
+    accepted = bool(
+        JOB_STATUS == "success" and report
+        and report.get("historical_pnl_calculated")
+        and int(report.get("replay_exception_count", 0)) == 0
+        and int(report.get("source_file_errors", 0)) == 0
+        and int(report.get("executed_event_rows", 0)) > 0
+        and int(report.get("cost_scenario_rows", 0)) > 0
+    )
+    outcome = "PASS" if accepted else "FAILED_OR_INCOMPLETE"
     summary = (
         f"- **Run:** [{RUN_ID}](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{RUN_ID}); job={JOB_STATUS}; "
         f"self-test={SELF_TEST}; plan-only={PLAN_STAGE}; replay={REPLAY_STAGE}.\n"
@@ -85,7 +93,7 @@ def main() -> int:
     status = status_path.read_text(encoding="utf-8")
     if f"run {RUN_ID}" not in status:
         line = next((x for x in status.splitlines() if x.startswith("**Overall:**")), "**Overall:** OPEN")
-        if JOB_STATUS == "success" and report:
+        if accepted:
             new_line = "**Overall:** OPEN — bounded historical BASELINE pilot completed; descriptive only, no promotion; factor routers/full grid remain gated"
         else:
             new_line = "**Overall:** OPEN — bounded historical pilot did not complete cleanly; see run-specific failure log; no result accepted"
@@ -102,7 +110,7 @@ def main() -> int:
         "- Event-level exclusions and six cost cases are in results/phase52/historical_pilot/.\n"
         "- Primary market data are CC BY-NC 4.0 and the pilot is not commercial/live evidence.\n"
     ))
-    if JOB_STATUS != "success" or not report:
+    if not accepted:
         error_block = (
             f"## F52-HIST-{RUN_ID} — Bounded historical pilot failed or did not produce an accepted report\n\n"
             f"- **Date:** {now}\n- **Workflow:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{RUN_ID}\n"
