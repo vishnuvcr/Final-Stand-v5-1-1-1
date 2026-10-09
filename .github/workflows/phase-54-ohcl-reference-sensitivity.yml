@@ -33,7 +33,6 @@ jobs:
           git fetch origin phase-54-ohcl-reference-sensitivity
           git checkout phase-54-ohcl-reference-sensitivity
           git reset --hard origin/phase-54-ohcl-reference-sensitivity
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -46,6 +45,37 @@ jobs:
           python research/phase54/ohlc_reference_sensitivity.py --self-test-only
       - name: Run frozen-candidate sensitivity (no P&L)
         run: python research/phase54/ohlc_reference_sensitivity.py
+      - name: Validate frozen input reconciliation and computed thresholds
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path("results/phase54/ohlc_reference_sensitivity/report.json").read_text())
+          assert report["input"]["row_count"] == 480
+          assert report["baseline_status_counts"] == {
+              "BLOCKED_LEG_ELIGIBILITY": 100,
+              "EXCLUDED_OHLC_RANGE_PROXY": 379,
+              "REPLAY_PASS": 1,
+          }, report["baseline_status_counts"]
+          assert report["input"]["input_sha256"], "missing input fingerprint"
+          assert len(report["threshold_sensitivity"]) == 11
+          if report["frozen_rules"]["threshold_sensitivity_computed"]:
+              for row in report["threshold_sensitivity"]:
+                  assert row["computable"] is True
+                  assert row["reconciliation_total"] == 480
+                  assert row["eligible_rows"] + row["oi_or_legs_rejected_rows"] + row["entry_data_rejected_rows"] + row["range_rejected_rows"] == 480
+              assert report["oi_rejections_invariant_across_thresholds"] is True
+              assert report["entry_data_rejections_invariant_across_thresholds"] is True
+              assert report["eligible_rows_monotonic_non_decreasing"] is True
+          else:
+              assert all(row["computable"] is False for row in report["threshold_sensitivity"])
+          print(json.dumps({
+              "status": report["status"],
+              "input_sha256": report["input"]["input_sha256"],
+              "threshold_sensitivity_computed": report["frozen_rules"]["threshold_sensitivity_computed"],
+              "thresholds": report["threshold_sensitivity"],
+          }, indent=2))
+          PY
       - name: Upload report artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -73,14 +103,25 @@ jobs:
           report = json.loads(path.read_text()) if path.exists() else None
           if report:
               statuses = report["baseline_status_counts"]
+              threshold_lines = report.get("threshold_sensitivity", [])
+              if report.get("frozen_rules", {}).get("threshold_sensitivity_computed"):
+                  threshold_summary = "; ".join(
+                      f"{x['threshold_pct']}%: {x['eligible_rows']}/{report['input']['row_count']} eligible "
+                      f"(OI/leg reject={x['oi_or_legs_rejected_rows']}, entry-data reject={x['entry_data_rejected_rows']}, "
+                      f"range reject={x['range_rejected_rows']})"
+                      for x in threshold_lines
+                  )
+              else:
+                  threshold_summary = "NOT COMPUTED; incomplete/non-conclusive per-leg evidence gate remains closed."
               summary = (
                   f"- Run: [{run_id}]({run_url}); workflow job status={status}.\n"
-                  f"- Input rows={report['input']['row_count']}; baseline statuses={json.dumps(statuses, sort_keys=True)}.\n"
+                  f"- Input rows={report['input']['row_count']}; input SHA-256={report['input']['input_sha256']}; "
+                  f"baseline statuses={json.dumps(statuses, sort_keys=True)}.\n"
                   f"- Complete leg payload rows={report['complete_leg_payload_rows']}; incomplete={report['incomplete_leg_payload_rows']}; "
-                  f"empty payloads={report['empty_leg_payload_rows']}; partial payloads={report['partial_leg_payload_rows']}.\n"
-                  f"- Range-excluded rows with complete leg payload={report['range_excluded_rows_with_complete_leg_payload']}.\n"
-                  f"- Sensitivity decision={report['status']}; alternate thresholds are not computed because parent output lacks complete leg-level evidence.\n"
-                  "- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.\n"
+                  f"explicit hard prior-OI blockers={report.get('known_hard_oi_block_rows', 0)}; "
+                  f"range-excluded rows with complete legs={report['range_excluded_rows_with_complete_leg_payload']}.\n"
+                  f"- Sensitivity decision={report['status']}; threshold results: {threshold_summary}\n"
+                  "- Candle range is not a bid/ask spread. No P&L, fills, exits or commercial/live strategy promotion inferred; holdout untouched.\n"
               )
           else:
               summary = f"- Run: [{run_id}]({run_url}); workflow job status={status}. Report missing; no conclusion accepted.\n"
