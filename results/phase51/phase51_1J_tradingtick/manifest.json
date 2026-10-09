@@ -1,12 +1,12 @@
 {
   "audit": "Phase 51-1J TradingTick public-source audit",
-  "created_utc": "2026-10-09T09:56:21.702969+00:00",
+  "created_utc": "2026-10-09T10:04:49.164178+00:00",
   "source": "https://tradingtick.in",
   "targets": [
     "2026-07-28",
     "2026-08-04"
   ],
-  "classification": "INTRADAY_PAYLOAD_CANDIDATE_REQUIRES_RAW_COVERAGE_REVIEW",
+  "classification": "2026_07_28_SNAPSHOT_OR_DAILY_BARS_ONLY__2026_08_04_NOT_LISTED",
   "pnl_eligible": false,
   "pages": {
     "historical_chain": {
@@ -506,14 +506,14 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Nifty Option Dashboard\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Option Chain Historical\n⬅ Previous\nNext ➡\nTurnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR\nTurnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR\n\n\n\t\n\t95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575\t\n\t\n\t\n\t\n\n1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11\n1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84\n10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37\n19680490\t1261472\t832715\t-323310\t119.05\t23850\t0.2\t-568230\t5219565\t6501861\t101000000\t23985.35\t6.27\n77188776\t4948061\t2937155\t-642850\t68.65\t23900\t0.6\t1164410\t13519415\t18346898\t285000000\t23985.35\t4.6\n231000000\t14829028\t9277060\t5550220\t19.6\t23950\t2.95\t12597910\t22580935\t35295089\t550000000\t23985.35\t2.43\n629000000\t40300828\t31166200\t18697185\t0.85\t24000\t27.3\t2452060\t16020030\t37388862\t584000000\t23985.35\t0.51\n393000000\t25118624\t13107575\t6866015\t0.25\t24050\t78.5\t1123590\t4020315\t10701584\t168000000\t23985.35\t0.31\n239000000\t15245129\t10908625\t486005\t0.2\t24100\t130.3\t-666185\t2858765\t4912449\t77285384\t23985.35\t0.26\n101000000\t6458519\t5204875\t-398190\t0.15\t24150\t180\t-151905\t418730\t1188407\t18771428\t23985.35\t0.08\n92670728\t5890841\t7875985\t-6862505\t0.15\t24200\t229.8\t-718445\t1517100\t728586\t11554834\t23985.35\t0.19\n38751268\t2458301\t4757935\t-1106105\t0.1\t24250\t279.9\t-36010\t340730\t120315\t1915887\t23985.35\t0.07\n35106728\t2222555\t6965725\t-3661840\t0.1\t24300\t326\t-361465\t597220\t101541\t1623602\t23985.35\t0.09\n\t\t\t\t\t\t\t\t\t\t\t\t\nShowing 1 to 13 of 13 entries\nNIFTY OPTION BACKTEST\nBear Call Spread\nNifty Bear Call Spread Strategy Backtest\nBear Put Spread\nNifty Bear Put Spread Strategy Backtest\nBull Call Spread\nNifty Bull Call Spread Strategy Backtest\nBull Put Spread\nNifty Bull Put Spread Strategy Backtest\nLong Call Backtest\nNifty Long Call Strategy Backtest\nLong Put Backtest\nNifty Long Put Strategy Backtest\nLong Straddle Backtest\nNifty Long Straddle Strategy Backtest\nLong Strangle Backtest\nNifty Long Strangle Strategy Backtest\nShort Call Backtest\nNifty Short Call Strategy Backtest\nShort Put Backtest\nNifty Short Put Strategy Backtest\nShort Straddle Backtest\nNifty Short Straddle Strategy Backtest\nShort Strangle Backtest\nNifty Short Strangle Strategy Backtest\nWhat is Nifty Option Chain Historical Data?\n\nAt its core, an option chain is a comprehensive table that lists all the available Call and Put option contracts for the Nifty 50 index at a specific point in time. When we add the word \"historical\" to it, we are referring to a snapshot of this table from a past trading session. So, nifty option chain historical data is essentially a detailed recor",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Nifty Option Dashboard\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Option Chain Historical\n⬅ Previous\nNext ➡\nTurnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR\nTurnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR\n\n\n\t\n\t95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575\t\n\t\n\t\n\t\n\n1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11\n1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84\n10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37\n19680490\t1261472\t832715\t-323310\t119.05\t23850\t0.2\t-568230\t5219565\t6501861\t101000000\t23985.35\t6.27\n77188776\t4948061\t2937155\t-642850\t68.65\t23900\t0.6\t1164410\t13519415\t18346898\t285000000\t23985.35\t4.6\n231000000\t14829028\t9277060\t5550220\t19.6\t23950\t2.95\t12597910\t22580935\t35295089\t550000000\t23985.35\t2.43\n629000000\t40300828\t31166200\t18697185\t0.85\t24000\t27.3\t2452060\t16020030\t37388862\t584000000\t23985.35\t0.51\n393000000\t25118624\t13107575\t6866015\t0.25\t24050\t78.5\t1123590\t4020315\t10701584\t168000000\t23985.35\t0.31\n239000000\t15245129\t10908625\t486005\t0.2\t24100\t130.3\t-666185\t2858765\t4912449\t77285384\t23985.35\t0.26\n101000000\t6458519\t5204875\t-398190\t0.15\t24150\t180\t-151905\t418730\t1188407\t18771428\t23985.35\t0.08\n92670728\t5890841\t7875985\t-6862505\t0.15\t24200\t229.8\t-718445\t1517100\t728586\t11554834\t23985.35\t0.19\n38751268\t2458301\t4757935\t-1106105\t0.1\t24250\t279.9\t-36010\t340730\t120315\t1915887\t23985.35\t0.07\n35106728\t2222555\t6965725\t-3661840\t0.1\t24300\t326\t-361465\t597220\t101541\t1623602\t23985.35\t0.09\n\t\t\t\t\t\t\t\t\t\t\t\t\nShowing 1 to 13 of 13 entriesTrack Commodities\nNIFTY OPTION BACKTEST\nBear Call Spread\nNifty Bear Call Spread Strategy Backtest\nBear Put Spread\nNifty Bear Put Spread Strategy Backtest\nBull Call Spread\nNifty Bull Call Spread Strategy Backtest\nBull Put Spread\nNifty Bull Put Spread Strategy Backtest\nLong Call Backtest\nNifty Long Call Strategy Backtest\nLong Put Backtest\nNifty Long Put Strategy Backtest\nLong Straddle Backtest\nNifty Long Straddle Strategy Backtest\nLong Strangle Backtest\nNifty Long Strangle Strategy Backtest\nShort Call Backtest\nNifty Short Call Strategy Backtest\nShort Put Backtest\nNifty Short Put Strategy Backtest\nShort Straddle Backtest\nNifty Short Straddle Strategy Backtest\nShort Strangle Backtest\nNifty Short Strangle Strategy Backtest\nWhat is Nifty Option Chain Historical Data?\n\nAt its core, an option chain is a comprehensive table that lists all the available Call and Put option contracts for the Nifty 50 index at a specific point in time. When we add the word \"historical\" to it, we are referring to a snapshot of this table from a past trading session. So, nifty option chain historical data is essentially",
         "scripts": [
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
-            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610070101/show_ads_impl.js?bust=122881492",
             "inline": ""
           },
           {
@@ -593,27 +593,27 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWjMLcs30yL-5Ml0u2xu8-sOT9bRu-69W4eSI6UvjljK0AYb2uLnIGnZLvGvv1yQlTs3Su9B2ePTzgBKepIACz15X3P8xkarEH13tf4DW7m1wVdQ162rw9Wm3ewDurp_GNJ4rpH-w==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg1LDcyNDAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDldXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxV9Xdt6reLcD2BtRT8TKU9-KfgKEPBTods-zOU8wHZIaN2G_jzpPLh7o7b_o4TGexgGa48yzk-hc2X6Uis7K6Tf9NGVzYkGTCbGObpbWeuLIvPpbTPIVF3LPJO6le4Mb5t0nK25yQ==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTQwMjkxLDcyMjAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3NzRdXV0iXSxbMjMsIjE3OTE1NDAyOTEiXSxbMzUsIjE3OTE1NDAyOTEiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxU7VfzOcCEM7-Vj4oyCd8Xc4JhwNtFDEgkbweYG5EJKI1yn0fNacdHpXmBnTPATxU8PsV0HSnNkhXE70nGSjDcPQudFc6xa8yFa2XGDTqnAwzP8-3Dbwe-duKIgBpbK5Bvuib1ZCA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg1LDc5NjAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTFdXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDldXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdLFsxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTUzOTc4NSw3MzY5MDkwMDBdXV1dIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXyoU0KUnFR3d0JRBkANLUk1erwB1wvae4urIXJjtLDlclckAbpiIcRNwHe9gGQhBYj4a3Ogudo8iW-ZW-etPZUlxokSsIYzMUtHXR3vCGeYsK_MOZjckfIuwNHmSTQY6TEebcoJg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTQwMjkxLDgwMTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTFdXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3NzRdXV0iXSxbMjMsIjE3OTE1NDAyOTEiXSxbMzUsIjE3OTE1NDAyOTEiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1NDAyOTEsNzM5Njc3MDAwXV1dXSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUuzr6jxq92WQKoCPk7ERVDBivwDBDyafFVQXH-mUHOlwNBBrXx5xatlp0Fb2mf1iqWDVGvxkaRBeaFu_VLbjgj4xocVA3nL6_Ll2zoPV0OKip3_3WC3-_3u4nZ8f7fQQk5KUaZmg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDU0OTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA5XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTUzNDAyNTIsOTUzNDAyNTRdXSJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3ODUsNzM2OTA5MDAwXV1dXSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxV7D8zFEbPhIx8iGkvxYRhhfUm-oGU7X3lTSVxpPjWin3aHkpP9VaufN8v1ut4mTtDAD4RX2zEw8PkeS7-AVmGwo9R0qmHZAs_Jtk7eKHVw7o4g71Hx2_fbjYVbCj_DCC-wxsZT6w==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTQwMjkyLDU0MTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNzc0XV1dIl0sWzIzLCIxNzkxNTQwMjkxIl0sWzM1LCIxNzkxNTQwMjkxIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTQwMjkxLDczOTY3NzAwMF1dXV0iXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXjz6Fj6XmNAZq8dL1F3ucxo8-t-DyDeWVNv8Y9mIC22qYTzeXf--ADg9w6ngQoEQNvvpG7QLr-pbbNRuPSlc-eafb9xSX5BWzleTHTnxQsnIAsGQNporunzDu7LxUIzB50zoIdQA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDYyMDAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA5XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTUzNDAyNTIsOTUzNDAyNTRdXSJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3ODUsNzM2OTA5MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWUy1AKouzD09r4pL4o2i4gyTmyn3ECPwcpmBNY50I-jX7f0zCBtIfQNWOu6BjzXS2yYucDqDwCggDiIGfdkyBlNRdWjE6mD_RYPaRuQmrRKoZuZDSCay-Zb7w-D9EnXn-gZlMpuA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTQwMjkyLDU4ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNzc0XV1dIl0sWzIzLCIxNzkxNTQwMjkxIl0sWzM1LCIxNzkxNTQwMjkxIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTQwMjkxLDczOTY3NzAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTU0MDI5Miw1NTk4NzIwMDBdLFsxMjA5NjAwXV1dXSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXq15q-7GA9R60IhS39vvxNIpDEs69HiCPJ-rbXbJvguOl9iI0-T6SWtE59G2syteqt5enWpMwIXYwYkoihM4CUGKsJaBH_DLO_GKvfPO-PSrasGaesN0kIxuil_Awil3oNBk22jA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDY1NzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA5XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTUzNDAyNTIsOTUzNDAyNTRdXSJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3ODUsNzM2OTA5MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwxLFsxNzkxNTM5Nzg2LDYzNjUwNTAwMF0sMF1dIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVx844LT3LDQAYeJAK7KmfEW1FO0l01wOK30apqQj99p8asWewLd86lIWigv6811RT1P-quAq1UxbmXKBsE6kbrGxyGcbSFggwVwWa7WCY_bewzv9RXBY5JcLeOCOtDA7wQt3-gDw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTQwMjkyLDYzMzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNzc0XV1dIl0sWzIzLCIxNzkxNTQwMjkxIl0sWzM1LCIxNzkxNTQwMjkxIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTQwMjkxLDczOTY3NzAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTU0MDI5Miw1NTk4NzIwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTU0MDI5Miw2MDkzNzcwMDBdLDBdXSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXf4hO_Hfy-wZY8YQSjhhCs6s75dX11syOmmt7t_ihKbCy03krH2e2HBV8tQXCIQxJzuhkuf1llfWorx4UfvalZY1lqk2OU803pN6XEbiWmzQvJiw1ow9J4mzLk86o6laullbaSiw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5Nzg2LDcyMzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDldXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdLFsxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTUzOTc4NSw3MzY5MDkwMDBdXV1dIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1Mzk3ODYsNTkxNDI0MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1Mzk3ODYsNjM2NTA1MDAwXSwwXV0iXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWS4u-ByMzA5zBh65bE2MbLrcLbtDyndKFqvDwTn4DsWtHo1QlfDQRl5gbmI4ihgj7NWCv4100GFr4gUrXFyyp00oN6Z75NoAlVfOV7bgBY6bQpDd3AZJundoY2PuIXmAfIRP3wIQ==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTQwMjkyLDY3ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksMTEsNiwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3NzRdXV0iXSxbMjMsIjE3OTE1NDAyOTEiXSxbMzUsIjE3OTE1NDAyOTEiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXSxbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1NDAyOTEsNzM5Njc3MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTQwMjkyLDU1OTg3MjAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwxLFsxNzkxNTQwMjkyLDYwOTM3NzAwMF0sMF1dIl1dXQ",
             "inline": ""
           },
           {
@@ -1228,13 +1228,48 @@
               "name": "",
               "aria": "",
               "labels": [],
-              "parentText": "Expiry Month\nSelect Month",
-              "disabled": true,
+              "parentText": "Expiry Month\nSelect Month\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly",
+              "disabled": false,
               "value": "",
               "options": [
                 {
                   "text": "Select Month",
                   "value": "",
+                  "disabled": false
+                },
+                {
+                  "text": "January",
+                  "value": "January",
+                  "disabled": false
+                },
+                {
+                  "text": "February",
+                  "value": "February",
+                  "disabled": false
+                },
+                {
+                  "text": "March",
+                  "value": "March",
+                  "disabled": false
+                },
+                {
+                  "text": "April",
+                  "value": "April",
+                  "disabled": false
+                },
+                {
+                  "text": "May",
+                  "value": "May",
+                  "disabled": false
+                },
+                {
+                  "text": "June",
+                  "value": "June",
+                  "disabled": false
+                },
+                {
+                  "text": "July",
+                  "value": "July",
                   "disabled": false
                 }
               ]
@@ -1473,10 +1508,10 @@
               "row_count": 6
             }
           ],
-          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Bank Nifty Mood\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty "
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Nifty Option Dashboard\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max P"
         }
       },
-      "request_count": 1364,
+      "request_count": 638,
       "initial_selects": [
         {
           "index": 0,
@@ -1784,8 +1819,7 @@
           "Advantages and Disadvantages of Historical Option Charts",
           "NIFTY OPTION BACKTEST",
           "NIFTY HISTORICAL DATA",
-          "Opt out of the sale or sharing of personal information",
-          "Help us Keep Trading Tick Free ❤️"
+          "Opt out of the sale or sharing of personal information"
         ],
         "buttons": [
           {
@@ -1885,14 +1919,14 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Track Commodities\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trading tools subscription\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts.\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful.\n\nHow Traders Use Historical Option Charts\n\n",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Track Commodities\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trading tools subscription\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts.\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful. Trading tools subscription\n\nHow Traders Use",
         "scripts": [
           {
             "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610070101/show_ads_impl.js?bust=122881492",
             "inline": ""
           },
           {
@@ -1968,15 +2002,15 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxX_x0yEUCrv2X3sdy7Dv6Ug61IeXtYGI5ObhSMbo3x9ks3pOD-jq5YrwYbGV1qVkVMBRXTyRtMXyW02fSRWfMTNluMQLwSn0rl5kGzeA3-kFqnSMwMvUVM3uGbv9i_pr0WesN5y4A==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MDQsNTA4MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk3OTksNDk5ODU1MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5Nzg2LDYzNjUwNTAwMF0sMF1dIl0sWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDgzNV1dXSJdLFsyMywiMTc5MTUzOTc4NCJdLFszNSwiMTc5MTUzOTc4NSJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUlL_Vgdp0IQIDm70A86JvSwgEKeQVCqQhXpR3RDDezBumpVHBAlrpHQMAug6zjEoKuFCLkUyQ90XJ1bM0EwdSiCMvgQZPmVAsEoC1kLdB26V7kTfFPCmy8q0nhir-YhzutkzJP6w==?fccs=W1siQUtzUm9sOXZWV2dWS3pCWC1JNUVJdXdjQlo1SF9RTmZYTEhTeDBRdGZIeUJDUm1PWC1na2lPYV81QW5YVG0wMGlhQ05YbjJ0ZFlyNmlwTklsWVpOR0JJbVNSYWRCNGpVVkpZRTEtekZZX1Z1T3VOOHhmemhPc3lkME1LWGRWZWRTQ21ES1BYQUE2cU5nWUZYNDhxTnRYVi1qSWEzR3pCanV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1NDAzMDgsOTg3MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1NDAzMDQsMzcwMzU2MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTQwMjkyLDU1OTg3MjAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTQwMjkyLDYwOTM3NzAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDUzMV1dXSJdLFsyMywiMTc5MTU0MDI5MSJdLFszNSwiMTc5MTU0MDI5MSJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVJa7tayzIi7Az6dM5vEDsCqdcGy4O3HRKqYM-M214_BB9FogfIa9aGfXYsU543g8-fUB2le1uPa9iAJNduEJPTlM7csNgXY1oX-HE6Us6IQGF07Ujxi-ECCXISCVoG0c_8glseFQ==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MDQsNTc5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMTMsIltcIkRCQUJMfkJWUXFBQUFBQWdcIixbWzcsWzE3OTE1Mzk4MDQsNTIwODYxMDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5Nzg2LDU5MTQyNDAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5Nzg2LDYzNjUwNTAwMF0sMF1dIl0sWzgsImJySkpReWw1RXd3Il0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDgzNV1dXSJdLFsyMywiMTc5MTUzOTc4NCJdLFszNSwiMTc5MTUzOTc4NSJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUPxwpOwxoB6Ok77VzamZJ5-MXQZ90Irgz7mTtJ3Zqm8muI_1F164NJAyKfuFSxbYttnp8S81EoyyoAn1HKlK9d46IoPMe8bs7qvmioWxbSsLJet_j9a_SLb67KLKcxjaz3E9tw-w==?fccs=W1siQUtzUm9sOXZWV2dWS3pCWC1JNUVJdXdjQlo1SF9RTmZYTEhTeDBRdGZIeUJDUm1PWC1na2lPYV81QW5YVG0wMGlhQ05YbjJ0ZFlyNmlwTklsWVpOR0JJbVNSYWRCNGpVVkpZRTEtekZZX1Z1T3VOOHhmemhPc3lkME1LWGRWZWRTQ21ES1BYQUE2cU5nWUZYNDhxTnRYVi1qSWEzR3pCanV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1NDAzMDksOTMwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5LDExXV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvbmlmdHktb3B0aW9uLXByaWNlLWNoYXJ0cy5waHAiLG51bGwsW1sxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTU0MDMwOSwxNDk3MDAwXV1dXSJdLFsyMSwiW1tbWzUsMSxbM11dLFsxNzkxNTQwMjkyLDU1OTg3MjAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTQwMjkyLDYwOTM3NzAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDUzMV1dXSJdLFsyMywiMTc5MTU0MDI5MSJdLFszNSwiMTc5MTU0MDI5MSJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUVvwLSCld5wbuXrO5Alrn5iHbQB5MkCc5L9nEln9WDy0--4haSU11bYPRQbcrWvoKiz_jAKXLCYgQyIpzYpf2pXd9aswpvqE49iKHlqtTvuMcXVUksN-gnj5EhLE9PV-WMoiuGWg==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MDUsMzQ2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTM5ODA0LDUyMDg2MTAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTc4Niw1OTE0MjQwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTUzOTc4Niw2MzY1MDUwMDBdLDBdXSJdLFs4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw4MzVdXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxV8_raSsn_IB1QuQv__o37hqvHce2oATRf8NNsNZNpaXzAuQ7VQ_MivoeQgdpzLnM0aGHUZ5tvRwAu7dWANsmeivguN-XzRw2gA5qtcij5vmabKTs3YiSSMDvackxwcQmdiheK83Q==?fccs=W1siQUtzUm9sOXZWV2dWS3pCWC1JNUVJdXdjQlo1SF9RTmZYTEhTeDBRdGZIeUJDUm1PWC1na2lPYV81QW5YVG0wMGlhQ05YbjJ0ZFlyNmlwTklsWVpOR0JJbVNSYWRCNGpVVkpZRTEtekZZX1Z1T3VOOHhmemhPc3lkME1LWGRWZWRTQ21ES1BYQUE2cU5nWUZYNDhxTnRYVi1qSWEzR3pCanV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1NDAzMDksODQxMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTQwMzA5LDE0OTcwMDBdXV1dIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1NDAyOTIsNTU5ODcyMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1NDAyOTIsNjA5Mzc3MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsNTMxXV1dIl0sWzIzLCIxNzkxNTQwMjkxIl0sWzM1LCIxNzkxNTQwMjkxIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
@@ -2587,10 +2621,10 @@
               "row_count": 9
             }
           ],
-          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\nOption\nCE\nPE\nStrike\nSelect Strike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold"
+          "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Nifty intraday charts\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\nOption\nCE\nPE\nStrike\nSelect Strike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Histo"
         }
       },
-      "request_count": 780,
+      "request_count": 581,
       "initial_selects": [
         {
           "index": 0,
@@ -2828,8 +2862,7 @@
           "NIFTY LIVE F&O",
           "Nifty Option Chart",
           "NIFTY HISTORICAL F&O",
-          "Opt out of the sale or sharing of personal information",
-          "Help us Keep Trading Tick Free ❤️"
+          "Opt out of the sale or sharing of personal information"
         ],
         "buttons": [
           {
@@ -2913,10 +2946,10 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry\n Historical PCR Data OLD PCR\nDATA \nNifty Historical PCR Data\n Futures Basis History OLD FUT\nBASIS HIST \nNifty Basis Historical Data\n Buy & Hold Call Option BUY HOLD\nCALL \nNifty Buy and Hold Call Option Until Expiry\n Buy & Hold Put Option BUY HOLD\nPUT\nNifty Buy and Hold Put Option Until Expiry\n\nOption Analytics websiteOption chain explorer\n\nCharts\nNifty Intraday\nNifty Expiry Day\nShare Price Target\nTick Screener\nBacktest\nNifty Short Straddle\nNifty Gap up\nNifty Gap Down\nStandard Deviation\nOption  Data\nOI Charts\nOld Option Chain\nOption Charts\nCompany\nAbout us\nContact us\nDisclaimer\nAffiliate Disclaimer\nPrivacy Policy\nConsent Policy\nTerms and Conditions\nDisclaimer: Trade at your own risk. we dont recommend buying and selling. we dont give tips.\n      \n© 2025 Copyright: Trading Tick\n\nBuilt for Traders, Supported by You\n\nHelp us Keep Trading Tick Free ❤️\n\nRunning Live Options Data & Analytics Requires High-Performance Servers & its expensive. We want to keep Trading Tick 100% FREE for you. All we ask is few seconds to view a Short ad.\n\nView Few-Sec Ad to Continue\nYour Few Sec Can Keep Trading Tick Free\nSubscribe to our newsletter\nSite-wide access for 30 Days",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry\n Historical PCR Data OLD PCR\nDATA \nNifty Historical PCR Data\n Futures Basis History OLD FUT\nBASIS HIST \nNifty Basis Historical Data\n Buy & Hold Call Option BUY HOLD\nCALL \nNifty Buy and Hold Call Option Until Expiry\n Buy & Hold Put Option BUY HOLD\nPUT\nNifty Buy and Hold Put Option Until Expiry\n\nOption Analytics websiteTrack Commodities\n\nCharts\nNifty Intraday\nNifty Expiry Day\nShare Price Target\nTick Screener\nBacktest\nNifty Short Straddle\nNifty Gap up\nNifty Gap Down\nStandard Deviation\nOption  Data\nOI Charts\nOld Option Chain\nOption Charts\nCompany\nAbout us\nContact us\nDisclaimer\nAffiliate Disclaimer\nPrivacy Policy\nConsent Policy\nTerms and Conditions\nDisclaimer: Trade at your own risk. we dont recommend buying and selling. we dont give tips.\n      \n© 2025 Copyright: Trading Tick",
         "scripts": [
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610070101/show_ads_impl.js?bust=122881492",
             "inline": ""
           },
           {
@@ -2976,15 +3009,15 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVWZXkS4Mf5jFFO8OpD8TrOJZcJNly-_5FNCqa1rvv8Aidk4gU9hmsykWdcCSEX1PgjVaF6HjdnihaXPN_UPYXnPa6o5E4diuiO1MKbVTMNk41dux8nKBpqtJxDOUyvFSO8zzL14w==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MjIsMTUyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTM5ODE2LDkzNTg2NDAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTc4Niw1OTE0MjQwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTUzOTc4Niw2MzY1MDUwMDBdLDBdXSJdLFs4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw4MjddXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWpzbCRQBeSg2xeZPlCjsBRor5gx5REnQ9ZUXJKgmicnl6sZAbiSeAfEwCNvlnsuuzs78fXHZD3qCOkjCWIghu35be4Zk3KGEpBSaXM08glyXCxCfaE_8CZS07qMGYuijKhI0b5eQ==?fccs=W1siQUtzUm9sOENnZGVmM1hRTmlzV2dBV2Q2LWFoQzBHWHNmUHVwbHNUdF9rVlNOb09vSmE4ZllMNU9Hbk96dlVwY2gwc2tWWnJ2TlBCSU94OG40Z1pxQldFclZ1cEtVLU45REh5Mjg1Q2tQV0Judk1oUC1YLTFkeXNOR3ltWVgtMWh3aFY1Und2VGdEZlA5XzgzS3p2REpRWEZ1UTZiSDhLa19nPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1NDAzMjUsNDY0MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTQwMzIwLDc0MzUyMTAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTU0MDI5Miw1NTk4NzIwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTU0MDI5Miw2MDkzNzcwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw1NjJdXV0iXSxbMjMsIjE3OTE1NDAyOTEiXSxbMzUsIjE3OTE1NDAyOTEiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVCgTpkkqJQG5Ml83qbzQ8licvaWiIkCZKCrxlma05_lMG9vDwLC1TWt10-PcRO95wkCp2OY8x4tFF51YvtdP917ls7vUZuD5pddeHmWADQcuw2TCll-WH4Y0KyGBS5shVYdPSQMg==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MjIsMjE2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTM5ODIyLDE2MzMzNTAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTc4Niw1OTE0MjQwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTUzOTc4Niw2MzY1MDUwMDBdLDBdXSJdLFs4LCJickpKUXlsNUV3dyJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw4MjddXV0iXSxbMjMsIjE3OTE1Mzk3ODQiXSxbMzUsIjE3OTE1Mzk3ODUiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUg-lYKmirr0tzdJjnKAibgPn3jYTZAbi6MIA2S-jpQ0jbEXQ2ItGdaYUV9RoTmFU2qdBkqI3OaCabptthaVooNIzuWt9R16uS474Xl-OfofhE0Rji4RxUzt4IrQTcqXyIoi7G9uw==?fccs=W1siQUtzUm9sOENnZGVmM1hRTmlzV2dBV2Q2LWFoQzBHWHNmUHVwbHNUdF9rVlNOb09vSmE4ZllMNU9Hbk96dlVwY2gwc2tWWnJ2TlBCSU94OG40Z1pxQldFclZ1cEtVLU45REh5Mjg1Q2tQV0Judk1oUC1YLTFkeXNOR3ltWVgtMWh3aFY1Und2VGdEZlA5XzgzS3p2REpRWEZ1UTZiSDhLa19nPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1NDAzMjUsNTI5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzEzLCJbXCJEQkFCTH5CVlFxQUFBQUFnXCIsW1s3LFsxNzkxNTQwMzI1LDQ3ODgwMTAwMF1dXV0iXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTU0MDI5Miw1NTk4NzIwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMyxbMTc5MTU0MDI5Miw2MDkzNzcwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCw1NjJdXV0iXSxbMjMsIjE3OTE1NDAyOTEiXSxbMzUsIjE3OTE1NDAyOTEiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUp8ZjUjWgvmemPCZLu8klzc2oo7NPzq42uxvbPU2wCmj6MXlynFmONpWxIH4EXzF6acUsJbEOAtzVP0zdwf_ZbALevnYzWykQowfsJUj-_aFnGfr2zfLDAB5PFygSG3BeEOtrAmQ==?fccs=W1siQUtzUm9sOENIZXFiNW9LY1VjV1dqcHhJWDJ5OTR6R09IU1BGUFRIV0tPSE9qbG5qekpvRS15WUMxLVhucktGaUQyMXZtMHNoazFoazhub2FhV001aFRRd2x3bHhzYXpYQWhOZVExZUdPdXQ5OV9hV1N4RFBfNXV3SU9OUjhWSTBGLU5KbHR6cURSdDNENDY2WVJLMGxlVFJXZXdyVkRiM01BPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1Mzk4MjIsOTI2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1sxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTUzOTgyMiwxNjMzMzUwMDBdXV1dIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1Mzk3ODYsNTkxNDI0MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1Mzk3ODYsNjM2NTA1MDAwXSwwXV0iXSxbOCwiYnJKSlF5bDVFd3ciXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsODI3XV1dIl0sWzIzLCIxNzkxNTM5Nzg0Il0sWzM1LCIxNzkxNTM5Nzg1Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXiqc64WGd8cClMNLE8YPNzIzScDJ5dO93wAB6Mw9waKAblES1g5YcVSluB17aCWreKo2GKd4YGfuCm3eSlDvVW4XajimjOSpkXOjCD7gr-lBSEeJnN6IvH_9WqjXU-Hi4231Cr2Q==?fccs=W1siQUtzUm9sOENnZGVmM1hRTmlzV2dBV2Q2LWFoQzBHWHNmUHVwbHNUdF9rVlNOb09vSmE4ZllMNU9Hbk96dlVwY2gwc2tWWnJ2TlBCSU94OG40Z1pxQldFclZ1cEtVLU45REh5Mjg1Q2tQV0Judk1oUC1YLTFkeXNOR3ltWVgtMWh3aFY1Und2VGdEZlA5XzgzS3p2REpRWEZ1UTZiSDhLa19nPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1NDAzMjYsMjE1MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSwxMSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1sxMywiW1wiREJBQkx-QlZRcUFBQUFBZ1wiLFtbNyxbMTc5MTU0MDMyNSw0Nzg4MDEwMDBdXV1dIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1NDAyOTIsNTU5ODcyMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1NDAyOTIsNjA5Mzc3MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsNTYyXV1dIl0sWzIzLCIxNzkxNTQwMjkxIl0sWzM1LCIxNzkxNTQwMjkxIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
@@ -3867,15 +3900,19 @@
               "content_length": "350",
               "actual_bytes": 1003,
               "sha256": "fc0acfcfff80deb69c1076135d6e5f2f36d9d64f24f73835f10a7ffba33ec2fe",
-              "json_is_list": true,
-              "json_items": 6,
-              "json_first_item_keys": [
-                "time",
-                "open",
-                "high",
-                "low",
-                "close"
-              ]
+              "payload_kind": "DAILY_BARS",
+              "payload_row_count": 6,
+              "payload_timestamp_field": "time",
+              "payload_intraday_resolution_confirmed": false
+            },
+            {
+              "event": "response",
+              "page": "chart_data",
+              "url": "https://e.clarity.ms/collect",
+              "status": 204,
+              "resource_type": "xhr",
+              "content_type": "",
+              "content_length": ""
             }
           ],
           "visible_tables": [
@@ -4125,7 +4162,7 @@
           "visible_text_excerpt": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nSelect Month\nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nExpiry\nSelect Expiry\nOption\nCE\nPE\nStrike\nSelect Strike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \n"
         }
       },
-      "request_count": 725,
+      "request_count": 517,
       "initial_selects": [
         {
           "index": 0,
@@ -4313,224 +4350,15 @@
     "Page metadata/date selectors do not prove target-session raw-row coverage.",
     "No P&L is calculated by this audit."
   ],
-  "network_events": 2869,
+  "network_events": 1736,
   "same_origin_data_responses": [
     {
       "page": "historical_chain",
       "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/d27f9cd06b8fb15d586e.json",
-      "bytes": 41899,
-      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
-      "content_type": "application/json"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/6e82c823bbca14c7e985.json",
-      "bytes": 57,
-      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/d27f9cd06b8fb15d586e.json",
-      "bytes": 41899,
-      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
-      "content_type": "application/json"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/6e82c823bbca14c7e985.json",
-      "bytes": 57,
-      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=month&year=2026",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/26800bf4e73fdab910cd.json",
-      "bytes": 58,
-      "sha256": "24515b8af8e52afae474fceba54a29cd880fb3e34e9e7da024f00c339cf889a8",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=expiryDate&year=2026&month=July",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/e8499833b8daa2c33428.json",
-      "bytes": 53,
-      "sha256": "160b5ec06197c3f6b1aaa5e233265563aae0541d9ed4a0326a5360f58877d507",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=date&expiry=2026-07-28",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/ab3b55b3fb497898d793.json",
-      "bytes": 79,
-      "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=date&expiry=2026-07-28",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/ab3b55b3fb497898d793.json",
-      "bytes": 79,
-      "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=2026-07-28&date=2026-07-28",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/194d74140a3f64a96d6a.json",
-      "bytes": 41899,
-      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
-      "content_type": "application/json"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/d27f9cd06b8fb15d586e.json",
-      "bytes": 41899,
-      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
-      "content_type": "application/json"
-    },
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/6e82c823bbca14c7e985.json",
-      "bytes": 57,
-      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
-      "content_type": "application/json; charset=utf-8"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/835ea36db2dd2b746490.json",
-      "bytes": 67,
-      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
-      "content_type": "application/json"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/835ea36db2dd2b746490.json",
-      "bytes": 67,
-      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
-      "content_type": "application/json"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=months&year=2026",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/e62658147961041b51ff.json",
-      "bytes": 215,
-      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
-      "content_type": "application/json"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=expiries&year=2026&month=Jul",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/3a3d37f213999674a4a7.json",
-      "bytes": 27,
-      "sha256": "ea31011d5b20f9da485ba4ac2becdfa3c75d53e4ca0ec46051a501c4ffe7c46a",
-      "content_type": "application/json"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=strikes&year=2026&month=Jul&expiry=2026-07-28&option=CE",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/64d400393fd99e0b94d8.json",
-      "bytes": 14,
-      "sha256": "a80e5d153fd4ae285b118aa4fd6566549abf7a1ea51a4f8a0adae873f6d46964",
-      "content_type": "application/json"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/835ea36db2dd2b746490.json",
-      "bytes": 67,
-      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
-      "content_type": "application/json"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=months&year=2026",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/e62658147961041b51ff.json",
-      "bytes": 215,
-      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/8814b423ef4f46fa8b84.json",
-      "bytes": 67,
-      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/8814b423ef4f46fa8b84.json",
-      "bytes": 67,
-      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=months&year=2026",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/23d42d2a86e396bdbef9.json",
-      "bytes": 215,
-      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=expiries&year=2026&month=Jul",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/e0ba0a437e9d9d43cb22.json",
-      "bytes": 66,
-      "sha256": "6eaa23ba6e7176a2c93ef832002cf310034f066b91972d09494e7545e3ed761c",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=strikes&year=2026&month=Jul&expiry=2026-07-28&option=CE",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/d055bd292258fca40138.json",
-      "bytes": 853,
-      "sha256": "704204fd2940b0c53a7f519cfc1d1b7c28a8bba2784191376982825321c861e5",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?year=2026&month=Jul&expiry=2026-07-28&option=CE&strike=24000&tf=1",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/0df940a53e66d7e29839.json",
-      "bytes": 1003,
-      "sha256": "fc0acfcfff80deb69c1076135d6e5f2f36d9d64f24f73835f10a7ffba33ec2fe",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/8814b423ef4f46fa8b84.json",
-      "bytes": 67,
-      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
-      "content_type": "application/json"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=months&year=2026",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/23d42d2a86e396bdbef9.json",
-      "bytes": 215,
-      "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
-      "content_type": "application/json"
-    }
-  ],
-  "response_reviews": [
-    {
-      "page": "historical_chain",
-      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
       "bytes": 41899,
       "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "expiry_used",
@@ -4556,27 +4384,10 @@
         "Spot",
         "PCR"
       ],
-      "first_row_sample": {
-        "Option": "CE",
-        "OI": 10530,
-        "OI_Change": -3835,
-        "Volume": 132,
-        "Turnover": 2060,
-        "Close": 2877.7,
-        "Strike": 21100,
-        "ATM": -2900,
-        "PE_Close": 0.1,
-        "PE_Turnover": 1135296,
-        "PE_Volume": 82777,
-        "PE_OI_Change": -1032460,
-        "PE_OI": 1287195,
-        "PE_Option": "PE",
-        "Spot": 23985.35,
-        "PCR": 122.24
-      },
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4584,12 +4395,13 @@
       "bytes": 57,
       "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 8,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4597,6 +4409,7 @@
       "bytes": 41899,
       "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "expiry_used",
@@ -4622,27 +4435,10 @@
         "Spot",
         "PCR"
       ],
-      "first_row_sample": {
-        "Option": "CE",
-        "OI": 10530,
-        "OI_Change": -3835,
-        "Volume": 132,
-        "Turnover": 2060,
-        "Close": 2877.7,
-        "Strike": 21100,
-        "ATM": -2900,
-        "PE_Close": 0.1,
-        "PE_Turnover": 1135296,
-        "PE_Volume": 82777,
-        "PE_OI_Change": -1032460,
-        "PE_OI": 1287195,
-        "PE_Option": "PE",
-        "Spot": 23985.35,
-        "PCR": 122.24
-      },
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4650,12 +4446,13 @@
       "bytes": 57,
       "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 8,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4663,12 +4460,13 @@
       "bytes": 58,
       "sha256": "24515b8af8e52afae474fceba54a29cd880fb3e34e9e7da024f00c339cf889a8",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 7,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4676,12 +4474,13 @@
       "bytes": 53,
       "sha256": "160b5ec06197c3f6b1aaa5e233265563aae0541d9ed4a0326a5360f58877d507",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 4,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4689,12 +4488,13 @@
       "bytes": 79,
       "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 6,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4702,12 +4502,13 @@
       "bytes": 79,
       "sha256": "73d2fe3603feffa9b761c8e6a272106e0067a18c31637e34ec39a486b8b18fdc",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 6,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4715,6 +4516,7 @@
       "bytes": 41899,
       "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "expiry_used",
@@ -4740,27 +4542,10 @@
         "Spot",
         "PCR"
       ],
-      "first_row_sample": {
-        "Option": "CE",
-        "OI": 10530,
-        "OI_Change": -3835,
-        "Volume": 132,
-        "Turnover": 2060,
-        "Close": 2877.7,
-        "Strike": 21100,
-        "ATM": -2900,
-        "PE_Close": 0.1,
-        "PE_Turnover": 1135296,
-        "PE_Volume": 82777,
-        "PE_OI_Change": -1032460,
-        "PE_OI": 1287195,
-        "PE_Option": "PE",
-        "Spot": 23985.35,
-        "PCR": 122.24
-      },
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4768,6 +4553,7 @@
       "bytes": 41899,
       "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "expiry_used",
@@ -4793,27 +4579,10 @@
         "Spot",
         "PCR"
       ],
-      "first_row_sample": {
-        "Option": "CE",
-        "OI": 10530,
-        "OI_Change": -3835,
-        "Volume": 132,
-        "Turnover": 2060,
-        "Close": 2877.7,
-        "Strike": 21100,
-        "ATM": -2900,
-        "PE_Close": 0.1,
-        "PE_Turnover": 1135296,
-        "PE_Volume": 82777,
-        "PE_OI_Change": -1032460,
-        "PE_OI": 1287195,
-        "PE_Option": "PE",
-        "Spot": 23985.35,
-        "PCR": 122.24
-      },
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "historical_chain",
@@ -4821,12 +4590,27 @@
       "bytes": 57,
       "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
       "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 8,
-      "first_row_keys": [],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=month&year=2026",
+      "bytes": 58,
+      "sha256": "24515b8af8e52afae474fceba54a29cd880fb3e34e9e7da024f00c339cf889a8",
+      "content_type": "application/json; charset=utf-8",
+      "payload_kind": "NON_JSON",
+      "top_level_type": "list",
+      "row_count": 7,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "SNAPSHOT_ROWS_WITHOUT_INTRADAY_TIMESTAMPS"
     },
     {
       "page": "expired_chart",
@@ -4834,13 +4618,16 @@
       "bytes": 67,
       "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "years"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "expired_chart",
@@ -4848,13 +4635,16 @@
       "bytes": 67,
       "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "years"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "expired_chart",
@@ -4862,13 +4652,16 @@
       "bytes": 215,
       "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "months"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "expired_chart",
@@ -4876,13 +4669,16 @@
       "bytes": 27,
       "sha256": "ea31011d5b20f9da485ba4ac2becdfa3c75d53e4ca0ec46051a501c4ffe7c46a",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "expiries"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "expired_chart",
@@ -4890,13 +4686,16 @@
       "bytes": 14,
       "sha256": "a80e5d153fd4ae285b118aa4fd6566549abf7a1ea51a4f8a0adae873f6d46964",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "strikes"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "expired_chart",
@@ -4904,13 +4703,16 @@
       "bytes": 67,
       "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "years"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "expired_chart",
@@ -4918,13 +4720,16 @@
       "bytes": 215,
       "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "months"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -4932,13 +4737,16 @@
       "bytes": 67,
       "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "years"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -4946,13 +4754,16 @@
       "bytes": 67,
       "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "years"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -4960,13 +4771,16 @@
       "bytes": 215,
       "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "months"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -4974,13 +4788,16 @@
       "bytes": 66,
       "sha256": "6eaa23ba6e7176a2c93ef832002cf310034f066b91972d09494e7545e3ed761c",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "expiries"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -4988,13 +4805,16 @@
       "bytes": 853,
       "sha256": "704204fd2940b0c53a7f519cfc1d1b7c28a8bba2784191376982825321c861e5",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "strikes"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -5002,18 +4822,26 @@
       "bytes": 1003,
       "sha256": "fc0acfcfff80deb69c1076135d6e5f2f36d9d64f24f73835f10a7ffba33ec2fe",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "list",
       "row_count": 6,
-      "first_row_keys": [
+      "row_keys": [
         "time",
         "open",
         "high",
         "low",
         "close"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": true
+      "timestamp_field": "time",
+      "timestamp_count_parsed": 6,
+      "timestamp_min_ist": "2026-07-21T00:00:00+05:30",
+      "timestamp_max_ist": "2026-07-28T00:00:00+05:30",
+      "distinct_timestamp_dates": 6,
+      "max_rows_per_local_date": 1,
+      "median_same_day_interval_seconds": null,
+      "daily_bar_pattern": true,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "DAILY_BARS"
     },
     {
       "page": "chart_data",
@@ -5021,13 +4849,16 @@
       "bytes": 67,
       "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "years"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     },
     {
       "page": "chart_data",
@@ -5035,13 +4866,16 @@
       "bytes": 215,
       "sha256": "4511bd69d9e7603f312b6b022a1242de3a2223788f1df24d5fe936f5f3412ebd",
       "content_type": "application/json",
+      "payload_kind": "NON_JSON",
       "top_level_type": "dict",
       "top_level_keys": [
         "months"
       ],
-      "contains_iso_intraday_timestamp": false,
-      "contains_clock_time_label": false,
-      "has_time_axis_keys": false
+      "row_count": 0,
+      "timestamp_field": null,
+      "timestamp_count_parsed": 0,
+      "intraday_resolution_confirmed": false,
+      "granularity_classification": "UNKNOWN_OR_FILTER_METADATA"
     }
   ],
   "target_presence_by_control": {
@@ -5057,5 +4891,6 @@
     }
   },
   "target_date_selectable_in_any_control": true,
-  "intraday_timestamp_in_observed_data_response": true
+  "intraday_timestamp_in_observed_data_response": false,
+  "raw_response_bodies_persisted": false
 }

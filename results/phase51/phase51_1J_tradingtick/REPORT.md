@@ -1,12 +1,12 @@
 # Phase 51-1J TradingTick Browser Audit
 
-**Classification:** INTRADAY_PAYLOAD_CANDIDATE_REQUIRES_RAW_COVERAGE_REVIEW
+**Classification:** 2026_07_28_SNAPSHOT_OR_DAILY_BARS_ONLY__2026_08_04_NOT_LISTED
 
-- Audit timestamp: 2026-10-09T09:56:21.702969+00:00
-- Same-origin data responses stored for inspection: 26
-- Browser network events observed: 2869
+- Audit timestamp: 2026-10-09T10:04:49.164178+00:00
+- Same-origin data responses stored for inspection: 27
+- Browser network events observed: 1736
 - Target date present in some selector option: True
-- Intraday-like timestamp found in observed response body: True
+- Intraday-like timestamp found in observed response body: False
 - **P&L eligible: NO** (browser access is not proof of full-chain/contract coverage).
 
 ## Page results
@@ -16,7 +16,7 @@
 - Navigation status: 200
 - Error: None
 - Select controls: 6
-- Browser requests/responses recorded: 1364
+- Browser requests/responses recorded: 638
 
 - 2026-07-28: attempted selections=4; controls containing this date=2
 - 2026-08-04: attempted selections=1; controls containing this date=0
@@ -26,7 +26,7 @@
 - Navigation status: 200
 - Error: None
 - Select controls: 5
-- Browser requests/responses recorded: 780
+- Browser requests/responses recorded: 581
 
 - 2026-07-28: attempted selections=3; controls containing this date=1
 - 2026-08-04: attempted selections=1; controls containing this date=0
@@ -36,11 +36,11 @@
 - Navigation status: 200
 - Error: None
 - Select controls: 5
-- Browser requests/responses recorded: 725
+- Browser requests/responses recorded: 517
 
 - 2026-07-28: attempted selections=3; controls containing this date=1
 - 2026-08-04: attempted selections=1; controls containing this date=0
 
 ## Data-response manifest
 
-See manifest.json, network.json, and responses/ for response metadata and small public JSON/CSV response copies. Only responses served by ordinary browser requests are represented. No authenticated or protected route was accessed.
+See manifest.json and network.json for public response provenance, schema, row-count, timestamp and granularity summaries. Raw response bodies/prices are not persisted. No authenticated or protected route was accessed.
