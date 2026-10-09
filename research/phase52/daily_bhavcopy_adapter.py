@@ -167,8 +167,8 @@ def parse_bhavcopy(raw_bytes: bytes, session_date: str) -> tuple[pd.DataFrame, p
     return opts.reset_index(drop=True), futs.reset_index(drop=True), meta
 
 
-def archive_path_map(tree: list[dict[str, Any]]) -> dict[str, str]:
-    result: dict[str, str] = {}
+def archive_path_map(tree: list[dict[str, Any]]) -> dict[str, dict[str, str]]:
+    result: dict[str, dict[str, str]] = {}
     month_codes = {m.upper(): i for i, m in enumerate(
         ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], 1
     )}
@@ -187,19 +187,31 @@ def archive_path_map(tree: list[dict[str, Any]]) -> dict[str, str]:
         else:
             continue
         if not pd.isna(d):
-            result[pd.Timestamp(d).strftime("%Y-%m-%d")] = path
+            result[pd.Timestamp(d).strftime("%Y-%m-%d")] = {
+                "path": path,
+                "blob_sha": str(item.get("sha", "")),
+            }
     return result
 
 
-def download_zip(session_date: str, relative_path: str, commit_sha: str, github_token: str | None) -> tuple[bytes, str, bool]:
+def download_zip(
+    session_date: str, relative_path: str, commit_sha: str, blob_sha: str, github_token: str | None
+) -> tuple[bytes, str, bool]:
+    # Cache path is date-keyed across repository commits; the sidecar pins the
+    # exact Git blob. Unchanged archives are reused after source HEAD advances,
+    # while corrected/replaced daily archives are re-downloaded.
     CACHE.mkdir(parents=True, exist_ok=True)
-    dest = CACHE / commit_sha / f"{session_date}.zip"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    if dest.exists():
-        b = dest.read_bytes()
-        if b[:2] == b"PK":
-            return b, sha256_bytes(b), True
-        dest.unlink(missing_ok=True)
+    dest = CACHE / f"{session_date}.zip"
+    sidecar = CACHE / f"{session_date}.json"
+    if dest.exists() and sidecar.exists():
+        try:
+            metadata = json.loads(sidecar.read_text(encoding="utf-8"))
+            if metadata.get("git_blob_sha") == blob_sha:
+                b = dest.read_bytes()
+                if b[:2] == b"PK" and sha256_bytes(b) == metadata.get("sha256"):
+                    return b, metadata["sha256"], True
+        except Exception:
+            pass
     url = f"https://raw.githubusercontent.com/{NSE_REPO}/{commit_sha}/{relative_path}"
     response = api_get(url, github_token)
     raw = response.content
@@ -209,6 +221,9 @@ def download_zip(session_date: str, relative_path: str, commit_sha: str, github_
     tmp = dest.with_suffix(".tmp")
     tmp.write_bytes(raw)
     tmp.replace(dest)
+    meta_tmp = sidecar.with_suffix(".json.tmp")
+    meta_tmp.write_text(json.dumps({"git_blob_sha": blob_sha, "sha256": digest, "archive_commit": commit_sha}, indent=2) + "\n", encoding="utf-8")
+    meta_tmp.replace(sidecar)
     return raw, digest, False
 
 
@@ -329,19 +344,21 @@ def main() -> int:
     daily: dict[str, tuple[pd.DataFrame, pd.DataFrame]] = {}
     source_records = []
     for i, d in enumerate(dates, 1):
-        rel = paths.get(d)
-        if rel is None:
+        path_record = paths.get(d)
+        if path_record is None:
             missing_paths += 1
             source_records.append({"session_date": d, "status": "SOURCE_PATH_MISSING"})
             continue
+        rel = path_record["path"]
+        blob_sha = path_record.get("blob_sha", "")
         try:
-            content, digest, hit = download_zip(d, rel, source_commit, github_token)
+            content, digest, hit = download_zip(d, rel, source_commit, blob_sha, github_token)
             opts, futs, meta = parse_bhavcopy(content, d)
             cache_hits += int(hit)
             downloaded += int(not hit)
             daily[d] = (opts, futs)
             source_records.append({
-                "session_date": d, "path": rel, "sha256": digest,
+                "session_date": d, "path": rel, "git_blob_sha": blob_sha, "sha256": digest,
                 "cache_hit": hit, "status": "PASS",
                 "schema": meta["schema"], "raw_rows": meta["raw_rows"],
                 "nifty_option_rows": meta["nifty_option_rows"], "nifty_future_rows": meta["nifty_future_rows"],
