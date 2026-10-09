@@ -31,6 +31,13 @@ jobs:
           ref: phase-53-free-option-data-coverage-remediation
           fetch-depth: 0
 
+      - name: Refresh latest branch tip before starting audit
+        shell: bash
+        run: |
+          git fetch origin "$PHASE_BRANCH"
+          git checkout "$PHASE_BRANCH"
+          git reset --hard "origin/$PHASE_BRANCH"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -45,6 +52,12 @@ jobs:
       - name: Probe source pages, pinned paths and metadata without downloading bars
         id: audit
         run: python research/phase53/source_coverage_audit.py --output results/phase53/source_coverage_audit/report.json
+
+      - name: Archive immutable report under the run ID
+        if: always() && steps.audit.outcome == 'success'
+        run: |
+          mkdir -p "results/phase53/source_coverage_audit/runs/$GITHUB_RUN_ID"
+          cp results/phase53/source_coverage_audit/report.json "results/phase53/source_coverage_audit/runs/$GITHUB_RUN_ID/report.json"
 
       - name: Upload source coverage audit artifact
         if: always()
@@ -135,12 +148,58 @@ jobs:
               if git push origin "$PHASE_BRANCH"; then
                 exit 0
               fi
-            else
-              echo "Rebase conflict; aborting rather than risking a lost audit log." >&2
+              echo "Push race on attempt $attempt; retrying." >&2
+              continue
+            fi
+            conflicts="$(git diff --name-only --diff-filter=U || true)"
+            if [ -z "$conflicts" ]; then
               git rebase --abort || true
+              echo "Rebase failed without conflict list." >&2
               exit 1
             fi
-            echo "Push race on attempt $attempt; retrying." >&2
+            python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          files = subprocess.check_output(
+              ["git", "diff", "--name-only", "--diff-filter=U"], text=True
+          ).splitlines()
+          docs = {"PHASE53_STATUS.md", "PHASE53_RESEARCH_LOG.md",
+                  "PHASE53_ERROR_LOG.md", "PHASE53_CHAT_LOG.md", "README.md"}
+          unique_report = "results/phase53/source_coverage_audit/report.json"
+          unexpected = [p for p in files if p not in docs and p != unique_report]
+          if unexpected:
+              raise SystemExit(f"Refusing to auto-resolve source/config conflicts: {unexpected}")
+          for name in files:
+              if name == unique_report:
+                  # Preserve the remote canonical latest pointer; our immutable run report is under runs/<id>.
+                  subprocess.run(["git", "checkout", "--ours", "--", name], check=True)
+                  continue
+              path = Path(name)
+              lines = path.read_text(encoding="utf-8").splitlines()
+              out, i = [], 0
+              while i < len(lines):
+                  if not lines[i].startswith("<<<<<<< "):
+                      out.append(lines[i]); i += 1; continue
+                  i += 1; ours = []
+                  while i < len(lines) and lines[i] != "=======":
+                      ours.append(lines[i]); i += 1
+                  if i >= len(lines): raise SystemExit(f"Malformed conflict in {name}")
+                  i += 1; theirs = []
+                  while i < len(lines) and not lines[i].startswith(">>>>>>> "):
+                      theirs.append(lines[i]); i += 1
+                  if i >= len(lines): raise SystemExit(f"Malformed conflict in {name}")
+                  i += 1
+                  out.extend(ours)
+                  seen = set(ours)
+                  out.extend(line for line in theirs if line not in seen)
+              path.write_text("\n".join(out) + "\n", encoding="utf-8")
+          PY
+            git add $conflicts
+            GIT_EDITOR=true git rebase --continue
+            if git push origin "$PHASE_BRANCH"; then
+              exit 0
+            fi
+            echo "Push raced after conflict union; retrying attempt $attempt." >&2
           done
           echo "Checkpoint persistence failed after 3 attempts." >&2
           exit 1
