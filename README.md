@@ -722,3 +722,20 @@ The accepted TT-03 V5 baseline is complete (200/201 coverage candidates, 99.50%,
 
 ## Phase 50B — live execution contingency — 2026-10-07
 TT-04 V3 remains the active numerical replay. A separate dormant performance-only fallback was prepared but not executed or wired into the workflow; no fallback result is evidence.
+
+
+## Phase 51-3 — Available-data OOS strategy sweep — READY / ORCHESTRATION BLOCKED (2026-10-09)
+
+Phase 51-3 has been initialized to evaluate the frozen Phase-50B candidate engines on the complete currently available option interval **2026-04-21 through 2026-07-21**. This is explicitly partial-OOS diagnostic evidence; the unresolved **2026-07-28 and 2026-08-04** expiries remain outside the available source and no final full-window claim is permitted.
+
+- [Phase 51-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-3-available-data-strategy-sweep)
+- [Phase 51-3 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_RESEARCH_PLAN.md)
+- [Phase 51-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_STATUS.md)
+- [Phase 51-3 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_ERROR_LOG.md)
+- [Phase 51-3 chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_CHAT_LOG.md)
+- [Phase 51-3 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/.github/workflows/phase-51-3-available-data-sweep.yml)
+- [Phase 51-3 PR #18](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/18)
+
+The frozen TT-02, TT-04 and TT-05 replay engines are wired into the sweep. TT-03 remains non-informative for this partial interval because its frozen three-calendar-day entry rule yields no eligible entries; TT-06 and TT-07 remain closed under their prior terminal coverage gates. No strategy has been promoted.
+
+The numerical run is currently blocked by the available GitHub connector not exposing workflow dispatch; no unexecuted result is being represented as evidence. A main-branch orchestrator and automatic PR path have been installed to preserve the phase branch without merging it.
