@@ -78,7 +78,7 @@ jobs:
 
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
-          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit
+          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit results/phase52/daily_eod_selector
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
       - name: Install replay and audit dependencies
