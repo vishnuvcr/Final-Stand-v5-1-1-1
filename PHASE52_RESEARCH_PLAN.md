@@ -382,3 +382,16 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Execution:** Exact option contract/timestamp/expiry rows, prior completed-minute OI≥100, valid OHLC, range-proxy pass, date-aware phase43 lot size and exact 15:15 same-day exit for every leg are mandatory. Missing any leg means an explicit exclusion and zero scenario rows. Evaluate ₹20 primary and ₹10 legacy brokerage with slippage 0/50/100%; statutorily assessed fees remain independent of the slippage stress. Hash the dataset revision, index/option source files, config manifest, scripts and replay protocol.
 
 **Inference boundary:** This is an engineering/coverage pilot with descriptive split reports only. No candidate ranking, statistical significance, promotion, holdout claim or commercial inference is permitted. Selector routers, ABS_DELTA, path/expiry exits, futures-dependent families and full-grid replay remain blocked until their own gates pass.
+
+
+### PA-015 — 2026-10-10 — Exact full-row duplicate normalization in historical pilot v0.2
+
+**Trigger:** Pilot v0.1 executed 1 of 480 planned configuration-event rows; 274 rows were blocked by duplicate exact contract bars and 205 rows were excluded by the pre-registered high-low/open range-proxy gate. This amendment is limited to data normalization and auditability, not candidate performance selection.
+
+**Frozen inputs unchanged:** 40 deterministic BASELINE configurations; 24 deterministic development/validation events; same splits; same entry timestamps; same exact 15:15 exit; same prior completed minute OI≥100 rule; same ₹20 primary / ₹10 legacy sensitivity and 0/50/100% adverse-slippage scenarios; same 2% OHLC high-low/open data-quality gate. Holdout remains excluded.
+
+**Change:** Pilot version changes from `phase52-historical-base-pilot-v0.1` to `v0.2`. After canonicalizing timestamps, option type and numeric columns, remove only rows identical across every source column. Log the count removed for each source partition and retain source SHA-256. Rows with the same exact contract key but any differing field are not averaged, deduplicated by key, or arbitrarily selected; they remain a hard exclusion.
+
+**Scientific interpretation:** This is a source-quality correction and coverage diagnostic. Do not use the v0.2 rerun to rank strategies or claim improved profitability. Compare status counts only to explain source-normalization effects. The `100 × (high-low)/open` gate is an OHLC range proxy—not observed bid/ask spread—and does not establish executable liquidity. Actual point-in-time quote/trade data are still required for execution-grade validation.
+
+**Acceptance:** Self-test proves exact full-row duplicates collapse to one while conflicting same-key rows remain distinct; workflow succeeds; source hashes/revision match the frozen manifest; every one of the 480 planned rows has exactly one status; costs exist for each executed row; zero source-file read errors; v0.1 outputs remain preserved. No strategy promotion or holdout access.
