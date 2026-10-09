@@ -173,7 +173,7 @@ def prepare(df):
 def load_expiry(expiry, entry_ts):
     name=f"options/NIFTY/{expiry.strftime('%Y-%m-%d')}.parquet"
     path=hf_hub_download(repo_id=HF_REPO, filename=name, repo_type="dataset",
-                         token=os.getenv("HF_TOKEN") or None)
+                         revision=HF_REVISION, token=os.getenv("HF_TOKEN") or None)
     start=expiry.normalize()
     windows=[
         (entry_ts-pd.Timedelta(minutes=1), entry_ts+pd.Timedelta(minutes=1)),
