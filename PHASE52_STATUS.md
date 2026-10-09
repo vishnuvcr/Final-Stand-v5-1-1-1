@@ -83,3 +83,8 @@ First automatic workflow run 37924369419 failed in registry validation after its
 - Coverage does not imply an incorrect price or failed strategy. The legacy outcome matrix contains expiry sessions for which the Phase39 option-factor panel has no same-expiry feature snapshot.
 - The pilot now records coverage by development/validation/holdout; it may proceed only when each split is at least 50% matched and validation/holdout have at least 20 matched expiry sessions. Every reported comparison uses the same matched expiry keys for selector and baseline, and there is no imputation. Otherwise a coverage-only report is written without factor P&L.
 - This is a documented exploratory matched-sample protocol, not a claim of full feature coverage. Futures/synthetic-futures remain untested until source data exist.
+
+
+## PA-005 — holdout coverage policy
+
+The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows extend through 2026-09-30. Therefore the 2026 holdout is not assumed to meet the 20-expiry/50% factor-feature coverage rule. The revised pilot can publish matched-sample development-tuning and 2024–25 validation comparisons only if those splits meet their gates; undercovered 2026 holdout is explicitly unevaluated, never imputed. A strategy still cannot be promoted without adequate untouched OOS confirmation.
