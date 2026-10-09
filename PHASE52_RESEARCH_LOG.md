@@ -81,3 +81,11 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - **Decision:** Added PA-004 using only coverage metadata: matched-sample pilot, minimum 50% in each split, at least 20 matched expiries in validation/holdout, identical matched expiries for selector and baseline. Missing feature rows are never imputed.
 - **Operations:** That run's branch checkpoint push failed due to a remote update after checkout. Workflow is patched to rebase before push. Its failed run and impact remain logged.
 - **Next:** Rerun, inspect coverage by split, and only then determine whether the exploratory pilot has enough admissible matched observations for numerical selector analysis.
+
+
+## 2026-10-09 — Step 0.9: Factor-pilot sample policy and strategy aliases
+
+- **Source inspection:** Phase45 canonical template map uses outcome labels distinct from some human-readable family names (`iron_condor`, `iron_butterfly`, `call_calendar`, `long_call_butterfly`, `bull_call_debit`, etc.).
+- **Correction:** Whitelist amended to reflect source outcome names while continuing to exclude naked/undefined-tail structures.
+- **Coverage policy:** Phase39 factor panel ends on 2026-04-24 but the Phase45 matrix extends through 2026-09-30. PA-005 lets the pilot report validation-only selector metrics if its matched sample passes, while withholding holdout inference when coverage/sample is insufficient.
+- **Inference:** Pilot uses circular moving-block bootstrap and block-level sign flips (block length 3 consecutive expiry observations) to account for short-range serial dependence. Results remain exploratory and subject to Holm correction across preregistered router families.
