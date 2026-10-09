@@ -4,3 +4,5 @@
 - **Persistence regression:** Run 37935663113 completed successfully with the revised fetch/rebase/push logic, confirming the append-only status/log conflict path can persist checkpoints. New selected-strike audit results remain pending; runs 37936777969 and 37937164472 are active on earlier workflow/code snapshots, while 37937318538 is queued for the latest point-in-time strike-ladder correction.
 
 - **Stale-result protection:** Workflow persistence now checks whether the selected-strike audit source changed after checkout; stale selected-strike outputs are discarded/restored instead of overwriting corrected evidence. Verification is pending the next run.
+
+- **Stale-output pathspec self-audit:** Added a .gitkeep placeholder after discarding stale outputs so the workflow's later git-add step cannot fail merely because the directory is empty; F52-028 records this. End-to-end verification remains pending.
