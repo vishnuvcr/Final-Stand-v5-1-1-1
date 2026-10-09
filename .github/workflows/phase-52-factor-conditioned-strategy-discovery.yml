@@ -1,5 +1,5 @@
 name: Phase 52 — Factor-Conditioned Strategy Discovery
-# Re-run after fixing the deterministic factor-binning self-test; selector analysis is gated by the Phase39 leakage audit.
+# Re-run after fixing binning, matching coverage, canonical aliases and serial-dependence-aware inference; see PA-004/PA-005.
 
 on:
   workflow_dispatch:
