@@ -50,3 +50,12 @@ Rules:
 - **Correction:** Added `research/phase51_3_primary_source_adapter.py` to inject the hash/size-locked RISSIN options source, validated NIFTY spot source, and expiry discovery from the primary options rows. Strategy rules, cost functions, slippage and execution semantics remain unchanged.
 - **Workflow correction:** Main orchestrator now caches the validated spot repository and checks the primary-source manifest before accepting results.
 - **Evidence status:** No Phase-51-3 P&L accepted yet.
+
+## F51-3-006 — Redundant branch workflow lacks spot-source acquisition — CLOSED
+
+- **Date:** 2026-10-09
+- **Run:** 37881823544.
+- **Observation:** The legacy phase-branch workflow fired on the adapter commit and failed because it does not contain the main orchestrator's validated-spot acquisition/cache step.
+- **Impact:** No evidence was generated; this redundant workflow is not the authoritative Phase-51-3 execution path.
+- **Correction:** The main orchestrator run 37881916446 contains the complete source-acquisition path and is the only run eligible for Phase-51-3 publication. The branch workflow will be prevented from creating duplicate scientific conclusions.
+- **Status:** CLOSED as redundant-workflow noise; no P&L accepted.
