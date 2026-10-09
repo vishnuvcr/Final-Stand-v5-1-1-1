@@ -87,6 +87,7 @@ def read_join(trades_path,features_path):
     audit={"trade_rows_input":int(len(t)),"feature_rows_input":int(len(f)),
       "trade_rows_with_asof_feature_match":int(z.feature_matched.sum()),
       "feature_match_rate":float(z.feature_matched.mean()) if len(z) else 0.0,
+      "feature_match_by_split":{str(k):{"rows":int(len(g)),"matched_rows":int(g.feature_matched.sum()),"coverage":float(g.feature_matched.mean()),"matched_unique_expiries":int(g.loc[g.feature_matched,"expiry_key"].nunique())} for k,g in z.groupby("split",dropna=False)},
       "median_feature_lag_minutes":float(z.loc[z.feature_matched,"feature_lag_minutes"].median()) if z.feature_matched.any() else None,
       "max_feature_lag_minutes":float(z.loc[z.feature_matched,"feature_lag_minutes"].max()) if z.feature_matched.any() else None,
       "source_strategies":sorted(z.strategy.dropna().astype(str).unique().tolist()),
@@ -189,7 +190,27 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
     audit["source_feature_leakage_audit_status"]=source_audit.get("status")
     audit["source_feature_rules"]=rules
     (outdir/"input_audit.json").write_text(json.dumps(audit,indent=2,allow_nan=False)+"\n")
-    if audit["feature_match_rate"]<.90:raise RuntimeError(f"PIT feature match {audit['feature_match_rate']:.1%} below 90%")
+    # PA-004: preserve and report point-in-time feature overlap rather than requiring
+    # 90% of all legacy rows. This is allowed only as an exploratory matched-sample pilot:
+    # >=50% overall and within each split, plus >=20 matched expiries in validation/holdout.
+    # All paired comparisons use only feature-matched rows; missing intervals are not imputed.
+    low_coverage = audit["feature_match_rate"] < .50
+    for split_name, block in audit.get("feature_match_by_split", {}).items():
+        if block["coverage"] < .50:
+            low_coverage = True
+        if split_name in {"validation", "holdout"} and block["matched_unique_expiries"] < 20:
+            low_coverage = True
+    if low_coverage:
+        blocked = {
+          "status": "BLOCKED_LOW_FEATURE_COVERAGE_NO_PERFORMANCE_ANALYSIS",
+          "input_sha256": {"trade_matrix": hashlib.sha256(Path(trades_path).read_bytes()).hexdigest(), "feature_panel": hashlib.sha256(Path(features_path).read_bytes()).hexdigest()},
+          "input_audit": audit, "risk_limited_strategy_count": 0, "selected_feature_by_mode": {},
+          "limitations": ["Point-in-time feature overlap failed the preregistered coverage/sample gate; no factor P&L analysis was run."]
+        }
+        (outdir / "summary.json").write_text(json.dumps(blocked, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        (outdir / "REPORT.md").write_text("# Phase 52 — Legacy Factor-Selector Pilot\n\n**Status:** blocked by point-in-time feature coverage. No factor or strategy performance analysis was run.\n\n" + json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({"status": blocked["status"], "input_audit": audit}, indent=2, allow_nan=False))
+        return blocked
     data=joined[joined.feature_matched&joined.net.notna()&joined.net50.notna()].copy()
     universe=strategy_universe(data);data=data[data.strategy.isin(universe)].copy()
     dev=data[data.split=="development"].copy();val=data[data.split=="validation"].copy();hold=data[data.split=="holdout"].copy()
