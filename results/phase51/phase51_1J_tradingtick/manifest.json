@@ -1,6 +1,6 @@
 {
   "audit": "Phase 51-1J TradingTick public-source audit",
-  "created_utc": "2026-10-09T09:47:37.617927+00:00",
+  "created_utc": "2026-10-09T09:49:13.527208+00:00",
   "source": "https://tradingtick.in",
   "targets": [
     "2026-07-28",
@@ -12,7 +12,7 @@
     "historical_chain": {
       "url": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
       "navigation_status": 200,
-      "error": "Locator.evaluate_all: SyntaxError: missing ) after argument list\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "error": "'value'",
       "initial_state": {
         "title": "Download Historical Nifty Option Chain Data | CSV & Excel Files",
         "url": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
@@ -505,14 +505,14 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Bank Nifty Mood\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Option Chain Historical\n⬅ Previous\nNext ➡\nTurnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR\nTurnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR\n\n\n\t\n\t95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575\t\n\t\n\t\n\t\n\n1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11\n1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84\n10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37\n19680490\t1261472\t832715\t-323310\t119.05\t23850\t0.2\t-568230\t5219565\t6501861\t101000000\t23985.35\t6.27\n77188776\t4948061\t2937155\t-642850\t68.65\t23900\t0.6\t1164410\t13519415\t18346898\t285000000\t23985.35\t4.6\n231000000\t14829028\t9277060\t5550220\t19.6\t23950\t2.95\t12597910\t22580935\t35295089\t550000000\t23985.35\t2.43\n629000000\t40300828\t31166200\t18697185\t0.85\t24000\t27.3\t2452060\t16020030\t37388862\t584000000\t23985.35\t0.51\n393000000\t25118624\t13107575\t6866015\t0.25\t24050\t78.5\t1123590\t4020315\t10701584\t168000000\t23985.35\t0.31\n239000000\t15245129\t10908625\t486005\t0.2\t24100\t130.3\t-666185\t2858765\t4912449\t77285384\t23985.35\t0.26\n101000000\t6458519\t5204875\t-398190\t0.15\t24150\t180\t-151905\t418730\t1188407\t18771428\t23985.35\t0.08\n92670728\t5890841\t7875985\t-6862505\t0.15\t24200\t229.8\t-718445\t1517100\t728586\t11554834\t23985.35\t0.19\n38751268\t2458301\t4757935\t-1106105\t0.1\t24250\t279.9\t-36010\t340730\t120315\t1915887\t23985.35\t0.07\n35106728\t2222555\t6965725\t-3661840\t0.1\t24300\t326\t-361465\t597220\t101541\t1623602\t23985.35\t0.09\n\t\t\t\t\t\t\t\t\t\t\t\t\nShowing 1 to 13 of 13 entries\nNIFTY OPTION BACKTEST\nBear Call Spread\nNifty Bear Call Spread Strategy Backtest\nBear Put Spread\nNifty Bear Put Spread Strategy Backtest\nBull Call Spread\nNifty Bull Call Spread Strategy Backtest\nBull Put Spread\nNifty Bull Put Spread Strategy Backtest\nLong Call Backtest\nNifty Long Call Strategy Backtest\nLong Put Backtest\nNifty Long Put Strategy Backtest\nLong Straddle Backtest\nNifty Long Straddle Strategy Backtest\nLong Strangle Backtest\nNifty Long Strangle Strategy Backtest\nShort Call Backtest\nNifty Short Call Strategy Backtest\nShort Put Backtest\nNifty Short Put Strategy Backtest\nShort Straddle Backtest\nNifty Short Straddle Strategy Backtest\nShort Strangle Backtest\nNifty Short Strangle Strategy Backtest\nWhat is Nifty Option Chain Historical Data?\n\nAt its core, an option chain is a comprehensive table that lists all the available Call and Put option contracts for the Nifty 50 index at a specific point in time. When we add the word \"historical\" to it, we are referring to a snapshot of this table from a past trading session. So, nifty option chain historical data is essentially a detailed record of ev",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Nifty Option Dashboard\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Option Chain Historical\n⬅ Previous\nNext ➡\nTurnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR\nTurnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR\n\n\n\t\n\t95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575\t\n\t\n\t\n\t\n\n1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11\n1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84\n10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37\n19680490\t1261472\t832715\t-323310\t119.05\t23850\t0.2\t-568230\t5219565\t6501861\t101000000\t23985.35\t6.27\n77188776\t4948061\t2937155\t-642850\t68.65\t23900\t0.6\t1164410\t13519415\t18346898\t285000000\t23985.35\t4.6\n231000000\t14829028\t9277060\t5550220\t19.6\t23950\t2.95\t12597910\t22580935\t35295089\t550000000\t23985.35\t2.43\n629000000\t40300828\t31166200\t18697185\t0.85\t24000\t27.3\t2452060\t16020030\t37388862\t584000000\t23985.35\t0.51\n393000000\t25118624\t13107575\t6866015\t0.25\t24050\t78.5\t1123590\t4020315\t10701584\t168000000\t23985.35\t0.31\n239000000\t15245129\t10908625\t486005\t0.2\t24100\t130.3\t-666185\t2858765\t4912449\t77285384\t23985.35\t0.26\n101000000\t6458519\t5204875\t-398190\t0.15\t24150\t180\t-151905\t418730\t1188407\t18771428\t23985.35\t0.08\n92670728\t5890841\t7875985\t-6862505\t0.15\t24200\t229.8\t-718445\t1517100\t728586\t11554834\t23985.35\t0.19\n38751268\t2458301\t4757935\t-1106105\t0.1\t24250\t279.9\t-36010\t340730\t120315\t1915887\t23985.35\t0.07\n35106728\t2222555\t6965725\t-3661840\t0.1\t24300\t326\t-361465\t597220\t101541\t1623602\t23985.35\t0.09\n\t\t\t\t\t\t\t\t\t\t\t\t\nShowing 1 to 13 of 13 entries\nNIFTY OPTION BACKTEST\nBear Call Spread\nNifty Bear Call Spread Strategy Backtest\nBear Put Spread\nNifty Bear Put Spread Strategy Backtest\nBull Call Spread\nNifty Bull Call Spread Strategy Backtest\nBull Put Spread\nNifty Bull Put Spread Strategy Backtest\nLong Call Backtest\nNifty Long Call Strategy Backtest\nLong Put Backtest\nNifty Long Put Strategy Backtest\nLong Straddle Backtest\nNifty Long Straddle Strategy Backtest\nLong Strangle Backtest\nNifty Long Strangle Strategy Backtest\nShort Call Backtest\nNifty Short Call Strategy Backtest\nShort Put Backtest\nNifty Short Put Strategy Backtest\nShort Straddle Backtest\nNifty Short Straddle Strategy Backtest\nShort Strangle Backtest\nNifty Short Strangle Strategy Backtest\nWhat is Nifty Option Chain Historical Data?\n\nAt its core, an option chain is a comprehensive table that lists all the available Call and Put option contracts for the Nifty 50 index at a specific point in time. When we add the word \"historical\" to it, we are referring to a snapshot of this table from a past trading session. So, nifty option chain historical data is essentially a detailed recor",
         "scripts": [
           {
-            "src": "https://scripts.clarity.ms/0.8.75-beta/clarity.js",
+            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js?bust=122881394",
             "inline": ""
           },
           {
@@ -592,27 +592,27 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWtIiagFp8Z0SgmdlVXXV2zZGALDNnmfzsRCqyLNE9HZV1LoKZUwzTBRPF9_fJ6bjSzCXl9HzR6xYv2O1kuQEZIEIFlUDXOxpDYB64b8SpJ5Bg2dohfbnKnnYfC5SLm2i96tFb9Rw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYyLDc4ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDddXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxU5AjAf93DNpt2K-aIGzvGIwv0BZoKfzR7m7TPSii2Dymfqy5AcinIcxUUFL_5BS3yaRFzuQ919xPfmLhKJZlc3rvirb7FUZtq5joRkfqyFjmIzXxqvsmckQ5dTzOvVTBjxNSgghA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU4LDM3ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDIyOThdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjEyIl0sWzI3LCI4Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTU0MDUwNDZdXSJdLFsyOSwiZmFsc2UiXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVWfB8ED1oSJuxcrz3qy5WJpK_kCEugdC4CPdOln_R0lbvzaYiFu18LBgS43rt9O4Byp0Pn5BmqPzt4XP8ZeNuozbcwvpnYsIO0S16nw-Z5LFk7I-sRxrqEmEUSKZ1_OykG8sjaFA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDU1MzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVFEXFc5r1BWFwBjDKhlCinqC0A3Fej04vcDJYDeJF-ycvz3KZl4VwQ53cEhSivM1WHE5x8ok6N-Gx79DO4HcqmB8yCHfjECmBBUtds1M0fdb7KfJ2ezqfMxnw7j5-pm3ikJq1jQg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDEyMDAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxW8oyERL4tBHaNd9f8KUJovhB0MiAQdiQyJfDF8zsgI74bwh5PEmGx5-0oCKSiuKRQXB7UKxZDZ1907xSMXi-l4BXhHv0OZcAljIshieH5wqaAPnex2zG7eHcCrHILT012A23B36g==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDYwOTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXNkuNBdA7ccoZ8V7hSeMUU1bTCavsiwQ25seRNovvnAgL4G3h9yhcq-ZN9yAnTC1ivuEyFwTinSz8Vt5m-UebfrKhQXQCwVSFyC0y7rYBz7e4GDLpS024g0GzUXssqqgGC0q4PZw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDE1OTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVVjhWPe6uMQVRtLA47LeQL6wgqH-laP5loLvPfUvB3wG2nWcW2tzxA-5TkdYQkfo7lOzot0lZ6mBxmBPQnOTUqEhU6D5cd6fc_ZIkLEWVwu35lqky7GCLvu7jcIfy8unoJ_TPZYg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDY1ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUyMdJsmixLe2Kkn8vsoILvHvafksAz6J9ucu_bYjW1SMJoWvBYWZPyKnykrl-CfV-o7VTe_Utfghy9appC_fs-wAUqyRUlv5siLB8MVkqKWgcaNAchbKCv_I3_MycsRi2cEzU19A==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDIwMzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVSqKZRNsmNJfHIgARcjCJ6MchAs66VZEfGHlyRyZJ3Dog6YCfaudOLxQKO_fLRJ84fk2FJ961wxyDfdrRlbe52QxUyXaFyxcvW9yRKg51YqhkeKAVc4dSWxqKux-xh6p0Myko_1Q==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDY5NjAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVE-HwC3OB3XJ2gq9VYmgf9cu-7GXIh60RnI4lCq63vNXUqVdYq_b58lUuU75TXsYacWzoM__RhHERu6FPvghUuDXylojWEUE7qPXkzQlbE1AmuJAwfIOyHrMtR1MXLD7urIm-FDA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDIzOTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwyMjk4XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXV1d",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVdSJWSEfTIl8BM8A7mV0elxqOBN_gcgZa73MJdP_Oj8s4JLOmyTO1xRD-6HZ2gTND8M8C63l3QLoEU0RftbGDuPJiMxr0BlYUJrEmYogqbiJFqJSUmVE0WCjSfWPozfArbdRd-vw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDc0OTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDddXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTI2Myw2Mjk0MzMwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTI2Myw2NzUzOTUwMDBdLDBdXSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVNAD2omVi7qSStcHKQ4Z47p05SwWFXoTEYZ3bZR5osmtDqZz2McDDOZcrjtmOXVN2Gpek5Aeeyklb3cPkZpUiBbsmys208GJsnzr9Lb5bDhsfp5Q3IOXjm2U5CMjSUrWrW8uJGCQ==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MzU5LDI4MzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDIyOThdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjEyIl0sWzI3LCI4Il0sWzE5LCIyIl0sWzI0LCIiXSxbMjUsIltbOTU0MDUwNDZdXSJdLFsyOSwiZmFsc2UiXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdXV0",
             "inline": ""
           },
           {
@@ -694,12 +694,207 @@
         ]
       },
       "selectors_by_target": {},
-      "request_count": 260
+      "request_count": 199,
+      "initial_selects": [
+        {
+          "index": 0,
+          "id": "exYear",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Expiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019",
+          "disabled": false,
+          "value": "",
+          "options": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        {
+          "index": 1,
+          "id": "exMonth",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Expiry Month\nSelect Month",
+          "disabled": true,
+          "value": "",
+          "options": [
+            {}
+          ]
+        },
+        {
+          "index": 2,
+          "id": "exExpiry",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Expiry Date\nSelect Expiry",
+          "disabled": true,
+          "value": "",
+          "options": [
+            {}
+          ]
+        },
+        {
+          "index": 3,
+          "id": "exDate",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Date\nSelect Date",
+          "disabled": true,
+          "value": "",
+          "options": [
+            {}
+          ]
+        },
+        {
+          "index": 4,
+          "id": "atmRange",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Strike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)",
+          "disabled": false,
+          "value": "all",
+          "options": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        {
+          "index": 5,
+          "id": "",
+          "name": "hocTable_length",
+          "aria": "",
+          "labels": [],
+          "parentText": "Show 102550100 entries",
+          "disabled": false,
+          "value": "100",
+          "options": [
+            {},
+            {},
+            {},
+            {}
+          ]
+        }
+      ],
+      "scripts": [
+        {
+          "inline": true,
+          "bytes": 153,
+          "sha256": "ccd1b3c7bb8de71818c2e7a9d2919c06a6c29429016ba7af72e5cf4f3297bc4c",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 309,
+          "sha256": "ecb58b905f237e4c1dc9dafb15e363e24ba2fd5f9a6537f4da5c4047b14a6724",
+          "endpoints": []
+        },
+        {
+          "url": "https://tradingtick.in/assets/js/main.js",
+          "status": 200,
+          "bytes": 4091,
+          "sha256": "1e36a5c2eff6f80f810d6bfcf83365f80d802a20b219ae6803a30520708d8915",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 1239,
+          "sha256": "67bb44d78ac86087f9b3e89c2af6b4f822abe32944222cb57a27024b2cd78829",
+          "endpoints": [
+            "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 727,
+          "sha256": "78e1d3c2f765d004c12b1f0d5f40d34ff6e796e3793bb0f6eca287ae36d7588f",
+          "endpoints": [
+            "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 2347,
+          "sha256": "884120931d2b7133cf6a2aef0c870bf2935c4d45451e83320c87a091df57d3f8",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 555,
+          "sha256": "9fa3f82e33f08449f5e1ed1d9f069ee981d1d7e3e9be1512c16368d8aeab3152",
+          "endpoints": [
+            "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 424,
+          "sha256": "0d13e1c2bafc54b215bf6a954639f7cabf8362fd31d514fe9d96c7e113cf62eb",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 14985,
+          "sha256": "a4e1a5f2f7146b6cd718a8bb5c5d8269c3c553f904bed7a9748e04e82a3f2818",
+          "endpoints": [
+            ").value;\n  const month = this.value;\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=expiryDate&year=${year}&month=${month}`)\n    .then(res => res.json())\n    .then(expiries => {\n      const expiryDropdown = document.getElementById(",
+            ").value;\n  if (!expiry) return;\n\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=date&expiry=${expiry}`)\n    .then(res => res.json())\n    .then(dates => {\n      availableDates = dates;\n      const dateDropdown = document.getElementById(",
+            ", function () {\n  const expiry = this.value;\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=date&expiry=${expiry}`)\n    .then(res => res.json())\n    .then(dates => {\n      const dateDropdown = document.getElementById(",
+            ", function () {\n  const year = this.value;\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=month&year=${year}`)\n    .then(res => res.json())\n    .then(months => {\n      const monthDropdown = document.getElementById(",
+            "nifty-hoc/nifty-whoc-filters.php?type=year"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 277,
+          "sha256": "e191ba887835b15af37a30959d4f76148f6c6b50eed24aeaed9bcd0dd62578d2",
+          "endpoints": []
+        }
+      ]
     },
     "expired_chart": {
       "url": "https://tradingtick.in/nifty/nifty-option-price-charts.php",
       "navigation_status": 200,
-      "error": "Locator.evaluate_all: SyntaxError: missing ) after argument list\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "error": "'value'",
       "initial_state": {
         "title": "Nifty Historical Option Charts | Visualize Past Call & Put Prices Weekly and Monthly Expiry",
         "url": "https://tradingtick.in/nifty/nifty-option-price-charts.php",
@@ -818,18 +1013,18 @@
             "type": ""
           }
         ],
-        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Nifty intraday charts\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trader education course\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts. Nifty intraday charts\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful.\n\nHow Traders Use His",
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Nifty intraday charts\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trader education course\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts.\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful. Option chain explorer\n\nHow Traders Use His",
         "scripts": [
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js?bust=122881394",
             "inline": ""
           },
           {
-            "src": "https://scripts.clarity.ms/0.8.75-beta/clarity.js",
+            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js?bust=122881394",
             "inline": ""
           },
           {
@@ -905,23 +1100,23 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUc88v6JoR4K4XI-26cG0JpCZ2HbLuoj5DamfYnPVpgsm3nWZwOaoAUN4yHKcMKJLmse6_thZi1yV2IsEij_4DipdHHVchssGhLfTtFMxpHpAIejk8pRQRj1mRORsJaN4tnQfTsew==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNjksOTYwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5XV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvbmlmdHktb3B0aW9uLXByaWNlLWNoYXJ0cy5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwxLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDEwMzFdXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUouc47bIkJe4gZrfHgwsjT4SQNISrFXkn2Nj9SWSqcck8rSK7x7YPPhnpPI94AEuwEh7DYr-5luFaDl2Bo9A45ZRVrpg1UEzNh-55mVEI0eaA9Y7qIq-XyjfCVDI9rCfj1xhGSYA==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjUsODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTQyNl1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiMTMiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxW0Z-RemIHpKybRcHkG7uYR1HAW5cCD6-sIetSAGCkCCKkMV38W53dgU-J2rl-FBqkzafvYL7R19d2aNkxApq7z7DDcMsRrFIzQonw5LIDt3lmeNyGZjTpiK2MboEGfLgJW1IkJtw==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMjQ5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTAzMV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVQgUo7XZ05r7XTXR0GmwodpMESTtzR-41fmvSYFi_xHHWLb216uFlJIN7p8nAr9iDXZzJ5P7to4FWcyQuyE-DHWCROqQC3JvMPaYWnh3qDPpbj7RHnnhaIPfJNd9Wqe0QRlhXSiQ==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsMjcwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5LDZdLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNDI2XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMyJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVMEhjH9KJKBcLab4sziPnuuO0CH5A7jwz6sOp3VL_DQ2dGpmn68VE7isBS-5uxyvhhj7sgr8j8kGMKcp0yqdAvxAoORF1U1A3Hs_ihB5rBpbzQUAJRFEMQSpO4vxvez8UzaH-C6A==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMzExMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTAzMV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXC-wOF7G489Vtep9Z9V5h8NElYATQm6RAvpfjRk-n2iT-rsJ_UDUe2HDwX-UpIrU3ve5Aa_z9xqBEH9A9T_e2PchTDJ4H-Q_bsXuDNToFat9T-_2AvCEzY7g1o0ypZGexTRZ57EQ==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsNzUwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5LDYsMTBdLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNDI2XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMyJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUMYFVuB2NiVLTZL4FZBeJtYIBhA-TpicDxn8NszaSjXO0jaCRCt4-3qjrJjkZ-J_q4pj85Q6aOayF0GpDhxrJr_j3mlXQIU_X3ix743rSmit6Pi4wxzO9oLc2M5-wCGl2Xf3au3g==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMzUyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTAzMV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVQdghdjmws6iIT0V9GfYCDn9GlQLYVuO6YdudxXzMzUcfDbJJ1hEYH_1B3fRnMBM6nI93wEuqV95OildUScEMZmG95_v8LP_8EBT1-bXlbFC095cJOyMcUNzP1LZyeN8-_V4jgsw==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsMTEyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTQyNl1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiMTMiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVLVr_BCVewZLbmIP0jo0K0jarg9hpwNDSk3d7EVGrzzOnsFGXirOgoFBWQZXNSuGv9BFseb0aiMh3HP-MJTwCviZ1be_ndan7QxVCw1zaySnpk_hMGlimD8slGvV1T7Pd2a15NmQ==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMzk3MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTI2Myw2Mjk0MzMwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMixbMTc5MTUzOTI2Myw2NzUzOTUwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxMDMxXV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVtnGhDjmfdNElGG6UhXUIpakP8RCPGHvboXwYOY-qy1IFb0GK2mEIugR40_jwRGUR9O9hxiwpav8QLvZsnWe7g9piZJk6yZsLXQxY3iZwW1EdbcPH5vKJsPGy7WA5_JOqwIVgVyw==?fccs=W1siQUtzUm9sOHdlS1ZsS3JuYVdQRnVWU0hFSngxVlRwcjRQeFphSnhuWTN2T0RHUTc3NkZpRW5wMUlfRU41WE1hY2EybWZ6alZrTVh1NnJOTTdDUjZYUk9Lc2JqSlpsQVliLVlEb2hOQmdiZUYyZDR3R0lyUXkwNGRCbHlsY1RoR1pBbWdIYmVmM3RVNXN3aFN1V3ZaY1JucEktUk5FcWJ4UW9RPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNjYsMTUyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTM1OSwxNzU4MDgwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMixbMTc5MTUzOTM1OSwyMTkxOTkwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxNDI2XV1dIl0sWzIzLCIxNzkxNTM5MzU3Il0sWzM1LCIxNzkxNTM5MzU4Il0sWzI2LCIxMyJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
@@ -1003,12 +1198,191 @@
         ]
       },
       "selectors_by_target": {},
-      "request_count": 1000
+      "request_count": 345,
+      "initial_selects": [
+        {
+          "index": 0,
+          "id": "exyear",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "EX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026",
+          "disabled": false,
+          "value": "",
+          "options": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        {
+          "index": 1,
+          "id": "exmonth",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "EX Month",
+          "disabled": false,
+          "value": "",
+          "options": []
+        },
+        {
+          "index": 2,
+          "id": "expiry",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Expiry",
+          "disabled": false,
+          "value": "",
+          "options": []
+        },
+        {
+          "index": 3,
+          "id": "option",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Option\nCE\nPE",
+          "disabled": false,
+          "value": "CE",
+          "options": [
+            {},
+            {}
+          ]
+        },
+        {
+          "index": 4,
+          "id": "strike",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Strike",
+          "disabled": false,
+          "value": "",
+          "options": []
+        }
+      ],
+      "scripts": [
+        {
+          "inline": true,
+          "bytes": 153,
+          "sha256": "ccd1b3c7bb8de71818c2e7a9d2919c06a6c29429016ba7af72e5cf4f3297bc4c",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 309,
+          "sha256": "ecb58b905f237e4c1dc9dafb15e363e24ba2fd5f9a6537f4da5c4047b14a6724",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 153,
+          "sha256": "08cef129018245f03310c0a6591b6fe54a596cd38fe64fe16a0ff7cbec6d1123",
+          "endpoints": []
+        },
+        {
+          "url": "https://tradingtick.in/assets/js/main.js",
+          "status": 200,
+          "bytes": 4091,
+          "sha256": "1e36a5c2eff6f80f810d6bfcf83365f80d802a20b219ae6803a30520708d8915",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 533,
+          "sha256": "4cd23c6f8bce2dea8024ace804038365019d2f7e803afaf5c7fed93b10b09c33",
+          "endpoints": [
+            "https://tradingtick.in/nifty/nifty-option-price-charts.php"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 324,
+          "sha256": "e156fb39a8249d0cfe0e59652123309349d7331aba65fc71a70af9437cc98b2d",
+          "endpoints": [
+            "https://tradingtick.in/nifty/nifty-option-price-charts.php"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 722,
+          "sha256": "207a7ff1d3f96bf48fdb1d11d4d325280103d256a11d427f96daabe6535a2e6c",
+          "endpoints": [
+            "https://tradingtick.in/nifty/nifty-option-price-charts.php",
+            "https://tradingtick.in/terms-and-conditions.php"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 424,
+          "sha256": "0d13e1c2bafc54b215bf6a954639f7cabf8362fd31d514fe9d96c7e113cf62eb",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 9657,
+          "sha256": "20be9de03ad09bae7ead6b5604de145504a860a3bcb972ac45ffb421772d65ff",
+          "endpoints": [
+            ", () => {\n        const year = exyear.value;\n        if (!year) return;\n\n        fetch(`chart-files/option-chart.php?action=months&year=${year}`)\n            .then(res => res.json())\n            .then(data => {\n                exmonth.innerHTML = ",
+            "chart-files/option-chart.php?action=filters"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 277,
+          "sha256": "e191ba887835b15af37a30959d4f76148f6c6b50eed24aeaed9bcd0dd62578d2",
+          "endpoints": []
+        }
+      ]
     },
     "chart_data": {
       "url": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php",
       "navigation_status": 200,
-      "error": "Locator.evaluate_all: SyntaxError: missing ) after argument list\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "error": "'value'",
       "initial_state": {
         "title": "Nifty Option Charts Historical Data for last 7 years for all strikes",
         "url": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php",
@@ -1104,15 +1478,15 @@
         "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry\n Historical PCR Data OLD PCR\nDATA \nNifty Historical PCR Data\n Futures Basis History OLD FUT\nBASIS HIST \nNifty Basis Historical Data\n Buy & Hold Call Option BUY HOLD\nCALL \nNifty Buy and Hold Call Option Until Expiry\n Buy & Hold Put Option BUY HOLD\nPUT\nNifty Buy and Hold Put Option Until Expiry\n\nOption Analytics websiteTrack Commodities\n\nCharts\nNifty Intraday\nNifty Expiry Day\nShare Price Target\nTick Screener\nBacktest\nNifty Short Straddle\nNifty Gap up\nNifty Gap Down\nStandard Deviation\nOption  Data\nOI Charts\nOld Option Chain\nOption Charts\nCompany\nAbout us\nContact us\nDisclaimer\nAffiliate Disclaimer\nPrivacy Policy\nConsent Policy\nTerms and Conditions\nDisclaimer: Trade at your own risk. we dont recommend buying and selling. we dont give tips.\n      \n© 2025 Copyright: Trading Tick",
         "scripts": [
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js?bust=122881394",
             "inline": ""
           },
           {
-            "src": "https://scripts.clarity.ms/0.8.75-beta/clarity.js",
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js?bust=122881394",
             "inline": ""
           },
           {
-            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "src": "https://scripts.clarity.ms/0.8.72/clarity.js",
             "inline": ""
           },
           {
@@ -1168,23 +1542,23 @@
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVJpSmh7mvKSZQOGUITlcPk0COEh5zM6n924eQ0vVFcfTdujmhzJrkXphfiUi0tCPNdzzGQaNgiIJRgt4PyYqe9l1EEvIbkOrU9ES5ZBE9CFfnHLk8_zWEihTfrHovTwOhECkCNGA==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzUsMzg2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTcwOV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1MzQwMjUyLDk1MzQwMjU0XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxXS0iYJkUb624kWWeHn5Oy1LzogLG6dgtTUcTN8AjIimktoXiTobC7a_EawEr5KE3qGcMTdlOFX25GQj6nDJ6-YPdUaDgI4a2vTVgNLX_7ICz1DP9fiSb2RSS1lpqypb-c8MmubmQ==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzEsNTE2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTY3NF1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiNiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWY8c0btn-Fx0iVtAokhokXoMSflEOqqvR1h-t-oVLKoj1I2s77zX87rV8AGsHD6mvpXcjIvIpnvq5velXWKPOTbvHTZtHoqZXXcUmwMTSJemJ0d2MITwLAQSuRejbsldTamaRFLQ==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsMjU5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3MDldXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUsfqCpE9KkagWNfWTvgj8n-Wrjc1WPzTGO3FVyAaRInrMCbpuKK801H3ucIkZObl-OW_7d-UZ5iYyXQIhMPTy1O9aSJZRdi1BicxMZY3levu_jbzl4VoQ859UoC_QdhDgaQLjNEA==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNDExMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MzU5LDE3NTgwODAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MzU5LDIxOTE5OTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE2NzRdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjYiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxURJQDXEP2fFyZ0nt7Jy-aYP5H0dIGtnkxXuYtxzrCE58nI6JC4oec4uPiyk2WhLn7_8mcy1USet83mEPhcidVaV8j8qqkVGpYvJR0AXc9N6FEi0sH9Yr_F7E1in4YmvHc1yd2-oA==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsMzE0MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3MDldXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWk_IS01ew-wDv-1aXKdcQqy4_ZlCwU01JypK818rmj_bSSHoHMFZgbYuAknV67wU6ZnNZ4FuImZz2ssAIoQ-5gmIswKyQ_u6GAt0dz2xLvN--vl1wrH8yPj8MMxYRJgLUA5v0Kuw==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNDU4MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MzU5LDE3NTgwODAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MzU5LDIxOTE5OTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE2NzRdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjYiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUyfvYAtDpPc6rmwKepFOBlx0cK5JWM6ENGKZ3079d8s11Vz3O9lzNtGnNGBOefw0QDDhTNCZeeUpfjxwBRe_oCh4fqvdbVSs42CGzVBgKJ2k3ejSMgMLNaMlu8i9ZxvPt8U_iV8g==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsMzYyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3MDldXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWrxPGFTy3qYhJ7uJUBhGvUmUNvPRNp3e0kmOmvnfEoI1fcxIAxvTNhMRf8evsenLJly6yy5t4-BNB1LFywHMkNi6zcXcvyTyeFFrvETz3tcuQTW1OQKaQL3q8tfwv8WmAnhcfh-A==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNDk4MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MzU5LDE3NTgwODAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5MzU5LDIxOTE5OTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE2NzRdXV0iXSxbMjMsIjE3OTE1MzkzNTciXSxbMzUsIjE3OTE1MzkzNTgiXSxbMjYsIjYiXSxbMjcsIjgiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTQwNTA0Nl1dIl0sWzI5LCJmYWxzZSJdXV0",
             "inline": ""
           },
           {
-            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxV4km-8dGJtFxtOydadu_L40lUC0S3gBVgvnHWvXkFbvF52Il4AvbhVa4yo-wz_MnV4NbE605d_YvvpcjPYKxyj20-pwVPctScOofeRK9bdT_Kuw6RhFBArFoZ1lGATSrLA8slv9Q==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsNDA1MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTcwOV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1MzQwMjUyLDk1MzQwMjU0XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVZK15pgqxk6T7gjCDqbn3TnHwh_9epC9vsQneM7H4SyZgWVLU-71tAIjv2pKifcrdyQSsBizkk1b36-qbhAmdad-YmWEXKDnjhpnoKq96nxUCuLkA2Bv-X9i7LvZ7w-_CWfAD-EA==?fccs=W1siQUtzUm9sX0QtcElhOURHZkFLUGtQOC1DbmMxSG1KbVJNZzQ3RzEtWWZKb1p1SzJqRTVaYnpxcnRLaGJIc09EVGN2OGkyT0d2VC1oSDJ3M1VHdVkwNHM1a2xKQkFjX0ZaZFVYYS0yb2xWamZ0NlpaWU5fWDhJcHZpQkljTDgxelQ4eGVwMTlKamdENkJ4bmQyZFZmWFRSZjc1ZjgtaC10aWl3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkzNzIsNTM3MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkzNTksMTc1ODA4MDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1MzkzNTksMjE5MTk5MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTY3NF1dXSJdLFsyMywiMTc5MTUzOTM1NyJdLFszNSwiMTc5MTUzOTM1OCJdLFsyNiwiNiJdLFsyNywiOCJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1NDA1MDQ2XV0iXSxbMjksImZhbHNlIl1dXQ",
             "inline": ""
           },
           {
@@ -1242,7 +1616,143 @@
         ]
       },
       "selectors_by_target": {},
-      "request_count": 493
+      "request_count": 305,
+      "initial_selects": [
+        {
+          "index": 0,
+          "id": "exyear",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "EX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026",
+          "disabled": false,
+          "value": "",
+          "options": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        {
+          "index": 1,
+          "id": "exmonth",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "EX Month",
+          "disabled": false,
+          "value": "",
+          "options": []
+        },
+        {
+          "index": 2,
+          "id": "expiry",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Expiry",
+          "disabled": false,
+          "value": "",
+          "options": []
+        },
+        {
+          "index": 3,
+          "id": "option",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Option\nCE\nPE",
+          "disabled": false,
+          "value": "CE",
+          "options": [
+            {},
+            {}
+          ]
+        },
+        {
+          "index": 4,
+          "id": "strike",
+          "name": "",
+          "aria": "",
+          "labels": [],
+          "parentText": "Strike",
+          "disabled": false,
+          "value": "",
+          "options": []
+        }
+      ],
+      "scripts": [
+        {
+          "inline": true,
+          "bytes": 153,
+          "sha256": "ccd1b3c7bb8de71818c2e7a9d2919c06a6c29429016ba7af72e5cf4f3297bc4c",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 309,
+          "sha256": "ecb58b905f237e4c1dc9dafb15e363e24ba2fd5f9a6537f4da5c4047b14a6724",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 153,
+          "sha256": "08cef129018245f03310c0a6591b6fe54a596cd38fe64fe16a0ff7cbec6d1123",
+          "endpoints": []
+        },
+        {
+          "url": "https://tradingtick.in/assets/js/main.js",
+          "status": 200,
+          "bytes": 4091,
+          "sha256": "1e36a5c2eff6f80f810d6bfcf83365f80d802a20b219ae6803a30520708d8915",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 424,
+          "sha256": "0d13e1c2bafc54b215bf6a954639f7cabf8362fd31d514fe9d96c7e113cf62eb",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 57,
+          "sha256": "1b60af0ce49d65e8b1006457c16883d60e53a0054bb157c57c3b03a82ee9964d",
+          "endpoints": []
+        },
+        {
+          "inline": true,
+          "bytes": 9677,
+          "sha256": "e72874b17588565f185b4fcf978697b31e350d0730a10d442d19ae55a0fa3503",
+          "endpoints": [
+            ", () => {\n        const year = exyear.value;\n        if (!year) return;\n\n        fetch(`chart-files/nifty-whoc-chart.php?action=months&year=${year}`)\n            .then(res => res.json())\n            .then(data => {\n                exmonth.innerHTML = ",
+            "chart-files/nifty-whoc-chart.php?action=filters"
+          ]
+        },
+        {
+          "inline": true,
+          "bytes": 277,
+          "sha256": "e191ba887835b15af37a30959d4f76148f6c6b50eed24aeaed9bcd0dd62578d2",
+          "endpoints": []
+        }
+      ]
     }
   },
   "notes": [
@@ -1250,7 +1760,7 @@
     "Page metadata/date selectors do not prove target-session raw-row coverage.",
     "No P&L is calculated by this audit."
   ],
-  "network_events": 1753,
+  "network_events": 849,
   "same_origin_data_responses": [
     {
       "page": "historical_chain",
@@ -1270,10 +1780,10 @@
     },
     {
       "page": "historical_chain",
-      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=3858353086850574",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/a35d6d0191a11f819ab4.json",
-      "bytes": 18010,
-      "sha256": "64ef217d785461bcc1381e498afc6fdca975b3acec54d29daa98dcf6227e9600",
+      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=6977395532785467",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/fc7cf93ccd3fb3ecd760.json",
+      "bytes": 17962,
+      "sha256": "c5faf7df85cec101a543183395c9c7e70b4b1c0ff2a1caeeff4fd3406e85d6f2",
       "content_type": "application/json; charset=UTF-8"
     },
     {
@@ -1286,27 +1796,11 @@
     },
     {
       "page": "expired_chart",
-      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=6325756778314474",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/fbf7b224076f698408cd.json",
-      "bytes": 17958,
-      "sha256": "75699a92ad2c817a3bac18a7b8519c133e1f1ea6467fe7c796d840525f4bff40",
+      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=3621478824605715",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/8ca67ccb1f57fcf4bd99.json",
+      "bytes": 17938,
+      "sha256": "c8f77cce9e6c35e60a1bf27c060678c841db6402355f4e9e45b6f7c1cad83e5a",
       "content_type": "application/json; charset=UTF-8"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjsv8BIxihSA63S8Fnz8hpDXCLkFW6mSeLoBvpY5anV8TAMuOCP_mapdW9s-MGHW2UL3RsYUhdqHUesp5GMFnGvmz-RmZ2dZN9udZ1s-4klFj1wIKs3WrBlu1fqYmnSkXsnYZ3xQJZxN3bCSDV9NovpdolLuEynFD7q_XxA_67AunHF6carwcF-Jm9aZOTwPu_uBayLE2LqgmYKvTtvU4iO3EKFJI3fyeOIK39a91FytD4UuRJbLXaJo--cdmqta5hkuk1PXazwpdx6FY508gji9zpTS6clPC54WCZ1szoqz8L7yItQCWe43v0wK91gTKaoaR39IPWw6qRGkNGSfUKh5RI44rhJu12R6diC7Y9iU7BvuRXwAibQMtZeBDUaYzH0VYdNR2mI_lW-_-nRjhnLfKn7MARHFn6MtaskU3MxYwHLbaMcuXNWLbcK1rQm7tpQV1h3m3z3-oR5t6fY5PvyTgX6OKxVvPhdUtLPG76nLyfYi0YH3uTB_BrpXkca2c5huAhYhGlCXe3jQ4Tpg5INGZLoMc3kAqqdO0lVDX7amP8F515Gs7wf0b37mWvUXYQIwGBxRiH9ba26jzwWd7n1OncZUXSQrSHkuIrSKs96Bj5c9wA6p7t5w6iBy09GH7CuPO5uNY9Q6VgDee0k6IMWw70VN3RvPuoWiG472Onu8MLqIJ9VzA1Mz8fYjo6OiuZrHDstrMfRPpP48BR8W-X1vNd_5fgdYKsM3F_RLE6Wbq3NlZJOqpUc_Fnh3n98xYJZXwQZiJF2hZY6Amv7EnScrCtPTUnWEMZopBkJXUWIbGORuV2PIw4_ie3xJY2g1hk3hvaNdfzgPwQ-5YPUr6W2WYXIna4k_ruZcl9S9VwCp2JCA1Y-HRiCIh9FTzIwh5Xb4sWJNI86TRUW0dIq1iiZ1rampMYH-gDQuaTz7r9RMzcDiLOPv2cCpqNPGemuyz0ahBy8PwsbEDFlCDB656VrGsOP3HWT75s-DsbK0SW000abmXabd98XMX6VOaDtHmZLu6_31A-ATm2SFXhH8X922NB5GcPnQdUvzUIml16NVEgdw7sbai3pkpqjNt32lwfBifSWxl4co7kvgIKSVSlAnCrKctEjr1JIqEqnIw14moiiY7h6MAmQ0Ute0k6HgpsWI2wUsXIcj0iTWpQ7gnwBeeklq2v5LKk5d86pary7H3AsmaW6q_iut03RDgCMgI4oW1AZE5y6Tx7be7TMvJKNLPx4JT6ablurRMvJM8GcV4mJi5AF3HSJVY7_QLbGuXyuJVSdKJ-4pTHBVfwZWKLn8TNpK-_qp34IrzWcuurVpjLrmS0gAK0Jwctwt_Ft90xZhMyE26bXSi0y4U0Z2bTcJFoZSgjjZYh1xZoXoCJjiZ5SslHv-sSpKe19QXmbmQBhMJ33tb6PRouO4opWdsq3vXi9a_iSKM-wZFWJ_YRYOVSp2-NiSCVnRD-KMKmmyL8JAZpBhyVtXnIMGRKANq9wpdyAQdqAJ7_O7UMK69XbPi67dcxVyE293LxzrtIbevrk6y-PU6-vzIPxBN7Jh6KeogEwkCp4vX5yTjreRCj0F0M7t3&sai=AMfl-YQfDKa0RA-aCEiftcfkcXTQrrj7l6eVmJXlQZPd8ScrHnMeo4TcTCpplOdgy3_rHhkADS7Ulf-OvzeaR0HVwipxtRb8om7_cF9Q_v-Qtin6GAjWEv5J6vO0vW5WK6kl-wsb48u7HNofZCofw4QpgnVCVixq5pQ5s_SMjkVFLKTKgaWKZ4_9qOwt6xTtWU8eRxvM0oxz_3OngICOzNxM7hvNhbCcMMgS47kbP0caSHOJ0jrZpEJxEWb7jFfxtBK06hqIz-_SjpaSFKKQQPJwuh69bYItDwZKPX3XrpH8QfIS-VpF2A5QRC7FgrOET9H8pPNTqFwMpN5eWrLbPLG_s6rOIfWpmHQgGaBwsMYtXm9wgWDg1KWgqoLssTPyDsOyeGmsTxODKQ&sig=Cg0ArKJSzENJRev_UugnEAE&cid=CAQS9QEAQM4h3OgOzRtpIBaYijIYuWPysGF-g9mcmCIr0N6vDpGGP6mmwipCOGkbLdYJyXofONSUPXJiB2AUT2BdFz_05hury7sbYmmD1pBOwvSB2C1FWdvYw-u3ER69NJ1OFyWKP1H6wWWsMEFdgE2wvz0XDOsAO5SB3TEccTcDTZFD4x9J7INixn5W07O1swntGN6jyS2xbvagsdUVNY6kdMFiDeVJ3DQQ5dxGtXkWuCttY9jsLly4GSR7jmiQbKk7QEstvUmBwpiVs3lyu-Ah3o_Rj1TQyh8EmOk52tnqrCWpiqnnZwMoSR8ZpHXFnv_bM3NMjKGWzBgB&id=lidar2&mcvt=1101&p=0,0,280,1080&tm=1546.0999999999767&tu=445&mtos=1101,1101,1101,1101,1101&tos=1101,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=2025129673&rs=2&la=1&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747206800&rst=1791539267312&rpt=1191&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/a45ba5a7976ca6d50107.txt",
-      "bytes": 42,
-      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
-      "content_type": "image/gif"
-    },
-    {
-      "page": "expired_chart",
-      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjss8NqE8lwNhk2-trkS9kIJAvbOiaLi5rXQs6t7asdinzO3Jx6JWccKqb8QTNvLq9TlJP-5Qhs9fxJ5PmLKD2kUKrKBTpgyAy1XlmnGeOZ6x9X5GCjZP5WSjThhk_tvibrUf62G-xu3pgs5wbyyjXJr0Flu6T7Vza7utZsY8PQG8TQ_GkkigFWwSf6-Y5my5bFTIv4P9jMxtoTNkQzGtRmFW7mx_FSSNxta4MBUfyQJs8ctqhp_-6FaAFqvVegTeWA3S1sHbxY2gEBcRNLosjsYqtDTCoYabUuIbkXj1oNeuwnG4RlvAMRlCuEFMCvASb5Y6CDhUnAKe_WeAUhx-B-6tNmKNXnOoZcGG-UzLpluOBUOvoiZM-SiP488ytWoh8rtfXkkc5cv20DcOlbrRGks-To7Zh83U7Ke0-2ePIKhxeNG5U6iMo9_rE6KHPKSYHMZzW-0z0bTBoWLxw-jHmz0tS5vgg3Q3j8HEH_iPECqMc6reUt8sKItSp0l_x6rRvXhtZ6b7K_pSK8nHexJI56lJdaZ95V_PM7rcd1bEAQhUmfqkaBowS-21HcsR_lFDmNxGuU1y8seMiFeV9KKlhQLCxZLDJ6d9egheDAXTX-GEN6XR9XlDLV5tR_o1NdTKRDaCBfiHfo5Vejd1kI6i2nR-ZDa4xkgdTBAg7RaQsO97LbGKh_UwZ8-nQE-kgcZsEaB_Zk1k22EJbEWhb9Qhz_3r-kwzOWtFF7cB_DKEj2S9hFcbp8xUvimiCla9zyyF3wO28Tql53vXBz16X83I48pR4v7CWMclhjjpzhkXspIfx_jjMd6z-FqAEhIp_yxATb1zPFGIBO2CtS9zBv7Ac0cOvAac02WOkmsslg1ysilvPfTkM2viyNZDnrAfG3XIwQVudbADGh9aANP0bPJOFyOUTNYAF2AT4x9qLwBwAjmEwe9QeV7Ec9TMkjIi3g64vUbgkToYaPbR80adk1f9FTlv-5ndxPRBGVd4-WQge-TjSUoeAyN4E0jebl7ikPyj1J2Ma0ueMk8rhfY_CDYaF6zvoRRTAm-Sl66KS3Qi9UjW_B70Ul4s5XMWnQQKgtofet3MS2zoG9OKvcANRl93maSw0WzeqbzWaKXrH110gSD3wYe48nvlIrsa5qsYDs3W_AtZZ4NDXEY_TAvbBOL-Aes2sWLNWzcHf6cWfNH4sYSk2-Asq-qU9lbgzXZ6YwyPMqbyoagCl95v9adjw1so1MUN8TyYFwS8n3FS44lyGcP4w24wrK-AQIUaS8k6QQ0cjjag5svOmHqt16UrjvJBhtneVD14nH6rrYDjm70KpovGqRBIZXXa7jzq0k-dEHQz-9OEAsJ90QoCSisSP2zmVBGlS4BiCUg4P3GeKMoDD7oZUdLSp6cdzp4EMnIwlh1qQX2zi2CW_1H_eyta-VMUmrY7lZuqzJqh8AArrgnoSZocFfwIvektpk--iXUAkkCQL0P2SHz2i8J_vnj8kasx0EtN848nlWIZLQWYMZ1K0Ig3fk4HDKUdur0r6MaTrkek9wGepdoJetH4DLdX10sd9YkinxJz68Urw4M&sai=AMfl-YRcW45ripm8Q5fy7KDbC7Y8SqNvXtvLLekYhwLXJhNq70adHkp07KSnQMVdBhLkoYI2tpUISkeUBB9q67e7GXMtED6tV2gdMZ1DQO8Kc4L528UTv6KkZgpv3LVkEwMS8F4ajc87OvZyBPK2IvIAS_hl_xGmf9wVOHtTsGFVT8plPZG1eCm5yUucXNdZuwQHM9HUEs08ZLdZMDvImkbxyogtMOtZkpILc4FXh1MOyxhQ_dc3IWv4bsdBRG6mN5BHWSiPWirKFFGuEI7Coq0ytnJ9d3uTaohg3d9GTVIBpQqjLxTErEaM8ciVTMtHV1n_BCffwyucSMHxqUEkdfl9oLBs1RXqXqsnG2YFmSMdO_7OSTRGdbZ1Mlecl7jwGHeuo_NIdljOTA&sig=Cg0ArKJSzOAUpKuUGrj-EAE&cid=CAQS9QEAQM4h3AWq0nshgL-FV3DosIIEv6RiRI6hjnGSEyonP-f7Kw73SyI6kbmf0Xr0gAT4faLQ-CvH4Q4jXMmrZu8EJS9PeuDB-aiyv6waRSq14dlvLBzDyuJsFK8MfEM90FhhhT2JrEF1NErX5ZSCW-_2EB3PKkls5IUsUNgIyfCC8ibs879sSUKMrV1ndUHE7bAepIJ4BUXi-kzCwVgnnY2ZVsSIkWiyWxCL67BkIjMJ2Gn26gAW56Rp24mnMQmmozQUWAdvc6bMlGYxAmajB6gUjY9e_Sk0fz-oWB28jVzue0iyQE2bfnatFv9UO8DBGFOiWhGnjhgB&id=lidar2&mcvt=1100&p=0,0,600,260&tm=1534.5&tu=434.9000000000233&mtos=1100,1100,1100,1100,1100&tos=1100,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=3184181384&rs=2&la=0&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747206800&rst=1791539267286&rpt=1286&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/87fe781480613d264946.txt",
-      "bytes": 42,
-      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
-      "content_type": "image/gif"
     },
     {
       "page": "chart_data",
@@ -1318,27 +1812,11 @@
     },
     {
       "page": "chart_data",
-      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=8912191180380943",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/2de042155b8003c64698.json",
-      "bytes": 18014,
-      "sha256": "39c5197377c4d5dff47a4d6aaa87f861313cb83dd4b8f0a0ff41ab6656f5784a",
+      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=251249146875170",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/3e8e420718825b640a07.json",
+      "bytes": 18370,
+      "sha256": "feb0d504c9c9c9be0a68f8e4c70a56da83074dd4c9455d3693c7a3fe0c43e880",
       "content_type": "application/json; charset=UTF-8"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjssRUX2wPy05XEuh53-fvoAsRCy4C4OSaer3qs0sINdns4jP8DASRlAU5Ps5P5W3UHZRPWd4qxzJVYBsLOuu0AHeiu9XjqfnoOVBuj8Urla-Tss3tTpuXmVyKHQMIV_cLW9RIVfP3XUnXI1Uss8usVOY2CbAW7yBdd0mSOQGUwvOXlqytVYJw8T9pcd3CRalzJ1zwqPbsB3lC097YS1QkMZbOLrKURoN5dxWOCQAmpPW9BGHHfg-2ESTI_UqDi8EXC9uRpaY_yqCnZtucVhBy1XzrpXz0pWRJxirmhf7Pq_4cVLxBt_JjDeStrmXZkfadzmA2z0ZkvCaEa5pxNAIbUePZ8VWWVOUml4epjmo5enMbHcA1j4dLN4dK84Qw7ldQzGbh-yI_4U13l_acIPg4sEOoYqg-OQjsT0NLHBmeyMI7-Z3LhoroZFtYclv6lSht8SB_SYFPqfs1QRu7cyjCJoqF2VYUsE_qhx4JB90GvJ--_Mcis8WshNAaWVbu9J9g2nQ_VqxeoSqa6XqxFrh2VA0GGY2mKSP4D68oKk1X4lRbzsm1pIsRxXJ2dZ_ydcMMlljAwwWssudBIrTYPTIDM3oWqahOcn7N_4kb2x7y6p9rLVu6sJ-ux1sYYVjxt2fO1aFOicfgPa2ywxQIe4twQB53qIMcWjjPO79lP-wnl2WpXnKrQwLoddy9caKIVC7a2ePa5pySchRy9X08O9gVuQ8UOTgwuyyaItORLaUH4vVvt-Z5a_8bNq2Mfh4NKm0MqtAdLti8j1sl31KDE0Si1zTBkLaGV_49qOPbqMWKvFI52zGZQo2rPMZG5bn4hwGlq3zCK_cyj2e32E_qFrssxYqg62S7U4R-KOKq4j5cGrJPLZc-IQEgoRMlYC4CNtVkJZAUWuoDfQko4lAIlj25kvV62p3JDwgvCTPiuYr2BAQRe_HPxA5xLS-Eh-0tckxiptxPdD14nUWFx4ElPPCur_PLy0PBwYNPBkRTLTfinIDDtFotg8D2p40gtMOq8FDAavzGy1Y3PcNl0aoMyJoxkEzFta2dcipKkCZDQM8c78FC_lDucS6wTo5Sj9mIbWI-yZdvoaHf00B_oJIpP_cyixvjfR_WBvjj4pMIIXHc8kNHpVWuajobuv5ix7F-l8bpIaRwReB5-8XnYQOPACSGLutSDVfF3IeBAuCipUtAyeKIcKTC-ZykuNIlUov_fZtDUdBBjO5zRs7LAwd6Kwocii8-IrbmkgDAkIvf3pTol9pNR0JdRYs2fZF_jgdHz59a_tJZzb9KQm6vM1vsifFIsCFHoakoY2tJaZrpzCK8g9QHDcW7Aq9HOnmj13-qNk1yilGKMtHflLuEm3A9DvypREN8iiimVE3gPHk6MAYqitjAqq8FnQudVtkpC_Fh0hOM6E4541WAio_if0qnT-dfFZZT-xn7Qq2231AtKkrCesdMLyqJDURBWv7vR68TYGLwhoFI6BR4g3mmjthxz4465yHXq5Jm3t4YRtXr0K4oHmsGTpJ8PKCH6fR1aQ6-6DQx5QvYHRLw3IoJJC-vSF_4yga2DH_pOiUiYhTG31HjNBZO7iPIHLn4A&sai=AMfl-YTKmTuv_0zpjDas8vXZgd5M78oWTEnFwA33sS-Gg7I7BfM_3-3pDKMplZSmsbm-EAbi0KSCtVT9Sj4rC31QMzj4kJ20DGMZ1Pv-E8CeI4PTx4GpK3b12wG3h9o3NJcJ6D7D9uDEw5pyAkM0eHptx-jyQTL9vw-cAEr5gZsv0ch9X_12sIU-eOENMZ4K4JcZjHbOMnSbYCgmqlMGPa7uy3mAqfch0VkvEC2SBP_43TsPkGN9OSY56DBlAaaoosg-qEJRh1qbpIpMwG8Wo5WZLGVy4B7DgMTV7wmGRr5M74d7T2l6OGtXKs9EVpgCqlumO2R8b1YtJYvNGcBtHva8XEXt5vMYMF2CNzmU6WC_zXUHFKFBcFYsKoCup-CcwzE5zu2S9a5PcA&sig=Cg0ArKJSzBzqeLLUELgaEAE&cid=CAQS9QEAQM4h3C29IteKi5t0aY-qATUPG7wMndJKwWMLlJfbZIe-MAol3rUi5K3fniy7Kp6P-X7FqLLIaFOFG7_jnWunMacZuLBZ-RW9JRi5qBBb_uuaNYpFBmQxjo-Eqbvf1M4i87jnlqTjwsm7cPEPZWV-5zu7SPJoM37h0H3rZ_Pmsr6G3buycyUeQiJgoiLVYEVlimtwmqSG0cg0vn8CxtP5Z2GrvTNagA3hEjZMdw5z85nLRO-yS30Xv0uEi0kJ5qYgTsB8wS7G-O5WBSCzNPNPw6zQHNmQYgRr5yO_GAKNxPHOpMliyuPVKnQ1jipvcapJt0hacRgB&id=lidar2&mcvt=1000&p=0,0,600,260&tm=1277.6000000000058&tu=277.8999999999942&mtos=1000,1000,1000,1000,1000&tos=1000,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=3184181384&rs=2&la=0&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747207400&rst=1791539274428&rpt=729&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/d912806c1dbdfb335d46.txt",
-      "bytes": 42,
-      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
-      "content_type": "image/gif"
-    },
-    {
-      "page": "chart_data",
-      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjstYa4PXo-jzksHun6HFriq4b4JVdJxsl4X_KCtTkhQhgRbw0YhWYam7vi8Dk_lwQ3sHDPfXnVvIaa7Q7_bV04E0qtiffNgPM087vQlMmQANMcbrun77dIgt0iPANe8Ft086Xu5b8M04J-myPz-Z1KWTC2xCu6LCL5BpzltLL4jfsTBvwXeJY6f4c8ls8Bkj1FwIPZwsRypBK2dteHOPERIWE970gIbJIoce8SL-aChcr-rnDdcO2eHkNxihZ7pMrJRmTpFVtjN4Tw934uQjFoBmblwYcLIbOYrcALHhzzJnjSDf7tvSKktiKEXV0Bv18ZSYI868S-SctjQjVzj918zianqqV5wJG0pzmCrebE7qv6yHHy5jZgt-J0cv3w5VXgQtgWuZOhlBJUUap_XhJcNmNAkb-WhymvVToJyIiZAmYt7tagPMkg8nC6Etx0_m9n_lqa99LT4s0S9_tLFzRcPAKaj3EOD7ptgDQuArNdCI8wMUosu26RZyirw26JTWJpftKHSLfyGbrRujOhlRJYTnikbQfpEv6uvThthesjTYh-Bcqr8fjAiMNrdoVWqMxGa68J5FGUCCH5ljc1VFhSWfh6-ugjp1X1YWaG7RUDagd90tHsqyIf5f5r7vySf8s1-Nou36NHoObX-EDiPdl9TofZDmfq0ixP7gY8zEijbjRc1FTWzsv56JDDHq2J40M97FaR-tu8gND8j5T1Lo86wBix4qCVF9djEr-JGl01fM4zxawUnk29cECdf_A9JeyB-dC_Moy6KBwe4T8-i-Z4Ko2SrhSKNMTn6vZ4OU3izJQ4Mn_3ushXYtQcD1t-zWWCKN1ISDmOoGOlfEfu8N5WFionk7nt0bba44IS9ILg1ZK7p35R4tn1znKS9KYHtndhVF5EATdu42_m2SXIqpoQd2H1chJoD3CoDnc4HkI7KVrm1kAl_hBzdxgcrUrnqrtrYpf15PU_0a_cp0wSvchXpBmlTANu00tg-vWrjZQvrwn_2lYgopSJ3gIGxeIkCVfFf__9wPs-TD0X8I8Cle-q4wIkbu3ZYvmlnTR_4YtVMIxMxG_diJVWpWFrOfa2fUy-KCfqCqNZIGIrGR6VL4GZrknYgRJ75fM50NhV9U2EjIAyMP8jsTFd9TXfk5bF4ACUr19Wk3E-TVdWdGVciabwGYj6a0yv-5S48Odzkb2DF6PmI9rSkV0cd6sPTThbz1CRRJztrJOZ-JNoGGNFoB7T11toHyz7ncg5Gq-fiAVhUZTttKC0mU9OdDPXpi3DBvnE9Mfjwct56E8FgjHikglsEPeZerFYKM5OR0YUI5K2JlxnFvFvREaOLjrKXjzhC9-EiNMx2LNFny768xnttGogBStKNLiiPI6gKs4tkb6JST6vyMWzSjDa-1irhrXuPZ6Aui_2ll9vC18bkPtQJ7j7H2FXy39JyWRA2xyxUNpEqF_jetK_NgUnV7gH8HQjvagIEPcPwhT69DxDZ9LzlUZ9G-uoMxtV77i8shtjmM4v56sj0ywDJk2dt-KbqFyGzWed97lcvD6OsZwQWISDQO8h6J-IPjuuTzXNHGZooiJ2ZWGMtnpESK2l8&sai=AMfl-YSVRgNznCXx4AVNS3QmKb7KknlmIblFrxDc_PDFZw_tgMgmYiS1p0o5wwgHQl2UBN-j3VT1Y7ojLCSmkWk9lgbnwSGgQ7HjqT3McBpZYAwv9rYP50tlx8i_pIXXDSNVq_cPVAUw5_hRRHkB7qImKw97EyjyHp3wIpAe9KRIPacJJCDuwiJ2RmDaZ3L5AqDau5EfbDFEO__Kd_zHyyt9mHJpm6QyGoMPjyELDbv9qz0A6UoE8y7TRtFdJOqDGnkEDY7lCvTMYndIvNUYv-b19ZkXoX-hBNZo-fyZmnp6thT5NTZo9p78h7xQENyhjbLxKP8QXC-uFP0hKrReLMnZT1M5G_0dVpAOoJdkHohSmmX_upWOEin5GO-Xi618dKIv6XKjcl31gg&sig=Cg0ArKJSzBlrvVc2PJ-oEAE&cid=CAQS9QEAQM4h3AHeyn4j61PcUWdfNWRgeZjj53iV9lH4hynHim1DOhuscAq6CbNdozSLDYEUAxAEJqrV-5qEcxd4SGy2Bv58tddYyvtSWtYJkvW6lQLaE7ciOrOFWNVhr02-AVzqWwUo9rdRWu9arneBQOinWqbP47CtYJxOFLwTTBfHj7Vld3bxTXxLhyLPfXqHMVcCHw56bJWP0bYNrtGeVfwQGGBU6eGRTndofIskAPZZyQboJFuK2iRe20oaiix0pQj3zVcLLME-1scZ2aSuOHgWGGnoS3Kq5l1ypkRXnd1UdreJmAt4IZy5IWP9TaD2tghl-LnA3hgB&id=lidar2&mcvt=1003&p=0,0,280,1080&tm=1203.6999999999825&tu=200.59999999997672&mtos=1003,1003,1003,1003,1003&tos=1003,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=2025129673&rs=2&la=1&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747207400&rst=1791539274443&rpt=702&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
-      "path": "results/phase51/phase51_1J_tradingtick/responses/a409ac8485d008b40631.txt",
-      "bytes": 42,
-      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
-      "content_type": "image/gif"
     }
   ],
   "target_date_selectable_in_any_control": false,
