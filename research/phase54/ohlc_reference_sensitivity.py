@@ -375,7 +375,7 @@ def main() -> None:
         assert result["threshold_sensitivity"][0]["eligible_rows"] == 0
         assert result["threshold_sensitivity"][0]["oi_or_legs_rejected_rows"] == 1
         assert result["threshold_sensitivity"][0]["range_rejected_rows"] == 1
-        assert result["threshold_sensitivity"][2]["eligible_rows"] == 1
+        assert result["threshold_sensitivity"][4]["eligible_rows"] == 1
         print("Phase 54 evidence-completeness/coverage self-test PASS")
         return
     result = analyze(read_rows(), strict_parent=True)
