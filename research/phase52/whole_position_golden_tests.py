@@ -32,7 +32,6 @@ BASE_CONFIG = {
     "strike_selection": "ATM_OFFSET",
     "atm_offset_steps": 2,
     "wing_width_steps": 3,
-    "leg_ratio": [1, 1],
     "reference_lots_per_leg": 1,
     "exit_rule": "15:15_IST",
     "hedge_mode": "NONE",
@@ -239,7 +238,13 @@ def _self_test() -> dict[str, Any]:
     assert blocked_missing_exit["status"] == "BLOCKED_EXIT_LEG_ELIGIBILITY", blocked_missing_exit
     assert not blocked_missing_exit["scenarios"] and blocked_missing_exit["pnl_computed"] is False
 
-    # Individually valid exit bars at different timestamps are not a valid synchronized portfolio exit.
+    # Verify the kernel's common-time intersection directly, then ensure the
+    # configured 15:15 exit fails closed when one leg has only a 15:14 bar.
+    common_none = kernel.latest_common_timestamp(
+        [[EXIT_1515], [EXIT_1515 - pd.Timedelta(minutes=1)]],
+        cutoff=EXIT_1515, not_before=ENTRY_TS
+    )
+    assert common_none is None, common_none
     one_contract = condor_resolved["legs"][0]
     skewed_exit = exit_chain.copy()
     mask = (
@@ -275,7 +280,8 @@ def _self_test() -> dict[str, Any]:
         "ratio_plus_reference_lot_test": {"status": "PASS", "quantities": ratio_position["lot_quantities"]},
         "base_template_scale_test": {"status": "PASS", "quantities": butterfly_position["lot_quantities"]},
         "fail_closed_missing_exit_test": {"status": "PASS", "pnl_computed": False, "scenario_count": 0},
-        "fail_closed_noncommon_timestamp_test": {"status": "PASS", "pnl_computed": False, "scenario_count": 0},
+        "kernel_noncommon_timestamp_intersection_test": {"status": "PASS", "common_timestamp": None},
+        "fail_closed_missing_configured_exit_time_test": {"status": "PASS", "pnl_computed": False, "scenario_count": 0},
         "fail_closed_missing_entry_test": {"status": "PASS", "resolver_status": blocked_entry["status"]},
         "fail_closed_low_prior_oi_test": {"status": "PASS", "resolver_status": blocked_oi["status"]},
         "scenario_shape": {"brokerage_scenarios_inr": [20,10], "slippage_stress_pct": [0,50,100], "scenarios_per_position": 6},
