@@ -9,6 +9,11 @@ on:
         required: false
         default: "25000"
         type: string
+      force_base_replay:
+        description: "Force recomputation of Phase 43/45 base-geometry replay against the latest HF revision"
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: "30 3 * * *"
   push:
@@ -27,13 +32,14 @@ jobs:
   discover-and-queue:
     name: Discover sources and advance bounded configuration queue
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 360
     env:
       PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       INPUT_SHARD_SIZE: ${{ github.event.inputs.shard_size }}
+      FORCE_BASE_REPLAY: ${{ github.event.inputs.force_base_replay }}
     steps:
       - name: Checkout research branch
         uses: actions/checkout@v4
@@ -59,13 +65,49 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Restore pinned Hugging Face dataset cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase52-hf-cache-${{ runner.os }}-v1
+          restore-keys: |
+            phase52-hf-cache-${{ runner.os }}-
+
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
-          mkdir -p research/phase52/results
+          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
-      - name: Install factor-selector pilot dependencies
-        run: python -m pip install --disable-pip-version-check --no-input pandas numpy
+      - name: Install replay and audit dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy
+
+      - name: Reproduce frozen Phase 43/45 base geometry at a pinned HF revision
+        env:
+          FORCE_BASE_REPLAY: ${{ github.event.inputs.force_base_replay }}
+        run: |
+          if [ "${FORCE_BASE_REPLAY:-false}" = "true" ]; then
+            python research/phase52/base_replay.py --force
+          else
+            python research/phase52/base_replay.py
+          fi
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest = json.loads(Path("results/phase52/base_replay/manifest.json").read_text())
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as fh:
+            fh.write("PHASE52_HF_REVISION=" + manifest["dataset_revision"] + "\n")
+          print(json.dumps({
+            "status": manifest["status"],
+            "dataset_revision": manifest["dataset_revision"],
+            "trade_rows": manifest["trade_rows"],
+            "strategies": manifest["strategies"],
+            "sha256": manifest["trade_matrix_sha256"],
+            "license_gate": manifest["license_gate"]
+          }, indent=2))
+          PY
+
+      - name: Audit pinned source schema, OI, quote timestamps and factor availability
+        run: python research/phase52/data_readiness_audit.py
 
       - name: Run point-in-time factor-selector pilot on frozen outcomes
         run: |
@@ -149,14 +191,18 @@ jobs:
           checkpoint = json.loads(Path("research/phase52/results/config_queue/checkpoint.json").read_text())
           source_report = json.loads(Path("research/phase52/results/source_discovery/latest.json").read_text())
           factor_report = json.loads(Path("research/phase52/results/factor_attribution/summary.json").read_text())
+          base_manifest = json.loads(Path("results/phase52/base_replay/manifest.json").read_text())
+          data_audit = json.loads(Path("results/phase52/data_readiness/source_capability_audit.json").read_text())
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
             f"- Registry validation: {audit['registry_validation']}; hypotheses registered: {audit['candidate_hypotheses']}; structure families: {audit['structure_families']}; selector modes: {audit['selector_modes']}.\n"
             f"- Finite configurations in grid {audit['grid_version']}: {audit['configuration_count']:,}; this run enumerated {checkpoint['last_shard_size']:,} configurations at offsets {checkpoint['last_start_offset']:,}–{checkpoint['next_offset'] - 1:,}.\n"
             f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
+            f"- Pinned base replay: {base_manifest['status']}; revision={base_manifest['dataset_revision']}; trade rows={base_manifest['trade_rows']}; strategies={base_manifest['strategies']}; license gate={base_manifest['license_gate']}.\n"
+            f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
             f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report.get('risk_limited_strategy_count', 0)}; chosen features={factor_report.get('selected_feature_by_mode', {})}.\n"
-            "- The legacy factor-selector pilot is not the full Phase52 configuration sweep; futures/synthetic basis remains unavailable in its seed panel. No Phase52 candidate is promoted.\\n"
+            "- The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.\n"
           )
           Path("PHASE52_RESEARCH_LOG.md").open("a", encoding="utf-8").write(msg)
           Path("PHASE52_STATUS.md").open("a", encoding="utf-8").write(
@@ -172,7 +218,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p research/phase52/results
-          printf "\n## F52-AUTO-%s — Automated workflow failure\n\n- Date: %s\n- Run: https://github.com/%s/actions/runs/%s\n- Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.\n- Root cause: pending review of the failed job logs.\n- Status: OPEN.\n" "$GITHUB_RUN_ID" "$(date -u +%F)" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE52_ERROR_LOG.md
+          printf "\n## F52-AUTO-%s — Automated workflow failure\n\n- Date: %s\n- Run: https://github.com/%s/actions/runs/%s\n- Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.\n- Root cause: pending review of the failed job logs.\n- Status: OPEN.\n" "$GITHUB_RUN_ID" "$(date -u +%F)" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE52_ERROR_LOG.md
 
       - name: Upload audit and deterministic configuration shard
         if: always()
@@ -184,6 +230,8 @@ jobs:
             research/phase52/results/config_queue/checkpoint.json
             research/phase52/results/source_discovery/latest.json
             research/phase52/results/factor_attribution
+            results/phase52/base_replay
+            results/phase52/data_readiness
             ${{ runner.temp }}/phase52_config_shard.jsonl
             ${{ runner.temp }}/phase52_emit_report.json
           if-no-files-found: warn
@@ -196,7 +244,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/data_readiness
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
