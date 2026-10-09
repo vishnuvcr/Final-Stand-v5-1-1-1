@@ -32,3 +32,9 @@ Rules:
 - **Cause:** The branch wrapper update triggered the branch workflow, while the main trigger-marker update triggered the orchestrator.
 - **Correction:** Future diagnostic retries are initiated through the main marker after the code correction; the main orchestrator uses a finite completion marker to avoid recurring execution after success.
 - **Status:** CLOSED for this one-time overlap; future evidence remains gated on a single accepted post-fix artifact set.
+
+## Post-fix retry checkpoint — run 37879953815
+
+- **Date:** 2026-10-09
+- **Observation:** The main-branch marker triggered orchestrator run [37879953815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879953815) after commits defining TT02_ENGINE_REV and masking invalid Newton divisions. Dependency installation was in progress at the last status check.
+- **Evidence status:** Pending. No output from this run is accepted until the wrapper, audit, artifact and publication steps complete.
