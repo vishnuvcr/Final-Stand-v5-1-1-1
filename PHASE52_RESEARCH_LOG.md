@@ -25,3 +25,12 @@ Append every completed research step, regardless of outcome. Preserve source ref
 
 - **Action:** Created phase-52-factor-conditioned-strategy-discovery from main.
 - **State:** No Phase 52 backtest results exist yet. The next step is to finish the 300-candidate registry, finite config domains, repository source ledger and validation/automation code.
+
+
+## 2026-10-09 — Step 0.5: Candidate and configuration registry
+
+- **Candidate matrix:** `research/phase52/strategy_registry.csv` contains 312 unique candidate hypothesis IDs (52 structure families × six selector modes: baseline, VIX, Greeks/surface, OI/flow, spot/futures/synthetic, multivariate context).
+- **Structure source specs:** `research/phase52/strategy_specifications.csv` contains 52 family templates. Several native presets and transitions are flagged for exact-source reconciliation rather than guessed; they cannot enter numerical replay until resolved.
+- **Configuration space:** `research/phase52/configuration_space.json`, grid `phase52-grid-v1.1`. It is a finite coarse grid, with conditional strike-selection branches and deterministic IDs. Paytm Money cost scenarios are outputs per configuration, not a tuned variable.
+- **Code:** `research/phase52/validate_registry.py` includes schema validation, deterministic mixed-radix indexing and optional resumable shard emission.
+- **Interpretation:** Registry and queue are not backtests; P&L, win rate, return, drawdown or factor uplift has not been calculated for Phase 52.
