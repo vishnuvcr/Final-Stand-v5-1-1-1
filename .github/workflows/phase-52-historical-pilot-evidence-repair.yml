@@ -1,0 +1,90 @@
+name: Phase 52 — Historical Pilot Leg Evidence Repair
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-52-factor-conditioned-strategy-discovery
+    paths:
+      - "research/phase52/historical_pilot_runner.py"
+      - ".github/workflows/phase-52-historical-pilot-evidence-repair.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase52-historical-pilot-evidence-repair
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+      PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install bounded pilot dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy
+      - name: Runner self-test
+        run: python research/phase52/historical_pilot_runner.py --self-test-only
+      - name: Recompute frozen 40 x 24 historical pilot with complete range-failure leg evidence
+        run: python research/phase52/historical_pilot_runner.py --run
+      - name: Validate output row counts and leg evidence
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path("results/phase52/historical_pilot")
+          rows=list(csv.DictReader((p/"event_replay.csv").open(newline="",encoding="utf-8")))
+          assert len(rows)==480, f"expected 480 rows, got {len(rows)}"
+          report=json.loads((p/"report.json").read_text())
+          print(json.dumps({"rows":len(rows),"status_counts":report.get("status_counts"),"version":report.get("pilot_version")},indent=2))
+          PY
+      - name: Upload audited pilot output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-leg-evidence-repair-\${{ github.run_id }}
+          path: results/phase52/historical_pilot/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Persist audited output and checkpoint logs
+        if: always()
+        env:
+          RUN_ID: \${{ github.run_id }}
+          JOB_STATUS: \${{ job.status }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          run_id=os.environ["RUN_ID"]
+          status=os.environ["JOB_STATUS"]
+          url=f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{run_id}"
+          text=f"\n\n## Leg-evidence repair run {run_id}\n\n- Run: [{run_id}]({url})\n- Job status: {status}\n- Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.\n- Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.\n"
+          for name in ["PHASE52_STATUS.md","PHASE52_RESEARCH_LOG.md","PHASE52_CHAT_LOG.md"]:
+            p=Path(name)
+            if p.exists(): p.write_text(p.read_text(encoding="utf-8").rstrip()+text,encoding="utf-8")
+          if status!="success":
+            p=Path("PHASE52_ERROR_LOG.md")
+            p.write_text(p.read_text(encoding="utf-8").rstrip()+f"\n\n## F52-LEG-EVIDENCE-{run_id} — replay/persistence failure\n\n- Run: {url}\n- Job status: {status}\n- No revised sensitivity accepted.\n- Status: OPEN.\n",encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase52/historical_pilot PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_CHAT_LOG.md PHASE52_ERROR_LOG.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase52 preserve full leg evidence run $GITHUB_RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            git rebase origin/"$PHASE_BRANCH" || { git rebase --abort || true; exit 1; }
+            git push origin "$PHASE_BRANCH" && exit 0
+          done
+          exit 1
