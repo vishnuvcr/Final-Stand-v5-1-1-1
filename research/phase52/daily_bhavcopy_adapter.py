@@ -435,10 +435,10 @@ def _self_test() -> None:
 
     # Tiny post-2024 UDiFF-format fixture; same factor interface must survive schema change.
     csv_udiff = (
-        "TckrSymb,XpryDt,StrkPric,OptnTp,ClsPric,TtlTradgVol,OpnIntrst,FinInstrmTp\\n"
-        "NIFTY,2026-10-29,25000,CE,111,1001,5001,OPTIDX\\n"
-        "NIFTY,2026-10-29,25000,PE,96,1201,7001,OPTIDX\\n"
-        "NIFTY,2026-10-29,0,,25021,5001,90001,FUTIDX\\n"
+        "TckrSymb,XpryDt,StrkPric,OptnTp,ClsPric,TtlTradgVol,OpnIntrst,FinInstrmTp\n"
+        "NIFTY,2026-10-29,25000,CE,111,1001,5001,OPTIDX\n"
+        "NIFTY,2026-10-29,25000,PE,96,1201,7001,OPTIDX\n"
+        "NIFTY,2026-10-29,0,,25021,5001,90001,FUTIDX\n"
     ).encode()
     opts2, futs2, meta2 = parse_bhavcopy(zip_bytes(csv_udiff), "2026-10-08")
     assert len(opts2) == 2, f"expected 2 UDiFF option rows, got {len(opts2)}"
