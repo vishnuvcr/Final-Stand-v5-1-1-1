@@ -1,22 +1,28 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
-## Phase 51-3 — Available-data OOS sweep — SOURCE-FAITHFUL REPLAY READY (2026-10-09)
+## Phase 51-3 — CLOSED: PASS_AVAILABLE_OOS (partial diagnostic only)
 
-The previous green workflow run was rejected during scientific self-audit because the inherited replay engines still used the rejected Phase-43 options source and stale expiry registry. **No P&L from that run is evidence.**
+Authoritative source-faithful replay completed successfully in [GitHub Actions run 37882057283](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37882057283). The frozen primary options object passed SHA-256/byte-size verification; the validated spot source covered 2026-04-21 09:15 through 2026-07-21 15:29 IST (23,625 observations), and 14 weekly expiries were derived from the primary option records. The eligible candidate set was TT-02, TT-04 and TT-05; all had 100% recorded execution coverage and zero row-level data errors.
 
-A primary-source adapter is now committed on the Phase-51-3 branch. It injects the frozen RISSIN NIFTY 1-minute options Parquet (SHA-256 locked), the previously validated Technovusin NIFTY 1-minute spot source, and an expiry universe derived directly from observed primary NIFTY 1-minute rows. The strategy rules, entry/exit logic, costs, and slippage assumptions are unchanged.
+| Strategy | Trades | Net ₹10/order | Net +50% friction | Net ₹20/order | Net ₹20/order +50% |
+|---|---:|---:|---:|---:|---:|
+| TT-02 | 13 | -₹1,341.12 | -₹2,936.31 | -₹3,701.12 | -₹6,476.31 |
+| TT-04 | 62 | +₹13,271.51 | +₹10,287.26 | +₹10,345.11 | +₹5,897.66 |
+| TT-05 | 62 | +₹17,098.15 | +₹14,239.72 | +₹14,171.75 | +₹9,850.12 |
 
-The main orchestrator now caches the validated spot repository and enforces the source manifest before accepting the replay. The next run is the first scientifically admissible Phase-51-3 replay.
+**Interpretation:** TT-04 and TT-05 were positive under the four registered cost/friction scenarios in this short interval; TT-02 was negative. These are descriptive partial-OOS results only. **No strategy is promoted** and no parameter tuning or confirmatory hypothesis test was run.
 
-The partial diagnostic window remains **2026-04-21 through 2026-07-21**. This does not replace the full Phase-51 OOS window **2026-04-21 through 2026-08-04**; the 2026-07-28 and 2026-08-04 option blocks remain unresolved.
+The complete preregistered Phase-51 OOS window remains **2026-04-21 through 2026-08-04**. Option blocks for **2026-07-28 and 2026-08-04 remain unresolved**, so this phase does not establish full-window performance or justify live deployment.
 
+- [Phase 51-3 final report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/results/phase51/available_oos/PHASE51_3_AVAILABLE_OOS_REPORT.md)
+- [Sweep summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/results/phase51/available_oos/sweep_summary.json)
 - [Phase 51-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-3-available-data-strategy-sweep)
 - [Phase 51-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_STATUS.md)
 - [Phase 51-3 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_ERROR_LOG.md)
+- [Phase 51-3 chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_CHAT_LOG.md)
 - [Phase 51-3 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_RESEARCH_PLAN.md)
-- [Phase 51-3 source adapter](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/research/phase51_3_primary_source_adapter.py)
 
-
+---
 ## Phase 51-1I — CLOSED / DATA-BLOCKED
 
 The preregistered authorized-access recovery route was executed automatically.
