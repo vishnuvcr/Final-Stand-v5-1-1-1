@@ -73,14 +73,14 @@ jobs:
               statuses = report["baseline_status_counts"]
               table = "\n".join(
                   f"| {x['threshold_pct']}% | {x['rows_meeting_prior_oi_entry_data_and_range_gate']} | "
-                  f"{x['share_of_planned_pct']:.2f}% | {x['rejected_for_prior_oi_or_missing_legs']} | "
-                  f"{x['rejected_for_range_proxy']} |"
+                  f"{x['share_of_planned_pct']:.2f}% | {x['rejected_for_prior_oi']} | "
+                  f"{x['unassessable_missing_leg_details']} | {x['rejected_for_range_proxy']} |"
                   for x in report["threshold_sensitivity"]
               )
               summary = (
                   f"- Run: [{run_id}]({run_url}); workflow job status={status}.\n"
                   f"- Input rows={rows}; baseline statuses={json.dumps(statuses, sort_keys=True)}.\n"
-                  f"- Threshold sensitivity (eligibility only):\n\n| Range threshold | Rows passing OI + entry-data + range | Planned share | OI/legs blocked | Range blocked |\n|---:|---:|---:|---:|---:|\n{table}\n\n"
+                  f"- Threshold sensitivity (eligibility only):\n\n| Range threshold | Rows passing OI + entry-data + range | Planned share | OI blocked | Missing leg detail | Range blocked |\n|---:|---:|---:|---:|---:|\n{table}\n\n"
                   "- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.\n"
               )
           else:
