@@ -154,6 +154,7 @@ def grid_configuration_subset(
                 seen.add(cfg_id)
                 out.append({
                     "grid_version": space["grid_version"],
+                    "dataset_revision": pilot["market_data"]["revision"],
                     "configuration_id": cfg_id,
                     "candidate_id": candidate["candidate_id"],
                     "family_id": family_id,
@@ -245,6 +246,7 @@ def create_manifest(
         "resolver_sha256": sha256_file(RESOLVER_PATH),
         "kernel_sha256": sha256_file(KERNEL_PATH),
         "grid_enumerator_sha256": sha256_file(VALIDATOR_PATH),
+        "historical_pilot_runner_sha256": sha256_file(Path(__file__)),
         "phase43_fee_and_lot_helper_sha256": sha256_file(PHASE43_PATH),
         "event_inventory_sha256": sha256_file(EVENTS_PATH),
         "configuration_manifest_sha256": sha256_text(cfg_csv),
@@ -557,7 +559,7 @@ def summarize(replay: pd.DataFrame, costs: pd.DataFrame) -> pd.DataFrame:
                         "excluded_events": int((~sr["status"].eq("REPLAY_PASS")).sum()),
                         "brokerage_per_order_inr": brokerage,
                         "slippage_stress_pct": stress,
-                        "gross_net_after_cost_pnl_rupees": float(net.sum()) if len(net) else None,
+                        "net_pnl_rupees": float(net.sum()) if len(net) else None,
                         "mean_net_per_executed_event_rupees": float(net.mean()) if len(net) else None,
                         "win_rate_net": float((net > 0).mean()) if len(net) else None,
                         "profit_factor_net": positive / negative if negative > 0 else (math.inf if positive > 0 else None),
@@ -617,11 +619,13 @@ def build_outputs(
     exclusions.to_csv(OUT / "excluded_events.csv", index=False)
 
     counts = replay_df["status"].value_counts(dropna=False).to_dict() if not replay_df.empty else {}
+    replay_error_rows = int(replay_df["status"].astype(str).str.startswith("ERROR_").sum()) if len(replay_df) else 0
+    report_status = "HISTORICAL_BASELINE_PILOT_WITH_REPLAY_ERRORS" if replay_error_rows else "HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS"
     report = {
-        "status": "HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS",
+        "status": report_status,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "pilot_version": pilot["pilot_version"],
-        "historical_pnl_calculated": bool(not cost_df.empty),
+        "historical_pnl_calculated": bool(not cost_df.empty and replay_error_rows == 0),
         "production_or_promotion_eligible": False,
         "pinned_dataset": HF_REPO,
         "dataset_revision": manifest["dataset_revision"],
@@ -631,6 +635,7 @@ def build_outputs(
         "planned_config_event_rows": len(replay_df),
         "executed_event_rows": int(replay_df["status"].eq("REPLAY_PASS").sum()) if len(replay_df) else 0,
         "excluded_or_error_event_rows": len(exclusions),
+        "replay_exception_count": replay_error_rows,
         "cost_scenario_rows": len(cost_df),
         "cost_scenarios_per_executed_event": 6,
         "status_counts": {str(k): int(v) for k, v in counts.items()},
@@ -679,7 +684,7 @@ def build_outputs(
     ]
     if not summary_df.empty:
         for r in summary_df.itertuples(index=False):
-            net = f"{r.gross_net_after_cost_pnl_rupees:,.0f}" if pd.notna(r.gross_net_after_cost_pnl_rupees) else "NA"
+            net = f"{r.net_pnl_rupees:,.0f}" if pd.notna(r.net_pnl_rupees) else "NA"
             mean = f"{r.mean_net_per_executed_event_rupees:,.0f}" if pd.notna(r.mean_net_per_executed_event_rupees) else "NA"
             wr = f"{100*r.win_rate_net:.1f}%" if pd.notna(r.win_rate_net) else "NA"
             dd = f"{r.max_drawdown_net_rupees:,.0f}" if pd.notna(r.max_drawdown_net_rupees) else "NA"
