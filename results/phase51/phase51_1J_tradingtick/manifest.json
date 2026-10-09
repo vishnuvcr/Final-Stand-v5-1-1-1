@@ -1,0 +1,1346 @@
+{
+  "audit": "Phase 51-1J TradingTick public-source audit",
+  "created_utc": "2026-10-09T09:47:37.617927+00:00",
+  "source": "https://tradingtick.in",
+  "targets": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "classification": "PUBLIC_PAGE_ACCESSIBLE_RAW_TARGET_DATA_NOT_VERIFIED",
+  "pnl_eligible": false,
+  "pages": {
+    "historical_chain": {
+      "url": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+      "navigation_status": 200,
+      "error": "Locator.evaluate_all: SyntaxError: missing ) after argument list\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "initial_state": {
+        "title": "Download Historical Nifty Option Chain Data | CSV & Excel Files",
+        "url": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+        "forms": [],
+        "headings": [
+          "Download Historical Nifty Option Chain Data",
+          "NIFTY LIVE F&O",
+          "Nifty Option Chain Historical Data Weekly Expiry",
+          "Nifty Option Chain Charts (Historical)",
+          "NIFTY HISTORICAL F&O",
+          "Nifty Option Chain Historical",
+          "NIFTY OPTION BACKTEST",
+          "What is Nifty Option Chain Historical Data?",
+          "Why Do You Need This Data?",
+          "1. Backtesting Your Trading Strategies",
+          "2. Calculating the Put-Call Ratio (PCR)",
+          "3. Identifying Support and Resistance Levels",
+          "4. Understanding Implied Volatility Trends",
+          "Key Metrics You Will Find in the  Data",
+          "Different Data Timeframes: From 1-Minute to Daily",
+          "How to Get Nifty Options Historical Data",
+          "Step-by-Step Guide to Analyzing This Data",
+          "The Advantages and Disadvantages of Using Historical Option  Data",
+          "Your Next Steps",
+          "NIFTY HISTORICAL  DATA"
+        ],
+        "buttons": [
+          {
+            "tag": "A",
+            "text": "NIFTY",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "SENSEX",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "OI",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Charts",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Stock",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Stock Option Chain Historical",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Stock Option Backtesting",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Index",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "About",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty Live",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Sensex Live",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty Historical",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Option Charts",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "26 Years Research",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Monday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-monday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Tuesday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-tuesday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Wednesday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-wednesday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Thursday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-thursday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Friday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-friday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "1 Min Charts (11 Years)",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty Intraday Charts\n        ▼",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#nifty-intraday-nav",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Bank Nifty OI charts",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Option Backtest",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Analysis",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Stock",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Zero to Hero",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Bank Nifty Nifty Zero to Hero",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Blog",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Old Option Chain\nDownload Nifty Option Chain Historical Data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Compare Expiry OI\nNifty Compare OI with Previous Expiry",
+            "href": "https://tradingtick.in/nifty/nifty-compare-oi-with-previous-expiry.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Compare Option Price\nNifty Compare Option Price with Previous Expiry",
+            "href": "https://tradingtick.in/nifty/nifty-compare-option-price-with-previous-expiry.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "BUTTON",
+            "text": "⬅ Previous",
+            "href": "",
+            "id": "prevDateBtn",
+            "name": "",
+            "type": "submit"
+          },
+          {
+            "tag": "BUTTON",
+            "text": "Next ➡",
+            "href": "",
+            "id": "nextDateBtn",
+            "name": "",
+            "type": "submit"
+          },
+          {
+            "tag": "A",
+            "text": "Previous",
+            "href": "",
+            "id": "hocTable_previous",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Next",
+            "href": "",
+            "id": "hocTable_next",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "DATA",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "What is Nifty Option Chain historical data?",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#collapseOne",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Why is historical Option Chain data important?",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#collapseTwo",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "What type of information is included in historical Option Chain?",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#collapseThree",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "How do analysts use historical Option Chain charts?",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#collapseFour",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "What are the challenges in using historical Option Chain data?",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#collapseFive",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Where can traders access Nifty Option Chain historical data?",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#collapseSix",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Old Option Chain",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#!",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          }
+        ],
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nHome\nNifty\nNifty Option chain\nDownload Historical Nifty Option Chain Data\n\nDownload Historical Nifty Option Chain  Data | CSV & Excel Files 6 years of  data with charts. Backtest your options strategies with precision. Download clean, structured historical Nifty Option Chain data in CSV/Excel format for any date in the past.Bank Nifty Mood\n\n\n\n\n\n\n\"Premiums aren’t free—they’re priced in risk, volatility, and time. If you don’t understand that, you’re playing a game you can’t win.\"\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\nNifty Option Chain Historical Data Weekly Expiry\nExpiry Year\nSelect Year\n2026\n2025\n2024\n2023\n2022\n2021\n2020\n2019\nExpiry Month\nSelect Month\nExpiry Date\nSelect Expiry\nDate\nSelect Date\nStrike Range\nAll Strikes\n±200 (4 Strikes)\n±300 (6 Strikes)\n±400 (8 Strikes)\n±500 (10 Strikes)\n±1000 (20 Strikes)\nNifty Option Chain Charts (Historical)\nOI\nOI Change\nVolume\nMax Pain\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Option Chain Historical\n⬅ Previous\nNext ➡\nTurnover\tVolume\tOI\tOI Change\tClose\tStrike\tClose\tOI Change\tOI\tVolume\tTurnover\tSpot\tPCR\nTurnover\n\t\nVolume\n\t\nOI\n\t\nOI Change\n\t\nClose\n\t\nStrike\n\t\nClose\n\t\nOI Change\n\t\nOI\n\t\nVolume\n\t\nTurnover\n\t\nSpot\n\t\nPCR\n\n\n\t\n\t95,567,940\t16,813,420\t\n\t\n\t\n\t6,372,860\t84,802,575\t\n\t\n\t\n\t\n\n1606135\t102959\t1163175\t-732875\t272.1\t23700\t0.1\t-3137225\t7105150\t2706578\t41696976\t23985.35\t6.11\n1643594\t105368\t289510\t-133445\t221.5\t23750\t0.15\t-1833780\t3718520\t2647434\t40872380\t23985.35\t12.84\n10173662\t652163\t1081405\t-924885\t169.6\t23800\t0.15\t-3491865\t6886100\t5417220\t83811352\t23985.35\t6.37\n19680490\t1261472\t832715\t-323310\t119.05\t23850\t0.2\t-568230\t5219565\t6501861\t101000000\t23985.35\t6.27\n77188776\t4948061\t2937155\t-642850\t68.65\t23900\t0.6\t1164410\t13519415\t18346898\t285000000\t23985.35\t4.6\n231000000\t14829028\t9277060\t5550220\t19.6\t23950\t2.95\t12597910\t22580935\t35295089\t550000000\t23985.35\t2.43\n629000000\t40300828\t31166200\t18697185\t0.85\t24000\t27.3\t2452060\t16020030\t37388862\t584000000\t23985.35\t0.51\n393000000\t25118624\t13107575\t6866015\t0.25\t24050\t78.5\t1123590\t4020315\t10701584\t168000000\t23985.35\t0.31\n239000000\t15245129\t10908625\t486005\t0.2\t24100\t130.3\t-666185\t2858765\t4912449\t77285384\t23985.35\t0.26\n101000000\t6458519\t5204875\t-398190\t0.15\t24150\t180\t-151905\t418730\t1188407\t18771428\t23985.35\t0.08\n92670728\t5890841\t7875985\t-6862505\t0.15\t24200\t229.8\t-718445\t1517100\t728586\t11554834\t23985.35\t0.19\n38751268\t2458301\t4757935\t-1106105\t0.1\t24250\t279.9\t-36010\t340730\t120315\t1915887\t23985.35\t0.07\n35106728\t2222555\t6965725\t-3661840\t0.1\t24300\t326\t-361465\t597220\t101541\t1623602\t23985.35\t0.09\n\t\t\t\t\t\t\t\t\t\t\t\t\nShowing 1 to 13 of 13 entries\nNIFTY OPTION BACKTEST\nBear Call Spread\nNifty Bear Call Spread Strategy Backtest\nBear Put Spread\nNifty Bear Put Spread Strategy Backtest\nBull Call Spread\nNifty Bull Call Spread Strategy Backtest\nBull Put Spread\nNifty Bull Put Spread Strategy Backtest\nLong Call Backtest\nNifty Long Call Strategy Backtest\nLong Put Backtest\nNifty Long Put Strategy Backtest\nLong Straddle Backtest\nNifty Long Straddle Strategy Backtest\nLong Strangle Backtest\nNifty Long Strangle Strategy Backtest\nShort Call Backtest\nNifty Short Call Strategy Backtest\nShort Put Backtest\nNifty Short Put Strategy Backtest\nShort Straddle Backtest\nNifty Short Straddle Strategy Backtest\nShort Strangle Backtest\nNifty Short Strangle Strategy Backtest\nWhat is Nifty Option Chain Historical Data?\n\nAt its core, an option chain is a comprehensive table that lists all the available Call and Put option contracts for the Nifty 50 index at a specific point in time. When we add the word \"historical\" to it, we are referring to a snapshot of this table from a past trading session. So, nifty option chain historical data is essentially a detailed record of ev",
+        "scripts": [
+          {
+            "src": "https://scripts.clarity.ms/0.8.75-beta/clarity.js",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "inline": ""
+          },
+          {
+            "src": "https://www.clarity.ms/tag/tzow5y99qt",
+            "inline": ""
+          },
+          {
+            "src": "https://www.googletagmanager.com/gtag/js?id=G-SWSLR1Q99K",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-SWSLR1Q99K');\n"
+          },
+          {
+            "src": "",
+            "inline": "\n    (function(c,l,a,r,i,t,y){\n        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n        t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;\n        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, \"clarity\", \"script\", \"tzow5y99qt\");\n"
+          },
+          {
+            "src": "https://code.jquery.com/jquery-3.7.0.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/chart.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "https://tradingtick.in/assets/js/main.js",
+            "inline": ""
+          },
+          {
+            "src": "https://tradingtick.in/assets/js/dropdown-test.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Dataset\",\n  \"name\": \"Download Nifty Option Chain Historical Data\",\n  \"description\": \"Download historical Nifty option chain data including call and put options across strikes and expiries. The dataset contains open interest, change in OI, volume, and price data for analysis and backtesting.\",\n  \"url\": \"https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php\",\n\n  \"keywords\": [\n    \"download Nifty option chain data\",\n    \"Nifty option chain historical data download\",\n    \"Nifty options data CSV\",\n    \"Nifty call put data download\",\n    \"options open interest data Nifty\"\n  ],\n\n  \"creator\": {\n    \"@type\": \"Organization\",\n    \"name\": \"Trading Tick\",\n    \"url\": \"https://tradingtick.in/\"\n  },\n\n  \"publisher\": {\n    \"@type\": \"Organization\",\n    \"name\": \"Trading Tick\",\n    \"url\": \"https://tradingtick.in/\"\n  },\n\n  \"license\": \"https://tradingtick.in/terms-and-conditions\",\n\n  \"distribution\": {\n    \"@type\": \"DataDownload\",\n    \"encodingFormat\": \"text/csv\",\n    \"contentUrl\": \"https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php\"\n  },\n\n  \"spatialCoverage\": {\n    \"@type\": \"Place\",\n    \"name\": \"India\"\n  },\n\n  \"temporalCoverage\": \"2010/2026\"\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"WebPage\",\n  \"name\": \"Download Nifty Option Chain Historical Data\",\n  \"url\": \"https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php\",\n  \"description\": \"Download historical Nifty option chain data in CSV format including call and put options, open interest, volume, and price data for analysis and backtesting.\",\n  \"inLanguage\": \"en-IN\",\n\n  \"isPartOf\": {\n    \"@type\": \"WebSite\",\n    \"name\": \"Trading Tick\",\n    \"url\": \"https://tradingtick.in/\"\n  },\n\n  \"about\": {\n    \"@type\": \"Thing\",\n    \"name\": \"Nifty Option Chain Data Download\"\n  },\n\n  \"publisher\": {\n    \"@type\": \"Organization\",\n    \"name\": \"Trading Tick\",\n    \"url\": \"https://tradingtick.in/\"\n  }\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What is Nifty Option Chain historical data?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Nifty Option Chain historical data refers to past records of option prices including strike prices, premiums, open interest, implied volatility, change in open interest, and trading volumes.\"\n      }\n    },\n\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Why is historical Option Chain data important?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"It allows traders to backtest strategies, analyze option premiums during different volatility conditions, and understand how open interest builds before and after major events such as budgets, earnings, or global crises.\"\n      }\n    },\n\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What type of information is included in historical Option Chain data?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"The dataset typically includes strike prices, call and put premiums, last traded price, trading volume, turnover, open interest, and changes in open interest over time.\"\n      }\n    },\n\n    {\n      \"@type\": \"Question\",\n      \"name\": \"How do analysts use historical Option Chain charts?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Analysts use charts to visualize option activity, identify spikes in open interest, detect unusual premium movements, and determine support and resistance zones in the derivatives market.\"\n      }\n    },\n\n    {\n      \"@type\": \"Question\",\n      \"name\": \"What are the challenges in using historical Option Chain data?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Challenges include handling large data volumes, frequent contract expiries, changes in market conditions, and the impact of global and local events on options pricing.\"\n      }\n    },\n\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Where can traders access Nifty Option Chain historical data?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Traders can access historical data through NSE archives, broker research platforms, and specialized analytics websites that provide structured option chain datasets.\"\n      }\n    }\n\n  ]\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BreadcrumbList\",\n  \"itemListElement\": [\n    \n    {\n      \"@type\": \"ListItem\",\n      \"position\": 1,\n      \"name\": \"Home\",\n      \"item\": \"https://tradingtick.in/\"\n    },\n    \n    {\n      \"@type\": \"ListItem\",\n      \"position\": 2,\n      \"name\": \"Nifty\",\n      \"item\": \"https://tradingtick.in/nifty/\"\n    },\n    \n    {\n      \"@type\": \"ListItem\",\n      \"position\": 3,\n      \"name\": \"Nifty Option Chain\",\n      \"item\": \"https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php\"\n    }\n\n  ]\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n// Disable right-click\ndocument.addEventListener('contextmenu', function(event) {\n    event.preventDefault();\n});\n\n\n// Disable key combinations for copy (Ctrl+C, Ctrl+X, Ctrl+V)\ndocument.addEventListener('keydown', function(event) {\n    // Check if Ctrl key is pressed along with C, X, or V\n    if (event.ctrlKey && (event.key === 'c' || event.key === 'x' || event.key === 'v')) {\n        event.preventDefault();\n    }\n});\n"
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/i/ca-pub-7020630172106461?href=https%3A%2F%2Ftradingtick.in%2Fnifty%2Fdownload-nifty-option-chain-historical-data.php&ers=2",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWtIiagFp8Z0SgmdlVXXV2zZGALDNnmfzsRCqyLNE9HZV1LoKZUwzTBRPF9_fJ6bjSzCXl9HzR6xYv2O1kuQEZIEIFlUDXOxpDYB64b8SpJ5Bg2dohfbnKnnYfC5SLm2i96tFb9Rw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYyLDc4ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTldXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDddXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVWfB8ED1oSJuxcrz3qy5WJpK_kCEugdC4CPdOln_R0lbvzaYiFu18LBgS43rt9O4Byp0Pn5BmqPzt4XP8ZeNuozbcwvpnYsIO0S16nw-Z5LFk7I-sRxrqEmEUSKZ1_OykG8sjaFA==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDU1MzAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNl0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxW8oyERL4tBHaNd9f8KUJovhB0MiAQdiQyJfDF8zsgI74bwh5PEmGx5-0oCKSiuKRQXB7UKxZDZ1907xSMXi-l4BXhHv0OZcAljIshieH5wqaAPnex2zG7eHcCrHILT012A23B36g==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDYwOTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVVjhWPe6uMQVRtLA47LeQL6wgqH-laP5loLvPfUvB3wG2nWcW2tzxA-5TkdYQkfo7lOzot0lZ6mBxmBPQnOTUqEhU6D5cd6fc_ZIkLEWVwu35lqky7GCLvu7jcIfy8unoJ_TPZYg==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDY1ODAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOF0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXV1d",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVSqKZRNsmNJfHIgARcjCJ6MchAs66VZEfGHlyRyZJ3Dog6YCfaudOLxQKO_fLRJ84fk2FJ961wxyDfdrRlbe52QxUyXaFyxcvW9yRKg51YqhkeKAVc4dSWxqKux-xh6p0Myko_1Q==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDY5NjAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNV0sbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvZG93bmxvYWQtbmlmdHktb3B0aW9uLWNoYWluLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1s4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxOTA3XV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl0sWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXV1d",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVdSJWSEfTIl8BM8A7mV0elxqOBN_gcgZa73MJdP_Oj8s4JLOmyTO1xRD-6HZ2gTND8M8C63l3QLoEU0RftbGDuPJiMxr0BlYUJrEmYogqbiJFqJSUmVE0WCjSfWPozfArbdRd-vw==?fccs=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLFsxNzkxNTM5MjYzLDc0OTAwMDAwMF0sbnVsbCxudWxsLG51bGwsW251bGwsWzcsMTksNiwxMCwxOCwxNSw5XSxudWxsLDIsbnVsbCwiZW4iLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9kb3dubG9hZC1uaWZ0eS1vcHRpb24tY2hhaW4taGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE5MDddXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXSxbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTI2Myw2Mjk0MzMwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMSxbMTc5MTUzOTI2Myw2NzUzOTUwMDBdLDBdXSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/chart.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\nlet dataTable;\nlet fullData = [];\nlet selectedATM = '300';\nlet oiChart, oiChangeChart, volumeChart, maxPainChart;\nlet totalOiChart, totalOiChangeChart;\n\nwindow.addEventListener('DOMContentLoaded', () => {\n\n  // Load year dropdown\n  fetch('nifty-hoc/nifty-whoc-filters.php?type=year')\n    .then(res => res.json())\n    .then(years => {\n      const yearDropdown = document.getElementById('exYear');\n      yearDropdown.innerHTML = '<option value=\"\">Select Year</option>';\n      years.forEach(year => {\n        yearDropdown.innerHTML += `<option value=\"${year}\">${year}</option>`;\n      });\n    });\n\n  // ✅ NEW: Load latest data automatically\n  fetchData('', '');\n\n});\n\n\ndocument.getElementById('exYear').addEventListener('change', function () {\n  const year = this.value;\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=month&year=${year}`)\n    .then(res => res.json())\n    .then(months => {\n      const monthDropdown = document.getElementById('exMonth');\n      monthDropdown.disabled = false;\n      monthDropdown.innerHTML = '<option value=\"\">Select Month</option>';\n      months.forEach(month => {\n        monthDropdown.innerHTML += `<option value=\"${month}\">${month}</option>`;\n      });\n      document.getElementById('exExpiry').innerHTML = '<option value=\"\">Select Expiry</option>';\n      document.getElementById('exExpiry').disabled = true;\n      document.getElementById('exDate').innerHTML = '<option value=\"\">Select Date</option>';\n      document.getElementById('exDate').disabled = true;\n    });\n});\n\ndocument.getElementById('exMonth').addEventListener('change', function () {\n  const year = document.getElementById('exYear').value;\n  const month = this.value;\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=expiryDate&year=${year}&month=${month}`)\n    .then(res => res.json())\n    .then(expiries => {\n      const expiryDropdown = document.getElementById('exExpiry');\n      expiryDropdown.disabled = false;\n      expiryDropdown.innerHTML = '<option value=\"\">Select Expiry</option>';\n      expiries.forEach(exp => {\n        expiryDropdown.innerHTML += `<option value=\"${exp}\">${exp}</option>`;\n      });\n      document.getElementById('exDate').innerHTML = '<option value=\"\">Select Date</option>';\n      document.getElementById('exDate').disabled = true;\n    });\n});\n\ndocument.getElementById('exExpiry').addEventListener('change', function () {\n  const expiry = this.value;\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=date&expiry=${expiry}`)\n    .then(res => res.json())\n    .then(dates => {\n      const dateDropdown = document.getElementById('exDate');\n      dateDropdown.disabled = false;\n      dateDropdown.innerHTML = '<option value=\"\">Select Date</option>';\n      dates.forEach(date => {\n        dateDropdown.innerHTML += `<option value=\"${date}\">${date}</option>`;\n      });\n    });\n});\n\ndocument.getElementById('exDate').addEventListener('change', function () {\n  const expiry = document.getElementById('exExpiry').value;\n  const date = this.value;\n  if (expiry && date) {\n    fetchData(expiry, date);\n  }\n});\n\ndocument.getElementById('atmRange').addEventListener('change', function () {\n  selectedATM = this.value;\n  applyATMFilter();\n});\n\nfunction fetchData(expiry, date) {\n  fetch(`nifty-hoc/nifty-whoc-data.php?expiry=${expiry}&date=${date}`)\n    .then(res => res.json())\n    .then(json => {\n      fullData = Array.isArray(json.data) ? json.data : [];\n      applyATMFilter();\n    });\n}\n\nfunction applyATMFilter() {\n  let filtered = fullData;\n  const range = parseInt(selectedATM);\n  if (!isNaN(range)) {\n    filtered = fullData.filter(r => Math.abs(parseInt(r.ATM)) <= range);\n  }\n\n  if (!filtered || filtered.length === 0) {\n    if (dataTable) dataTable.clear().draw();\n    clearCharts();\n    document.getElementById(\"maxPainDisplay\").innerText = `Max Pain: N/A`;\n    return;\n  }\n\n  if (dataTable) {\n  dataTable.clear().rows.add(filtered).draw();\n} else {\n  dataTable = $('#hocTable').DataTable({\n    data: filtered,\n    columns: [\n      { data: 'Turnover' },\n      { data: 'Volume' },\n      { data: 'OI' },\n      { data: 'OI_Change' },\n      { data: 'Close' },\n      { data: 'Strike' },\n      { data: 'PE_Close' },\n      { data: 'PE_OI_Change' },\n      { data: 'PE_OI' },\n      { data: 'PE_Volume' },\n      { data: 'PE_Turnover' },\n      { data: 'Spot' },\n      {\n        data: 'PCR',\n        render: function (data) {\n          const color = data >= 1 ? 'green' : 'red';\n          return `<span style=\"color: ${color}; font-weight: bold;\">${data}</span>`;\n        }\n      }\n    ],\n    scrollX: true,\n    fixedHeader: true,\n    pageLength: 100,\n    searching: false,\n    ordering: false,\n\n    // ✅ Highlight ATM rows where ATM === 0\n    rowCallback: function (row, data) {\n      if (parseInt(data.ATM) === 0) {\n        $(row).css('background-color', '#fdf2e9'); // Optional: .addClass('atm-highlight');\n      }\n    }\n  });\n}\n\n// ✅ Update footer, style, and charts\ncalculateFooterSums(filtered);\nstyleTableRows(filtered);\nupdateCharts(filtered);\n\n}\n\nfunction calculateFooterSums(data) {\n  let ceOi = 0, ceOiChange = 0, peOi = 0, peOiChange = 0;\n  data.forEach(row => {\n    ceOi += parseFloat(row.OI || 0);\n    ceOiChange += parseFloat(row.OI_Change || 0);\n    peOi += parseFloat(row.PE_OI || 0);\n    peOiChange += parseFloat(row.PE_OI_Change || 0);\n  });\n  document.getElementById('ceOiSum').textContent = ceOi.toLocaleString();\n  document.getElementById('ceOiChangeSum').textContent = ceOiChange.toLocaleString();\n  document.getElementById('peOiSum').textContent = peOi.toLocaleString();\n  document.getElementById('peOiChangeSum').textContent = peOiChange.toLocaleString();\n  return { ceOi, ceOiChange, peOi, peOiChange };\n}\n\nfunction styleTableRows(data) {\n  setTimeout(() => {\n    $('#hocTable tbody tr').each(function (index) {\n      const row = data[index];\n\n      // Highlight negative OI Change\n      const oiChange = parseFloat(row.OI_Change || 0);\n      const peOiChange = parseFloat(row.PE_OI_Change || 0);\n      if (oiChange < 0) $(this).find('td:eq(3)').addClass('oi-change-red');  // OI_Change\n      if (peOiChange < 0) $(this).find('td:eq(7)').addClass('oi-change-red'); // PE_OI_Change\n    });\n\n    // Highlight top 3 OI and PE OI\n    const topOI = [...data].map(r => parseInt(r.OI)).filter(Boolean).sort((a, b) => b - a).slice(0, 3);\n    const topPEOI = [...data].map(r => parseInt(r.PE_OI)).filter(Boolean).sort((a, b) => b - a).slice(0, 3);\n\n    $('#hocTable tbody tr').each(function (index) {\n      const row = data[index];\n      if (topOI.includes(parseInt(row.OI))) $(this).find('td:eq(2)').addClass('oi-bold');      // OI\n      if (topPEOI.includes(parseInt(row.PE_OI))) $(this).find('td:eq(8)').addClass('oi-bold');  // PE_OI\n    });\n\n    // Highlight ATM rows based on row.ATM\n    $('#hocTable tbody tr').each(function (index) {\n      const row = data[index];\n      const atm = parseInt(row.ATM);\n      if (!isNaN(atm)) {\n        if (atm >= 0) $(this).find('td:lt(6)').addClass('atm-ce-style'); // First 6 CE cols\n        if (atm <= 0) $(this).find('td:gt(5)').addClass('atm-pe-style'); // PE cols\n      }\n    });\n  }, 10);\n}\n\n\nfunction clearCharts() {\n  [oiChart, oiChangeChart, volumeChart, maxPainChart, totalOiChart, totalOiChangeChart].forEach(c => {\n    if (c) c.destroy();\n  });\n}\n\nfunction updateCharts(data) {\n  const isMobile = window.innerWidth <= 767;\n\n  const strikes = data.map(r => r.Strike);\n  const spot = parseInt(data[0].Spot);\n  const spotIndex = strikes.findIndex(s => parseInt(s) >= spot);\n  const ceOi = data.map(r => parseInt(r.OI) || 0);\n  const peOi = data.map(r => parseInt(r.PE_OI) || 0);\n  const ceChange = data.map(r => parseInt(r.OI_Change) || 0);\n  const peChange = data.map(r => parseInt(r.PE_OI_Change) || 0);\n  const ceVol = data.map(r => parseInt(r.Volume) || 0);\n  const peVol = data.map(r => parseInt(r.PE_Volume) || 0);\n  const { ceOi: totalCeOi, ceOiChange: totalCeOiChange, peOi: totalPeOi, peOiChange: totalPeOiChange } = calculateFooterSums(data);\n  clearCharts();\n\n  const commonXAxis = {\n  title: { display: true, text: 'Strike Price' },\n  ticks: {\n    font: { size: isMobile ? 8 : 12 },\n    callback: function (val, index) {\n      return isMobile && index % 2 !== 0 ? '' : this.getLabelForValue(val);\n    },\n    minRotation: isMobile ? 90 : 0,\n    maxRotation: isMobile ? 90 : 0,\n    align: isMobile ? 'start' : 'center'\n  }\n};\n\n\n  const commonLegend = {\n    labels: {\n      font: { size: isMobile ? 10 : 12 }\n    },\n    position: 'top'\n  };\n\n  const yHidden = {\n    display: !isMobile,\n    title: { display: !isMobile, text: '' },\n    ticks: { display: !isMobile },\n    grid: { drawTicks: !isMobile }\n  };\n\n  oiChart = new Chart(document.getElementById(\"oiChart\"), {\n    type: \"bar\",\n    data: {\n      labels: strikes,\n      datasets: [\n        { label: \"CE OI\", data: ceOi, backgroundColor: \"#40b0b2\" },\n        { label: \"PE OI\", data: peOi, backgroundColor: \"#e76d67\" }\n      ]\n    },\n    options: {\n      responsive: true,\n      plugins: {\n        legend: commonLegend,\n        annotation: {\n          annotations: {\n            spotLine: {\n              type: 'line',\n              borderColor: 'black',\n              borderWidth: 2,\n              label: { content: 'Spot', enabled: true, position: 'start' },\n              scaleID: 'x',\n              value: spotIndex\n            }\n          }\n        }\n      },\n      scales: {\n        y: yHidden,\n        x: commonXAxis\n      }\n    }\n  });\n\n  totalOiChart = new Chart(document.getElementById(\"totalOiChart\"), {\n  type: \"bar\",\n  data: {\n    labels: [\"CE Total\", \"PE Total\"],\n    datasets: [{\n      data: [totalCeOi, totalPeOi],\n      backgroundColor: [\"#40b0b2\", \"#e76d67\"]\n    }]\n  },\n  options: {\n    plugins: {\n      legend: { display: false }\n    },\n    scales: {\n      y: {\n        beginAtZero: true,\n        title: { display: true, text: 'Total OI' },\n        ticks: {\n          callback: function (value) {\n            if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';\n            if (value >= 1000) return (value / 1000).toFixed(0) + 'k';\n            return value;\n          }\n        }\n      }\n    }\n  }\n});\n\n\n  oiChangeChart = new Chart(document.getElementById(\"oiChangeChart\"), {\n    type: \"bar\",\n    data: {\n      labels: strikes,\n      datasets: [\n        { label: \"CE OI Change\", data: ceChange, backgroundColor: \"#40b0b2\" },\n        { label: \"PE OI Change\", data: peChange, backgroundColor: \"#e76d67\" }\n      ]\n    },\n    options: {\n      responsive: true,\n      plugins: {\n        legend: commonLegend,\n        annotation: {\n          annotations: {\n            spotLine: {\n              type: 'line',\n              borderColor: 'black',\n              borderWidth: 2,\n              label: { content: 'Spot', enabled: true, position: 'start' },\n              scaleID: 'x',\n              value: spotIndex\n            }\n          }\n        }\n      },\n      scales: {\n        y: yHidden,\n        x: commonXAxis\n      }\n    }\n  });\n\n  totalOiChangeChart = new Chart(document.getElementById(\"totalOiChangeChart\"), {\n  type: \"bar\",\n  data: {\n    labels: [\"CE Change\", \"PE Change\"],\n    datasets: [{\n      data: [totalCeOiChange, totalPeOiChange],\n      backgroundColor: [\"#40b0b2\", \"#e76d67\"]\n    }]\n  },\n  options: {\n    plugins: {\n      legend: { display: false }\n    },\n    scales: {\n      y: {\n        beginAtZero: true,\n        title: { display: true, text: 'Total OI Change' },\n        ticks: {\n          callback: function (value) {\n            if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';\n            if (value >= 1000) return (value / 1000).toFixed(0) + 'k';\n            return value;\n          }\n        }\n      }\n    }\n  }\n});\n\n\n  volumeChart = new Chart(document.getElementById(\"volumeChart\"), {\n    type: \"bar\",\n    data: {\n      labels: strikes,\n      datasets: [\n        { label: \"CE Volume\", data: ceVol, backgroundColor: \"#40b0b2\" },\n        { label: \"PE Volume\", data: peVol, backgroundColor: \"#e76d67\" }\n      ]\n    },\n    options: {\n      responsive: true,\n      plugins: {\n        legend: commonLegend\n      },\n      scales: {\n        y: yHidden,\n        x: commonXAxis\n      }\n    }\n  });\n\n  const lossArr = strikes.map((strike, i) => {\n    let totalLoss = 0;\n    for (let j = 0; j < strikes.length; j++) {\n      const ceLoss = Math.max(0, strikes[j] - strike) * ceOi[j];\n      const peLoss = Math.max(0, strike - strikes[j]) * peOi[j];\n      totalLoss += ceLoss + peLoss;\n    }\n    return { strike, loss: totalLoss };\n  });\n\n  if (lossArr.length === 0) {\n    document.getElementById(\"maxPainDisplay\").innerText = `Max Pain: N/A`;\n    return;\n  }\n\n  const lossData = lossArr.map(d => d.loss);\n  const minLossObj = lossArr.reduce((min, curr) => curr.loss < min.loss ? curr : min);\n  const maxPainColors = strikes.map(s => parseInt(s) <= spot ? '#40b0b2' : '#e76d67');\n\n  maxPainChart = new Chart(document.getElementById(\"maxPainChart\"), {\n    type: \"bar\",\n    data: {\n      labels: strikes,\n      datasets: [\n        {\n          label: \"Total Loss (Max Pain)\",\n          data: lossData,\n          backgroundColor: maxPainColors\n        }\n      ]\n    },\n    options: {\n      responsive: true,\n      plugins: {\n        legend: commonLegend,\n        tooltip: {\n          callbacks: {\n            label: ctx => `Loss: ₹${ctx.raw.toLocaleString()}`\n          }\n        }\n      },\n      scales: {\n        y: yHidden,\n        x: commonXAxis\n      }\n    }\n  });\n\n  document.getElementById(\"maxPainDisplay\").innerText = `Max Pain: ${minLossObj.strike}`;\n}\n\n/* next button*/\nlet availableDates = [];\n\n// Capture available dates when expiry is selected\ndocument.getElementById(\"exExpiry\").addEventListener(\"change\", () => {\n  const expiry = document.getElementById(\"exExpiry\").value;\n  if (!expiry) return;\n\n  fetch(`nifty-hoc/nifty-whoc-filters.php?type=date&expiry=${expiry}`)\n    .then(res => res.json())\n    .then(dates => {\n      availableDates = dates;\n      const dateDropdown = document.getElementById(\"exDate\");\n      dateDropdown.innerHTML = `<option value=\"\">Select Date</option>`;\n      dates.forEach(date => {\n        dateDropdown.innerHTML += `<option value=\"${date}\">${date}</option>`;\n      });\n    });\n});\n\n// Utility to simulate change\nfunction changeDate(newDate) {\n  const dateDropdown = document.getElementById(\"exDate\");\n  dateDropdown.value = newDate;\n  const event = new Event('change');\n  dateDropdown.dispatchEvent(event);\n}\n\n// NEXT button\ndocument.getElementById(\"nextDateBtn\").addEventListener(\"click\", () => {\n  const current = document.getElementById(\"exDate\").value;\n  const idx = availableDates.indexOf(current);\n  if (idx !== -1 && idx < availableDates.length - 1) {\n    const nextDate = availableDates[idx + 1];\n    changeDate(nextDate);\n  }\n});\n\n// PREVIOUS button\ndocument.getElementById(\"prevDateBtn\").addEventListener(\"click\", () => {\n  const current = document.getElementById(\"exDate\").value;\n  const idx = availableDates.indexOf(current);\n  if (idx > 0) {\n    const prevDate = availableDates[idx - 1];\n    changeDate(prevDate);\n  }\n});\n\n"
+          },
+          {
+            "src": "",
+            "inline": "\n  document.addEventListener(\"DOMContentLoaded\", () => {\n    const toggleBtn = document.querySelector(\".toggle-sidebar-btn\");\n    if (toggleBtn) {\n      toggleBtn.addEventListener(\"click\", () => {\n        document.body.classList.toggle(\"toggle-sidebar\");\n      });\n    }\n  });\n"
+          },
+          {
+            "src": "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://code.jquery.com/jquery-3.6.0.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
+            "inline": ""
+          }
+        ]
+      },
+      "selectors_by_target": {},
+      "request_count": 260
+    },
+    "expired_chart": {
+      "url": "https://tradingtick.in/nifty/nifty-option-price-charts.php",
+      "navigation_status": 200,
+      "error": "Locator.evaluate_all: SyntaxError: missing ) after argument list\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "initial_state": {
+        "title": "Nifty Historical Option Charts | Visualize Past Call & Put Prices Weekly and Monthly Expiry",
+        "url": "https://tradingtick.in/nifty/nifty-option-price-charts.php",
+        "forms": [],
+        "headings": [
+          "Nifty Historical Option Charts",
+          "NIFTY LIVE F&O",
+          "Nifty Option Chart",
+          "NIFTY HISTORICAL F&O",
+          "Nifty Expired Options Chart",
+          "Previous Option Charts",
+          "Nifty Old Option Chart Data",
+          "Historical Option Charts Free",
+          "Previous Expiry Option Chart Analysis",
+          "How Traders Use Historical Option Charts",
+          "Summary",
+          "Advantages and Disadvantages of Historical Option Charts",
+          "NIFTY OPTION BACKTEST",
+          "NIFTY HISTORICAL DATA"
+        ],
+        "buttons": [
+          {
+            "tag": "A",
+            "text": "26 Years Research",
+            "href": "https://tradingtick.in/nifty/nifty-option-price-charts.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Monday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-monday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Tuesday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-tuesday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Wednesday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-wednesday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Thursday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-thursday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Friday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-friday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Old Option Chain\nDownload Nifty Option Chain Historical Data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Compare Expiry OI\nNifty Compare OI with Previous Expiry",
+            "href": "https://tradingtick.in/nifty/nifty-compare-oi-with-previous-expiry.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Compare Option Price\nNifty Compare Option Price with Previous Expiry",
+            "href": "https://tradingtick.in/nifty/nifty-compare-option-price-with-previous-expiry.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Why Do Traders Study Previous Option Charts?",
+            "href": "https://tradingtick.in/nifty/nifty-option-price-charts.php#collapseThree",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Can I Analyze Previous Expiry Option Charts?",
+            "href": "https://tradingtick.in/nifty/nifty-option-price-charts.php#collapseSix",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Old Option Chain",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          }
+        ],
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Historical Option Charts\n\nTrack how option premiums moved. Our historical charts show the price, volume, and volatility of any Nifty call or put option over time, perfect for option trading strategy and analysis.Nifty intraday charts\n\nHome\nNifty\nNifty Historical Option Charts\n\n\nNIFTY LIVE F&O\nOption Chain\nNifty Option Chain\nNifty Live PCR\nNifty Live PCR\nNifty Call\nvs Put OI\nNifty Call vs Put OI\nNifty Option Screener\nNifty Option Screener\nNifty Trending OI\nNifty Trending OI\nNifty Highest OI\nNifty Highest OI\nNifty OI Charts Live\nNifty Open Interest Charts Live\nNifty Multi Strike OI\nNifty Multi Strike OI\nShort Straddle Charts\nNifty Short Straddle Charts\nMulti Strike Straddle\nNifty Multi Strike Short Straddle\nSensex Live PCR\nSensex Live PCR\nSensex Call vs Put OI\nSensex Call vs Put OI\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\nOption Simulator\nNifty Option Simulator Free\nHistorical CE\nvs PE OI\nNifty Historical Call vs Put OI Charts\nMax Pain History\nNifty Max Pain Chart History\nOld Option Chain\nDownload Nifty Option Chain Historical Data\nOld OI Charts\nNifty Historical Open Interest Charts\nOld IV Charts\nNifty Historical IV Charts\nCompare Expiry OI\nNifty Compare OI with Previous Expiry\nCompare Option Price\nNifty Compare Option Price with Previous Expiry\nHistorical PCR Data\nNifty Historical PCR Data\nFutures Basis History\nNifty Basis Historical Data\nBuy & Hold Call Option\nNifty Buy and Hold Call Option Until Expiry\nBuy & Hold Put Option\nNifty Buy and Hold Put Option Until Expiry\nNifty Expired Options Chart\n\nMost option trading websites focus only on live contracts, but many traders also want to study expired options. A Nifty Expired Options Chart allows you to see how option premiums behaved before expiry and how quickly time decay impacted option prices. By studying expired call and put options, traders can better understand option movement, premium erosion, and volatility changes during different market conditions. Historical option charts are especially useful for learning how options reacted during trending, sideways, and highly volatile markets. Traders often combine historical option charts with Historical Option Chain Data to better understand option pricing behaviour. Trader education course\n\nPrevious Option Charts\n\nPrevious option charts help traders review historical option price movement after a trade is completed. Instead of guessing what happened, traders can visually analyze how option premiums moved throughout the trading session. Whether you trade Nifty weekly expiry, monthly expiry, call options, or put options, previous option charts provide valuable insight into market behaviour and option pricing patterns. Many traders compare previous option charts with Historical Open Interest Charts to understand how option premiums reacted to changing Open Interest.\n\nNifty Old Option Chart Data\n\nNifty Old Option Chart Data is useful for strategy testing, market research, and option trading education. Traders can compare option prices across different expiries, strike prices, and market environments. Historical charts often reveal patterns that may not be visible when looking at live data alone. By reviewing old option charts, traders can learn how option premiums reacted during major market events, budget sessions, expiry days, and high-volatility periods. Historical option data becomes even more powerful when combined with Call vs Put OI Charts. Nifty intraday charts\n\nHistorical Option Charts Free\n\nAccess to Historical Option Charts Free can be extremely valuable for traders who want to improve their understanding of option behaviour without purchasing expensive market data subscriptions. Historical charts help traders analyze price action, volume trends, premium decay, and volatility changes over time. Free access to option chart history allows both beginners and experienced traders to study real market data and improve their decision-making process. Many traders also use Live Option Chain Data alongside historical charts to compare past and current market conditions.\n\nPrevious Expiry Option Chart Analysis\n\nPrevious Expiry Option Charts provide a unique view of how option premiums behaved during the final days and hours before expiry. Since time decay accelerates as expiry approaches, these charts help traders understand how option values change near expiration. Many option traders study previous expiry charts to evaluate short straddle strategies, option selling opportunities, and premium decay behaviour during expiry week. Traders interested in expiry behaviour may also find Intraday Short Straddle Charts useful.\n\nHow Traders Use His",
+        "scripts": [
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js",
+            "inline": ""
+          },
+          {
+            "src": "https://scripts.clarity.ms/0.8.75-beta/clarity.js",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "inline": ""
+          },
+          {
+            "src": "https://www.googletagmanager.com/gtag/js?id=G-PPTBC2FFW2&cx=c&gtm=4e6a72",
+            "inline": ""
+          },
+          {
+            "src": "https://www.clarity.ms/tag/tzow5y99qt",
+            "inline": ""
+          },
+          {
+            "src": "https://www.googletagmanager.com/gtag/js?id=G-SWSLR1Q99K",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-SWSLR1Q99K');\n"
+          },
+          {
+            "src": "",
+            "inline": "\n    (function(c,l,a,r,i,t,y){\n        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n        t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;\n        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, \"clarity\", \"script\", \"tzow5y99qt\");\n"
+          },
+          {
+            "src": "https://www.googletagmanager.com/gtag/js?id=G-PPTBC2FFW2",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-PPTBC2FFW2');\n"
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "https://tradingtick.in/assets/js/main.js",
+            "inline": ""
+          },
+          {
+            "src": "https://tradingtick.in/assets/js/dropdown-test.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BreadcrumbList\",\n  \"itemListElement\": [\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 1,\n      \"name\": \"Home\",\n      \"item\": \"https://tradingtick.in/\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 2,\n      \"name\": \"Nifty\",\n      \"item\": \"https://tradingtick.in/nifty/\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 3,\n      \"name\": \"Nifty Historical Option Charts\",\n      \"item\": \"https://tradingtick.in/nifty/nifty-option-price-charts.php\"\n    }\n  ]\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n    {\n      \"@context\":\"https://schema.org\",\n  \"@type\":\"WebPage\",\n  \"name\":\"Nifty Historical Option Charts\",\n  \"url\":\"https://tradingtick.in/nifty/nifty-option-price-charts.php\",\n  \"description\":\"View Nifty historical option charts, expired option charts, previous expiry option charts and historical option price data.\"\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n{\n  \"@context\":\"https://schema.org\",\n  \"@type\":\"Dataset\",\n  \"name\":\"Nifty Historical Option Charts\",\n  \"description\":\"Historical Nifty option price charts including expired option charts, previous expiry option charts, call option charts and put option charts for option trading analysis.\",\n  \"url\":\"https://tradingtick.in/nifty/nifty-option-price-charts.php\",\n  \"keywords\":[\n    \"Nifty Historical Option Charts\",\n    \"Nifty Expired Options Chart\",\n    \"Previous Option Charts\",\n    \"Historical Option Charts Free\",\n    \"Previous Expiry Option Chart\",\n    \"Option Price History\"\n  ],\n  \"creator\":{\n    \"@type\":\"Organization\",\n    \"name\":\"Trading Tick\"\n  },\n  \"license\":\"https://tradingtick.in/terms-and-conditions.php\"\n}\n"
+          },
+          {
+            "src": "",
+            "inline": "\n// Disable right-click\ndocument.addEventListener('contextmenu', function(event) {\n    event.preventDefault();\n});\n\n\n// Disable key combinations for copy (Ctrl+C, Ctrl+X, Ctrl+V)\ndocument.addEventListener('keydown', function(event) {\n    // Check if Ctrl key is pressed along with C, X, or V\n    if (event.ctrlKey && (event.key === 'c' || event.key === 'x' || event.key === 'v')) {\n        event.preventDefault();\n    }\n});\n"
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/i/ca-pub-7020630172106461?href=https%3A%2F%2Ftradingtick.in%2Fnifty%2Fnifty-option-price-charts.php&ers=2",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUc88v6JoR4K4XI-26cG0JpCZ2HbLuoj5DamfYnPVpgsm3nWZwOaoAUN4yHKcMKJLmse6_thZi1yV2IsEij_4DipdHHVchssGhLfTtFMxpHpAIejk8pRQRj1mRORsJaN4tnQfTsew==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNjksOTYwMDAwMDBdLG51bGwsbnVsbCxudWxsLFtudWxsLFs3LDE5XV0sImh0dHBzOi8vdHJhZGluZ3RpY2suaW4vbmlmdHkvbmlmdHktb3B0aW9uLXByaWNlLWNoYXJ0cy5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwxLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDEwMzFdXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyOSwiZmFsc2UiXV1d",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxW0Z-RemIHpKybRcHkG7uYR1HAW5cCD6-sIetSAGCkCCKkMV38W53dgU-J2rl-FBqkzafvYL7R19d2aNkxApq7z7DDcMsRrFIzQonw5LIDt3lmeNyGZjTpiK2MboEGfLgJW1IkJtw==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMjQ5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTAzMV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVMEhjH9KJKBcLab4sziPnuuO0CH5A7jwz6sOp3VL_DQ2dGpmn68VE7isBS-5uxyvhhj7sgr8j8kGMKcp0yqdAvxAoORF1U1A3Hs_ihB5rBpbzQUAJRFEMQSpO4vxvez8UzaH-C6A==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMzExMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDEsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTAzMV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUMYFVuB2NiVLTZL4FZBeJtYIBhA-TpicDxn8NszaSjXO0jaCRCt4-3qjrJjkZ-J_q4pj85Q6aOayF0GpDhxrJr_j3mlXQIU_X3ix743rSmit6Pi4wxzO9oLc2M5-wCGl2Xf3au3g==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMzUyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tcHJpY2UtY2hhcnRzLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTAzMV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI5LCJmYWxzZSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVLVr_BCVewZLbmIP0jo0K0jarg9hpwNDSk3d7EVGrzzOnsFGXirOgoFBWQZXNSuGv9BFseb0aiMh3HP-MJTwCviZ1be_ndan7QxVCw1zaySnpk_hMGlimD8slGvV1T7Pd2a15NmQ==?fccs=W1siQUtzUm9sLVN5ZVNzMWRpQjJNeTBzM0dLUFUxZDI0Y0J3QVdISkJnQ2JJMXU4aGJTTW9zN29Uc1RocWdpVlRiYTRWS0hPd3BuWHVMQm9QQnZaRGFMVUJqbktYcmwwUjNZMndPZm9sZEdXTVpZQkZ0U1VXOFkyV3hEQUdUbEw2TTIzSE1GVzRmc3hFSDdrcV9SR2pkTHVsT2lpS3p3VFRKTVV3PT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzAsMzk3MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1wcmljZS1jaGFydHMucGhwIixudWxsLFtbMjEsIltbW1s1LDEsWzNdXSxbMTc5MTUzOTI2Myw2Mjk0MzMwMDBdLFsxMjA5NjAwXV1dXSJdLFsyOCwiW251bGwsW251bGwsMixbMTc5MTUzOTI2Myw2NzUzOTUwMDBdLDBdXSJdLFs4LCJOdUFVMGJ0aHIxMCJdLFs5LCJlbi1VUyJdLFsxOCwiW1tbbnVsbCwxMDMxXV1dIl0sWzIzLCIxNzkxNTM5MjYyIl0sWzM1LCIxNzkxNTM5MjYyIl0sWzE5LCIyIl0sWzI0LCIiXSxbMjksImZhbHNlIl1dXQ",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "",
+            "inline": "\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n    const exyear = document.getElementById(\"exyear\");\n    const exmonth = document.getElementById(\"exmonth\");\n    const expiry = document.getElementById(\"expiry\");\n    const option = document.getElementById(\"option\");\n    const strike = document.getElementById(\"strike\");\n\n    // Keep a reference to the current chart and crosshair subscriber\n    let priceChart = null;\n    let crosshairUnsub = null;\n\n    // Create a single tooltip element (once)\n    const toolTip = document.createElement(\"div\");\n    toolTip.className = \"floating-tooltip-2\";\n    toolTip.style.position = \"absolute\";\n    toolTip.style.display = \"none\";\n    toolTip.style.pointerEvents = \"none\";\n    document.body.appendChild(toolTip);\n\n    // --- 1️⃣ Load EX Year ---\n    fetch(\"chart-files/option-chart.php?action=filters\")\n        .then(res => res.json())\n        .then(data => {\n            exyear.innerHTML = '<option value=\"\">Select Year</option>' +\n                               data.years.map(y => `<option value=\"${y}\">${y}</option>`).join(\"\");\n        });\n\n    // --- 2️⃣ EX Month ---\n    exyear.addEventListener(\"change\", () => {\n        const year = exyear.value;\n        if (!year) return;\n\n        fetch(`chart-files/option-chart.php?action=months&year=${year}`)\n            .then(res => res.json())\n            .then(data => {\n                exmonth.innerHTML = '<option value=\"\">Select Month</option>' +\n                                    data.months.map(m => `<option value=\"${m.value}\">${m.name}</option>`).join(\"\");\n                expiry.innerHTML = '<option value=\"\">Select Expiry</option>';\n                strike.innerHTML = '<option value=\"\">Select Strike</option>';\n            });\n    });\n\n    // --- 3️⃣ Expiry ---\n    exmonth.addEventListener(\"change\", () => {\n        const year = exyear.value;\n        const month = exmonth.value;\n        if (!year || !month) return;\n\n        fetch(`chart-files/option-chart.php?action=expiries&year=${year}&month=${month}`)\n            .then(res => res.json())\n            .then(data => {\n                expiry.innerHTML = '<option value=\"\">Select Expiry</option>' +\n                                   data.expiries.map(e => `<option value=\"${e}\">${e}</option>`).join(\"\");\n                strike.innerHTML = '<option value=\"\">Select Strike</option>';\n            });\n    });\n\n    // --- 4️⃣ Option & Expiry trigger Strike load ---\n    option.addEventListener(\"change\", loadStrikes);\n    expiry.addEventListener(\"change\", loadStrikes);\n\n    function loadStrikes() {\n        const year = exyear.value;\n        const month = exmonth.value;\n        const exp = expiry.value;\n        const opt = option.value;\n        if (!year || !month || !exp || !opt) return;\n\n        fetch(`chart-files/option-chart.php?action=strikes&year=${year}&month=${month}&expiry=${exp}&option=${opt}`)\n            .then(res => res.json())\n            .then(data => {\n                strike.innerHTML = '<option value=\"\">Select Strike</option>' +\n                                    data.strikes.map(s => `<option value=\"${s}\">${s}</option>`).join(\"\");\n            });\n    }\n\n    // --- Helper: Fix null OHLC by using previous close ---\n    function fixNulls(data) {\n        let prevClose = null;\n        return data.map(c => {\n            let candle = {\n                time: +c.time,\n                open: c.open !== null ? +c.open : null,\n                high: c.high !== null ? +c.high : null,\n                low:  c.low  !== null ? +c.low  : null,\n                close:c.close!== null ? +c.close: null\n            };\n\n            if (candle.open === null || candle.high === null || candle.low === null || candle.close === null) {\n                if (prevClose !== null) {\n                    candle.open  = prevClose;\n                    candle.high  = prevClose;\n                    candle.low   = prevClose;\n                    candle.close = prevClose;\n                } else {\n                    candle.open = candle.high = candle.low = candle.close = 0;\n                }\n            }\n\n            prevClose = candle.close;\n            return candle;\n        });\n    }\n\n    // --- 5️⃣ Auto Load Chart when all filters are selected ---\n    function maybeLoadChart() {\n        const year = exyear.value;\n        const month = exmonth.value;\n        const exp = expiry.value;\n        const opt = option.value;\n        const strk = strike.value;\n        const tf = 1; // default 1-min\n\n        if (!year || !month || !exp || !opt || !strk) return; // wait until all selected\n\n        fetch(`chart-files/option-chart.php?year=${year}&month=${month}&expiry=${exp}&option=${opt}&strike=${strk}&tf=${tf}`)\n            .then(res => res.json())\n            .then(data => {\n                if (!Array.isArray(data) || data.length === 0) {\n                    alert(\"No data available for selected filters.\");\n                    return;\n                }\n\n                const candles = fixNulls(data);\n\n                // Initialize chart container\n                const priceChartDiv = document.getElementById(\"priceChart\");\n                // hide tooltip while chart is reloading\n                toolTip.style.display = \"none\";\n\n                // Unsubscribe previous crosshair handler (if any)\n                if (typeof crosshairUnsub === 'function') {\n                    try { crosshairUnsub(); } catch (e) { /* ignore */ }\n                    crosshairUnsub = null;\n                }\n\n                // Clear previous DOM (keeps same container element)\n                priceChartDiv.innerHTML = \"\";\n\n                // Create new chart and store reference\n                priceChart = LightweightCharts.createChart(priceChartDiv, {\n                    layout: { backgroundColor: '#fff', textColor: '#000' },\n                    grid: { vertLines: { color: '#eee' }, horzLines: { color: '#eee' } },\n                    timeScale: { timeVisible: true }\n                });\n\n                const candleSeries = priceChart.addCandlestickSeries();\n                candleSeries.setData(candles);\n                priceChart.timeScale().fitContent();\n\n                // time changed from 12am to 1530\n                function formatTo1530(unixSec) {\n                const d = new Date(unixSec * 1000);\n                // Force the time to 15:30 local time\n                d.setHours(15, 30, 0, 0);\n                const day = String(d.getDate()).padStart(2, '0');\n                const mon = d.toLocaleString(undefined, { month: 'short' }); // e.g. \"Aug\"\n                const year = d.getFullYear();\n                const hh = String(d.getHours()).padStart(2, '0');\n                const mm = String(d.getMinutes()).padStart(2, '0');\n                return `${day}-${mon}-${year} ${hh}:${mm}`;\n            }\n\n\n                // Subscribe crosshair move and keep unsubscribe function\n                crosshairUnsub = priceChart.subscribeCrosshairMove(param => {\n                    // If invalid param or outside chart area -> hide tooltip\n                    if (!param || !param.time || !param.point || param.point.x < 0 || param.point.y < 0) {\n                        toolTip.style.display = \"none\";\n                        return;\n                    }\n\n                    // Get series data for this crosshair position\n                    const price = param.seriesData.get(candleSeries);\n                    if (!price) {\n                        toolTip.style.display = \"none\";\n                        return;\n                    }\n\n                    // Build tooltip HTML (add more fields if needed)\n                    toolTip.innerHTML = `\n                    <div style=\"font-weight:600;margin-bottom:4px;\">\n                        ${formatTo1530(param.time)}\n                    </div>\n                    <div style=\"display:flex; justify-content:space-between; width:170px;\">\n                        <div><strong>O:</strong> ${price.open}</div>\n                        <div><strong>H:</strong> ${price.high}</div>\n                    </div>\n                    <div style=\"display:flex; justify-content:space-between; width:170px;\">\n                        <div><strong>L:</strong> ${price.low}</div>\n                        <div><strong>C:</strong> ${price.close}</div>\n                    </div>\n                `;\n\n\n                    // Position tooltip relative to chart container (accounts for page scroll)\n                    const rect = priceChartDiv.getBoundingClientRect();\n                    const left = rect.left + window.scrollX + param.point.x + 16;\n                    const top  = rect.top  + window.scrollY + param.point.y + 16;\n\n                    toolTip.style.left = `${left}px`;\n                    toolTip.style.top  = `${top}px`;\n                    toolTip.style.display = \"block\";\n                });\n\n                // Hide tooltip when mouse leaves chart container (prevents sticky tooltip)\n                // remove previous listener by setting a flag on the container\n                if (!priceChartDiv._tooltipMouseListenerAdded) {\n                    priceChartDiv.addEventListener(\"mouseleave\", () => {\n                        toolTip.style.display = \"none\";\n                    });\n                    priceChartDiv._tooltipMouseListenerAdded = true;\n                }\n            })\n            .catch(err => {\n                console.error(\"Chart load error:\", err);\n                toolTip.style.display = \"none\";\n            });\n    }\n\n    // Watch all dropdowns for change\n    [exyear, exmonth, expiry, option, strike].forEach(el => {\n        el.addEventListener(\"change\", maybeLoadChart);\n    });\n});\n"
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  document.addEventListener(\"DOMContentLoaded\", () => {\n    const toggleBtn = document.querySelector(\".toggle-sidebar-btn\");\n    if (toggleBtn) {\n      toggleBtn.addEventListener(\"click\", () => {\n        document.body.classList.toggle(\"toggle-sidebar\");\n      });\n    }\n  });\n"
+          },
+          {
+            "src": "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://code.jquery.com/jquery-3.6.0.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
+            "inline": ""
+          }
+        ]
+      },
+      "selectors_by_target": {},
+      "request_count": 1000
+    },
+    "chart_data": {
+      "url": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php",
+      "navigation_status": 200,
+      "error": "Locator.evaluate_all: SyntaxError: missing ) after argument list\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "initial_state": {
+        "title": "Nifty Option Charts Historical Data for last 7 years for all strikes",
+        "url": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php",
+        "forms": [],
+        "headings": [
+          "Nifty Option Charts Historical Data",
+          "NIFTY LIVE F&O",
+          "Nifty Option Chart",
+          "NIFTY HISTORICAL F&O"
+        ],
+        "buttons": [
+          {
+            "tag": "A",
+            "text": "26 Years Research",
+            "href": "https://tradingtick.in/nifty/nifty-option-charts-historical-data.php#",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Monday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-monday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Tuesday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-tuesday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Wednesday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-wednesday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Thursday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-thursday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Nifty On Friday",
+            "href": "https://tradingtick.in/nifty/research/nifty-50-friday-prediction.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry",
+            "href": "https://tradingtick.in/nifty/nifty-compare-oi-with-previous-expiry.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry",
+            "href": "https://tradingtick.in/nifty/nifty-compare-option-price-with-previous-expiry.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          },
+          {
+            "tag": "A",
+            "text": "Old Option Chain",
+            "href": "https://tradingtick.in/nifty/download-nifty-option-chain-historical-data.php",
+            "id": "",
+            "name": "",
+            "type": ""
+          }
+        ],
+        "bodyText": "Trading Tick\nNIFTY\nSENSEX\nOI\nCharts\nStock\nIndex\nAbout\nTRADING TICK\nSCREENER\nNifty Live\nSensex Live\nNifty Historical\nOption Charts\n26 Years Research\n1 Min Charts (11 Years)\nOption Backtest\nAnalysis\nStock\nZero to Hero\nBlog\nContact us\nNifty Option Charts Historical Data\nHome\nNifty\nNifty Option Charts Historical Data\n\n\nNIFTY LIVE F&O\n Option Chain Option\nChain \nNifty Option Chain\n Nifty Live PCR Live\nPCR \nNifty Live PCR\n Nifty Call\nvs Put OI Call vs\nPut OI \nNifty Call vs Put OI\n Nifty Option Screener Option\nScreener \nNifty Option Screener\n Nifty Trending OI Trending\nOI \nNifty Trending OI\n Nifty Highest OI Highest\nOI \nNifty Highest OI\n Nifty OI Charts Live OI Charts\nLive \nNifty Open Interest Charts Live\n Nifty Multi Strike OI Multi Strike\nOI \nNifty Multi Strike OI\n Short Straddle Charts Straddle\nCharts \nNifty Short Straddle Charts\n Multi Strike Straddle Multi Strike\nStraddle \nNifty Multi Strike Short Straddle\n Sensex Live PCR Live\nPCR \nSensex Live PCR\n Sensex Call vs Put OI Call vs\nPut OI\nSensex Call vs Put OI\n\n\n\n\nALL YOU NEED IS ONE STRATEGY TO MAKE A LIVING\nNifty Option Chart\nEX Year\nSelect Year\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nEX Month\nExpiry\nOption\nCE\nPE\nStrike\nNIFTY HISTORICAL F&O\n Option Simulator OPTION\nSIMULATR \nNifty Option Simulator Free\n Historical CE\nvs PE OI OLD CE\nVS PE \nNifty Historical Call vs Put OI Charts\n Max Pain History MAX PAIN\nHISTORY \nNifty Max Pain Chart History\n Old Option Chain OLD OPT\nCHAIN \nDownload Nifty Option Chain Historical Data\n Old OI Charts OLD OI\nCHARTS \nNifty Historical Open Interest Charts\n Old IV Charts OLD IV\nCHARTS \nNifty Historical IV Charts\n Compare Expiry OI EXP TO\nEXP OI \nNifty Compare OI with Previous Expiry\n Compare Option Price OLD PRICE /\nOPT PRICE \nNifty Compare Option Price with Previous Expiry\n Historical PCR Data OLD PCR\nDATA \nNifty Historical PCR Data\n Futures Basis History OLD FUT\nBASIS HIST \nNifty Basis Historical Data\n Buy & Hold Call Option BUY HOLD\nCALL \nNifty Buy and Hold Call Option Until Expiry\n Buy & Hold Put Option BUY HOLD\nPUT\nNifty Buy and Hold Put Option Until Expiry\n\nOption Analytics websiteTrack Commodities\n\nCharts\nNifty Intraday\nNifty Expiry Day\nShare Price Target\nTick Screener\nBacktest\nNifty Short Straddle\nNifty Gap up\nNifty Gap Down\nStandard Deviation\nOption  Data\nOI Charts\nOld Option Chain\nOption Charts\nCompany\nAbout us\nContact us\nDisclaimer\nAffiliate Disclaimer\nPrivacy Policy\nConsent Policy\nTerms and Conditions\nDisclaimer: Trade at your own risk. we dont recommend buying and selling. we dont give tips.\n      \n© 2025 Copyright: Trading Tick",
+        "scripts": [
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/reactive_library.js",
+            "inline": ""
+          },
+          {
+            "src": "https://scripts.clarity.ms/0.8.75-beta/clarity.js",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202610020101/show_ads_impl.js",
+            "inline": ""
+          },
+          {
+            "src": "https://www.googletagmanager.com/gtag/js?id=G-PPTBC2FFW2&cx=c&gtm=4e6a72",
+            "inline": ""
+          },
+          {
+            "src": "https://www.clarity.ms/tag/tzow5y99qt",
+            "inline": ""
+          },
+          {
+            "src": "https://www.googletagmanager.com/gtag/js?id=G-SWSLR1Q99K",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-SWSLR1Q99K');\n"
+          },
+          {
+            "src": "",
+            "inline": "\n    (function(c,l,a,r,i,t,y){\n        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};\n        t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;\n        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);\n    })(window, document, \"clarity\", \"script\", \"tzow5y99qt\");\n"
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-PPTBC2FFW2');\n"
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js",
+            "inline": ""
+          },
+          {
+            "src": "https://tradingtick.in/assets/js/main.js",
+            "inline": ""
+          },
+          {
+            "src": "https://tradingtick.in/assets/js/dropdown-test.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n// Disable right-click\ndocument.addEventListener('contextmenu', function(event) {\n    event.preventDefault();\n});\n\n\n// Disable key combinations for copy (Ctrl+C, Ctrl+X, Ctrl+V)\ndocument.addEventListener('keydown', function(event) {\n    // Check if Ctrl key is pressed along with C, X, or V\n    if (event.ctrlKey && (event.key === 'c' || event.key === 'x' || event.key === 'v')) {\n        event.preventDefault();\n    }\n});\n"
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/i/ca-pub-7020630172106461?href=https%3A%2F%2Ftradingtick.in%2Fnifty%2Fnifty-option-charts-historical-data.php&ers=2",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxVJpSmh7mvKSZQOGUITlcPk0COEh5zM6n924eQ0vVFcfTdujmhzJrkXphfiUi0tCPNdzzGQaNgiIJRgt4PyYqe9l1EEvIbkOrU9ES5ZBE9CFfnHLk8_zWEihTfrHovTwOhECkCNGA==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzUsMzg2MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOV1dLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDIsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTcwOV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1MzQwMjUyLDk1MzQwMjU0XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxWY8c0btn-Fx0iVtAokhokXoMSflEOqqvR1h-t-oVLKoj1I2s77zX87rV8AGsHD6mvpXcjIvIpnvq5velXWKPOTbvHTZtHoqZXXcUmwMTSJemJ0d2MITwLAQSuRejbsldTamaRFLQ==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsMjU5MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3MDldXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxURJQDXEP2fFyZ0nt7Jy-aYP5H0dIGtnkxXuYtxzrCE58nI6JC4oec4uPiyk2WhLn7_8mcy1USet83mEPhcidVaV8j8qqkVGpYvJR0AXc9N6FEi0sH9Yr_F7E1in4YmvHc1yd2-oA==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsMzE0MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwyLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3MDldXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxUyfvYAtDpPc6rmwKepFOBlx0cK5JWM6ENGKZ3079d8s11Vz3O9lzNtGnNGBOefw0QDDhTNCZeeUpfjxwBRe_oCh4fqvdbVSs42CGzVBgKJ2k3ejSMgMLNaMlu8i9ZxvPt8U_iV8g==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsMzYyMDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1XSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCwxXSwiaHR0cHM6Ly90cmFkaW5ndGljay5pbi9uaWZ0eS9uaWZ0eS1vcHRpb24tY2hhcnRzLWhpc3RvcmljYWwtZGF0YS5waHAiLG51bGwsW1syMSwiW1tbWzUsMSxbM11dLFsxNzkxNTM5MjYzLDYyOTQzMzAwMF0sWzEyMDk2MDBdXV1dIl0sWzI4LCJbbnVsbCxbbnVsbCwzLFsxNzkxNTM5MjYzLDY3NTM5NTAwMF0sMF1dIl0sWzgsIk51QVUwYnRocjEwIl0sWzksImVuLVVTIl0sWzE4LCJbW1tudWxsLDE3MDldXV0iXSxbMjMsIjE3OTE1MzkyNjIiXSxbMzUsIjE3OTE1MzkyNjIiXSxbMTksIjIiXSxbMjQsIiJdLFsyNSwiW1s5NTM0MDI1Miw5NTM0MDI1NF1dIl0sWzI5LCJmYWxzZSJdXV0",
+            "inline": ""
+          },
+          {
+            "src": "https://fundingchoicesmessages.google.com/f/AGSKWxV4km-8dGJtFxtOydadu_L40lUC0S3gBVgvnHWvXkFbvF52Il4AvbhVa4yo-wz_MnV4NbE605d_YvvpcjPYKxyj20-pwVPctScOofeRK9bdT_Kuw6RhFBArFoZ1lGATSrLA8slv9Q==?fccs=W1siQUtzUm9sOXJ3dW9ITHVVWi1VbVpEOENBQlRKVFI3T3ZONkFTeFFRYXJKMU5DTFYzUkpCTnZKamV5NUtpM3RCS2tob1ZuTzI3ZlJQX0RyVzJZa1RQWEluUXVtX0t6THY1WXhYaHVLektYbm9tS0RFZTFKZ0xIaFdvTUlmeWpHekdSd0RNblk5WVB0RFp4LXNnVWxYUlFLMmF2dzVNOE5aQWdBPT0iXSxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsWzE3OTE1MzkyNzYsNDA1MDAwMDAwXSxudWxsLG51bGwsbnVsbCxbbnVsbCxbNywxOSw2LDEwLDE1LDldLG51bGwsMixudWxsLCJlbiIsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDFdLCJodHRwczovL3RyYWRpbmd0aWNrLmluL25pZnR5L25pZnR5LW9wdGlvbi1jaGFydHMtaGlzdG9yaWNhbC1kYXRhLnBocCIsbnVsbCxbWzIxLCJbW1tbNSwxLFszXV0sWzE3OTE1MzkyNjMsNjI5NDMzMDAwXSxbMTIwOTYwMF1dXV0iXSxbMjgsIltudWxsLFtudWxsLDMsWzE3OTE1MzkyNjMsNjc1Mzk1MDAwXSwwXV0iXSxbOCwiTnVBVTBidGhyMTAiXSxbOSwiZW4tVVMiXSxbMTgsIltbW251bGwsMTcwOV1dXSJdLFsyMywiMTc5MTUzOTI2MiJdLFszNSwiMTc5MTUzOTI2MiJdLFsxOSwiMiJdLFsyNCwiIl0sWzI1LCJbWzk1MzQwMjUyLDk1MzQwMjU0XV0iXSxbMjksImZhbHNlIl1dXQ",
+            "inline": ""
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7020630172106461",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n     (adsbygoogle = window.adsbygoogle || []).push({});\n"
+          },
+          {
+            "src": "",
+            "inline": "\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n    const exyear = document.getElementById(\"exyear\");\n    const exmonth = document.getElementById(\"exmonth\");\n    const expiry = document.getElementById(\"expiry\");\n    const option = document.getElementById(\"option\");\n    const strike = document.getElementById(\"strike\");\n\n    // Keep a reference to the current chart and crosshair subscriber\n    let priceChart = null;\n    let crosshairUnsub = null;\n\n    // Create a single tooltip element (once)\n    const toolTip = document.createElement(\"div\");\n    toolTip.className = \"floating-tooltip-2\";\n    toolTip.style.position = \"absolute\";\n    toolTip.style.display = \"none\";\n    toolTip.style.pointerEvents = \"none\";\n    document.body.appendChild(toolTip);\n\n    // --- 1️⃣ Load EX Year ---\n    fetch(\"chart-files/nifty-whoc-chart.php?action=filters\")\n        .then(res => res.json())\n        .then(data => {\n            exyear.innerHTML = '<option value=\"\">Select Year</option>' +\n                               data.years.map(y => `<option value=\"${y}\">${y}</option>`).join(\"\");\n        });\n\n    // --- 2️⃣ EX Month ---\n    exyear.addEventListener(\"change\", () => {\n        const year = exyear.value;\n        if (!year) return;\n\n        fetch(`chart-files/nifty-whoc-chart.php?action=months&year=${year}`)\n            .then(res => res.json())\n            .then(data => {\n                exmonth.innerHTML = '<option value=\"\">Select Month</option>' +\n                                    data.months.map(m => `<option value=\"${m.value}\">${m.name}</option>`).join(\"\");\n                expiry.innerHTML = '<option value=\"\">Select Expiry</option>';\n                strike.innerHTML = '<option value=\"\">Select Strike</option>';\n            });\n    });\n\n    // --- 3️⃣ Expiry ---\n    exmonth.addEventListener(\"change\", () => {\n        const year = exyear.value;\n        const month = exmonth.value;\n        if (!year || !month) return;\n\n        fetch(`chart-files/nifty-whoc-chart.php?action=expiries&year=${year}&month=${month}`)\n            .then(res => res.json())\n            .then(data => {\n                expiry.innerHTML = '<option value=\"\">Select Expiry</option>' +\n                                   data.expiries.map(e => `<option value=\"${e}\">${e}</option>`).join(\"\");\n                strike.innerHTML = '<option value=\"\">Select Strike</option>';\n            });\n    });\n\n    // --- 4️⃣ Option & Expiry trigger Strike load ---\n    option.addEventListener(\"change\", loadStrikes);\n    expiry.addEventListener(\"change\", loadStrikes);\n\n    function loadStrikes() {\n        const year = exyear.value;\n        const month = exmonth.value;\n        const exp = expiry.value;\n        const opt = option.value;\n        if (!year || !month || !exp || !opt) return;\n\n        fetch(`chart-files/nifty-whoc-chart.php?action=strikes&year=${year}&month=${month}&expiry=${exp}&option=${opt}`)\n            .then(res => res.json())\n            .then(data => {\n                strike.innerHTML = '<option value=\"\">Select Strike</option>' +\n                                    data.strikes.map(s => `<option value=\"${s}\">${s}</option>`).join(\"\");\n            });\n    }\n\n    // --- Helper: Fix null OHLC by using previous close ---\n    function fixNulls(data) {\n        let prevClose = null;\n        return data.map(c => {\n            let candle = {\n                time: +c.time,\n                open: c.open !== null ? +c.open : null,\n                high: c.high !== null ? +c.high : null,\n                low:  c.low  !== null ? +c.low  : null,\n                close:c.close!== null ? +c.close: null\n            };\n\n            if (candle.open === null || candle.high === null || candle.low === null || candle.close === null) {\n                if (prevClose !== null) {\n                    candle.open  = prevClose;\n                    candle.high  = prevClose;\n                    candle.low   = prevClose;\n                    candle.close = prevClose;\n                } else {\n                    candle.open = candle.high = candle.low = candle.close = 0;\n                }\n            }\n\n            prevClose = candle.close;\n            return candle;\n        });\n    }\n\n    // --- 5️⃣ Auto Load Chart when all filters are selected ---\n    function maybeLoadChart() {\n        const year = exyear.value;\n        const month = exmonth.value;\n        const exp = expiry.value;\n        const opt = option.value;\n        const strk = strike.value;\n        const tf = 1; // default 1-min\n\n        if (!year || !month || !exp || !opt || !strk) return; // wait until all selected\n\n        fetch(`chart-files/nifty-whoc-chart.php?year=${year}&month=${month}&expiry=${exp}&option=${opt}&strike=${strk}&tf=${tf}`)\n            .then(res => res.json())\n            .then(data => {\n                if (!Array.isArray(data) || data.length === 0) {\n                    alert(\"No data available for selected filters.\");\n                    return;\n                }\n\n                const candles = fixNulls(data);\n\n                // Initialize chart container\n                const priceChartDiv = document.getElementById(\"priceChart\");\n                // hide tooltip while chart is reloading\n                toolTip.style.display = \"none\";\n\n                // Unsubscribe previous crosshair handler (if any)\n                if (typeof crosshairUnsub === 'function') {\n                    try { crosshairUnsub(); } catch (e) { /* ignore */ }\n                    crosshairUnsub = null;\n                }\n\n                // Clear previous DOM (keeps same container element)\n                priceChartDiv.innerHTML = \"\";\n\n                // Create new chart and store reference\n                priceChart = LightweightCharts.createChart(priceChartDiv, {\n                    layout: { backgroundColor: '#fff', textColor: '#000' },\n                    grid: { vertLines: { color: '#eee' }, horzLines: { color: '#eee' } },\n                    timeScale: { timeVisible: true }\n                });\n\n                const candleSeries = priceChart.addCandlestickSeries();\n                candleSeries.setData(candles);\n                priceChart.timeScale().fitContent();\n\n                // time changed from 12am to 1530\n                function formatTo1530(unixSec) {\n                const d = new Date(unixSec * 1000);\n                // Force the time to 15:30 local time\n                d.setHours(15, 30, 0, 0);\n                const day = String(d.getDate()).padStart(2, '0');\n                const mon = d.toLocaleString(undefined, { month: 'short' }); // e.g. \"Aug\"\n                const year = d.getFullYear();\n                const hh = String(d.getHours()).padStart(2, '0');\n                const mm = String(d.getMinutes()).padStart(2, '0');\n                return `${day}-${mon}-${year} ${hh}:${mm}`;\n            }\n\n\n                // Subscribe crosshair move and keep unsubscribe function\n                crosshairUnsub = priceChart.subscribeCrosshairMove(param => {\n                    // If invalid param or outside chart area -> hide tooltip\n                    if (!param || !param.time || !param.point || param.point.x < 0 || param.point.y < 0) {\n                        toolTip.style.display = \"none\";\n                        return;\n                    }\n\n                    // Get series data for this crosshair position\n                    const price = param.seriesData.get(candleSeries);\n                    if (!price) {\n                        toolTip.style.display = \"none\";\n                        return;\n                    }\n\n                    // Build tooltip HTML (add more fields if needed)\n                    toolTip.innerHTML = `\n                    <div style=\"font-weight:600;margin-bottom:4px;\">\n                        ${formatTo1530(param.time)}\n                    </div>\n                    <div style=\"display:flex; justify-content:space-between; width:170px;\">\n                        <div><strong>O:</strong> ${price.open}</div>\n                        <div><strong>H:</strong> ${price.high}</div>\n                    </div>\n                    <div style=\"display:flex; justify-content:space-between; width:170px;\">\n                        <div><strong>L:</strong> ${price.low}</div>\n                        <div><strong>C:</strong> ${price.close}</div>\n                    </div>\n                `;\n\n\n                    // Position tooltip relative to chart container (accounts for page scroll)\n                    const rect = priceChartDiv.getBoundingClientRect();\n                    const left = rect.left + window.scrollX + param.point.x + 16;\n                    const top  = rect.top  + window.scrollY + param.point.y + 16;\n\n                    toolTip.style.left = `${left}px`;\n                    toolTip.style.top  = `${top}px`;\n                    toolTip.style.display = \"block\";\n                });\n\n                // Hide tooltip when mouse leaves chart container (prevents sticky tooltip)\n                // remove previous listener by setting a flag on the container\n                if (!priceChartDiv._tooltipMouseListenerAdded) {\n                    priceChartDiv.addEventListener(\"mouseleave\", () => {\n                        toolTip.style.display = \"none\";\n                    });\n                    priceChartDiv._tooltipMouseListenerAdded = true;\n                }\n            })\n            .catch(err => {\n                console.error(\"Chart load error:\", err);\n                toolTip.style.display = \"none\";\n            });\n    }\n\n    // Watch all dropdowns for change\n    [exyear, exmonth, expiry, option, strike].forEach(el => {\n        el.addEventListener(\"change\", maybeLoadChart);\n    });\n});\n"
+          },
+          {
+            "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js",
+            "inline": ""
+          },
+          {
+            "src": "",
+            "inline": "\n  document.addEventListener(\"DOMContentLoaded\", () => {\n    const toggleBtn = document.querySelector(\".toggle-sidebar-btn\");\n    if (toggleBtn) {\n      toggleBtn.addEventListener(\"click\", () => {\n        document.body.classList.toggle(\"toggle-sidebar\");\n      });\n    }\n  });\n"
+          },
+          {
+            "src": "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://code.jquery.com/jquery-3.6.0.min.js",
+            "inline": ""
+          },
+          {
+            "src": "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
+            "inline": ""
+          }
+        ]
+      },
+      "selectors_by_target": {},
+      "request_count": 493
+    }
+  },
+  "notes": [
+    "Ordinary public browser interaction only; no access-control bypass.",
+    "Page metadata/date selectors do not prove target-session raw-row coverage.",
+    "No P&L is calculated by this audit."
+  ],
+  "network_events": 1753,
+  "same_origin_data_responses": [
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-data.php?expiry=&date=",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/d27f9cd06b8fb15d586e.json",
+      "bytes": 41899,
+      "sha256": "d3aa2df5568655d13c150deecb74cbf5166c62ec449fcc4260058830a578ac5c",
+      "content_type": "application/json"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://tradingtick.in/nifty/nifty-hoc/nifty-whoc-filters.php?type=year",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/6e82c823bbca14c7e985.json",
+      "bytes": 57,
+      "sha256": "bb37a6aa7790f3cff47700e1d0b044dd148368dbe00cf52745799340ebe42781",
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "page": "historical_chain",
+      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=3858353086850574",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/a35d6d0191a11f819ab4.json",
+      "bytes": 18010,
+      "sha256": "64ef217d785461bcc1381e498afc6fdca975b3acec54d29daa98dcf6227e9600",
+      "content_type": "application/json; charset=UTF-8"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://tradingtick.in/nifty/chart-files/option-chart.php?action=filters",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/835ea36db2dd2b746490.json",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=6325756778314474",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/fbf7b224076f698408cd.json",
+      "bytes": 17958,
+      "sha256": "75699a92ad2c817a3bac18a7b8519c133e1f1ea6467fe7c796d840525f4bff40",
+      "content_type": "application/json; charset=UTF-8"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjsv8BIxihSA63S8Fnz8hpDXCLkFW6mSeLoBvpY5anV8TAMuOCP_mapdW9s-MGHW2UL3RsYUhdqHUesp5GMFnGvmz-RmZ2dZN9udZ1s-4klFj1wIKs3WrBlu1fqYmnSkXsnYZ3xQJZxN3bCSDV9NovpdolLuEynFD7q_XxA_67AunHF6carwcF-Jm9aZOTwPu_uBayLE2LqgmYKvTtvU4iO3EKFJI3fyeOIK39a91FytD4UuRJbLXaJo--cdmqta5hkuk1PXazwpdx6FY508gji9zpTS6clPC54WCZ1szoqz8L7yItQCWe43v0wK91gTKaoaR39IPWw6qRGkNGSfUKh5RI44rhJu12R6diC7Y9iU7BvuRXwAibQMtZeBDUaYzH0VYdNR2mI_lW-_-nRjhnLfKn7MARHFn6MtaskU3MxYwHLbaMcuXNWLbcK1rQm7tpQV1h3m3z3-oR5t6fY5PvyTgX6OKxVvPhdUtLPG76nLyfYi0YH3uTB_BrpXkca2c5huAhYhGlCXe3jQ4Tpg5INGZLoMc3kAqqdO0lVDX7amP8F515Gs7wf0b37mWvUXYQIwGBxRiH9ba26jzwWd7n1OncZUXSQrSHkuIrSKs96Bj5c9wA6p7t5w6iBy09GH7CuPO5uNY9Q6VgDee0k6IMWw70VN3RvPuoWiG472Onu8MLqIJ9VzA1Mz8fYjo6OiuZrHDstrMfRPpP48BR8W-X1vNd_5fgdYKsM3F_RLE6Wbq3NlZJOqpUc_Fnh3n98xYJZXwQZiJF2hZY6Amv7EnScrCtPTUnWEMZopBkJXUWIbGORuV2PIw4_ie3xJY2g1hk3hvaNdfzgPwQ-5YPUr6W2WYXIna4k_ruZcl9S9VwCp2JCA1Y-HRiCIh9FTzIwh5Xb4sWJNI86TRUW0dIq1iiZ1rampMYH-gDQuaTz7r9RMzcDiLOPv2cCpqNPGemuyz0ahBy8PwsbEDFlCDB656VrGsOP3HWT75s-DsbK0SW000abmXabd98XMX6VOaDtHmZLu6_31A-ATm2SFXhH8X922NB5GcPnQdUvzUIml16NVEgdw7sbai3pkpqjNt32lwfBifSWxl4co7kvgIKSVSlAnCrKctEjr1JIqEqnIw14moiiY7h6MAmQ0Ute0k6HgpsWI2wUsXIcj0iTWpQ7gnwBeeklq2v5LKk5d86pary7H3AsmaW6q_iut03RDgCMgI4oW1AZE5y6Tx7be7TMvJKNLPx4JT6ablurRMvJM8GcV4mJi5AF3HSJVY7_QLbGuXyuJVSdKJ-4pTHBVfwZWKLn8TNpK-_qp34IrzWcuurVpjLrmS0gAK0Jwctwt_Ft90xZhMyE26bXSi0y4U0Z2bTcJFoZSgjjZYh1xZoXoCJjiZ5SslHv-sSpKe19QXmbmQBhMJ33tb6PRouO4opWdsq3vXi9a_iSKM-wZFWJ_YRYOVSp2-NiSCVnRD-KMKmmyL8JAZpBhyVtXnIMGRKANq9wpdyAQdqAJ7_O7UMK69XbPi67dcxVyE293LxzrtIbevrk6y-PU6-vzIPxBN7Jh6KeogEwkCp4vX5yTjreRCj0F0M7t3&sai=AMfl-YQfDKa0RA-aCEiftcfkcXTQrrj7l6eVmJXlQZPd8ScrHnMeo4TcTCpplOdgy3_rHhkADS7Ulf-OvzeaR0HVwipxtRb8om7_cF9Q_v-Qtin6GAjWEv5J6vO0vW5WK6kl-wsb48u7HNofZCofw4QpgnVCVixq5pQ5s_SMjkVFLKTKgaWKZ4_9qOwt6xTtWU8eRxvM0oxz_3OngICOzNxM7hvNhbCcMMgS47kbP0caSHOJ0jrZpEJxEWb7jFfxtBK06hqIz-_SjpaSFKKQQPJwuh69bYItDwZKPX3XrpH8QfIS-VpF2A5QRC7FgrOET9H8pPNTqFwMpN5eWrLbPLG_s6rOIfWpmHQgGaBwsMYtXm9wgWDg1KWgqoLssTPyDsOyeGmsTxODKQ&sig=Cg0ArKJSzENJRev_UugnEAE&cid=CAQS9QEAQM4h3OgOzRtpIBaYijIYuWPysGF-g9mcmCIr0N6vDpGGP6mmwipCOGkbLdYJyXofONSUPXJiB2AUT2BdFz_05hury7sbYmmD1pBOwvSB2C1FWdvYw-u3ER69NJ1OFyWKP1H6wWWsMEFdgE2wvz0XDOsAO5SB3TEccTcDTZFD4x9J7INixn5W07O1swntGN6jyS2xbvagsdUVNY6kdMFiDeVJ3DQQ5dxGtXkWuCttY9jsLly4GSR7jmiQbKk7QEstvUmBwpiVs3lyu-Ah3o_Rj1TQyh8EmOk52tnqrCWpiqnnZwMoSR8ZpHXFnv_bM3NMjKGWzBgB&id=lidar2&mcvt=1101&p=0,0,280,1080&tm=1546.0999999999767&tu=445&mtos=1101,1101,1101,1101,1101&tos=1101,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=2025129673&rs=2&la=1&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747206800&rst=1791539267312&rpt=1191&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/a45ba5a7976ca6d50107.txt",
+      "bytes": 42,
+      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
+      "content_type": "image/gif"
+    },
+    {
+      "page": "expired_chart",
+      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjss8NqE8lwNhk2-trkS9kIJAvbOiaLi5rXQs6t7asdinzO3Jx6JWccKqb8QTNvLq9TlJP-5Qhs9fxJ5PmLKD2kUKrKBTpgyAy1XlmnGeOZ6x9X5GCjZP5WSjThhk_tvibrUf62G-xu3pgs5wbyyjXJr0Flu6T7Vza7utZsY8PQG8TQ_GkkigFWwSf6-Y5my5bFTIv4P9jMxtoTNkQzGtRmFW7mx_FSSNxta4MBUfyQJs8ctqhp_-6FaAFqvVegTeWA3S1sHbxY2gEBcRNLosjsYqtDTCoYabUuIbkXj1oNeuwnG4RlvAMRlCuEFMCvASb5Y6CDhUnAKe_WeAUhx-B-6tNmKNXnOoZcGG-UzLpluOBUOvoiZM-SiP488ytWoh8rtfXkkc5cv20DcOlbrRGks-To7Zh83U7Ke0-2ePIKhxeNG5U6iMo9_rE6KHPKSYHMZzW-0z0bTBoWLxw-jHmz0tS5vgg3Q3j8HEH_iPECqMc6reUt8sKItSp0l_x6rRvXhtZ6b7K_pSK8nHexJI56lJdaZ95V_PM7rcd1bEAQhUmfqkaBowS-21HcsR_lFDmNxGuU1y8seMiFeV9KKlhQLCxZLDJ6d9egheDAXTX-GEN6XR9XlDLV5tR_o1NdTKRDaCBfiHfo5Vejd1kI6i2nR-ZDa4xkgdTBAg7RaQsO97LbGKh_UwZ8-nQE-kgcZsEaB_Zk1k22EJbEWhb9Qhz_3r-kwzOWtFF7cB_DKEj2S9hFcbp8xUvimiCla9zyyF3wO28Tql53vXBz16X83I48pR4v7CWMclhjjpzhkXspIfx_jjMd6z-FqAEhIp_yxATb1zPFGIBO2CtS9zBv7Ac0cOvAac02WOkmsslg1ysilvPfTkM2viyNZDnrAfG3XIwQVudbADGh9aANP0bPJOFyOUTNYAF2AT4x9qLwBwAjmEwe9QeV7Ec9TMkjIi3g64vUbgkToYaPbR80adk1f9FTlv-5ndxPRBGVd4-WQge-TjSUoeAyN4E0jebl7ikPyj1J2Ma0ueMk8rhfY_CDYaF6zvoRRTAm-Sl66KS3Qi9UjW_B70Ul4s5XMWnQQKgtofet3MS2zoG9OKvcANRl93maSw0WzeqbzWaKXrH110gSD3wYe48nvlIrsa5qsYDs3W_AtZZ4NDXEY_TAvbBOL-Aes2sWLNWzcHf6cWfNH4sYSk2-Asq-qU9lbgzXZ6YwyPMqbyoagCl95v9adjw1so1MUN8TyYFwS8n3FS44lyGcP4w24wrK-AQIUaS8k6QQ0cjjag5svOmHqt16UrjvJBhtneVD14nH6rrYDjm70KpovGqRBIZXXa7jzq0k-dEHQz-9OEAsJ90QoCSisSP2zmVBGlS4BiCUg4P3GeKMoDD7oZUdLSp6cdzp4EMnIwlh1qQX2zi2CW_1H_eyta-VMUmrY7lZuqzJqh8AArrgnoSZocFfwIvektpk--iXUAkkCQL0P2SHz2i8J_vnj8kasx0EtN848nlWIZLQWYMZ1K0Ig3fk4HDKUdur0r6MaTrkek9wGepdoJetH4DLdX10sd9YkinxJz68Urw4M&sai=AMfl-YRcW45ripm8Q5fy7KDbC7Y8SqNvXtvLLekYhwLXJhNq70adHkp07KSnQMVdBhLkoYI2tpUISkeUBB9q67e7GXMtED6tV2gdMZ1DQO8Kc4L528UTv6KkZgpv3LVkEwMS8F4ajc87OvZyBPK2IvIAS_hl_xGmf9wVOHtTsGFVT8plPZG1eCm5yUucXNdZuwQHM9HUEs08ZLdZMDvImkbxyogtMOtZkpILc4FXh1MOyxhQ_dc3IWv4bsdBRG6mN5BHWSiPWirKFFGuEI7Coq0ytnJ9d3uTaohg3d9GTVIBpQqjLxTErEaM8ciVTMtHV1n_BCffwyucSMHxqUEkdfl9oLBs1RXqXqsnG2YFmSMdO_7OSTRGdbZ1Mlecl7jwGHeuo_NIdljOTA&sig=Cg0ArKJSzOAUpKuUGrj-EAE&cid=CAQS9QEAQM4h3AWq0nshgL-FV3DosIIEv6RiRI6hjnGSEyonP-f7Kw73SyI6kbmf0Xr0gAT4faLQ-CvH4Q4jXMmrZu8EJS9PeuDB-aiyv6waRSq14dlvLBzDyuJsFK8MfEM90FhhhT2JrEF1NErX5ZSCW-_2EB3PKkls5IUsUNgIyfCC8ibs879sSUKMrV1ndUHE7bAepIJ4BUXi-kzCwVgnnY2ZVsSIkWiyWxCL67BkIjMJ2Gn26gAW56Rp24mnMQmmozQUWAdvc6bMlGYxAmajB6gUjY9e_Sk0fz-oWB28jVzue0iyQE2bfnatFv9UO8DBGFOiWhGnjhgB&id=lidar2&mcvt=1100&p=0,0,600,260&tm=1534.5&tu=434.9000000000233&mtos=1100,1100,1100,1100,1100&tos=1100,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=3184181384&rs=2&la=0&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747206800&rst=1791539267286&rpt=1286&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/87fe781480613d264946.txt",
+      "bytes": 42,
+      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
+      "content_type": "image/gif"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://tradingtick.in/nifty/chart-files/nifty-whoc-chart.php?action=filters",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/8814b423ef4f46fa8b84.json",
+      "bytes": 67,
+      "sha256": "394a59259537b25887df2090aa848b9046cfebf343193565f67e38ce2a9ce5d4",
+      "content_type": "application/json"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://ep1.adtrafficquality.google/getconfig/sodar?sv=200&tid=gda&tv=r20261007&st=env&sjk=8912191180380943",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/2de042155b8003c64698.json",
+      "bytes": 18014,
+      "sha256": "39c5197377c4d5dff47a4d6aaa87f861313cb83dd4b8f0a0ff41ab6656f5784a",
+      "content_type": "application/json; charset=UTF-8"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjssRUX2wPy05XEuh53-fvoAsRCy4C4OSaer3qs0sINdns4jP8DASRlAU5Ps5P5W3UHZRPWd4qxzJVYBsLOuu0AHeiu9XjqfnoOVBuj8Urla-Tss3tTpuXmVyKHQMIV_cLW9RIVfP3XUnXI1Uss8usVOY2CbAW7yBdd0mSOQGUwvOXlqytVYJw8T9pcd3CRalzJ1zwqPbsB3lC097YS1QkMZbOLrKURoN5dxWOCQAmpPW9BGHHfg-2ESTI_UqDi8EXC9uRpaY_yqCnZtucVhBy1XzrpXz0pWRJxirmhf7Pq_4cVLxBt_JjDeStrmXZkfadzmA2z0ZkvCaEa5pxNAIbUePZ8VWWVOUml4epjmo5enMbHcA1j4dLN4dK84Qw7ldQzGbh-yI_4U13l_acIPg4sEOoYqg-OQjsT0NLHBmeyMI7-Z3LhoroZFtYclv6lSht8SB_SYFPqfs1QRu7cyjCJoqF2VYUsE_qhx4JB90GvJ--_Mcis8WshNAaWVbu9J9g2nQ_VqxeoSqa6XqxFrh2VA0GGY2mKSP4D68oKk1X4lRbzsm1pIsRxXJ2dZ_ydcMMlljAwwWssudBIrTYPTIDM3oWqahOcn7N_4kb2x7y6p9rLVu6sJ-ux1sYYVjxt2fO1aFOicfgPa2ywxQIe4twQB53qIMcWjjPO79lP-wnl2WpXnKrQwLoddy9caKIVC7a2ePa5pySchRy9X08O9gVuQ8UOTgwuyyaItORLaUH4vVvt-Z5a_8bNq2Mfh4NKm0MqtAdLti8j1sl31KDE0Si1zTBkLaGV_49qOPbqMWKvFI52zGZQo2rPMZG5bn4hwGlq3zCK_cyj2e32E_qFrssxYqg62S7U4R-KOKq4j5cGrJPLZc-IQEgoRMlYC4CNtVkJZAUWuoDfQko4lAIlj25kvV62p3JDwgvCTPiuYr2BAQRe_HPxA5xLS-Eh-0tckxiptxPdD14nUWFx4ElPPCur_PLy0PBwYNPBkRTLTfinIDDtFotg8D2p40gtMOq8FDAavzGy1Y3PcNl0aoMyJoxkEzFta2dcipKkCZDQM8c78FC_lDucS6wTo5Sj9mIbWI-yZdvoaHf00B_oJIpP_cyixvjfR_WBvjj4pMIIXHc8kNHpVWuajobuv5ix7F-l8bpIaRwReB5-8XnYQOPACSGLutSDVfF3IeBAuCipUtAyeKIcKTC-ZykuNIlUov_fZtDUdBBjO5zRs7LAwd6Kwocii8-IrbmkgDAkIvf3pTol9pNR0JdRYs2fZF_jgdHz59a_tJZzb9KQm6vM1vsifFIsCFHoakoY2tJaZrpzCK8g9QHDcW7Aq9HOnmj13-qNk1yilGKMtHflLuEm3A9DvypREN8iiimVE3gPHk6MAYqitjAqq8FnQudVtkpC_Fh0hOM6E4541WAio_if0qnT-dfFZZT-xn7Qq2231AtKkrCesdMLyqJDURBWv7vR68TYGLwhoFI6BR4g3mmjthxz4465yHXq5Jm3t4YRtXr0K4oHmsGTpJ8PKCH6fR1aQ6-6DQx5QvYHRLw3IoJJC-vSF_4yga2DH_pOiUiYhTG31HjNBZO7iPIHLn4A&sai=AMfl-YTKmTuv_0zpjDas8vXZgd5M78oWTEnFwA33sS-Gg7I7BfM_3-3pDKMplZSmsbm-EAbi0KSCtVT9Sj4rC31QMzj4kJ20DGMZ1Pv-E8CeI4PTx4GpK3b12wG3h9o3NJcJ6D7D9uDEw5pyAkM0eHptx-jyQTL9vw-cAEr5gZsv0ch9X_12sIU-eOENMZ4K4JcZjHbOMnSbYCgmqlMGPa7uy3mAqfch0VkvEC2SBP_43TsPkGN9OSY56DBlAaaoosg-qEJRh1qbpIpMwG8Wo5WZLGVy4B7DgMTV7wmGRr5M74d7T2l6OGtXKs9EVpgCqlumO2R8b1YtJYvNGcBtHva8XEXt5vMYMF2CNzmU6WC_zXUHFKFBcFYsKoCup-CcwzE5zu2S9a5PcA&sig=Cg0ArKJSzBzqeLLUELgaEAE&cid=CAQS9QEAQM4h3C29IteKi5t0aY-qATUPG7wMndJKwWMLlJfbZIe-MAol3rUi5K3fniy7Kp6P-X7FqLLIaFOFG7_jnWunMacZuLBZ-RW9JRi5qBBb_uuaNYpFBmQxjo-Eqbvf1M4i87jnlqTjwsm7cPEPZWV-5zu7SPJoM37h0H3rZ_Pmsr6G3buycyUeQiJgoiLVYEVlimtwmqSG0cg0vn8CxtP5Z2GrvTNagA3hEjZMdw5z85nLRO-yS30Xv0uEi0kJ5qYgTsB8wS7G-O5WBSCzNPNPw6zQHNmQYgRr5yO_GAKNxPHOpMliyuPVKnQ1jipvcapJt0hacRgB&id=lidar2&mcvt=1000&p=0,0,600,260&tm=1277.6000000000058&tu=277.8999999999942&mtos=1000,1000,1000,1000,1000&tos=1000,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=3184181384&rs=2&la=0&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747207400&rst=1791539274428&rpt=729&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/d912806c1dbdfb335d46.txt",
+      "bytes": 42,
+      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
+      "content_type": "image/gif"
+    },
+    {
+      "page": "chart_data",
+      "url": "https://pagead2.googlesyndication.com/pcs/activeview?xai=AKAOjstYa4PXo-jzksHun6HFriq4b4JVdJxsl4X_KCtTkhQhgRbw0YhWYam7vi8Dk_lwQ3sHDPfXnVvIaa7Q7_bV04E0qtiffNgPM087vQlMmQANMcbrun77dIgt0iPANe8Ft086Xu5b8M04J-myPz-Z1KWTC2xCu6LCL5BpzltLL4jfsTBvwXeJY6f4c8ls8Bkj1FwIPZwsRypBK2dteHOPERIWE970gIbJIoce8SL-aChcr-rnDdcO2eHkNxihZ7pMrJRmTpFVtjN4Tw934uQjFoBmblwYcLIbOYrcALHhzzJnjSDf7tvSKktiKEXV0Bv18ZSYI868S-SctjQjVzj918zianqqV5wJG0pzmCrebE7qv6yHHy5jZgt-J0cv3w5VXgQtgWuZOhlBJUUap_XhJcNmNAkb-WhymvVToJyIiZAmYt7tagPMkg8nC6Etx0_m9n_lqa99LT4s0S9_tLFzRcPAKaj3EOD7ptgDQuArNdCI8wMUosu26RZyirw26JTWJpftKHSLfyGbrRujOhlRJYTnikbQfpEv6uvThthesjTYh-Bcqr8fjAiMNrdoVWqMxGa68J5FGUCCH5ljc1VFhSWfh6-ugjp1X1YWaG7RUDagd90tHsqyIf5f5r7vySf8s1-Nou36NHoObX-EDiPdl9TofZDmfq0ixP7gY8zEijbjRc1FTWzsv56JDDHq2J40M97FaR-tu8gND8j5T1Lo86wBix4qCVF9djEr-JGl01fM4zxawUnk29cECdf_A9JeyB-dC_Moy6KBwe4T8-i-Z4Ko2SrhSKNMTn6vZ4OU3izJQ4Mn_3ushXYtQcD1t-zWWCKN1ISDmOoGOlfEfu8N5WFionk7nt0bba44IS9ILg1ZK7p35R4tn1znKS9KYHtndhVF5EATdu42_m2SXIqpoQd2H1chJoD3CoDnc4HkI7KVrm1kAl_hBzdxgcrUrnqrtrYpf15PU_0a_cp0wSvchXpBmlTANu00tg-vWrjZQvrwn_2lYgopSJ3gIGxeIkCVfFf__9wPs-TD0X8I8Cle-q4wIkbu3ZYvmlnTR_4YtVMIxMxG_diJVWpWFrOfa2fUy-KCfqCqNZIGIrGR6VL4GZrknYgRJ75fM50NhV9U2EjIAyMP8jsTFd9TXfk5bF4ACUr19Wk3E-TVdWdGVciabwGYj6a0yv-5S48Odzkb2DF6PmI9rSkV0cd6sPTThbz1CRRJztrJOZ-JNoGGNFoB7T11toHyz7ncg5Gq-fiAVhUZTttKC0mU9OdDPXpi3DBvnE9Mfjwct56E8FgjHikglsEPeZerFYKM5OR0YUI5K2JlxnFvFvREaOLjrKXjzhC9-EiNMx2LNFny768xnttGogBStKNLiiPI6gKs4tkb6JST6vyMWzSjDa-1irhrXuPZ6Aui_2ll9vC18bkPtQJ7j7H2FXy39JyWRA2xyxUNpEqF_jetK_NgUnV7gH8HQjvagIEPcPwhT69DxDZ9LzlUZ9G-uoMxtV77i8shtjmM4v56sj0ywDJk2dt-KbqFyGzWed97lcvD6OsZwQWISDQO8h6J-IPjuuTzXNHGZooiJ2ZWGMtnpESK2l8&sai=AMfl-YSVRgNznCXx4AVNS3QmKb7KknlmIblFrxDc_PDFZw_tgMgmYiS1p0o5wwgHQl2UBN-j3VT1Y7ojLCSmkWk9lgbnwSGgQ7HjqT3McBpZYAwv9rYP50tlx8i_pIXXDSNVq_cPVAUw5_hRRHkB7qImKw97EyjyHp3wIpAe9KRIPacJJCDuwiJ2RmDaZ3L5AqDau5EfbDFEO__Kd_zHyyt9mHJpm6QyGoMPjyELDbv9qz0A6UoE8y7TRtFdJOqDGnkEDY7lCvTMYndIvNUYv-b19ZkXoX-hBNZo-fyZmnp6thT5NTZo9p78h7xQENyhjbLxKP8QXC-uFP0hKrReLMnZT1M5G_0dVpAOoJdkHohSmmX_upWOEin5GO-Xi618dKIv6XKjcl31gg&sig=Cg0ArKJSzBlrvVc2PJ-oEAE&cid=CAQS9QEAQM4h3AHeyn4j61PcUWdfNWRgeZjj53iV9lH4hynHim1DOhuscAq6CbNdozSLDYEUAxAEJqrV-5qEcxd4SGy2Bv58tddYyvtSWtYJkvW6lQLaE7ciOrOFWNVhr02-AVzqWwUo9rdRWu9arneBQOinWqbP47CtYJxOFLwTTBfHj7Vld3bxTXxLhyLPfXqHMVcCHw56bJWP0bYNrtGeVfwQGGBU6eGRTndofIskAPZZyQboJFuK2iRe20oaiix0pQj3zVcLLME-1scZ2aSuOHgWGGnoS3Kq5l1ypkRXnd1UdreJmAt4IZy5IWP9TaD2tghl-LnA3hgB&id=lidar2&mcvt=1003&p=0,0,280,1080&tm=1203.6999999999825&tu=200.59999999997672&mtos=1003,1003,1003,1003,1003&tos=1003,0,0,0,0&v=20261007&bin=7&avms=nio&bs=0,0&mc=1&if=1&vu=1&app=0&itpl=22&adk=2025129673&rs=2&la=1&cr=0&uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1My4wLjgwMTAuMTIiLG51bGwsMCxudWxsLCI2NCIsW1siSGVhZGxlc3NDaHJvbWUiLCIxNTMuMC44MDEwLjEyIl0sWyJOb3RfQSBCcmFuZCIsIjguMC4wLjAiXSxbIkNocm9taXVtIiwiMTUzLjAuODAxMC4xMiJdXSwwXQ%3D%3D&vs=4&r=v&co=8747207400&rst=1791539274443&rpt=702&met=mue&wmsd=0&pbe=0&fle=0&vae=0&spb=0&sfl=0&ffslot=0&reach=8&io2=0",
+      "path": "results/phase51/phase51_1J_tradingtick/responses/a409ac8485d008b40631.txt",
+      "bytes": 42,
+      "sha256": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
+      "content_type": "image/gif"
+    }
+  ],
+  "target_date_selectable_in_any_control": false,
+  "intraday_timestamp_in_observed_data_response": false
+}
