@@ -56,13 +56,32 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface/hub
-          key: phase51-3-orchestrator-${{ runner.os }}-${{ hashFiles('research/phase51_3_available_data_sweep.py','research/phase50b_tt02_calendar_replay_v3.py','research/phase50b_tt04_premium_match_replay.py','research/phase50b_tt05_short_straddle_replay.py') }}
+          key: phase51-3-orchestrator-${{ runner.os }}-${{ hashFiles('research/phase51_3_available_data_sweep.py','research/phase51_3_primary_source_adapter.py','research/phase50b_tt02_calendar_replay_v3.py','research/phase50b_tt04_premium_match_replay.py','research/phase50b_tt05_short_straddle_replay.py') }}
           restore-keys: |
             phase51-3-orchestrator-${{ runner.os }}-
+      - name: Validated NIFTY spot source cache
+        uses: actions/cache@v4
+        with:
+          path: data/validated_spot_source
+          key: phase51-3-technovusin-nifty50-spot-${{ runner.os }}-2026-10-07-v1
+      - name: Acquire validated NIFTY spot source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -d data/validated_spot_source/.git ]; then
+            mkdir -p data
+            git clone --depth 1 https://github.com/technovusin/nifty50-historical-data.git data/validated_spot_source
+          fi
+          test -d data/validated_spot_source/nifty/1min/2026
+          find data/validated_spot_source/nifty/1min/2026 -type f -name '*.csv' -print | sort > /tmp/spot_files.txt
+          test -s /tmp/spot_files.txt
+          echo "Validated spot files:"
+          cat /tmp/spot_files.txt
       - name: Run phase branch sweep
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_HUB_DISABLE_TELEMETRY: "1"
+          PHASE51_SPOT_ROOT: data/validated_spot_source
         run: python research/phase51_3_available_data_sweep.py
       - name: Audit
         if: always()
@@ -75,6 +94,14 @@ jobs:
           print(json.dumps(d,indent=2), flush=True)
           assert d["window"] == ["2026-04-21","2026-07-21"]
           assert d.get("partial_oos_only") is True
+          sm=d.get("source_manifest", {})
+          assert sm.get("options_repo") == "rissin/nse-options-intraday"
+          assert sm.get("options_sha256") == "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73"
+          assert sm.get("options_bytes") == 394805617
+          assert sm.get("spot_rows",0) > 0
+          assert sm.get("spot_first","") <= "2026-04-21 09:15:00+05:30"
+          assert sm.get("spot_last","") >= "2026-07-21 15:29:00+05:30"
+          assert "2026-07-21" in sm.get("observed_expiries", [])
           expected=set(d.get("expected_candidates", []))
           assert expected == {"TT02","TT04","TT05"}, expected
           assert set(d.get("results", {})) | set(d.get("errors", {})) == expected
