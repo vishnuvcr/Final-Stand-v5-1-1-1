@@ -307,3 +307,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Observation:** Run 37935663113 remained in broad option coverage longer than the prior successful run, and the next run stayed pending under the original concurrency group.
 - **Correction:** Versioned the workflow concurrency group to `phase52-factor-conditioned-strategy-discovery-v2`; run [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472) started in the new group. Another old-group run 37936777969 also began, so duplicate audit outputs must be reconciled by code revision and hashes.
 - **Status:** MITIGATION IN PROGRESS; run 37937318538 is queued and is expected to use the latest point-in-time strike-ladder correction.
+
+
+## F52-027 — Concurrent stale audit could overwrite patched strike coverage — PREVENTIVE GUARD ADDED
+
+- **Date:** 2026-10-09
+- **Observation:** Runs 37936777969 and 37937164472 started before the latest point-in-time strike-ladder correction and may complete after the corrected run. Without a source-revision guard, an older run could publish its stale selected-strike CSV after a newer run.
+- **Correction:** Workflow persistence now compares the selected-strike auditor in the checked-out research branch with the current remote branch. If the source changed during the run, it discards only that run's stale selected-strike output (or restores the remote result state) while preserving other outputs. It fails closed for non-log conflicts.
+- **Verification:** Guard added to main and branch workflows; next Actions run must confirm the guard and patched self-test execute successfully.
+- **Status:** PATCHED IN WORKFLOW; verification pending.
