@@ -59,4 +59,4 @@ Plan frozen; implementation committed; workflow execution and results pending ve
 
 **Acceptance:** Reconcile exactly 100 threshold-invariant hard OI blockers, 379 complete range-excluded leg payloads, and one complete baseline pass; each threshold's mutually exclusive categories must sum to 480; OI and entry-data rejection counts must remain invariant; eligible counts must be non-decreasing as the threshold increases.
 
-**Status:** Amendment recorded before accepting any threshold outputs; automated rerun and report validation pending.
+**Verification:** Passed in [GitHub Actions run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101). The canonical CSV was synchronized from the Phase 52 branch before execution. All 480 rows reconciled at each threshold; exactly 100 rows were rejected by a verified prior-OI hard blocker; 379 range-exclusion rows and one baseline pass have full selected-leg payloads. OI and entry-data rejection counts remained invariant; eligibility was non-decreasing with threshold. The phase is complete as a coverage diagnostic only.
