@@ -75,3 +75,12 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Added a stricter selected-strike ATM-offset coverage audit; it checks exact bars/OHLC/OI for offsets -6..+6 and does not calculate P&L. Self-test/full run pending.
 - ABS_DELTA configurations are not to be backtested until a validated point-in-time delta resolver exists.
 - Queue remains 235,000/9,379,584 enumerated, not tested. No promotion.
+
+
+## User said “Ok proceed” / resume — 2026-10-09 21:07 IST
+
+- Re-read current Phase52 status, plan, replay protocol, error log, research log and README before continuing.
+- Selected-strike audit results from run 37942202655 exist, but source audit found rank-vs-step and index close-vs-open defects. Their coverage counts are superseded pending corrected rerun.
+- Delta run 37944408314 failed at self-test before data audit. Fixed synthetic sigma units and below-intrinsic test; also changed delta selection to use prior-bar close data and exact entry-open fill eligibility.
+- Updated protocol and pre-registered plan amendments PA-011/PA-012 without changing v1.3 grid domains.
+- No variable-grid configuration P&L exists, and no strategy is promoted.
