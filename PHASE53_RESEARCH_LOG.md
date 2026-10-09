@@ -1,0 +1,11 @@
+# Phase 53 research log
+
+## 2026-10-10 — Step 0: phase initialized
+
+- Created a separate Phase 53 branch for free-source data coverage remediation after Phase 52 returned 1 executed row out of 480 planned.
+- Fixed Phase 52 checkpoint persistence and added a regression test covering a genuine concurrent local Git rebase; run 37983999726 passed all replay and persistence stages.
+- Reconciled v0.1/v0.2 artifact counts as distinct versions. The v0.2 artifact reports 379 OHLC-range exclusions, 100 prior-OI blocks (all prior OI=0), and one negative net modeled trade.
+- Added a new audit-only v0.2.1 correction to retain strike/option type/offset and OHLC values on excluded rows; launched run 37984566094 to verify it.
+- Phase 53 is a data-sourcing/coverage phase only, not profitability testing. It cannot change Phase 52's filter, costs, sample or holdout.
+- Source search indicates official NSE daily derivative files can support end-of-day controls, not automatically minute-level quotes. Current HF dataset explicitly says option coverage is partial and the licence is CC BY-NC 4.0. OptionVault has evaluation samples but its README says the complete collection is licensed; the Breeze downloader requires a broker account/key/session. Do not claim these as a solved free intraday source.
+- This initial log entry describes the plan and known facts before the first Phase 53 workflow. Results will be appended automatically by the workflow.
