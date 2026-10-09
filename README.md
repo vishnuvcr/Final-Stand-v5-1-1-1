@@ -1,5 +1,32 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
+## Phase 51-1H — CLOSED / DATA-BLOCKED
+
+A final live-byte audit was executed against the current public Hugging Face NIFTY options repository for the unresolved Phase-51 expiries **2026-07-28** and **2026-08-04**.
+
+The files are real Parquet objects and their schema is canonically mappable, but both terminate on **2026-07-02**, so neither contains the required target trading session.
+
+| Target | Size | Rows | Actual end | Decision |
+|---|---:|---:|---|---|
+| 2026-07-28 | 3,990,663 B | 320,359 | 2026-07-02 15:30 IST | REJECT |
+| 2026-08-04 | 58,248 B | 2,646 | 2026-07-02 15:29 IST | REJECT |
+
+No OOS P&L was calculated and the frozen 2026-04-21 → 2026-08-04 window was not shortened.
+
+StockMock and StockMojo were also checked as independent historical-option research/oracle platforms. Their public materials describe minute-level historical replay/backtesting, but no reproducible raw archive suitable for repository ingestion was established, so neither replaces the raw-data gate.
+
+- [Phase 51-1H report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1H-current-hf-byte-validation/results/phase51/PHASE51_1H_CURRENT_HF_REPORT.md)
+- [Phase 51-1H manifest](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1H-current-hf-byte-validation/results/phase51/PHASE51_1H_CURRENT_HF_MANIFEST.json)
+- [Phase 51-1H status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1H-current-hf-byte-validation/PHASE51_1H_STATUS.md)
+- [Phase 51-1H error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1H-current-hf-byte-validation/PHASE51_1H_ERROR_LOG.md)
+- [Accepted audit run 37876719483](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37876719483)
+
+**Next:** preregistered authorized-data recovery, beginning with a non-secret credential-presence check for Upstox/Dhan/ICICI routes. No P&L or parameter tuning is permitted until the raw-data gate passes.
+
+---
+
+# Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
+
 ## Phase 50B-6 — CLOSED / NO PROMOTION
 
 Phase 50B-6 performed the preregistered dependence-aware validation inference for frozen OTM350 versus fixed BASE.
