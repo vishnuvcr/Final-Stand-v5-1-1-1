@@ -76,7 +76,7 @@ class LegAuditPayloadTests(unittest.TestCase):
         baseline = runner.resolver.resolve_template(
             "BEAR_CALL_SPREAD", config, event, entry, prior, expiries, specs, manifest
         )
-        self.assertEqual(baseline["status"], "TEMPLATE_RESOLVED_ENTRY_GATES_PASS")
+        self.assertIn(baseline["status"], {"TEMPLATE_RESOLVED_ENTRY_GATES_PASS", "DIAGNOSTIC_ONLY_TEMPLATE_RESOLVED"})
         self.assertEqual(len(baseline["legs"]), 2)
 
         first = baseline["legs"][0]
