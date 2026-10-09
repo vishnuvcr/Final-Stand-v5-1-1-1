@@ -322,7 +322,8 @@
       "limitations": [
         "no archived historical quote snapshot endpoint confirmed",
         "do not scrape/copy or automate collection"
-      ]
+      ],
+      "probe_allowed": false
     },
     {
       "id": "hf_codepyx_mirror",
