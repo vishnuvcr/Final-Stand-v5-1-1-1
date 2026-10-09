@@ -41,3 +41,12 @@ Actions run 37926165354 passed the factor-selector unit test but stopped before 
 ## 2026-10-09 — Canonical strategy aliases and holdout coverage policy
 
 A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes use names like `iron_condor`, `bull_call_debit`, `call_calendar` and `long_call_butterfly`; these aliases were added to the pilot's risk-limited whitelist before any selector result. The pilot now uses block resampling for expiry-level inference. Because the feature feed ends on 2026-04-24, the 2026 holdout is only reported if its own feature coverage/samples pass; otherwise it is explicitly unevaluated while validation can still be examined.
+
+
+## 2026-10-09 — User said “Ok proceed”; legacy selector pilot checkpoint
+
+- Re-audited plan/status/error log and the latest main README before resuming.
+- The first selector workflow run passed self-test but stopped at the coverage gate; subsequent runs revealed and fixed an accidental path line inside the status Python heredoc and a concurrent append-only log conflict.
+- Authoritative run 37927040268 completed successfully. The Phase45 source outcome matrix has 9,699 rows, and 6,617 rows matched to point-in-time Phase39 feature snapshots. The leakage audit PASS rules remain in force.
+- Validation (2024–25) was negative for every selected policy. VIX was the least-bad router but still net -₹63,547 and its relative uplift was non-significant after Holm correction (p_adj 0.985). The 2026 holdout has only 13 matched expiry sessions and is not evaluated.
+- No candidate is promoted. The next goal is actual variable-config replay; configuration enumeration must not be described as tested strategy performance.
