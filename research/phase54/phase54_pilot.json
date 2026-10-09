@@ -1,0 +1,138 @@
+{
+  "pilot_version": "phase54-ohlc-reference-sensitivity-v1.0",
+  "status": "PREREGISTERED_BEFORE_HISTORICAL_PNL",
+  "created_at_ist": "2026-10-10",
+  "parent_grid_version": "phase52-grid-v1.3",
+  "replay_protocol": "phase52-replay-v1.0",
+  "intent": "OHLC reference and cost/slippage sensitivity only. Keep the exact 40 configuration IDs, 24 selected event IDs, exact contract entry, unique strictly prior-minute OI >=100, exact 15:15 exit, fees and dev/validation split from Phase52. Do not treat (high-low)/open as bid-ask spread or execution-quality data. Record it as a diagnostic but do not use it as a range exclusion. Add a separately reported adverse-slippage sensitivity of 0/10/25/50/100% of the larger entry/exit candle range, floored at ₹0.05 per fill; this is a risk stress proxy, not measured spread. No strategy ranking, inference or promotion. Holdout is untouched.",
+  "market_data": {
+    "dataset": "thetrademarkk/india-index-options-1m",
+    "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+    "declared_license": "CC BY-NC 4.0",
+    "usage": "Research-only; no commercial/live evidence.",
+    "cache": "Hugging Face cache restored/saved by GitHub Actions; source data hashes are recorded per file. Raw market data are not committed to the public repository.",
+    "duplicate_policy": "Remove only exact duplicate rows across all columns after canonical normalization. Do not collapse conflicting duplicate contract bars; reject them. Record per-file source-row count, deduplicated row count and exact duplicate count."
+  },
+  "configuration_filter": {
+    "family_ids": [
+      "BUY_CALL",
+      "BUY_PUT",
+      "BULL_CALL_SPREAD",
+      "BEAR_CALL_SPREAD",
+      "LONG_STRADDLE",
+      "LONG_STRANGLE",
+      "SHORT_IRON_CONDOR"
+    ],
+    "selector_mode": "BASELINE",
+    "entry_dte_calendar_days": [
+      0
+    ],
+    "entry_time_ist": [
+      "09:45",
+      "13:00"
+    ],
+    "strike_selection": "ATM_OFFSET",
+    "atm_offset_steps": [
+      1,
+      3
+    ],
+    "wing_width_steps": {
+      "values": [
+        1,
+        3
+      ],
+      "applicability": "Use [1,3] only for BULL_CALL_SPREAD, BEAR_CALL_SPREAD and SHORT_IRON_CONDOR. For LONG_STRADDLE and LONG_STRANGLE the resolver template has no width-dependent leg; include only width=1 as the non-redundant representative, to avoid falsely treating duplicate geometries as distinct pilot strategies. This is a pilot subset, not a change to grid v1.3."
+    },
+    "leg_ratio_applicable_only": [
+      [
+        1,
+        1
+      ]
+    ],
+    "reference_lots_per_leg": [
+      1
+    ],
+    "exit_rule": "15:15_IST",
+    "liquidity_max_spread_pct": [
+      2
+    ],
+    "hedge_mode": "NONE",
+    "expected_configuration_count": 40,
+    "configuration_ids": "Generated only from the exact phase52-grid-v1.3 Cartesian enumerator and frozen filter; no new dimensions are introduced."
+  },
+  "event_sampling": {
+    "source": "results/phase52/configuration_event_universe/expected_events.csv",
+    "target_expiries_only": true,
+    "entry_dte_calendar_days": 0,
+    "entry_time_ist": [
+      "09:45",
+      "13:00"
+    ],
+    "only_exact_index_entry_timestamp": true,
+    "split_definition": "Development: target expiry <= 2023-12-31; validation: target expiry 2024-01-01 through 2025-12-31; holdout from 2026-01-01 onward.",
+    "events_per_split_per_entry_time": 6,
+    "expected_event_rows": 24,
+    "deterministic_rule": "Within each development/validation × entry-time bucket, sort by target expiry and event_id, then select six evenly spaced rows using rounded linspace positions. No option-leg availability or strategy P&L is used to choose the events.",
+    "holdout": "Deliberately excluded from performance output; it remains untouched and data-gated."
+  },
+  "execution": {
+    "eligible_exit_rule_only": "15:15_IST on the entry/target-expiry date with an exact 15:15 bar for every resolved leg.",
+    "exact_timestamps_only": true,
+    "no_nearest_quote_or_strike": true,
+    "no_forward_fill_or_interpolation": true,
+    "prior_oi": "Unique exact T-1 minute selected-contract row with OI >= 100; entry-bar OI is diagnostic only.",
+    "fill_reference": "exact option-bar OPEN with adverse slippage; minute OHLC is a simulation reference, not bid/ask or tick execution.",
+    "liquidity_gate": "Phase54 sensitivity only: record 100*(high-low)/open as descriptive OHLC range reference; no range-based exclusion. This is not bid-ask spread.",
+    "unsupported_modes": "All factor routers except BASELINE, ABS_DELTA until the audited resolver is fully bound into the production runner, non-15:15 exits, hedges and intraday-futures-dependent families remain fail-closed.",
+    "costs": {
+      "brokerage_primary_inr_per_order": 20,
+      "brokerage_legacy_sensitivity_inr_per_order": 10,
+      "adverse_slippage_inr_per_leg_fill_base": 0.05,
+      "slippage_stress_percent": [
+        0,
+        50,
+        100
+      ],
+      "statutory_charges": "Date-aware kernel schedule, independently calculated and not scaled by slippage stress.",
+      "reference_capital_inr": 600000
+    },
+    "slippage_sensitivity": {
+      "type": "OHLC_RANGE_FRACTION_PROXY_NOT_OBSERVED_SPREAD",
+      "fractions": [
+        0,
+        0.1,
+        0.25,
+        0.5,
+        1
+      ],
+      "floor_inr_per_fill": 0.05,
+      "description": "per leg use max(base 0.05 INR, fraction*max(entry candle high-low, exit candle high-low)); non-executable risk sensitivity only."
+    }
+  },
+  "required_outputs": [
+    "pilot_manifest.json with source/script/protocol fingerprints and all exact configuration/event IDs",
+    "event_replay.csv with one status row per configuration/event including every exclusion reason",
+    "config_split_summary.csv with descriptive-only split aggregates, executed/eligible counts, exclusions and all costs",
+    "source_file_audit.csv with per-file SHA256, revision, size and row/timestamp extent",
+    "report.md stating that this is an engineering pilot, not a selector efficacy test or confirmation study",
+    "source_file_audit.csv with rows_source_after_normalization and exact_duplicate_rows_removed",
+    "cost_scenarios.csv with six fixed-paise sensitivity cases per completed replay",
+    "range_slippage_scenarios.csv with ten OHLC-range-fraction sensitivity cases per completed replay",
+    "range_slippage_summary.csv grouped by fraction and brokerage",
+    "event_replay.csv with exact prior OI/exit gates and OHLC range clearly labeled as a diagnostic"
+  ],
+  "promotion_policy": {
+    "promoted_candidates": 0,
+    "strategy_ranking": "NONE; descriptive reference only",
+    "inference": "No p-values, optimization, winner selection, or holdout claim. OHLC fills are non-executable references.",
+    "next_gate": "A later phase may evaluate strategy efficacy only with adequate coverage and an approved exact prior-OI/quote source; no free true quote data passed the Phase53 gate."
+  },
+  "pilot_exclusions": [
+    "No factor router runs because historical point-in-time selector execution is not integrated into the whole-position worker.",
+    "No ABS_DELTA runs in this pilot; model-delta audit still has only 2,232/4,272 selections with entry bars and must be bound to the resolver under a dedicated gate.",
+    "No take-profit or expiry-exit variants; only exact 15:15 exit is integrated end-to-end.",
+    "No holdout performance; holdout remains untouched.",
+    "No real intraday futures/hedge/synthetic-futures strategies.",
+    "The 2% high-low/open threshold is an OHLC range proxy and not an observed bid/ask spread; results are not executable-liquidity evidence."
+  ]
+}
