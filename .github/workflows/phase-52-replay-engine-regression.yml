@@ -1,0 +1,46 @@
+name: Phase 52 — Replay Engine Hand-Checked Regression
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase-52-replay-engine-regression.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase52-replay-engine-regression
+  cancel-in-progress: false
+
+jobs:
+  replay-primitives:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout frozen Phase52 source branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install accepted-engine helper dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy matplotlib huggingface_hub
+
+      - name: Run exact-fill, prior-OI, fee-parity and multi-leg fixtures
+        run: |
+          python research/phase52/replay_engine_core.py --self-test --report results/phase52/replay_engine_regression/self_test.json
+
+      - name: Upload regression report
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-replay-engine-regression-${{ github.run_id }}
+          path: results/phase52/replay_engine_regression/self_test.json
+          if-no-files-found: error
+          retention-days: 30
