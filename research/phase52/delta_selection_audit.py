@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Point-in-time model-delta selection audit; diagnostic only, no P&L.
 
-Uses exact timestamp option-bar close and exact timestamp NIFTY index close,
-a European Black-Scholes model, 6% continuously compounded rate, zero dividend
-yield, and exact expiry time 15:30 IST. Minute-bar close is not a bid/ask quote;
-outputs must not be called exchange Greeks or executable fills.
+The selector uses only the exact prior completed one-minute option/index bar
+(entry timestamp minus one minute) for premium/spot/model delta. It then checks
+the selected contract's exact entry-time OHLC open as an execution reference.
+No nearest-minute substitution, current-bar close or P&L is allowed. Greeks are
+model estimates, not exchange-published values or bid/ask executable quotes.
 """
 from __future__ import annotations
 
@@ -196,7 +197,7 @@ def main() -> int:
                 for target in TARGET_ABS_DELTAS:
                     selected = min(contracts, key=lambda x: (abs(abs(x["delta"])-target), x["strike"])) if contracts else None
                     if selected is None:
-                        rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"selection_ts":selection_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":None,"spot_prior_close":spot if math.isfinite(spot) else None,"predecision_premium_close":None,"implied_vol":None,"model_delta":None,"predecision_oi":None,"predecision_oi_ge_100":False,"entry_bar_open":None,"entry_bar_ohlc_valid":False,"entry_bar_oi":None,"entry_fill_bar_available":False,"status":("NO_PREDECISION_OI_ELIGIBLE_IV_CONTRACT" if any(x["type"] == typ for x in eligible) else "NO_VALID_PRE_ENTRY_IV_CONTRACT"),"model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
+                        rows.append({"event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"selection_ts":selection_ts.isoformat(),"dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),"option_type":typ,"target_abs_delta":target,"selected_strike":None,"spot_prior_close":spot if math.isfinite(spot) else None,"predecision_premium_close":None,"implied_vol":None,"model_delta":None,"predecision_oi":None,"predecision_oi_ge_100":False,"entry_bar_open":None,"entry_bar_ohlc_valid":False,"entry_bar_oi":None,"entry_fill_bar_available":False,"status":("MISSING_EXACT_PRIOR_MINUTE_INPUT" if selection_snapshot.empty or not math.isfinite(spot) else ("NO_PREDECISION_OI_ELIGIBLE_IV_CONTRACT" if any(x["type"] == typ for x in eligible) else "NO_VALID_PRE_ENTRY_IV_CONTRACT")),"model_rate":RATE,"dividend_yield":DIVIDEND_YIELD,"pnl_status":"NOT_BACKTESTED"})
                         continue
                     fill_rows = entry_fill[(entry_fill["option_type"] == typ) & (entry_fill["strike"] == selected["strike"])]
                     fill_row = fill_rows.iloc[0] if len(fill_rows) == 1 else None
@@ -223,6 +224,7 @@ def main() -> int:
         "source_expiry_files_audited":int(len(file_audit)),"source_file_errors":len(errors),
         "expected_selection_rows":int(events["event_id"].nunique()*len(TARGET_ABS_DELTAS)*2),
         "selection_rows":int(len(detail)),"selected_rows":int(detail["status"].isin(["MODEL_DELTA_SELECTED_ENTRY_BAR_PASS","MODEL_DELTA_SELECTED_ENTRY_FILL_UNAVAILABLE","MODEL_DELTA_SELECTED_PREDECISION_OI_GATE_FAIL"]).sum()),
+        "missing_exact_prior_minute_rows":int((detail["status"]=="MISSING_EXACT_PRIOR_MINUTE_INPUT").sum()),
         "no_valid_iv_rows":int((detail["status"]=="NO_VALID_PRE_ENTRY_IV_CONTRACT").sum()),
         "no_predecision_oi_eligible_contract_rows":int((detail["status"]=="NO_PREDECISION_OI_ELIGIBLE_IV_CONTRACT").sum()),
         "predecision_oi_qualified_rows":int(detail["predecision_oi_ge_100"].sum()) if "predecision_oi_ge_100" in detail else 0,
