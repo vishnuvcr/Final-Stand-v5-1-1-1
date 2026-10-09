@@ -233,3 +233,8 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - **Data guard:** Absolute-delta selection is explicitly marked blocked until a validated point-in-time delta/IV resolver is implemented; no delta is guessed from close prices.
 - **Engineering correction:** Timestamp lookup was changed to a per-file timestamp index to avoid repeated full-file scans; output directory is created before the workflow step so failure logging can persist.
 - **Status:** Code is committed; self-test and end-to-end audit are pending the next Actions run. No result is accepted yet and no configuration P&L is calculated.
+
+
+## 2026-10-09 — Pre-run audit correction: timestamp key normalization
+
+During code review before accepting the selected-strike audit, I found that index spot-map keys used ISO `T` timestamps while lookup used `str(Timestamp)` with a space. Patched both sides to use `isoformat()` and added a self-test assertion. This correction occurred before the first accepted selected-strike result; run remains pending.
