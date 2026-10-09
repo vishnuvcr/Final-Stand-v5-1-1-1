@@ -571,3 +571,11 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - Job status: success
 - Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
 - Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
+
+## 2026-10-10 — Phase 52 range-evidence repair and Phase 54 sensitivity
+
+- Evidence-repair workflow [37990362985](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985) succeeded end-to-end. The canonical Phase 52 v0.2.1 `event_replay.csv` has 480 rows: 379 range-proxy exclusions, 100 prior-OI hard blocks, and one replay pass. The source revision stayed pinned at `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; 13 files audited, zero source-read errors, zero replay exceptions.
+- The runner now persists all selected legs on each of the 379 OHLC-range exclusions, including individual entry/OI/range/exit diagnostics; the single pass row is also complete. The 100 rows blocked by explicit prior-OI failures still have early resolver payloads and are excluded at every range threshold.
+- Phase 54's bounded diagnostic sensitivity [run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101) consumed the same ledger (matching branch file contents and pinned revision) and passed all 11 threshold checks. Eligible rows by 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 1000% thresholds: 1, 1, 8, 24, 55, 91, 150, 227, 298, 345, 380; the 100 explicit OI blocks stay invariant and all rows reconcile to 480.
+- These counts establish sensitivity of coverage to an OHLC range proxy, not executable liquidity or profitability. The OHLC high-low/open metric is not bid/ask spread. No P&L was recalculated in Phase 54; no holdout or promotion.
+- Phase 55 is now extending the audit invariant to the remaining 100 OI-blocked rows: the resolver will continue through all selected legs and persist entry/OI/range/exit state instead of returning after the first failure. A new two-leg spread regression test is included; all-leg rerun/validation is in progress at [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521).
