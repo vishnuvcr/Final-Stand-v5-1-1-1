@@ -1,5 +1,18 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
+## Phase 51 full-window OOS — DATA-BLOCKED (freshness re-audit 2026-10-09)
+
+The latest raw-byte re-audit [run 37912433753](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37912433753) reconfirmed that the public Hugging Face option files named for expiries 2026-07-28 and 2026-08-04 still end on 2026-07-02. The files' hashes/sizes were unchanged from the previous audit; neither contains its target trading session. **No full-window OOS P&L was calculated.**
+
+- [Phase 51-1H status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1H-current-hf-byte-validation/PHASE51_1H_STATUS.md)
+- [Phase 51-1H error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1H-current-hf-byte-validation/PHASE51_1H_ERROR_LOG.md)
+- [Upstox expired option-candle API](https://upstox.com/developer/api-documentation/get-expired-historical-candle-data/) (requires authorized Plus access)
+- [Potential vendor archive: NIFTY 1-minute full chain](https://optionsdata.shop/data/nifty-options-historical-data) (paid; not purchased)
+
+The remaining blocker is access to an accepted raw archive or authorized API credentials. No synthetic prices, forward fills, shortened OOS windows or strategy promotion are allowed.
+
+---
+
 ## Phase 51-3 — CLOSED: PASS_AVAILABLE_OOS (partial diagnostic only)
 
 Authoritative source-faithful replay completed successfully in [GitHub Actions run 37882057283](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37882057283). The frozen primary options object passed SHA-256/byte-size verification; the validated spot source covered 2026-04-21 09:15 through 2026-07-21 15:29 IST (23,625 observations), and 14 weekly expiries were derived from the primary option records. The eligible candidate set was TT-02, TT-04 and TT-05; all had 100% recorded execution coverage and zero row-level data errors.
