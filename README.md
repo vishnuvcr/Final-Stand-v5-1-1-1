@@ -893,3 +893,11 @@ The prior ATM-offset coverage artifact from [run 37942202655](https://github.com
 ### Phase 52 PA-013: pre-entry OI gate
 
 A final timing audit found the selected-strike coverage script was using entry-bar OI for a trade simulated at that same bar's open. It has been patched to use the exact prior completed minute's OI for the >=100 gate, while checking current entry-bar open/OHLC separately; entry-bar OI is diagnostic only. The current workflow [37954806932](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37954806932) checked out the earlier code, so any selected-strike output from that run is not accepted as final. Fresh rerun required; no Phase52 grid P&L exists.
+
+
+### Phase 52 corrected strike/delta coverage and replay-kernel test (2026-10-09)
+
+- **ATM-offset coverage:** [run 37956261518](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956261518) passed with corrected exact-time index open/modal strike-step mapping and prior-completed-minute OI gate. 27,768 offset/type rows were audited across 267 files; 10,552 had prior-bar OI≥100, 10,501 had valid exact entry bars and 10,405 had exact-index plus target-expiry exit support. These are not trades or P&L.
+- **ABS_DELTA diagnostic:** [run 37956675818](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956675818) audited all 4,272 target-delta/type rows with zero file errors. 232 lacked an exact prior minute, 148 lacked an OI-qualified candidate, 3,892 passed prior-bar OI, and only 2,232 had valid exact entry-bar references. These are model delta estimates, not exchange Greeks or strategy outcomes.
+- **Replay kernel:** [run 37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed synthetic exact-bar, common-time, prior-OI, fill/slippage, fee-scenario and exit-rule tests. The first attempt failed after tests passed due to a literal runner-temp manifest path; that was corrected in the succeeding run.
+- **Current decision:** no strategy is promoted. The 9,379,584 grid remains enumerated/not backtested, the index dataset stops 2026-07-02 and its CC BY-NC licence precludes commercial use without independent rights-cleared evidence. Next step is template-aware multi-leg integration and golden tests.
