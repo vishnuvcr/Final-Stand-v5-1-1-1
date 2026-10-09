@@ -478,6 +478,8 @@ def analyze(
     robustness_screen: list[dict[str, Any]] = []
     trade_index: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
     family_index: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
+    configs = sorted({row["configuration_id"] for row in input_rows})
+    families = sorted({row["family_id"] for row in input_rows})
     for trade in trade_scenarios:
         common = (
             trade["threshold_pct"],
@@ -502,16 +504,10 @@ def analyze(
                     "adverse_slippage_per_fill_inr": slip_value,
                     **summ,
                 })
-                severe_key = (threshold, 20.0, "very_severe_0.50")
-                severe_trades = trade_index.get(severe_key + ("" ,), []) if False else None
-                for configuration_id in sorted({row["configuration_id"] for row in input_rows}):
-                    matching = [
-                        x for x in trade_scenarios
-                        if x["configuration_id"] == configuration_id
-                        and x["threshold_pct"] == threshold
-                        and x["brokerage_per_order_inr"] == brokerage
-                        and x["slippage_case"] == slip_label
-                    ]
+                for configuration_id in sorted(configs):
+                    matching = trade_index.get(
+                        (threshold, brokerage, slip_label, configuration_id), []
+                    )
                     # Include configurations with no eligible rows, so the output has a fixed grid.
                     positive = sum(float(x["net_pnl_inr"]) > 0 for x in matching)
                     negative = sum(float(x["net_pnl_inr"]) < 0 for x in matching)
@@ -562,14 +558,10 @@ def analyze(
                             "interpretation": "Exploratory quote-validation lead only; never a strategy promotion.",
                         })
 
-                for family_id in sorted({row["family_id"] for row in input_rows}):
-                    family_trades = [
-                        x for x in trade_scenarios
-                        if x["family_id"] == family_id
-                        and x["threshold_pct"] == threshold
-                        and x["brokerage_per_order_inr"] == brokerage
-                        and x["slippage_case"] == slip_label
-                    ]
+                for family_id in sorted(families):
+                    family_trades = family_index.get(
+                        (threshold, brokerage, slip_label, family_id), []
+                    )
                     family_summary.append({
                         "family_id": family_id,
                         "threshold_pct": threshold,
@@ -608,25 +600,19 @@ def analyze(
         if any(next_value > prior_value + 1e-8 for prior_value, next_value in zip(ordered, ordered[1:])):
             raise AssertionError(f"Gross P&L improved under higher adverse slippage for {key}")
 
-    scenario_map = {
-        (x["configuration_id"], x["event_id"], x["threshold_pct"], x["slippage_case"]): x
+    scenario_lookup = {
+        (x["configuration_id"], x["event_id"], x["threshold_pct"],
+         x["slippage_case"], x["brokerage_per_order_inr"]): x
         for x in trade_scenarios
     }
-    for prefix in {
-        (x["configuration_id"], x["event_id"], x["threshold_pct"], x["slippage_case"])
-        for x in trade_scenarios
-    }:
-        low = scenario_map[prefix + ( )] if False else None
-        ten = next(
-            x for x in trade_scenarios
-            if (x["configuration_id"], x["event_id"], x["threshold_pct"], x["slippage_case"]) == prefix
-            and x["brokerage_per_order_inr"] == 10.0
+    for x in trade_scenarios:
+        if x["brokerage_per_order_inr"] != 10.0:
+            continue
+        prefix = (
+            x["configuration_id"], x["event_id"], x["threshold_pct"], x["slippage_case"]
         )
-        twenty = next(
-            x for x in trade_scenarios
-            if (x["configuration_id"], x["event_id"], x["threshold_pct"], x["slippage_case"]) == prefix
-            and x["brokerage_per_order_inr"] == 20.0
-        )
+        ten = scenario_lookup[prefix + (10.0,)]
+        twenty = scenario_lookup[prefix + (20.0,)]
         if float(twenty["net_pnl_inr"]) > float(ten["net_pnl_inr"]) + 1e-8:
             raise AssertionError("Net P&L improved when per-order brokerage rose from ₹10 to ₹20")
 
