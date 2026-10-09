@@ -17,3 +17,7 @@ Both are rejected for the frozen OOS gap.
 StockMock and StockMojo were also checked. They remain useful external oracle/context sources but are not accepted as raw repository evidence.
 
 Phase 51 remains DATA-BLOCKED.
+
+## 2026-10-09 — Dataset freshness recheck requested
+
+A fresh public Hugging Face search now surfaces the NIFTY expiry file `options/NIFTY/2026-08-04.parquet` under a newer visible repository commit (51ca58c). The prior accepted byte audit found that the then-current file did not contain the target trading session. File presence/expiry naming alone does not prove complete target-date coverage, so no old result is overwritten or accepted. Trigger marker advanced to `rerun-4 public dataset freshness audit 2026-10-09` to re-download both missing files and re-check raw timestamps, expiry values, duplicate keys and hashes. New result is pending; no P&L is authorized.
