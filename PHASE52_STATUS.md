@@ -1,6 +1,6 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — bootstrap and source inventory  
+**Overall:** OPEN — base replay and EOD factor build complete; exact intraday coverage audit rerun pending  
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
 **Plan version:** 1.3 (pre-test amendments PA-001 to PA-003)  
 **Latest checkpoint:** 2026-10-09 (Asia/Kolkata)
@@ -13,14 +13,14 @@
 | User repository inventory | IN PROGRESS | 40 accessible repositories inventoried. Continue root-document/code search by repository; several do not expose a root README through the connected file API and require alternative-path inspection. |
 | Literature/source discovery | IN PROGRESS | Initial sources include NSE India VIX/contract information, option-volume/OI literature, public GitHub strategy implementations and user-designated YouTube source tracks. Expand systematically and log each lead. |
 | Candidate registry | IN PROGRESS | 312 unique structure × selector hypothesis IDs: 52 families × 6 selector modes (not 300 claimed structural families); validate IDs, source lineage and risk tags. |
-| Data coverage and licensing | NOT STARTED / GATED | Preserve the Phase 51 gap for 2026-07-28 and 2026-08-04. No P&L until timestamp/contract coverage and licensing pass. |
+| Data coverage and licensing | PARTIAL / REVIEW GATES OPEN | Base replay is complete only through expiry 2026-05-26 from the pinned CC BY-NC dataset; exact timestamp coverage audit is being rerun. Lagged daily EOD factor panel has 256/256 event rows and 0 archive path/file errors, but it is not intraday basis and NSE data rights still require review. |
 | Finite-grid enumeration | IN PROGRESS | Grid v1.3 has 9,379,584 configurations; 25,000 per day implies about 376 enumeration runs. Enumeration is not replay. |
-| Replay engine/data integration | NOT STARTED | Reuse existing audited engines where semantics match; otherwise implement source-faithful generic multi-leg replay and independent tests. |
-| Legacy factor-selector pilot | VALIDATION-ONLY COMPLETE — NO PROMOTION | Run 37925891660 found a brittle unit-test assumption before data analysis; fixed in commit 50fac930 and pending rerun. No factor P&L conclusion yet. |
+| Base-geometry replay | COMPLETE / DIAGNOSTIC ONLY | Existing Phase43/45 engines replayed at HF revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; 9,699 rows, 42 strategy labels, 256 expiries. This is not the 9,379,584-config variable replay. The full source expiry window is not yet reconciled. |
+| Legacy factor-selector pilot | VALIDATION-ONLY COMPLETE — NO PROMOTION | Run 37927040268 passed end-to-end: 6,617/9,699 rows matched (68.2%); all six policies lost on validation, VIX router Holm p=0.985; 2026 holdout not evaluated (13 matched expiries). |
 | Untouched OOS confirmation | NOT STARTED | Keep confirmation intervals protected before selection freeze. |
 | Promotion / live readiness | NOT STARTED | No strategy is promoted or approved for live execution. |
 | Manuscript and supplements | NOT STARTED | Produce after evidence and inference gates are complete. |
-| Recurring automation | ACTIVE / REPAIR CYCLE | Main branch workflow is manual + daily at 09:00 IST. Last run 37925891660 failed at the pilot unit test, was auto-logged, and is being corrected before accepting analysis outputs. |
+| Recurring automation | ACTIVE / REPAIR CYCLE | Main branch workflow is manual + daily. Parser fixtures now pass for legacy and UDiFF schemas; run 37929888516 built the EOD factor panel. Coverage run 37930010915 stopped because the audit script was absent from the branch checkout; copied in commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`; rerun pending. |
 
 ## Existing evidence carried forward (not Phase 52 evidence)
 
@@ -118,3 +118,13 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Source leads newly recorded: 0.
 - Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
 - Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.
+
+
+## 2026-10-09 — Base replay + daily source coverage checkpoint
+
+- **Successful workflow:** [37929888516](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929888516).
+- **Pinned replay:** option dataset revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; 9,699 rows across 42 strategies and 256 expiries, 2021-06-03 to 2026-05-26. This is fixed geometry, not all Phase52 parameter-grid combinations. Source licence is CC BY-NC 4.0; research-only pending rights review.
+- **Daily EOD supplement:** 256/256 event rows have a strictly prior-session factor row; 512 archive sessions were processed with zero missing archive paths, file errors, or feature gaps. It is daily EOD OI/volume and front-future basis, not intraday futures basis or a substitute for missing one-minute option data. Factor-level non-null coverage and the patched contract-matched futures-OI change metric will be refreshed on rerun with cached archives.
+- **Coverage audit attempt:** run [37930010915](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37930010915) failed before it could emit a coverage conclusion because `research/phase52/expiry_coverage_audit.py` existed on main but was missing from the checked-out research branch. That script has now been copied to this branch (commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`). No coverage numbers are accepted from that failed run.
+- **Strategy decision:** reproduced LOW-VIX Bear Call Spread validation net ₹24,743, legacy 1.5× all-cost net ₹23,082. Phase45's multiple-testing decision remains zero Holm-adjusted statistical survivors; no promotion.
+- **Next gate:** rerun exact-10:00 entry-spot coverage audit and inspect daily factor-level coverage before any factor-selector or parameter replay.
