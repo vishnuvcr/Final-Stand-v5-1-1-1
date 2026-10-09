@@ -1,0 +1,131 @@
+name: Phase 52 — Point-in-Time Delta Audit
+# PA-012/PA-013: exact prior-minute inputs and OI eligibility; exact entry open checked separately.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase52-factor-conditioned-strategy-discovery
+  cancel-in-progress: false
+
+jobs:
+  delta-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore pinned market-data cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/phase52/nse_fno_bhavcopy
+          key: phase52-delta-cache-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            phase52-market-data-cache-${{ runner.os }}-
+            phase52-focused-strike-cache-${{ runner.os }}-
+            phase52-delta-cache-${{ runner.os }}-
+
+      - name: Install delta audit dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub
+
+      - name: Remove stale outputs before running the delta audit
+        run: |
+          mkdir -p results/phase52/delta_selection_audit
+          rm -f results/phase52/delta_selection_audit/summary.json
+          rm -f results/phase52/delta_selection_audit/delta_selection.csv
+          rm -f results/phase52/delta_selection_audit/source_file_audit.csv
+          rm -f results/phase52/delta_selection_audit/source_errors.csv
+          touch results/phase52/delta_selection_audit/.gitkeep
+
+      - name: Run prior-bar IV/delta regression
+        run: python research/phase52/delta_selection_audit.py --self-test
+
+      - name: Run prior-bar delta selector coverage audit
+        run: python research/phase52/delta_selection_audit.py
+
+      - name: Save market-data cache even if audit fails
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/phase52/nse_fno_bhavcopy
+          key: phase52-delta-cache-${{ runner.os }}-${{ github.run_id }}
+
+      - name: Upload delta audit outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-delta-audit-${{ github.run_id }}
+          path: results/phase52/delta_selection_audit/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Append result or failure to research logs and persist audit
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          out = Path("results/phase52/delta_selection_audit")
+          summary = out / "summary.json"
+          stamp = datetime.now(timezone.utc).isoformat()
+          run_id = os.environ.get("GITHUB_RUN_ID", "unknown")
+          if summary.exists():
+              x = json.loads(summary.read_text(encoding="utf-8"))
+              entry = (
+                  f"\n\n## Point-in-time delta audit — run {run_id} ({stamp})\n"
+                  f"- Status: {x.get('status')}\n"
+                  f"- Dataset revision: {x.get('dataset_revision')}\n"
+                  f"- Audit source SHA256: {x.get('audit_script_sha256')}\n"
+                  f"- Replay protocol SHA256: {x.get('replay_protocol_sha256')}\n"
+                  f"- Expiry files audited/errors: {x.get('source_expiry_files_audited')}/{x.get('source_file_errors')}\n"
+                  f"- Expected/actual selection rows: {x.get('expected_selection_rows')}/{x.get('selection_rows')}\n"
+                  f"- Rows with prior-OI-qualified selections: {x.get('predecision_oi_qualified_rows')}\n"
+                  f"- Exact entry fill bars available: {x.get('entry_fill_bar_available_rows')}\n"
+                  "- Model delta is diagnostic only; no P&L or promotion.\n"
+              )
+              for name in ("PHASE52_STATUS.md", "PHASE52_RESEARCH_LOG.md"):
+                  p = Path(name)
+                  p.write_text(p.read_text(encoding="utf-8") + entry, encoding="utf-8")
+          else:
+              entry = (
+                  f"\n\n## F52 delta-audit failure — run {run_id} ({stamp})\n"
+                  "- Delta audit produced no summary.json; preserve the Actions logs/artifact and do not infer coverage.\n"
+              )
+              p = Path("PHASE52_ERROR_LOG.md")
+              p.write_text(p.read_text(encoding="utf-8") + entry, encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md results/phase52/delta_selection_audit
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase52 point-in-time delta audit run $GITHUB_RUN_ID"
+          git fetch origin "$PHASE_BRANCH"
+          local_script="$(sha256sum research/phase52/delta_selection_audit.py | cut -d' ' -f1)"
+          remote_script="$(git show "origin/$PHASE_BRANCH:research/phase52/delta_selection_audit.py" | sha256sum | cut -d' ' -f1)"
+          local_protocol="$(sha256sum PHASE52_REPLAY_PROTOCOL.md | cut -d' ' -f1)"
+          remote_protocol="$(git show "origin/$PHASE_BRANCH:PHASE52_REPLAY_PROTOCOL.md" | sha256sum | cut -d' ' -f1)"
+          if [ "$local_script" != "$remote_script" ] || [ "$local_protocol" != "$remote_protocol" ]; then
+            echo "Source/protocol changed during delta run; refusing to publish stale results." >&2
+            exit 1
+          fi
+          git rebase "origin/$PHASE_BRANCH"
+          git push origin HEAD:"$PHASE_BRANCH"
