@@ -329,6 +329,15 @@ jobs:
               touch results/phase52/selected_strike_coverage/.gitkeep
             fi
           fi
+          # Registry summaries are only valid for the specification CSV snapshot used by this run.
+          if ! git diff --quiet "origin/$PHASE_BRANCH" -- research/phase52/strategy_specifications.csv; then
+            echo "Strategy specifications changed during this run; preserving the remote registry audit."
+            if git cat-file -e "origin/$PHASE_BRANCH:research/phase52/results/registry_audit.json" 2>/dev/null; then
+              git checkout "origin/$PHASE_BRANCH" -- research/phase52/results/registry_audit.json
+            else
+              rm -f research/phase52/results/registry_audit.json
+            fi
+          fi
           git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
           if git diff --cached --quiet; then
             echo "No branch state changed."
