@@ -395,3 +395,13 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Scientific interpretation:** This is a source-quality correction and coverage diagnostic. Do not use the v0.2 rerun to rank strategies or claim improved profitability. Compare status counts only to explain source-normalization effects. The `100 × (high-low)/open` gate is an OHLC range proxy—not observed bid/ask spread—and does not establish executable liquidity. Actual point-in-time quote/trade data are still required for execution-grade validation.
 
 **Acceptance:** Self-test proves exact full-row duplicates collapse to one while conflicting same-key rows remain distinct; workflow succeeds; source hashes/revision match the frozen manifest; every one of the 480 planned rows has exactly one status; costs exist for each executed row; zero source-file read errors; v0.1 outputs remain preserved. No strategy promotion or holdout access.
+
+### PA-016 — 2026-10-10 — Bounded OpenChart source feasibility probe
+
+**Purpose:** Evaluate marketcalls/openchart as a possible auxiliary acquisition source because its public client claims individual NSE/NFO historical OHLCV at one-minute resolution. The added investigation does not change grid v1.3, selector hypotheses, event sample, validation splits, cost model, exclusion filters or holdout boundary.
+
+**Pre-registered probe:** Pin upstream client commit `a207108890c96a9830b35a8d15442c896ea0a9d6`; limit requests with a minimum 1.25-second interval; query current NIFTY FO symbols and the known 2026-07-28 / 2026-08-04 gap windows; fetch at most one currently listed option and one result per historical query if discoverable. Capture response-status metadata and aggregate coverage diagnostics only. Do not store raw OHLCV rows, tokens or full symbol lists in the public repository.
+
+**Acceptance boundary:** A positive smoke test does not establish all-strike/all-expiry coverage. Require exact target-session verification, a frozen contract-universe reconciliation, timestamp/OHLC validation, independent source comparison, quote/OI availability decisions and applicable NSE data-use/storage review before replay use. No P&L from this probe and no strategy/source selection based on expected profitability.
+
+**Static finding:** Current documented response schema is OHLCV only; OI/Greeks/bid/ask/depth are not exposed. Expired-contract discovery and complete chain coverage remain unproven.
