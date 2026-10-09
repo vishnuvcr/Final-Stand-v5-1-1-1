@@ -63,7 +63,7 @@ def validate(rows: list[dict[str, str]], space: dict[str, Any], specs: list[dict
         errors.append("strategy specification family IDs do not exactly match candidate registry")
     for spec in specs:
         for field in required_specs:
-            if not spec.get(field, "").strip():
+            if not (spec.get(field) or "").strip():
                 errors.append(f"{spec.get('family_id', '?')} has blank strategy specification field {field}")
     modes = {r.get("selector_mode", "") for r in rows}
     if len(rows) != len(families) * len(modes):
