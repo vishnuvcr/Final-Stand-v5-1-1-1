@@ -444,3 +444,31 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **ABS_DELTA:** [Run 37956675818](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37956675818) emitted a fingerprinted diagnostic result for all 4,272 checks with zero file errors, prior-bar-only input semantics, and a separate exact entry-bar open gate. Only 2,232 selection rows have valid entry fill bars.
 - **Inference:** These close the audit-code defects, not the market-data or strategy profitability gates. They are not evidence of returns or that every configured multi-leg position is executable.
 - **Status:** Coverage-audit implementation gate resolved; end-to-end configuration strategy runner and full finite-grid P&L are still not implemented.
+
+
+## F52-021 — Reference-lot scale absent from resolved leg quantities — RESOLVED BEFORE HISTORICAL P&L
+
+- **Date:** 2026-10-09
+- **Observed during resolver audit:** `reference_lots_per_leg` was included in the resolved configuration record, but `quantity_lots` was not multiplied by it after the optional first-two-leg ratio override.
+- **Impact:** Any eventual historical replay could understate or misstate position size, P&L, turnover, brokerage and risk whenever the grid used `reference_lots_per_leg=2`. No historical Phase52 grid P&L had been calculated, so no accepted backtest result was affected.
+- **Correction:** Resolver code now validates a positive integer reference-lot input, applies ratio overrides first, then scales every resolved leg quantity. Tests assert a ratio spread becomes [4,2] under ratio [2,1] and reference lot scale 2, and a native 1:2:1 butterfly becomes [2,4,2].
+- **Verification:** Source-bound resolver tests and the end-to-end whole-position workflow [37960484240](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960484240) passed after the correction.
+- **Status:** RESOLVED; zero historical configuration results affected.
+
+## F52-022 — Whole-position test fixture accidentally overrode the native butterfly ratio — RESOLVED
+
+- **Date:** 2026-10-09
+- **Run:** [37960340815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960340815), failed at the butterfly lot-scaling assertion; source-bound resolver stage had already passed.
+- **Root cause:** The supposed “native 1:2:1 butterfly scaled ×2” case explicitly passed `leg_ratio=[1,1]`, which correctly replaced the first two leg quantities under the frozen protocol. The test setup was wrong; the resolver output [2,2,2] was consistent with the supplied override, not evidence that the scale patch failed.
+- **Correction:** Removed the ratio override from this test case so it now exercises native template quantities [1,2,1] multiplied by reference-lot scale 2. Added an explicit kernel non-common-timestamp intersection assertion.
+- **Verification:** Rerun [37960484240](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960484240) passed all steps: resolver self-test, 45-template synthetic position integration, kernel/Phase43 cost parity and evidence upload.
+- **Scientific impact:** Failed synthetic-only attempt; no historical data/P&L were accessed. The failed run remains preserved.
+- **Status:** RESOLVED.
+
+## F52-023 — Phase52 status and research log contained literal escaped newline markers — RESOLVED
+
+- **Date:** 2026-10-09
+- **Observed:** `PHASE52_STATUS.md` and `PHASE52_RESEARCH_LOG.md` contained hundreds of literal backslash-n sequences instead of real Markdown line breaks, making those documents difficult to read and reducing reliable status scanning.
+- **Impact:** Research code/results were unaffected, but status/log readability and auditability were degraded.
+- **Correction:** Normalized newline separators in both Markdown files; existing research content and historical entries were preserved. Future writes should use real newlines, and post-update line-count/escape checks are added to the release checklist.
+- **Status:** RESOLVED in this checkpoint.
