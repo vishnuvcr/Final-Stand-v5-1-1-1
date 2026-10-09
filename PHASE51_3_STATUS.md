@@ -1,6 +1,6 @@
 # Phase 51-3 Status
 
-**State:** INITIALIZED → numerical sweep pending.
+**State:** READY → BLOCKED_ORCHESTRATION (numerical sweep not yet executed).
 
 The phase evaluates only the already-frozen Phase-50B candidate set on the complete currently available 2026-04-21 to 2026-07-21 option interval.
 
