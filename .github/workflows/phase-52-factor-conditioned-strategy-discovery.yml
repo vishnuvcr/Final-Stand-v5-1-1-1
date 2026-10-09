@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase52-factor-conditioned-strategy-discovery-v2
+  group: phase52-factor-conditioned-strategy-discovery
   cancel-in-progress: false
 
 jobs:
@@ -362,13 +362,19 @@ jobs:
           from pathlib import Path
           import subprocess
           allowed = {"PHASE52_STATUS.md", "PHASE52_RESEARCH_LOG.md", "PHASE52_ERROR_LOG.md"}
+          result_prefixes = ("research/phase52/results/", "results/phase52/")
           files = subprocess.check_output(
               ["git", "diff", "--name-only", "--diff-filter=U"], text=True
           ).splitlines()
-          unexpected = set(files) - allowed
+          unexpected = [name for name in files if name not in allowed and not name.startswith(result_prefixes)]
           if unexpected:
-              raise SystemExit(f"Refusing automatic conflict resolution for non-log files: {sorted(unexpected)}")
+              raise SystemExit(f"Refusing automatic conflict resolution for source/code conflicts: {sorted(unexpected)}")
           for name in files:
+              if name not in allowed:
+                  # Keep the already-persisted remote result for a generated-artifact
+                  # collision. The losing shard can be deterministically re-emitted.
+                  subprocess.run(["git", "checkout", "--ours", "--", name], check=True)
+                  continue
               path = Path(name)
               lines = path.read_text(encoding="utf-8").splitlines()
               out = []
