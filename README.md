@@ -993,3 +993,16 @@ Phase 52's checkpoint-persistence defect is resolved and its regression test pas
 - [Manual/automatic source audit workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/.github/workflows/phase-53-free-option-data-coverage.yml)
 
 Phase 53 must establish exact source revision/file coverage and distinguish official daily reports from timestamp-aligned intraday quote/depth. Public sample files or credential-dependent APIs are not counted as free full-history sources. No strategy, factor router or holdout is promoted or evaluated in this phase.
+
+
+## Phase 54 — OHLC-reference sensitivity (non-executable)
+
+Phase 53 closed with a bounded NO-GO for free independent historical bid/ask/depth data. Phase 54 is a separate branch and does not treat candle range as spread, recompute P&L, or promote any strategy. It measures how many of the frozen 480 Phase 52 configuration-event rows satisfy prior-minute OI and entry-data gates under preregistered OHLC range thresholds.
+
+- [Phase 54 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_RESEARCH_PLAN.md)
+- [Phase 54 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md)
+- [Phase 54 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_ERROR_LOG.md)
+- [Sensitivity code](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/research/phase54/ohlc_reference_sensitivity.py)
+- [Manual and push-triggered workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/.github/workflows/phase-54-ohcl-reference-sensitivity.yml)
+
+The workflow reports eligibility counts only. Exit validity, executable fills, transaction-cost profitability and strategy superiority are not tested in this phase; holdout remains untouched.
