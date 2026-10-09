@@ -227,6 +227,19 @@ def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[st
 
 
 def source_probe(source: dict[str, Any], token: str | None) -> dict[str, Any]:
+    if source.get("probe_allowed", True) is False:
+        return {
+            "source_id": source["id"],
+            "source_name": source["name"],
+            "source_class": source["class"],
+            "url": source.get("url"),
+            "http_status": None,
+            "reachable": None,
+            "probe_status": "SKIPPED_BY_POLICY",
+            "claimed_granularity": source.get("expected_granularity", "not specified"),
+            "license": source.get("license", "not established by metadata probe"),
+            "note": "Automated page retrieval disabled by source terms/policy; findings are documentation-only.",
+        }
     result = request_url(source["url"], "GET", token, read_limit=24_000)
     result.update({
         "source_id": source["id"],
@@ -390,10 +403,14 @@ def main() -> int:
     args = parser.parse_args()
     registry = load_registry(args.registry)
     if args.self_test_only:
-        sample = assess_inventory([{"path": "options/NIFTY/2021-05-27.parquet", "size": 10}], [
-            "options/NIFTY/2021-05-27.parquet", "index/NIFTY.parquet"
-        ])
-        assert sample["present_count"] == 1 and sample["missing_count"] == 1
+        sample = assess_inventory(
+            [{"path": "options/NIFTY/2021-05-27.parquet", "size": 10}],
+            ["options/NIFTY/2021-05-27.parquet", "index/NIFTY.parquet"],
+            listing_complete=False,
+        )
+        assert sample["listed_matching_count"] == 1
+        assert sample["not_listed_in_returned_metadata_count"] == 1
+        assert sample["metadata_listing_proves_missing"] is False
         print(json.dumps({"self_test": "PASS", "source_count": len(registry["sources"]),
                           "required_path_count": len(registry["parent_dataset"]["required_files"])}))
         return 0
