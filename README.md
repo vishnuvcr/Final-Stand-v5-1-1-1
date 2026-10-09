@@ -819,3 +819,8 @@ Phase 52 tests whether VIX, Greeks/IV/skew, OI/volume/PCR, spot/futures/syntheti
 ## Phase 52 selector screen — latest result
 
 Authoritative run [37927040268](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927040268) completed successfully. The selector screen joined 6,617/9,699 outcome rows (68.2%) to point-in-time features. All six selected policies were net negative on 2024–25 validation. The VIX router was least negative at -₹63,547, but its relative +₹1,411/expiry stress uplift had a 95% block-bootstrap CI [-₹915,+₹4,290] and Holm-adjusted p=0.985. The 2026 holdout was not evaluated (13 matched expiries, below the minimum 20). No selector is promoted. The finite grid remains queued/enumerated rather than fully replayed.
+
+
+## Phase 52 replay and data-coverage status — 2026-10-09
+
+Successful run [37929888516](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37929888516) reproduced 9,699 fixed-template rows across 42 strategy labels and 256 expiries (2021-06-03 to 2026-05-26) at pinned HF revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`. The source licence is CC BY-NC 4.0, so this result is research-only pending rights review. The daily NSE bhavcopy supplement produced 256/256 prior-session EOD factor rows from 512 archive sessions with zero archive path/file errors, but this is not intraday futures basis. LOW-VIX Bear Call Spread remained the strongest validation candidate (₹24,743 net; ₹23,082 legacy 1.5× all-cost stress), yet Phase45's multiple-testing gate had zero Holm-adjusted survivors and no strategy is promoted. The exact-10:00 coverage audit failed because its script was absent from this branch; it has now been copied here and must be rerun before interpreting the replay window.
