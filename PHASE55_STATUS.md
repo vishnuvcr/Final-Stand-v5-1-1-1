@@ -13,3 +13,10 @@
 
 - Run: [37988475159](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988475159); workflow status=\failure; audit PASS=False.
 - Output is not accepted as complete unless the row/leg invariant audit passes.
+
+## Automated checkpoint 37988611330
+
+- Run: [37988611330](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988611330); workflow status=success; audit PASS.
+- Rows=480; status counts={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Leg payload rows audited=380; cost rows=6; source revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5.
+- No holdout use, raw data committed, or strategy promotion.

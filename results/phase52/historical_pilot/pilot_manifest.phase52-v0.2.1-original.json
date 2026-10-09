@@ -1,7 +1,7 @@
 {
   "status": "FROZEN_PILOT_MANIFEST_BEFORE_HISTORICAL_REPLAY",
-  "created_at_utc": "2026-10-09T20:41:35.080433+00:00",
-  "source_branch_commit": "d09df9cd8dc719b6e1cc644fcfd59514fed862e7",
+  "created_at_utc": "2026-10-09T20:05:26.321919+00:00",
+  "source_branch_commit": "786fbcf41650de8931d770fa8f384d6a04b603c6",
   "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
   "grid_version": "phase52-grid-v1.3",
   "historical_pnl_not_yet_computed_at_manifest_creation": true,
@@ -116,7 +116,7 @@
     "resolver_sha256": "9ec380e6b631042ca534571fd11ea124dfc17836716a588c4d8b13dcdd869758",
     "kernel_sha256": "8bb4ee8bfb7694a88cf83bfd69a93296185fb1f58ab06c5433fbe599a67f2c19",
     "grid_enumerator_sha256": "e02ed01bdf533e90039b2f0c310b786356af437cee709863453bd24036102d9b",
-    "historical_pilot_runner_sha256": "2649c3e2e1eb41564474efd379152b095653979a63df06f754550b5756409249",
+    "historical_pilot_runner_sha256": "7bebb441d2124b1358845ede1c989fe17fdeb29c886205b92b71f8c474a7c4e5",
     "phase43_fee_and_lot_helper_sha256": "b1f09876ab461b2cccc5b6089901b3720623360d781f82369be6ea6ee100ea47",
     "event_inventory_sha256": "b35c7779f302a4351c068771a020ea75a664b514be139f66cf276abcd81f61b3",
     "configuration_manifest_sha256": "812f0c3288332901cda80c818c9121c21ec1f70d5fc87580cbe0aba5fd2f1569",

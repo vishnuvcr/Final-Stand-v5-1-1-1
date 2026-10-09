@@ -1,0 +1,85 @@
+{
+  "status": "HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS",
+  "created_at_utc": "2026-10-09T20:50:56.886045+00:00",
+  "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
+  "historical_pnl_calculated": true,
+  "production_or_promotion_eligible": false,
+  "pinned_dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "declared_license": "CC BY-NC 4.0",
+  "configurations": 40,
+  "selected_event_rows": 24,
+  "planned_config_event_rows": 480,
+  "executed_event_rows": 1,
+  "excluded_or_error_event_rows": 479,
+  "replay_exception_count": 0,
+  "cost_scenario_rows": 6,
+  "cost_scenarios_per_executed_event": 6,
+  "status_counts": {
+    "EXCLUDED_OHLC_RANGE_PROXY": 379,
+    "BLOCKED_LEG_ELIGIBILITY": 100,
+    "REPLAY_PASS": 1
+  },
+  "configs_by_family": {
+    "BEAR_CALL_SPREAD": 8,
+    "BULL_CALL_SPREAD": 8,
+    "SHORT_IRON_CONDOR": 8,
+    "BUY_CALL": 4,
+    "BUY_PUT": 4,
+    "LONG_STRADDLE": 4,
+    "LONG_STRANGLE": 4
+  },
+  "executed_by_split": {
+    "development": 1
+  },
+  "selector_scope": "BASELINE only; no factor selector efficacy test",
+  "holdout_used": false,
+  "no_outcome_based_event_selection": true,
+  "source_files_audited": 13,
+  "source_file_errors": 0,
+  "input_fingerprints": {
+    "pilot_plan_sha256": "eaaeb525858e6a1827a685db16879a6f96fedd4edc256419730fef71935705e9",
+    "grid_sha256": "6a6c72da7f44438af7fdefa96134082fd214be3df48980b4a88543e0db96b07b",
+    "registry_sha256": "8660a07c7bd90ada78ed30f05eb361a15fe948844e05377d266b45d74599f87b",
+    "specifications_sha256": "1690fa3ad156aaf94e18f8f6547829065e5a90aef907a5602516451ff13a4cc3",
+    "template_manifest_sha256": "4803b6e0efc9b21de77633eb6a474cea2130febcae6631a3903769f6c27b65d0",
+    "replay_protocol_sha256": "5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6",
+    "resolver_sha256": "9ec380e6b631042ca534571fd11ea124dfc17836716a588c4d8b13dcdd869758",
+    "kernel_sha256": "8bb4ee8bfb7694a88cf83bfd69a93296185fb1f58ab06c5433fbe599a67f2c19",
+    "grid_enumerator_sha256": "e02ed01bdf533e90039b2f0c310b786356af437cee709863453bd24036102d9b",
+    "historical_pilot_runner_sha256": "2649c3e2e1eb41564474efd379152b095653979a63df06f754550b5756409249",
+    "phase43_fee_and_lot_helper_sha256": "b1f09876ab461b2cccc5b6089901b3720623360d781f82369be6ea6ee100ea47",
+    "event_inventory_sha256": "b35c7779f302a4351c068771a020ea75a664b514be139f66cf276abcd81f61b3",
+    "configuration_manifest_sha256": "812f0c3288332901cda80c818c9121c21ec1f70d5fc87580cbe0aba5fd2f1569",
+    "selected_events_sha256": "055888075f39cee082b8dd1e953af4852460a290004fdb9cf052b13d000dbc2c"
+  },
+  "source_file_hashes": {
+    "2021-05-27": "46aef7e94628ea3c180e4deb4998a19fab2d1082fce0529cc5ba6bca7313e26e",
+    "2021-12-09": "b052768bb573a639dec2cd1a0128d40464c117e0a9628fd83757e06607b081a5",
+    "2022-06-16": "f30098c49e0ce1ecf556d281e6c355bc42cecb9715dec80d40587f08735354f3",
+    "2022-12-15": "b1cf4f5f3ac6516ea38d90bbc6311e8294941be2aac849b0de327b733b554f94",
+    "2023-06-22": "435935f842611d7a943bddf200f38dde1575a7b789741e797976d53ea604c2e6",
+    "2023-12-28": "afc826198ed386459f5f38ad5daa984b6a55093ffdf4d16e1c40489159fd87fd",
+    "2024-01-04": "c7e4da3130309c2695b134e3027e3ba40767f7b99359c0f9fe78fc0bc37f5dbf",
+    "2024-05-30": "7aa0b68ff53f2384cf8940036faa3243cf48733477bc4406eb18e94973283cb3",
+    "2024-10-17": "4afde72d45f8a83da1a1a066b8528d9fb7b530b5960f7f57f89a4c5440f1267e",
+    "2025-03-13": "8118362cc9e58b646ac98cdd7eaf59675b995ba907a07cba8819b477fcc84f61",
+    "2025-07-31": "64572ceb2a40e1cb45b7b688e6041e724ae034521ed82cfbd05d6b1a1c24941f",
+    "2025-12-30": "5ed78461988ce2d90d56aa54afa032a72c7889cbfed73d8f7d8b2239ff580541"
+  },
+  "limitations": [
+    "Non-commercial CC BY-NC 4.0 options data; this is not commercial/live evidence.",
+    "Historical index series ends 2026-07-02; July 28/August 4 records remain unresolved.",
+    "Only development and validation split events are included; 2026 holdout is untouched.",
+    "The pilot samples 40 baseline configurations and 24 target events; it is not the full v1.3 grid.",
+    "One-minute OHLC-open fills plus fixed adverse slippage are modeled references, not tick-level/bid-ask executable fills.",
+    "No significance testing, configuration ranking, router selection or promotion is performed."
+  ],
+  "outputs": {
+    "event_replay": "results/phase52/historical_pilot/event_replay.csv",
+    "cost_scenarios": "results/phase52/historical_pilot/cost_scenarios.csv",
+    "config_split_summary": "results/phase52/historical_pilot/config_split_summary.csv",
+    "exclusions": "results/phase52/historical_pilot/excluded_events.csv",
+    "source_audit": "results/phase52/historical_pilot/source_file_audit.csv"
+  }
+}
