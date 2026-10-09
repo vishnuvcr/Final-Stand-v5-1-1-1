@@ -307,7 +307,75 @@ jobs:
             exit 0
           fi
           git commit -m "Phase 52 automated research checkpoint $GITHUB_RUN_ID"
-          # Another accepted result/status commit may arrive after checkout. Rebase this
-          # run's durable checkpoint instead of overwriting or force-pushing remote work.
-          git pull --rebase origin "$PHASE_BRANCH"
-          git push origin "$PHASE_BRANCH"
+          # Rebase durable results instead of force-pushing. If two append-only
+          # research checkpoints collide, union the conflict blocks in the logs.
+          # This preserves both the workflow checkpoint and a concurrent manual status update.
+          pushed=false
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            if git rebase "origin/$PHASE_BRANCH"; then
+              if git push origin "$PHASE_BRANCH"; then
+                pushed=true
+                break
+              fi
+              echo "Push raced with another update; retrying rebase (attempt $attempt)." >&2
+              continue
+            fi
+            conflicts="$(git diff --name-only --diff-filter=U || true)"
+            if [ -z "$conflicts" ]; then
+              echo "Rebase failed without a resolvable append-only document conflict." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+            python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          allowed = {"PHASE52_STATUS.md", "PHASE52_RESEARCH_LOG.md", "PHASE52_ERROR_LOG.md"}
+          files = subprocess.check_output(
+              ["git", "diff", "--name-only", "--diff-filter=U"], text=True
+          ).splitlines()
+          unexpected = set(files) - allowed
+          if unexpected:
+              raise SystemExit(f"Refusing automatic conflict resolution for non-log files: {sorted(unexpected)}")
+          for name in files:
+              path = Path(name)
+              lines = path.read_text(encoding="utf-8").splitlines()
+              out = []
+              i = 0
+              while i < len(lines):
+                  if not lines[i].startswith("<<<<<<< "):
+                      out.append(lines[i])
+                      i += 1
+                      continue
+                  i += 1
+                  ours = []
+                  while i < len(lines) and lines[i] != "=======":
+                      ours.append(lines[i]); i += 1
+                  if i >= len(lines):
+                      raise SystemExit(f"Malformed conflict in {name}: missing =======")
+                  i += 1
+                  theirs = []
+                  while i < len(lines) and not lines[i].startswith(">>>>>>> "):
+                      theirs.append(lines[i]); i += 1
+                  if i >= len(lines):
+                      raise SystemExit(f"Malformed conflict in {name}: missing >>>>>>>")
+                  i += 1
+                  # These files are append-only. Keep both sides in chronological-ish
+                  # order and suppress only exact lines repeated on both sides.
+                  seen = set(ours)
+                  out.extend(ours)
+                  out.extend(line for line in theirs if line not in seen)
+              path.write_text("\\n".join(out) + "\\n", encoding="utf-8")
+          PY
+            git add $conflicts
+            GIT_EDITOR=true git rebase --continue
+            if git push origin "$PHASE_BRANCH"; then
+              pushed=true
+              break
+            fi
+            echo "Push raced after conflict union; retrying (attempt $attempt)." >&2
+          done
+          if [ "$pushed" != true ]; then
+            echo "Could not persist checkpoint after three safe push/rebase attempts." >&2
+            exit 1
+          fi
