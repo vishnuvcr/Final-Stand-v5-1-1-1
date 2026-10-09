@@ -324,3 +324,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Observation:** The stale-result guard removes the selected-strike output directory when the remote branch has no accepted output. The persistence step later stages that directory by path, so an absent/empty directory could cause a second persistence failure.
 - **Correction:** After removing stale output when no remote result exists, recreate the directory and add a .gitkeep placeholder. The pathspec therefore remains valid and no stale CSV is committed.
 - **Status:** PATCHED IN MAIN AND BRANCH WORKFLOWS; end-to-end verification pending.
+
+
+## F52-030 — Stale registry audit could overwrite PA-010 specification reconciliation — PREVENTIVE GUARD ADDED
+
+- **Date:** 2026-10-09
+- **Observation:** Two workflow runs checked out the older strategy-specification CSV before PA-010 reconciled 11 named presets. Their generated registry_audit.json could become stale if persisted after the updated registry was validated.
+- **Correction:** Workflow persistence now compares the checked-out strategy_specifications.csv with the current remote branch and restores the remote registry_audit.json (or discards the stale copy) when the specification snapshot changed.
+- **Impact:** No P&L is affected; registry audit counts must correspond to the exact specification CSV hash.
+- **Status:** PATCHED IN MAIN AND BRANCH WORKFLOWS; end-to-end verification pending.
