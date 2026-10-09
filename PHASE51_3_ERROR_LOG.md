@@ -41,3 +41,12 @@ Rules:
 - **Correction:** Monkey-patch only those dependencies to the frozen RISSIN options source and validated NIFTY spot source; retain all trading rules, cost functions, slippage and execution semantics. The main workflow now caches the spot source and audits its observed window.
 - **Evidence status:** No results accepted yet; next run is the first source-faithful replay.
 - **Status:** READY FOR REPLAY.
+
+
+## F51-3-005 — Primary-source adapter hardening — READY FOR REPLAY
+
+- **Date:** 2026-10-09
+- **Observation:** Reusing the frozen engines by changing only START/END was insufficient because their data-loader and expiry dependencies remained bound to Phase-43.
+- **Correction:** Added `research/phase51_3_primary_source_adapter.py` to inject the hash/size-locked RISSIN options source, validated NIFTY spot source, and expiry discovery from the primary options rows. Strategy rules, cost functions, slippage and execution semantics remain unchanged.
+- **Workflow correction:** Main orchestrator now caches the validated spot repository and checks the primary-source manifest before accepting results.
+- **Evidence status:** No Phase-51-3 P&L accepted yet.
