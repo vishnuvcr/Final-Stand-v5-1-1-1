@@ -1,6 +1,10 @@
 name: Phase 52 — Point-in-Time Delta Audit
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase-52-delta-selection-audit.yml"
   schedule:
     - cron: "45 3 * * *"
 permissions:
