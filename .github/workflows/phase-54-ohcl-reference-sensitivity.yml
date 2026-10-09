@@ -1,0 +1,112 @@
+name: Phase 54 — OHLC Reference Sensitivity (Non-Executable)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-54-ohcl-reference-sensitivity
+    paths:
+      - ".github/workflows/phase-54-ohcl-reference-sensitivity.yml"
+      - "research/phase54/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase54-ohcl-sensitivity-\${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  sensitivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout current phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-54-ohcl-reference-sensitivity
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regression tests
+        run: |
+          python -m unittest discover -s research/phase54/tests -v
+          python research/phase54/ohlc_reference_sensitivity.py --self-test-only
+      - name: Run frozen-candidate sensitivity (no P&L)
+        run: python research/phase54/ohlc_reference_sensitivity.py
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase54-ohcl-sensitivity-\${{ github.run_id }}
+          path: results/phase54/ohlc_reference_sensitivity/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist status, research, error and chat logs
+        if: always()
+        shell: bash
+        env:
+          PHASE_BRANCH: phase-54-ohcl-reference-sensitivity
+          JOB_STATUS: \${{ job.status }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id = os.environ["GITHUB_RUN_ID"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
+          status = os.environ.get("JOB_STATUS", "unknown")
+          path = Path("results/phase54/ohlc_reference_sensitivity/report.json")
+          report = json.loads(path.read_text()) if path.exists() else None
+          if report:
+              rows = report["input"]["row_count"]
+              statuses = report["baseline_status_counts"]
+              table = "\n".join(
+                  f"| {x['threshold_pct']}% | {x['rows_meeting_prior_oi_entry_data_and_range_gate']} | "
+                  f"{x['share_of_planned_pct']:.2f}% | {x['rejected_for_prior_oi_or_missing_legs']} | "
+                  f"{x['rejected_for_range_proxy']} |"
+                  for x in report["threshold_sensitivity"]
+              )
+              summary = (
+                  f"- Run: [{run_id}]({run_url}); workflow job status={status}.\n"
+                  f"- Input rows={rows}; baseline statuses={json.dumps(statuses, sort_keys=True)}.\n"
+                  f"- Threshold sensitivity (eligibility only):\n\n| Range threshold | Rows passing OI + entry-data + range | Planned share | OI/legs blocked | Range blocked |\n|---:|---:|---:|---:|---:|\n{table}\n\n"
+                  "- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.\n"
+              )
+          else:
+              summary = f"- Run: [{run_id}]({run_url}); workflow job status={status}. Report missing; no conclusion accepted.\n"
+          for filename, heading in [
+              ("PHASE54_STATUS.md", f"## Run checkpoint {run_id}"),
+              ("PHASE54_RESEARCH_LOG.md", f"## Run checkpoint {run_id}"),
+              ("PHASE54_CHAT_LOG.md", f"## Automated run {run_id}"),
+          ]:
+              p = Path(filename)
+              p.write_text(p.read_text(encoding="utf-8").rstrip() + "\n\n" + heading + "\n\n" + summary, encoding="utf-8")
+          if status != "success" or report is None:
+              p = Path("PHASE54_ERROR_LOG.md")
+              p.write_text(p.read_text(encoding="utf-8").rstrip() +
+                  f"\n\n## F54-RUN-{run_id} — workflow/report failure\n\n- Run: {run_url}\n- Job status: {status}\n- Report present: {report is not None}\n- No result or strategy conclusion accepted.\n- Status: OPEN.\n", encoding="utf-8")
+          readme = Path("README.md")
+          readme.write_text(readme.read_text(encoding="utf-8").rstrip() +
+              f"\n\n## Phase 54 OHLC-reference sensitivity — run {run_id}\n\n" + summary +
+              "- [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)\n", encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE54_STATUS.md PHASE54_RESEARCH_LOG.md PHASE54_CHAT_LOG.md PHASE54_ERROR_LOG.md README.md results/phase54/ohlc_reference_sensitivity
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase54 sensitivity checkpoint $GITHUB_RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            if git rebase origin/"$PHASE_BRANCH"; then
+              if git push origin "$PHASE_BRANCH"; then exit 0; fi
+            else
+              echo "Rebase conflict; refusing to overwrite research logs." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+          done
+          exit 1
