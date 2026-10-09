@@ -969,3 +969,11 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 - Leg payload rows audited=380; cost rows=6; source revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5.
 - No holdout use, raw data committed, or strategy promotion.
 - [Plan](PHASE55_RESEARCH_PLAN.md) · [Status](PHASE55_STATUS.md) · [Audit](results/phase52/historical_pilot/phase55_audit.json)
+
+## Phase 55 leg-audit repair — run 37993167521
+
+- Run: [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521); workflow status=success; audit PASS.
+- Rows=480; status counts={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Leg payload rows audited=380; cost rows=6; source revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5.
+- No holdout use, raw data committed, or strategy promotion.
+- [Plan](PHASE55_RESEARCH_PLAN.md) · [Status](PHASE55_STATUS.md) · [Audit](results/phase52/historical_pilot/phase55_audit.json)
