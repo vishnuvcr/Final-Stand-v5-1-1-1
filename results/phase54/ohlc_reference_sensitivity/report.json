@@ -1,7 +1,7 @@
 {
   "phase": "54",
   "status": "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE",
-  "created_at_utc": "2026-10-09T21:16:21.196741+00:00",
+  "created_at_utc": "2026-10-09T21:16:34.198937+00:00",
   "input": {
     "path": "results/phase52/historical_pilot/event_replay.csv",
     "row_count": 480,
