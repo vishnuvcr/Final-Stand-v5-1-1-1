@@ -72,7 +72,7 @@ jobs:
 
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
-          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit results/phase52/daily_eod_selector results/phase52/configuration_event_universe results/phase52/option_quote_coverage
+          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit results/phase52/daily_eod_selector results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/selected_strike_coverage
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
       - name: Install replay and audit dependencies
@@ -117,6 +117,14 @@ jobs:
 
       - name: Audit all exact option entry/exit bar availability across the config event universe
         run: python research/phase52/option_quote_coverage_audit.py
+
+      - name: Audit selected ATM-offset strike OHLC and OI eligibility
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python research/phase52/selected_strike_coverage_audit.py --self-test
+          python research/phase52/selected_strike_coverage_audit.py
+
 
       - name: Audit exact 10:00 entry-timestamp coverage by option expiry
         run: python research/phase52/expiry_coverage_audit.py
