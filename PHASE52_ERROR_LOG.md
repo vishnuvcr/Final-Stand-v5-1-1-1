@@ -135,3 +135,21 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.
 - Root cause: pending review of the failed job logs.
 - Status: OPEN.
+
+
+## F52-011 — Automated checkpoint indentation and persistence conflicts — RESOLVED
+
+- **Date:** 2026-10-09
+- **Runs:** 37926550040 and 37926908847 failed at the status/logging step because an accidental bare path was left inside the Python heredoc. Run 37926550040 also encountered an append-only error-log conflict during rebase after a concurrent branch update.
+- **Impact:** The selector calculations in these runs had finished and output artifacts were uploaded; no data-analysis exception or live action occurred. Because persistence/logging failed, those runs were not the authoritative successful workflow.
+- **Correction:** Removed the stray workflow line and fixed newline/status formatting in the main workflow. Run 37927040268 passed end-to-end and wrote the selector report, input audit, matched results, queue checkpoint, research log and status to the phase branch.
+- **Status:** RESOLVED. Keep the original failed run records; do not rewrite them as successes.
+
+## F52-012 — Legacy selector pilot validation result — NEGATIVE / INSUFFICIENT EVIDENCE
+
+- **Date:** 2026-10-09
+- **Authoritative workflow:** [37927040268](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927040268).
+- **Input lineage:** frozen Phase45 outcome matrix SHA-256 `7c287ce4c3e958a40e2472d9c0391d2f6d8afa43ecc153b380be603ca44894d0`; Phase39 feature panel SHA-256 `2ae9558062a67a11d7e7d1ba3cfea15a7b847e95a91fbce2a8e72fc075a1efc1`; leakage audit PASS.
+- **Result:** 6,617/9,699 outcome rows matched (68.22%). The development-fitted VIX router's validation net was -₹63,547; its paired mean uplift on the legacy all-cost 1.5× stress was +₹1,411/expiry, 95% block-bootstrap CI [-₹915, +₹4,290], one-sided p=0.1642, Holm-adjusted p=0.9850. All selector policies were net negative during validation; no factor-router uplift passed corrected inference.
+- **Holdout:** Not evaluated because 13 matched expiry sessions is below the 20-expiry gate.
+- **Correction / inference:** Preserve the result as exploratory, negative/insufficient evidence. Do not promote a selector. Next step is the actual registered-configuration replay. This legacy result does not complete any of the 9.38M configuration searches.
