@@ -406,3 +406,10 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Job status: \failure
 - Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
 - Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
+
+## Leg-evidence repair run \37989783135
+
+- Run: [\37989783135](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/\37989783135)
+- Job status: \failure
+- Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
+- Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.

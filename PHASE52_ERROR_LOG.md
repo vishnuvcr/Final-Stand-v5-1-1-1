@@ -584,3 +584,10 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Job status: \failure
 - No revised sensitivity accepted.
 - Status: OPEN.
+
+## F52-LEG-EVIDENCE-\37989783135 — replay/persistence failure
+
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/\37989783135
+- Job status: \failure
+- No revised sensitivity accepted.
+- Status: OPEN.
