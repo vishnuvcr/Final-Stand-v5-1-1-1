@@ -98,32 +98,6 @@ def validate(rows: list[dict[str, str]], space: dict[str, Any]) -> list[str]:
     return errors
 
 
-def dimensions_for(row: dict[str, str], space: dict[str, Any]) -> list[tuple[str, list[Any]]]:
-    group = space["family_to_group"][row["family_id"]]
-    base_names = space["parameter_groups"][group]
-    selector_names = space["selector_domains"][row["selector_mode"]]
-    all_names: list[str] = []
-    for name in list(base_names) + list(selector_names):
-        if name not in all_names:
-            all_names.append(name)
-    selection_branches = space["conditional_dimensions"]["strike_selection"]
-    branches: list[tuple[str, list[Any]]] = []
-    for selection, child_map in selection_branches.items():
-        names = [n for n in all_names if n != "strike_selection" and n not in {k for ch in selection_branches.values() for k in ch}]
-        names.append("strike_selection")
-        for child_name, child_values in child_map.items():
-            if child_name in all_names:
-                names.append(child_name)
-        dims = [(n, [selection] if n == "strike_selection" else (child_map.get(n, {}).get("values") if False else space["general_domains"][n])) for n in names]
-        # The selected strike branch exposes only its applicable child dimension.
-        for child_name in {k for ch in selection_branches.values() for k in ch}:
-            if child_name not in child_map:
-                dims = [(n, vals) for n, vals in dims if n != child_name]
-        branches.append((selection, dims))
-    # Selector thresholds are only present for the selected router, never for BASELINE.
-    return [dims for _, dims in branches]
-
-
 def product_size(dimensions: list[tuple[str, list[Any]]]) -> int:
     size = 1
     for _, values in dimensions:
@@ -162,7 +136,7 @@ def branches_for(row: dict[str, str], space: dict[str, Any]) -> list[list[tuple[
     for selection, child_map in space["conditional_dimensions"]["strike_selection"].items():
         dims = list(base)
         dims.append(("strike_selection", [selection]))
-        for child_name, child_values in child_map[selection].items() if False else child_map.items():
+        for child_name, child_values in child_map.items():
             if child_name in space["general_domains"]:
                 dims.append((child_name, child_values))
         answer.append(dims)
