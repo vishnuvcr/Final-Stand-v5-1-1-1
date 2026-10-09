@@ -85,5 +85,29 @@ class ConflictMergeTests(unittest.TestCase):
             self.assertIn("## Base", final)
 
 
+    def test_range_proxy_exclusion_retains_contract_and_measurement(self) -> None:
+        runner_path = SCRIPT.parent / "historical_pilot_runner.py"
+        runner_spec = importlib.util.spec_from_file_location("historical_pilot_runner_test", runner_path)
+        runner = importlib.util.module_from_spec(runner_spec)
+        assert runner_spec is not None and runner_spec.loader is not None
+        runner_spec.loader.exec_module(runner)
+        leg = {
+            "leg_id": "L2", "side": "BUY", "option_type": "CE", "anchor": "CALL",
+            "relative_offset_steps": 1, "strike": 22550.0, "expiry": "2025-03-13",
+            "expiry_role": "near", "quantity_lots": 1,
+        }
+        entry = {"open": 5.0, "high": 5.7, "low": 4.8}
+        row = runner.range_proxy_failure_leg(
+            leg, entry, 12500.0, "2025-03-13T09:44:00+05:30", 18.0, 75
+        )
+        self.assertEqual(row["option_type"], "CE")
+        self.assertEqual(row["strike"], 22550.0)
+        self.assertEqual(row["relative_offset_steps"], 1)
+        self.assertEqual(row["prior_oi"], 12500.0)
+        self.assertEqual(row["entry_range_proxy_pct"], 18.0)
+        self.assertEqual(row["range_proxy_status"], "EXCLUDED")
+        self.assertEqual(row["exit_status"], "NOT_TESTED")
+
+
 if __name__ == "__main__":
     unittest.main()
