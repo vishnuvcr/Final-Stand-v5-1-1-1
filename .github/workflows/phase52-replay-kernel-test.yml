@@ -1,0 +1,65 @@
+name: Phase 52 — Deterministic Replay Kernel Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase52-replay-kernel-test.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase52-replay-kernel-selftest
+  cancel-in-progress: false
+
+jobs:
+  kernel-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Phase52 research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deterministic test dependencies
+        run: python -m pip install --disable-pip-version-check --no-input numpy pandas
+
+      - name: Run hand-calculated replay-kernel tests
+        run: |
+          mkdir -p "$RUNNER_TEMP/phase52-kernel-test"
+          python research/phase52/replay_kernel.py --self-test-only > "$RUNNER_TEMP/phase52-kernel-test/self-test.log" 2>&1
+          cat "$RUNNER_TEMP/phase52-kernel-test/self-test.log"
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root=Path(".")
+          def sha(path):
+              h=hashlib.sha256()
+              with open(path,"rb") as f:
+                  for block in iter(lambda:f.read(4*1024*1024),b""): h.update(block)
+              return h.hexdigest()
+          out=Path("$RUNNER_TEMP/phase52-kernel-test") / "manifest.json"
+          out.write_text(json.dumps({
+              "status":"SELF_TEST_STEP_COMPLETED",
+              "kernel_sha256":sha(root/"research/phase52/replay_kernel.py"),
+              "protocol_sha256":sha(root/"PHASE52_REPLAY_PROTOCOL.md"),
+              "purpose":"Synthetic deterministic kernel tests only; no live market data or strategy P&L."
+          },indent=2)+"\n")
+          PY
+
+      - name: Upload deterministic test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-replay-kernel-test-${{ github.run_id }}
+          path: ${{ runner.temp }}/phase52-kernel-test/
+          if-no-files-found: warn
+          retention-days: 30
