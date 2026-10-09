@@ -385,6 +385,8 @@ def resolve_template(
     if not bound:
         return blocked("BLOCKED_TEMPLATE_MANIFEST_DRIFT", family_id, rule_or_error)
     rule_id = rule_or_error
+    if rule_id == "BLOCKED_INTRADAY_FUTURES_TEMPLATE":
+        return blocked("BLOCKED_INTRADAY_FUTURES", family_id, "family requires synchronized traded-futures mapping absent from the current resolver")
     if rule_id.startswith("BLOCKED_"):
         return blocked(rule_id, family_id, "family is explicitly blocked by the frozen source/specification manifest")
     if family_id not in RULES:
@@ -755,7 +757,8 @@ def self_test() -> dict[str, Any]:
     for fam in FUTURES_REQUIRED_FAMILIES:
         if fam in spec_by:
             result=resolve_template(fam,base,event,entry,prior,expiry_list,specs,manifest,intraday_futures_passed=True)
-            assert result["status"]=="BLOCKED_INTRADAY_FUTURES", (fam,result)
+            expected_block = "BLOCKED_SPECIFICATION" if manifest["families"][fam]["resolver_rule_id"] == "BLOCKED_SPECIFICATION" else "BLOCKED_INTRADAY_FUTURES"
+            assert result["status"] == expected_block, (fam,result)
 
     return {
         "status":"PASS",
