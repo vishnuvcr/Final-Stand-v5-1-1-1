@@ -1,6 +1,6 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — pilot v0.2 coverage insufficient (1/480 rows executed); OpenChart source discovery blocked; no profitability inference or promotion
+**Overall:** OPEN — pilot v0.2 coverage insufficient (1/480 rows executed); persistence repair and exclusion decomposition are next; no profitability inference or promotion
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
 **Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-017  
 **Latest checkpoint:** 2026-10-10 (Asia/Kolkata)
@@ -368,3 +368,10 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Workflow run: [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805). Self-test, preflight and replay passed; persistence failed after replay due rebase conflicts in PHASE52_STATUS.md, PHASE52_RESEARCH_LOG.md and PHASE52_CHAT_LOG.md.
 - Full status reconciliation: 379 EXCLUDED_OHLC_RANGE_PROXY, 100 BLOCKED_LEG_ELIGIBILITY, 1 REPLAY_PASS (480 total). Thirteen source files audited, zero source-file errors, zero replay exceptions; six cost rows for the single replayed event.
 - This is insufficient for profitability inference. Report summary: results/phase52/historical_pilot/v0.2-run-37980455805-summary.json. Detailed audit: results/phase52/historical_pilot/v0.2-run-37980455805-audit.md. Do not rank strategies, claim statistical significance or access holdout.
+
+## Resume checkpoint — 2026-10-10 — planned Phase 52 work resumed
+
+- User closed the OpenChart investigation. Its historical negative result remains archived for provenance, but no more OpenChart work is planned.
+- **Next gate 1:** fix the historical pilot's shared-log checkpoint persistence/rebase conflict with idempotent, latest-tip-aware writes and regression coverage.
+- **Next gate 2:** perform a coverage-only decomposition of the same v0.2 480-row event ledger: 379 OHLC-range-proxy exclusions and 100 leg-eligibility blocks. Trace reasons to exact source files/contracts/timestamps; exclusions are not losing trades.
+- **Frozen constraints:** no threshold/filter relaxation, no change to the 40 configurations × 24 events, costs, validation splits or holdout; no strategy ranking/promotion from 1 executed row.
