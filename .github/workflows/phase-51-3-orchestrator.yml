@@ -1,0 +1,68 @@
+name: Phase 51-3 Orchestrator
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - trigger/phase51_3_orchestrator.start
+
+permissions:
+  contents: write
+
+jobs:
+  run-phase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-51-3-available-data-strategy-sweep
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow scipy matplotlib huggingface_hub
+      - name: HF cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase51-3-orchestrator-${{ runner.os }}-${{ hashFiles('research/phase51_3_available_data_sweep.py','research/phase50b_tt02_calendar_replay_v3.py','research/phase50b_tt04_premium_match_replay.py','research/phase50b_tt05_short_straddle_replay.py') }}
+          restore-keys: |
+            phase51-3-orchestrator-${{ runner.os }}-
+      - name: Run phase branch sweep
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: "1"
+        run: python research/phase51_3_available_data_sweep.py
+      - name: Audit
+        run: |
+          set -euo pipefail
+          test -s results/phase51/available_oos/sweep_summary.json
+          python - <<'PY'
+          import json
+          d=json.load(open("results/phase51/available_oos/sweep_summary.json"))
+          assert d["window"] == ["2026-04-21","2026-07-21"]
+          assert not d["errors"], d["errors"]
+          print(json.dumps(d,indent=2))
+          PY
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase51-3-available-oos-${{ github.run_id }}
+          path: results/phase51/available_oos
+      - name: Publish artifacts to phase branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin phase-51-3-available-data-strategy-sweep
+          git checkout -B phase-51-3-available-data-strategy-sweep origin/phase-51-3-available-data-strategy-sweep
+          rm -rf results/phase51/available_oos
+          mkdir -p results/phase51
+          cp -R "$GITHUB_WORKSPACE/results/phase51/available_oos" results/phase51/
+          git add results/phase51/available_oos
+          git diff --cached --quiet || git commit -m "Phase 51-3: publish available-data OOS results"
+          git push origin HEAD:phase-51-3-available-data-strategy-sweep
