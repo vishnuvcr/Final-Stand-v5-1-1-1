@@ -459,3 +459,10 @@ Run 37937164472's broad coverage and selected-strike steps completed at the proc
 - Updated `historical_pilot_runner.py` to drop only full-row identical records after normalized timestamp/type/numeric fields. Per-file audit logs source row count, exact duplicate rows removed and post-dedup rows. Conflicting duplicates are not resolved and remain blocked.
 - Bumped the pilot version to v0.2 and updated its frozen plan before rerun. No config/event/cost/threshold change; no P&L ranking or selection. The 2% metric is explicitly described as an OHLC range proxy, not actual bid/ask spread.
 - Next: self-test, run v0.2, reconcile exactly 480 statuses, inspect duplicate removals and conflicts, then decide whether a larger development/validation engineering pilot is possible. No holdout use.
+
+
+## 2026-10-10 — Launch pilot v0.2 exact duplicate normalization
+
+- Run [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805) started after the runner, frozen pilot plan and workflow were updated.
+- Self-test and frozen plan stages passed. Expected sample remains 40 configurations × 24 events = 480 config-event rows, with holdout untouched.
+- Historical replay stage remained in progress at last check. No v0.2 report accepted yet; final status reconciliation pending.
