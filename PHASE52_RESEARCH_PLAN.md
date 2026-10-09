@@ -405,3 +405,12 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Acceptance boundary:** A positive smoke test does not establish all-strike/all-expiry coverage. Require exact target-session verification, a frozen contract-universe reconciliation, timestamp/OHLC validation, independent source comparison, quote/OI availability decisions and applicable NSE data-use/storage review before replay use. No P&L from this probe and no strategy/source selection based on expected profitability.
 
 **Static finding:** Current documented response schema is OHLCV only; OI/Greeks/bid/ask/depth are not exposed. Expired-contract discovery and complete chain coverage remain unproven.
+
+### PA-017 — 2026-10-10 — Exploratory diagnosis of OpenChart symbol-search behavior
+
+**Reason:** The initial PA-016 smoke test found rows but did not identify any options/futures. To diagnose whether the issue was a type classifier or query/segment behavior, the probe was extended to compare FO vs IDX for NIFTY, a current-month option prefix, the upstream README's option example, and both Phase 51 missing-session prefixes. This extension was implemented before the expanded run but was documented in this plan after that run; treat it as exploratory source diagnostics, not preregistered performance evidence.
+
+**Result:** Run 37982534138 and the final schema-corrected run 37982673873 both passed as workflows. In the final report, all six queries returned the same 20-row normalized result hash, with 20/20 typed as Index and zero Options/Futures. The FO and IDX NIFTY queries produced the same result; the current-month option and README-example queries plus target-month queries had zero symbol/description matches. Six charting search calls returned HTTP 200, while the separate homepage cookie request returned 403.
+
+**Interpretation:** No historical option-data request was issued: no option token was discovered. The final report separately records two target-date windows planned and zero target windows with a historical request. The symbol-discovery wrapper is blocked for Phase 52 use until corrected and independently validated. Do not classify the absence of search results as absence of underlying NSE data, and do not promote OpenChart as a complete source. No strategy grid/configuration/cost/split/holdout changed.
+
