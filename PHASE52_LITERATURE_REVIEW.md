@@ -70,3 +70,31 @@ A repository's README or advertised metric is not itself a backtest record. Ever
 - Greek calculations from LTP-derived implied volatility are noisy when bid/ask or rates/dividend inputs are missing. Keep source quality flags and test Greeks as estimated features only.
 - Global-market, DII/FII, news and corporate-action information may be daily or have release timestamps. Apply the information only after it would have become observable and test additional coverage/lagging.
 - Global literature results are not automatically portable to Indian index options, and paper claims are not evidence of post-cost robustness.
+
+
+## 7. Additional indexed-source leads added 2026-10-09
+
+These sources broaden the public review. Each remains a **discovery lead only** until source code/data/methodology are inspected and the strategy is independently reproduced.
+
+### Indian option-market research
+
+- Pathak, Rajesh (2016), *Volatility Informed Trading in the Options Market: Evidence from India*, Business: Theory and Practice 17(1), 13–22. DOI: https://doi.org/10.3846/btp.2016.559. The study examines common implied volatility, option volume and changes in OI using regression/VAR frameworks, also splitting by moneyness and market trend. This supports testing volatility and OI/volume interactions; it does not imply a post-cost NIFTY edge.
+- Jithendranathan, Thadavillil (working paper posted 2026-04-29), *Trading Activity, Open Interest, and Volatility: Evidence from the Indian Derivatives Market*: https://papers.ssrn.com/sol3/Delivery.cfm/6675000.pdf?abstractid=6675000&mirid=1. Its stated results associate volatility increases with higher trading activity, particularly puts/index futures, often without corresponding OI increases. This is a recent working paper, not settled consensus; test its claims only with matched timestamped Indian derivatives data.
+- Srivastava, Sandeep, *Informational Content of Trading Volume and Open Interest — An Empirical Study of Stock Option Market in India*, NSE Research Initiative Working Paper 29 (2003/2004): https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID606121_code364627.pdf?abstractid=606121. Historically relevant but stock-option sample and period differ from current weekly NIFTY index options.
+
+### YouTube strategy leads
+
+- Profit Breakout, *India VIX & Options Strategies: When to Use Calendar, Iron Fly, Condor, Straddle, Strangle* (2025-09-08): https://www.youtube.com/watch?v=vVkAw2G93as. Directly relevant for VIX/vega structure-routing hypotheses; video claims are not accepted performance evidence.
+- Ganesh Sharma, *Secret Option Strategy — VIX + Volume Profile + Option Chain (Nifty Setup)* (2026-04-05): https://www.youtube.com/watch?v=eoMUcUMkciU. Candidate claims combine VIX environment, volume-profile levels and OI/PCR confirmation. Freeze point-in-time volume-profile inputs and prevent contemporaneous/future OI leakage before testing.
+- The user-designated Profit Breakout channel remains at https://www.youtube.com/@profitbreakout. Scheduled API-based YouTube discovery requires the optional `YOUTUBE_API_KEY` Actions secret; if absent, workflow logs `NOT_RUN` and uses prior Phase46 video ledger without pretending a fresh crawl occurred.
+
+### Public source-code leads
+
+- Rusty-Thunderbird, *NIFTY50 Options GoldenCross ExtensiveBacktest*: https://github.com/Rusty-Thunderbird/NIFTY50_Options-GoldenCross_ExtensiveBacktest. Its description advertises option-chain/OI/IV/VIX replay, trend/volatility filters, margin awareness and slippage; inspect actual fill assumptions and data provenance before reuse.
+- sahilempire, *NIFTY Options Research Lab*: https://github.com/sahilempire/nifty-options-research-lab. The README reports a broad negative strategy sweep and substantial brokerage sensitivity; those claims are not adopted, but its cost-first philosophy and negative controls are useful code-review targets.
+- bhawuk-arora, *Backtesting-NSE*: https://github.com/bhawuk-arora/Backtesting-NSE. Description advertises Upstox expired-contract integration, synchronized minute replay and deterministic Parquet reporting. Check license/API eligibility and compare fills/cost conventions.
+- Rusty-Thunderbird, *NIFTY50 Options Optimising Strategy*: https://github.com/Rusty-Thunderbird/NIFTY50_Options-Optimising-Strategy. Public-code lead for VIX/trend filters, spot/options synchronization and config parameterization. Claims must be independently reproduced.
+
+## 8. Source-review state
+
+The scheduled `research/phase52/source_discovery.py` stores metadata from Hugging Face and GitHub public search, and uses YouTube Data API search only if `YOUTUBE_API_KEY` is configured. Results carry the evidence grade `DISCOVERY_LEAD_NOT_VALIDATED`; raw third-party performance statements never flow directly into accepted results.
