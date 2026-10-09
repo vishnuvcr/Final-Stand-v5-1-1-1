@@ -492,3 +492,10 @@ Run 37937164472's broad coverage and selected-strike steps completed at the proc
 - **Decision:** OpenChart's current public wrapper is **not accepted for all-options acquisition**. The underlying charting endpoint is reachable, but symbol discovery does not satisfy the source-universe requirement in this probe. Repair/verify request semantics or supply an independently verified contract/token master before a direct-token history test. Its documented OHLCV schema still does not cover OI, exchange Greeks, bid/ask or depth.
 - **Data governance:** only aggregate metadata/fingerprints were persisted. No raw bars, full symbol list, contract token or market prices were added. NSE usage/storage rights remain a separate gate from the client's MIT software license.
 - **Report:** [results/phase52/openchart_probe/runs/37982673873/probe_report.json](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/openchart_probe/runs/37982673873/probe_report.json). No strategy grid, cost model, validation split or holdout changed.
+
+## 2026-10-10 — Step 2.12: Return to preregistered Phase 52 replay work
+
+- User explicitly asked to forget OpenChart and resume the planned research. No further OpenChart probes are to be run; prior negative result is retained only as an audit record.
+- The next work is engineering and coverage diagnosis, not strategy optimization: (1) repair pilot checkpoint persistence after run 37980455805's rebase conflicts; (2) decompose all 480 statuses by exact first failure and source/contract/time; (3) trace representative failures to pinned source rows; (4) only correct demonstrated source/mapping/software defects and rerun the same frozen sample.
+- Current pilot remains 379/480 OHLC-range exclusions, 100/480 leg-eligibility blocks, 1/480 executed. Exclusions are not losses. No relaxation of the preregistered 2% OHLC proxy, no changes to the event/configuration/cost/split definitions, and no holdout access.
+- Promotion, statistical inference and full-grid factor-router claims remain blocked until usable coverage and reproducible replay gates pass.
