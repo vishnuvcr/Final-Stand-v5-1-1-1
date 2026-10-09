@@ -1,8 +1,8 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — pilot v0.2 replay completed but only 1/480 rows executed; no profitability inference; OpenChart source probe pending
+**Overall:** OPEN — pilot v0.2 coverage insufficient (1/480 rows executed); OpenChart source discovery blocked; no profitability inference or promotion
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
-**Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-016  
+**Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-017  
 **Latest checkpoint:** 2026-10-10 (Asia/Kolkata)
 **Accepted finite grid:** phase52-grid-v1.3; 9,379,584 configurations (computed queue size, not tested count).
 
@@ -14,7 +14,7 @@
 | Literature/source discovery | IN PROGRESS | Initial sources include NSE India VIX/contract information, option-volume/OI literature, public GitHub strategy implementations and user-designated YouTube source tracks. Expand systematically and log each lead. |
 | Candidate registry | VALIDATED / SPECIFICATION GATES OPEN | 312 hypotheses across 52 families × six selector modes pass registry checks. Four families remain specification-blocked (Calendar Trap, Iron-Condor-to-Ratio transition, conversion/reversal, futures-basis overlay); three diagnostic-only families cannot be promoted. Eleven previously blocked Phase45 named presets have now been reconciled to exact source leg maps under PA-010; registry revalidation is pending. |
 | Historical BASELINE pilot v0.2 | REPLAY COMPLETE / COVERAGE INSUFFICIENT | Run 37980455805 reconciled 480 rows: 379 OHLC-range exclusions, 100 leg-eligibility blocks, 1 executed row; persistence failed after replay. No inference/promotion. |
-| OpenChart source candidate | STATIC AUDIT COMPLETE / RUNTIME PROBE PENDING | Individual-instrument OHLCV is documented; complete expired chain, OI/Greeks/quotes and full-history coverage are unproven. See PHASE52_OPENCHART_AUDIT.md. |
+| OpenChart source candidate | NOT ACCEPTED / SYMBOL DISCOVERY BLOCKED | Final bounded probe [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) returned 20 Index rows for each of six queries, identical normalized fingerprint, zero option/future rows, and zero historical option requests. See PHASE52_OPENCHART_AUDIT.md and the run report. |
 | Data coverage and licensing | PARTIAL / PROMOTION BLOCKED | Run 37934719402 broad event gate remains 1,004/1,068 and holdout 74/112. Corrected selected ATM-offset audit run 37956261518 scanned all 267 option files with zero source errors: 27,768 offset/type rows; 10,552 pass prior-bar OI≥100; 10,501 also have valid exact entry OHLC; 10,405 additionally have exact-index and valid expiry-exit support. Corrected ABS_DELTA diagnostic run 37956675818 audited 4,272 target-delta/type rows with zero source errors: 3,892 pass prior OI, only 2,232 selected contracts have valid exact entry bars. These are coverage-only counts; no P&L. Index bars still end 2026-07-02; CC BY-NC source license blocks commercial promotion. |
 | Finite-grid enumeration | IN PROGRESS — QUEUE ONLY | Grid v1.3 has 9,379,584 configurations. Run 37954806932 advanced the checkpoint to offset 360,000; emitted records are ENUMERATED_NOT_BACKTESTED, not P&L tests. Any replay must have its own offset-0 ledger and cost outputs. |
 | Base-geometry replay | COMPLETE / DIAGNOSTIC ONLY | Pinned Phase43/45 replay: 9,699 rows, 42 strategy labels, 256 expiry events through 2026-05-26. It is not the 9,379,584-config variable replay, and the source window is partial. Empty Phase45 error file is now correctly recorded as zero rows. |
@@ -31,9 +31,9 @@
 - All 480 statuses reconciled: 379 EXCLUDED_OHLC_RANGE_PROXY, 100 BLOCKED_LEG_ELIGIBILITY, 1 REPLAY_PASS. Thirteen source files read with zero file errors; six cost scenarios were emitted for the one replayed row.
 - **Decision:** not a usable profitability sample; no ranking/promotion; holdout untouched. The artifact and exact metrics are recorded in results/phase52/historical_pilot/v0.2-run-37980455805-summary.json and its workflow audit note.
 
-### OpenChart source feasibility
-- Static audit completed at pinned upstream commit a207108890c96a9830b35a8d15442c896ea0a9d6. Treat as an auxiliary OHLCV acquisition candidate, not a complete options-chain source.
-- Runtime probe/workflow is registered and pending; raw market rows will not be committed. Acceptance requires target-date/expiry coverage, timestamp validation, independent source reconciliation, OI/quote gap handling and NSE data-use review.
+### OpenChart source feasibility — NOT ACCEPTED
+- Static audit completed at pinned upstream commit a207108890c96a9830b35a8d15442c896ea0a9d6. Final bounded probe [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) passed mechanically but found the same index-only result set across six symbol/segment queries. No option/futures row was found and no historical option bar was requested.
+- Do not use current `NSEData.search()` as the source of contract discovery. Direct-token historical retrieval remains untested. Any future adapter must provide verified expiry/strike inventory, exact symbol-to-token matches, date/session coverage, timezone validation, independent-source checks, required factor fields and NSE data-use review. Raw market rows remain out of the public repo.
 
 ## Existing evidence carried forward (not Phase 52 evidence)
 
@@ -43,6 +43,18 @@
 - The preregistered Phase 51 complete OOS window remains 2026-04-21 through 2026-08-04, and option data for 2026-07-28 and 2026-08-04 remains unresolved. No result from a shortened/missing window may be represented as full-window confirmation.
 
 ## Acceptance rules
+
+## OpenChart runtime probe — final bounded result (2026-10-10)
+
+[Workflow 37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) passed its self-tests, live probe, artifact upload and aggregate-report persistence. This is a **negative/inconclusive source-eligibility result**, not strategy evidence.
+
+- Six symbol queries were made: NIFTY / FO, NIFTY / IDX control, current-month option prefix NIFTY26OCT / FO, the README's documented option example NIFTY2612020400CE / FO, and the NIFTY26JUL / NIFTY26AUG target prefixes / FO.
+- Every query returned the same 20-row normalized result fingerprint (`6284a00ec2a8cc5c102d30f0b7e3dce5d5ccb9d8588b5c6a98b9a440d761d837)); all 20 rows were typed `Index`. The FO and IDX NIFTY searches produced identical results. The other four query strings had zero matching symbol/description rows; no option or futures row was identified.
+- `www.nseindia.com` homepage returned HTTP 403. All six requests to `charting.nseindia.com/v1/exchanges/symbolsDynamic` returned HTTP 200, but the payload summary indicates the search wrapper/parameters are not enumerating the requested FO symbols.
+- **No historical option-bar request was executed** because no option token/symbol was discovered. The two missing-session windows (2026-07-28 and 2026-08-04) were planned for testing, but had zero historical requests and zero observed bars. Direct-token history retrieval remains unverified.
+- No raw bars, symbol list, or tokens were stored; no Phase 52 grid, P&L, costs, splits or holdout boundary changed.
+
+Full aggregate report: [`results/phase52/openchart_probe/runs/37982673873/probe_report.json`](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/openchart_probe/runs/37982673873/probe_report.json). Conclusion: OpenChart is **not accepted as a source for all options data in its current form**. A potential future auxiliary OHLCV adapter requires repaired exact symbol search (or a trusted external contract/token master), exact-match fail-closed behavior, direct-history validation, contract/date coverage, independent timestamp/source reconciliation, and NSE data-use review.
 
 A green workflow alone is not a scientific pass. Every numerical result needs a source manifest, candidate/configuration identity, quote and trade coverage, zero unresolved data errors, complete costs, reproducible artifacts and the applicable pre-registered statistical gates.
 
