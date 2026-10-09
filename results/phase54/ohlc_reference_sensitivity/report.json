@@ -1,0 +1,179 @@
+{
+  "phase": "54",
+  "status": "OHLC_REFERENCE_SENSITIVITY_COMPLETE_NON_EXECUTABLE",
+  "created_at_utc": "2026-10-09T20:32:46.247739+00:00",
+  "input": {
+    "path": "results/phase52/historical_pilot/event_replay.csv",
+    "row_count": 480,
+    "source_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+    "input_sha256": "ca60e4b1757b1b6cb7fa94b495eff73e08da481fbe3952a19808a10dfdac19db",
+    "parent_grid": "phase52-grid-v1.3",
+    "parent_pilot": "phase52-historical-base-pilot-v0.2.1-audit-provenance"
+  },
+  "frozen_rules": {
+    "baseline_range_proxy_pct": 2,
+    "prior_minute_oi_minimum": 100,
+    "thresholds_are_sensitivity_only": true,
+    "holdout_used": false,
+    "raw_data_downloaded": false,
+    "historical_pnl_recalculated": false,
+    "bid_ask_spread_observed": false,
+    "live_execution_or_promotion_allowed": false
+  },
+  "baseline_status_counts": {
+    "BLOCKED_LEG_ELIGIBILITY": 100,
+    "EXCLUDED_OHLC_RANGE_PROXY": 379,
+    "REPLAY_PASS": 1
+  },
+  "status_counts_by_split": {
+    "development": {
+      "EXCLUDED_OHLC_RANGE_PROXY": 239,
+      "REPLAY_PASS": 1
+    },
+    "validation": {
+      "BLOCKED_LEG_ELIGIBILITY": 100,
+      "EXCLUDED_OHLC_RANGE_PROXY": 140
+    }
+  },
+  "strict_prior_oi_fail_row_count": 480,
+  "threshold_sensitivity": [
+    {
+      "threshold_pct": 2,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 3,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 4,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 5,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 6,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 8,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 10,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 12,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 15,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 20,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    },
+    {
+      "threshold_pct": 1000,
+      "planned_config_event_rows": 480,
+      "rows_meeting_prior_oi_entry_data_and_range_gate": 0,
+      "share_of_planned_pct": 0.0,
+      "rejected_for_prior_oi_or_missing_legs": 480,
+      "rejected_for_entry_data": 0,
+      "rejected_for_range_proxy": 0,
+      "families_with_at_least_one_qualified_row": 0,
+      "qualified_rows_by_family": {},
+      "note": "Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+    }
+  ],
+  "interpretation": [
+    "The OHLC high-low/open percentage is a candle-range proxy, not a quoted spread or executable liquidity measure.",
+    "Relaxing this threshold changes only a diagnostic eligibility count; it does not establish valid exits, fills, profitability or strategy superiority.",
+    "Rows blocked by missing/zero strictly prior-minute OI remain blocked under every threshold.",
+    "This output is not a backtest and cannot be used to promote a strategy or tune a live selector."
+  ]
+}

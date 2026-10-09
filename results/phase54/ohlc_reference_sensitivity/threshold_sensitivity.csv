@@ -1,0 +1,12 @@
+threshold_pct,planned_config_event_rows,rows_meeting_prior_oi_entry_data_and_range_gate,share_of_planned_pct,rejected_for_prior_oi_or_missing_legs,rejected_for_entry_data,rejected_for_range_proxy,families_with_at_least_one_qualified_row,note
+2,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+3,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+4,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+5,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+6,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+8,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+10,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+12,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+15,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+20,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
+1000,480,0,0.0,480,0,0,0,"Eligibility counts only; exits, executable quotes, fills, costs, and P&L are not evaluated."
