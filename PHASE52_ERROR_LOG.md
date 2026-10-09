@@ -553,3 +553,13 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Next correction:** make persistence latest-tip-aware and idempotent; add a regression test for concurrent append-only log updates and unique run artifacts. Then decompose each first-failure status using the frozen row ledger and exact source provenance.
 - **Acceptance:** a successful persistence test plus a complete 480-row status reconciliation. Never turn excluded/blocked rows into losses or relax the frozen filter to manufacture coverage.
 - **Status:** OPEN / NEXT PHASE 52 ENGINEERING GATE.
+
+
+## F52-DATA-PROVENANCE-001 — Pilot version/count mismatch
+
+- Date: 2026-10-10
+- Evidence: committed `results/phase52/historical_pilot/report.json`, `excluded_events.csv`, and `event_replay.csv` identify v0.1 and report 274 `BLOCKED_LEG_ELIGIBILITY`, 205 `EXCLUDED_OHLC_RANGE_PROXY`, and 1 `REPLAY_PASS` (480 total).
+- Conflicting record: later v0.2 run summary reports 100 blocked / 379 excluded / 1 pass. The v0.2 artifact has not yet been reconciled against these committed files.
+- Impact: canonical pilot status counts and root-cause breakdown remain OPEN. Neither count set may be silently substituted for the other; no strategy ranking or promotion.
+- Next: retrieve run 37980455805 artifact and v0.2 run outputs, compare run IDs, manifests, source hashes and row keys; only then publish a versioned breakdown and rerun if warranted.
+- Status: OPEN.
