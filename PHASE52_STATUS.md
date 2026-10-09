@@ -44,3 +44,8 @@ New phase branch created; plan version 1.0 and its seed logs are being committed
 - Added deterministic Cartesian configuration enumerator and registry/specification audit. It does not calculate strategy P&L.
 - Added recurring/manual discovery runner for public Hugging Face/GitHub catalogs and YouTube when `YOUTUBE_API_KEY` is configured.
 - **Current gate:** source discovery + configuration queue bootstrap. Source-faithful numerical replay is still NOT STARTED; all 312 hypotheses remain REGISTERED_NOT_TESTED.
+
+
+## 2026-10-09 — Gate failure recorded
+
+First automatic workflow run 37924369419 failed in registry validation after its deterministic enumerator self-test passed. The strategy specification CSV had a data-row/header column mismatch. Corrected all 52 rows and hardened the validator. No numerical replay ran; no strategy has a profitability result. Next action is rerunning the workflow gate.
