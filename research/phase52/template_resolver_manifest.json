@@ -1,0 +1,477 @@
+{
+  "manifest_version": "phase52-template-manifest-v0.1",
+  "protocol_version": "phase52-replay-v1.0",
+  "generated_before_any_configuration_grid_pnl": true,
+  "purpose": "Exact per-family source/specification guard and resolver rule binding. The runtime resolver fails closed when a source specification differs from this manifest.",
+  "family_count": 52,
+  "families": {
+    "BUY_CALL": {
+      "family_name": "Long call option; ATM, delta and OTM variants",
+      "leg_template": "BUY 1 CE at selected ATM-offset or absolute-delta strike; selected expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Long-premium risk capped at premium; verify quote liquidity.",
+      "resolver_rule_id": "BUY_CALL",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BUY_PUT": {
+      "family_name": "Long put option; ATM, delta and OTM variants",
+      "leg_template": "BUY 1 PE at selected ATM-offset or absolute-delta strike; selected expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Long-premium risk capped at premium; verify quote liquidity.",
+      "resolver_rule_id": "BUY_PUT",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SELL_CALL": {
+      "family_name": "Naked short call; diagnostic only",
+      "leg_template": "SELL 1 CE at selected strike/expiry",
+      "specification_status": "DIAGNOSTIC_ONLY_UNDEFINED_RISK",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Not promotable without a defined-risk wing or explicit risk cap.",
+      "resolver_rule_id": "SELL_CALL",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SELL_PUT": {
+      "family_name": "Naked short put; diagnostic only",
+      "leg_template": "SELL 1 PE at selected strike/expiry",
+      "specification_status": "DIAGNOSTIC_ONLY_TAIL_RISK",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Naked short put retains extreme downside/tail risk; diagnostic only.",
+      "resolver_rule_id": "SELL_PUT",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BULL_CALL_SPREAD": {
+      "family_name": "Bull call debit vertical",
+      "leg_template": "BUY 1 CE K; SELL 1 CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Defined-risk debit vertical.",
+      "resolver_rule_id": "BULL_CALL_SPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BEAR_PUT_SPREAD": {
+      "family_name": "Bear put debit vertical",
+      "leg_template": "BUY 1 PE K; SELL 1 PE K-W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Defined-risk debit vertical.",
+      "resolver_rule_id": "BEAR_PUT_SPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BULL_PUT_SPREAD": {
+      "family_name": "Bull put credit vertical",
+      "leg_template": "SELL 1 PE K; BUY 1 PE K-W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Defined-risk credit vertical.",
+      "resolver_rule_id": "BULL_PUT_SPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BEAR_CALL_SPREAD": {
+      "family_name": "Bear call credit vertical",
+      "leg_template": "SELL 1 CE K; BUY 1 CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Defined-risk credit vertical.",
+      "resolver_rule_id": "BEAR_CALL_SPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "LONG_STRADDLE": {
+      "family_name": "Long call and put at same strike/expiry",
+      "leg_template": "BUY 1 CE K and BUY 1 PE K; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Long premium; loss limited to debit.",
+      "resolver_rule_id": "LONG_STRADDLE",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SHORT_STRADDLE": {
+      "family_name": "Short call and put at same strike/expiry",
+      "leg_template": "SELL 1 CE K and SELL 1 PE K; same expiry",
+      "specification_status": "DIAGNOSTIC_ONLY_UNDEFINED_RISK",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Undefined upside risk; promote only a hedged/defined-risk variant as a separate family.",
+      "resolver_rule_id": "SHORT_STRADDLE",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "LONG_STRANGLE": {
+      "family_name": "Long OTM call and put",
+      "leg_template": "BUY 1 CE K+O and BUY 1 PE K-O; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Long-premium risk capped at debit.",
+      "resolver_rule_id": "LONG_STRANGLE",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SHORT_STRANGLE": {
+      "family_name": "Short OTM call and put",
+      "leg_template": "SELL 1 CE K+O and SELL 1 PE K-O; same expiry",
+      "specification_status": "DIAGNOSTIC_ONLY_UNDEFINED_RISK",
+      "source_ref": "USER_UPLOADED_STRATEGY_BUILDER_SCREENSHOTS_2026-10-09",
+      "risk_notes": "Undefined upside risk; diagnostic only unless wings/hedges are specified.",
+      "resolver_rule_id": "SHORT_STRANGLE",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SHORT_IRON_CONDOR": {
+      "family_name": "Short defined-risk iron condor",
+      "leg_template": "BUY 1 PE K-W2; SELL 1 PE K-W1; SELL 1 CE K+W1; BUY 1 CE K+W2; W2>W1",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 preset universe; screenshot named preset",
+      "risk_notes": "Defined-risk credit condor; verify ordered strike geometry.",
+      "resolver_rule_id": "SHORT_IRON_CONDOR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "LONG_IRON_CONDOR": {
+      "family_name": "Long/reverse iron condor",
+      "leg_template": "BUY 1 PE K-W1; BUY 1 CE K+W1; SELL 1 PE K-W2; SELL 1 CE K+W2; W2>W1",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Use source-defined outer/inner strike offsets; do not infer solely from payoff icon. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "LONG_IRON_CONDOR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SHORT_IRON_BUTTERFLY": {
+      "family_name": "Short iron butterfly",
+      "leg_template": "SELL 1 CE K and SELL 1 PE K; BUY 1 PE K-W and BUY 1 CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 preset universe; screenshot named preset",
+      "risk_notes": "Defined-risk short-volatility structure.",
+      "resolver_rule_id": "SHORT_IRON_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "LONG_IRON_BUTTERFLY": {
+      "family_name": "Long iron butterfly",
+      "leg_template": "BUY 1 CE K and BUY 1 PE K; SELL 1 PE K-W and SELL 1 CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Use registered preset strike map and reconcile apparent wing direction before replay. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "LONG_IRON_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BULL_CONDOR": {
+      "family_name": "Bullish condor preset",
+      "leg_template": "Phase45 native variant: BUY 1 CE K+1; SELL 1 CE K+2; SELL 1 CE K+3; BUY 1 CE K+4",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-45-exhaustive-ready-made-strategies/PHASE45_RESEARCH_PLAN.md",
+      "risk_notes": "Prior plan shorthand must be checked against actual source engine before replay. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "BULL_CONDOR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BEAR_CONDOR": {
+      "family_name": "Bearish condor preset",
+      "leg_template": "BUY 1 PE K-1; SELL 1 PE K-2; SELL 1 PE K-3; BUY 1 PE K-4",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Reconcile strike-order/payoff orientation with source engine. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "BEAR_CONDOR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BULL_BUTTERFLY": {
+      "family_name": "Bull butterfly preset",
+      "leg_template": "BUY 1 CE K+1; SELL 2 CE K+2; BUY 1 CE K+3",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Reconcile strike offsets with Phase45 engine. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "BULL_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BEAR_BUTTERFLY": {
+      "family_name": "Bear butterfly preset",
+      "leg_template": "BUY 1 PE K-1; SELL 2 PE K-2; BUY 1 PE K-3",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Reconcile strike offsets with Phase45 engine. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "BEAR_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALL_BUTTERFLY": {
+      "family_name": "Call butterfly spread",
+      "leg_template": "BUY 1 CE K-W; SELL 2 CE K; BUY 1 CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Defined-risk debit butterfly; canonical call butterfly is separate from the named preset.",
+      "resolver_rule_id": "CALL_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "PUT_BUTTERFLY": {
+      "family_name": "Put butterfly spread",
+      "leg_template": "BUY 1 PE K+W; SELL 2 PE K; BUY 1 PE K-W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Defined-risk debit butterfly.",
+      "resolver_rule_id": "PUT_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALL_BROKEN_WING_BUTTERFLY": {
+      "family_name": "Call broken-wing butterfly",
+      "leg_template": "BUY 1 CE K; SELL 2 CE K+W1; BUY 1 CE K+W1+W2; W1,W2 from finite grid",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Asymmetric wing; compute payoff bound for each configuration.",
+      "resolver_rule_id": "CALL_BROKEN_WING_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "PUT_BROKEN_WING_BUTTERFLY": {
+      "family_name": "Put broken-wing butterfly",
+      "leg_template": "BUY 1 PE K; SELL 2 PE K-W1; BUY 1 PE K-W1-W2; W1,W2 from finite grid",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Asymmetric wing; compute payoff bound for each configuration.",
+      "resolver_rule_id": "PUT_BROKEN_WING_BUTTERFLY",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALL_RATIO_SPREAD": {
+      "family_name": "Call ratio spread",
+      "leg_template": "BUY 1 CE K; SELL R CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Ratio and entry debit/credit change tail risk; compute maximum loss.",
+      "resolver_rule_id": "CALL_RATIO_SPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "PUT_RATIO_SPREAD": {
+      "family_name": "Put ratio spread",
+      "leg_template": "BUY 1 PE K; SELL R PE K-W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Ratio and entry debit/credit change tail risk; compute maximum loss.",
+      "resolver_rule_id": "PUT_RATIO_SPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALL_RATIO_BACKSPREAD": {
+      "family_name": "Call ratio backspread",
+      "leg_template": "SELL 1 CE K; BUY R CE K+W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase46 public-source discovery plus standardized variant",
+      "risk_notes": "Payoff is debit/credit-sensitive; report any valley risk.",
+      "resolver_rule_id": "CALL_RATIO_BACKSPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "PUT_RATIO_BACKSPREAD": {
+      "family_name": "Put ratio backspread",
+      "leg_template": "SELL 1 PE K; BUY R PE K-W; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase46 public-source discovery plus standardized variant",
+      "risk_notes": "Payoff is debit/credit-sensitive; report any valley risk.",
+      "resolver_rule_id": "PUT_RATIO_BACKSPREAD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "JADE_LIZARD": {
+      "family_name": "Jade Lizard",
+      "leg_template": "SELL 1 PE K-1; SELL 1 CE K+1; BUY 1 CE K+3; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Check total credit versus call-wing width; downside risk remains.",
+      "resolver_rule_id": "JADE_LIZARD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "REVERSE_JADE_LIZARD": {
+      "family_name": "Reverse Jade Lizard",
+      "leg_template": "SELL 1 CE K+1; SELL 1 PE K-1; BUY 1 PE K-3; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Named preset geometry must be reconciled before replay. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "REVERSE_JADE_LIZARD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "RANGE_FORWARD": {
+      "family_name": "Range Forward / bullish risk reversal",
+      "leg_template": "BUY 1 CE K+1; SELL 1 PE K-1; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Phase45 maps screenshot preset to a risk-reversal-like geometry; label as standardized variant. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "RANGE_FORWARD",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BEAR_RISK_REVERSAL": {
+      "family_name": "Bearish risk reversal",
+      "leg_template": "BUY 1 PE K-1; SELL 1 CE K+1; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Premium imbalance can create financing/long-tail exposure; bound and tag. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "BEAR_RISK_REVERSAL",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "STRIP": {
+      "family_name": "Strip: long one call and two puts",
+      "leg_template": "BUY 1 CE K; BUY 2 PE K; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Long-premium structure with greater downside convexity.",
+      "resolver_rule_id": "STRIP",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "STRAP": {
+      "family_name": "Strap: long two calls and one put",
+      "leg_template": "BUY 2 CE K; BUY 1 PE K; same expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Long-premium structure with greater upside convexity.",
+      "resolver_rule_id": "STRAP",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "BATMAN": {
+      "family_name": "Batman multi-leg structure",
+      "leg_template": "Phase45 registered variant: BUY 1 CE K+1; SELL 2 CE K+2; BUY 1 PE K-1; SELL 2 PE K-2",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan and vishnuvcr/Nifty",
+      "risk_notes": "Validate leg signs and all tails from payoff/source code before replay. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "BATMAN",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "DOUBLE_PLATEAU": {
+      "family_name": "Double Plateau multi-butterfly",
+      "leg_template": "BUY 1 PE K-1; SELL 2 PE K-2; BUY 1 PE K-3; BUY 1 CE K+1; SELL 2 CE K+2; BUY 1 CE K+3",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Reconcile whether strike labels imply offsets from ATM or ordered strikes. Exact leg geometry reconciled against PHASE45_RESEARCH_PLAN.md; preserve this named preset as its own baseline and keep parameter variants separately identified.",
+      "resolver_rule_id": "DOUBLE_PLATEAU",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALL_CALENDAR": {
+      "family_name": "Call calendar spread",
+      "leg_template": "SELL 1 near-expiry CE K; BUY 1 later-expiry CE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 / Phase46 strategy registry",
+      "risk_notes": "Front/back expiry dates must be actual listed contracts and premiums timestamp matched.",
+      "resolver_rule_id": "CALL_CALENDAR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "PUT_CALENDAR": {
+      "family_name": "Put calendar spread",
+      "leg_template": "SELL 1 near-expiry PE K; BUY 1 later-expiry PE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 / Phase46 strategy registry",
+      "risk_notes": "Front/back expiry dates must be actual listed contracts and premiums timestamp matched.",
+      "resolver_rule_id": "PUT_CALENDAR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "DOUBLE_CALENDAR": {
+      "family_name": "Double calendar spread",
+      "leg_template": "SELL 1 near-expiry CE K and PE K; BUY 1 later-expiry CE K and PE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Point-in-time synchronized quotes required on both expiries.",
+      "resolver_rule_id": "DOUBLE_CALENDAR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALL_DIAGONAL": {
+      "family_name": "Call diagonal spread",
+      "leg_template": "SELL 1 near-expiry CE K+W; BUY 1 later-expiry CE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Path-dependent; both expiries must be tracked separately.",
+      "resolver_rule_id": "CALL_DIAGONAL",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "PUT_DIAGONAL": {
+      "family_name": "Put diagonal spread",
+      "leg_template": "SELL 1 near-expiry PE K-W; BUY 1 later-expiry PE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Path-dependent; both expiries must be tracked separately.",
+      "resolver_rule_id": "PUT_DIAGONAL",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "DOUBLE_DIAGONAL": {
+      "family_name": "Double diagonal spread",
+      "leg_template": "SELL near-expiry CE K+W and PE K-W; BUY later-expiry CE K and PE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Path-dependent; both expiries must be tracked separately.",
+      "resolver_rule_id": "DOUBLE_DIAGONAL",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CALENDAR_TRAP": {
+      "family_name": "Calendar trap structure",
+      "leg_template": "Exact source leg/expiry definition not yet frozen",
+      "specification_status": "SPECIFICATION_BLOCKED",
+      "source_ref": "Phase46 YouTube discovery",
+      "risk_notes": "Do not replay until an exact primary-source rule is reconstructed.",
+      "resolver_rule_id": "BLOCKED_SPECIFICATION",
+      "declared_resolver_status": "BLOCKED_SPECIFICATION"
+    },
+    "IRON_CONDOR_TO_RATIO": {
+      "family_name": "Iron-condor-to-ratio transition strategy",
+      "leg_template": "Source hypothesis: monthly iron condor using short legs near 0.30 delta, wings near 0.10 delta; transition per source trigger",
+      "specification_status": "SPECIFICATION_BLOCKED",
+      "source_ref": "https://github.com/vishnuvcr/Iron-condor-to-ratio-v1; https://github.com/vishnuvcr/Iron-condor-to-ratio-v2",
+      "risk_notes": "G6 historical Greek/IV data audit was reported open in repo; exact transition and stop/re-entry semantics must be frozen.",
+      "resolver_rule_id": "BLOCKED_SPECIFICATION",
+      "declared_resolver_status": "BLOCKED_SPECIFICATION"
+    },
+    "RATIO_CALENDAR": {
+      "family_name": "Ratio calendar spread",
+      "leg_template": "SELL 2 near-expiry CE K; BUY 1 later-expiry CE K",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Ratio calendar path risk and margin must be explicitly computed.",
+      "resolver_rule_id": "RATIO_CALENDAR",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "LONG_SYNTHETIC_FUTURE": {
+      "family_name": "Long synthetic future",
+      "leg_template": "BUY 1 CE K; SELL 1 PE K; same expiry and timestamp",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Include financing/carry, dividends where applicable, charges and basis.",
+      "resolver_rule_id": "LONG_SYNTHETIC_FUTURE",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "SHORT_SYNTHETIC_FUTURE": {
+      "family_name": "Short synthetic future",
+      "leg_template": "SELL 1 CE K; BUY 1 PE K; same expiry and timestamp",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase45 research plan",
+      "risk_notes": "Include financing/carry, charges and basis.",
+      "resolver_rule_id": "SHORT_SYNTHETIC_FUTURE",
+      "declared_resolver_status": "RESOLVABLE_TEMPLATE"
+    },
+    "CONVERSION_REVERSAL": {
+      "family_name": "Put-call parity conversion/reversal",
+      "leg_template": "Conversion variant: long future/spot proxy, BUY 1 PE K and SELL 1 CE K; matched expiry/strike",
+      "specification_status": "SPECIFICATION_BLOCKED",
+      "source_ref": "Standard option-parity research hypothesis",
+      "risk_notes": "Conversion/reversal and underlying hedge must be distinct variants; do not replay a mixed definition.",
+      "resolver_rule_id": "BLOCKED_SPECIFICATION",
+      "declared_resolver_status": "BLOCKED_SPECIFICATION"
+    },
+    "FUTURES_BASIS_SPREAD": {
+      "family_name": "Futures-basis spread/overlay",
+      "leg_template": "BUY synthetic future and SELL matching traded future, same expiry/strike/timestamp; reverse side as separate candidate if registered",
+      "specification_status": "SPECIFICATION_BLOCKED",
+      "source_ref": "vishnuvcr/Iron_condor; vishnuvcr/Nifty",
+      "risk_notes": "Financing, margin, synchronized pricing and actual futures contract mapping are mandatory.",
+      "resolver_rule_id": "BLOCKED_SPECIFICATION",
+      "declared_resolver_status": "BLOCKED_SPECIFICATION"
+    },
+    "DELTA_NEUTRAL_LONG_GAMMA_SCALP": {
+      "family_name": "Long-gamma straddle with delta hedge",
+      "leg_template": "BUY 1 ATM CE and 1 ATM PE; hedge underlying delta only at registered delta band/cadence",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Standardized Phase52 variant",
+      "risk_notes": "Hedge P&L and all futures hedge costs/fills must be included.",
+      "resolver_rule_id": "BLOCKED_INTRADAY_FUTURES_TEMPLATE",
+      "declared_resolver_status": "BLOCKED_INTRADAY_FUTURES"
+    },
+    "PROTECTIVE_PUT_FUTURE": {
+      "family_name": "Long futures plus protective put",
+      "leg_template": "BUY 1 matching future and BUY 1 PE at configured strike/expiry",
+      "specification_status": "STANDARD_VARIANT_PREREGISTERED",
+      "source_ref": "Phase46 source discovery / standardized variant",
+      "risk_notes": "Futures notional and option multiplier/lot sizes must match.",
+      "resolver_rule_id": "BLOCKED_INTRADAY_FUTURES_TEMPLATE",
+      "declared_resolver_status": "BLOCKED_INTRADAY_FUTURES"
+    },
+    "COVERED_CALL_FUTURE": {
+      "family_name": "Long futures proxy plus short call overlay",
+      "leg_template": "BUY 1 matching future and SELL 1 CE at configured strike/expiry",
+      "specification_status": "DIAGNOSTIC_ONLY_SHORT_GAMMA",
+      "source_ref": "Phase46 public-source discovery",
+      "risk_notes": "This is a futures-call overlay, not a legally/economically identical covered-equity position.",
+      "resolver_rule_id": "BLOCKED_INTRADAY_FUTURES_TEMPLATE",
+      "declared_resolver_status": "BLOCKED_INTRADAY_FUTURES"
+    }
+  }
+}
