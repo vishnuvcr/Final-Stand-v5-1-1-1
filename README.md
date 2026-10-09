@@ -939,3 +939,11 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Event-level exclusions and six cost cases are in results/phase52/historical_pilot/.
 - Primary market data are CC BY-NC 4.0 and the pilot is not commercial/live evidence.
+
+## Phase 52 bounded historical pilot — run 37983999726
+
+- **Run:** [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Event-level exclusions and six cost cases are in results/phase52/historical_pilot/.
+- Primary market data are CC BY-NC 4.0 and the pilot is not commercial/live evidence.

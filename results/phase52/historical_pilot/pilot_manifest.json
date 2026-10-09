@@ -1,7 +1,8 @@
 {
   "status": "FROZEN_PILOT_MANIFEST_BEFORE_HISTORICAL_REPLAY",
-  "created_at_utc": "2026-10-09T16:59:19.745178+00:00",
-  "pilot_version": "phase52-historical-base-pilot-v0.1",
+  "created_at_utc": "2026-10-09T20:00:27.069699+00:00",
+  "source_branch_commit": "2334688b41245610fd41ebe8bc1d359d581f3e9b",
+  "pilot_version": "phase52-historical-base-pilot-v0.2",
   "grid_version": "phase52-grid-v1.3",
   "historical_pnl_not_yet_computed_at_manifest_creation": true,
   "pinned_dataset": "thetrademarkk/india-index-options-1m",
@@ -106,7 +107,7 @@
   "selector_scope": "BASELINE only; this pilot makes no factor-selector efficacy claim",
   "inference": "No candidate ranking, p-values, or promotion. Descriptive implementation and coverage pilot only.",
   "file_hashes": {
-    "pilot_plan_sha256": "499dd8e5cc9ee5cc42ddf81878adf142d9049d51639e0eaa2c7c2aad5c1a02ca",
+    "pilot_plan_sha256": "714cdb7d8a4d47089b03df865a3d2261a5ae3171890640bc67177754118cb992",
     "grid_sha256": "6a6c72da7f44438af7fdefa96134082fd214be3df48980b4a88543e0db96b07b",
     "registry_sha256": "8660a07c7bd90ada78ed30f05eb361a15fe948844e05377d266b45d74599f87b",
     "specifications_sha256": "1690fa3ad156aaf94e18f8f6547829065e5a90aef907a5602516451ff13a4cc3",
@@ -115,7 +116,7 @@
     "resolver_sha256": "9ec380e6b631042ca534571fd11ea124dfc17836716a588c4d8b13dcdd869758",
     "kernel_sha256": "8bb4ee8bfb7694a88cf83bfd69a93296185fb1f58ab06c5433fbe599a67f2c19",
     "grid_enumerator_sha256": "e02ed01bdf533e90039b2f0c310b786356af437cee709863453bd24036102d9b",
-    "historical_pilot_runner_sha256": "b01f9fa0b2c088cc088d798c1775f765f7e17ee05cea16fdc757a1561ef7c587",
+    "historical_pilot_runner_sha256": "eabde2d0062a9ecde4b18bd8990cc9a4929f2549a38490bf18638519973cad48",
     "phase43_fee_and_lot_helper_sha256": "b1f09876ab461b2cccc5b6089901b3720623360d781f82369be6ea6ee100ea47",
     "event_inventory_sha256": "b35c7779f302a4351c068771a020ea75a664b514be139f66cf276abcd81f61b3",
     "configuration_manifest_sha256": "812f0c3288332901cda80c818c9121c21ec1f70d5fc87580cbe0aba5fd2f1569",

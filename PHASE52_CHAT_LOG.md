@@ -173,3 +173,7 @@ User requested that issues be resolved. Investigation identified a material v0.1
 - Retrieved run 37980455805's actual artifact and verified the v0.2 480-row status counts. The previous v0.1 vs v0.2 difference was a version labeling/provenance issue, not contradictory rows.
 - Root causes: 100 rows have prior OI = 0 and are blocked under the frozen prior-OI gate; 379 fail the frozen OHLC range proxy, whose observed range is 2.38%–44.44%. Only one development row replayed and its modeled net P&L is negative under every cost scenario. No strategy promotion.
 - Persistence writer and regression test updated on the research branch. Workflow validation run 37983999726 is underway. Continue to Phase 53 only as data coverage/source validation unless usable replay coverage is achieved.
+## User continuation / automated action — run 37983999726
+- **Run:** [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.

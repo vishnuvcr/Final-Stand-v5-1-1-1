@@ -513,3 +513,9 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - One replay row is a development-split BUY_CALL on 2022-12-15 13:00 IST. Modeled net P&L is -₹166.19 to -₹194.79 across six cost/stress cases; the row is research-only and not an efficacy result. 13 source files audited, zero source-read errors, zero replay exceptions, 6 cost rows, no holdout used.
 - Persistence helper now contains an allowlisted, append-only conflict union with bounded fetch/rebase/push retries and refuses source-code conflicts. A regression test exercises both malformed markers and a real local-Git concurrent rebase. Workflow run [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726) is the current test/replay validation.
 - Decision: Phase 52 baseline pilot is technically auditable but has inadequate coverage (1/480 = 0.21%). No ranking, statistical claim, router efficacy statement or promotion. Next phase should source-test better OI + quote-quality inputs before a larger replay.
+## 2026-10-09T20:04:16.938553+00:00 — Bounded historical pilot run 37983999726
+- **Run:** [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Frozen plan: research/phase52/first_historical_pilot.json; runner: research/phase52/historical_pilot_runner.py.
+- No hidden reasoning or secret values are recorded. Workflow logs/artifacts preserve operational errors.

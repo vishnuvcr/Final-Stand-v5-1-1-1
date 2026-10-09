@@ -1,6 +1,6 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — pilot v0.2 coverage insufficient (1/480 rows executed); persistence repair and exclusion decomposition are next; no profitability inference or promotion
+**Overall:** OPEN — bounded historical BASELINE pilot completed; descriptive only, no promotion; factor routers/full grid remain gated
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
 **Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-017  
 **Latest checkpoint:** 2026-10-10 (Asia/Kolkata)
@@ -385,3 +385,11 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **OHLC proxy diagnosis:** all 379 measured high-low/open ratios exceed the frozen 2% gate; range is 2.38%–44.44% (34 rows 2–5%, 149 rows 5–10%, 167 rows 10–20%, 29 rows over 20%). This is an intraminute range proxy, not a measured quoted bid-ask spread.
 - One row replayed: `BUY_CALL`, development, 2022-12-15 13:00 IST. Its modeled net P&L is negative across all six cost scenarios (about -₹166.19 to -₹194.79 depending on brokerage/stress). It is a single modeled row, not profitability evidence; no strategy is promoted.
 - Persistence fix and a real Git-rebase regression test are committed; validation run [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726) is in progress. No filter, grid, costs, splits or holdout are changed.
+- The persisted `report.json` presently identifies pilot version `v0.1`: 480 planned configuration-event rows; status counts are 274 `BLOCKED_LEG_ELIGIBILITY`, 205 `EXCLUDED_OHLC_RANGE_PROXY`, and 1 `REPLAY_PASS`. This conflicts with the separately reported v0.2 summary (379/100/1), so versioned artifacts must be reconciled before treating either count as canonical.
+- No result is promoted. The observed statuses are exclusions/eligibility blocks, not losses. Next: audit version/run provenance, compute reason-level counts from the matching CSV, fix checkpoint persistence, then rerun only after a reproducible diagnosis.
+
+## Bounded historical pilot checkpoint
+
+- **Run:** [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
