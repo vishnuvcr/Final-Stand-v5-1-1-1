@@ -1,0 +1,24 @@
+{
+  "source": "thetrademarkk/india-index-options-1m",
+  "accepted_workflow": 37876719483,
+  "artifact_id": 11591824558,
+  "status": "DATA_BLOCKED",
+  "targets": {
+    "2026-07-28": {
+      "sha256": "f9c3a6d1e4498274644ccbfeb8aeb3d545fc2ce1a12b908f450360a643e40d17",
+      "size_bytes": 3990663,
+      "rows": 320359,
+      "min_datetime": "2026-06-15T09:15:00+05:30",
+      "max_datetime": "2026-07-02T15:30:00+05:30",
+      "target_trade_date_present": false
+    },
+    "2026-08-04": {
+      "sha256": "8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c",
+      "size_bytes": 58248,
+      "rows": 2646,
+      "min_datetime": "2026-06-24T10:08:00+05:30",
+      "max_datetime": "2026-07-02T15:29:00+05:30",
+      "target_trade_date_present": false
+    }
+  }
+}
