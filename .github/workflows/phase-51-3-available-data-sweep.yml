@@ -8,14 +8,6 @@ on:
       - trigger/phase51_3.start
       - research/phase51_3_available_data_sweep.py
       - PHASE51_3_RESEARCH_PLAN.md
-  push:
-    branches:
-      - phase-51-3-available-data-strategy-sweep
-    paths:
-      - trigger/phase51_3.start
-      - research/phase51_3_available_data_sweep.py
-      - PHASE51_3_RESEARCH_PLAN.md
-
 permissions:
   contents: write
 
