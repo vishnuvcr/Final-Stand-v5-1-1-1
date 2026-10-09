@@ -47,3 +47,13 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.
 - Root cause: pending review of the failed job logs.
 - Status: OPEN.
+
+
+## F52-005 — Strategy specification CSV column misalignment — RESOLVED IN FILE
+
+- **Date:** 2026-10-09
+- **Observed in Actions run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37924369419
+- **Root cause:** The initial CSV generator omitted the `family_name` field from each data row while the header expected it. The validator encountered null cells and raised AttributeError rather than presenting a clean schema error.
+- **Impact:** Registry self-test passed, but registry validation failed before source discovery or grid enumeration. No backtest result was produced.
+- **Correction:** Rebuilt all 52 strategy-specification rows with the correct six columns, deriving family names from the candidate registry; hardened validation against null fields.
+- **Status:** Corrected in branch; rerun verification pending.
