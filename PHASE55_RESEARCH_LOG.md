@@ -6,3 +6,8 @@
 - Reworked leg evaluation to keep processing the remaining legs after the first gate failure, while preserving the first deterministic row-level exclusion reason.
 - Added a fail-closed output invariant for expected leg count and unique leg IDs by strategy family.
 - Actual pilot rerun and regression verification are pending.
+
+## Run 37988475159
+
+- Run: [37988475159](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988475159); workflow status=\failure; audit PASS=False.
+- Output is not accepted as complete unless the row/leg invariant audit passes.

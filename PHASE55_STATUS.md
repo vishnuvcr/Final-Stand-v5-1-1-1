@@ -8,3 +8,8 @@
 - **Repair:** pre-create one audit row per selected leg, continue collecting other-leg evidence after the first failure, and validate expected leg counts before writing results.
 - **Frozen:** grid, event universe, pinned source revision, prior OI gate, 2% proxy, exact exit and all cost assumptions.
 - **Next:** unit tests and a bounded full 480-row pilot rerun using the pinned source and cache. No holdout or promotion.
+
+## Automated checkpoint 37988475159
+
+- Run: [37988475159](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988475159); workflow status=\failure; audit PASS=False.
+- Output is not accepted as complete unless the row/leg invariant audit passes.

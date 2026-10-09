@@ -955,3 +955,9 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Event-level exclusions and six cost cases are in results/phase52/historical_pilot/.
 - Primary market data are CC BY-NC 4.0 and the pilot is not commercial/live evidence.
+
+## Phase 55 leg-audit repair — run 37988475159
+
+- Run: [37988475159](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37988475159); workflow status=\failure; audit PASS=False.
+- Output is not accepted as complete unless the row/leg invariant audit passes.
+- [Plan](PHASE55_RESEARCH_PLAN.md) · [Status](PHASE55_STATUS.md) · [Audit](results/phase52/historical_pilot/phase55_audit.json)
