@@ -137,9 +137,9 @@ def parse_bhavcopy(raw_bytes: bytes, session_date: str) -> tuple[pd.DataFrame, p
         oi = _numeric(raw, ("OpnIntrst",))
         underlying_mask = symbol.eq("NIFTY")
         option_mask = underlying_mask & typ.isin(["CE", "PE"])
-        future_mask = underlying_mask & inst.str.contains("FUT", na=False)
-        if not future_mask.any() and "OptnTp" in raw:
-            future_mask = underlying_mask & raw["OptnTp"].isna() & expiry.notna() & close.notna() & inst.str.contains("FUT", na=False)
+        # NSE UDiFF uses IDF for index futures in its published security-type taxonomy.
+        # The upstream normalized schema maps both IDF and FUTIDX to instrument_kind=FUTURE.
+        future_mask = underlying_mask & inst.isin(["IDF", "FUTIDX"])
     else:
         raise ValueError("Unrecognized NSE F&O bhavcopy schema")
 
@@ -483,7 +483,7 @@ def _self_test() -> None:
         "TckrSymb,XpryDt,StrkPric,OptnTp,ClsPric,TtlTradgVol,OpnIntrst,FinInstrmTp\n"
         "NIFTY,2026-10-29,25000,CE,111,1001,5001,OPTIDX\n"
         "NIFTY,2026-10-29,25000,PE,96,1201,7001,OPTIDX\n"
-        "NIFTY,2026-10-29,0,,25021,5001,90001,FUTIDX\n"
+        "NIFTY,2026-10-29,0,,25021,5001,90001,IDF\n"
     ).encode()
     opts2, futs2, meta2 = parse_bhavcopy(zip_bytes(csv_udiff), "2026-10-08")
     assert len(opts2) == 2, f"expected 2 UDiFF option rows, got {len(opts2)}"
