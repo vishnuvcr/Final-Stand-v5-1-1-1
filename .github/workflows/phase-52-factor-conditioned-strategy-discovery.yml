@@ -1,6 +1,6 @@
 name: Phase 52 — Factor-Conditioned Strategy Discovery
 # Phase52 replay/data gates: point-in-time selectors, pinned base replay, lagged NSE EOD factors, exact entry-time coverage, and UDiFF IDF futures validation (PA-004 to PA-006).
-# PA-010: selected-strike audit uses only contracts listed at the exact entry timestamp; verify the patched research-branch commit before accepting outputs.
+# PA-011/PA-012: corrected ATM offsets use exact-time index open and modal strike steps; ABS_DELTA uses the exact prior completed minute and checks the entry-bar open. Prior coverage counts are superseded pending rerun.
 
 on:
   workflow_dispatch:
