@@ -377,7 +377,11 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Frozen constraints:** no threshold/filter relaxation, no change to the 40 configurations × 24 events, costs, validation splits or holdout; no strategy ranking/promotion from 1 executed row.
 
 
-## Resume checkpoint — 2026-10-10 (coverage diagnosis queued)
+## Resume checkpoint — 2026-10-10 — artifact reconciliation and root-cause diagnosis
 
-- The persisted `report.json` presently identifies pilot version `v0.1`: 480 planned configuration-event rows; status counts are 274 `BLOCKED_LEG_ELIGIBILITY`, 205 `EXCLUDED_OHLC_RANGE_PROXY`, and 1 `REPLAY_PASS`. This conflicts with the separately reported v0.2 summary (379/100/1), so versioned artifacts must be reconciled before treating either count as canonical.
-- No result is promoted. The observed statuses are exclusions/eligibility blocks, not losses. Next: audit version/run provenance, compute reason-level counts from the matching CSV, fix checkpoint persistence, then rerun only after a reproducible diagnosis.
+- **Provenance discrepancy resolved:** the committed branch `report.json`/CSVs are v0.1. The separately uploaded artifact for v0.2 run [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805) is independently verified as pilot `phase52-historical-base-pilot-v0.2`; artifact digest `sha256:34b987e2fa19821898582145ae6d4403a64f6d9d085f588628a07b6e78da2aaa`.
+- Canonical v0.2 counts from its own report and 480-row CSV: 379 `EXCLUDED_OHLC_RANGE_PROXY`, 100 `BLOCKED_LEG_ELIGIBILITY`, 1 `REPLAY_PASS`. No row/status mismatch inside the v0.2 artifact.
+- **Eligibility root cause:** all 100 blocked rows have `PRIOR_OI_MISSING_OR_BELOW_GATE` and prior OI = 0.0; all are in validation, distributed across five selected event IDs (20 rows each). This is unavailable/zero prior OI, not duplicate-bar failure.
+- **OHLC proxy diagnosis:** all 379 measured high-low/open ratios exceed the frozen 2% gate; range is 2.38%–44.44% (34 rows 2–5%, 149 rows 5–10%, 167 rows 10–20%, 29 rows over 20%). This is an intraminute range proxy, not a measured quoted bid-ask spread.
+- One row replayed: `BUY_CALL`, development, 2022-12-15 13:00 IST. Its modeled net P&L is negative across all six cost scenarios (about -₹166.19 to -₹194.79 depending on brokerage/stress). It is a single modeled row, not profitability evidence; no strategy is promoted.
+- Persistence fix and a real Git-rebase regression test are committed; validation run [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726) is in progress. No filter, grid, costs, splits or holdout are changed.
