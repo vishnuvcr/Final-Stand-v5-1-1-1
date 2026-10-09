@@ -351,3 +351,12 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Correction:** Use the OI field from the exact prior completed minute (entry_ts minus one minute) for the >=100 contract eligibility gate. The selected strike must then have a unique, OHLC-valid exact entry-time bar. Current entry-bar OI is recorded only as a diagnostic field. Missing prior contract/OI values are a failed eligibility gate; do not forward-fill or silently substitute.
 
 **Timing / impact:** This amendment is based on bar information-timing consistency, before any Phase52 configuration P&L is calculated. It does not change the frozen grid version, configuration IDs, or parameter values. The selected-strike audit output from any code version using same-entry-bar OI for eligibility is superseded; rerun after the patch.
+
+
+### PA-014 — 2026-10-09 — Deterministic replay kernel validated on synthetic fixtures
+
+**Scope:** Added `research/phase52/replay_kernel.py`, a tested set of primitives for exact timestamp/contract matching, common leg exit timestamps, OHLC validity, adverse open-fill simulation, date-aware statutory fees, independent brokerage scenarios, prior-bar OI eligibility, high-low liquidity proxy, and next-minute common-open take-profit exits. It also blocks unresolved family specifications, ABS_DELTA until its model-selection gate passes, intraday-futures strategies without synchronized futures bars, and unsupported max-profit exit rules.
+
+**Verification:** Actions run [37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452) passed hand-calculated synthetic unit tests: exact-bar/no-nearest matching, common timestamps, ₹1,293.50 known gross P&L on a one-leg fixture, six ₹10/₹20 × 0/50/100 slippage cost cases, prior-OI and OHLC-range gates, take-profit trigger/next-minute execution behavior, and fail-closed eligibility statuses. The first attempt [37957499754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957499754) failed only while writing its test manifest to a literal `$RUNNER_TEMP` path; the environment path was corrected and the rerun passed.
+
+**Interpretation:** This validates the kernel primitives only, not the end-to-end configuration replay worker. No real-market Phase52 variable-grid P&L exists, no configuration has been promoted, and v1.3 domains/IDs were unchanged. The next stage is to implement a source/specification-aware strategy-family resolver and use deterministic golden fixtures before any finite-grid result is accepted.
