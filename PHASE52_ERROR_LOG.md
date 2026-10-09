@@ -290,3 +290,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction:** Versioned the workflow concurrency group to `phase52-factor-conditioned-strategy-discovery-v2`, allowing a fresh bounded run to proceed without cancelling or overwriting the older checkpoint. New run [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472) started at 2026-10-09 18:59 IST.
 - **Safety:** Both runs use hash-pinned source data and conflict-safe log persistence; any duplicate audit result must be reconciled by revision/hash and not double-counted.
 - **Status:** MITIGATION RUNNING; wait for the new run's selected-strike self-test and summary.
+
+
+## F52-026 — Strike ladder must be point-in-time — PATCHED BEFORE ACCEPTANCE
+
+- **Date:** 2026-10-09
+- **Observation:** Code review found the initial selected-strike audit built its strike ladder from all strikes appearing anywhere in an expiry file. Some strikes may have been introduced later, so this could leak future listing information into ATM selection.
+- **Correction:** ATM and rank-offset selection now uses only strikes present at the exact entry timestamp, with exact timestamp keying and OI/OHLC gates applied to that timestamp's rows.
+- **Impact:** No P&L or selected-strike result has been accepted. The currently running workflow may have checked out the earlier draft; its output must be treated as superseded unless the run provenance proves it used the patched commit.
+- **Status:** PATCHED IN SOURCE; end-to-end verification required on the patched commit.
