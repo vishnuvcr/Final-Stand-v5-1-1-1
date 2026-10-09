@@ -100,3 +100,12 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Confirmed the prior-bar ABS_DELTA scan completed in 37956675818: 4,272 checks, 232 missing exact prior minutes, 148 no OI-qualified candidate, 3,892 predecision OI-qualified, 2,232 valid exact entry bars. Model delta only; no P&L.
 - Synthetic replay kernel test passed in 37957753452. The first run 37957499754 had a literal runner-temp manifest path failure after self-tests passed; corrected and rerun.
 - Phase52 is now past the separate coverage-audit test gate but still has no configuration-level P&L. Next: implement template-aware strategy resolver and whole-position replay fixtures; retain no-promotion conclusion until real validation/holdout and costs/inference gates pass.
+
+
+## User said “Resume” / “Ok proceed” — verified checkpoint (2026-10-09)
+
+- Corrected ATM_OFFSET audit passed (run 37956261518): 27,768 offset/type rows; 10,552 prior-OI eligible, 10,501 valid entry-bar, 10,405 with exact-index and expiry-exit support. Zero source errors.
+- Corrected ABS_DELTA diagnostic passed (run 37956675818): 4,272 checks, 3,892 prior-OI-qualified, 2,232 valid exact entry bars, zero source errors. Model delta only, no P&L.
+- Deterministic replay kernel tests passed (run 37957753452). First run 37957499754 failed to write its manifest after SELF_TEST_PASS due to a literal runner-temp path; corrected and verified.
+- The finite configuration queue is at 360,000 / 9,379,584 enumerated, not backtested. No Phase52 grid P&L and no promotion.
+- Next: source/specification-aware family-template resolver, exact multi-leg combination, common exits, and end-to-end golden fixtures before the first real-data configuration slice.
