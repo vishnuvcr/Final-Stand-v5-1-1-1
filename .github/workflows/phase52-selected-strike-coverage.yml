@@ -1,0 +1,135 @@
+name: Phase 52 — Focused Selected-Strike Coverage Audit
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase52-factor-conditioned-strategy-discovery
+  cancel-in-progress: false
+
+jobs:
+  selected-strike-audit:
+    name: Audit exact strike-step and prior-bar OI eligibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore pinned market-data cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase52-focused-strike-cache-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            phase52-market-data-cache-${{ runner.os }}-
+            phase52-focused-strike-cache-${{ runner.os }}-
+
+      - name: Install audit dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub
+
+      - name: Remove prior audit outputs to prevent stale-summary acceptance
+        run: |
+          mkdir -p results/phase52/selected_strike_coverage
+          rm -f results/phase52/selected_strike_coverage/summary.json
+          rm -f results/phase52/selected_strike_coverage/atm_offset_leg_coverage.csv.gz
+          rm -f results/phase52/selected_strike_coverage/source_file_audit.csv
+          rm -f results/phase52/selected_strike_coverage/source_errors.csv
+          touch results/phase52/selected_strike_coverage/.gitkeep
+
+      - name: Run strike-step and prior-bar OI regression tests
+        run: |
+          mkdir -p results/phase52/selected_strike_coverage
+          python research/phase52/selected_strike_coverage_audit.py --self-test
+
+      - name: Audit selected strikes against pinned exact-time option bars
+        run: python research/phase52/selected_strike_coverage_audit.py
+
+      - name: Save focused data cache even if audit/persistence fails
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase52-focused-strike-cache-${{ runner.os }}-${{ github.run_id }}
+
+      - name: Upload source audit and coverage outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-selected-strike-${{ github.run_id }}
+          path: |
+            results/phase52/selected_strike_coverage/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Append research status and persist focused audit outputs
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          summary_path = Path("results/phase52/selected_strike_coverage/summary.json")
+          stamp = datetime.now(timezone.utc).isoformat()
+          branch = os.environ["PHASE_BRANCH"]
+          run_id = os.environ.get("GITHUB_RUN_ID", "unknown")
+          status_path = Path("PHASE52_STATUS.md")
+          research_path = Path("PHASE52_RESEARCH_LOG.md")
+          error_path = Path("PHASE52_ERROR_LOG.md")
+          if summary_path.exists():
+              summary = json.loads(summary_path.read_text(encoding="utf-8"))
+              entry = (
+                  f"\n\n## Focused selected-strike audit — run {run_id} ({stamp})\n"
+                  f"- Source revision: {summary.get('dataset_revision')}\n"
+                  f"- Audit source SHA256: {summary.get('audit_script_sha256')}\n"
+                  f"- Protocol SHA256: {summary.get('replay_protocol_sha256')}\n"
+                  f"- Expected/audited events: {summary.get('expected_events')}/{summary.get('audited_events')}\n"
+                  f"- Expiry files audited/errors: {summary.get('source_expiry_files_audited')}/{summary.get('source_file_errors')}\n"
+                  f"- OI eligible prior-bar rows: {summary.get('prior_oi_ge_100_rows')}\n"
+                  f"- Entry-bar valid AND prior-OI-eligible rows: {summary.get('entry_bar_valid_and_prior_oi_ge_100_rows')}\n"
+                  f"- Exact-index + entry-open + prior-OI eligible rows: {summary.get('entry_bar_valid_prior_oi_ge_100_and_exact_index_rows')}\n"
+                  "- This is coverage only; no P&L or strategy promotion.\n"
+              )
+              research_path.write_text(research_path.read_text(encoding="utf-8") + entry, encoding="utf-8")
+              status_path.write_text(status_path.read_text(encoding="utf-8") + entry, encoding="utf-8")
+          else:
+              failure = (
+                  f"\n\n## F52 automated audit failure — focused strike run {run_id} ({stamp})\n"
+                  "- Focused selected-strike audit did not produce summary.json. See the associated GitHub Actions run/logs and artifact if present.\n"
+                  "- Do not accept or infer selected-strike coverage from a failed or partial run.\n"
+              )
+              error_path.write_text(error_path.read_text(encoding="utf-8") + failure, encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md results/phase52/selected_strike_coverage
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase52 selected-strike audit checkpoint $GITHUB_RUN_ID"
+          git fetch origin "$PHASE_BRANCH"
+          # Refuse to persist results computed with code/protocol that have changed remotely.
+          local_script="$(sha256sum research/phase52/selected_strike_coverage_audit.py | cut -d' ' -f1)"
+          remote_script="$(git show "origin/$PHASE_BRANCH:research/phase52/selected_strike_coverage_audit.py" | sha256sum | cut -d' ' -f1)"
+          local_protocol="$(sha256sum PHASE52_REPLAY_PROTOCOL.md | cut -d' ' -f1)"
+          remote_protocol="$(git show "origin/$PHASE_BRANCH:PHASE52_REPLAY_PROTOCOL.md" | sha256sum | cut -d' ' -f1)"
+          if [ "$local_script" != "$remote_script" ] || [ "$local_protocol" != "$remote_protocol" ]; then
+            echo "Source/protocol changed during run; refusing to publish potentially stale selected-strike output." >&2
+            exit 1
+          fi
+          git rebase "origin/$PHASE_BRANCH"
+          git push origin HEAD:"$PHASE_BRANCH"
