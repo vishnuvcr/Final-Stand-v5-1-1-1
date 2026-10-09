@@ -451,3 +451,11 @@ Run 37937164472's broad coverage and selected-strike steps completed at the proc
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Frozen plan: research/phase52/first_historical_pilot.json; runner: research/phase52/historical_pilot_runner.py.
 - No hidden reasoning or secret values are recorded. Workflow logs/artifacts preserve operational errors.
+
+
+## 2026-10-10 — PA-015: Historical pilot v0.2 exact-duplicate normalization
+
+- Preserved pilot v0.1 outputs. Root cause: duplicate exact contract bars caused 274/480 planned config-event rows to fail closed; 205 additional rows failed the preregistered 2% high-low/open proxy; only one row executed.
+- Updated `historical_pilot_runner.py` to drop only full-row identical records after normalized timestamp/type/numeric fields. Per-file audit logs source row count, exact duplicate rows removed and post-dedup rows. Conflicting duplicates are not resolved and remain blocked.
+- Bumped the pilot version to v0.2 and updated its frozen plan before rerun. No config/event/cost/threshold change; no P&L ranking or selection. The 2% metric is explicitly described as an OHLC range proxy, not actual bid/ask spread.
+- Next: self-test, run v0.2, reconcile exactly 480 statuses, inspect duplicate removals and conflicts, then decide whether a larger development/validation engineering pilot is possible. No holdout use.
