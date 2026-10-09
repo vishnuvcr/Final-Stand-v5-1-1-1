@@ -20,7 +20,7 @@
 | Untouched OOS confirmation | NOT STARTED | Keep confirmation intervals protected before selection freeze. |
 | Promotion / live readiness | NOT STARTED | No strategy is promoted or approved for live execution. |
 | Manuscript and supplements | NOT STARTED | Produce after evidence and inference gates are complete. |
-| Recurring automation | ACTIVE | Main workflow is manual + daily. Legacy/UDiFF+IDF parser tests pass (run 37931285866); source audit and EOD adapter corrected successfully (run 37931305395); exact fixed-template coverage report completed (run 37931097834); EOD selector run 37932492241 completed with no promotion. The workflow now also builds a separate DTE/time event inventory before variable replay. |
+| Recurring automation | ACTIVE | Main workflow is manual + daily. Legacy/UDiFF+IDF parser tests pass (run 37931285866); source audit and EOD adapter corrected successfully (run 37931305395); exact fixed-template coverage report completed (run 37931097834); EOD selector run 37932492241 completed with no promotion. The workflow now builds exact index event and broad option/OI/exit coverage audits before variable replay. Run 37934719402 completed successfully; no configuration-specific P&L or per-strike eligibility has been calculated. |
 
 ## Existing evidence carried forward (not Phase 52 evidence)
 
@@ -181,3 +181,15 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Data warning:** The source index/option history ends 2026-07-02 even though expiry files have names through 2026-08-04. The files labeled 2026-07-28 and 2026-08-04 contain no target entry-day quotes. No silent date rolling or interpolation allowed.
 - **Meaning:** These are event/broad-contract-universe counts, not per-configuration selected-leg fills or P&L. Variable grid replay is not yet run.
 - **Cost amendment:** PA-008 sets ₹20/order primary and ₹10/order legacy sensitivity; no parameter grid dimensions changed.
+
+
+## Configuration-wide broad option/OI audit — 2026-10-09
+
+- Run: [37934719402](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934719402), success.
+- Frozen input: `thetrademarkk/india-index-options-1m` revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; 267 expiry files, no source file read errors.
+- Expected events: 1,068 = 267 target expiries × DTE calendar days {0,7} × exact entry times {09:45,13:00}. All 1,068 received an audit row.
+- Broad coverage counts: exact index entry=1,012; any option rows at exact entry=1,016; both CE and PE present=1,016; any contract with OI≥100=1,012; any 15:15 same-day exit rows=1,016; target-expiry exit with both option types at a common timestamp=1,040.
+- Conservative intersections: exact index + entry option rows + OI≥100 = 1,006/1,068; additionally requiring broad expiry exit = 1,004/1,068. These are broad event gates, not proof that each chosen strike/leg has valid entry and exit OHLC.
+- Split: development 526/540 pass exact-index + entry-option + OI gate; validation 404/416; holdout 76/112. With broad target-expiry exit additionally required: 526/540, 404/416, and 74/112 respectively.
+- Holdout limitation: pinned index bars end 2026-07-02; source expiry labels run through 2026-08-04, but recent expiry files do not imply complete recent index/option coverage. The July 28/Aug 4 sessions remain unresolved.
+- No P&L was calculated. Next mandatory gate: per-configuration selected-strike/leg OHLC eligibility and executable fill pricing; do not use the broad event counts as the replay sample size.
