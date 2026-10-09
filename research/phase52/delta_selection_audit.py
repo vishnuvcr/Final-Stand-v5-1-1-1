@@ -220,6 +220,8 @@ def main() -> int:
     summary = {
         "status":"MODEL_DELTA_AUDIT_COMPLETE" if not errors else "MODEL_DELTA_AUDIT_WITH_SOURCE_ERRORS",
         "created_at_utc":datetime.now(timezone.utc).isoformat(),"dataset":HF_REPO,"dataset_revision":revision,
+        "audit_script_sha256":sha256_file(Path(__file__)),
+        "replay_protocol_sha256":sha256_file(ROOT / "PHASE52_REPLAY_PROTOCOL.md"),
         "index_file_sha256":sha256_file(index_path),"source_expiry_files_expected":int(events["expiry"].nunique()),
         "source_expiry_files_audited":int(len(file_audit)),"source_file_errors":len(errors),
         "expected_selection_rows":int(events["event_id"].nunique()*len(TARGET_ABS_DELTAS)*2),
