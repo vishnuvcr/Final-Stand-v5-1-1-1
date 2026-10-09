@@ -292,8 +292,8 @@ def run(trades_path,features_path,outdir,leakage_audit_path):
     return out
 
 def self_test():
-    x=pd.DataFrame({"v":[1.,2.,3.]});e=edges_from(x,"v");b=bins(x,"v",e)
-    assert list(b)==["LOW","MID","HIGH"]
+    x=pd.DataFrame({"v":[1.,2.,3.]});e=[1.5,2.5];b=bins(x,"v",e)
+    assert [str(v) for v in b]==["LOW","MID","HIGH"], f"unexpected bin labels: {list(b)}"
     x1=pd.DataFrame({"expiry_key":["a","a"],"strategy":["x","y"],"net50":[1.,2.],"net":[1.,2.],"net100":[1.,2.],"expiry_date":pd.to_datetime(["2026-01-01","2026-01-01"])})
     m=metrics(x1.iloc[[1]],x1.iloc[[0]])
     assert m["n"]==1 and m["paired_mean_uplift_net50"]==1.0
