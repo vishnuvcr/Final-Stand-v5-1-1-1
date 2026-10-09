@@ -8,6 +8,7 @@ on:
     paths:
       - ".github/workflows/phase-54-ohcl-reference-sensitivity.yml"
       - "research/phase54/**"
+      - "results/phase52/historical_pilot/event_replay.csv"
 
 permissions:
   contents: write
