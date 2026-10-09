@@ -570,3 +570,10 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Root-cause diagnosis:** all 100 v0.2 eligibility blocks have prior OI 0.0 and status `PRIOR_OI_MISSING_OR_BELOW_GATE`; all are validation rows. The 379 OHLC failures are range-proxy breaches, not bid-ask spread observations.
 - **Verified data:** artifact digest `sha256:34b987e2fa19821898582145ae6d4403a64f6d9d085f588628a07b6e78da2aaa`; no source file errors or replay exceptions. Still insufficient usable coverage, no profitability inference.
 - **Status:** RESOLVED as a provenance issue; coverage limitation remains OPEN under F52-RESUME-001.
+
+## F52-RESUME-001 — Persistence sub-issue RESOLVED; coverage gate remains OPEN (2026-10-10)
+
+- **Persistence evidence:** workflow [37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726) completed successfully. The new regression test passed, including a real local Git remote with simultaneous append-only status edits; the checkpoint persistence step passed and both branch and main README updates were persisted.
+- **Code correction:** `persist_historical_pilot.py` now retries fetch/rebase/push races up to three times; it unions both sides only for allowlisted append-only log/README conflicts, retains an already-persisted remote artifact when same-path results collide, refuses source-code conflicts, and never force-pushes.
+- **Remaining issue:** research coverage remains insufficient at 1/480 executed rows. The second run [37984566094](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37984566094) validates the v0.2.1 audit metadata correction. Source coverage remediation is the next phase, not a reason to loosen filters.
+- **Status:** persistence RESOLVED; scientific coverage gate OPEN; no strategy promotion.
