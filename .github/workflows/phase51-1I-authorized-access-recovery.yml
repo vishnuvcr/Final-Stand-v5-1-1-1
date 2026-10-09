@@ -1,0 +1,62 @@
+name: Phase 51-1I Authorized Access Recovery
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-51-1I-authorized-access-recovery
+    paths:
+      - trigger/phase51_1I.start
+      - research/phase51_1F_authorized_access_inventory.py
+      - research/phase51_1F_upstox_fullchain_acquisition.py
+      - .github/workflows/phase51-1I-authorized-access-recovery.yml
+
+concurrency:
+  group: phase51-1I-authorized-access-recovery
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
+      DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+      ICICI_BREEZE_API_KEY: ${{ secrets.ICICI_BREEZE_API_KEY }}
+      ICICI_BREEZE_API_SECRET: ${{ secrets.ICICI_BREEZE_API_SECRET }}
+      ICICI_BREEZE_SESSION_TOKEN: ${{ secrets.ICICI_BREEZE_SESSION_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Record non-secret credential inventory
+        run: python research/phase51_1F_authorized_access_inventory.py
+      - name: Install recovery dependencies
+        run: python -m pip install --no-input requests pandas pyarrow
+      - name: Cache authorized acquisition
+        uses: actions/cache@v4
+        with:
+          path: data/phase51/upstox_1f
+          key: phase51-1I-upstox-${{ runner.os }}-${{ hashFiles('research/phase51_1F_upstox_fullchain_acquisition.py') }}
+          restore-keys: |
+            phase51-1I-upstox-${{ runner.os }}-
+      - name: Execute frozen Upstox recovery when authorized
+        run: |
+          set -euo pipefail
+          if [ -n "${UPSTOX_ACCESS_TOKEN:-}" ]; then
+            python research/phase51_1F_upstox_fullchain_acquisition.py
+          else
+            echo "UPSTOX_ACCESS_TOKEN is not configured; retaining DATA-BLOCKED status."
+          fi
+      - name: Upload recovery audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase51-1I-authorized-access-recovery-${{ github.run_id }}
+          path: |
+            results/phase51/authorized_access_inventory.json
+            results/phase51/upstox_1f/
