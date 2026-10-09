@@ -881,3 +881,8 @@ Artifacts: [summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phas
 ## Phase 52 audit-code correction — 2026-10-09
 
 Source-level review found defects in two coverage-only audits despite green steps. The ATM-offset summary from run [37942202655](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37942202655) is superseded because its offsets used ordinal ranks and the index close; the corrected script uses exact-time index open plus modal strike-step arithmetic. The delta audit failed its self-test in [37944408314](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37944408314) before market-data analysis. Its units/negative fixtures are fixed, and its selector now uses only the exact prior one-minute close for IV/delta and the exact entry open for fill eligibility. Reruns are pending. No Phase52 grid P&L has been calculated and no strategy is promoted.
+
+
+### Additional point-in-time correction — OI gate (PA-013)
+
+The selected-strike audit was further corrected so an open-fill decision uses OI from the exact prior completed minute (entry_ts minus one minute) rather than same-bar OI. Entry-bar OI is now diagnostics only; the same contract must independently have a valid exact entry-time bar/open. The active factor run [37954806932](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37954806932) checked out code before this amendment, so its selected-strike output cannot satisfy the final PA-013 gate. No P&L has been computed.
