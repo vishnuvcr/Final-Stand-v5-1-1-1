@@ -488,9 +488,9 @@ def analyze(
         )
         trade_index[common].append(trade)
         config_index = common + (trade["configuration_id"],)
-        family_index = common + (trade["family_id"],)
+        family_key = common + (trade["family_id"],)
         trade_index[config_index].append(trade)
-        family_index[family_index_key := common + (trade["family_id"],)].append(trade)
+        family_index[family_key].append(trade)
 
     for threshold in THRESHOLDS:
         for brokerage in BROKERAGE_PER_ORDER_INR:
