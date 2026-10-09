@@ -958,3 +958,8 @@ A final timing audit found the selected-strike coverage script was using entry-b
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Branch-local run details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot
 - This is a bounded baseline engineering run, not a factor-router efficacy result.
+
+
+## Phase 52 — pilot integrity issue (2026-10-10)
+
+The factor-conditioned strategy-discovery branch is paused at a data/provenance gate. The committed historical pilot files identify v0.1 and count 274 eligibility blocks, 205 OHLC-proxy exclusions, and one replay pass (480 rows). A later v0.2 checkpoint reported different counts (100/379/1). These versions have not yet been reconciled; neither set is treated as canonical. No strategy has been promoted. See [Phase 52 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md), [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md), and [historical pilot report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot/report.json). Next gate: reconcile run artifacts and manifests, then diagnose eligibility failures without relaxing the frozen liquidity proxy.
