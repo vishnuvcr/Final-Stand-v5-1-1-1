@@ -1,4 +1,4 @@
-name: Phase 52 — Bounded Historical BASELINE Pilot v0.2 (exact duplicate normalization)
+name: Phase 52 — Bounded Historical BASELINE Pilot v0.2.1 (audit provenance)
 
 on:
   workflow_dispatch:
@@ -64,7 +64,7 @@ jobs:
         id: plan
         run: python research/phase52/historical_pilot_runner.py --plan-only
 
-      - name: Run bounded historical BASELINE v0.2 replay (frozen configs/events; exact duplicates only)
+      - name: Run bounded historical BASELINE v0.2.1 replay (frozen configs/events; audit-only metadata correction)
         id: replay
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
