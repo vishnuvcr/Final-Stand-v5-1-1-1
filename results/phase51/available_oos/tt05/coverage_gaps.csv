@@ -1,4 +1,1 @@
 trade_id,expiry,trigger_ts,gap_type
-3,2026-05-05,2026-04-23 00:00:00+05:30,missing_complete_entry_at_09:30_to_15:10
-8,2026-05-12,2026-04-30 00:00:00+05:30,missing_complete_entry_at_09:30_to_15:10
-12,2026-05-19,2026-05-07 00:00:00+05:30,missing_complete_entry_at_09:30_to_15:10

@@ -1,15 +1,15 @@
 {
   "strategy": "TT-05",
   "engine_revision": "50B-TT05-COVERAGE-V2",
-  "trades": 17,
-  "candidate_trades": 20,
-  "coverage_exclusions": 3,
-  "coverage_rate": 0.85,
+  "trades": 62,
+  "candidate_trades": 62,
+  "coverage_exclusions": 0,
+  "coverage_rate": 1.0,
   "session_exclusions": 0,
-  "net": -1853.6351072795042,
-  "net50": -2626.0776609192526,
-  "net20": -2656.0351072795047,
-  "net20_50": -3829.6776609192525,
+  "net": 17098.146574629933,
+  "net50": 14239.719861944934,
+  "net20": 14171.746574629931,
+  "net20_50": 9850.119861944935,
   "splits": [
     {
       "split": "DEV",
@@ -29,11 +29,11 @@
     },
     {
       "split": "HOLD",
-      "trades": 17,
-      "net": -1853.6351072795042,
-      "net50": -2626.0776609192526,
-      "net20": -2656.0351072795047,
-      "net20_50": -3829.6776609192525
+      "trades": 62,
+      "net": 17098.146574629933,
+      "net50": 14239.719861944934,
+      "net20": 14171.746574629931,
+      "net20_50": 9850.119861944935
     }
   ],
   "phase51_3_window": [
@@ -43,11 +43,11 @@
   "partial_oos_only": true,
   "phase51_3_gate": {
     "coverage_threshold": 0.95,
-    "coverage_rate": 0.85,
-    "coverage_status": "FAIL_COVERAGE",
+    "coverage_rate": 1.0,
+    "coverage_status": "PASS",
     "data_error_count": 0,
     "data_error_status": "PASS",
-    "replay_quality_gate": "FAIL",
+    "replay_quality_gate": "PASS",
     "final_full_window_validation": false
   }
 }

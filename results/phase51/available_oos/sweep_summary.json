@@ -9,26 +9,56 @@
     "TT04",
     "TT05"
   ],
+  "source_manifest": {
+    "options_repo": "rissin/nse-options-intraday",
+    "options_file": "upstox_intraday/NIFTY/NIFTY_2026.parquet",
+    "options_sha256": "bae9943b2fa99ee9c1214fb7c695b84f9f661a050a5cd04d9c5c2ffc7bc59f73",
+    "options_bytes": 394805617,
+    "observed_expiries": [
+      "2026-04-21",
+      "2026-04-28",
+      "2026-05-05",
+      "2026-05-12",
+      "2026-05-19",
+      "2026-05-26",
+      "2026-06-02",
+      "2026-06-09",
+      "2026-06-16",
+      "2026-06-23",
+      "2026-06-30",
+      "2026-07-07",
+      "2026-07-14",
+      "2026-07-21"
+    ],
+    "spot_root": "data/validated_spot_source",
+    "spot_rows": 23625,
+    "spot_first": "2026-04-21 09:15:00+05:30",
+    "spot_last": "2026-07-21 15:29:00+05:30",
+    "window": [
+      "2026-04-21 00:00:00+05:30",
+      "2026-07-21 23:59:59+05:30"
+    ]
+  },
   "results": {
     "TT02": {
       "strategy": "TT-02",
       "engine_revision": "50B-TT02-COVERAGE-V3",
-      "trades": 5,
-      "candidate_trades": 5,
+      "trades": 13,
+      "candidate_trades": 13,
       "coverage_exclusions": 0,
       "coverage_rate": 1.0,
-      "net": 13824.960170215996,
-      "net50": 13249.440255323996,
-      "net20": 12904.560170215997,
-      "net20_50": 11868.840255323998,
+      "net": -1341.120832479497,
+      "net50": -2936.306248719252,
+      "net20": -3701.120832479496,
+      "net20_50": -6476.306248719249,
       "by_vix": [
         {
           "vix_state": "NORMAL",
-          "trades": 5,
-          "net": 13824.960170215996,
-          "net50": 13249.440255323996,
-          "mean": 2764.992034043199,
-          "win_rate": 0.8
+          "trades": 13,
+          "net": -1341.1208324795007,
+          "net50": -2936.306248719251,
+          "mean": -103.1631409599616,
+          "win_rate": 0.38461538461538464
         }
       ],
       "phase51_3_window": [
@@ -49,15 +79,15 @@
     "TT04": {
       "strategy": "TT-04",
       "engine_revision": "50B-TT04-COVERAGE-V3",
-      "trades": 22,
-      "candidate_trades": 22,
+      "trades": 62,
+      "candidate_trades": 62,
       "coverage_exclusions": 0,
       "coverage_rate": 1.0,
       "session_exclusions": 0,
-      "net": 6864.31031071597,
-      "net50": 5694.465466073972,
-      "net20": 5825.910310715968,
-      "net20_50": 4136.865466073971,
+      "net": 13271.506311950925,
+      "net50": 10287.259467926428,
+      "net20": 10345.106311950924,
+      "net20_50": 5897.659467926425,
       "splits": [
         {
           "split": "DEV",
@@ -75,19 +105,26 @@
         },
         {
           "split": "HOLD",
-          "trades": 22,
-          "net": 6864.31031071597,
-          "net50": 5694.465466073972,
-          "win_rate": 0.6363636363636364
+          "trades": 62,
+          "net": 13271.506311950925,
+          "net50": 10287.259467926428,
+          "win_rate": 0.6774193548387096
         }
       ],
       "by_vix": [
         {
+          "vix_state": "LOW",
+          "trades": 2,
+          "net": -4899.991145296503,
+          "net50": -4988.861717944754,
+          "mean": -2449.9955726482517
+        },
+        {
           "vix_state": "NORMAL",
-          "trades": 22,
-          "net": 6864.31031071597,
-          "net50": 5694.465466073972,
-          "mean": 312.01410503254414
+          "trades": 60,
+          "net": 18171.497457247428,
+          "net50": 15276.12118587118,
+          "mean": 302.8582909541238
         }
       ],
       "phase51_3_window": [
@@ -108,15 +145,15 @@
     "TT05": {
       "strategy": "TT-05",
       "engine_revision": "50B-TT05-COVERAGE-V2",
-      "trades": 17,
-      "candidate_trades": 20,
-      "coverage_exclusions": 3,
-      "coverage_rate": 0.85,
+      "trades": 62,
+      "candidate_trades": 62,
+      "coverage_exclusions": 0,
+      "coverage_rate": 1.0,
       "session_exclusions": 0,
-      "net": -1853.6351072795042,
-      "net50": -2626.0776609192526,
-      "net20": -2656.0351072795047,
-      "net20_50": -3829.6776609192525,
+      "net": 17098.146574629933,
+      "net50": 14239.719861944934,
+      "net20": 14171.746574629931,
+      "net20_50": 9850.119861944935,
       "splits": [
         {
           "split": "DEV",
@@ -136,11 +173,11 @@
         },
         {
           "split": "HOLD",
-          "trades": 17,
-          "net": -1853.6351072795042,
-          "net50": -2626.0776609192526,
-          "net20": -2656.0351072795047,
-          "net20_50": -3829.6776609192525
+          "trades": 62,
+          "net": 17098.146574629933,
+          "net50": 14239.719861944934,
+          "net20": 14171.746574629931,
+          "net20_50": 9850.119861944935
         }
       ],
       "phase51_3_window": [
@@ -150,11 +187,11 @@
       "partial_oos_only": true,
       "phase51_3_gate": {
         "coverage_threshold": 0.95,
-        "coverage_rate": 0.85,
-        "coverage_status": "FAIL_COVERAGE",
+        "coverage_rate": 1.0,
+        "coverage_status": "PASS",
         "data_error_count": 0,
         "data_error_status": "PASS",
-        "replay_quality_gate": "FAIL",
+        "replay_quality_gate": "PASS",
         "final_full_window_validation": false
       }
     }
