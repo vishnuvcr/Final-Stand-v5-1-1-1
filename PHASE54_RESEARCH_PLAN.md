@@ -48,3 +48,15 @@ Log failures with run URL, exact step, root cause, correction, regression test a
 
 ## Status
 Plan frozen; implementation committed; workflow execution and results pending verification. Live execution and strategy promotion are prohibited.
+
+## Plan amendment PA-54-001 — conclusive hard-block classification (2026-10-10)
+
+**Reason:** The corrected Phase 52 replay now preserves complete selected-leg evidence for all 379 OHLC-range-excluded rows and the single replay-pass row. The remaining 100 rows are blocked with an explicit first-leg status of `PRIOR_OI_MISSING_OR_BELOW_GATE`, observed `prior_oi=0`, and a recorded exclusion stating that a required selected leg lacks exact prior-bar OI at or above 100.
+
+**Clarification:** A multi-leg strategy fails its all-legs eligibility gate when any one required leg demonstrably fails the fixed prior-minute OI minimum. It is therefore valid to retain that row as a threshold-invariant OI/leg rejection without inventing evidence for the unvisited legs. This does not mean the unvisited legs were audited. All rows that could pass the OI gate or whose eligibility could change with the OHLC threshold must contain complete selected-leg OI, entry-status and finite range-proxy evidence. Any partial row without a conclusive hard blocker continues to fail closed.
+
+**Unchanged:** The 480-row frozen universe, 2% baseline, 11 preregistered thresholds, OI minimum 100, data revision, holdout exclusion, costs, no-P&L boundary, and promotion prohibitions remain unchanged.
+
+**Acceptance:** Reconcile exactly 100 threshold-invariant hard OI blockers, 379 complete range-excluded leg payloads, and one complete baseline pass; each threshold's mutually exclusive categories must sum to 480; OI and entry-data rejection counts must remain invariant; eligible counts must be non-decreasing as the threshold increases.
+
+**Status:** Amendment recorded before accepting any threshold outputs; automated rerun and report validation pending.
