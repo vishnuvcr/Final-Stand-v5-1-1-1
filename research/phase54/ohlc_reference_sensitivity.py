@@ -169,7 +169,7 @@ def main() -> None:
             {"configuration_id":"c1","event_id":"e1","status":"EXCLUDED_OHLC_RANGE_PROXY","split":"development","family_id":"BEAR_CALL_SPREAD",
              "resolved_legs_json":json.dumps([{"prior_oi_status":"PASS","prior_oi":500,"entry_status":"PASS","entry_range_proxy_pct":2.5}])},
             {"configuration_id":"c2","event_id":"e1","status":"BLOCKED_LEG_ELIGIBILITY","split":"development","family_id":"BUY_CALL",
-             "resolved_legs_json":json.dumps([{"prior_oi_status":"FAIL","prior_oi":0,"entry_status":"PASS","entry_range_proxy_pct":1.0}])},
+             "resolved_legs_json":json.dumps([{"leg_id":"L1","prior_oi_status":"FAIL","prior_oi":0,"entry_status":"PASS","entry_range_proxy_pct":1.0}])},
         ]
         result = analyze(sample)
         assert result["status"] == "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE"
