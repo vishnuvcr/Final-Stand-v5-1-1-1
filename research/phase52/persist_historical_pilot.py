@@ -29,9 +29,18 @@ def git(args: list[str], cwd: Path) -> str:
     return result.stdout.strip()
 
 def persist_repo(cwd: Path, branch: str, paths: list[str], message: str) -> str:
+    available: list[str] = []
+    for item in paths:
+        path = cwd / item
+        if path.is_file():
+            available.append(item)
+        elif path.is_dir():
+            available.extend(str(child.relative_to(cwd)) for child in path.rglob("*") if child.is_file())
+    if not available:
+        return "NO_FILES_TO_PERSIST"
     git(["config", "user.name", "github-actions[bot]"], cwd)
     git(["config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], cwd)
-    git(["add", *paths], cwd)
+    git(["add", *sorted(set(available))], cwd)
     staged = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=cwd).returncode == 1
     if not staged:
         return "NO_CHANGES"
