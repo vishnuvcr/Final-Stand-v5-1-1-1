@@ -63,3 +63,15 @@ This is a discovery smoke test, not an exhaustive source audit. Even if all requ
 3. OpenChart response transformation: https://github.com/marketcalls/openchart/blob/master/openchart/utils.py
 4. OpenChart issues on request failures/rate limiting/backfill depth: https://github.com/marketcalls/openchart/issues
 5. NSE Data Sharing & Usage Policy: https://www.nseindia.com/static/market-data/nse-data-policy
+
+## Runtime outcome — 2026-10-10 (final bounded probe)
+
+The workflow [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) passed its software/quality checks and persisted an aggregate-only report at [`results/phase52/openchart_probe/runs/37982673873/probe_report.json`](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/openchart_probe/runs/37982673873/probe_report.json).
+
+Six search queries were tested: NIFTY on FO and IDX, current-month prefix NIFTY26OCT on FO, the README's documented option example, and the NIFTY26JUL / NIFTY26AUG prefixes corresponding to unresolved Phase 51 sessions. Each request to `/v1/exchanges/symbolsDynamic` returned HTTP 200 and 20 rows. All 20 rows had type `Index`; the normalized result hash was identical across all six searches. Both NIFTY FO and NIFTY IDX returned the same rows; the other four contract-oriented query strings had zero symbol/description matches. The cookie/homepage GET returned HTTP 403.
+
+**Result:** zero options/futures were identified. The report records two historical date windows planned and zero historical requests. The options-history endpoint was **not exercised**, because the search wrapper did not produce a contract/token. This distinguishes a failed source-discovery step from proof that the separate historical-data endpoint cannot serve an individual known token.
+
+The immediate disposition remains **NOT ACCEPTED for all-options acquisition**. In addition to not exposing OI, Greeks, IV, bid/ask, order depth or trade-by-trade data in its documented OHLCV schema, the current symbol-search wrapper fails the initial option-universe discovery gate. The generic `historical()` method also falls back to the first search result if there is no exact symbol match, so any adapter must explicitly enforce exact symbol/token matching before fetching; otherwise it risks silently selecting the wrong instrument.
+
+A future bounded follow-up may test `historical_direct()` using a separately verified contract/token and then audit expiry/strike/session coverage. It must not treat this current run as a historical data success, fill the Phase 51 gaps, or produce strategy P&L.
