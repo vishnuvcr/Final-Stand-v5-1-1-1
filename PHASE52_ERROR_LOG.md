@@ -333,3 +333,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction:** Workflow persistence now compares the checked-out strategy_specifications.csv with the current remote branch and restores the remote registry_audit.json (or discards the stale copy) when the specification snapshot changed.
 - **Impact:** No P&L is affected; registry audit counts must correspond to the exact specification CSV hash.
 - **Status:** PATCHED IN MAIN AND BRANCH WORKFLOWS; end-to-end verification pending.
+
+
+## F52-031 — First selected-strike audit ran on pre-correction snapshot — NOT ACCEPTED
+
+- **Date:** 2026-10-09
+- **Run:** 37937164472; the selected-strike audit step completed successfully at the process level.
+- **Issue:** This run checked out the earlier strike-ladder implementation, which sourced candidate strikes from the full expiry file rather than the exact entry-time contract set. Therefore a green step is not a valid scientific pass.
+- **Handling:** Mark the run's selected-strike output stale and do not use its counts. The workflow now compares the auditor against the remote branch before persistence and discards/restores stale output. The next queued run should use the point-in-time correction and reconciled PA-010 strategy specs.
+- **Status:** NOT ACCEPTED; patched-source rerun pending.
