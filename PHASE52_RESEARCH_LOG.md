@@ -519,3 +519,11 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Frozen plan: research/phase52/first_historical_pilot.json; runner: research/phase52/historical_pilot_runner.py.
 - No hidden reasoning or secret values are recorded. Workflow logs/artifacts preserve operational errors.
+
+## 2026-10-09T20:11:32.785337+00:00 — Bounded historical pilot run 37984566094
+
+- **Run:** [37984566094](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37984566094); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Frozen plan: research/phase52/first_historical_pilot.json; runner: research/phase52/historical_pilot_runner.py.
+- No hidden reasoning or secret values are recorded. Workflow logs/artifacts preserve operational errors.

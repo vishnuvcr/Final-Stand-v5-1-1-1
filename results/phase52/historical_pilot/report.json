@@ -1,7 +1,7 @@
 {
   "status": "HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS",
-  "created_at_utc": "2026-10-09T20:04:13.966869+00:00",
-  "pilot_version": "phase52-historical-base-pilot-v0.2",
+  "created_at_utc": "2026-10-09T20:11:29.911548+00:00",
+  "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
   "historical_pnl_calculated": true,
   "production_or_promotion_eligible": false,
   "pinned_dataset": "thetrademarkk/india-index-options-1m",
@@ -38,7 +38,7 @@
   "source_files_audited": 13,
   "source_file_errors": 0,
   "input_fingerprints": {
-    "pilot_plan_sha256": "714cdb7d8a4d47089b03df865a3d2261a5ae3171890640bc67177754118cb992",
+    "pilot_plan_sha256": "eaaeb525858e6a1827a685db16879a6f96fedd4edc256419730fef71935705e9",
     "grid_sha256": "6a6c72da7f44438af7fdefa96134082fd214be3df48980b4a88543e0db96b07b",
     "registry_sha256": "8660a07c7bd90ada78ed30f05eb361a15fe948844e05377d266b45d74599f87b",
     "specifications_sha256": "1690fa3ad156aaf94e18f8f6547829065e5a90aef907a5602516451ff13a4cc3",
@@ -47,7 +47,7 @@
     "resolver_sha256": "9ec380e6b631042ca534571fd11ea124dfc17836716a588c4d8b13dcdd869758",
     "kernel_sha256": "8bb4ee8bfb7694a88cf83bfd69a93296185fb1f58ab06c5433fbe599a67f2c19",
     "grid_enumerator_sha256": "e02ed01bdf533e90039b2f0c310b786356af437cee709863453bd24036102d9b",
-    "historical_pilot_runner_sha256": "eabde2d0062a9ecde4b18bd8990cc9a4929f2549a38490bf18638519973cad48",
+    "historical_pilot_runner_sha256": "7bebb441d2124b1358845ede1c989fe17fdeb29c886205b92b71f8c474a7c4e5",
     "phase43_fee_and_lot_helper_sha256": "b1f09876ab461b2cccc5b6089901b3720623360d781f82369be6ea6ee100ea47",
     "event_inventory_sha256": "b35c7779f302a4351c068771a020ea75a664b514be139f66cf276abcd81f61b3",
     "configuration_manifest_sha256": "812f0c3288332901cda80c818c9121c21ec1f70d5fc87580cbe0aba5fd2f1569",
