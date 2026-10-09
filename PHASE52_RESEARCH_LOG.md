@@ -98,3 +98,13 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - Queue status: ENUMERATED_NOT_BACKTESTED; enumeration complete: False. Enumerated configs are NOT backtests.
 - Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
 - The legacy factor-selector pilot is not the full Phase52 configuration sweep; futures/synthetic basis remains unavailable in its seed panel. No Phase52 candidate is promoted.\n
+
+## 2026-10-09 — Step 0.9: Legacy selector pilot completed with validation-only evidence
+
+- **Authoritative run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927040268 (successful end-to-end).
+- **Inputs:** 9,699 frozen Phase45 strategy outcomes and 477 point-in-time Phase39 feature rows; feature leakage audit status PASS. Joined 6,617 outcomes (68.22%) without interpolation/forward-fill. Matched expiries: development 102; validation 60; 2026 holdout 13.
+- **Development fit/tuning:** training ended 2023-02-17; tuning began 2023-02-24. Selected features: VIX = India_VIX_state; Greeks/surface = atm_pe_iv; OI/flow = near_atm_oi_pcr; spot = nifty_ma_gap_15m; multivariate = TREND_X_IV_SKEW; global/sentiment proxy = global_NASDAQ_ret1.
+- **Validation results:** all policies net negative. VIX router net -₹63,547, legacy all-modelled-cost 1.5× stress net -₹64,634, mean stress uplift +₹1,411/expiry; CI [-₹915,+₹4,290], one-sided p=0.1642 and Holm-adjusted p=0.9850. This is not statistically significant, and the absolute P&L remains negative.
+- **2026 holdout:** not evaluated; only 13 matched expiries, below the 20-expiry pre-registered threshold. No confirmation is claimed.
+- **Operational repairs:** run 37926550040 and run 37926908847 failed after analysis due to a stray workflow Python-heredoc line and/or concurrent append-only log rebase conflict. Run 37927040268 corrected the workflow and successfully persisted artifacts. Failed runs remain documented.
+- **Conclusion:** no factor selector is promoted. The current legacy panel supports only a negative/insufficient-evidence exploratory screen. Next phase is true variable-configuration replay, with traded-futures basis and 2026 OI gates still open.
