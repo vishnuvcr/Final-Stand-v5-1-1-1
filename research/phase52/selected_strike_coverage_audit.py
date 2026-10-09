@@ -108,6 +108,10 @@ def main() -> int:
                 df[col] = pd.to_numeric(df[col], errors="coerce")
             df = df.dropna(subset=["timestamp","strike"])
             df["valid_ohlc"] = valid_ohlc(df)
+            # Timestamp index prevents repeated full-file scans inside the event ×
+            # offset × option-type loops.
+            by_ts = {stamp: frame for stamp, frame in df.groupby("timestamp", sort=False)}
+            empty = df.iloc[0:0]
             strikes, _ = select_ranked_strikes(df["strike"].dropna().unique().tolist(), 1.0)
             strikes = sorted(strikes)
             target_day = pd.Timestamp(expiry, tz=TZ).normalize()
@@ -130,11 +134,11 @@ def main() -> int:
             else: entry_ts = entry_ts.tz_convert(TZ)
             spot = spot_map.get(str(entry_ts), np.nan)
             ordered, atm_idx = select_ranked_strikes(strikes, spot)
-            entry = df[df["timestamp"].eq(entry_ts)]
+            entry = by_ts.get(entry_ts, empty)
             exit_1515_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
-            exit_1515 = df[df["timestamp"].eq(exit_1515_ts)]
+            exit_1515 = by_ts.get(exit_1515_ts, empty)
             expiry_exit_ts = pd.Timestamp(expiry_exit) if expiry_exit is not None else None
-            exit_expiry = df[df["timestamp"].eq(expiry_exit_ts)] if expiry_exit_ts is not None else df.iloc[0:0]
+            exit_expiry = by_ts.get(expiry_exit_ts, empty) if expiry_exit_ts is not None else empty
             for offset in OFFSETS:
                 rank = atm_idx + offset
                 strike = ordered[rank] if 0 <= rank < len(ordered) else np.nan
