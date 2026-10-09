@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
-      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
       PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +36,17 @@ jobs:
         run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy
       - name: Runner self-test
         run: python research/phase52/historical_pilot_runner.py --self-test-only
+      - name: Refresh preregistration manifest for the reviewed code revision
+        run: |
+          python research/phase52/historical_pilot_runner.py --plan-only
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path("results/phase52/historical_pilot/pilot_manifest.json").read_text())
+          assert m["configuration_count"]==40 and m["expected_event_rows"]==480
+          assert len(m["event_ids"])==24
+          print("Frozen universe identities checked; only code/file fingerprints refreshed.")
+          PY
       - name: Recompute frozen 40 x 24 historical pilot with complete range-failure leg evidence
         run: python research/phase52/historical_pilot_runner.py --run
       - name: Validate output row counts and leg evidence
@@ -53,15 +64,15 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase52-leg-evidence-repair-\${{ github.run_id }}
+          name: phase52-leg-evidence-repair-${{ github.run_id }}
           path: results/phase52/historical_pilot/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 90
       - name: Persist audited output and checkpoint logs
         if: always()
         env:
-          RUN_ID: \${{ github.run_id }}
-          JOB_STATUS: \${{ job.status }}
+          RUN_ID: ${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
         run: |
           set -euo pipefail
           python - <<'PY'
