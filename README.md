@@ -1,18 +1,19 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
-## Phase 51-3 — Available-data OOS sweep — RETRY PENDING (2026-10-09)
+## Phase 51-3 — Available-data OOS sweep — POST-FIX RETRY PENDING (2026-10-09)
 
-The first orchestration attempt started successfully but failed in the TT-02 candidate engine. Run [37878089042](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37878089042) produced no accepted result artifact, so every P&L value emitted by that run remains **NON-EVIDENCE**.
+The first run started successfully but failed in TT-02 because the replay summary referenced an undefined `TT02_ENGINE_REV`. The exact traceback was captured in run [37879416000](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879416000); main orchestrator run [37879632246](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37879632246) also started before the patch reached its checkout and failed with the same defect. Its diagnostic artifact was retained, but it is not accepted P&L evidence.
 
-TT-05's console-only output showed 17 completed trades from 20 candidates (85% coverage), below the preregistered 95% gate. If repeated, it is classified FAIL_COVERAGE and excluded; missing opportunities are not imputed or dropped. TT-04 console figures are also unaccepted because the overall run failed and no artifact passed audit.
+**Correction committed on the Phase-51-3 branch:** defined `TT02_ENGINE_REV = "50B-TT02-COVERAGE-V3"` and replaced the vectorized implied-volatility step's eager division with a masked divide for valid-vega rows. Strategy rules, parameters and valid Newton updates are unchanged.
 
-Corrections already committed:
-- Wrapper writes per-candidate coverage/data-error gate status and prints full candidate tracebacks.
-- Workflow audit runs after a failing engine step and uploads partial diagnostic artifacts even when the attempt fails.
-- Orchestration uses a finite completion marker so the schedule stops after the diagnostic sweep is completed; manual dispatch remains available.
-- The research branch remains separate and unmerged.
+Candidate observations from the failed diagnostic run, strictly **not accepted P&L evidence**:
+- **TT-04:** 22/22 completed candidates, 100% coverage, zero row-level data errors; quality gate PASS, but clean replay and artifact audit still required.
+- **TT-05:** 17/20 completed candidates, 85% coverage, zero row-level data errors; **FAIL_COVERAGE** under the preregistered >=95% threshold. It remains excluded.
+- **TT-02:** summary failed on the missing metadata constant; the post-fix replay is required.
 
-Current boundaries remain unchanged: this is a partial diagnostic window of **2026-04-21 to 2026-07-21**, not the final Phase-51 OOS window of **2026-04-21 to 2026-08-04**. Expiries **2026-07-28 and 2026-08-04** remain unresolved. No strategy tuning or promotion is permitted.
+The corrected wrapper now prints/stores tracebacks, classifies each candidate's coverage/data-error gate, and the main orchestrator uploads diagnostics even after failure. A finite completion marker stops scheduled runs after the finite phase succeeds; manual dispatch remains available.
+
+The diagnostic interval stays **2026-04-21 to 2026-07-21** and does not replace the final Phase-51 window **2026-04-21 to 2026-08-04**. Expiries **2026-07-28 and 2026-08-04** remain unresolved. No parameter tuning, statistical promotion, or live-trading recommendation is authorized.
 
 - [Phase 51-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-3-available-data-strategy-sweep)
 - [Phase 51-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_STATUS.md)
