@@ -979,3 +979,17 @@ The v0.1 report and v0.2 run artifact are distinct versions, not contradictory r
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Branch-local run details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot
 - This is a bounded baseline engineering run, not a factor-router efficacy result.
+
+
+## Phase 53 — Free-source option data coverage remediation (2026-10-10)
+
+Phase 52's checkpoint-persistence defect is resolved and its regression test passed on [run 37983999726](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37983999726). The verified v0.2 pilot still has only one replay pass out of 480 rows, so Phase 53 is a bounded source-quality/data-coverage audit, not another strategy optimization or a promotion attempt. It preserves the 2% OHLC proxy and holdout.
+
+- [Phase 53 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/PHASE53_RESEARCH_PLAN.md)
+- [Data source matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/PHASE53_DATA_SOURCE_MATRIX.md)
+- [Phase 53 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/PHASE53_STATUS.md)
+- [Phase 53 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/PHASE53_ERROR_LOG.md)
+- [Machine-readable source registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/research/phase53/sources.json)
+- [Manual/automatic source audit workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-53-free-option-data-coverage-remediation/.github/workflows/phase-53-free-option-data-coverage.yml)
+
+Phase 53 must establish exact source revision/file coverage and distinguish official daily reports from timestamp-aligned intraday quote/depth. Public sample files or credential-dependent APIs are not counted as free full-history sources. No strategy, factor router or holdout is promoted or evaluated in this phase.
