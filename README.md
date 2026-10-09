@@ -870,3 +870,16 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Workflow concurrency correction:** Run [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472) completed its audit steps but failed at persistence because parallel runs collided on generated artifacts. One shared concurrency group has been restored; the resolver preserves existing remote result files on collisions and merges only append-only logs, while source/code conflicts still fail closed. See [F52-032](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md). Verification pending.
+
+
+## Phase 52 — selected ATM-offset leg coverage gate (2026-10-09)
+
+The corrected selected-strike audit completed in [workflow run 37942202655](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37942202655). It used pinned dataset revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5` and resolved the ATM-relative strike ladder only from contracts present at the exact entry timestamp, avoiding future-listed strike leakage.
+
+- 267/267 expiry files audited; zero source file errors.
+- 1,068/1,068 event rows; 27,768 ATM-offset × option-type leg-event rows across offsets -6..+6.
+- 11,222 rows meet entry OI≥100; 15,718 rows have valid expiry-exit OHLC; 11,108 rows pass exact-index + entry OI + expiry-exit OHLC.
+- These are leg-level coverage counts only—not complete multi-leg configuration coverage and not P&L. ABS_DELTA remains blocked pending a tested point-in-time IV/delta resolver. The 2026-07-28 and 2026-08-04 exit data gaps remain unresolved; no candidate is promoted.
+- Configuration queue checkpoint: 335,000/9,379,584 IDs enumerated, still `ENUMERATED_NOT_BACKTESTED`.
+
+Artifacts: [summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/selected_strike_coverage/summary.json), [source file audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/selected_strike_coverage/source_file_audit.csv), [source errors](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/selected_strike_coverage/source_errors.csv), [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md), [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_RESEARCH_LOG.md), [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md).
