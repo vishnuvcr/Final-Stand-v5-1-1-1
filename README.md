@@ -1,3 +1,13 @@
+## Phase 51-1J — Free-source recovery audit
+
+A public Hugging Face dataset, [thetrademarkk/india-index-options-1m](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m), lists both missing NIFTY files: [2026-07-28](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/commit/dbc0596) and [2026-08-04](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/commit/51ca58c). It is labelled CC BY-NC 4.0 and warns option coverage is partial. File presence is not yet proof of minute/strike/expiry completeness.
+
+- [Automated metadata-only audit run 37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582) is running after a first workflow setup failure was patched.
+- [Free-source plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1J-tradingtick-source-audit/PHASE51_1J_FREE_SOURCE_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1J-tradingtick-source-audit/PHASE51_1J_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1J-tradingtick-source-audit/PHASE51_1J_ERROR_LOG.md)
+- Raw files will not be committed to the public repository. No P&L or strategy promotion until provenance, exact contract coverage and data-integrity gates pass.
+
+---
+
 ## Phase 51-1J — TradingTick public-source audit (CLOSED / INSUFFICIENT)
 
 **Terminal audit:** [GitHub Actions run 37915320571](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37915320571) succeeded on 2026-10-09. This is a successful audit workflow but a negative source-eligibility result for intraday replay.
