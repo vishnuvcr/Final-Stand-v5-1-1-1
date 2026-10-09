@@ -20,7 +20,7 @@
 | Untouched OOS confirmation | NOT STARTED | Keep confirmation intervals protected before selection freeze. |
 | Promotion / live readiness | NOT STARTED | No strategy is promoted or approved for live execution. |
 | Manuscript and supplements | NOT STARTED | Produce after evidence and inference gates are complete. |
-| Recurring automation | ACTIVE | Main workflow is manual + daily. Legacy/UDiFF+IDF parser tests pass (run 37931285866); source audit and EOD adapter corrected successfully (run 37931305395); exact fixed-template coverage report completed (run 37931097834); EOD selector run 37932492241 completed with no promotion. The workflow now builds exact index event and broad option/OI/exit coverage audits before variable replay. Run 37934719402 completed successfully; no configuration-specific P&L or per-strike eligibility has been calculated. |
+| Recurring automation | ACTIVE | Main workflow is manual + daily. Legacy/UDiFF+IDF parser tests pass (run 37931285866); source audit and EOD adapter corrected successfully (run 37931305395); exact fixed-template coverage report completed (run 37931097834); EOD selector run 37932492241 completed with no promotion. The workflow builds exact index event and broad option/OI/exit coverage audits, and now includes a selected-strike ATM-offset OHLC/OI audit (first run pending). ABS_DELTA remains blocked pending a validated point-in-time delta resolver. Run 37934719402 completed successfully; no configuration-specific P&L or per-strike eligibility has been calculated. |
 
 ## Existing evidence carried forward (not Phase 52 evidence)
 
@@ -193,3 +193,11 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Split: development 526/540 pass exact-index + entry-option + OI gate; validation 404/416; holdout 76/112. With broad target-expiry exit additionally required: 526/540, 404/416, and 74/112 respectively.
 - Holdout limitation: pinned index bars end 2026-07-02; source expiry labels run through 2026-08-04, but recent expiry files do not imply complete recent index/option coverage. The July 28/Aug 4 sessions remain unresolved.
 - No P&L was calculated. Next mandatory gate: per-configuration selected-strike/leg OHLC eligibility and executable fill pricing; do not use the broad event counts as the replay sample size.
+
+
+## Selected-strike audit implementation — pending validation
+
+- Added `research/phase52/selected_strike_coverage_audit.py` to the branch and wired it into the scheduled/manual workflow.
+- Scope: for each of the 1,068 registered events, resolve nearest listed ATM strike and audit offsets -6 through +6 for both CE and PE, using exact entry timestamps, OHLC consistency, OI≥100, exact 15:15 bars and common-time expiry exits. Outputs are coverage diagnostics only; no P&L.
+- A code-path optimization indexes rows by exact timestamp to avoid repeatedly scanning full expiry files. Self-test and end-to-end run are pending the queued Actions execution.
+- ABS_DELTA configurations are explicitly blocked. Minute option close alone is not treated as a validated delta; a point-in-time IV/Greeks resolver and its own tests are required before those configurations can replay.
