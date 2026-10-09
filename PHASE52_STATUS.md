@@ -336,3 +336,11 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Change: v0.2 removes only rows identical across all columns after canonical timestamp/type/numeric normalization. Conflicting rows with the same contract key are not averaged or arbitrarily selected; they remain blocked. The frozen 40 configurations, 24 events, splits, costs and OHLC proxy threshold are unchanged.
 - Interpretation: this is a source-normalization/coverage engineering rerun, not a performance retest. The 2% high-low/open test is an OHLC-range proxy, not an observed bid/ask spread; it remains a conservative data-quality exclusion and cannot establish executable liquidity.
 - The v0.1 report is preserved. v0.2 must report per-file original normalized row counts, exact duplicate rows removed, conflicts remaining, and complete 480-row status reconciliation before it can pass.
+
+
+## Pilot v0.2 execution in progress — 2026-10-10 IST
+
+- Workflow run: [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805).
+- Self-test passed, including exact full-row duplicate normalization fixture and preservation of conflicting same-key rows.
+- Frozen config/event planning passed: 40 configurations, 24 events, 480 planned config-event rows; no holdout events.
+- Historical replay step is still in progress at last status check. No v0.2 output has been accepted yet. Preserve v0.1 output and do not infer profitability until report, hashes, costs and full 480-row reconciliation are verified.
