@@ -292,3 +292,14 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Change:** For all future configuration-grid replays, ₹20/order is the primary conservative brokerage scenario and ₹10/order is a legacy-plan sensitivity. Both are computed side by side for the same fills; neither is an optimizable dimension. The grid version remains `phase52-grid-v1.3`; no configurations or threshold domains are added or removed. The existing fixed-template Phase43/45 results using ₹10/order remain historical diagnostics and must not be re-labelled as ₹20/order results.
 
 **Rationale / timing:** This amendment is based only on official published fee documents and occurs before any grid-configuration P&L is calculated. Exact user's account tariff remains to be verified before deployment consideration.
+
+
+### PA-009 — 2026-10-09 — Selected-strike gate before configuration P&L
+
+**Trigger:** Broad event-level coverage passed, but it does not prove a configuration's selected strike/leg has valid exact entry and exit bars. This distinction was preregistered in replay protocol v1.0 and is now implemented as a dedicated coverage script.
+
+**Implementation:** `research/phase52/selected_strike_coverage_audit.py` audits offsets -6..+6 around the nearest listed ATM strike for CE and PE, exact entry timestamp, OHLC range consistency, OI≥100, exact 15:15 bar and a common target-expiry exit timestamp. This is a coverage-only gate, not a strategy backtest. A self-test and first full workflow execution are pending.
+
+**ABS_DELTA handling:** Absolute-delta selection remains blocked until a validated point-in-time delta/IV resolver is defined and tested. Do not proxy delta from a single minute close or silently substitute ATM-offset strikes.
+
+**Grid impact:** No parameter domains or candidate IDs change; grid stays `phase52-grid-v1.3`. This amendment is procedural and is recorded before any configuration-grid P&L.
