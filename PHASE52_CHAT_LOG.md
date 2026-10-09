@@ -36,3 +36,8 @@ The main Actions workflow passed registry validation and finite-grid audit (312 
 ## 2026-10-09 — Coverage diagnostic and matched-sample amendment
 
 Actions run 37926165354 passed the factor-selector unit test but stopped before metric analysis because 68.2% of outcome rows matched a same-expiry prior feature record (initial blanket cutoff was 90%). Added PA-004 prior to any factor-performance calculation: test matched rows only, require ≥50% coverage in each split and ≥20 matched expiries in validation/holdout, report all coverage gaps, and do not impute missing features. The same run's branch checkpoint push was rejected due to a non-fast-forward update; the workflow now rebases before push, without force pushing.
+
+
+## 2026-10-09 — Canonical strategy aliases and holdout coverage policy
+
+A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes use names like `iron_condor`, `bull_call_debit`, `call_calendar` and `long_call_butterfly`; these aliases were added to the pilot's risk-limited whitelist before any selector result. The pilot now uses block resampling for expiry-level inference. Because the feature feed ends on 2026-04-24, the 2026 holdout is only reported if its own feature coverage/samples pass; otherwise it is explicitly unevaluated while validation can still be examined.
