@@ -124,3 +124,9 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
 - **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+
+## User continuation / automated action — run 37962948690
+
+- **Run:** [37962948690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962948690); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.

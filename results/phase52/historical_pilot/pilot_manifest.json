@@ -1,6 +1,6 @@
 {
   "status": "FROZEN_PILOT_MANIFEST_BEFORE_HISTORICAL_REPLAY",
-  "created_at_utc": "2026-10-09T16:52:40.818492+00:00",
+  "created_at_utc": "2026-10-09T16:59:19.745178+00:00",
   "pilot_version": "phase52-historical-base-pilot-v0.1",
   "grid_version": "phase52-grid-v1.3",
   "historical_pnl_not_yet_computed_at_manifest_creation": true,
@@ -115,6 +115,7 @@
     "resolver_sha256": "9ec380e6b631042ca534571fd11ea124dfc17836716a588c4d8b13dcdd869758",
     "kernel_sha256": "8bb4ee8bfb7694a88cf83bfd69a93296185fb1f58ab06c5433fbe599a67f2c19",
     "grid_enumerator_sha256": "e02ed01bdf533e90039b2f0c310b786356af437cee709863453bd24036102d9b",
+    "historical_pilot_runner_sha256": "b01f9fa0b2c088cc088d798c1775f765f7e17ee05cea16fdc757a1561ef7c587",
     "phase43_fee_and_lot_helper_sha256": "b1f09876ab461b2cccc5b6089901b3720623360d781f82369be6ea6ee100ea47",
     "event_inventory_sha256": "b35c7779f302a4351c068771a020ea75a664b514be139f66cf276abcd81f61b3",
     "configuration_manifest_sha256": "812f0c3288332901cda80c818c9121c21ec1f70d5fc87580cbe0aba5fd2f1569",

@@ -1,6 +1,6 @@
 # Phase 52 Status — Factor-Conditioned Strategy Discovery
 
-**Overall:** OPEN — bounded historical pilot did not complete cleanly; see run-specific failure log; no result accepted
+**Overall:** OPEN — bounded historical BASELINE pilot completed; descriptive only, no promotion; factor routers/full grid remain gated
 **Branch:** phase-52-factor-conditioned-strategy-discovery  
 **Plan versions:** phase52-grid-v1.3; replay protocol phase52-replay-v1.0; plan amendments PA-001 to PA-014  
 **Latest checkpoint:** 2026-10-09 (Asia/Kolkata)
@@ -321,4 +321,10 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 
 - **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
 - **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+
+## Bounded historical pilot checkpoint
+
+- **Run:** [37962948690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962948690); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
