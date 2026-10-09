@@ -37,3 +37,8 @@ Run 37935663113 persisted the next 25,000 configuration IDs, moving the determin
 ## 2026-10-09 — Protect registry audit against stale source specifications
 
 Because PA-010 changed 11 strategy-specification rows while older workflows were still running, added a persistence guard: if the specification CSV changed after checkout, the run cannot overwrite the registry audit for the new source snapshot. It restores the remote audit if present or discards the stale local summary. Logged as F52-030; end-to-end test pending.
+
+
+## 2026-10-09 — Selected-strike audit first execution (stale source snapshot; not accepted)
+
+Run 37937164472 reports the selected ATM-offset strike audit step itself as successful, but the run checked out the auditor before PA-026/F52-026 changed strike-ladder resolution to contracts present at the exact entry timestamp. Therefore its selected-strike output is explicitly not accepted as evidence. The persistence guard should discard that output when the source hash differs from the current branch. The queued run 37938099763 is expected to validate the patched script and the PA-010 specification snapshot.
