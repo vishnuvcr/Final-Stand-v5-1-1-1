@@ -14,3 +14,5 @@
 - **Stale registry protection:** The workflow now checks the specification CSV revision before persisting registry_audit.json and preserves the remote audit if an older run used the pre-PA-010 file. Verification is pending.
 
 - **First selected-strike run:** The selected-strike step in run 37937164472 completed at the process level, but it used the pre-correction strike ladder and is explicitly NOT ACCEPTED. The persistence guard and queued run 37938099763 are intended to enforce the corrected point-in-time source and PA-010 registry.
+
+- **Concurrent persistence correction:** Run 37937164472 completed audit steps but failed while persisting overlapping generated artifacts. The workflow is back on one shared concurrency group; generated-result conflicts now preserve the remote version while append-only logs are merged, and source/code conflicts still fail closed. Verification pending.
