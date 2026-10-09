@@ -303,3 +303,25 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **ABS_DELTA handling:** Absolute-delta selection remains blocked until a validated point-in-time delta/IV resolver is defined and tested. Do not proxy delta from a single minute close or silently substitute ATM-offset strikes.
 
 **Grid impact:** No parameter domains or candidate IDs change; grid stays `phase52-grid-v1.3`. This amendment is procedural and is recorded before any configuration-grid P&L.
+
+
+### PA-010 — 2026-10-09 — Reconcile named preset leg templates to Phase45 source definitions
+
+**Evidence:** The Phase45 source plan explicitly defines leg signs and strike offsets for the 11 templates previously flagged for reconciliation. Those definitions are in PHASE45_RESEARCH_PLAN.md on branch phase-45-exhaustive-ready-made-strategies, and the Phase45 sweep implementation maps the same named presets. The ambiguity was documentation status, not missing primary leg definitions.
+
+**Resolved named presets and source geometry:**
+- **Bull condor:** +1 CE at +1 step; -1 CE at +2; -1 CE at +3; +1 CE at +4.
+- **Bear condor:** +1 PE at -1; -1 PE at -2; -1 PE at -3; +1 PE at -4.
+- **Bull butterfly:** +1 CE at +1; -2 CE at +2; +1 CE at +3.
+- **Bear butterfly:** +1 PE at -1; -2 PE at -2; +1 PE at -3.
+- **Long iron condor:** +1 PE at -1; -1 PE at -3; +1 CE at +1; -1 CE at +3 (source-defined long-condor geometry; do not reinterpret from payoff naming).
+- **Long iron butterfly:** +1 ATM PE; +1 ATM CE; -1 PE at -2; -1 CE at +2 (source-defined preset, despite the nonstandard name).
+- **Reverse Jade Lizard:** -1 CE at ATM; -1 PE at ATM; +1 PE at +2 steps.
+- **Range Forward:** +1 CE at +1; -1 PE at -1.
+- **Bear risk reversal:** +1 PE at -1; -1 CE at +1.
+- **Batman:** +1 CE at +1; -2 CE at +2; +1 PE at -1; -2 PE at -2.
+- **Double Plateau:** +1 PE at -1; -2 PE at -2; +1 PE at -3; +1 CE at +1; -2 CE at +2; +1 CE at +3.
+
+**Change:** The 11 rows in research/phase52/strategy_specifications.csv are now marked STANDARD_VARIANT_PREREGISTERED with provenance notes linking them to the Phase45 source definitions. They remain distinct named families; their source-defined template is the baseline and parameterized variants remain separate configurations.
+
+**Grid impact:** No grid domains, candidate IDs or configuration IDs changed. This resolves source specification gates only and does not constitute a backtest. Registry validation must pass on the next workflow run before these rows are considered eligible for replay. ABS_DELTA resolution remains separately blocked under PA-009.
