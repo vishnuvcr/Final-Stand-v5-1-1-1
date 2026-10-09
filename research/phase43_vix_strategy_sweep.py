@@ -9,6 +9,7 @@ import pandas as pd
 from huggingface_hub import HfApi, hf_hub_download
 
 HF_REPO = "thetrademarkk/india-index-options-1m"
+HF_REVISION = os.environ.get("PHASE52_HF_REVISION", "main")
 TZ = "Asia/Kolkata"
 START = pd.Timestamp("2021-05-27", tz=TZ)
 END = pd.Timestamp("2026-09-30", tz=TZ)
@@ -105,7 +106,7 @@ def charges(orders, lot_size, cost_mult=1.0, brokerage_per_order=None):
 
 
 def load_parquet(name):
-    p = hf_hub_download(repo_id=HF_REPO, filename=name, repo_type="dataset", token=os.getenv("HF_TOKEN") or None)
+    p = hf_hub_download(repo_id=HF_REPO, filename=name, repo_type="dataset", revision=HF_REVISION, token=os.getenv("HF_TOKEN") or None)
     df = pd.read_parquet(p)
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     if df["timestamp"].dt.tz is None:
@@ -118,7 +119,7 @@ def load_parquet(name):
 def list_expiry_files():
     api = HfApi()
     dates = []
-    for f in api.list_repo_files(HF_REPO, repo_type="dataset"):
+    for f in api.list_repo_files(HF_REPO, repo_type="dataset", revision=HF_REVISION):
         m = re.fullmatch(r"options/NIFTY/(\d{4}-\d{2}-\d{2})\.parquet", f)
         if m:
             d = pd.Timestamp(m.group(1), tz=TZ)
