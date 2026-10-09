@@ -128,3 +128,20 @@ Stop after source inventory, coverage comparison, and a documented go/no-go. Do 
 - HF dataset: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m
 - OptionVault: https://github.com/QuantDev-stack/OptionVault
 - Breeze API pipeline: https://github.com/mukhilj/breeze_options_pipeline
+
+
+### PA-020 — 2026-10-10 — Extended source triage and correct partial-inventory semantics
+
+**New candidates examined (metadata/documentation only; no raw bars downloaded):**
+
+1. rissin/nse-options-intraday includes 1-minute Upstox OHLC for NIFTY/BANKNIFTY/SENSEX from Oct 2024 plus daily EOD data, but its public README explicitly says intraday OI and settlement are NaN and the HF license is “other”. It may only challenge OHLC values on overlapping dates after licensing and lineage clearance; it does not repair Phase52's prior-minute OI requirement.
+2. artist-23/nifty-options-data advertises a 34M-row timestamped OHLC/IV/OI dataset. Displayed columns expose only expiry_type/strike_type, not a direct expiry-date field; no explicit license is shown and the viewer shows extreme negative volume and extreme outliers. Hold blocked until license, complete raw schema, expiry join, provenance and numeric validation are solved.
+3. codepyx23/india-index-options-1m looks like a mirror/derivative of the pinned TradeMarkk source. It is not independent until identical expiry-file hashes and provenance show otherwise.
+4. Zenodo NIFTY 1-minute data covers 2017–2020 and lists OHLC/volume but no OI in its description. It does not cover the Phase52 cohort sampled from 2021 onward.
+5. SauMStats/nifty-options-data-engine exposes a code interface, not the external Kaggle raw file archive; its README says market price is close price and bid/ask are unavailable. The Kaggle object URL, license and actual data were not verified, so code is not counted as a source.
+6. NSE's visible option-chain page is a current snapshot, not verified historical snapshots; the site places conditions on copying/aggregation. The automated probe is disabled for this endpoint. No scraping or copying.
+7. Commercial sources OptionsData.Shop and MoneyTicks are potential procurement leads, not free sources. No purchase is authorized. A minute-bar/OI product would still not satisfy historical bid/ask/depth unless its schema proves it.
+
+**Report correctness fix:** HF direct HEAD requests all returned HTTP 200 for the 13 exact pinned paths, and the exact revision API agrees with SHA 0f4800e43e6f96cec0794369d78eb4d3c4211ef5. The repository tree API uses paginated folder listings. The report now follows Link rel=next metadata pages, records listing_complete, and calls paths absent from a partial tree response “not listed in returned metadata,” never “missing files.” Direct HEAD status takes precedence for path existence. It also skips automated HTTP retrieval of the current NSE option-chain page.
+
+**Phase gate remains unchanged.** No candidate has proven licensed, exact prior-minute OI coverage plus actual bid/ask/depth at adequate overlap. No broad replay begins. Continue the bounded source metadata audit until pagination/tests pass; record a source no-go if the gates cannot be satisfied without paid data or credentials.
