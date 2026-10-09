@@ -31,3 +31,12 @@
 - EOD selector pilot: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; matched events=256; fixed development baseline=buy_call; best validation uplift diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; no promotion.
 - Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
 - The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.
+
+
+## 2026-10-09 — Step 2.6: Correct selected-strike and delta-audit timing before replay
+
+- Audited the selected ATM-offset artifact and delta resolver source line by line after the successful workflow step; that source review found two semantics errors despite a green workflow.
+- **ATM_OFFSET:** old run 37942202655 computed coverage with ordinal strike ranks and index close at entry. Corrected to index open at exact entry timestamp, nearest ATM among exact-time option contracts, and the Phase43 modal strike-step rule; offsets are now arithmetic strike gaps. The old 27,768-row summary is superseded and must not be quoted as current coverage.
+- **ABS_DELTA:** workflow 37944408314 failed at self-test before reading market data. Fixed `sigma=180` to `sigma=0.18` and changed the invalid negative premium fixture to a call with intrinsic value. Further removed same-bar-close lookahead: IV/delta now uses exact prior one-minute option/index close and prior-bar OI; current entry open is checked separately.
+- **Plan impact:** added PA-011/PA-012 and amended replay protocol. Grid v1.3 domains and configuration IDs are unchanged; no P&L has been computed from these audits.
+- **Next:** trigger corrected regression workflows; inspect their source hashes, exact-stamp/selected-leg coverage and delta-selection status summaries. Only after regression succeeds should a tiny hand-calculated replay engine test be built; do not start the full config queue yet.
