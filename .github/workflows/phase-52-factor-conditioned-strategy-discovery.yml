@@ -79,7 +79,7 @@ jobs:
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
       - name: Install replay and audit dependencies
-        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy matplotlib
 
       - name: Reproduce frozen Phase 43/45 base geometry at a pinned HF revision
         env:
