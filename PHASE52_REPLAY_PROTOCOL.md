@@ -32,7 +32,7 @@ Dataset timestamps are one-minute candle timestamps, not exchange tick/order-boo
 
 ## 3. Liquidity, OI and freshness controls
 
-All traded option legs must pass the frozen minimum open-interest gate of 100 contracts at entry; required fields must be non-null and the strike/expiry/type must match exactly. The parameter `liquidity_max_spread_pct` is applied only to the **intrabar high-low range proxy** `100 × (high-low)/open` at entry because bid/ask quotes are not present. In result labels and the manuscript it must be named an OHLC-range liquidity proxy, never an observed bid/ask spread. Report this source limitation beside every result.
+All traded option legs must pass the frozen minimum open-interest gate of 100 contracts using the exact prior completed one-minute bar at entry_ts minus one minute; use that prior bar's OI for eligibility because current-bar OI may only be known after the bar has completed. The selected contract must then have an exact entry-time OHLC bar whose open is the OHLC execution reference. Entry-bar OI is recorded for diagnostics only and must not determine eligibility for a fill at that bar's open. Required fields must be non-null and the strike/expiry/type must match exactly. The parameter `liquidity_max_spread_pct` is applied only to the **intrabar high-low range proxy** `100 × (high-low)/open` at entry because bid/ask quotes are not present. In result labels and the manuscript it must be named an OHLC-range liquidity proxy, never an observed bid/ask spread. Report this source limitation beside every result.
 
 ## 4. Anchor strikes, wings, ratios and lots
 
@@ -83,3 +83,8 @@ Paytm Money's official pricing update dated 18 December 2024 states that flat �
 ### Correction record — point-in-time strike selection audit (PA-011/PA-012)
 
 The initial ATM-offset coverage artifact used rank offsets among available strikes and the index close at the entry timestamp; the initial delta resolver used the same-bar close in model-IV selection. Both are coverage-only audit defects, not strategy P&L defects, because no Phase52 grid P&L was run. The audit code is corrected to use the exact-time modal strike-step ladder with index open for ATM selection, and the previous completed one-minute close for model-delta selection. Previous audit counts are superseded and will not be interpreted as the current exact-strike selection coverage.
+
+
+### PA-013 — 2026-10-09 — Make ATM-offset OI eligibility strictly prior-bar
+
+The ATM-offset coverage audit originally used the entry-timestamp OI field while separately treating the same bar's open as the fill price. Because a minute bar's OI snapshot may only be available on/after bar completion, this is not safe as a known-at-open eligibility gate. The corrected audit uses OI from the exact prior completed minute (entry_ts minus one minute) for the OI>=100 rule, requires a valid exact entry-time OHLC bar separately, and reports the entry-bar OI as diagnostics only. If the prior-minute target contract/OI row is absent, the leg fails this gate instead of carrying forward a previous value or using current-bar OI. No P&L has been computed and the v1.3 grid is unchanged.
