@@ -1,0 +1,107 @@
+{
+  "audit": "Phase 51-1J free Hugging Face candidate audit",
+  "created_utc": "2026-10-09T10:17:02.004645+00:00",
+  "repo_id": "thetrademarkk/india-index-options-1m",
+  "targets": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "raw_parquet_committed": false,
+  "results": [
+    {
+      "date": "2026-07-28",
+      "repo_id": "thetrademarkk/india-index-options-1m",
+      "path": "options/NIFTY/2026-07-28.parquet",
+      "status": "DOWNLOADED",
+      "file_bytes": 3990663,
+      "sha256": "f9c3a6d1e4498274644ccbfeb8aeb3d545fc2ce1a12b908f450360a643e40d17",
+      "rows": 320359,
+      "columns": [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "open_interest",
+        "trading_day",
+        "symbol",
+        "strike",
+        "option_type",
+        "expiry"
+      ],
+      "timestamp_column": "timestamp",
+      "timestamp_valid_rows": 320359,
+      "timestamp_min": "2026-06-15 09:15:00+05:30",
+      "timestamp_max": "2026-07-02 15:30:00+05:30",
+      "unique_timestamps": 4888,
+      "rows_on_target_date": 0,
+      "timestamps_on_target_date": 0,
+      "target_minutes": [],
+      "strike_column": "strike",
+      "unique_strikes": 105,
+      "strike_min": 21100.0,
+      "strike_max": 26300.0,
+      "option_type_column": "option_type",
+      "option_types": [
+        "CE",
+        "PE"
+      ],
+      "expiry_column": "expiry",
+      "expiries": [
+        "2026-07-28"
+      ],
+      "invalid_or_nonpositive_close_rows": 0,
+      "duplicate_contract_timestamp_keys": 0,
+      "warning": "Dataset card warns option coverage is partial; exact strategy-leg coverage must be checked."
+    },
+    {
+      "date": "2026-08-04",
+      "repo_id": "thetrademarkk/india-index-options-1m",
+      "path": "options/NIFTY/2026-08-04.parquet",
+      "status": "DOWNLOADED",
+      "file_bytes": 58248,
+      "sha256": "8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c",
+      "rows": 2646,
+      "columns": [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "open_interest",
+        "trading_day",
+        "symbol",
+        "strike",
+        "option_type",
+        "expiry"
+      ],
+      "timestamp_column": "timestamp",
+      "timestamp_valid_rows": 2646,
+      "timestamp_min": "2026-06-24 10:08:00+05:30",
+      "timestamp_max": "2026-07-02 15:29:00+05:30",
+      "unique_timestamps": 1237,
+      "rows_on_target_date": 0,
+      "timestamps_on_target_date": 0,
+      "target_minutes": [],
+      "strike_column": "strike",
+      "unique_strikes": 46,
+      "strike_min": 22100.0,
+      "strike_max": 25350.0,
+      "option_type_column": "option_type",
+      "option_types": [
+        "CE",
+        "PE"
+      ],
+      "expiry_column": "expiry",
+      "expiries": [
+        "2026-08-04"
+      ],
+      "invalid_or_nonpositive_close_rows": 0,
+      "duplicate_contract_timestamp_keys": 0,
+      "warning": "Dataset card warns option coverage is partial; exact strategy-leg coverage must be checked."
+    }
+  ],
+  "decision": "PENDING_REVIEW"
+}
