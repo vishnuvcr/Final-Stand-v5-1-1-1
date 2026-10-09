@@ -35,3 +35,5 @@ class Phase54Tests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Trigger validation after workflow persistence fix; test logic unchanged.
