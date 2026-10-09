@@ -39,15 +39,8 @@ def target_hit(vals, date):
     return any(p in s for p in patterns)
 
 async def select_snapshot(page):
-    return await page.locator("select").evaluate_all("""els => els.map((e,i) => {
-      const labels = Array.from(document.querySelectorAll('label')).filter(l =>
-        l.htmlFor === e.id || l.contains(e)).map(l => (l.innerText || l.textContent || '').trim());
-      let parentText = '';
-      try { parentText = (e.parentElement?.innerText || '').trim().slice(0,160); } catch {}
-      return {index:i,id:e.id||'',name:e.name||'',aria:e.getAttribute('aria-label')||'',
-        labels,parentText,disabled:e.disabled,value:e.value||'',
-        options:Array.from(e.options).map(o=>({text:(o.textContent||'').trim(),value:o.value,disabled:o.disabled})).slice(0,400)};
-    }""")
+    js = "els => Array.from(els, (e,i) => ({index:i,id:e.id||'',name:e.name||'',aria:e.getAttribute('aria-label')||'',labels:[],parentText:(e.parentElement && e.parentElement.innerText || '').trim().slice(0,160),disabled:!!e.disabled,value:e.value||'',options:Array.from(e.options).map(o=>({text:(o.textContent||'').trim(),value:o.value,disabled:!!o.disabled}).slice ? {text:(o.textContent||'').trim(),value:o.value,disabled:!!o.disabled} : {})}))"
+    return await page.locator("select").evaluate_all(js)
 
 async def page_state(page):
     return await page.evaluate("""() => ({
