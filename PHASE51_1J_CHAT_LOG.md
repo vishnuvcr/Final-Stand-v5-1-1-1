@@ -6,3 +6,5 @@
 - 2026-10-09: Frozen targets remain 2026-07-28 and 2026-08-04. No P&L or source promotion is permitted pending raw-data verification.
 
 - 2026-10-09: Browser run 37913468653 opened all three TradingTick pages with HTTP 200 and observed same-origin responses, but its selector snapshot failed due a JavaScript syntax error. Its zero-selector/date conclusion is invalid; no data was accepted. The selector inspector was simplified and patched; corrected run pending.
+
+- 2026-10-09: Corrected browser run 37913684463 showed NIFTY expiry 2026-07-28 in the chain and chart selector lists. The chain endpoint returned a JSON snapshot (41,899 bytes; 15 visible UI rows; fields include Close, OI, volume and turnover but no timestamp field), which by itself is not intraday data. The expired-chart route listed no strike choices for the July-28 expiry, whereas the historical-chart route listed strike values. The prior target loop retained page state and did not select a strike; its August-4 result was inconclusive. A new audit resets pages independently for each date and invokes the standard chart-data fetch by selecting a representative CE strike. No prices are accepted yet.
