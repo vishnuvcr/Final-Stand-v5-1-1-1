@@ -50,3 +50,12 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Authoritative run 37927040268 completed successfully. The Phase45 source outcome matrix has 9,699 rows, and 6,617 rows matched to point-in-time Phase39 feature snapshots. The leakage audit PASS rules remain in force.
 - Validation (2024–25) was negative for every selected policy. VIX was the least-bad router but still net -₹63,547 and its relative uplift was non-significant after Holm correction (p_adj 0.985). The 2026 holdout has only 13 matched expiry sessions and is not evaluated.
 - No candidate is promoted. The next goal is actual variable-config replay; configuration enumeration must not be described as tested strategy performance.
+
+
+## 2026-10-09 — Resume checkpoint: base replay, EOD factors, coverage-gate correction
+
+- Reused accepted Phase43/45 replay engines at pinned HF revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`. Outputs: 9,699 rows / 42 strategy labels / 256 expiries through 2026-05-26. The data source declares CC BY-NC 4.0 and is not authorized as sole evidence for commercial use.
+- Reproduced LOW-VIX Bear Call Spread validation net ₹24,743 and legacy 1.5× all-cost stress ₹23,082, but Phase45's multiple-testing decision had zero Holm-adjusted survivors. No promotion.
+- Daily NSE bhavcopy supplement completed with 256/256 event rows, 512 processed prior-session archives, and zero missing archive paths/file errors/gap rows. It is lagged daily EOD only, not intraday futures basis.
+- Run 37930010915 failed because the exact-timestamp coverage audit file existed on main rather than the Phase52 branch. Copied into the research branch, commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`; coverage result is still pending. No unsupported coverage conclusion accepted.
+- Next: rerun the exact-entry coverage audit; refresh cached EOD factors with contract-matched OI-change coverage; then decide whether the admissible data support registered variable-config replay.
