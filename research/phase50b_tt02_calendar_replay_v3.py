@@ -174,7 +174,9 @@ def nearest_delta(z,spot,ts,expiry,opt,target):
         vega=spot*np.exp(-0.5*d1*d1)/math.sqrt(2*np.pi)*sqrt_t
         good=vega>1e-10
         if not np.any(good):break
-        sigma=np.where(good,np.clip(sigma-diff/vega,1e-5,8.0),sigma)
+        # Divide only where vega is valid; np.where otherwise evaluates diff/vega eagerly and emits spurious divide-by-zero warnings.
+        step=np.divide(diff,vega,out=np.zeros_like(sigma),where=good)
+        sigma=np.where(good,np.clip(sigma-step,1e-5,8.0),sigma)
     d1=(np.log(spot/k)+(R+0.5*sigma*sigma)*t)/(sigma*sqrt_t)
     delta=ndtr(d1) if call else ndtr(d1)-1.0
     err=np.abs(delta-target)
