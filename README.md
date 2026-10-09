@@ -814,3 +814,8 @@ Phase 52 tests whether VIX, Greeks/IV/skew, OI/volume/PCR, spot/futures/syntheti
 
 
 **Updated selector result (run 37927040268):** 6,617/9,699 legacy trade rows matched (68.2%). Validation net: VIX router -₹63,547; Greeks/surface -₹168,132; OI/flow -₹173,805; spot proxy -₹159,796; multivariate -₹112,260; global/sentiment -₹185,057. All are negative. VIX relative stress uplift +₹1,411/expiry had a 95% paired block-bootstrap CI [-₹915,+₹4,290], one-sided p=0.1642, Holm-adjusted p=0.985. No promotion. The holdout remains unevaluated at 13 matched expiries.
+
+
+## Phase 52 selector screen — latest result
+
+Authoritative run [37927040268](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927040268) completed successfully. The selector screen joined 6,617/9,699 outcome rows (68.2%) to point-in-time features. All six selected policies were net negative on 2024–25 validation. The VIX router was least negative at -₹63,547, but its relative +₹1,411/expiry stress uplift had a 95% block-bootstrap CI [-₹915,+₹4,290] and Holm-adjusted p=0.985. The 2026 holdout was not evaluated (13 matched expiries, below the minimum 20). No selector is promoted. The finite grid remains queued/enumerated rather than fully replayed.
