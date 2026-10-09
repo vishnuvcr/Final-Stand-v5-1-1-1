@@ -162,3 +162,10 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - UDiFF `IDF` index-futures parsing is corrected and regression-tested. The corrected EOD manifest reports basis and futures OI available on 256/256 events, with same-contract futures OI change available on 255/256; this is lagged daily EOD only, not intraday traded-futures basis.
 - Replay protocol v1.0 and plan amendment PA-007 have been committed before configuration-grid P&L. Grid v1.3 domains were not changed.
 - Workflow [37934339579](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934339579) is running the new event universe: 267 expiry files × two DTE values × two exact entry times = 1,068 expected date/time events. This inventory checks exact index timestamps only; it does not count option-leg quotes as valid until each configuration's selected strikes are checked.
+
+## Automated checkpoint — 2026-10-09 18:49:09 IST
+- Workflow run: 37934719402
+- Source leads newly recorded: 0.
+- Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
+- Daily EOD factor-selector: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; validation diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; report at results/phase52/daily_eod_selector/REPORT.md.
+- Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.

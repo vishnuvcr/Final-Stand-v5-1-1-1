@@ -1,0 +1,75 @@
+{
+  "status": "CONFIGURATION_EVENT_UNIVERSE_BUILT_WITH_EXPLICIT_COVERAGE_GAPS",
+  "created_at_utc": "2026-10-09T13:08:56.737843+00:00",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "source_option_expiry_files": 267,
+  "first_option_expiry": "2021-05-27",
+  "last_option_expiry": "2026-08-04",
+  "dte_calendar_days": [
+    0,
+    7
+  ],
+  "entry_times_ist": [
+    "09:45",
+    "13:00"
+  ],
+  "expected_event_count": 1068,
+  "unique_target_expiries_in_universe": 267,
+  "exact_index_entry_timestamp_count": 1012,
+  "events_without_exact_index_entry_timestamp": 56,
+  "index_timestamp_min": "2021-05-24T09:07:00+05:30",
+  "index_timestamp_max": "2026-07-02T15:30:00+05:30",
+  "counts_by_dte": {
+    "0": {
+      "expected_events": 534,
+      "exact_index_entries": 520,
+      "index_entry_missing": 14
+    },
+    "7": {
+      "expected_events": 534,
+      "exact_index_entries": 492,
+      "index_entry_missing": 42
+    }
+  },
+  "counts_by_entry_time": {
+    "09:45": {
+      "expected_events": 534,
+      "exact_index_entries": 506,
+      "index_entry_missing": 28
+    },
+    "13:00": {
+      "expected_events": 534,
+      "exact_index_entries": 506,
+      "index_entry_missing": 28
+    }
+  },
+  "counts_by_split": {
+    "development": {
+      "expected_events": 540,
+      "exact_index_entries": 526,
+      "index_entry_missing": 14
+    },
+    "holdout": {
+      "expected_events": 112,
+      "exact_index_entries": 80,
+      "index_entry_missing": 32
+    },
+    "validation": {
+      "expected_events": 416,
+      "exact_index_entries": 406,
+      "index_entry_missing": 10
+    }
+  },
+  "entry_status_counts": {
+    "INDEX_TIMESTAMP_PASS_OPTION_LEG_AUDIT_PENDING": 1012,
+    "NO_INDEX_ROWS_ON_EXACT_ENTRY_DATE": 34,
+    "EXACT_INDEX_ENTRY_TIMESTAMP_MISSING": 4,
+    "INDEX_SOURCE_ENDS_BEFORE_ENTRY_TIMESTAMP": 18
+  },
+  "option_leg_quotes": "NOT AUDITED BY THIS FILE; exact strike/expiry/entry and exit quote eligibility must be checked per configuration by the replay worker.",
+  "pnl_status": "NO PNL COMPUTED; THIS IS AN EVENT INVENTORY ONLY",
+  "no_imputation_policy": "No calendar rolling, no nearest timestamp, no forward fill and no interpolation. Missing exact index ticks remain explicit.",
+  "output_csv": "results/phase52/configuration_event_universe/expected_events.csv"
+}

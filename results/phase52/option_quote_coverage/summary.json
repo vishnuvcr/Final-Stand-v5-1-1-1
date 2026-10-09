@@ -1,0 +1,24 @@
+{
+  "status": "OPTION_QUOTE_COVERAGE_AUDIT_COMPLETE",
+  "created_at_utc": "2026-10-09T13:18:05.739386+00:00",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "expected_event_rows": 1068,
+  "audited_event_rows": 1068,
+  "event_rows_with_audit_results": 1068,
+  "option_expiry_files_expected": 267,
+  "option_expiry_files_audited": 267,
+  "source_file_errors": 0,
+  "events_with_any_option_row_at_exact_entry": 1016,
+  "events_with_both_ce_and_pe_at_exact_entry": 1016,
+  "events_with_any_oi_eligible_contract_at_entry": 1012,
+  "events_with_any_option_row_at_exact_15_15_entry_day_exit": 1016,
+  "events_with_any_option_row_at_target_expiry_exit": 1040,
+  "events_with_both_option_types_at_common_target_expiry_timestamp": 1040,
+  "interpretation": "This is timestamp and broad contract-universe coverage only. It does not establish that every configured strike has a valid entry/exit quote. The replay worker must verify every selected contract/strike/expiry/time, OI and OHLC-range gate. No P&L is calculated.",
+  "outputs": {
+    "event_coverage": "results/phase52/option_quote_coverage/entry_exit_quote_coverage.csv",
+    "source_audit": "results/phase52/option_quote_coverage/source_file_audit.csv",
+    "source_errors": "results/phase52/option_quote_coverage/source_errors.csv"
+  }
+}
