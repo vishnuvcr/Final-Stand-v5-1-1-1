@@ -466,3 +466,20 @@ Run 37937164472's broad coverage and selected-strike steps completed at the proc
 - Run [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805) started after the runner, frozen pilot plan and workflow were updated.
 - Self-test and frozen plan stages passed. Expected sample remains 40 configurations × 24 events = 480 config-event rows, with holdout untouched.
 - Historical replay stage remained in progress at last check. No v0.2 report accepted yet; final status reconciliation pending.
+
+## 2026-10-10 — Step 2.9: Historical BASELINE pilot v0.2 result and persistence failure
+
+- **Run:** [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805). Self-test=success; frozen preflight=success; replay=success; artifact upload=success; cache save=success; overall job=failure in final persistence.
+- **Result reconciliation:** 40 configs × 24 events = 480 planned rows; EXCLUDED_OHLC_RANGE_PROXY=379; BLOCKED_LEG_ELIGIBILITY=100; REPLAY_PASS=1; total=480. The source reader audited 13 files with zero source-file errors and zero replay exceptions. Six cost-scenario rows were emitted for the single replayed row.
+- **Input fingerprints:** dataset revision 0f4800e43e6f96cec0794369d78eb4d3c4211ef5; pilot plan SHA-256 714cdb7d8a4d47089b03df865a3d2261a5ae3171890640bc67177754118cb992; runner SHA-256 eabde2d0062a9ecde4b18bd8990cc9a4929f2549a38490bf18638519973cad48.
+- **Persistence failure:** run output and artifact were generated, but the status-persistence script failed its rebase after concurrent updates produced conflicts in PHASE52_CHAT_LOG.md, PHASE52_RESEARCH_LOG.md and PHASE52_STATUS.md. Logged separately in PHASE52_ERROR_LOG.md. Do not describe this as replay failure; do not promote the replay as a performance result.
+- **Interpretation:** duplicate-only normalization did not cure sparse eligibility: 479/480 rows are excluded or blocked. This is a source/coverage engineering result only. Holdout remains unused; no strategy ranking or factor-router inference is justified.
+
+## 2026-10-10 — Step 2.10: OpenChart source feasibility audit and bounded probe registration
+
+- Inspected the OpenChart README, core request code, response transformer, license and issue list at pinned upstream commit a207108890c96a9830b35a8d15442c896ea0a9d6.
+- The client documents individual-instrument OHLCV and 1-minute intervals via NSE charting endpoints. The inspected response schema does not include OI, Greeks, bid/ask, order-book depth or trade-by-trade records; complete expired-contract and all-chain coverage is not demonstrated.
+- The upstream transformer strips timestamp timezone metadata; returned clock conventions need independent session-anchor verification. Public issues contain reports of request failures/rate limiting and an open question about oldest backfill duration.
+- NSE market-data usage policy is separate from the MIT license of client software. Raw bars will not be persisted to the public repository pending terms/storage review.
+- Decision: probe OpenChart as an auxiliary candidate only. Add a rate-limited bounded workflow with aggregate diagnostics against current symbol search plus Phase 51 missing-session windows 2026-07-28 and 2026-08-04. No strategy-grid, event, cost or OOS boundary changes.
+
