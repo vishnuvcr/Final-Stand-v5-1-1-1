@@ -107,7 +107,7 @@ def valid_ohlc(row: pd.Series) -> bool:
 
 
 def _self_test() -> None:
-    s, k, t, v, r, q = 22000.0, 22100.0, 7 / 365.25, 180.0, RATE, DIVIDEND_YIELD
+    s, k, t, v, r, q = 22000.0, 22100.0, 7 / 365.25, 0.18, RATE, DIVIDEND_YIELD
     for typ in ("CE", "PE"):
         premium = bs_price(s, k, t, v, r, q, typ)
         iv, status = implied_vol(s, k, t, premium, r, q, typ)
