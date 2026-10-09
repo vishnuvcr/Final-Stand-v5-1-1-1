@@ -1,0 +1,150 @@
+name: Phase 53 — Free-Source Option Data Coverage Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-53-free-option-data-coverage-remediation
+    paths:
+      - ".github/workflows/phase-53-free-option-data-coverage.yml"
+      - "research/phase53/**"
+      - "PHASE53_*.md"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase53-source-audit-\${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PHASE_BRANCH: phase-53-free-option-data-coverage-remediation
+      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+    steps:
+      - name: Checkout Phase 53 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-53-free-option-data-coverage-remediation
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate source registry and offline inventory logic
+        id: tests
+        run: |
+          python -m unittest discover -s research/phase53/tests -v
+          python research/phase53/source_coverage_audit.py --self-test-only
+
+      - name: Probe source pages, pinned paths and metadata without downloading bars
+        id: audit
+        run: python research/phase53/source_coverage_audit.py --output results/phase53/source_coverage_audit/report.json
+
+      - name: Upload source coverage audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase53-source-coverage-audit-\${{ github.run_id }}
+          path: results/phase53/source_coverage_audit/
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Persist results, status, error and chat logs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id = os.environ.get("GITHUB_RUN_ID", "unknown")
+          job_status = os.environ.get("JOB_STATUS", "unknown")
+          run_url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{run_id}"
+          report_path = Path("results/phase53/source_coverage_audit/report.json")
+          report = None
+          error_text = "unknown error"
+          if report_path.exists():
+              try:
+                  report = json.loads(report_path.read_text(encoding="utf-8"))
+              except Exception as exc:
+                  error_text = f"{type(exc).__name__}: {str(exc)[:200]}"
+          else:
+              error_text = "Audit report was not created."
+          if report:
+              s = report.get("summary", {})
+              summary = (
+                  f"- Run: [{run_id}]({run_url}); workflow job status={job_status}.\n"
+                  f"- Source registry rows={s.get('source_registry_count')}; "
+                  f"pinned required files={s.get('required_paths')}; "
+                  f"HEAD accessible={s.get('required_paths_accessible_by_head')}; "
+                  f"404={s.get('required_paths_404')}; unknown={s.get('required_paths_unknown')}.\n"
+                  f"- Audit decision={s.get('decision')}; confirmed free full-history bid/ask/depth="
+                  f"{report.get('execution_quality', {}).get('free_full_history_bid_ask_archive_confirmed')}.\n"
+                  "- Raw market bars downloaded=False; strategy backtest run=False; holdout used=False.\n"
+              )
+          else:
+              summary = (
+                  f"- Run: [{run_id}]({run_url}); workflow job status={job_status}.\n"
+                  f"- Audit report missing/unreadable: {error_text}.\n"
+                  "- No source or strategy conclusion accepted from this run.\n"
+              )
+          status = Path("PHASE53_STATUS.md")
+          status.write_text(status.read_text(encoding="utf-8").rstrip() +
+                            f"\n\n## Automated source audit checkpoint — run {run_id}\n\n" + summary,
+                            encoding="utf-8")
+          log = Path("PHASE53_RESEARCH_LOG.md")
+          log.write_text(log.read_text(encoding="utf-8").rstrip() +
+                         f"\n\n## {run_id} — Source coverage audit\n\n" + summary,
+                         encoding="utf-8")
+          chat = Path("PHASE53_CHAT_LOG.md")
+          chat.write_text(chat.read_text(encoding="utf-8").rstrip() +
+                          f"\n\n## Automated action — run {run_id}\n\n" + summary,
+                          encoding="utf-8")
+          if job_status != "success" or not report:
+              err = Path("PHASE53_ERROR_LOG.md")
+              err.write_text(err.read_text(encoding="utf-8").rstrip() +
+                  f"\n\n## F53-RUN-{run_id} — Source audit workflow or report failure\n\n"
+                  f"- Date: {__import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat()}\n"
+                  f"- Run: {run_url}\n- Job status: {job_status}\n"
+                  f"- Report error: {error_text}\n"
+                  "- Impact: no data-source coverage or strategy conclusion accepted.\n- Status: OPEN.\n",
+                  encoding="utf-8")
+          readme = Path("README.md")
+          readme.write_text(readme.read_text(encoding="utf-8").rstrip() +
+                            f"\n\n## Phase 53 source coverage audit — run {run_id}\n\n" + summary +
+                            "- Full methodology: PHASE53_RESEARCH_PLAN.md; machine-readable sources: research/phase53/sources.json.\n",
+                            encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE53_STATUS.md PHASE53_RESEARCH_LOG.md PHASE53_ERROR_LOG.md PHASE53_CHAT_LOG.md README.md results/phase53/source_coverage_audit
+          if git diff --cached --quiet; then
+            echo "No source audit changes to persist."
+            exit 0
+          fi
+          git commit -m "Phase53 source coverage audit checkpoint $GITHUB_RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            if git rebase origin/"$PHASE_BRANCH"; then
+              if git push origin "$PHASE_BRANCH"; then
+                exit 0
+              fi
+            else
+              echo "Rebase conflict; aborting rather than risking a lost audit log." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+            echo "Push race on attempt $attempt; retrying." >&2
+          done
+          echo "Checkpoint persistence failed after 3 attempts." >&2
+          exit 1
+        env:
+          JOB_STATUS: \${{ job.status }}
+          HF_TOKEN: \${{ secrets.HF_TOKEN }}
+
