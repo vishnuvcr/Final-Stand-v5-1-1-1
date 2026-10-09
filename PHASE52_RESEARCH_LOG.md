@@ -57,3 +57,18 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - Hugging Face and GitHub search calls completed; 32 unique public source leads were added to the durable source ledger. No fresh YouTube API crawl was performed because `YOUTUBE_API_KEY` is absent.
 - Grid `phase52-grid-v1.3`: 9,379,584 applicable combinations; 10,000 configuration records emitted and checkpointed for offsets 0–9,999.
 - These are candidate configurations, not tested trades or backtests. The numerical replay engine/data coverage gate remains open. No strategy is promoted.
+
+
+## 2026-10-09 — Step 0.6: First factor-selector workflow execution
+
+- **Workflow:** run 37925891660; job 113804605666.
+- **Passed:** Registry/spec/grid consistency validation and deterministic configuration ID self-test. Validator reported 312 hypotheses, 52 families and grid v1.3 with 9,379,584 finite configurations.
+- **Blocked:** Factor-selector pilot self-test failed on strict expected quantile labels. It stopped before loading/analysing the Phase45 trade matrix. No factor or strategy performance conclusion was produced.
+- **Correction:** Unit test now uses explicit edges [1.5, 2.5] so LOW/MID/HIGH labels are unambiguous and independent of quantile conventions. Root cause recorded as F52-005; automatic rerun pending.
+
+## 2026-10-09 — Step 0.7: Configuration-space feasibility check
+
+- **Finding:** v1.1 197,842,176 candidates, v1.2 36,008,064; current v1.3 9,379,584 configurations.
+- **Decision:** Keep all combinations in current grid but use bounded 25,000-row shards. Clearly distinguish enumeration from actual replay, and do not claim full config test count until a source-faithful replay result exists.
+- **Next:** pass the selector pilot unit test, validate as-of feature coverage and chronology, run validation/holdout comparisons, then integrate replay engine for the registered variable configurations.
+
