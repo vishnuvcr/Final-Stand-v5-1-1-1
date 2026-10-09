@@ -169,3 +169,23 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.
 - Root cause: pending review of the failed job logs.
 - Status: OPEN.
+
+
+## F52-013 — Coverage auditor missing from research-branch checkout — RESOLVED / RERUN PENDING
+
+- **Date:** 2026-10-09
+- **Run:** [37930010915](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37930010915).
+- **Observed:** Base replay, source-schema audit, and pinned dataset validation had completed, but `python research/phase52/expiry_coverage_audit.py` exited with “No such file or directory”.
+- **Root cause:** The audit script had been committed to the default branch because the file-create call omitted the target branch; the Phase52 workflow intentionally checks out `phase-52-factor-conditioned-strategy-discovery`.
+- **Scientific impact:** The exact-10:00 expiry coverage audit did not run. No coverage conclusion is claimed and the partial base replay remains only diagnostic until this gate emits a report.
+- **Correction:** Copied the exact script into the Phase52 research branch in commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`. The next workflow run should execute the existing gate without changing the pre-registered strategy grid.
+- **Status:** Code-path correction complete; rerun needed to resolve the scientific coverage gate.
+
+
+## F52-014 — Base-replay empty error CSV misread as −1 errors — RESOLVED IN CODE / MANIFEST REFRESH PENDING
+
+- **Date:** 2026-10-09
+- **Observation:** The accepted Phase43/45 engines wrote a headerless/empty data-errors CSV. The base replay wrapper's generic CSV reader treated that as an exception and stored `phase45_data_error_rows: -1`.
+- **Impact:** No replay P&L row was affected, but the audit field was ambiguous and incorrect.
+- **Correction:** `research/phase52/base_replay.py` now classifies an empty/whitespace-only data-error file as zero rows with status `EMPTY_NO_ERROR_ROWS`, records source-code SHA256 provenance, and refreshes this metadata when reusing a valid pinned matrix. Next run must refresh the manifest and verify `phase45_data_error_rows = 0`.
+- **Status:** PATCHED; refresh pending.
