@@ -328,3 +328,11 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Run:** [37962948690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962948690); job=success; self-test=success; plan-only=success; replay=success.
 - **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+
+
+## PA-015 — 2026-10-10 — Exact duplicate row normalization for the historical pilot
+
+- The v0.1 pilot executed 1 of 480 planned config-event rows; 274 were blocked by duplicate exact contract bars and 205 failed the preregistered 2% high-low/open proxy gate.
+- Change: v0.2 removes only rows identical across all columns after canonical timestamp/type/numeric normalization. Conflicting rows with the same contract key are not averaged or arbitrarily selected; they remain blocked. The frozen 40 configurations, 24 events, splits, costs and OHLC proxy threshold are unchanged.
+- Interpretation: this is a source-normalization/coverage engineering rerun, not a performance retest. The 2% high-low/open test is an OHLC-range proxy, not an observed bid/ask spread; it remains a conservative data-quality exclusion and cannot establish executable liquidity.
+- The v0.1 report is preserved. v0.2 must report per-file original normalized row counts, exact duplicate rows removed, conflicts remaining, and complete 480-row status reconciliation before it can pass.
