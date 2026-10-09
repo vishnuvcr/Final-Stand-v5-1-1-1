@@ -1,0 +1,49 @@
+name: Phase 52 — Template Resolver Synthetic Golden Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase-52-template-resolver-tests.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase52-template-resolver-selftest
+  cancel-in-progress: false
+
+jobs:
+  template-resolver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout frozen Phase52 research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-52-factor-conditioned-strategy-discovery
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deterministic resolver-test dependencies
+        run: python -m pip install --disable-pip-version-check --no-input numpy pandas
+
+      - name: Run source-bound family resolver golden tests
+        run: |
+          mkdir -p "$RUNNER_TEMP/phase52-template-resolver"
+          python research/phase52/strategy_template_resolver.py --self-test --report "$RUNNER_TEMP/phase52-template-resolver/report.json"
+          cp "$RUNNER_TEMP/phase52-template-resolver/report.json" results-template-resolver-report.json
+
+      - name: Upload resolver report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase52-template-resolver-${{ github.run_id }}
+          path: results-template-resolver-report.json
+          if-no-files-found: warn
+          retention-days: 30
