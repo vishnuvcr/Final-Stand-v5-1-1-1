@@ -10,6 +10,7 @@ from huggingface_hub import hf_hub_download
 
 TZ = "Asia/Kolkata"
 HF_REPO = "thetrademarkk/india-index-options-1m"
+HF_REVISION = os.environ.get("PHASE52_HF_REVISION", "main")
 TICK = 0.05
 BROKERAGE_PER_ORDER = 10.0
 DEV_END = pd.Timestamp("2023-12-31", tz=TZ)
@@ -108,7 +109,7 @@ def charges(orders, lot, mult=1.0):
 
 def load_index():
     p = hf_hub_download(repo_id=HF_REPO, filename="index/NIFTY.parquet",
-                        repo_type="dataset", token=os.getenv("HF_TOKEN") or None)
+                        repo_type="dataset", revision=HF_REVISION, token=os.getenv("HF_TOKEN") or None)
     df = pd.read_parquet(p, columns=["timestamp", "close"])
     ts = pd.to_datetime(df["timestamp"])
     df["timestamp"] = ts.dt.tz_localize(TZ) if ts.dt.tz is None else ts.dt.tz_convert(TZ)
