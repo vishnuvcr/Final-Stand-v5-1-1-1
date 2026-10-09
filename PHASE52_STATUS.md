@@ -128,3 +128,9 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Coverage audit attempt:** run [37930010915](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37930010915) failed before it could emit a coverage conclusion because `research/phase52/expiry_coverage_audit.py` existed on main but was missing from the checked-out research branch. That script has now been copied to this branch (commit `43e8ae1a9a4c5acf5c6be4c0f4a83bb74455f50b`). No coverage numbers are accepted from that failed run.
 - **Strategy decision:** reproduced LOW-VIX Bear Call Spread validation net ₹24,743, legacy 1.5× all-cost net ₹23,082. Phase45's multiple-testing decision remains zero Holm-adjusted statistical survivors; no promotion.
 - **Next gate:** rerun exact-10:00 entry-spot coverage audit and inspect daily factor-level coverage before any factor-selector or parameter replay.
+
+## Automated checkpoint — 2026-10-09 18:08:24 IST
+- Workflow run: 37931097834
+- Source leads newly recorded: 0.
+- Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
+- Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.

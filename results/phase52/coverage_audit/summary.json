@@ -1,0 +1,43 @@
+{
+  "status": "COVERAGE_AUDIT_COMPLETE_WINDOW_GATE_REVIEW_REQUIRED",
+  "created_at_utc": "2026-10-09T12:36:51.354524+00:00",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "base_trade_matrix_sha256": "76b12c6723affbd33cdd736b04e5bba4172cdd5a1ffe9c04b081f69038a081d1",
+  "option_expiry_files_in_scope": 267,
+  "first_source_option_expiry": "2021-05-27",
+  "last_source_option_expiry": "2026-08-04",
+  "unique_expiries_in_base_matrix": 256,
+  "first_matrix_expiry": "2021-06-03",
+  "last_matrix_expiry": "2026-05-26",
+  "index_timestamp_min": "2021-05-24 09:07:00+05:30",
+  "index_timestamp_max": "2026-07-02 15:30:00+05:30",
+  "latest_index_session_date": "2026-07-02",
+  "sessions_with_exact_10am_ticks": 1255,
+  "source_expiry_rows_with_exact_entry_tick": 257,
+  "source_expiry_rows_with_matrix_outcome": 256,
+  "source_expiry_rows_not_fully_replayed": 11,
+  "coverage_status_counts": {
+    "MATRIX_ROWS_PRESENT": 256,
+    "UNREPLAYABLE_INDEX_SERIES_ENDS_BEFORE_EXPIRY": 5,
+    "UNREPLAYABLE_MISSING_EXACT_ENTRY_SPOT": 4,
+    "EXCLUDED": 1,
+    "UNREPLAYABLE_NO_MATRIX_ROWS": 1
+  },
+  "latest_missing_or_unreplayed_expiries": [
+    "2021-05-27",
+    "2021-11-11",
+    "2024-11-07",
+    "2025-10-28",
+    "2026-06-02",
+    "2026-06-09",
+    "2026-07-07",
+    "2026-07-14",
+    "2026-07-21",
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "interpretation": "A listed expiry file is not treated as a tested opportunity unless the exact prior-session-derived 10:00 IST index tick exists and at least one trade-matrix row was produced. No quote interpolation, timestamp substitution or forward filling is allowed.",
+  "output_csv": "results/phase52/coverage_audit/expiry_coverage.csv"
+}
