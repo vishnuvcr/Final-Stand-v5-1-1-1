@@ -849,3 +849,6 @@ Because broad event coverage is not proof that the configured strikes can trade,
 
 
 **Workflow self-audit update:** The previously failing status-log persistence step passed in [run 37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) after the safe rebase/push fix. A point-in-time strike-ladder issue was caught before accepting selected-strike results and patched; see [F52-026](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md). Two earlier runs are using older code snapshots; [run 37937318538](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937318538) is queued to validate the corrected script. No selected-strike result or configuration P&L is accepted yet.
+
+
+**Concurrency safeguard:** Workflow persistence now checks whether the selected-strike auditor changed after a run checked out its source snapshot; stale selected-strike outputs are discarded/restored rather than overwriting newer evidence. Verification is pending. See [F52-027](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md).
