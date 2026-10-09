@@ -38,7 +38,7 @@ jobs:
           python research/phase52/replay_kernel.py --self-test-only > "$RUNNER_TEMP/phase52-kernel-test/self-test.log" 2>&1
           cat "$RUNNER_TEMP/phase52-kernel-test/self-test.log"
           python - <<'PY'
-          import hashlib, json
+          import hashlib, json, os
           from pathlib import Path
           root=Path(".")
           def sha(path):
@@ -46,7 +46,7 @@ jobs:
               with open(path,"rb") as f:
                   for block in iter(lambda:f.read(4*1024*1024),b""): h.update(block)
               return h.hexdigest()
-          out=Path("$RUNNER_TEMP/phase52-kernel-test") / "manifest.json"
+          out=Path(os.environ["RUNNER_TEMP"]) / "phase52-kernel-test" / "manifest.json"
           out.write_text(json.dumps({
               "status":"SELF_TEST_STEP_COMPLETED",
               "kernel_sha256":sha(root/"research/phase52/replay_kernel.py"),
