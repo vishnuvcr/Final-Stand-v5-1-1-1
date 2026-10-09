@@ -1,3 +1,23 @@
+# Latest research checkpoint — 2026-10-10
+
+## Phase 52 bounded historical pilot v0.2 — replay complete, insufficient coverage
+
+[Workflow 37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805) completed replay and status reconciliation for 40 configurations × 24 development/validation events = 480 planned configuration-event rows: 379 failed the frozen OHLC-range proxy, 100 were blocked by leg eligibility, and one executed. Thirteen source files had zero read errors; six cost-scenario rows were emitted for the one executed row. The final checkpoint-persistence step failed due conflicts in shared status/research/chat logs. **This is not a usable profitability sample; no strategy is ranked or promoted; holdout remains untouched.**
+
+- [Pilot run summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot/v0.2-run-37980455805-summary.json)
+- [Pilot audit note](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot/v0.2-run-37980455805-audit.md)
+- [Phase 52 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
+
+## OpenChart source feasibility — auxiliary candidate only
+
+Static inspection of [marketcalls/openchart](https://github.com/marketcalls/openchart) finds individual-instrument historical OHLCV support including 1-minute bars, but not a documented complete historical all-strike chain API, OI, Greeks, bid/ask or depth. Expired-contract discoverability, oldest history, timestamp convention and rate-limit behaviour need a bounded runtime probe. The MIT license covers the client software, not NSE data rights; raw bars are not committed pending data-use review.
+
+- [OpenChart feasibility audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_OPENCHART_AUDIT.md)
+- [OpenChart probe code](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/openchart_source_probe.py)
+- [Phase 52 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery)
+
+---
+
 ## Phase 51-1J — Free-source recovery audit
 
 A public Hugging Face dataset, [thetrademarkk/india-index-options-1m](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m), lists both missing NIFTY files: [2026-07-28](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/commit/dbc0596) and [2026-08-04](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/commit/51ca58c). The metadata-only audit [run 37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582) downloaded both files, but both were stale: timestamps ended on 2026-07-02 and each contained zero rows on its named target session. This source is rejected for the missing dates despite its filenames and expiry metadata.
