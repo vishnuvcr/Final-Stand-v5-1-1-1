@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 180
     env:
       PHASE_BRANCH: phase-55-leg-audit-payload-repair
-      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
       - name: Checkout Phase 55 branch
         uses: actions/checkout@v4
@@ -54,6 +54,13 @@ jobs:
         run: python -m unittest research.phase52.tests.test_historical_pilot_leg_audit -v
       - name: Runner deterministic self-test
         run: python research/phase52/historical_pilot_runner.py --self-test-only
+      - name: Freeze updated audit-code manifest without changing research design
+        run: |
+          set -euo pipefail
+          manifest=results/phase52/historical_pilot/pilot_manifest.json
+          archived=results/phase52/historical_pilot/pilot_manifest.phase52-v0.2.1-original.json
+          if [ -f "$manifest" ] && [ ! -f "$archived" ]; then cp "$manifest" "$archived"; fi
+          python research/phase52/historical_pilot_runner.py --plan-only
       - name: Clear stale generated outputs
         run: rm -f results/phase52/historical_pilot/event_replay.csv results/phase52/historical_pilot/cost_scenarios.csv results/phase52/historical_pilot/report.json
       - name: Rerun frozen 480-row pilot at pinned source revision
@@ -99,7 +106,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase55-frozen-pilot-\${{ github.run_id }}
+          name: phase55-frozen-pilot-${{ github.run_id }}
           path: results/phase52/historical_pilot/
           if-no-files-found: warn
           retention-days: 90
@@ -107,7 +114,7 @@ jobs:
         if: always()
         shell: bash
         env:
-          JOB_STATUS: \${{ job.status }}
+          JOB_STATUS: ${{ job.status }}
         run: |
           set -euo pipefail
           python - <<'PY'
