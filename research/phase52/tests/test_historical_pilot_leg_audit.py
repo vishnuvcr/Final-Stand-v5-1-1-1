@@ -22,6 +22,23 @@ class LegAuditPayloadTests(unittest.TestCase):
         self.assertTrue(all(x["range_proxy_status"] == "NOT_TESTED" for x in rows))
         self.assertTrue(all(x["exit_status"] == "NOT_TESTED" for x in rows))
 
+    def test_validator_fails_closed_on_dropped_leg(self):
+        row = {
+            "configuration_id":"cfg", "event_id":"e", "family_id":"BEAR_CALL_SPREAD",
+            "status":"EXCLUDED_OHLC_RANGE_PROXY",
+            "resolved_legs_json":json.dumps([{"leg_id":"L1"}]),
+        }
+        with self.assertRaises(RuntimeError):
+            runner.validate_leg_audit_payloads([row])
+
+    def test_validator_accepts_complete_spread_leg_ids(self):
+        row = {
+            "configuration_id":"cfg", "event_id":"e", "family_id":"BEAR_CALL_SPREAD",
+            "status":"EXCLUDED_OHLC_RANGE_PROXY",
+            "resolved_legs_json":json.dumps([{"leg_id":"L1"},{"leg_id":"L2"}]),
+        }
+        runner.validate_leg_audit_payloads([row])
+
     def test_event_record_preserves_all_leg_payloads(self):
         event = {"split":"development","event_id":"e1","expiry":"2025-03-13","entry_ts":"2025-03-13T09:45:00+05:30"}
         conf = {
