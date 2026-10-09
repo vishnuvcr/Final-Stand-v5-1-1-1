@@ -37,8 +37,9 @@ def load_registry(path: Path = REGISTRY) -> dict[str, Any]:
     return obj
 
 
-def assess_inventory(items: Iterable[dict[str, Any]], required_paths: list[str]) -> dict[str, Any]:
-    """Assess a known metadata listing; never treat a failed listing as an empty list."""
+def assess_inventory(items: Iterable[dict[str, Any]], required_paths: list[str],
+                     listing_complete: bool = True) -> dict[str, Any]:
+    """Match paths against returned metadata; partial listings do not prove file absence."""
     rows = list(items)
     by_path: dict[str, dict[str, Any]] = {}
     duplicates: list[str] = []
@@ -46,43 +47,49 @@ def assess_inventory(items: Iterable[dict[str, Any]], required_paths: list[str])
         name = item.get("path") or item.get("name") or item.get("rfilename")
         if not isinstance(name, str) or not name:
             continue
-        # Normalize API responses that list only paths relative to the requested folder.
         normalized = name.lstrip("/")
-        if normalized in by_path and normalized not in duplicates:
-            duplicates.append(normalized)
+        if normalized in by_path:
+            if normalized not in duplicates:
+                duplicates.append(normalized)
         else:
             by_path[normalized] = item
-    # Permit either full dataset-relative paths or basename results from a folder listing.
     present: list[str] = []
-    missing: list[str] = []
+    not_listed: list[str] = []
     metadata: list[dict[str, Any]] = []
     for required in required_paths:
         basename = required.rsplit("/", 1)[-1]
         candidate = by_path.get(required) or by_path.get(basename)
         if candidate is None:
-            candidate = next((v for k, v in by_path.items() if k.endswith("/" + required) or k.endswith("/" + basename)), None)
+            candidate = next((v for k, v in by_path.items()
+                              if k.endswith("/" + required) or k.endswith("/" + basename)), None)
         if candidate is None:
-            missing.append(required)
-        else:
-            present.append(required)
-            lfs = candidate.get("lfs") if isinstance(candidate.get("lfs"), dict) else {}
-            metadata.append({
-                "path": required,
-                "listed_path": candidate.get("path") or candidate.get("name") or candidate.get("rfilename"),
-                "size_bytes": candidate.get("size"),
-                "oid": candidate.get("oid"),
-                "lfs_oid": lfs.get("oid"),
-                "lfs_size": lfs.get("size"),
-            })
+            not_listed.append(required)
+            continue
+        present.append(required)
+        lfs = candidate.get("lfs") if isinstance(candidate.get("lfs"), dict) else {}
+        metadata.append({
+            "path": required,
+            "listed_path": candidate.get("path") or candidate.get("name") or candidate.get("rfilename"),
+            "size_bytes": candidate.get("size"),
+            "oid": candidate.get("oid"),
+            "lfs_oid": lfs.get("oid"),
+            "lfs_size": lfs.get("size"),
+        })
     return {
-        "listing_complete": True,
+        "listing_complete": bool(listing_complete),
         "required_count": len(required_paths),
-        "present_count": len(present),
-        "missing_count": len(missing),
+        "listed_matching_count": len(present),
+        "not_listed_in_returned_metadata_count": len(not_listed),
+        "not_listed_in_returned_metadata_paths": not_listed,
+        "metadata_listing_proves_missing": bool(listing_complete),
         "present_paths": present,
-        "missing_paths": missing,
         "file_metadata": metadata,
         "duplicate_list_entries": duplicates,
+        "interpretation": (
+            "Metadata listing was complete; unmatched paths were not present in the queried repository tree."
+            if listing_complete else
+            "Partial metadata listing only; unlisted paths are UNKNOWN in this listing, not confirmed missing. Direct file checks take precedence."
+        ),
     }
 
 
@@ -106,6 +113,7 @@ def request_url(url: str, method: str = "GET", token: str | None = None,
                 "content_type": response.headers.get("Content-Type"),
                 "content_length": response.headers.get("Content-Length"),
                 "etag": response.headers.get("ETag"),
+                "link_header": response.headers.get("Link"),
                 "last_modified": response.headers.get("Last-Modified"),
                 "body_prefix_bytes": len(body),
                 "body_sha256_prefix": __import__("hashlib").sha256(body).hexdigest() if body else None,
@@ -117,7 +125,8 @@ def request_url(url: str, method: str = "GET", token: str | None = None,
             "url": url, "http_status": int(exc.code), "reachable": False,
             "content_type": exc.headers.get("Content-Type"),
             "content_length": exc.headers.get("Content-Length"),
-            "etag": exc.headers.get("ETag"), "last_modified": exc.headers.get("Last-Modified"),
+            "etag": exc.headers.get("ETag"), "link_header": exc.headers.get("Link"),
+            "last_modified": exc.headers.get("Last-Modified"),
             "body_prefix_bytes": 0, "body_sha256_prefix": None,
             "elapsed_ms": int((time.monotonic() - started) * 1000),
             "error": "HTTP_ERROR",
@@ -144,6 +153,8 @@ def json_request(url: str, token: str | None = None) -> tuple[dict[str, Any], An
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=18.0) as response:
             raw = response.read(MAX_METADATA_BYTES + 1)
+            result["link_header"] = response.headers.get("Link")
+            result["metadata_content_length"] = response.headers.get("Content-Length")
         if len(raw) > MAX_METADATA_BYTES:
             result["metadata_parse_error"] = "metadata exceeds size limit"
             return result, None
@@ -156,49 +167,64 @@ def json_request(url: str, token: str | None = None) -> tuple[dict[str, Any], An
 
 
 def listed_tree(repo_id: str, revision: str, token: str | None) -> tuple[dict[str, Any], list[dict[str, Any]] | None]:
-    # Query the option and index directories independently, then combine metadata
-    # listings only when each returned JSON successfully. Fallback to a recursive
-    # root listing only if both directory endpoints are inaccessible.
+    """Read exact pinned tree metadata and follow Link rel=next, without downloading blobs."""
     urls = [
-        f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/options/NIFTY?recursive=false&expand=true&limit=1000",
+        f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/options/NIFTY?recursive=false&expand=true",
         f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}/index?recursive=false&expand=true",
     ]
-    attempted = []
+    attempted: list[dict[str, Any]] = []
     combined: list[dict[str, Any]] = []
-    success_count = 0
-    for url in urls:
-        meta, data = json_request(url, token)
-        attempted.append(meta)
-        if isinstance(data, list):
+    successful_dirs = 0
+    fully_paged_dirs = 0
+    per_dir: list[dict[str, Any]] = []
+
+    def next_link(link_header: str | None) -> str | None:
+        if not link_header:
+            return None
+        for part in link_header.split(","):
+            if 'rel="next"' in part or "rel=next" in part:
+                left = part.find("<")
+                right = part.find(">", left + 1)
+                if left >= 0 and right > left:
+                    return part[left + 1:right]
+        return None
+
+    for initial_url in urls:
+        page_url = initial_url
+        page_count = 0
+        start_index = len(combined)
+        failure = None
+        while page_url and page_count < 100:
+            meta, data = json_request(page_url, token)
+            attempted.append(meta)
+            if not isinstance(data, list):
+                failure = {"url": page_url, "http_status": meta.get("http_status"),
+                           "error": meta.get("error") or meta.get("metadata_parse_error") or "non-list response"}
+                break
             combined.extend(data)
-            success_count += 1
-    if success_count:
-        return {
-            "attempts": attempted,
-            "successful_url_count": success_count,
+            page_count += 1
+            page_url = next_link(meta.get("link_header"))
+        complete = failure is None and page_url is None
+        if page_count >= 100 and page_url:
+            complete = False
+            failure = {"error": "pagination safety limit 100 pages reached"}
+        if page_count:
+            successful_dirs += 1
+        if complete:
+            fully_paged_dirs += 1
+        per_dir.append({"initial_url": initial_url, "pages_read": page_count,
+                        "metadata_items": len(combined) - start_index,
+                        "complete": complete, "failure": failure})
+    if successful_dirs == 0:
+        return {"attempts": attempted, "directories": per_dir, "successful_url_count": 0,
+                "expected_directory_count": len(urls), "listing_complete": False,
+                "http_status": None}, None
+    return {"attempts": attempted, "directories": per_dir,
+            "successful_url_count": successful_dirs,
             "expected_directory_count": len(urls),
-            "listing_complete": success_count == len(urls),
-            "http_status": 200,
-        }, combined
-    root_url = f"https://huggingface.co/api/datasets/{repo_id}/tree/{revision}?recursive=true&expand=false&limit=1000"
-    meta, data = json_request(root_url, token)
-    attempted.append(meta)
-    if isinstance(data, list):
-        return {
-            "attempts": attempted,
-            "successful_url_count": 1,
-            "expected_directory_count": len(urls),
-            "listing_complete": True,
-            "root_listing_fallback": True,
-            "http_status": meta.get("http_status"),
-        }, data
-    return {
-        "attempts": attempted,
-        "successful_url_count": 0,
-        "expected_directory_count": len(urls),
-        "listing_complete": False,
-        "http_status": None,
-    }, None
+            "listing_complete": successful_dirs == len(urls) and fully_paged_dirs == len(urls),
+            "http_status": 200}, combined
+
 
 def source_probe(source: dict[str, Any], token: str | None) -> dict[str, Any]:
     result = request_url(source["url"], "GET", token, read_limit=24_000)
@@ -258,7 +284,9 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
     hf_listing_meta, hf_listing = listed_tree(repo_id, revision, token)
     inventory = None
     if hf_listing is not None:
-        inventory = assess_inventory(hf_listing, required)
+        inventory = assess_inventory(
+            hf_listing, required, listing_complete=bool(hf_listing_meta.get("listing_complete"))
+        )
 
     file_statuses = [row["http_status"] for row in file_checks]
     known = [x for x in file_statuses if isinstance(x, int)]
@@ -308,7 +336,12 @@ def audit(registry: dict[str, Any]) -> dict[str, Any]:
             },
             "required_file_checks": file_checks,
             "tree_listing": {
-                "status": "AVAILABLE" if hf_listing is not None else "INACCESSIBLE_OR_UNSUPPORTED",
+                "status": (
+                    "AVAILABLE_COMPLETE" if hf_listing is not None and hf_listing_meta.get("listing_complete")
+                    else "AVAILABLE_PARTIAL" if hf_listing is not None
+                    else "INACCESSIBLE_OR_UNSUPPORTED"
+                ),
+                "listed_item_count": len(hf_listing) if hf_listing is not None else None,
                 "meta": hf_listing_meta,
                 "inventory_assessment": inventory,
             },
