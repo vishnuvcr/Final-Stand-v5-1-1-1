@@ -44,3 +44,12 @@ Every runtime or extraction failure must be recorded with run ID, cause, correct
 - **Cause:** setup-python's pip cache option requires a requirements.txt or pyproject.toml, neither exists at repository root. The setup step failed before downloading any source files. Artifact publication also attempted to git-add a nonexistent output directory.
 - **Correction:** removed setup-python pip caching (the HF cache remains separately configured) and made metadata publication tolerate a missing output directory. Triggered corrected run [37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582).
 - **Evidence impact:** no source files downloaded and no data conclusions drawn from failed run.
+
+
+## T51-1J-006 — Free HF files contain no target-date rows — CLOSED / SOURCE REJECTED
+
+- **Run:** [37916601582](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37916601582), all workflow steps passed.
+- **Observation:** Both advertised files were downloaded successfully and hashes/schema were recorded, but all timestamps stop on 2026-07-02. The 2026-07-28 file has 320,359 rows and zero rows dated 2026-07-28; the 2026-08-04 file has 2,646 rows and zero rows dated 2026-08-04.
+- **Cause:** Stale/incomplete payloads stored under future expiry-date filenames; expiry metadata does not guarantee target-session coverage.
+- **Correction:** Automated timestamp-range and target-date row audit added. Workflow setup failure from run 37916552983 is separately logged above and was corrected before this run.
+- **Evidence impact:** Reject these files for the missing-session replay. No P&L accepted; raw files were not committed.
