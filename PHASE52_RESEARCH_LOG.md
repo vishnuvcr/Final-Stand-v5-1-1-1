@@ -40,3 +40,11 @@
 - **ABS_DELTA:** workflow 37944408314 failed at self-test before reading market data. Fixed `sigma=180` to `sigma=0.18` and changed the invalid negative premium fixture to a call with intrinsic value. Further removed same-bar-close lookahead: IV/delta now uses exact prior one-minute option/index close and prior-bar OI; current entry open is checked separately.
 - **Plan impact:** added PA-011/PA-012 and amended replay protocol. Grid v1.3 domains and configuration IDs are unchanged; no P&L has been computed from these audits.
 - **Next:** trigger corrected regression workflows; inspect their source hashes, exact-stamp/selected-leg coverage and delta-selection status summaries. Only after regression succeeds should a tiny hand-calculated replay engine test be built; do not start the full config queue yet.
+
+
+## 2026-10-09 — Step 2.7: Gate ATM-offset OI with prior completed bar
+
+- Source review of PA-011/PA-012 correction found current-bar OI was still used in the ATM-offset audit, despite open-fill semantics.
+- Patched research/phase52/selected_strike_coverage_audit.py on main and research branch: exact prior timestamp is entry_ts minus one minute; prior_oi_gate must show a unique target-contract row and OI>=100; exact entry-time OHLC validity/open is a separate condition; current entry-bar OI is diagnostics only.
+- Added plan/protocol amendment PA-013 and updated configuration execution semantics. v1.3 domains remain unchanged; no P&L calculated.
+- The currently running factor workflow (37954806932) checked out the code before PA-013, so its selected-strike result must not be accepted as final. Wait for it to complete, then rerun; delta workflow 37954839508 is queued by concurrency and should use the updated branch code.
