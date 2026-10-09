@@ -325,3 +325,20 @@ The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes exte
 **Change:** The 11 rows in research/phase52/strategy_specifications.csv are now marked STANDARD_VARIANT_PREREGISTERED with provenance notes linking them to the Phase45 source definitions. They remain distinct named families; their source-defined template is the baseline and parameterized variants remain separate configurations.
 
 **Grid impact:** No grid domains, candidate IDs or configuration IDs changed. This resolves source specification gates only and does not constitute a backtest. Registry validation must pass on the next workflow run before these rows are considered eligible for replay. ABS_DELTA resolution remains separately blocked under PA-009.
+
+
+### PA-011 — 2026-10-09 — Correct ATM-offset audit geometry and entry anchor before replay
+
+**Finding:** The initial selected-strike coverage audit reported 27,768 leg-event rows but represented registered strike offsets as ordinal ranks among available strikes. It also used the index bar close at the entry timestamp as the ATM anchor, while the frozen protocol calls for the exact-time index bar open. These are implementation defects in a coverage-only audit, not evidence of bad strategy P&L: no Phase52 configuration P&L has been computed.
+
+**Correction:** The ATM-offset audit now resolves nearest ATM from contracts actually present at the exact entry timestamp using exact-time NIFTY index `open`, calculates the modal strike spacing from that same option snapshot using Phase43 helper semantics, and targets `ATM + signed_offset_steps × modal_step`. If the target contract is unavailable at the exact timestamp, it is marked unavailable; the audit must not shift to another listed strike.
+
+**Evidence status:** The previous selected-strike coverage summary and any counts derived from ordinal-rank offsets are superseded. Fresh Actions results from the corrected code are required before the audit can pass. No grid domain or configuration ID changed.
+
+### PA-012 — 2026-10-09 — Enforce prior-bar-only ABS_DELTA selection and repair regression fixtures
+
+**Finding:** The delta audit's first regression fixture passed `180.0` as annual volatility instead of `0.18`; its below-intrinsic test used an out-of-the-money call whose premium was not below intrinsic. Further review found that the initial delta audit used same-entry-bar closes to select delta strikes, which would not be known at the open fill reference.
+
+**Correction:** Fix the regression volatility scale to 18% and use an in-the-money call for the below-intrinsic negative fixture. Delta selection now uses only the exact prior completed one-minute bar (entry timestamp minus one minute): option close and NIFTY index close for model-IV/delta, prior-bar OI for the OI gate, then the exact entry-time option open for entry-bar eligibility. Missing exact prior data or entry fills must be excluded, never moved to a nearby minute.
+
+**Evidence status:** The old delta run [37944408314](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37944408314) failed at self-test and its audit did not run. The corrected code still requires regression and full coverage reruns. Model deltas remain estimates under a European Black–Scholes model (6% rate, zero dividend yield), not exchange-published Greeks. No grid domain or configuration ID changed.
