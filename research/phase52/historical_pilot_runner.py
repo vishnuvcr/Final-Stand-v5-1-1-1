@@ -822,6 +822,15 @@ def self_test() -> None:
     assert all(truthy(x) for x in events["index_has_exact_entry_timestamp"])
     p = kernel.passes_range_proxy_gate({"open":100,"high":101,"low":99,"close":100.5},2.0)
     assert p[0] is True
+    # Duplicate normalization removes only rows identical across all columns.
+    dup_fixture = pd.DataFrame([
+        {"timestamp":"2024-01-04T09:44:00+05:30","expiry":"2024-01-04","option_type":"CE","strike":22000,"open":100.0,"open_interest":500},
+        {"timestamp":"2024-01-04T09:44:00+05:30","expiry":"2024-01-04","option_type":"CE","strike":22000,"open":100.0,"open_interest":500},
+        {"timestamp":"2024-01-04T09:44:00+05:30","expiry":"2024-01-04","option_type":"CE","strike":22000,"open":101.0,"open_interest":500},
+    ])
+    dedup_fixture = dup_fixture.drop_duplicates(keep="first")
+    assert len(dup_fixture) == 3 and len(dedup_fixture) == 2
+    assert dedup_fixture.iloc[0]["open"] == 100.0 and dedup_fixture.iloc[1]["open"] == 101.0
     missing = kernel.select_exact_bar(pd.DataFrame(columns=["timestamp","expiry","option_type","strike","open","high","low","close"]),
                                      "2024-01-04T09:45:00+05:30","2024-01-04","CE",22000)
     assert missing.status in {"BLOCKED_SCHEMA","NO_EXACT_CONTRACT_BAR"}
