@@ -1,10 +1,10 @@
 # Phase 54 research plan — OHLC-reference eligibility sensitivity
 
 ## Purpose
-Quantify how the Phase 52 pilot's eligibility counts respond to different OHLC high-low/open thresholds, without representing candle range as bid/ask spread and without converting the exercise into a strategy backtest. This is a bounded diagnostic phase following Phase 53's no-go for a free independent historical quote/depth source.
+Determine whether the committed Phase 52 pilot output retains enough per-leg evidence to support a valid OHLC-reference threshold sensitivity. The first implementation showed that it does not: 373 rows have empty leg payloads and six range-excluded rows have only partial leg payloads. Threshold estimates are therefore blocked rather than imputed.
 
 ## Research question
-How sensitive are the 480 frozen configuration-event rows to the OHLC range-proxy threshold, after retaining the strictly prior-minute OI requirement and existing entry-data eligibility, and how much of the low coverage is caused by missing/zero OI?
+Does the Phase 52 output preserve all selected legs for each configuration-event row, so alternate OHLC thresholds can be recalculated without inventing data? If not, what audit-schema repair is required?
 
 ## Aims and objectives
 1. Reconcile baseline status counts from the exact Phase 52 event replay CSV.
@@ -15,9 +15,9 @@ How sensitive are the 480 frozen configuration-event rows to the OHLC range-prox
 6. Stop after the sensitivity report and decide whether additional licensed quote/OI data is necessary before any executable replay.
 
 ## Preregistered hypotheses
-- H1: relaxing the candle-range threshold will increase rows that pass the three diagnostic checks.
-- H2: strict prior-minute OI failures will not change as the range threshold changes.
-- H3: increased diagnostic eligibility alone will not establish executable liquidity, valid exits, positive P&L or superiority of any strategy.
+- H1: sensitivity is computable only if each row includes all expected legs and the exact leg-level OHLC/OI evidence used for its status.
+- H2: missing/partial leg payloads cannot be treated as OI failures or range passes.
+- H3: eligibility counts alone cannot establish executable liquidity, valid exits, positive P&L or strategy superiority.
 
 ## Frozen inputs and rules
 - Parent evidence: Phase 52 v0.2.1 audit-provenance output.
@@ -31,25 +31,24 @@ How sensitive are the 480 frozen configuration-event rows to the OHLC range-prox
 - No holdout use; no raw data download; no P&L or strategy ranking.
 
 ## Methodology
-1. Load the committed Phase 52 CSV with Python's CSV parser and parse the JSON leg payload.
-2. Validate required columns, non-empty input and parseable leg arrays.
-3. For each threshold, require all legs to have prior_oi_status=PASS, prior OI >= 100, entry_status=PASS, a finite range proxy and maximum per-row leg range <= threshold.
-4. Count diagnostic eligible rows and rejected rows by OI/missing legs, entry-data status and range proxy. Group eligible rows by strategy family.
-5. Emit machine-readable JSON, CSV and Markdown with the input SHA-256, source revision, frozen-rule flags and caveats.
-6. Run unit tests and self-test in GitHub Actions; upload an artifact; persist status, research, error and chat logs plus README checkpoint.
-7. Review results only as coverage sensitivity. If the OI block remains material or quote history remains absent, close this phase without a larger replay.
+1. Load the committed Phase 52 CSV and parse its JSON leg payload.
+2. Reconcile the 480 parent status rows: 100 blocked on OI eligibility, 379 excluded by range proxy, 1 replay pass.
+3. Compare payload leg counts with expected leg counts by strategy family. Treat empty/partial payloads as unassessable, not as losses, OI failures or threshold passes.
+4. Do not emit alternate-threshold eligibility numbers until complete per-leg OHLC/OI evidence is available for every row.
+5. Emit JSON, CSV and Markdown with the input SHA-256, source revision, payload completeness counts and explicit blocker.
+6. Run tests/self-test in Actions, upload artifact, and persist status/research/error/chat logs and README checkpoint.
+7. Hand off to Phase 55: repair the parent audit output to retain all leg evidence, rerun the frozen pilot, then return to this sensitivity only if the output is complete.
 
 ## Statistical analysis
 This is descriptive coverage analysis, not a performance experiment. Report counts and percentages only. No p-values, confidence intervals, P&L estimates or inferential claims are appropriate because threshold variants are not independent samples and the required exit/fill evidence is not recomputed.
 
 ## Acceptance criteria
-- 480 rows reconciled against parent status counts.
-- All 11 thresholds emitted with mutually exclusive qualification/rejection categories summing to 480.
-- Prior-OI blocked row count invariant across thresholds.
-- Input fingerprint present and matches the exact committed CSV.
-- Unit tests and self-test pass.
+- 480 rows reconcile to parent statuses.
+- Every row is classified for complete, partial or empty leg payload.
+- No alternative threshold counts are emitted while evidence is incomplete.
+- Input fingerprint matches the exact committed CSV.
+- Tests pass, artifact is uploaded and checkpoint logs persist.
 - Explicit warning that OHLC range is not spread and eligibility is not profitability.
-- Workflow report artifact and checkpoint logs are persisted.
 
 ## Error handling
 Any missing input, schema mismatch, malformed row or test failure is logged in PHASE54_ERROR_LOG.md; no synthetic rows or guessed data are permitted. If persistence races occur, rebase and retry; never force-push or discard concurrent logs.
@@ -58,5 +57,5 @@ Any missing input, schema mismatch, malformed row or test failure is logged in P
 - Plan: FROZEN.
 - Implementation: committed.
 - Automated run: pending/under verification.
-- Scientific conclusion: pending actual workflow artifact.
+- Scientific conclusion: threshold sensitivity is currently not computable; parent output is lossy. Phase 55 audit-schema repair required.
 - Promotion/live strategy: prohibited by this phase.
