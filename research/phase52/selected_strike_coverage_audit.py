@@ -67,6 +67,8 @@ def _self_test() -> None:
     frame = pd.DataFrame({"open":[10, 10], "high":[12, 9], "low":[8, 11], "close":[11, 10]})
     assert valid_ohlc(frame).tolist() == [True, False]
     assert select_ranked_strikes([], 22000) == ([], -1)
+    ts = pd.Timestamp("2021-05-27T09:45:00+05:30")
+    assert ts.isoformat() == "2021-05-27T09:45:00+05:30"
 
 
 def main() -> int:
@@ -132,7 +134,7 @@ def main() -> int:
             entry_ts = pd.Timestamp(ev.entry_ts)
             if entry_ts.tzinfo is None: entry_ts = entry_ts.tz_localize(TZ)
             else: entry_ts = entry_ts.tz_convert(TZ)
-            spot = spot_map.get(str(entry_ts), np.nan)
+            spot = spot_map.get(entry_ts.isoformat(), np.nan)
             ordered, atm_idx = select_ranked_strikes(strikes, spot)
             entry = by_ts.get(entry_ts, empty)
             exit_1515_ts = entry_ts.normalize() + pd.Timedelta(hours=15, minutes=15)
