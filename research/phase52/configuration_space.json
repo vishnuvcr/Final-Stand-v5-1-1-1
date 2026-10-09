@@ -1,17 +1,16 @@
 {
   "schema_version": "1.0.0",
-  "grid_version": "phase52-grid-v1.1",
+  "grid_version": "phase52-grid-v1.2",
   "status": "PREREGISTERED_NOT_YET_EXPANDED_OR_TESTED",
   "interpretation": "Exhaustive only across this published finite applicable grid; not every mathematically possible real-valued parameter. Every accepted grid expansion requires a versioned amendment before running that grid.",
   "candidate_cartesian_product": "Each of 52 families × 6 selector modes = 312 candidate hypotheses; each candidate expands only dimensions listed by its parameter_group. BASELINE candidates must not depend on feature thresholds.",
   "general_domains": {
     "entry_time_ist": [
       "09:45",
-      "10:00",
       "13:00"
     ],
     "entry_dte_calendar_days": [
-      1,
+      0,
       3,
       7
     ],
@@ -21,18 +20,15 @@
     ],
     "atm_offset_steps": [
       1,
-      3,
-      5
+      3
     ],
     "absolute_delta": [
       0.15,
-      0.25,
-      0.35
+      0.3
     ],
     "wing_width_steps": [
       1,
-      2,
-      4
+      3
     ],
     "leg_ratio": [
       [
@@ -55,8 +51,7 @@
     "exit_rule": [
       "EXPIRY_OR_LAST_VALID_QUOTE",
       "15:15_IST",
-      "TAKE_PROFIT_50_PERCENT_MAX_PROFIT",
-      "STOP_1X_INITIAL_CREDIT_OR_DEBIT"
+      "TAKE_PROFIT_50_PERCENT_MAX_PROFIT"
     ],
     "hedge_mode": [
       "NONE",
@@ -68,17 +63,14 @@
     ],
     "vix_percentile_threshold": [
       25,
-      50,
       75
     ],
     "vix_change_pct_threshold": [
       -10,
-      0,
       10
     ],
     "iv_minus_rv_threshold_vol_points": [
       -2,
-      0,
       2
     ],
     "absolute_net_delta_trigger": [
@@ -107,17 +99,14 @@
     ],
     "spot_return_15m_pct": [
       -0.4,
-      0,
       0.4
     ],
     "futures_basis_bps": [
       -15,
-      0,
       15
     ],
     "synthetic_basis_bps": [
       -15,
-      0,
       15
     ],
     "liquidity_max_spread_pct": [
@@ -376,7 +365,7 @@
     "configuration_id": "SHA256(grid_version|candidate_id|canonical_json(config))",
     "shard_order": "candidate_id ascending then lexicographic parameter-product order",
     "continue_marker": "results/config_queue/checkpoint.json",
-    "default_shard_size": 10000,
+    "default_shard_size": 25000,
     "default_max_wall_minutes": 45,
     "do_not_skip_on_pnl": true,
     "preserve_failed_shards": true
@@ -425,6 +414,12 @@
       "date": "2026-10-09",
       "reason": "Registry contained 52 distinct structure families rather than the planned 50. Retain all 52 (312 structure × selector hypotheses) and limit every dimension to a published, reproducible coarse grid before any numerical replay. Cost scenarios are evaluated side-by-side for each configuration, not exploded as separate parameter configurations.",
       "effect": "No backtest results existed at amendment time. Every combination of the resulting finite per-family grid remains in scope; later refinements require a further versioned amendment."
+    },
+    {
+      "version": "1.2",
+      "date": "2026-10-09",
+      "reason": "Pre-test feasibility check found grid v1.1 would require approximately 197.8 million finite configurations, making a 10,000-config/day queue take nearly 20,000 days before any replay; this did not depend on P&L because no replay had run.",
+      "effect": "Reduced the coarse finite domains and the default shard size before numerical testing. All combinations of the v1.2 applicable grid remain in scope. Cost scenarios remain side-by-side outputs, not tuning dimensions. Any further grid change requires a logged new version."
     }
   ]
 }
