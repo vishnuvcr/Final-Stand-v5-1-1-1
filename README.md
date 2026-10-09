@@ -8,13 +8,13 @@
 - [Pilot audit note](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot/v0.2-run-37980455805-audit.md)
 - [Phase 52 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
 
-## OpenChart source feasibility — auxiliary candidate only
+## OpenChart source feasibility — runtime probe NOT ACCEPTED (2026-10-10)
 
-Static inspection of [marketcalls/openchart](https://github.com/marketcalls/openchart) finds individual-instrument historical OHLCV support including 1-minute bars, but not a documented complete historical all-strike chain API, OI, Greeks, bid/ask or depth. Expired-contract discoverability, oldest history, timestamp convention and rate-limit behaviour need a bounded runtime probe. The MIT license covers the client software, not NSE data rights; raw bars are not committed pending data-use review.
+[Final bounded Actions run 37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) completed successfully as a workflow. Its six symbol-query variants all returned the same 20 Index rows; none yielded an option or future, and no historical option-bar request could be issued. The NSE homepage request returned HTTP 403 while the charting symbol search returned HTTP 200. The current wrapper is therefore **not accepted for acquiring all options data**; direct-token historical retrieval remains untested.
 
-- [OpenChart feasibility audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_OPENCHART_AUDIT.md)
-- [OpenChart probe code](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/openchart_source_probe.py)
-- [Phase 52 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery)
+- [Phase 52 OpenChart audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_OPENCHART_AUDIT.md)
+- [Aggregate-only runtime report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/openchart_probe/runs/37982673873/probe_report.json)
+- [Phase 52 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
 
 ---
 
