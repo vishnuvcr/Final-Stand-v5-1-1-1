@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "source_coverage_audit.py"
@@ -52,6 +53,44 @@ class SourceRegistryTests(unittest.TestCase):
         ]
         result = audit.assess_inventory(items, ["index/NIFTY.parquet"])
         self.assertEqual(result["duplicate_list_entries"], ["index/NIFTY.parquet"])
+
+
+    def test_hf_tree_listing_follows_next_page_and_merges_directories(self) -> None:
+        option_first = [
+            {"path": "options/NIFTY/2021-05-27.parquet", "size": 100},
+            {"path": "options/NIFTY/2021-12-09.parquet", "size": 120},
+        ]
+        option_second = [{"path": "options/NIFTY/2022-06-16.parquet", "size": 150}]
+        index_rows = [{"path": "index/NIFTY.parquet", "size": 500}]
+        meta_first = {"http_status": 200, "link_header": '<https://next.example/page2>; rel="next"'}
+        meta_last = {"http_status": 200, "link_header": None}
+        with patch.object(audit, "json_request", side_effect=[
+            (meta_first, option_first),
+            (meta_last, option_second),
+            (meta_last, index_rows),
+        ]):
+            meta, items = audit.listed_tree("owner/repo", "abc123", None)
+        self.assertTrue(meta["listing_complete"])
+        self.assertEqual(len(items or []), 4)
+        inventory = audit.assess_inventory(
+            items or [],
+            ["options/NIFTY/2021-05-27.parquet", "options/NIFTY/2021-12-09.parquet",
+             "options/NIFTY/2022-06-16.parquet", "index/NIFTY.parquet"],
+            listing_complete=meta["listing_complete"],
+        )
+        self.assertEqual(inventory["listed_matching_count"], 4)
+        self.assertEqual(inventory["not_listed_in_returned_metadata_count"], 0)
+
+    def test_policy_skips_nse_live_option_chain_network_probe(self) -> None:
+        source = {
+            "id": "nse_live_option_chain", "name": "NSE current option chain",
+            "class": "official_current_snapshot_not_historical", "url": "https://example.invalid",
+            "probe_allowed": False, "expected_granularity": "current snapshot only",
+        }
+        with patch.object(audit, "request_url") as mocked:
+            result = audit.source_probe(source, None)
+        mocked.assert_not_called()
+        self.assertEqual(result["probe_status"], "SKIPPED_BY_POLICY")
 
 
 if __name__ == "__main__":
