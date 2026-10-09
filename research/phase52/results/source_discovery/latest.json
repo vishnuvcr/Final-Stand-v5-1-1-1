@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-09T14:22:12.862813+00:00",
+  "timestamp_utc": "2026-10-09T16:04:23.327204+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-09T13:53:11Z",
+          "pushed_at": "2026-10-09T15:49:47Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"

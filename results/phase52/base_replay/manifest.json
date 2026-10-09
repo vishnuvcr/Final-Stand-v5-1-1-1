@@ -77,7 +77,7 @@
   "interpretation": "Base-geometry replay only. This does not enumerate or test the complete Phase52 configuration grid and does not promote any strategy. The source dataset declares CC BY-NC 4.0; do not use this source as sole evidence for any commercial deployment.",
   "phase45_data_error_file_status": "EMPTY_NO_ERROR_ROWS",
   "current_file_provenance": {
-    "phase52_checkout_commit_at_manifest_write": "f132693c57c7d2c5a4d6099a4d60a6c19ff3965e",
+    "phase52_checkout_commit_at_manifest_write": "b0c1679a94a0568f5da23d62f83e99d9e1200bf0",
     "phase43_replay_script_sha256": "b1f09876ab461b2cccc5b6089901b3720623360d781f82369be6ea6ee100ea47",
     "phase45_replay_script_sha256": "d1575614717290efb735c10031f97d22a64a910cbd573ceb176f8e4afc30ebfe",
     "base_replay_runner_sha256": "bc55f45106611fed0efc97ef1944aee511bb5b107e37228be416e0dc1009ad32",
