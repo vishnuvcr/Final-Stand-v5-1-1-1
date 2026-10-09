@@ -1021,22 +1021,43 @@ Phase 54 showed that the stored event replay output was not sufficiently detaile
 The workflow reruns the same frozen 480-row pilot against the pinned revision, validates expected leg counts and cost rows, and caches the Hugging Face files by revision. Raw market data is not committed; no holdout or strategy promotion is allowed.
 
 
-## Research continuation — Phase 54 evidence gate (2026-10-10)
+## Research continuation — Phase 54 completed; Phase 55 all-leg audit repair active (2026-10-10)
 
-Phase 53 closed its source inventory with a NO-GO for a verified independent free historical bid/ask/depth source. Phase 54 is a bounded, non-executable OHLC-reference sensitivity only; candle range is not bid/ask spread and this phase cannot establish profitability.
+### Phase 52 — repaired bounded historical pilot evidence
 
-- [Phase 54 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_RESEARCH_PLAN.md)
-- [Phase 54 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md)
-- [Phase 54 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_ERROR_LOG.md)
-- [Phase 54 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/report.md)
-- [Phase 52 leg-evidence repair runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/historical_pilot_runner.py)
+Workflow [37990362985](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985) completed the frozen 40-config × 24-event pilot with 480 rows. The accepted row ledger has 379 `EXCLUDED_OHLC_RANGE_PROXY` rows with full selected-leg diagnostics, 100 prior-OI eligibility blockers, and one baseline `REPLAY_PASS`. The 100 blockers each have an observed required-leg prior OI below 100; the other legs were not all audited in this Phase 52 output. The pilot is not a useful profitability sample (one executed row); no strategy is ranked or promoted.
 
-**Current gate:** a stale parent CSV on the Phase 54 branch was replaced with the canonical Phase 52 v0.2.1 audit-provenance file (480 rows; source blob SHA 33c82a92e4546c4be10138dbf518ce0e51a83c03). Its existing range-excluded multi-leg records still lack complete evidence for every leg, so alternative threshold counts are withheld. The Phase 52 runner patch to retain all leg evidence on range exclusions is committed but requires a fresh historical pilot run and validation before Phase 54 can compute the sensitivity. No holdout was used, no strategy was promoted, and no live recommendation is made.
+- [Phase 52 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
+- [Accepted 480-row replay ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot/event_replay.csv)
+- [Phase 52 evidence-repair workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990362985)
 
+### Phase 54 — OHLC-reference coverage sensitivity CLOSED
 
-## Phase 52 evidence-repair checkpoint — 2026-10-10
+The corrected Phase 52 ledger was copied byte-for-byte to the Phase 54 branch and verified by input fingerprint. Run [37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101) passed unit tests, self-test, input reconciliation, all 11 preregistered thresholds, artifact upload, and checkpoint persistence.
 
-The bounded historical pilot evidence repair remains **OPEN / NO PROMOTION**. Workflow [37990101556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990101556) passed the runner self-test and manifest refresh but stopped before replay because the environment lacked `matplotlib`; the checkpoint persistence step succeeded. The workflow now installs this missing dependency in commit [7d9f385](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/7d9f385cbe306b6b2cf1ee148d33d98dfc10a0ca), which should trigger another automatic run. No new replay metrics are accepted yet, and Phase 54 sensitivity remains gated on complete per-leg evidence.
+| OHLC range proxy threshold | Rows meeting OI + entry + range checks | Share of 480 |
+|---:|---:|---:|
+| 2% (frozen baseline) | 1 | 0.21% |
+| 3% | 1 | 0.21% |
+| 4% | 8 | 1.67% |
+| 5% | 24 | 5.00% |
+| 6% | 55 | 11.46% |
+| 8% | 91 | 18.96% |
+| 10% | 150 | 31.25% |
+| 12% | 227 | 47.29% |
+| 15% | 298 | 62.08% |
+| 20% | 345 | 71.88% |
+| 1000% (diagnostic near-removal) | 380 | 79.17% |
 
-- [Phase 52 status and evidence log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md)
-- [Phase 52 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
+Across every threshold the 100 explicit prior-OI blockers remain rejected, entry-data rejections are zero, and all categories reconcile to 480. The increasing counts show sensitivity to the range-proxy threshold, **not** more profitable or more liquid opportunities. The OHLC high-low/open statistic is not a quoted bid/ask spread; there are no recalculated exits, fills, costs, or P&L, and no holdout use or strategy promotion.
+
+- [Phase 54 plan and preregistered amendment](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_ERROR_LOG.md)
+- [Sensitivity report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/report.md) · [Machine-readable threshold results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/threshold_sensitivity.csv) · [Family coverage](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/family_coverage.csv)
+
+### Phase 55 — complete selected-leg audit (ACTIVE)
+
+Phase 54 could be completed without the unvisited legs on the 100 rows because an explicit required-leg prior-OI failure conclusively blocks each strategy at every range threshold. Phase 55's stricter engineering plan separately requires a complete audit payload for every selected leg, including the unvisited legs in these hard-blocked rows. The resolver and runner have been changed to keep evaluating all selected legs and to record entry/OI/range/exit states after an early OI failure. A new regression test checks a two-leg spread with one required leg failing OI. The next bounded frozen 480-row rerun is in GitHub Actions run [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521); **its replay and all-480-row invariant still need to pass before Phase 55 can close**.
+
+- [Phase 55 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_ERROR_LOG.md)
+
+**Research-wide guardrails:** source revision remains pinned to `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; the source declares CC BY-NC 4.0, so commercial/live promotion is prohibited; holdout remains untouched; fees/slippage assumptions and the frozen 2% baseline were not altered; no profitability conclusion is established.
