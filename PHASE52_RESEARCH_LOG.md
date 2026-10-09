@@ -32,3 +32,8 @@ Run 37935663113 persisted the next 25,000 configuration IDs, moving the determin
 - **Change:** Updated their strategy-specification rows to STANDARD_VARIANT_PREREGISTERED and documented source-defined geometry in PA-010. The named preset remains a separate baseline; variable configurations remain distinct IDs.
 - **Impact:** Specification blockers fall from 15 families to four genuinely blocked families: Calendar Trap, Iron-Condor-to-Ratio transition, conversion/reversal, and futures-basis overlay. Three diagnostic-only families remain non-promotable. No P&L was calculated and grid domains did not change.
 - **Verification:** Next workflow must validate the revised CSV/registry. In-flight runs checked out earlier specs and cannot be used as validation for this change.
+
+
+## 2026-10-09 — Protect registry audit against stale source specifications
+
+Because PA-010 changed 11 strategy-specification rows while older workflows were still running, added a persistence guard: if the specification CSV changed after checkout, the run cannot overwrite the registry audit for the new source snapshot. It restores the remote audit if present or discards the stale local summary. Logged as F52-030; end-to-end test pending.
