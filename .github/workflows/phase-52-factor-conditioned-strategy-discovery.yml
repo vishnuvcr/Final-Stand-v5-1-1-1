@@ -121,6 +121,12 @@ jobs:
       - name: Build strictly lagged NSE daily OI and futures EOD factors
         run: python research/phase52/daily_bhavcopy_adapter.py
 
+      - name: Test daily EOD factor-selector mechanics
+        run: python research/phase52/daily_eod_factor_attribution.py --self-test-only
+
+      - name: Run development-tuned selector test with lagged daily EOD factors
+        run: python research/phase52/daily_eod_factor_attribution.py
+
       - name: Run point-in-time factor-selector pilot on frozen outcomes
         run: |
           python research/phase52/factor_attribution.py --self-test \
@@ -207,6 +213,15 @@ jobs:
           data_audit = json.loads(Path("results/phase52/data_readiness/source_capability_audit.json").read_text())
           coverage_report = json.loads(Path("results/phase52/coverage_audit/summary.json").read_text())
           bhavcopy_manifest = json.loads(Path("results/phase52/daily_bhavcopy/manifest.json").read_text())
+          eod_selector_manifest = json.loads(Path("results/phase52/daily_eod_selector/manifest.json").read_text())
+          import pandas as pd
+          eod_selector_rows = pd.read_csv("results/phase52/daily_eod_selector/selector_results.csv")
+          eod_validation = eod_selector_rows[(eod_selector_rows["split"] == "validation") & (eod_selector_rows["status"] == "EXPLORATORY_NO_PROMOTION")]
+          if len(eod_validation) and "paired_mean_uplift_legacy_stress_rupees" in eod_validation:
+            best_eod = eod_validation.sort_values("paired_mean_uplift_legacy_stress_rupees", ascending=False).iloc[0]
+            best_eod_summary = f"{best_eod['mode']} uplift={best_eod['paired_mean_uplift_legacy_stress_rupees']:.0f} INR/event, Holm p={best_eod.get('p_holm_across_frozen_EOD_modes', float('nan')):.4f}"
+          else:
+            best_eod_summary = "no validation mode cleared sample/coverage reporting gates"
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
             f"- Registry validation: {audit['registry_validation']}; hypotheses registered: {audit['candidate_hypotheses']}; structure families: {audit['structure_families']}; selector modes: {audit['selector_modes']}.\n"
@@ -217,6 +232,7 @@ jobs:
             f"- Expiry timestamp coverage: {coverage_report['status']}; source expiries={coverage_report['option_expiry_files_in_scope']}; matrix expiries={coverage_report['unique_expiries_in_base_matrix']}; last source expiry={coverage_report['last_source_option_expiry']}; last matrix expiry={coverage_report['last_matrix_expiry']}; missing/unreplayed={coverage_report['source_expiry_rows_not_fully_replayed']}.\n"
             f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
             f"- Prior-session NSE EOD factor build: {bhavcopy_manifest['status']}; event coverage={bhavcopy_manifest['feature_event_coverage']:.1%}; missing archive paths={bhavcopy_manifest['missing_archive_paths']}; file errors={bhavcopy_manifest['archive_file_errors']}; not intraday futures basis.\n"
+            f"- EOD selector pilot: {eod_selector_manifest['status']}; matched events={eod_selector_manifest['matched_event_rows']}; fixed development baseline={eod_selector_manifest['selected_baseline_strategy']}; best validation uplift diagnostic={best_eod_summary}; no promotion.\n"
             f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report.get('risk_limited_strategy_count', 0)}; chosen features={factor_report.get('selected_feature_by_mode', {})}.\n"
             "- The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.\n"
           )
@@ -225,6 +241,7 @@ jobs:
             f"\n## Automated checkpoint — {stamp}\n- Workflow run: {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n"
             f"- Source leads newly recorded: {source_report.get('new_unique_source_leads_added', 0)}.\n"
             f"- Configurations enumerated in this run: {checkpoint['last_shard_size']:,} of {checkpoint['total_configurations']:,} finite-grid combinations. This is queue enumeration only, not strategy testing.\n"
+            f"- Daily EOD factor-selector: {eod_selector_manifest['status']}; validation diagnostic={best_eod_summary}; report at results/phase52/daily_eod_selector/REPORT.md.\n"
             f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\n"
           )
           PY
@@ -259,6 +276,7 @@ jobs:
             results/phase52/coverage_audit
             results/phase52/data_readiness
             results/phase52/daily_bhavcopy
+            results/phase52/daily_eod_selector
             ${{ runner.temp }}/phase52_config_shard.jsonl
             ${{ runner.temp }}/phase52_emit_report.json
           if-no-files-found: warn
@@ -271,7 +289,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
