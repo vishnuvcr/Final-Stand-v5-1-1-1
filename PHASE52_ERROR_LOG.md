@@ -224,7 +224,7 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Workflow:** [37934339579](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37934339579).
 - **Scope:** Build an inventory of target expiry × exact calendar DTE {0,7} × entry timestamp {09:45,13:00}, then audit exact NIFTY index timestamp presence. This addresses the event-time mismatch between the old fixed 10:00 event replay and the registered configuration grid.
 - **Interpretation:** Expected event rows and exact index ticks are coverage metadata, not P&L or tested configurations. Option-leg and exit-time quote availability still requires configuration-specific verification.
-- **Status:** RUNNING; final counts will be appended once the workflow result is available.
+- **Status:** RESOLVED AS AN EVENT INVENTORY ONLY. Run 37934719402 built the 1,068-row event inventory and broad option/OI coverage audit. No P&L was calculated; selected-strike audit is tracked separately under F52-019 and F52-021–F52-023.
 
 
 ## F52-019 — Broad event coverage is not selected-leg eligibility — DATA GATE OPEN
