@@ -98,3 +98,8 @@ These sources broaden the public review. Each remains a **discovery lead only** 
 ## 8. Source-review state
 
 The scheduled `research/phase52/source_discovery.py` stores metadata from Hugging Face and GitHub public search, and uses YouTube Data API search only if `YOUTUBE_API_KEY` is configured. Results carry the evidence grade `DISCOVERY_LEAD_NOT_VALIDATED`; raw third-party performance statements never flow directly into accepted results.
+
+
+## Paytm Money brokerage source note (2026-10-09)
+
+Paytm Money's official 18-Dec-2024 pricing update states flat ₹20 brokerage across segments from 15-Jan-2025 (https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/), while a separate F&O FAQ still states ₹10 per executed order (https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web). This ambiguity is recorded, not hidden: Phase52 grid replay uses ₹20/order as its conservative primary case and retains ₹10/order as a legacy-plan sensitivity. Actual account tariff requires confirmation before deployment.
