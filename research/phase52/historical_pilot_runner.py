@@ -21,6 +21,7 @@ import importlib.util
 import json
 import math
 import os
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -255,6 +256,7 @@ def create_manifest(
     return {
         "status": "FROZEN_PILOT_MANIFEST_BEFORE_HISTORICAL_REPLAY",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "source_branch_commit": subprocess.run(["git","rev-parse","HEAD"],cwd=ROOT,check=True,capture_output=True,text=True).stdout.strip(),
         "pilot_version": pilot["pilot_version"],
         "grid_version": space["grid_version"],
         "historical_pnl_not_yet_computed_at_manifest_creation": True,
@@ -532,6 +534,13 @@ def replay_one(
 def summarize(replay: pd.DataFrame, costs: pd.DataFrame) -> pd.DataFrame:
     if replay.empty:
         return pd.DataFrame()
+    if costs.empty:
+        # A run with zero executed events must still emit a report and exclusions,
+        # rather than crash while trying to index absent scenario columns.
+        costs = pd.DataFrame(columns=[
+            "configuration_id","split","event_id","entry_ts",
+            "brokerage_per_order_inr","slippage_stress_pct","net_pnl_inr"
+        ])
     records = []
     for config_id in replay["configuration_id"].drop_duplicates():
         cfg = replay[replay["configuration_id"].eq(config_id)]
@@ -608,22 +617,26 @@ def build_outputs(
                     outcome, scenarios = replay_one(normalized_event, config, index, option_frames,
                                                     source_hashes, specs, template_manifest, phase43, registry[config["candidate_id"]])
                 except Exception as exc:
-                    outcome = event_record(normalized_event, config, "ERROR_REPLAY_EXCEPTION",
-                                           f"{type(exc).__name__}: {str(exc)[:500]}")
+                    reason = f"{type(exc).__name__}: {str(exc)[:500]}"
+                    print(json.dumps({"event":"PILOT_REPLAY_EXCEPTION","configuration_id":config["configuration_id"],
+                                      "event_id":str(event.get("event_id","")),"reason":reason}),flush=True)
+                    outcome = event_record(normalized_event, config, "ERROR_REPLAY_EXCEPTION", reason)
                     scenarios = []
             event_rows.append(outcome)
             cost_rows.extend(scenarios)
 
     replay_df = pd.DataFrame(event_rows)
     cost_df = pd.DataFrame(cost_rows)
-    summary_df = summarize(replay_df, cost_df)
     OUT.mkdir(parents=True, exist_ok=True)
+    # Persist event outcomes and exclusions before summary aggregation. If the
+    # summary stage itself has a programming defect, these ledgers remain visible.
     replay_df.to_csv(OUT / "event_replay.csv", index=False)
     cost_df.to_csv(OUT / "cost_scenarios.csv", index=False)
-    summary_df.to_csv(OUT / "config_split_summary.csv", index=False)
     pd.DataFrame(source_audit).to_csv(OUT / "source_file_audit.csv", index=False)
     exclusions = replay_df[~replay_df["status"].eq("REPLAY_PASS")].copy()
     exclusions.to_csv(OUT / "excluded_events.csv", index=False)
+    summary_df = summarize(replay_df, cost_df)
+    summary_df.to_csv(OUT / "config_split_summary.csv", index=False)
 
     counts = replay_df["status"].value_counts(dropna=False).to_dict() if not replay_df.empty else {}
     replay_error_rows = int(replay_df["status"].astype(str).str.startswith("ERROR_").sum()) if len(replay_df) else 0
