@@ -1,5 +1,37 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
+## Phase 51-1I — CLOSED / DATA-BLOCKED
+
+The preregistered authorized-access recovery route was executed automatically.
+
+Credential inventory found **no configured authorized API credentials** for:
+- Upstox
+- Dhan
+- ICICI Breeze
+
+No secret values were exposed and no unauthorized access was attempted.
+
+The frozen Phase-51 OOS window remains **2026-04-21 → 2026-08-04**. The missing option blocks remain **2026-07-28 and 2026-08-04**.
+
+**No OOS P&L has been calculated from incomplete data.**
+
+- [Phase 51-1I branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-1I-authorized-access-recovery)
+- [Phase 51-1I status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1I-authorized-access-recovery/PHASE51_1I_STATUS.md)
+- [Phase 51-1I error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-1I-authorized-access-recovery/PHASE51_1I_ERROR_LOG.md)
+- [Authorized recovery Actions run 37876882587](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37876882587)
+
+### Current blocking condition
+
+An authorized raw-data route is now the only blocking dependency. The existing workflow is ready to execute the frozen Upstox acquisition automatically when `UPSTOX_ACCESS_TOKEN` is configured, followed by the existing source-equivalence and replay-coverage gates.
+
+An authorized OptionsData.shop archive/API export would also be acceptable under the preregistered gate.
+
+**No strategy tuning, source selection by expected P&L, OOS-window shortening, synthetic prices or forward filling is permitted.**
+
+---
+
+# Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
+
 ## Phase 51-1H — CLOSED / DATA-BLOCKED
 
 A final live-byte audit was executed against the current public Hugging Face NIFTY options repository for the unresolved Phase-51 expiries **2026-07-28** and **2026-08-04**.
