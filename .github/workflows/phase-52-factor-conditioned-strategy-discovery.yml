@@ -148,7 +148,6 @@ jobs:
           audit = json.loads(Path("research/phase52/results/registry_audit.json").read_text())
           checkpoint = json.loads(Path("research/phase52/results/config_queue/checkpoint.json").read_text())
           source_report = json.loads(Path("research/phase52/results/source_discovery/latest.json").read_text())
-            research/phase52/results/factor_attribution
           factor_report = json.loads(Path("research/phase52/results/factor_attribution/summary.json").read_text())
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
@@ -156,7 +155,7 @@ jobs:
             f"- Finite configurations in grid {audit['grid_version']}: {audit['configuration_count']:,}; this run enumerated {checkpoint['last_shard_size']:,} configurations at offsets {checkpoint['last_start_offset']:,}–{checkpoint['next_offset'] - 1:,}.\n"
             f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
-            f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report['risk_limited_strategy_count']}; chosen features={factor_report['selected_feature_by_mode']}.\\n"
+            f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report.get('risk_limited_strategy_count', 0)}; chosen features={factor_report.get('selected_feature_by_mode', {})}.\n"
             "- The legacy factor-selector pilot is not the full Phase52 configuration sweep; futures/synthetic basis remains unavailable in its seed panel. No Phase52 candidate is promoted.\\n"
           )
           Path("PHASE52_RESEARCH_LOG.md").open("a", encoding="utf-8").write(msg)
@@ -164,7 +163,7 @@ jobs:
             f"\n## Automated checkpoint — {stamp}\n- Workflow run: {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n"
             f"- Source leads newly recorded: {source_report.get('new_unique_source_leads_added', 0)}.\n"
             f"- Configurations enumerated in this run: {checkpoint['last_shard_size']:,} of {checkpoint['total_configurations']:,} finite-grid combinations. This is queue enumeration only, not strategy testing.\n"
-            f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\\n"
+            f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\n"
           )
           PY
 
