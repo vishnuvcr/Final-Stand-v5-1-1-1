@@ -10,3 +10,15 @@
 - Entry-bar valid AND prior-OI-eligible rows: 10501
 - Exact-index + entry-open + prior-OI eligible rows: 10501
 - This is coverage only; no P&L or strategy promotion.
+
+
+## Point-in-time delta audit — run 37956675818 (2026-10-09T16:14:15.196036+00:00)
+- Status: MODEL_DELTA_AUDIT_COMPLETE
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Audit source SHA256: 9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3
+- Replay protocol SHA256: f3e910a064cc7af18885617f9e4c25cf5ef901c491a6f40ffd124808cb71e6f6
+- Expiry files audited/errors: 267/0
+- Expected/actual selection rows: 4272/4272
+- Rows with prior-OI-qualified selections: 3892
+- Exact entry fill bars available: 2232
+- Model delta is diagnostic only; no P&L or promotion.

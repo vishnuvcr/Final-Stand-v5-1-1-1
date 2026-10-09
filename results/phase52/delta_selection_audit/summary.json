@@ -1,0 +1,43 @@
+{
+  "status": "MODEL_DELTA_AUDIT_COMPLETE",
+  "created_at_utc": "2026-10-09T16:14:08.923719+00:00",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "audit_script_sha256": "9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3",
+  "replay_protocol_sha256": "f3e910a064cc7af18885617f9e4c25cf5ef901c491a6f40ffd124808cb71e6f6",
+  "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "source_expiry_files_expected": 267,
+  "source_expiry_files_audited": 267,
+  "source_file_errors": 0,
+  "expected_selection_rows": 4272,
+  "selection_rows": 4272,
+  "selected_rows": 3892,
+  "missing_exact_prior_minute_rows": 232,
+  "no_valid_iv_rows": 0,
+  "no_predecision_oi_eligible_contract_rows": 148,
+  "predecision_oi_qualified_rows": 3892,
+  "entry_fill_bar_available_rows": 2232,
+  "model": {
+    "type": "European Black-Scholes",
+    "rate_continuous": 0.06,
+    "dividend_yield": 0.0,
+    "expiry_timestamp": "15:30 Asia/Kolkata",
+    "decision_timestamp": "exact prior one-minute bar close at entry_ts minus one minute",
+    "premium_input": "prior completed option-bar OHLC close; never the current entry-bar close",
+    "spot_input": "prior completed NIFTY index-bar close; never the current entry-bar close",
+    "execution_reference": "exact entry-timestamp option-bar open if present and OHLC-valid",
+    "delta_source": "model-estimated, not exchange-published"
+  },
+  "limitations": [
+    "Model estimates are not exchange Greeks.",
+    "Prior minute-bar closes are model inputs, not executable bid/ask quotes; entry open is only an OHLC simulation reference.",
+    "Model assumptions (6% rate, zero dividend yield, expiry at 15:30 IST) must be stress-tested before strategy replay.",
+    "Same-pivot multi-leg structures must follow the frozen replay protocol and use call-side delta anchor where specified.",
+    "This is strike-selection coverage only; no P&L or strategy promotion."
+  ],
+  "outputs": {
+    "detail": "results/phase52/delta_selection_audit/delta_selection.csv",
+    "source_audit": "results/phase52/delta_selection_audit/source_file_audit.csv",
+    "source_errors": "results/phase52/delta_selection_audit/source_errors.csv"
+  }
+}
