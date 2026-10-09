@@ -1,4 +1,5 @@
 name: Phase 52 — Factor-Conditioned Strategy Discovery
+# Phase52 replay/data gates: point-in-time selectors, pinned base replay, lagged NSE EOD factors, exact entry-time coverage, and UDiFF IDF futures validation (PA-004 to PA-006).
 
 on:
   workflow_dispatch:
@@ -8,6 +9,11 @@ on:
         required: false
         default: "25000"
         type: string
+      force_base_replay:
+        description: "Force recomputation of Phase 43/45 base-geometry replay against the latest HF revision"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -20,13 +26,14 @@ jobs:
   discover-and-queue:
     name: Discover sources and advance bounded configuration queue
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 360
     env:
       PHASE_BRANCH: phase-52-factor-conditioned-strategy-discovery
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       INPUT_SHARD_SIZE: ${{ github.event.inputs.shard_size }}
+      FORCE_BASE_REPLAY: ${{ github.event.inputs.force_base_replay }}
     steps:
       - name: Checkout research branch
         uses: actions/checkout@v4
@@ -52,13 +59,79 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Restore pinned market-data caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/phase52/nse_fno_bhavcopy
+          key: phase52-market-data-cache-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            phase52-market-data-cache-${{ runner.os }}-
+            phase52-hf-cache-${{ runner.os }}-
+
       - name: Validate registry, specs, grid and deterministic enumerator
         run: |
-          mkdir -p research/phase52/results
+          mkdir -p research/phase52/results results/phase52/base_replay results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/coverage_audit results/phase52/daily_eod_selector results/phase52/configuration_event_universe results/phase52/option_quote_coverage
           python research/phase52/validate_registry.py --self-test --audit-out research/phase52/results/registry_audit.json
 
-      - name: Install factor-selector pilot dependencies
-        run: python -m pip install --disable-pip-version-check --no-input pandas numpy
+      - name: Install replay and audit dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy pyarrow huggingface_hub scipy matplotlib requests
+
+      - name: Run legacy + UDiFF bhavcopy parser regression after dependency installation
+        run: python research/phase52/daily_bhavcopy_adapter.py --self-test --self-test-only
+
+      - name: Reproduce frozen Phase 43/45 base geometry at a pinned HF revision
+        env:
+          FORCE_BASE_REPLAY: ${{ github.event.inputs.force_base_replay }}
+        run: |
+          if [ "${FORCE_BASE_REPLAY:-false}" = "true" ]; then
+            python research/phase52/base_replay.py --force
+          else
+            python research/phase52/base_replay.py
+          fi
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest = json.loads(Path("results/phase52/base_replay/manifest.json").read_text())
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as fh:
+            fh.write("PHASE52_HF_REVISION=" + manifest["dataset_revision"] + "\n")
+          print(json.dumps({
+            "status": manifest["status"],
+            "dataset_revision": manifest["dataset_revision"],
+            "trade_rows": manifest["trade_rows"],
+            "strategies": manifest["strategies"],
+            "sha256": manifest["trade_matrix_sha256"],
+            "license_gate": manifest["license_gate"]
+          }, indent=2))
+          PY
+
+      - name: Test configuration event-universe indexing
+        run: python research/phase52/configuration_event_universe.py --self-test-only
+
+      - name: Build exact timestamp event universe for the finite config grid
+        run: python research/phase52/configuration_event_universe.py
+
+      - name: Test option quote coverage audit semantics
+        run: python research/phase52/option_quote_coverage_audit.py --self-test-only
+
+      - name: Audit all exact option entry/exit bar availability across the config event universe
+        run: python research/phase52/option_quote_coverage_audit.py
+
+      - name: Audit exact 10:00 entry-timestamp coverage by option expiry
+        run: python research/phase52/expiry_coverage_audit.py
+
+      - name: Audit pinned source schema, OI, quote timestamps and factor availability
+        run: python research/phase52/data_readiness_audit.py
+
+      - name: Build strictly lagged NSE daily OI and futures EOD factors
+        run: python research/phase52/daily_bhavcopy_adapter.py
+
+      - name: Test daily EOD factor-selector mechanics
+        run: python research/phase52/daily_eod_factor_attribution.py --self-test-only
+
+      - name: Run development-tuned selector test with lagged daily EOD factors
+        run: python research/phase52/daily_eod_factor_attribution.py
 
       - name: Run point-in-time factor-selector pilot on frozen outcomes
         run: |
@@ -141,23 +214,45 @@ jobs:
           audit = json.loads(Path("research/phase52/results/registry_audit.json").read_text())
           checkpoint = json.loads(Path("research/phase52/results/config_queue/checkpoint.json").read_text())
           source_report = json.loads(Path("research/phase52/results/source_discovery/latest.json").read_text())
-            research/phase52/results/factor_attribution
           factor_report = json.loads(Path("research/phase52/results/factor_attribution/summary.json").read_text())
+          base_manifest = json.loads(Path("results/phase52/base_replay/manifest.json").read_text())
+          data_audit = json.loads(Path("results/phase52/data_readiness/source_capability_audit.json").read_text())
+          coverage_report = json.loads(Path("results/phase52/coverage_audit/summary.json").read_text())
+          bhavcopy_manifest = json.loads(Path("results/phase52/daily_bhavcopy/manifest.json").read_text())
+          event_universe = json.loads(Path("results/phase52/configuration_event_universe/summary.json").read_text())
+          option_quote_audit = json.loads(Path("results/phase52/option_quote_coverage/summary.json").read_text())
+          eod_selector_manifest = json.loads(Path("results/phase52/daily_eod_selector/manifest.json").read_text())
+          import pandas as pd
+          eod_selector_rows = pd.read_csv("results/phase52/daily_eod_selector/selector_results.csv")
+          eod_validation = eod_selector_rows[(eod_selector_rows["split"] == "validation") & (eod_selector_rows["status"] == "EXPLORATORY_NO_PROMOTION")]
+          if len(eod_validation) and "paired_mean_uplift_legacy_stress_rupees" in eod_validation:
+            best_eod = eod_validation.sort_values("paired_mean_uplift_legacy_stress_rupees", ascending=False).iloc[0]
+            best_eod_summary = f"{best_eod['mode']} uplift={best_eod['paired_mean_uplift_legacy_stress_rupees']:.0f} INR/event, Holm p={best_eod.get('p_holm_across_frozen_EOD_modes', float('nan')):.4f}"
+          else:
+            best_eod_summary = "no validation mode cleared sample/coverage reporting gates"
           msg = (
             f"\n## {stamp} — Automated run {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n\n"
             f"- Registry validation: {audit['registry_validation']}; hypotheses registered: {audit['candidate_hypotheses']}; structure families: {audit['structure_families']}; selector modes: {audit['selector_modes']}.\n"
             f"- Finite configurations in grid {audit['grid_version']}: {audit['configuration_count']:,}; this run enumerated {checkpoint['last_shard_size']:,} configurations at offsets {checkpoint['last_start_offset']:,}–{checkpoint['next_offset'] - 1:,}.\n"
             f"- Source-discovery queries: {len(source_report['queries'])}; unique leads added: {source_report.get('new_unique_source_leads_added', 0)}. Credential presence only (no values logged): {source_report['credentials_present']}.\n"
             f"- Queue status: {checkpoint['status']}; enumeration complete: {checkpoint['configuration_enumeration_complete']}. Enumerated configs are NOT backtests.\n"
-            f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report['risk_limited_strategy_count']}; chosen features={factor_report['selected_feature_by_mode']}.\\n"
-            "- The legacy factor-selector pilot is not the full Phase52 configuration sweep; futures/synthetic basis remains unavailable in its seed panel. No Phase52 candidate is promoted.\\n"
+            f"- Pinned base replay: {base_manifest['status']}; revision={base_manifest['dataset_revision']}; trade rows={base_manifest['trade_rows']}; strategies={base_manifest['strategies']}; license gate={base_manifest['license_gate']}.\n"
+            f"- Configuration event universe: {event_universe['status']}; source expiries={event_universe['source_option_expiry_files']}; expected grid events={event_universe['expected_event_count']}; exact index entry ticks={event_universe['exact_index_entry_timestamp_count']}; missing exact index ticks={event_universe['events_without_exact_index_entry_timestamp']}.\n"
+            f"- Exact option bar coverage: {option_quote_audit['status']}; event rows audited={option_quote_audit['event_rows_with_audit_results']}/{option_quote_audit['expected_event_rows']}; events with option rows at exact entry={option_quote_audit['events_with_any_option_row_at_exact_entry']}; entries with OI-qualified contracts={option_quote_audit['events_with_any_oi_eligible_contract_at_entry']}; source file errors={option_quote_audit['source_file_errors']}; config-specific legs still require replay-worker checks.\n"
+            f"- Fixed 10:00 coverage audit: {coverage_report['status']}; source expiries={coverage_report['option_expiry_files_in_scope']}; base matrix expiries={coverage_report['unique_expiries_in_base_matrix']}; last source expiry={coverage_report['last_source_option_expiry']}; last matrix expiry={coverage_report['last_matrix_expiry']}; missing/unreplayed={coverage_report['source_expiry_rows_not_fully_replayed']}.\n"
+            f"- Data capability audit: {data_audit['status']}; sampled source files={len(data_audit['sources'])}; factor availability and licensing limits retained.\n"
+            f"- Prior-session NSE EOD factor build: {bhavcopy_manifest['status']}; event coverage={bhavcopy_manifest['feature_event_coverage']:.1%}; missing archive paths={bhavcopy_manifest['missing_archive_paths']}; file errors={bhavcopy_manifest['archive_file_errors']}; not intraday futures basis.\n"
+            f"- EOD selector pilot: {eod_selector_manifest['status']}; matched events={eod_selector_manifest['matched_event_rows']}; fixed development baseline={eod_selector_manifest['selected_baseline_strategy']}; best validation uplift diagnostic={best_eod_summary}; no promotion.\n"
+            f"- Factor-selector pilot: {factor_report['status']}; PIT match={factor_report['input_audit']['feature_match_rate']:.1%}; risk-limited legacy templates={factor_report.get('risk_limited_strategy_count', 0)}; chosen features={factor_report.get('selected_feature_by_mode', {})}.\n"
+            "- The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.\n"
           )
           Path("PHASE52_RESEARCH_LOG.md").open("a", encoding="utf-8").write(msg)
           Path("PHASE52_STATUS.md").open("a", encoding="utf-8").write(
             f"\n## Automated checkpoint — {stamp}\n- Workflow run: {os.environ.get('GITHUB_RUN_ID', 'unknown')}\n"
             f"- Source leads newly recorded: {source_report.get('new_unique_source_leads_added', 0)}.\n"
             f"- Configurations enumerated in this run: {checkpoint['last_shard_size']:,} of {checkpoint['total_configurations']:,} finite-grid combinations. This is queue enumeration only, not strategy testing.\n"
-            f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\\n"
+            f"- Daily EOD factor-selector: {eod_selector_manifest['status']}; validation diagnostic={best_eod_summary}; report at results/phase52/daily_eod_selector/REPORT.md.\n"
+            f"- Legacy factor-selector pilot: {factor_report['status']} (PIT match {factor_report['input_audit']['feature_match_rate']:.1%}); report at research/phase52/results/factor_attribution/REPORT.md.\n"
           )
           PY
 
@@ -166,7 +261,16 @@ jobs:
         shell: bash
         run: |
           mkdir -p research/phase52/results
-          printf "\n## F52-AUTO-%s — Automated workflow failure\n\n- Date: %s\n- Run: https://github.com/%s/actions/runs/%s\n- Impact: no strategy P&L is accepted from this run. Partial outputs remain unverified diagnostics.\n- Root cause: pending review of the failed job logs.\n- Status: OPEN.\n" "$GITHUB_RUN_ID" "$(date -u +%F)" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE52_ERROR_LOG.md
+          printf "\n## F52-AUTO-%s — Automated workflow failure\n\n- Date: %s\n- Run: https://github.com/%s/actions/runs/%s\n- Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.\n- Root cause: pending review of the failed job logs.\n- Status: OPEN.\n" "$GITHUB_RUN_ID" "$(date -u +%F)" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE52_ERROR_LOG.md
+
+      - name: Save partial or complete market-data cache even if a later gate fails
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/huggingface/hub
+            ~/.cache/phase52/nse_fno_bhavcopy
+          key: phase52-market-data-cache-${{ runner.os }}-${{ github.run_id }}
 
       - name: Upload audit and deterministic configuration shard
         if: always()
@@ -178,6 +282,13 @@ jobs:
             research/phase52/results/config_queue/checkpoint.json
             research/phase52/results/source_discovery/latest.json
             research/phase52/results/factor_attribution
+            results/phase52/base_replay
+            results/phase52/configuration_event_universe
+            results/phase52/option_quote_coverage
+            results/phase52/coverage_audit
+            results/phase52/data_readiness
+            results/phase52/daily_bhavcopy
+            results/phase52/daily_eod_selector
             ${{ runner.temp }}/phase52_config_shard.jsonl
             ${{ runner.temp }}/phase52_emit_report.json
           if-no-files-found: warn
@@ -190,11 +301,13 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results
+          git add PHASE52_STATUS.md PHASE52_RESEARCH_LOG.md PHASE52_ERROR_LOG.md research/phase52/results results/phase52/base_replay results/phase52/configuration_event_universe results/phase52/option_quote_coverage results/phase52/coverage_audit results/phase52/data_readiness results/phase52/daily_bhavcopy results/phase52/daily_eod_selector
           if git diff --cached --quiet; then
             echo "No branch state changed."
             exit 0
           fi
           git commit -m "Phase 52 automated research checkpoint $GITHUB_RUN_ID"
+          # Another accepted result/status commit may arrive after checkout. Rebase this
+          # run's durable checkpoint instead of overwriting or force-pushing remote work.
           git pull --rebase origin "$PHASE_BRANCH"
           git push origin "$PHASE_BRANCH"
