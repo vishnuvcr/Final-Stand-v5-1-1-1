@@ -1,0 +1,164 @@
+{
+  "phase_id": "phase-53-free-option-data-coverage-remediation",
+  "created_at_utc": "2026-10-10T00:00:00Z",
+  "parent_dataset": {
+    "repo": "thetrademarkk/india-index-options-1m",
+    "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+    "license": "cc-by-nc-4.0",
+    "required_files": [
+      "index/NIFTY.parquet",
+      "options/NIFTY/2021-05-27.parquet",
+      "options/NIFTY/2021-12-09.parquet",
+      "options/NIFTY/2022-06-16.parquet",
+      "options/NIFTY/2022-12-15.parquet",
+      "options/NIFTY/2023-06-22.parquet",
+      "options/NIFTY/2023-12-28.parquet",
+      "options/NIFTY/2024-01-04.parquet",
+      "options/NIFTY/2024-05-30.parquet",
+      "options/NIFTY/2024-10-17.parquet",
+      "options/NIFTY/2025-03-13.parquet",
+      "options/NIFTY/2025-07-31.parquet",
+      "options/NIFTY/2025-12-30.parquet"
+    ]
+  },
+  "sources": [
+    {
+      "id": "hf_pinned",
+      "name": "Hugging Face pinned intraday options bars",
+      "class": "primary_research_dataset",
+      "url": "https://huggingface.co/datasets/thetrademarkk/india-index-options-1m",
+      "api_url": "https://huggingface.co/api/datasets/thetrademarkk/india-index-options-1m",
+      "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+      "license": "CC BY-NC 4.0",
+      "expected_granularity": "1-minute OHLCV + OI",
+      "expected_fields": [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "open_interest",
+        "strike",
+        "option_type",
+        "expiry"
+      ],
+      "uses": [
+        "exploratory intraday eligibility",
+        "source/hash integrity"
+      ],
+      "limitations": [
+        "partial option coverage",
+        "not quoted bid/ask/depth",
+        "non-commercial license"
+      ]
+    },
+    {
+      "id": "nse_reports",
+      "name": "NSE All Reports - derivatives",
+      "class": "official_exchange_daily_reports",
+      "url": "https://www.nseindia.com/all-reports-derivatives",
+      "expected_granularity": "report-dependent; mostly daily",
+      "expected_fields": [
+        "UDiFF bhavcopy",
+        "NCL OI",
+        "combined OI",
+        "participant-wise OI/volume",
+        "FII derivatives statistics"
+      ],
+      "uses": [
+        "daily context and independent EOD reconciliation"
+      ],
+      "limitations": [
+        "not a minute-level quote feed",
+        "access and usage are report-specific"
+      ]
+    },
+    {
+      "id": "nse_eod_subscription",
+      "name": "NSE EOD historical product page",
+      "class": "official_exchange_product_page",
+      "url": "https://www.nse.in/static/market-data/eod-historical-data-subscription",
+      "expected_granularity": "daily historical product-specific",
+      "uses": [
+        "distinguish public reports from paid historical products"
+      ],
+      "limitations": [
+        "some EOD products require subscription"
+      ]
+    },
+    {
+      "id": "bse_file_format",
+      "name": "BSE equity derivatives end-of-day file format",
+      "class": "official_exchange_documentation",
+      "url": "https://www.bseindia.com/downloads1/File_Format_Equity_Derivatives.pdf",
+      "expected_granularity": "EOD contract files",
+      "expected_fields": [
+        "expiry",
+        "strike",
+        "option type",
+        "OHLC",
+        "volume",
+        "OI"
+      ],
+      "uses": [
+        "daily cross-check and schema reference"
+      ],
+      "limitations": [
+        "not intraday quote/depth guarantee"
+      ]
+    },
+    {
+      "id": "bse_fii_summary",
+      "name": "BSE historical FII/FPI derivatives summary",
+      "class": "official_exchange_daily_report",
+      "url": "https://www.bseindia.com/markets/Derivatives/DeriReports/FIISummaryHistorical.aspx",
+      "expected_granularity": "daily aggregate",
+      "uses": [
+        "daily positioning cross-check"
+      ],
+      "limitations": [
+        "not contract-by-contract minute OI"
+      ]
+    },
+    {
+      "id": "optionvault",
+      "name": "OptionVault public code and sample",
+      "class": "public_repository_sample_not_full_data",
+      "url": "https://github.com/QuantDev-stack/OptionVault",
+      "api_url": "https://api.github.com/repos/QuantDev-stack/OptionVault",
+      "license": "repository code and sample status must be read separately from data licence",
+      "uses": [
+        "schema and sample validation if files are publicly accessible"
+      ],
+      "limitations": [
+        "README states complete 300+ GB dataset is licensed; samples are evaluation only"
+      ]
+    },
+    {
+      "id": "breeze_pipeline",
+      "name": "ICICI Breeze options pipeline",
+      "class": "public_code_credentialed_data_source",
+      "url": "https://github.com/mukhilj/breeze_options_pipeline",
+      "api_url": "https://api.github.com/repos/mukhilj/breeze_options_pipeline",
+      "uses": [
+        "document conditional authenticated acquisition"
+      ],
+      "limitations": [
+        "requires ICICI Direct account, Breeze API key and session; no credentials used"
+      ]
+    },
+    {
+      "id": "bse_marketdata",
+      "name": "BSE market data product portal",
+      "class": "official_exchange_paid_or_trial_product",
+      "url": "https://marketdata.bseindia.com/",
+      "uses": [
+        "identify paid data requirements"
+      ],
+      "limitations": [
+        "product plans/agreements required for broad access; no purchase authorized"
+      ]
+    }
+  ]
+}
