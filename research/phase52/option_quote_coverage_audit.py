@@ -71,6 +71,7 @@ def audit_one_expiry(
         revision=revision, token=token
     )
     file_path = Path(path)
+    file_hash = sha256_file(file_path)
     # Read just columns needed for timestamp-coverage and basic data eligibility.
     columns = ["timestamp", "option_type", "strike", "open", "high", "low", "close", "volume", "open_interest"]
     df = pd.read_parquet(file_path, columns=columns)
@@ -94,6 +95,7 @@ def audit_one_expiry(
         if "CE" in counts and "PE" in counts:
             eligible = counts[(counts["CE"] > 0) & (counts["PE"] > 0)]
             both_exit = eligible.index.max() if len(eligible) else None
+    all_timestamps = set(df["timestamp"].tolist())
     rows = []
     for ev in entry_events.itertuples(index=False):
         entry_ts = pd.Timestamp(ev.entry_ts)
@@ -111,7 +113,7 @@ def audit_one_expiry(
         if len(tp_times):
             for stamp in tp_times:
                 next_stamp = stamp + pd.Timedelta(minutes=1)
-                if next_stamp in set(df["timestamp"].tolist()):
+                if next_stamp in all_timestamps:
                     next_open_candidates.append(next_stamp)
         exit_1515_ts = entry_day + pd.Timedelta(hours=15, minutes=15)
         exit_1515 = df[df["timestamp"].eq(exit_1515_ts)]
@@ -126,7 +128,7 @@ def audit_one_expiry(
             "entry_time_ist": str(ev.entry_time_ist),
             "entry_ts": entry_ts.isoformat(),
             "index_has_exact_entry_timestamp": bool(ev.index_has_exact_entry_timestamp),
-            "option_file_sha256": sha256_file(file_path),
+            "option_file_sha256": file_hash,
             "option_file_bytes": int(file_path.stat().st_size),
             "entry_option_row_count": entry_counts["rows"],
             "entry_ce_contracts": entry_counts["ce_contracts"],
@@ -149,7 +151,7 @@ def audit_one_expiry(
     metadata = {
         "expiry": expiry,
         "file": filename,
-        "sha256": sha256_file(file_path),
+        "sha256": file_hash,
         "bytes": int(file_path.stat().st_size),
         "rows": int(len(df)),
         "timestamp_min": df["timestamp"].min().isoformat() if len(df) else None,
@@ -159,6 +161,22 @@ def audit_one_expiry(
         "target_expiry_last_both_ce_pe_timestamp": both_exit.isoformat() if both_exit is not None else None,
     }
     return rows, metadata
+
+
+def self_test() -> None:
+    frame = pd.DataFrame({
+        "option_type": ["CE", "PE", "CE"],
+        "strike": [25000, 25000, 25100],
+        "open": [100.0, 95.0, 0.0],
+        "high": [104.0, 100.0, 2.0],
+        "low": [98.0, 92.0, 0.0],
+        "open_interest": [500, 50, 1000],
+    })
+    counts = valid_contract_counts(frame)
+    assert counts["ce_contracts"] == 2 and counts["pe_contracts"] == 1, counts
+    assert counts["oi_eligible_contracts"] == 1, counts
+    assert counts["valid_ohlc_contracts"] == 2, counts
+    print("SELF_TEST_PASS: exact quote contract counting, OI gate and OHLC sanity")
 
 
 def main() -> int:
@@ -236,4 +254,11 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--self-test-only", action="store_true")
+    args = parser.parse_args()
+    if args.self_test_only:
+        self_test()
+        raise SystemExit(0)
     raise SystemExit(main())
