@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "grid_version": "phase52-grid-v1.2",
+  "grid_version": "phase52-grid-v1.3",
   "status": "PREREGISTERED_NOT_YET_EXPANDED_OR_TESTED",
   "interpretation": "Exhaustive only across this published finite applicable grid; not every mathematically possible real-valued parameter. Every accepted grid expansion requires a versioned amendment before running that grid.",
   "candidate_cartesian_product": "Each of 52 families × 6 selector modes = 312 candidate hypotheses; each candidate expands only dimensions listed by its parameter_group. BASELINE candidates must not depend on feature thresholds.",
@@ -11,7 +11,6 @@
     ],
     "entry_dte_calendar_days": [
       0,
-      3,
       7
     ],
     "strike_selection": [
@@ -113,16 +112,6 @@
       0.5,
       2
     ],
-    "min_open_interest_contracts": [
-      100,
-      500,
-      1000,
-      5000
-    ],
-    "max_quote_age_seconds": [
-      5,
-      30
-    ],
     "multifactor_min_agreement": [
       0.67,
       0.9
@@ -131,17 +120,9 @@
       0.75,
       0.9
     ],
-    "cost_scenarios": [
-      "PAYTM_10_PER_ORDER_BASE",
-      "PAYTM_20_PER_ORDER_SENSITIVITY",
-      "BASE_COST_PLUS_50_PERCENT_FRICTION",
-      "BASE_COST_PLUS_100_PERCENT_FRICTION"
-    ],
     "expiry_pairing": [
-      "SAME_EXPIRY",
       "WEEKLY_WEEKLY",
-      "WEEKLY_MONTHLY",
-      "MONTHLY_MONTHLY"
+      "WEEKLY_MONTHLY"
     ]
   },
   "parameter_groups": {
@@ -150,7 +131,6 @@
       "entry_dte_calendar_days",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -159,7 +139,6 @@
       "entry_dte_calendar_days",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -169,7 +148,6 @@
       "wing_width_steps",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -179,7 +157,6 @@
       "wing_width_steps",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -189,7 +166,6 @@
       "wing_width_steps",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -200,7 +176,6 @@
       "leg_ratio",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -211,7 +186,6 @@
       "leg_ratio",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -223,7 +197,6 @@
       "leg_ratio",
       "exit_rule",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -236,7 +209,6 @@
       "hedge_mode",
       "rebalance_cadence_minutes",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -247,7 +219,6 @@
       "hedge_mode",
       "rebalance_cadence_minutes",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ],
@@ -258,7 +229,6 @@
       "hedge_mode",
       "rebalance_cadence_minutes",
       "reference_lots_per_leg",
-      "max_quote_age_seconds",
       "liquidity_max_spread_pct",
       "strike_selection"
     ]
@@ -420,6 +390,19 @@
       "date": "2026-10-09",
       "reason": "Pre-test feasibility check found grid v1.1 would require approximately 197.8 million finite configurations, making a 10,000-config/day queue take nearly 20,000 days before any replay; this did not depend on P&L because no replay had run.",
       "effect": "Reduced the coarse finite domains and the default shard size before numerical testing. All combinations of the v1.2 applicable grid remain in scope. Cost scenarios remain side-by-side outputs, not tuning dimensions. Any further grid change requires a logged new version."
+    },
+    {
+      "version": "1.3",
+      "date": "2026-10-09",
+      "reason": "Pre-test sizing showed the v1.2 grid still contains 36,008,064 configurations, equivalent to about 1,441 daily 25k enumeration shards before any replay. Quote-age and minimum-OI thresholds are data eligibility gates rather than strategy-alpha parameters, and redundant expiry-pair combinations were narrowed.",
+      "effect": "DTE grid reduced to expiry-day and one-week horizon; calendar pairing grid restricted to two valid listed-expiry pairings; stale-quote and min-OI filters are frozen execution/data gates, not optimizable axes. This was done before any backtest results. Every combination in the v1.3 applicable finite grid remains in scope."
     }
-  ]
+  ],
+  "execution_eligibility": {
+    "max_quote_age_seconds": 15,
+    "min_open_interest_contracts": 100,
+    "derived_value_timestamp_match": "exact timestamp and same strike/expiry; otherwise unavailable",
+    "spread_gate": "liquidity_max_spread_pct remains an explicit finite strategy/execution configuration dimension",
+    "stale_quote_policy": "no trade; never forward-fill or interpolate tradable option prices"
+  }
 }
