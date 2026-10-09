@@ -153,3 +153,11 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Result:** 6,617/9,699 outcome rows matched (68.22%). The development-fitted VIX router's validation net was -₹63,547; its paired mean uplift on the legacy all-cost 1.5× stress was +₹1,411/expiry, 95% block-bootstrap CI [-₹915, +₹4,290], one-sided p=0.1642, Holm-adjusted p=0.9850. All selector policies were net negative during validation; no factor-router uplift passed corrected inference.
 - **Holdout:** Not evaluated because 13 matched expiry sessions is below the 20-expiry gate.
 - **Correction / inference:** Preserve the result as exploratory, negative/insufficient evidence. Do not promote a selector. Next step is the actual registered-configuration replay. This legacy result does not complete any of the 9.38M configuration searches.
+
+## F52-AUTO-37927797509 — Automated workflow failure
+
+- Date: 2026-10-09
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37927797509
+- Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.
+- Root cause: pending review of the failed job logs.
+- Status: OPEN.
