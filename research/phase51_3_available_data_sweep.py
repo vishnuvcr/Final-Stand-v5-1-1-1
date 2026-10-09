@@ -2,6 +2,7 @@ import csv
 import importlib
 from pathlib import Path
 import json, traceback
+import phase51_3_primary_source_adapter as primary
 
 START = "2026-04-21"
 END = "2026-07-21"
@@ -17,6 +18,16 @@ def run_one(name, modname):
     m = importlib.import_module(modname)
     m.START = m.pd.Timestamp(START, tz=m.TZ)
     m.END = m.pd.Timestamp(END, tz=m.TZ)
+    # Replace only the inherited Phase-43 data/expiry dependencies. The
+    # strategy code, execution semantics, cost model and parameters stay frozen.
+    primary._init()
+    m.load_parquet = primary.load_parquet
+    if hasattr(m, "get_expiries"):
+        m.get_expiries = primary.expiries
+    if hasattr(m, "expiry_list"):
+        m.expiry_list = primary.expiries
+    if hasattr(m, "exps"):
+        m.exps = primary.expiries
     out = OUTROOT / name.lower()
     out.mkdir(parents=True, exist_ok=True)
     m.OUT = out
@@ -71,6 +82,7 @@ def main():
         "window": [START, END],
         "partial_oos_only": True,
         "expected_candidates": [name for name, _ in CANDIDATES],
+        "source_manifest": primary.source_manifest(),
         "results": results,
         "errors": errors,
     }
