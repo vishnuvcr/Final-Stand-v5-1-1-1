@@ -914,3 +914,11 @@ A final timing audit found the selected-strike coverage script was using entry-b
 ### Phase 52 whole-position synthetic integration — latest checkpoint
 
 [Run 37960484240](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960484240) passed the source-bound strategy-template resolver, end-to-end synthetic whole-position tests across all 45 supported option-only templates, and the independent canonical replay-kernel/Phase43 fee-parity regression. The integrated test produces 270 synthetic cost-scenario rows across ₹20 primary/₹10 legacy brokerage × 0/50/100% slippage; it verifies exact option legs, prior-minute OI, common 15:15 exits, fee math and fail-closed missing-leg cases. A reference-lot scaling gap found during review was fixed before historical replay. The initial integration run [37960340815](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37960340815) failed because its butterfly test fixture inadvertently overrode the native 1:2:1 ratio; corrected rerun passed. All calculated P&L here is synthetic fixture arithmetic only. The finite grid has 360,000/9,379,584 IDs enumerated and **zero historical Phase52 configuration backtests**. The main next gate is a bounded historical pilot with exact source/leg/exit/cost manifests; no strategy is promoted.
+
+## Phase 52 bounded historical pilot — run 37962192723
+
+- **Run:** [37962192723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37962192723); job=failure; self-test=success; plan-only=success; replay=failure.
+- **Frozen pilot preflight only:** configs=40; events=24; planned config-event rows=480; historical replay report missing.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Branch-local run details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot
+- This is a bounded baseline engineering run, not a factor-router efficacy result.
