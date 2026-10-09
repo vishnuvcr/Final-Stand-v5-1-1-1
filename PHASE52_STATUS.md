@@ -201,3 +201,5 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - Scope: for each of the 1,068 registered events, resolve nearest listed ATM strike and audit offsets -6 through +6 for both CE and PE, using exact entry timestamps, OHLC consistency, OI≥100, exact 15:15 bars and common-time expiry exits. Outputs are coverage diagnostics only; no P&L.
 - A code-path optimization indexes rows by exact timestamp to avoid repeatedly scanning full expiry files. Self-test and end-to-end run are pending the queued Actions execution.
 - ABS_DELTA configurations are explicitly blocked. Minute option close alone is not treated as a validated delta; a point-in-time IV/Greeks resolver and its own tests are required before those configurations can replay.
+
+- **Pre-run self-audit:** Found and patched a timestamp string-key mismatch in the new selected-strike audit before accepting any result. F52-023 logs the defect; self-test/full audit remain pending.
