@@ -14,3 +14,12 @@
 - Range-excluded rows with complete leg payload=81.
 - Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; alternate thresholds are not computed because parent output lacks complete leg-level evidence.
 - No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
+
+
+## Resume checkpoint — input provenance and leg evidence gate
+
+- Identified and corrected a cross-branch input mismatch: the Phase 54 branch had inherited a Phase 52 v0.2 replay CSV (327,244 bytes; 373 empty leg payloads) while the canonical Phase 52 branch contains v0.2.1 audit-provenance (533,125 bytes; SHA 33c82a92e4546c4be10138dbf518ce0e51a83c03). Phase 54 input file was replaced with the canonical v0.2.1 CSV.
+- The earlier successful Phase 54 workflow run 37988153104 is now superseded for data conclusions because it read the stale input. It remains evidence of test/workflow mechanics only.
+- The corrected v0.2.1 replay has 480 rows with statuses 379 EXCLUDED_OHLC_RANGE_PROXY, 100 BLOCKED_LEG_ELIGIBILITY and 1 REPLAY_PASS. Payloads contain one leg in 474 rows and two legs in 6 rows, so many multi-leg range exclusions still lack all selected legs' diagnostic evidence.
+- No alternate threshold counts are accepted until every selected leg's exact entry/prior-OI evidence is preserved. The Phase 52 runner has been patched to continue through remaining legs after a range-proxy failure and preserve their evidence before returning the canonical exclusion; this patch is not yet verified by a fresh Phase 52 replay.
+- Next step: trigger/execute the Phase 52 historical pilot from its dedicated workflow, inspect all 480 payloads and compare hashes; then rerun Phase 54 sensitivity. Do not infer profitability or promote a strategy from this coverage study.
