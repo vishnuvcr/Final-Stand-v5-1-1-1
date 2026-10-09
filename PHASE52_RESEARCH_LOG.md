@@ -72,3 +72,12 @@ Run 37924369419: deterministic Cartesian unranking self-test passed. Registry va
 - **Decision:** Keep all combinations in current grid but use bounded 25,000-row shards. Clearly distinguish enumeration from actual replay, and do not claim full config test count until a source-faithful replay result exists.
 - **Next:** pass the selector pilot unit test, validate as-of feature coverage and chronology, run validation/holdout comparisons, then integrate replay engine for the registered variable configurations.
 
+
+
+## 2026-10-09 — Step 0.8: As-of factor-panel coverage diagnosis
+
+- **Run:** 37926165354 (self-test passed; selector analysis stopped before metrics).
+- **Observed:** 68.2% of all legacy outcome rows had a prior as-of feature record for the same expiry within 24 hours. The source feature panel is a separate 477-row panel, while the legacy matrix includes additional expiries without matched option-factor rows.
+- **Decision:** Added PA-004 using only coverage metadata: matched-sample pilot, minimum 50% in each split, at least 20 matched expiries in validation/holdout, identical matched expiries for selector and baseline. Missing feature rows are never imputed.
+- **Operations:** That run's branch checkpoint push failed due to a remote update after checkout. Workflow is patched to rebase before push. Its failed run and impact remain logged.
+- **Next:** Rerun, inspect coverage by split, and only then determine whether the exploratory pilot has enough admissible matched observations for numerical selector analysis.
