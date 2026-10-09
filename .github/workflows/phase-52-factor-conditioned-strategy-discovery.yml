@@ -1,5 +1,5 @@
 name: Phase 52 — Factor-Conditioned Strategy Discovery
-# Phase52 replay/data gates: point-in-time selectors, pinned base replay, lagged NSE EOD factors, and exact entry-time coverage (PA-004 to PA-006).
+# Phase52 replay/data gates: point-in-time selectors, pinned base replay, lagged NSE EOD factors, exact entry-time coverage, and UDiFF IDF futures validation (PA-004 to PA-006).
 
 on:
   workflow_dispatch:
