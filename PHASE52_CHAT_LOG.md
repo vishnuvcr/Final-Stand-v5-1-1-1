@@ -154,3 +154,10 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - OpenChart source audit and bounded workflow were added on the Phase 52 branch. Runtime runs [37982208116](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982208116), [37982325565](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982325565), [37982356068](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982356068), [37982534138](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982534138) and final report run [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) all completed successfully as workflows.
 - Final result: six symbol searches return the same 20 Index rows/hash across FO/IDX and query variants. Zero option/futures rows found; no historical option request occurred. OpenChart is not accepted for all-options acquisition in its current form. Direct-token history remains untested.
 - Raw market data and contract tokens were not committed. Phase 52 grid, cost model, event set and holdout remained unchanged; no strategy result or promotion arose from this source audit.
+
+## User resume instruction — 2026-10-10
+
+- User: “Ok forget open chart. Let's continue with our planned research”.
+- Action: close OpenChart exploration for now; retain the audit record but do not run further probes.
+- Resume the existing Phase 52 plan. First fix historical pilot persistence; then decompose the 480 v0.2 statuses and trace source/contract/timestamp reasons for 379 OHLC-proxy exclusions and 100 leg-eligibility blocks.
+- Keep all exclusions explicit and separate from losses. Do not change the frozen 40 configurations, 24 events, cost model, 2% proxy, splits or holdout. No candidate promotion from 1 execution.
