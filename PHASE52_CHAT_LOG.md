@@ -26,3 +26,8 @@ Finish registry/config-grid generation and validation, complete prioritized sour
 ## 2026-10-09 — Registry/grid pre-test amendment
 
 The generated initial matrix is 52 structure families × six selector modes = 312 hypotheses, which exceeds the user's 200–300 target without discarding any registered family. Plan and finite grid advanced to version 1.1 *before any numerical replay*. Each configuration evaluates every cost scenario. Some native named presets remain blocked pending exact-leg reconciliation, and no profitability claim is made from registration or enumeration.
+
+
+## 2026-10-09 — First factor-selector pilot and correction
+
+The main Actions workflow passed registry validation and finite-grid audit (312 hypotheses; 9,379,584 configurations under grid v1.3) but stopped at the newly added selector-pilot self-test. No data analysis was performed. The failed assertion was a brittle expectation about quantile bins under the installed pandas version; the test now uses fixed edges and remains pre-analysis. The event is logged as F52-005; full-grid queue sizing is F52-006 and remains an explicit compute caveat.
