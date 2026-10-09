@@ -16,3 +16,10 @@
 - Source registry rows=8; pinned required files=13; HEAD accessible=13; 404=0; unknown=0.
 - Audit decision=SOURCE_INVENTORY_COMPLETE_BUT_INTRADAY_QUOTE_NO_GO; confirmed free full-history bid/ask/depth=False.
 - Raw market bars downloaded=False; strategy backtest run=False; holdout used=False.
+
+## 37985550672 — Source coverage audit
+
+- Run: [37985550672](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37985550672); workflow job status=\failure.
+- Source registry rows=8; pinned required files=13; HEAD accessible=13; 404=0; unknown=0.
+- Audit decision=SOURCE_INVENTORY_COMPLETE_BUT_INTRADAY_QUOTE_NO_GO; confirmed free full-history bid/ask/depth=False.
+- Raw market bars downloaded=False; strategy backtest run=False; holdout used=False.
