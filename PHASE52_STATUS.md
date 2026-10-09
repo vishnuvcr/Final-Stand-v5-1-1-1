@@ -418,3 +418,10 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 ## Leg-evidence repair checkpoint (2026-10-10)
 
 First run failed closed on code-fingerprint drift and exposed escaped workflow expressions. Both issues were corrected. Verification run [37989827840](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37989827840) is queued; no replay result is accepted yet.
+
+## Leg-evidence repair run 37990101556
+
+- Run: [37990101556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37990101556)
+- Job status: failure
+- Intended change: preserve all resolved-leg range diagnostics without changing the frozen 2% eligibility rule, costs, or event universe.
+- Status counts and per-row leg completeness must be reviewed from the uploaded artifact before using it in Phase 54.
