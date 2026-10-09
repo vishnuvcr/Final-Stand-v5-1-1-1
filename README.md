@@ -971,3 +971,11 @@ The v0.1 report and v0.2 run artifact are distinct versions, not contradictory r
 - **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
 - Branch-local run details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot
 - This is a bounded baseline engineering run, not a factor-router efficacy result.
+
+## Phase 52 bounded historical pilot — run 37984566094
+
+- **Run:** [37984566094](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37984566094); job=success; self-test=success; plan-only=success; replay=success.
+- **Pilot result status:** HISTORICAL_BASELINE_PILOT_COMPLETE_WITH_EXPLICIT_EXCLUSIONS; configs=40; planned config-event rows=480; executed=1; excluded/errors=479; cost rows=6; source file errors=0.
+- **Interpretation:** bounded BASELINE engineering pilot only; no winner ranking/promotion. Holdout remains untouched. Queue enumeration is not a backtest count.
+- Branch-local run details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery/results/phase52/historical_pilot
+- This is a bounded baseline engineering run, not a factor-router efficacy result.
