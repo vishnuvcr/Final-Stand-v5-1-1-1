@@ -1,4 +1,4 @@
-name: Phase 52 — Bounded Historical BASELINE Pilot (revision-fingerprinted rerun)
+name: Phase 52 — Bounded Historical BASELINE Pilot v0.2 (exact duplicate normalization)
 
 on:
   workflow_dispatch:
@@ -53,7 +53,7 @@ jobs:
       - name: Install bounded pilot dependencies
         run: python -m pip install --disable-pip-version-check --no-input numpy pandas pyarrow huggingface_hub matplotlib
 
-      - name: Test config enumeration and event sample without market downloads
+      - name: Test config enumeration, event sample and duplicate policy without market downloads
         id: self_test
         run: python research/phase52/historical_pilot_runner.py --self-test-only
 
@@ -61,7 +61,7 @@ jobs:
         id: plan
         run: python research/phase52/historical_pilot_runner.py --plan-only
 
-      - name: Run bounded historical BASELINE replay
+      - name: Run bounded historical BASELINE v0.2 replay (frozen configs/events; exact duplicates only)
         id: replay
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
