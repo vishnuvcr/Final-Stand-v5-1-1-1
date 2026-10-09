@@ -4,11 +4,11 @@
 
 - Input rows: 480
 - Baseline statuses: {"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}
-- Complete per-leg payload rows: 21
-- Incomplete per-leg payload rows: 459
-- Empty leg payload rows: 373
-- Partial leg payload rows: 86
-- Range-excluded rows with complete leg payload: 0
+- Complete per-leg payload rows: 102
+- Incomplete per-leg payload rows: 378
+- Empty leg payload rows: 0
+- Partial leg payload rows: 378
+- Range-excluded rows with complete leg payload: 81
 
 | Threshold (%) | Sensitivity computable? | Result |
 |---:|:---:|---|

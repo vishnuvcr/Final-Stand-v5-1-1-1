@@ -1210,3 +1210,13 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 - Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; alternate thresholds are not computed because parent output lacks complete leg-level evidence.
 - No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
 - [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)
+
+## Phase 54 OHLC-reference sensitivity — run 37989390203
+
+- Run: [37989390203](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37989390203); workflow job status=success.
+- Input rows=480; baseline statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Complete leg payload rows=102; incomplete=378; empty payloads=0; partial payloads=378.
+- Range-excluded rows with complete leg payload=81.
+- Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE; alternate thresholds are not computed because parent output lacks complete leg-level evidence.
+- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
+- [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)

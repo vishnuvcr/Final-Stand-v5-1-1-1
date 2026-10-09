@@ -1,12 +1,12 @@
 {
   "phase": "54",
   "status": "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE",
-  "created_at_utc": "2026-10-09T20:37:07.713383+00:00",
+  "created_at_utc": "2026-10-09T20:48:13.411966+00:00",
   "input": {
     "path": "results/phase52/historical_pilot/event_replay.csv",
     "row_count": 480,
     "source_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
-    "input_sha256": "ca60e4b1757b1b6cb7fa94b495eff73e08da481fbe3952a19808a10dfdac19db",
+    "input_sha256": "5052dcf08c20fe0bb921db2172ee7845327112a836145fe2eb91732015901abf",
     "parent_grid": "phase52-grid-v1.3",
     "parent_pilot": "phase52-historical-base-pilot-v0.2.1-audit-provenance"
   },
@@ -41,15 +41,15 @@
   "leg_payload_detail_counts": {
     "BLOCKED_LEG_ELIGIBILITY::COMPLETE_LEG_PAYLOAD": 20,
     "BLOCKED_LEG_ELIGIBILITY::PARTIAL_LEG_PAYLOAD": 80,
-    "EXCLUDED_OHLC_RANGE_PROXY::EMPTY_LEG_PAYLOAD": 373,
-    "EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD": 6,
+    "EXCLUDED_OHLC_RANGE_PROXY::COMPLETE_LEG_PAYLOAD": 81,
+    "EXCLUDED_OHLC_RANGE_PROXY::PARTIAL_LEG_PAYLOAD": 298,
     "REPLAY_PASS::COMPLETE_LEG_PAYLOAD": 1
   },
-  "complete_leg_payload_rows": 21,
-  "incomplete_leg_payload_rows": 459,
-  "empty_leg_payload_rows": 373,
-  "partial_leg_payload_rows": 86,
-  "range_excluded_rows_with_complete_leg_payload": 0,
+  "complete_leg_payload_rows": 102,
+  "incomplete_leg_payload_rows": 378,
+  "empty_leg_payload_rows": 0,
+  "partial_leg_payload_rows": 378,
+  "range_excluded_rows_with_complete_leg_payload": 81,
   "strict_prior_oi_blocked_rows_by_parent_status": 100,
   "range_excluded_rows_by_parent_status": 379,
   "replay_pass_rows_by_parent_status": 1,
