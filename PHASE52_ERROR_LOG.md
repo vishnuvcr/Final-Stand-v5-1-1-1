@@ -56,4 +56,13 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Root cause:** The initial CSV generator omitted the `family_name` field from each data row while the header expected it. The validator encountered null cells and raised AttributeError rather than presenting a clean schema error.
 - **Impact:** Registry self-test passed, but registry validation failed before source discovery or grid enumeration. No backtest result was produced.
 - **Correction:** Rebuilt all 52 strategy-specification rows with the correct six columns, deriving family names from the candidate registry; hardened validation against null fields.
-- **Status:** Corrected in branch; rerun verification pending.
+- **Status:** RESOLVED — retry run passed registry/spec/grid validation and completed the source-discovery and 10,000-record queue checkpoint.
+
+
+## F52-006 — YouTube API secret absent — EXPECTED CAPABILITY LIMITATION
+
+- **Date:** 2026-10-09
+- **Observation:** The Actions environment contains `HF_TOKEN` and GitHub's workflow token, but `YOUTUBE_API_KEY` is not configured.
+- **Impact:** This run queried Hugging Face and GitHub successfully; fresh YouTube Data API search did not run.
+- **Correction/handling:** The discovery script reports `NOT_RUN`, keeps the previously collected Phase 46 YouTube ledger and does not claim fresh channel coverage. Public YouTube metadata can be researched separately where accessible without an API key, subject to rate limits and source attribution.
+- **Status:** OPEN / optional credential. This is not a strategy-test failure.
