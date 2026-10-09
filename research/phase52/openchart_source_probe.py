@@ -134,7 +134,16 @@ def summarize_bars(
 def _is_option_row(row: dict[str, Any]) -> bool:
     symbol = str(row.get("symbol", ""))
     instrument_type = str(row.get("type", "")).strip().lower()
-    return instrument_type == "options" or bool(re.search(r"(CE|PE)$", symbol.upper()))
+    # Be tolerant to singular/plural type labels and exchange suffix spacing.
+    return ("option" in instrument_type) or bool(
+        re.search(r"(?:^|[\\s:_-])(CE|PE)\\s*$", symbol.upper())
+    )
+
+
+def _is_future_row(row: dict[str, Any]) -> bool:
+    symbol = str(row.get("symbol", "")).strip().upper()
+    instrument_type = str(row.get("type", "")).strip().lower()
+    return ("future" in instrument_type) or bool(re.search(r"FUT\\s*$", symbol))
 
 
 def _safe_search_metadata(frame: pd.DataFrame, query: str) -> dict[str, Any]:
@@ -229,6 +238,8 @@ def self_test() -> None:
     assert summary["invalid_ohlc_rows"] == 0
     assert summary["nonpositive_volume_rows"] == 0
     assert _is_option_row({"symbol": "NIFTY26OCT25000CE", "type": "Options"})
+    assert _is_option_row({"symbol": "NIFTY26OCT25000 PE", "type": "Option"})
+    assert _is_future_row({"symbol": "NIFTY26OCTFUT", "type": "Futures"})
     assert not _is_option_row({"symbol": "NIFTY26OCTFUT", "type": "Futures"})
     print("OPENCHART_SELF_TEST_PASS")
 
