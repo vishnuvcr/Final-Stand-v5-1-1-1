@@ -1,0 +1,42 @@
+{
+  "run_id": 37980455805,
+  "workflow_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805",
+  "job_id": 113989334277,
+  "job_status": "failure",
+  "self_test": "success",
+  "plan_stage": "success",
+  "replay_stage": "success",
+  "persistence_stage": "failure",
+  "pilot_version": "phase52-historical-base-pilot-v0.2",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "declared_license": "CC BY-NC 4.0",
+  "configurations": 40,
+  "selected_events": 24,
+  "planned_configuration_event_rows": 480,
+  "status_counts": {
+    "EXCLUDED_OHLC_RANGE_PROXY": 379,
+    "BLOCKED_LEG_ELIGIBILITY": 100,
+    "REPLAY_PASS": 1
+  },
+  "executed_rows": 1,
+  "excluded_or_error_rows": 479,
+  "cost_scenario_rows": 6,
+  "source_files_audited": 13,
+  "source_file_errors": 0,
+  "replay_exception_count": 0,
+  "holdout_used": false,
+  "promotion_eligible": false,
+  "input_hashes": {
+    "pilot_plan_sha256": "714cdb7d8a4d47089b03df865a3d2261a5ae3171890640bc67177754118cb992",
+    "grid_sha256": "6a6c72da7f44438af7fdefa96134082fd214be3df48980b4a88543e0db96b07b",
+    "specifications_sha256": "1690fa3ad156aaf94e18f8f6547829065e5a90aef907a5602516451ff13a4cc3",
+    "template_manifest_sha256": "4803b6e0efc9b21de77633eb6a474cea2130febcae6631a3903769f6c27b65d0",
+    "replay_protocol_sha256": "5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6",
+    "resolver_sha256": "9ec380e6b631042ca534571fd11ea124dfc17836716a588c4d8b13dcdd869758",
+    "kernel_sha256": "8bb4ee8bfb7694a88cf83bfd69a93296185fb1f58ab06c5433fbe599a67f2c19",
+    "historical_pilot_runner_sha256": "eabde2d0062a9ecde4b18bd8990cc9a4929f2549a38490bf18638519973cad48",
+    "selected_events_sha256": "055888075f39cee082b8dd1e953af4852460a290004fdb9cf052b13d000dbc2c"
+  },
+  "disposition": "Coverage-only engineering pilot. One executed row is not a meaningful profitability sample; no ranking, significance claim, strategy promotion, or holdout use."
+}
