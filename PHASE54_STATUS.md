@@ -1,13 +1,13 @@
 # Phase 54 status — OHLC-reference eligibility sensitivity
 
-**Overall:** ACTIVE — non-executable coverage sensitivity only.
+**Overall:** BLOCKED — audit-output completeness failure; no alternate-threshold estimates accepted.
 
 - **Branch:** phase-54-ohcl-reference-sensitivity
 - **Parent:** Phase 53 source audit closed with NO-GO for free independent historical bid/ask/depth.
 - **Input:** frozen Phase 52 v0.2.1 event replay CSV; expected 480 configuration-event rows.
-- **Method:** vary only diagnostic OHLC range threshold across 11 preregistered values; preserve exact prior-minute OI >= 100 and existing entry status.
+- **Audit result:** 480 parent statuses reconcile, but 373 rows have empty leg payloads and six range-excluded rows have partial payloads; only one replay-pass row has a complete payload. Therefore alternate-threshold eligibility cannot be calculated honestly.
 - **Forbidden:** P&L recalculation, exit/fill assumptions, holdout use, strategy ranking, promotion, live-execution recommendations.
-- **Next gate:** confirm workflow tests, row reconciliation, artifact and persistence; then close Phase 54 and formulate research-wide conclusion.
+- **Next gate:** Phase 55 must repair the Phase 52 runner to preserve all selected legs for every status and rerun the same frozen pilot. Return here only after payload completeness passes.
 
 ## Run checkpoint 37987696866
 
