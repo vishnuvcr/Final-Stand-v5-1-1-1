@@ -172,10 +172,12 @@ def main() -> None:
              "resolved_legs_json":json.dumps([{"prior_oi_status":"FAIL","prior_oi":0,"entry_status":"PASS","entry_range_proxy_pct":1.0}])},
         ]
         result = analyze(sample)
-        assert result["threshold_sensitivity"][0]["rows_meeting_prior_oi_entry_data_and_range_gate"] == 0
-        assert result["threshold_sensitivity"][1]["rows_meeting_prior_oi_entry_data_and_range_gate"] == 1
-        assert result["threshold_sensitivity"][0]["rejected_for_prior_oi"] == 1
-        print("Phase 54 self-test PASS")
+        assert result["status"] == "OHLC_REFERENCE_SENSITIVITY_BLOCKED_INCOMPLETE_LEG_EVIDENCE"
+        assert result["threshold_sensitivity"][0]["computable"] is False
+        assert result["threshold_sensitivity"][0]["eligible_rows"] is None
+        assert result["incomplete_leg_payload_rows"] == 1
+        assert result["complete_leg_payload_rows"] == 1
+        print("Phase 54 evidence-completeness self-test PASS")
         return
     result = analyze(read_rows())
     write_outputs(result, args.output)
