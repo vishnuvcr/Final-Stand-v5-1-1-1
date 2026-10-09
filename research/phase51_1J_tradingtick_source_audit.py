@@ -261,8 +261,8 @@ async def main():
             review["row_count"]=len(obj)
             review["first_row_keys"]=list(obj[0].keys())[:80] if obj and isinstance(obj[0],dict) else []
           raw=json.dumps(obj,ensure_ascii=False)
-          has_iso=bool(re.search(r"20\\d{2}[-/]\\d{2}[-/]\\d{2}[ T]\\d{2}:\\d{2}",raw))
-          hhmm=bool(re.search(r'"(?:0[9]|1[0-5]):[0-5]\\d(?::[0-5]\\d)?"',raw))
+          has_iso=bool(re.search(r"20\d{2}[-/]\d{2}[-/]\d{2}[ T]\d{2}:\d{2}",raw))
+          hhmm=bool(re.search(r'"(?:0[9]|1[0-5]):[0-5]\d(?::[0-5]\d)?"',raw))
           keys=set(review.get("top_level_keys",[]))|set(review.get("row_keys",[]))|set(review.get("first_row_keys",[]))
           time_keys=any(str(k).lower() in {"timestamp","datetime","time","times","labels","x"} for k in keys)
           review["contains_iso_intraday_timestamp"]=has_iso
