@@ -21,7 +21,7 @@ The decision is broader than “which fixed strategy is best.” The experiment 
 
 ### Aim
 
-Build a reproducible, data-audited discovery and validation system that searches at least 300 distinct structure × selector hypotheses, then exhaustively evaluates the registered finite configuration space in deterministic shards. The search should continue on a schedule until a candidate passes all registered gates or a serious data, access, licensing, software or safety issue requires intervention.
+Build a reproducible, data-audited discovery and validation system that searches at least 312 distinct structure × selector hypotheses, then exhaustively evaluates the registered finite configuration space in deterministic shards. The search should continue on a schedule until a candidate passes all registered gates or a serious data, access, licensing, software or safety issue requires intervention.
 
 ### Objectives
 
@@ -50,7 +50,7 @@ All are falsifiable hypotheses. None is assumed true, and a high in-sample profi
 
 ## 4. Scope and candidate universe
 
-The initial registry contains 300 candidate hypotheses: 50 base structures × 6 selector modes. The six selector modes are:
+The initial registry contains 312 candidate hypotheses: 52 base structures × 6 selector modes. The six selector modes are:
 1. unconditional/base control;
 2. India VIX level/trend/percentile/term-state router;
 3. Greeks/IV/skew/gamma/theta router;
@@ -109,7 +109,7 @@ Reject stale, incomplete, duplicated, timestamp-incompatible or contract-mismatc
 
 ### Phase D — Strategy reconstruction and registry
 
-For each source: freeze leg directions, quantities, strike mapping, expiry pairing, entry timing, rebalance/repair logic, exits and capital/margin assumptions. Record ambiguities and alternatives as distinct variants. A source's advertised return is a hypothesis, not evidence. Validate that 300 candidate IDs are unique and every candidate maps to a documented structural rule and a source lineage.
+For each source: freeze leg directions, quantities, strike mapping, expiry pairing, entry timing, rebalance/repair logic, exits and capital/margin assumptions. Record ambiguities and alternatives as distinct variants. A source's advertised return is a hypothesis, not evidence. Validate that 312 candidate IDs are unique and every candidate maps to a documented structural rule and a source lineage.
 
 ### Phase E — Replay and configuration enumeration
 
@@ -214,3 +214,12 @@ When a survivor appears, continue the overall search while running a separate st
 ## Plan changes
 
 This initial plan is the frozen version 1.0. A change to scope, finite grids, hypotheses, cost model or decision gates requires a documented amendment before the amended analysis starts.
+
+
+## Version history and pre-test amendment
+
+### PA-001 — 2026-10-09 — Registered-universe count and finite-grid clarification
+
+Before any numerical replay, the generated registry was reconciled against this plan. It contains **52 distinct structure families × 6 selector modes = 312 hypotheses**, not 50 × 6 = 300. All 52 families are retained because the extras include additional futures/synthetic-futures, protection and ratio/calendar families. The minimum target remains exceeded; no candidate was dropped based on P&L.
+
+The finite parameter grid was also frozen at `phase52-grid-v1.1` before results: a finite coarse grid is exhaustively enumerated in deterministic resumable shards; costs are evaluated side-by-side for each configuration rather than optimized as a parameter. The amendment does not relax statistical or cost gates and does not change any prior phase result. Any further expansion requires a new version before the expanded grid is evaluated.
