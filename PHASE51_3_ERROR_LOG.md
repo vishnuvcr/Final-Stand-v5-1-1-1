@@ -59,3 +59,12 @@ Rules:
 - **Impact:** No evidence was generated; this redundant workflow is not the authoritative Phase-51-3 execution path.
 - **Correction:** The main orchestrator run 37881916446 contains the complete source-acquisition path and is the only run eligible for Phase-51-3 publication. The branch workflow will be prevented from creating duplicate scientific conclusions.
 - **Status:** CLOSED as redundant-workflow noise; no P&L accepted.
+
+## F51-3-007 — Spot-source path assumption — PATCHED
+
+- **Date:** 2026-10-09
+- **Run:** 37881916446.
+- **Observation:** The source-faithful adapter was correct, but the orchestrator's acquisition step required the spot repository to have exactly `nifty/1min/2026`. The cloned repository's current layout did not satisfy that literal path, so the acquisition step stopped before replay acceptance.
+- **Impact:** Run 37881916446 is non-evidence; its artifact is retained only for diagnostics.
+- **Correction:** Spot-source discovery now searches recursively for 2026 1-minute CSVs, while the adapter applies the same recursive discovery. No spot values are transformed beyond the previously validated Timestamp/Close mapping.
+- **Status:** PATCHED; clean source-faithful retry required.
