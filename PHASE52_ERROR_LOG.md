@@ -544,3 +544,12 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction:** The report schema now distinguishes `target_date_windows_planned` from `target_date_windows_with_history_requests`.
 - **Verification:** Final run [37982673873](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37982673873) records 2 planned windows and 0 history requests.
 - **Status:** RESOLVED IN REPORT SCHEMA.
+
+## F52-RESUME-001 — Pilot persistence conflict and coverage diagnosis queued — OPEN
+
+- **Date:** 2026-10-10.
+- **Evidence:** historical pilot run [37980455805](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37980455805) replay succeeded but final persistence failed when rebasing stale log/status edits onto a branch tip with concurrent changes.
+- **Scientific impact:** the 480-row replay summary is reconciled separately, but automated checkpoint completion is not reliable yet. Current coverage remains 379 OHLC-range exclusions, 100 leg-eligibility blocks and 1 execution. No profitability inference.
+- **Next correction:** make persistence latest-tip-aware and idempotent; add a regression test for concurrent append-only log updates and unique run artifacts. Then decompose each first-failure status using the frozen row ledger and exact source provenance.
+- **Acceptance:** a successful persistence test plus a complete 480-row status reconciliation. Never turn excluded/blocked rows into losses or relax the frozen filter to manufacture coverage.
+- **Status:** OPEN / NEXT PHASE 52 ENGINEERING GATE.
