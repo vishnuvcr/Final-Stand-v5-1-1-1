@@ -1,0 +1,59 @@
+{
+  "strategy": "TT-04",
+  "engine_revision": "50B-TT04-COVERAGE-V3",
+  "trades": 22,
+  "candidate_trades": 22,
+  "coverage_exclusions": 0,
+  "coverage_rate": 1.0,
+  "session_exclusions": 0,
+  "net": 6864.31031071597,
+  "net50": 5694.465466073972,
+  "net20": 5825.910310715968,
+  "net20_50": 4136.865466073971,
+  "splits": [
+    {
+      "split": "DEV",
+      "trades": 0,
+      "net": 0.0,
+      "net50": 0.0,
+      "win_rate": 0
+    },
+    {
+      "split": "VAL",
+      "trades": 0,
+      "net": 0.0,
+      "net50": 0.0,
+      "win_rate": 0
+    },
+    {
+      "split": "HOLD",
+      "trades": 22,
+      "net": 6864.31031071597,
+      "net50": 5694.465466073972,
+      "win_rate": 0.6363636363636364
+    }
+  ],
+  "by_vix": [
+    {
+      "vix_state": "NORMAL",
+      "trades": 22,
+      "net": 6864.31031071597,
+      "net50": 5694.465466073972,
+      "mean": 312.01410503254414
+    }
+  ],
+  "phase51_3_window": [
+    "2026-04-21",
+    "2026-07-21"
+  ],
+  "partial_oos_only": true,
+  "phase51_3_gate": {
+    "coverage_threshold": 0.95,
+    "coverage_rate": 1.0,
+    "coverage_status": "PASS",
+    "data_error_count": 0,
+    "data_error_status": "PASS",
+    "replay_quality_gate": "PASS",
+    "final_full_window_validation": false
+  }
+}

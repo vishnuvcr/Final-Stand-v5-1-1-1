@@ -1,0 +1,36 @@
+{
+  "strategy": "TT-02",
+  "engine_revision": "50B-TT02-COVERAGE-V3",
+  "trades": 5,
+  "candidate_trades": 5,
+  "coverage_exclusions": 0,
+  "coverage_rate": 1.0,
+  "net": 13824.960170215996,
+  "net50": 13249.440255323996,
+  "net20": 12904.560170215997,
+  "net20_50": 11868.840255323998,
+  "by_vix": [
+    {
+      "vix_state": "NORMAL",
+      "trades": 5,
+      "net": 13824.960170215996,
+      "net50": 13249.440255323996,
+      "mean": 2764.992034043199,
+      "win_rate": 0.8
+    }
+  ],
+  "phase51_3_window": [
+    "2026-04-21",
+    "2026-07-21"
+  ],
+  "partial_oos_only": true,
+  "phase51_3_gate": {
+    "coverage_threshold": 0.95,
+    "coverage_rate": 1.0,
+    "coverage_status": "PASS",
+    "data_error_count": 0,
+    "data_error_status": "PASS",
+    "replay_quality_gate": "PASS",
+    "final_full_window_validation": false
+  }
+}
