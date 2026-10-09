@@ -1019,3 +1019,16 @@ Phase 54 showed that the stored event replay output was not sufficiently detaile
 - [Cached manual/automatic pilot workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/.github/workflows/phase-55-leg-audit-payload-repair.yml)
 
 The workflow reruns the same frozen 480-row pilot against the pinned revision, validates expected leg counts and cost rows, and caches the Hugging Face files by revision. Raw market data is not committed; no holdout or strategy promotion is allowed.
+
+
+## Research continuation — Phase 54 evidence gate (2026-10-10)
+
+Phase 53 closed its source inventory with a NO-GO for a verified independent free historical bid/ask/depth source. Phase 54 is a bounded, non-executable OHLC-reference sensitivity only; candle range is not bid/ask spread and this phase cannot establish profitability.
+
+- [Phase 54 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_RESEARCH_PLAN.md)
+- [Phase 54 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md)
+- [Phase 54 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_ERROR_LOG.md)
+- [Phase 54 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/report.md)
+- [Phase 52 leg-evidence repair runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/research/phase52/historical_pilot_runner.py)
+
+**Current gate:** a stale parent CSV on the Phase 54 branch was replaced with the canonical Phase 52 v0.2.1 audit-provenance file (480 rows; source blob SHA 33c82a92e4546c4be10138dbf518ce0e51a83c03). Its existing range-excluded multi-leg records still lack complete evidence for every leg, so alternative threshold counts are withheld. The Phase 52 runner patch to retain all leg evidence on range exclusions is committed but requires a fresh historical pilot run and validation before Phase 54 can compute the sensitivity. No holdout was used, no strategy was promoted, and no live recommendation is made.
