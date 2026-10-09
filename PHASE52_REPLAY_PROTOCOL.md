@@ -93,3 +93,8 @@ The ATM-offset coverage audit originally used the entry-timestamp OI field while
 ## 9. Kernel-tested execution and accounting primitives
 
 Synthetic kernel tests are green in [run 37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452). The tested primitives refuse nearest-timestamp/strike substitution, require valid exact contract OHLC bars, use only prior-bar OI for entry eligibility, use exact common timestamps for multi-leg exits, apply adverse slippage to each leg fill, and calculate statutory fees independently of the brokerage/slippage scenarios. A high-low/open liquidity statistic is explicitly an OHLC range proxy, not bid/ask spread. A take-profit signal is recognized on completed portfolio P&L and must fill at the next exact common-minute open. These tests are synthetic unit evidence only; they do not imply that the strategy-family resolver, source data coverage or full-grid runner has passed.
+
+
+## 9. Kernel-tested execution and accounting primitives
+
+Synthetic unit tests passed in [Actions run 37957753452](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37957753452). Tested primitives refuse nearest-timestamp/contract substitution; require internally valid exact contract OHLC; use exact prior-bar OI; require common timestamps for multi-leg exits; apply adverse slippage separately to every fill; calculate statutory charges independently from brokerage/slippage scenarios; label high-low/open as an OHLC range proxy, not bid/ask; and require a next-minute common open for take-profit execution. These results are synthetic engineering evidence only, not backtests, source-coverage proof, or strategy performance.
