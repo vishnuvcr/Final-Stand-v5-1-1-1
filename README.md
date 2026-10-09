@@ -1167,3 +1167,26 @@ The latest synthetic engineering gate passed in [Actions run 37960484240](https:
 
 - No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
 - [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)
+
+## Phase 54 OHLC-reference sensitivity — run 37987961994
+
+- Run: [37987961994](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37987961994); workflow job status=failure.
+- Input rows=480; baseline statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Threshold sensitivity (eligibility only):
+
+| Range threshold | Rows passing OI + entry-data + range | Planned share | OI blocked | Missing leg detail | Range blocked |
+|---:|---:|---:|---:|---:|
+| 2% | 0 | 0.00% | 107 | 373 | 0 |
+| 3% | 0 | 0.00% | 107 | 373 | 0 |
+| 4% | 0 | 0.00% | 107 | 373 | 0 |
+| 5% | 0 | 0.00% | 107 | 373 | 0 |
+| 6% | 0 | 0.00% | 107 | 373 | 0 |
+| 8% | 0 | 0.00% | 107 | 373 | 0 |
+| 10% | 0 | 0.00% | 107 | 373 | 0 |
+| 12% | 0 | 0.00% | 107 | 373 | 0 |
+| 15% | 0 | 0.00% | 107 | 373 | 0 |
+| 20% | 0 | 0.00% | 107 | 373 | 0 |
+| 1000% | 0 | 0.00% | 107 | 373 | 0 |
+
+- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.
+- [Plan](PHASE54_RESEARCH_PLAN.md) · [Status](PHASE54_STATUS.md) · [Results](results/phase54/ohlc_reference_sensitivity/report.md)
