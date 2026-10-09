@@ -110,3 +110,20 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Impact:** The factor input-audit artifact was uploaded to Actions but not persisted at its intended branch path in that run; no scientific result was lost because the analysis had stopped at the coverage gate.
 - **Correction:** Workflow now rebases its committed checkpoint on the current remote Phase52 branch before pushing. Failure logs retain the rejected run. If a rebase conflict occurs, the run must remain failed and logged; never force-push/rewrite earlier outcomes.
 - **Status:** PATCHED; verify on the next run.
+
+
+## F52-009 — Legacy outcome matrix contains canonical alias names absent from first pilot whitelist — PATCHED BEFORE SELECTOR P&L
+
+- **Date:** 2026-10-09
+- **Observation:** Reading the saved Phase45 `PHASE43_MAP` showed source outcome labels like `bull_call_debit`, `iron_condor`, `iron_butterfly`, `call_calendar`, `long_call_butterfly` and `call_backspread`, while the initial selector whitelist used some registry display names (for example `bull_call_spread` and `short_iron_condor`).
+- **Impact:** Could have omitted eligible fixed-template outcomes and distorted the selector universe. No factor-selection performance result was calculated before this was noticed.
+- **Correction:** Add the canonical Phase45 engine labels in addition to registry display aliases; the input audit reports exact matched strategy names. Do not relabel an undefined-risk structure as safe merely to increase counts.
+- **Status:** PATCHED; awaiting clean workflow verification.
+
+## F52-010 — 2026 holdout feature coverage expected to be incomplete — HANDLED BY PA-005
+
+- **Date:** 2026-10-09
+- **Observation:** The stored Phase39 feature panel's final records are dated 2026-04-24, but Phase45 trade outcomes include later 2026 sessions.
+- **Impact:** A full 2026 holdout selector evaluation might lack 20 matched expiry sessions or minimum 50% coverage.
+- **Correction:** Under PA-005, only the validation split must meet validation coverage/sample gates to run the exploratory pilot; holdout is tested only if its separate gate passes. Otherwise explicitly emit no holdout performance metrics and preserve the missing coverage as a limitation.
+- **Status:** PATCHED before selector P&L analysis.
