@@ -33,7 +33,7 @@ jobs:
       - name: Install accepted-engine helper dependencies
         run: python -m pip install --disable-pip-version-check --no-input pandas numpy matplotlib huggingface_hub
 
-      - name: Run exact-fill, prior-OI, fee-parity and multi-leg fixtures
+      - name: Run canonical-kernel, exact-fill, multi-leg and Phase43 fee-parity fixtures
         run: |
           python research/phase52/replay_engine_core.py --self-test --report results/phase52/replay_engine_regression/self_test.json
 
