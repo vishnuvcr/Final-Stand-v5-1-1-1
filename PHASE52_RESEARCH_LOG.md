@@ -34,3 +34,8 @@ Append every completed research step, regardless of outcome. Preserve source ref
 - **Configuration space:** `research/phase52/configuration_space.json`, grid `phase52-grid-v1.1`. It is a finite coarse grid, with conditional strike-selection branches and deterministic IDs. Paytm Money cost scenarios are outputs per configuration, not a tuned variable.
 - **Code:** `research/phase52/validate_registry.py` includes schema validation, deterministic mixed-radix indexing and optional resumable shard emission.
 - **Interpretation:** Registry and queue are not backtests; P&L, win rate, return, drawdown or factor uplift has not been calculated for Phase 52.
+
+
+## 2026-10-09 — First Actions gate failure and correction
+
+Run 37924369419: deterministic Cartesian unranking self-test passed. Registry validation then failed because the first strategy-specification CSV had a missing `family_name` column in data rows. No source-discovery or configuration-enumeration step ran. The CSV was rebuilt to six columns for all 52 rows and the validator hardened against null fields. Rerun still required; no backtest evidence was generated.
