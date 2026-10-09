@@ -42,6 +42,14 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def sha256_file(path: str | Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for block in iter(lambda: fh.read(8 * 1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
@@ -81,7 +89,7 @@ def session_dates_from_index(revision: str, token: str | None) -> tuple[pd.DataF
     idx["session_date"] = idx["timestamp"].dt.strftime("%Y-%m-%d")
     closes = idx.groupby("session_date", sort=True).tail(1)[["session_date", "timestamp", "close"]]
     closes = closes.rename(columns={"close": "nifty_spot_eod"}).reset_index(drop=True)
-    return closes, sha256_bytes(Path(path).read_bytes())
+    return closes, sha256_file(path)
 
 
 def _get_first(raw: pd.DataFrame, *names: str) -> pd.Series | None:
