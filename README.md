@@ -1,5 +1,27 @@
 # Final Stand v5 1-1-1-1 — Latest Research Checkpoint (2026-10-09)
 
+## Phase 51-3 — Available-data OOS sweep — RETRY PENDING (2026-10-09)
+
+The first orchestration attempt started successfully but failed in the TT-02 candidate engine. Run [37878089042](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37878089042) produced no accepted result artifact, so every P&L value emitted by that run remains **NON-EVIDENCE**.
+
+TT-05's console-only output showed 17 completed trades from 20 candidates (85% coverage), below the preregistered 95% gate. If repeated, it is classified FAIL_COVERAGE and excluded; missing opportunities are not imputed or dropped. TT-04 console figures are also unaccepted because the overall run failed and no artifact passed audit.
+
+Corrections already committed:
+- Wrapper writes per-candidate coverage/data-error gate status and prints full candidate tracebacks.
+- Workflow audit runs after a failing engine step and uploads partial diagnostic artifacts even when the attempt fails.
+- Orchestration uses a finite completion marker so the schedule stops after the diagnostic sweep is completed; manual dispatch remains available.
+- The research branch remains separate and unmerged.
+
+Current boundaries remain unchanged: this is a partial diagnostic window of **2026-04-21 to 2026-07-21**, not the final Phase-51 OOS window of **2026-04-21 to 2026-08-04**. Expiries **2026-07-28 and 2026-08-04** remain unresolved. No strategy tuning or promotion is permitted.
+
+- [Phase 51-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-3-available-data-strategy-sweep)
+- [Phase 51-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_STATUS.md)
+- [Phase 51-3 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_ERROR_LOG.md)
+- [Phase 51-3 chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_CHAT_LOG.md)
+- [Phase 51-3 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_RESEARCH_PLAN.md)
+- [Main-branch orchestrator](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase-51-3-orchestrator.yml)
+- [Phase 51-3 PR #18](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/18)
+
 ## Phase 51-1I — CLOSED / DATA-BLOCKED
 
 The preregistered authorized-access recovery route was executed automatically.
@@ -724,18 +746,7 @@ The accepted TT-03 V5 baseline is complete (200/201 coverage candidates, 99.50%,
 TT-04 V3 remains the active numerical replay. A separate dormant performance-only fallback was prepared but not executed or wired into the workflow; no fallback result is evidence.
 
 
-## Phase 51-3 — Available-data OOS strategy sweep — READY / ORCHESTRATION BLOCKED (2026-10-09)
+## Phase 51-3 — Initial orchestration checkpoint (SUPERSEDED)
 
-Phase 51-3 has been initialized to evaluate the frozen Phase-50B candidate engines on the complete currently available option interval **2026-04-21 through 2026-07-21**. This is explicitly partial-OOS diagnostic evidence; the unresolved **2026-07-28 and 2026-08-04** expiries remain outside the available source and no final full-window claim is permitted.
+This initial setup checkpoint is superseded by the current Phase 51-3 retry status near the top of this README. The first run did start; it failed in TT-02 and its console P&L figures were not accepted as evidence.
 
-- [Phase 51-3 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-51-3-available-data-strategy-sweep)
-- [Phase 51-3 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_RESEARCH_PLAN.md)
-- [Phase 51-3 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_STATUS.md)
-- [Phase 51-3 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_ERROR_LOG.md)
-- [Phase 51-3 chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/PHASE51_3_CHAT_LOG.md)
-- [Phase 51-3 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-51-3-available-data-strategy-sweep/.github/workflows/phase-51-3-available-data-sweep.yml)
-- [Phase 51-3 PR #18](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/18)
-
-The frozen TT-02, TT-04 and TT-05 replay engines are wired into the sweep. TT-03 remains non-informative for this partial interval because its frozen three-calendar-day entry rule yields no eligible entries; TT-06 and TT-07 remain closed under their prior terminal coverage gates. No strategy has been promoted.
-
-The numerical run is currently blocked by the available GitHub connector not exposing workflow dispatch; no unexecuted result is being represented as evidence. A main-branch orchestrator and automatic PR path have been installed to preserve the phase branch without merging it.
