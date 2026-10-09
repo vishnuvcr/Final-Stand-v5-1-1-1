@@ -280,3 +280,13 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Correction:** Added bounded fetch/rebase/push retries and a restricted conflict-union resolver for append-only status/research/error logs. It refuses to auto-resolve conflicts in code or result data.
 - **Verification:** Run [37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) is testing the revised workflow but has remained in the exact option-coverage step without a fresh GitHub job update. A later run is queued behind it. End-to-end persistence is not yet verified.
 - **Status:** PATCHED IN WORKFLOW; verification pending.
+
+
+## F52-025 — Stale workflow run blocked selected-strike validation queue — MITIGATION RUNNING
+
+- **Date:** 2026-10-09
+- **Observation:** Run [37935663113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37935663113) remained in the broad option coverage step with no fresh job update after the prior run had already completed the same audit successfully. A later run stayed pending under the same concurrency group.
+- **Impact:** The new selected-strike audit could not be verified promptly; no new P&L was produced.
+- **Correction:** Versioned the workflow concurrency group to `phase52-factor-conditioned-strategy-discovery-v2`, allowing a fresh bounded run to proceed without cancelling or overwriting the older checkpoint. New run [37937164472](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37937164472) started at 2026-10-09 18:59 IST.
+- **Safety:** Both runs use hash-pinned source data and conflict-safe log persistence; any duplicate audit result must be reconciled by revision/hash and not double-counted.
+- **Status:** MITIGATION RUNNING; wait for the new run's selected-strike self-test and summary.
