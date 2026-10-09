@@ -255,3 +255,16 @@ This amendment uses input coverage information only. No selector P&L or factor u
 ### PA-005 — 2026-10-09 — Preserve validation inference when 2026 holdout coverage is insufficient
 
 The source Phase39 feature panel ends on 2026-04-24, while Phase45 outcomes extend further through 2026. Under the matched-sample protocol, the 2026 holdout may therefore fail its coverage gate. Before factor-outcome calculations, the pilot is amended so that (1) development and validation each require at least 50% matched rows, (2) validation requires at least 20 matched expiries, and (3) the 2026 holdout is only evaluated when its own match rate is at least 50% and it includes at least 20 matched expiries. If the holdout does not qualify, development/validation analysis may still be reported as a **validation-only exploratory screen**, and the holdout row is emitted as `HOLDOUT_NOT_EVALUATED_LOW_FEATURE_COVERAGE_OR_SAMPLE`. No holdout-performance claim or promotion can follow. This amendment relies on feature-panel date coverage, not P&L.
+
+
+### PA-006 — Daily official-format NSE F&O bhavcopy factor supplement (2026-10-09)
+
+**Rationale:** A public GitHub archive has a history of daily NSE F&O bhavcopy ZIPs spanning legacy and post-2024 UDiFF formats, including NIFTY options, futures, daily volume, and open interest. It may add daily point-in-time features where the intraday seed feature panel is incomplete.
+
+**Scope is deliberately narrow:** For each replay event, select the last available index session strictly before the 10:00 IST entry date. Use that session's end-of-day NIFTY option OI/volume for the strategy's target expiry and the nearest non-expired NIFTY futures contract's end-of-day close/OI/volume. If a prior session's archive, target expiry, or needed field is missing, keep the factor missing and log the exact gap; never forward fill or substitute another expiry/session silently.
+
+**Source pinning:** Resolve the source repository to an immutable Git commit at run start, download raw ZIPs by that commit SHA, hash each archive, and persist only normalized feature data, per-session hashes and coverage metadata. Raw ZIPs belong in a bounded GitHub Actions cache, not in the source repository. The MIT code license does not grant ownership or redistribution rights to bundled NSE data; source rights/terms remain a non-commercial/reuse review gate.
+
+**Interpretation:** This produces *lagged daily EOD* OI/PCR and futures-basis proxies only. It is not intraday futures basis, does not establish synthetic-future lead/lag, cannot recover missing 1-minute option quotes for Phase 51, and cannot support claims about intraday futures-market inefficiency. It does not change the frozen phase52-grid-v1.3 or permit a parameter-grid change after seeing outcomes.
+
+**Pre-performance tests:** Both legacy and UDiFF parser fixtures must pass; tree completeness must be verified; no archive row is accepted without NIFTY symbol / option or futures type checks; prior-session mapping must be strictly earlier than entry; each raw archive must have a ZIP signature and SHA-256; output must report per-split event coverage and missing reasons before any P&L analysis.
