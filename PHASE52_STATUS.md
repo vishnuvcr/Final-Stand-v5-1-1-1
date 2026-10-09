@@ -6,3 +6,5 @@
 - **Stale-result protection:** Workflow persistence now checks whether the selected-strike audit source changed after checkout; stale selected-strike outputs are discarded/restored instead of overwriting corrected evidence. Verification is pending the next run.
 
 - **Stale-output pathspec self-audit:** Added a .gitkeep placeholder after discarding stale outputs so the workflow's later git-add step cannot fail merely because the directory is empty; F52-028 records this. End-to-end verification remains pending.
+
+- **Latest queue checkpoint:** 260,000/9,379,584 deterministic configuration IDs enumerated (run 37935663113); still zero configurations backtested by this queue.
