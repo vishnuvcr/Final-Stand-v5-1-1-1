@@ -69,18 +69,14 @@ jobs:
           path = Path("results/phase54/ohlc_reference_sensitivity/report.json")
           report = json.loads(path.read_text()) if path.exists() else None
           if report:
-              rows = report["input"]["row_count"]
               statuses = report["baseline_status_counts"]
-              table = "\n".join(
-                  f"| {x['threshold_pct']}% | {x['rows_meeting_prior_oi_entry_data_and_range_gate']} | "
-                  f"{x['share_of_planned_pct']:.2f}% | {x['rejected_for_prior_oi']} | "
-                  f"{x['unassessable_missing_leg_details']} | {x['rejected_for_range_proxy']} |"
-                  for x in report["threshold_sensitivity"]
-              )
               summary = (
                   f"- Run: [{run_id}]({run_url}); workflow job status={status}.\n"
-                  f"- Input rows={rows}; baseline statuses={json.dumps(statuses, sort_keys=True)}.\n"
-                  f"- Threshold sensitivity (eligibility only):\n\n| Range threshold | Rows passing OI + entry-data + range | Planned share | OI blocked | Missing leg detail | Range blocked |\n|---:|---:|---:|---:|---:|\n{table}\n\n"
+                  f"- Input rows={report['input']['row_count']}; baseline statuses={json.dumps(statuses, sort_keys=True)}.\n"
+                  f"- Complete leg payload rows={report['complete_leg_payload_rows']}; incomplete={report['incomplete_leg_payload_rows']}; "
+                  f"empty payloads={report['empty_leg_payload_rows']}; partial payloads={report['partial_leg_payload_rows']}.\n"
+                  f"- Range-excluded rows with complete leg payload={report['range_excluded_rows_with_complete_leg_payload']}.\n"
+                  f"- Sensitivity decision={report['status']}; alternate thresholds are not computed because parent output lacks complete leg-level evidence.\n"
                   "- No P&L recomputed, no exits validated, no raw data downloaded, no holdout used, no strategy promoted.\n"
               )
           else:
