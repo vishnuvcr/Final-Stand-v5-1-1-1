@@ -14,3 +14,20 @@
 - EOD selector pilot: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; matched events=256; fixed development baseline=buy_call; best validation uplift diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; no promotion.
 - Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
 - The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.
+
+## 2026-10-09 19:52:13 IST — Automated run 37942202655
+
+- Registry validation: PASS; hypotheses registered: 312; structure families: 52; selector modes: 6.
+- Finite configurations in grid phase52-grid-v1.3: 9,379,584; this run enumerated 25,000 configurations at offsets 310,000–334,999.
+- Source-discovery queries: 11; unique leads added: 0. Credential presence only (no values logged): {'HF_TOKEN': True, 'GITHUB_TOKEN': True, 'YOUTUBE_API_KEY': False}.
+- Queue status: ENUMERATED_NOT_BACKTESTED; enumeration complete: False. Enumerated configs are NOT backtests.
+- Pinned base replay: BASE_GEOMETRY_REPLAY_COMPLETE_NOT_FACTOR_PROMOTION; revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5; trade rows=9699; strategies=42; license gate=RESEARCH_ONLY_NONCOMMERCIAL_SOURCE.
+- Configuration event universe: CONFIGURATION_EVENT_UNIVERSE_BUILT_WITH_EXPLICIT_COVERAGE_GAPS; source expiries=267; expected grid events=1068; exact index entry ticks=1012; missing exact index ticks=56.
+- Exact option bar coverage: OPTION_QUOTE_COVERAGE_AUDIT_COMPLETE; event rows audited=1068/1068; events with option rows at exact entry=1016; entries with OI-qualified contracts=1012; source file errors=0; config-specific legs still require replay-worker checks.
+- Selected ATM-offset leg audit: SELECTED_STRIKE_ATM_OFFSET_COVERAGE_AUDIT_COMPLETE; files=267/267; leg-event rows=27768; OI-qualified entries=11222; exact-index+OI+expiry-exit rows=11108; source errors=0; ABS_DELTA remains blocked; no P&L.
+- Fixed 10:00 coverage audit: COVERAGE_AUDIT_COMPLETE_WINDOW_GATE_REVIEW_REQUIRED; source expiries=267; base matrix expiries=256; last source expiry=2026-08-04; last matrix expiry=2026-05-26; missing/unreplayed=11.
+- Data capability audit: PASS_METADATA_AND_SAMPLE_AUDIT_WITH_REVIEW_GATES; sampled source files=2; factor availability and licensing limits retained.
+- Prior-session NSE EOD factor build: DAILY_EOD_FACTOR_BUILD_WITH_COVERAGE_AUDIT; event coverage=100.0%; missing archive paths=0; file errors=0; not intraday futures basis.
+- EOD selector pilot: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; matched events=256; fixed development baseline=buy_call; best validation uplift diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; no promotion.
+- Factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION; PIT match=68.2%; risk-limited legacy templates=25; chosen features={'GLOBAL_SENTIMENT_PROXY': 'global_NASDAQ_ret1', 'GREEKS_SURFACE_ROUTER': 'atm_pe_iv', 'MULTI_FACTOR_ROUTER': 'TREND_X_IV_SKEW', 'OI_FLOW_ROUTER': 'near_atm_oi_pcr', 'SPOT_PROXY_ONLY': 'nifty_ma_gap_15m', 'VIX_ROUTER': 'India_VIX_state'}.
+- The legacy factor-selector pilot is not the full Phase52 configuration sweep. No Phase52 candidate is promoted.

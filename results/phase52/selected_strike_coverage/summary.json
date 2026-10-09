@@ -1,0 +1,39 @@
+{
+  "status": "SELECTED_STRIKE_ATM_OFFSET_COVERAGE_AUDIT_COMPLETE",
+  "created_at_utc": "2026-10-09T14:20:46.637346+00:00",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "expected_events": 1068,
+  "audited_events": 1068,
+  "source_expiry_files_expected": 267,
+  "source_expiry_files_audited": 267,
+  "source_file_errors": 0,
+  "strike_offsets": [
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "option_type_rows": 27768,
+  "entry_oi_ge_100_rows": 11222,
+  "entry_oi_ge_100_and_exact_index_rows": 11222,
+  "expiry_exit_ohlc_valid_rows": 15718,
+  "exact_entry_and_expiry_exit_rows": 11108,
+  "abs_delta": "BLOCKED: no validated point-in-time delta/IV resolver; do not proxy delta from close without separate methodology.",
+  "interpretation": "Selected strike rank coverage only; a complete strategy still needs per-config leg combination, sizing, execution-price/slippage and path-dependent exit replay. No P&L.",
+  "outputs": {
+    "detail": "results/phase52/selected_strike_coverage/atm_offset_leg_coverage.csv.gz",
+    "source_audit": "results/phase52/selected_strike_coverage/source_file_audit.csv",
+    "source_errors": "results/phase52/selected_strike_coverage/source_errors.csv"
+  }
+}
