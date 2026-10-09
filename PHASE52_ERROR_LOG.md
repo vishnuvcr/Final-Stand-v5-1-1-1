@@ -563,3 +563,10 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Impact: canonical pilot status counts and root-cause breakdown remain OPEN. Neither count set may be silently substituted for the other; no strategy ranking or promotion.
 - Next: retrieve run 37980455805 artifact and v0.2 run outputs, compare run IDs, manifests, source hashes and row keys; only then publish a versioned breakdown and rerun if warranted.
 - Status: OPEN.
+
+## F52-DATA-PROVENANCE-001 — RESOLVED by artifact reconciliation (2026-10-10)
+
+- **Resolution:** retrieved run 37980455805 artifact ID 11641042776 and inspected `report.json`, `pilot_manifest.json`, and both event CSVs directly. All artifact outputs identify v0.2 and agree on 379 OHLC-proxy exclusions / 100 prior-OI eligibility blocks / 1 replay pass (480 total). The different 274/205/1 counts in committed branch files belong to the prior v0.1 run. There is no v0.2 row-count discrepancy; outputs must continue to be labeled by run ID/version.
+- **Root-cause diagnosis:** all 100 v0.2 eligibility blocks have prior OI 0.0 and status `PRIOR_OI_MISSING_OR_BELOW_GATE`; all are validation rows. The 379 OHLC failures are range-proxy breaches, not bid-ask spread observations.
+- **Verified data:** artifact digest `sha256:34b987e2fa19821898582145ae6d4403a64f6d9d085f588628a07b6e78da2aaa`; no source file errors or replay exceptions. Still insufficient usable coverage, no profitability inference.
+- **Status:** RESOLVED as a provenance issue; coverage limitation remains OPEN under F52-RESUME-001.
