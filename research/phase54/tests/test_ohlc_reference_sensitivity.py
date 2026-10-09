@@ -23,7 +23,7 @@ class Phase54Tests(unittest.TestCase):
         self.assertEqual(out["threshold_sensitivity"][0]["rows_meeting_prior_oi_entry_data_and_range_gate"], 0)
         at_six = next(x for x in out["threshold_sensitivity"] if x["threshold_pct"] == 6)
         self.assertEqual(at_six["rows_meeting_prior_oi_entry_data_and_range_gate"], 1)
-        self.assertEqual(at_six["rejected_for_prior_oi_or_missing_legs"], 1)
+        self.assertEqual(at_six["rejected_for_prior_oi"], 1)
         self.assertFalse(out["frozen_rules"]["historical_pnl_recalculated"])
         self.assertFalse(out["frozen_rules"]["live_execution_or_promotion_allowed"])
 
