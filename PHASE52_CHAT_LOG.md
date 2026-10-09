@@ -67,3 +67,11 @@ A source-code check of Phase45's `PHASE43_MAP` found that saved trade outcomes u
 - Run 37934719402 finished successfully. Exact broad option/OI audit: 1,068 event rows audited, 267 expiry files, zero source errors; 1,012 exact index ticks, 1,012 events with any OI≥100 contract, 1,040 with common-time target-expiry CE/PE exit bars; strict broad intersection 1,004 events. This is not selected-strike eligibility or P&L.
 - Latest finite-grid queue checkpoint offset is 235,000/9,379,584, still ENUMERATED_NOT_BACKTESTED.
 - Current decision: continue into configuration-specific leg eligibility and executable-fill replay tests; no candidate is promoted and the holdout remains data-gated.
+
+
+## Resume checkpoint — 2026-10-09 18:52 IST
+
+- Completed broad event/option/OI audit has been recorded in status, research log, error log and README.
+- Added a stricter selected-strike ATM-offset coverage audit; it checks exact bars/OHLC/OI for offsets -6..+6 and does not calculate P&L. Self-test/full run pending.
+- ABS_DELTA configurations are not to be backtested until a validated point-in-time delta resolver exists.
+- Queue remains 235,000/9,379,584 enumerated, not tested. No promotion.
