@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "grid_version": "phase52-grid-v1",
+  "grid_version": "phase52-grid-v1.1",
   "status": "PREREGISTERED_NOT_YET_EXPANDED_OR_TESTED",
   "interpretation": "Exhaustive only across this published finite applicable grid; not every mathematically possible real-valued parameter. Every accepted grid expansion requires a versioned amendment before running that grid.",
   "candidate_cartesian_product": "Each of 52 families × 6 selector modes = 312 candidate hypotheses; each candidate expands only dimensions listed by its parameter_group. BASELINE candidates must not depend on feature thresholds.",
@@ -222,119 +222,108 @@
       "PAYTM_20_PER_ORDER_SENSITIVITY",
       "BASE_COST_PLUS_50_PERCENT_FRICTION",
       "BASE_COST_PLUS_100_PERCENT_FRICTION"
+    ],
+    "expiry_pairing": [
+      "SAME_EXPIRY",
+      "WEEKLY_WEEKLY",
+      "WEEKLY_MONTHLY",
+      "MONTHLY_MONTHLY"
     ]
   },
   "parameter_groups": {
     "single_long": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "single_short_diagnostic": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "vertical": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "wing_width_steps",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "butterfly": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "wing_width_steps",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "condor_iron": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "wing_width_steps",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "multi_leg_ratio": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "wing_width_steps",
       "leg_ratio",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "calendar": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
+      "expiry_pairing",
       "leg_ratio",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "diagonal": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
+      "expiry_pairing",
       "wing_width_steps",
       "leg_ratio",
       "exit_rule",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "dynamic_transition": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "wing_width_steps",
       "leg_ratio",
       "exit_rule",
@@ -343,35 +332,32 @@
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "synthetic": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "exit_rule",
       "hedge_mode",
       "rebalance_cadence_minutes",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ],
     "long_gamma_hedge": [
       "entry_time_ist",
       "entry_dte_calendar_days",
-      "strike_selection",
-      "atm_offset_steps",
-      "absolute_delta",
       "exit_rule",
       "hedge_mode",
       "rebalance_cadence_minutes",
       "reference_lots_per_leg",
       "cost_scenarios",
       "max_quote_age_seconds",
-      "liquidity_max_spread_pct"
+      "liquidity_max_spread_pct",
+      "strike_selection"
     ]
   },
   "family_to_group": {
@@ -479,5 +465,43 @@
     "default_max_wall_minutes": 45,
     "do_not_skip_on_pnl": true,
     "preserve_failed_shards": true
+  },
+  "conditional_dimensions": {
+    "strike_selection": {
+      "ATM_OFFSET": {
+        "atm_offset_steps": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "ABS_DELTA": {
+        "absolute_delta": [
+          0.1,
+          0.15,
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      }
+    }
+  },
+  "family_geometry_policy": {
+    "status": "STRUCTURE_SPEC_GATE_REQUIRED",
+    "rule": "A family must have an explicit, validated leg template before numerical replay. Preset names and small payoff thumbnails alone are insufficient for ambiguous multi-leg structures. When exact legs cannot be reconstructed, test a clearly named standard variant or mark the source variant SPECIFICATION_BLOCKED; do not silently guess.",
+    "required_fields": [
+      "option_type",
+      "side",
+      "expiry_role",
+      "strike_rule",
+      "quantity",
+      "risk_class",
+      "source_ref"
+    ],
+    "unknown_families_must_not_replay": true
   }
 }
