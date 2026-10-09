@@ -319,8 +319,8 @@
   },
   "cost_model": {
     "broker": "Paytm Money",
-    "baseline_brokerage_inr_per_order": 10,
-    "sensitivity_brokerage_inr_per_order": 20,
+    "baseline_brokerage_inr_per_order": 20,
+    "sensitivity_brokerage_inr_per_order": 10,
     "friction_stress_pct": [
       0,
       50,
@@ -329,7 +329,13 @@
     "statutory_charges": "calculate from effective date and current applicable NSE schedule; reuse the project's validated cost implementation; changes require a versioned model",
     "option_slippage": "existing project convention: adverse ₹0.05 per option leg per fill in base case where source model assumes LTP; add bid/ask-aware replay where raw quotes exist",
     "no_live_execution": true,
-    "evaluate_all_scenarios_for_every_configuration": true
+    "evaluate_all_scenarios_for_every_configuration": true,
+    "brokerage_sensitivity_note": "Primary conservative scenario is ₹20 per executed order, reflecting Paytm Money's 18-Dec-2024 official notice effective 15-Jan-2025. ₹10/order retained only as a legacy-plan sensitivity because Paytm Money's current F&O FAQ also lists ₹10; account-specific tariff must be confirmed before deployment.",
+    "brokerage_source_refs": [
+      "https://www.paytmmoney.com/blog/all-new-paytm-money-updates-revisions-and-more/",
+      "https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web"
+    ],
+    "no_double_counting": "Brokerage rates are separate scenarios (₹20 primary, ₹10 legacy sensitivity). Slippage stress changes adverse execution slippage only; statutory levies remain fixed under that stress."
   },
   "search_control": {
     "configuration_id": "SHA256(grid_version|candidate_id|canonical_json(config))",
