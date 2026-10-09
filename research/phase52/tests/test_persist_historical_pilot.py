@@ -78,6 +78,7 @@ class ConflictMergeTests(unittest.TestCase):
                 clone_local, "phase-test", ["PHASE52_STATUS.md"], "local checkpoint"
             )
             self.assertTrue(len(sha) == 40)
+            run_git(clone_local, "fetch", "origin", "phase-test")
             final = run_git(clone_local, "show", "origin/phase-test:PHASE52_STATUS.md")
             self.assertIn("## Remote run", final)
             self.assertIn("## Local run", final)
