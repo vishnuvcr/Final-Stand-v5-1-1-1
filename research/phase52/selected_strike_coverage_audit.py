@@ -217,6 +217,8 @@ def main() -> int:
     pd.DataFrame(failures, columns=["expiry","error_type"]).to_csv(OUT / "source_errors.csv", index=False)
     summary = {
         "status":"SELECTED_STRIKE_ATM_OFFSET_COVERAGE_AUDIT_COMPLETE" if not failures else "SELECTED_STRIKE_ATM_OFFSET_COVERAGE_WITH_SOURCE_ERRORS",
+        "audit_script_sha256":sha256_file(Path(__file__)),
+        "replay_protocol_sha256":sha256_file(ROOT / "PHASE52_REPLAY_PROTOCOL.md"),
         "created_at_utc":datetime.now(timezone.utc).isoformat(),"dataset":HF_REPO,"dataset_revision":revision,
         "index_file_sha256":sha256_file(index_path),"expected_events":int(len(events)),"audited_events":int(events["event_id"].nunique()),
         "source_expiry_files_expected":int(events["expiry"].nunique()),"source_expiry_files_audited":int(len(file_audit)),
