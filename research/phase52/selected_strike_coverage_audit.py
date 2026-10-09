@@ -73,9 +73,20 @@ def modal_step(snapshot: pd.DataFrame) -> float | None:
             gaps.append(float(values[np.argmax(counts)]))
     return gaps[0] if gaps else None
 
+def prior_oi_gate(prior_snapshot: pd.DataFrame, typ: str, strike: float, min_oi: float = MIN_OI) -> tuple[bool, float]:
+    """Gate a decision on the exact prior completed bar; never use entry-bar OI."""
+    if prior_snapshot.empty or not np.isfinite(strike):
+        return False, np.nan
+    rows = prior_snapshot[(prior_snapshot["option_type"] == typ) & (prior_snapshot["strike"] == strike)]
+    if len(rows) != 1 or pd.isna(rows.iloc[0]["open_interest"]):
+        return False, np.nan
+    oi = float(rows.iloc[0]["open_interest"])
+    return oi >= min_oi, oi
+
+
 def _self_test() -> None:
     strikes, idx = select_ranked_strikes([22000, 22100, 22200, 22300], 22150)
-    assert strikes[idx] == 22100  # deterministic lower-strike tie break
+    assert strikes[idx] == 22100
     assert strikes[idx + 1] == 22200
     frame = pd.DataFrame({"open":[10, 10], "high":[12, 9], "low":[8, 11], "close":[11, 10]})
     assert valid_ohlc(frame).tolist() == [True, False]
@@ -86,6 +97,11 @@ def _self_test() -> None:
     atm = ordered[idx]
     target = atm + 3 * modal_step(ladder)
     assert target == 22250 and target not in ladder["strike"].tolist()
+    oi_frame = pd.DataFrame({"option_type":["CE"],"strike":[22250],"open_interest":[150]})
+    ok, oi = prior_oi_gate(oi_frame, "CE", 22250)
+    assert ok and oi == 150
+    no_prior = pd.DataFrame(columns=["option_type","strike","open_interest"])
+    assert prior_oi_gate(no_prior, "CE", 22250)[0] is False
     ts = pd.Timestamp("2021-05-27T09:45:00+05:30")
     assert ts.isoformat() == "2021-05-27T09:45:00+05:30"
 
@@ -154,6 +170,10 @@ def main() -> int:
             else: entry_ts = entry_ts.tz_convert(TZ)
             spot = spot_map.get(entry_ts.isoformat(), np.nan)
             entry = by_ts.get(entry_ts, empty)
+            prior_ts = entry_ts - pd.Timedelta(minutes=1)
+            prior = by_ts.get(prior_ts, empty)
+            # OI eligibility is strictly prior-bar, because the entry-bar OI can
+            # only be known after that bar completes; entry open is the fill reference.
             # Resolve the strike ladder only from contracts actually present at
             # this exact entry timestamp; future-listed strikes must not leak in.
             ordered, atm_idx = select_ranked_strikes(entry["strike"].dropna().unique().tolist(), spot)
@@ -170,19 +190,23 @@ def main() -> int:
                     er = entry[(entry["option_type"] == typ) & (entry["strike"] == strike)] if np.isfinite(strike) else entry.iloc[0:0]
                     r15 = exit_1515[(exit_1515["option_type"] == typ) & (exit_1515["strike"] == strike)] if np.isfinite(strike) else exit_1515.iloc[0:0]
                     rexp = exit_expiry[(exit_expiry["option_type"] == typ) & (exit_expiry["strike"] == strike)] if np.isfinite(strike) else exit_expiry.iloc[0:0]
-                    entry_ok = len(er) == 1 and bool(er.iloc[0]["valid_ohlc"]) and pd.notna(er.iloc[0]["open_interest"]) and er.iloc[0]["open_interest"] >= MIN_OI
+                    prior_oi_ok, prior_oi = prior_oi_gate(prior, typ, float(strike) if np.isfinite(strike) else np.nan)
+                    entry_bar_ok = len(er) == 1 and bool(er.iloc[0]["valid_ohlc"])
+                    entry_ok = entry_bar_ok and prior_oi_ok
                     exit15_ok = len(r15) == 1 and bool(r15.iloc[0]["valid_ohlc"])
                     exit_exp_ok = len(rexp) == 1 and bool(rexp.iloc[0]["valid_ohlc"])
                     out_rows.append({
-                        "event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),
+                        "event_id":str(ev.event_id),"expiry":expiry,"split":str(ev.split),"entry_ts":entry_ts.isoformat(),"prior_oi_ts":prior_ts.isoformat(),
                         "entry_dte_calendar_days":int(ev.entry_dte_calendar_days),"entry_time_ist":str(ev.entry_time_ist),
+                        "entry_ts":entry_ts.isoformat(),"prior_oi_ts":prior_ts.isoformat(),
                         "spot_at_entry_open":float(spot) if np.isfinite(spot) else np.nan,"atm_strike":float(atm) if np.isfinite(atm) else np.nan,
                         "modal_strike_step":float(step) if step is not None else np.nan,"strike_step_offset":offset,
                         "theoretical_strike":float(strike) if np.isfinite(strike) else np.nan,
                         "selected_strike":float(strike) if np.isfinite(strike) and len(er) == 1 else np.nan,"option_type":typ,
                         "index_exact_entry":bool(ev.index_has_exact_entry_timestamp),"entry_row_count":len(er),
-                        "entry_ohlc_valid":bool(len(er)==1 and er.iloc[0]["valid_ohlc"]),"entry_oi":float(er.iloc[0]["open_interest"]) if len(er)==1 and pd.notna(er.iloc[0]["open_interest"]) else np.nan,
-                        "entry_oi_ge_100":bool(entry_ok),"strike_exact_entry_present":bool(np.isfinite(strike) and len(er) == 1),"exit_1515_ohlc_valid":bool(exit15_ok),
+                        "entry_ohlc_valid":bool(entry_bar_ok),"entry_bar_oi":float(er.iloc[0]["open_interest"]) if len(er)==1 and pd.notna(er.iloc[0]["open_interest"]) else np.nan,
+                        "predecision_oi":prior_oi,"predecision_oi_ge_100":bool(prior_oi_ok),"entry_oi_ge_100":bool(entry_ok),
+                        "strike_exact_entry_present":bool(np.isfinite(strike) and len(er) == 1),"exit_1515_ohlc_valid":bool(exit15_ok),
                         "expiry_exit_ts":expiry_exit_ts.isoformat() if expiry_exit_ts is not None else None,"expiry_exit_ohlc_valid":bool(exit_exp_ok),
                         "abs_delta_selection_status":"BLOCKED_NO_VALIDATED_POINT_IN_TIME_DELTA_RESOLVER","pnl_status":"NOT_BACKTESTED"
                     })
@@ -203,7 +227,8 @@ def main() -> int:
         "expiry_exit_ohlc_valid_rows":int(detail["expiry_exit_ohlc_valid"].sum()),
         "exact_entry_and_expiry_exit_rows":int((detail["entry_oi_ge_100"] & detail["index_exact_entry"] & detail["expiry_exit_ohlc_valid"]).sum()),
         "abs_delta":"BLOCKED: no validated point-in-time delta/IV resolver; do not proxy delta from close without separate methodology.",
-        "interpretation":"Selected strike rank coverage only; a complete strategy still needs per-config leg combination, sizing, execution-price/slippage and path-dependent exit replay. No P&L.",
+        "oi_gate_basis":"Exact prior completed bar at entry_ts minus one minute; entry-bar OI is diagnostics only and is not used for eligibility.",
+        "interpretation":"Selected strike-step coverage only; a complete strategy still needs per-config leg combination, sizing, execution-price/slippage and path-dependent exit replay. No P&L.",
         "outputs":{"detail":str(detail_path.relative_to(ROOT)),"source_audit":"results/phase52/selected_strike_coverage/source_file_audit.csv","source_errors":"results/phase52/selected_strike_coverage/source_errors.csv"}
     }
     (OUT/"summary.json").write_text(json.dumps(summary,indent=2)+"\n",encoding="utf-8")
