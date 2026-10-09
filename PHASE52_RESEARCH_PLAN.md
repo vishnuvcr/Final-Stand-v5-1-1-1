@@ -1,0 +1,216 @@
+# Phase 52 Research Plan — Factor-Conditioned Options Strategy Discovery
+
+**Branch:** phase-52-factor-conditioned-strategy-discovery  
+**Status at initialization:** OPEN — registry/governance bootstrap  
+**Protocol type:** Open-ended recurring research; every individual Actions run is bounded and auditable  
+**Primary instrument:** NIFTY index options, with verified NIFTY spot and futures reference series; cross-index replication is secondary  
+**Broker cost model:** Paytm Money, date-aware statutory charges, conservative slippage and fill-stress scenarios
+
+## 1. Research question
+
+Do India VIX and its dynamics, option Greeks and volatility surface, open-interest/volume/PCR features, NIFTY spot/futures basis, synthetic futures, liquidity, market regime/sentiment, global cross-market relationships, flows, event/news context and corporate-action/calendar effects provide incremental, reproducible net profitability when selecting an options strategy and its configuration, compared with an unconditional strategy baseline?
+
+The decision is broader than “which fixed strategy is best.” The experiment will compare:
+1. which structure to choose;
+2. which finite parameter configuration to use within that structure;
+3. when to enter, adjust, hedge, exit or abstain;
+4. whether a factor adds useful information beyond simpler controls; and
+5. whether the resulting rule holds across the preregistered entry-condition and market-regime matrix.
+
+## 2. Aim and objectives
+
+### Aim
+
+Build a reproducible, data-audited discovery and validation system that searches at least 300 distinct structure × selector hypotheses, then exhaustively evaluates the registered finite configuration space in deterministic shards. The search should continue on a schedule until a candidate passes all registered gates or a serious data, access, licensing, software or safety issue requires intervention.
+
+### Objectives
+
+1. Audit all 40 repositories visible in the connected GitHub account inventory, prioritising user-created option/market-strategy code, registries, parameter sweeps, and previously accepted/rejected research.
+2. Search indexed YouTube videos, public strategy education, source code, papers, NSE/BSE documentation, Hugging Face, Kaggle and other accessible public repositories. Store source URLs, retrieval date, claims, reconstructed rules, licensing/access constraints and evidence grade.
+3. Create at least 300 distinct candidate hypotheses across strategy structure and selector logic. Deduplicate aliases without erasing valid differences in legs, ratios, expiry pairing, entry logic or risk management.
+4. Build a point-in-time data-availability map for each factor and historical interval before any P&L is calculated.
+5. Enumerate and test all configurations in the documented finite search domain, with stable configuration IDs and resumable shards. Never claim exhaustive search over continuous/unbounded parameter values.
+6. Compare VIX, Greeks/IV/skew, OI/volume/PCR, spot, futures, synthetic futures, skew/term structure, liquidity, trend/range, global markets, FII/DII and event-context factors through preregistered ablations and incremental-value tests.
+7. Account for Paytm Money brokerage, date-aware NSE transaction charges, taxes, exchange charges, slippage, bid/ask, latency/fill stress and available historical lot sizes.
+8. Preserve chronological training/validation/OOS boundaries, multiplicity correction, failed attempts, source hashes, coverage gaps and reproducible numerical artifacts.
+9. Retain both positive and negative results, and publish a final manuscript with methods, charts, tables, appendices, source ledger, configuration space and machine-readable supplements.
+10. Keep status, errors, research-step logs and a concise conversation/decision log in the repository. Record decisions and actions—not hidden private chain-of-thought.
+
+## 3. Hypotheses
+
+- H1 — VIX: level, percentile, term structure, change, acceleration and spike/fade state modify the relative performance of long-volatility, short-volatility and directional structures.
+- H2 — Greeks/surface: delta, gamma, theta, vega, IV-versus-realised volatility, skew and term structure can improve structure/strike/expiry selection after costs.
+- H3 — OI/flow: point-in-time OI change, strike concentration, PCR, volume/OI and buildup/unwind proxies add information beyond spot-only features.
+- H4 — underlying/basis: synchronized spot, traded futures and synthetic futures reveal basis/lead-lag conditions that change expected execution value or directional/volatility risk.
+- H5 — interaction: combinations of factors may provide incremental utility even where single-factor filters fail; each interaction must be compared against simpler controls to limit overfit.
+- H6 — selective action: a calibrated selector with an abstain/no-trade action can improve net outcomes and tail risk versus unconditional strategies and random/hindsight controls.
+- H7 — robustness: any apparent uplift should survive chronological walk-forward evaluation, realistic costs, adverse execution stress, regime/entry-condition splits and multiplicity adjustment.
+
+All are falsifiable hypotheses. None is assumed true, and a high in-sample profit or high win rate alone is not evidence of an edge.
+
+## 4. Scope and candidate universe
+
+The initial registry contains 300 candidate hypotheses: 50 base structures × 6 selector modes. The six selector modes are:
+1. unconditional/base control;
+2. India VIX level/trend/percentile/term-state router;
+3. Greeks/IV/skew/gamma/theta router;
+4. OI/volume/PCR/strike-concentration router;
+5. spot/futures/synthetic-futures/basis router;
+6. multivariate regime/sentiment/cross-market/flow/event router.
+
+The registered base structure universe includes every distinct named preset visible in the supplied strategy-builder images—Buy Call/Put; Sell Call/Put; bull call/put spreads; bear call/put spreads; long/short straddles and strangles; long/short iron butterflies and iron condors; bull/bear condors and butterflies; call/put ratio spreads and ratio backspreads; calendars; synthetic futures; risk reversals/range forward; Strip/Strap; Batman; Double Plateau; Jade Lizard/Reverse Jade Lizard—and additional families: broken-wing butterflies, double calendar, call/put diagonals, calendar trap, iron-condor-to-ratio transition, ratio calendar, parity conversion/reversal, futures-basis spread and delta-neutral long-gamma scalping.
+
+Naked, unlimited-loss or execution-fragile structures may be analysed as labelled diagnostics; they are not eligible for live-risk promotion. Undefined-risk structures must be reported separately from defined-risk structures.
+
+## 5. Parameter space and exhaustive-search interpretation
+
+Parameter domains are finite and versioned in research/phase52/configuration_space.json. The registered dimensions include:
+- entry time and entry condition;
+- days to expiry and weekly/monthly expiry pairing;
+- strike selection by ATM offset or target delta;
+- strike distance, wing width, ratio and leg quantity;
+- entry credit/debit and liquidity/quote quality constraints;
+- exit, take-profit, stop, trailing, time and underlying/Greek/VIX-trigger modes;
+- hedge instrument, hedge cadence and delta bands;
+- VIX level/change/percentile/spike-reversal thresholds;
+- Greek, IV/RV, skew and term-structure thresholds;
+- OI/PCR/volume/buildup thresholds;
+- spot momentum, gap, range, realised volatility and basis/synthetic-basis thresholds;
+- available event, cross-market, flow and sentiment context;
+- cost/slippage/fill stress level.
+
+For each family, only structurally applicable dimensions are expanded; inapplicable dimensions are explicitly marked rather than silently assigned. The project must enumerate the complete Cartesian product of the frozen applicable finite grid for each candidate over resumable shards. A versioned expansion/refinement can be added only as a separate registered grid version; the original run is preserved.
+
+Continuous real-number spaces cannot be literally exhausted. Therefore the claim is “exhaustive over the published finite grid,” not exhaustive over every mathematically possible parameter value. Coarse-to-fine grids may only be expanded under a logged version change. Candidates/configurations are not silently dropped because interim P&L is poor; if compute limits require a staged queue, every configuration remains queued and the scheduler resumes it.
+
+## 6. Scientific methodology
+
+### Phase A — Governance and lineage
+
+Read parent README, current Phase 51 status/plan/error/chat logs and relevant previous phase plans before any new numerical job. Pin the base commit, source hashes and rule revisions. Create a deduplicated repository/source ledger. User repositories are evidence of candidate specifications, not proof of profitability.
+
+### Phase B — Literature/source discovery
+
+Search:
+- peer-reviewed research on option volume, demand pressure, volatility risk premia, option Greeks and implied-volatility surfaces;
+- NSE/BSE official market-data, contract and India VIX methodology documents;
+- YouTube strategy walkthroughs and transcripts where available;
+- public GitHub repositories, Kaggle and Hugging Face catalogs/datasets;
+- user's own GitHub strategies and prior Final Stand research;
+- StockMock, StockMojo and comparable platforms as strategy-definition/backtest cross-checks, not substitutes for audited quote-level data unless they provide verifiable exports.
+
+Record both positive and negative source findings. Search coverage is broad and reproducible but cannot honestly be described as every video ever published because public indexing is incomplete.
+
+### Phase C — Data inventory and admissibility
+
+Build an as-of timestamped coverage map for options OHLC/volume/OI, spot, futures, VIX, Greeks/IV, global-market data, FII/DII flow, news/events and charges. Use HF_TOKEN from GitHub Actions secrets only for authorised acquisition, never log it, and cache immutable files with path, repository revision, byte size and SHA-256. Follow dataset licensing and do not publish raw licensed/private data without permission.
+
+Reject stale, incomplete, duplicated, timestamp-incompatible or contract-mismatched files. Never forward-fill missing option premiums, interpolate tradable quotes, fabricate Greeks/OI, or use future information. When only LTP exists, model adverse fills and explicitly mark bid/ask uncertainty.
+
+### Phase D — Strategy reconstruction and registry
+
+For each source: freeze leg directions, quantities, strike mapping, expiry pairing, entry timing, rebalance/repair logic, exits and capital/margin assumptions. Record ambiguities and alternatives as distinct variants. A source's advertised return is a hypothesis, not evidence. Validate that 300 candidate IDs are unique and every candidate maps to a documented structural rule and a source lineage.
+
+### Phase E — Replay and configuration enumeration
+
+Use point-in-time quotes and exchange-valid contract metadata. Generate every applicable configuration deterministically. Queue items carry candidate ID, configuration ID, data fingerprint, engine revision and seed. Jobs process bounded shards, write durable completion markers and resume from the next unprocessed configuration. Replay results must include executed opportunities, exclusions, missing-price reasons, costs, slippage and source lineages.
+
+### Phase F — Factor attribution and interaction tests
+
+Compare each factor-conditioned candidate against the same structure and configuration without that factor, with paired observation windows and identical cost assumptions. Use nested time-ordered validation to select the strategy, parameters and factors. Quantify marginal information through feature ablation, conditional uplift and interactions. Never select a factor based only on contemporaneous or outcome-derived VIX/OI states. Include random/shifted-label placebo controls and a simple baseline.
+
+### Phase G — Validation, costs and robustness
+
+- Development/training: earliest admissible period.
+- Rolling/expanding walk-forward validation: only for model/parameter selection.
+- Frozen confirmation/OOS: untouched until the selector/configuration is frozen.
+- Later prospective paper validation: record actual quote snapshots, intended orders, delayed fills, rejection/latency and realised costs if authorised feeds exist.
+
+Cost scenarios: Paytm Money ₹10/order baseline proxy and ₹20/order sensitivity; date-aware statutory charges under the applicable schedule; at least baseline, +50% and +100% adverse slippage/friction; bid/ask-aware replay when available; fill/latency stress; explicit margin and buying-power usage. If the brokerage schedule changes, version the cost model rather than rewriting past results.
+
+### Phase H — Statistical analysis
+
+Report net P&L, profit/trade, P&L percentage on declared capital and margin, trades, expectancy, win rate, profit factor, mark-to-market maximum drawdown, Sharpe/Sortino/Calmar where valid, volatility, worst trade/day/week, tail loss, expected shortfall/CVaR, capital/margin utilisation, turnover and robustness across regimes.
+
+Use paired bootstrap clustered by expiry/session and where appropriate moving/block bootstrap for serial dependence; confidence intervals; paired permutation/sign-flip tests for incremental uplift; multiple-testing correction (Holm or stronger familywise method); and selection-bias-aware diagnostics such as Deflated Sharpe / probability of backtest overfitting where assumptions permit. Report sample sizes and uncertainty. Zero/low sample regimes remain non-informative, not success or failure.
+
+### Phase I — Promotion gate
+
+A candidate is a research survivor only if it:
+1. has source-complete reproducible replay, zero unresolved data errors and registered coverage;
+2. is net-positive under the primary cost model and remains acceptable under adverse friction stress;
+3. beats its matched unconditional/control policy by a preregistered economically meaningful amount, with an uncertainty interval that excludes zero or an explicitly preregistered equivalent evidence threshold;
+4. survives the registered multiple-testing adjustment;
+5. exhibits acceptable drawdown/tail risk, adequate trade count and no single-day/expiry concentration;
+6. remains credible across the required entry-condition matrix and predefined regimes (or is explicitly scoped to the subset that passed);
+7. passes untouched OOS confirmation and all execution/margin audits.
+
+A strategy is never declared successful in all possible market conditions. The final decision must state the exact tested condition matrix and where it did or did not work. No research result automatically authorises live orders.
+
+### Phase J — Manuscript and repeat cycle
+
+Write a structured manuscript with abstract, research question, related literature, data sources and provenance, aims/objectives, strategy registry, methods, statistical plan, results, figures, tables, inferences, discussion, strengths, limitations, conclusion, future work, references and appendices/supplements. Keep machine-readable CSV/JSON, figures and run manifests. Daily/recurring iterations append their checkpoint and continue queued configurations; passed candidates move to robustness/paper confirmation but do not terminate the broader discovery process.
+
+## 7. Entry-condition matrix
+
+At minimum report independent results for:
+- time-of-day buckets;
+- opening gap and gap direction;
+- trend / range / breakout / reversal / high-noise states;
+- India VIX LOW/NORMAL/HIGH, rising/falling, spike and post-spike reversal;
+- expiry proximity and weekly/monthly tenor;
+- high/low IV-RV spread and skew;
+- directional, delta-neutral and volatility-expansion conditions;
+- OI/PCR/liquidity feature availability buckets;
+- spot-futures basis and synthetic-future divergence;
+- event versus non-event sessions when time-stamped data support it;
+- cross-market aligned/divergent conditions when source quality supports it.
+
+Do not interpret missing-factor rows as neutral-factor rows. Report selection coverage and abstention rate.
+
+## 8. Source and data priorities
+
+1. NSE official contract/specification, bhavcopy, F&O and India VIX material; BSE sources where instruments/underlyings are relevant.
+2. Already validated and hash-pinned datasets in earlier project phases; primary RISSIN NIFTY options data and existing validated spot reference where eligible.
+3. Hugging Face/Kaggle/open-source market archives, inspected for exact dates, contract coverage, freshness and licence.
+4. Official broker APIs/data exports where authorised secrets exist; credentials are checked by presence only and never printed.
+5. StockMock/StockMojo and other backtest platforms for reconstructing rule semantics and independent platform comparisons.
+6. YouTube and public code for hypothesis generation, followed by independent rule reconstruction.
+
+The known Phase 51 full-window gaps (2026-07-28 and 2026-08-04) remain explicit. Phase 52 may test other verified complete intervals; it must not imply those missing sessions have been solved.
+
+## 9. Automation and governance
+
+- Dedicated branch: phase-52-factor-conditioned-strategy-discovery.
+- Main-branch Actions orchestrator: manual dispatch plus scheduled recurring runs; it checks out this research branch and writes durable logs/results to this branch.
+- Each run has a bounded wall-time and configuration-shard budget. Continuation is automatic on the next schedule; no single action is an unbounded process.
+- Cache immutable input data and package downloads; use repository manifests and Action cache keys. Never commit raw datasets or credentials.
+- Append one status checkpoint and log every test outcome and every error/fix. Failed tests are retained as non-evidence, not erased.
+- Branch-local manual workflow remains available for focused execution.
+- Do not store hidden private reasoning. Store concise decision summaries, commands/results, evidence references and user-visible conversation summaries.
+- Do not merge experimental strategy changes to the canonical live/paper strategy until the promotion gates pass.
+
+## 10. Stopping and continuation rules
+
+The research has no arbitrary end date. It continues through scheduled, bounded jobs until at least one candidate survives the full preregistered confirmation matrix, or until the user stops the research, the available data universe is exhausted, or a serious access/licensing/safety/engineering issue blocks further valid research. “Keep searching until successful” is not a guarantee that such a strategy exists; failure to find one is a valid conclusion.
+
+When a survivor appears, continue the overall search while running a separate strict robustness and forward-paper track. Do not relax thresholds after seeing results. Revisions require a new plan version, preserved prior results and a reason logged in the research log/error log.
+
+## 11. Initial deliverables
+
+- PHASE52_RESEARCH_PLAN.md — this protocol.
+- PHASE52_STATUS.md — phase and gate status.
+- PHASE52_ERROR_LOG.md — operational/scientific error ledger.
+- PHASE52_RESEARCH_LOG.md — append-only step outcomes.
+- PHASE52_CHAT_LOG.md — visible conversation/decision summaries.
+- PHASE52_LITERATURE_REVIEW.md — initial bibliography and evidence hierarchy.
+- research/phase52/strategy_registry.csv — 300 hypothesis records.
+- research/phase52/configuration_space.json — finite configuration domains.
+- research/phase52/repository_audit.csv — inventory of all connected-account repositories and source-audit state.
+- research/phase52/validate_registry.py — local validation of the registry and grid.
+- research/phase52/results/ — manifests, audit output, shard results, tables and figures.
+- .github/workflows/phase-52-factor-conditioned-strategy-discovery.yml — bounded scheduled/manual runner, surfaced on the default branch and in this phase branch.
+
+## Plan changes
+
+This initial plan is the frozen version 1.0. A change to scope, finite grids, hypotheses, cost model or decision gates requires a documented amendment before the amended analysis starts.
