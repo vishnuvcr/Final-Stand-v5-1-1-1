@@ -375,3 +375,9 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Next gate 1:** fix the historical pilot's shared-log checkpoint persistence/rebase conflict with idempotent, latest-tip-aware writes and regression coverage.
 - **Next gate 2:** perform a coverage-only decomposition of the same v0.2 480-row event ledger: 379 OHLC-range-proxy exclusions and 100 leg-eligibility blocks. Trace reasons to exact source files/contracts/timestamps; exclusions are not losing trades.
 - **Frozen constraints:** no threshold/filter relaxation, no change to the 40 configurations × 24 events, costs, validation splits or holdout; no strategy ranking/promotion from 1 executed row.
+
+
+## Resume checkpoint — 2026-10-10 (coverage diagnosis queued)
+
+- The persisted `report.json` presently identifies pilot version `v0.1`: 480 planned configuration-event rows; status counts are 274 `BLOCKED_LEG_ELIGIBILITY`, 205 `EXCLUDED_OHLC_RANGE_PROXY`, and 1 `REPLAY_PASS`. This conflicts with the separately reported v0.2 summary (379/100/1), so versioned artifacts must be reconciled before treating either count as canonical.
+- No result is promoted. The observed statuses are exclusions/eligibility blocks, not losses. Next: audit version/run provenance, compute reason-level counts from the matching CSV, fix checkpoint persistence, then rerun only after a reproducible diagnosis.
