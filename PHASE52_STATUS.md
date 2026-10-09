@@ -106,3 +106,9 @@ The existing Phase39 feature file ends on 2026-04-24; Phase45 outcome rows exten
 - **Interpretation:** This is an exploratory legacy-outcome selector screen, not a test of all 312 hypotheses or the 9,379,584 registered variable configurations. No candidate is promoted.
 - **Next gate:** implement the source-faithful variable-configuration replay engine. The finite queue advances from offset 35,000 to 60,000 in this run; its records are still enumeration, not backtests.
 - **Known limits:** current seed factor panel includes VIX, IV/Greeks, OI/PCR, spot, global-market and sentiment proxies, but it does not supply verified intraday traded-futures basis or a true synthetic-futures lead/lag panel. Current 2026 RISSIN intraday OI is not available for OI-based replay; legacy HF data license is CC BY-NC 4.0 and is research-only pending rights review.
+
+## Automated checkpoint — 2026-10-09 17:51:46 IST
+- Workflow run: 37928216137
+- Source leads newly recorded: 0.
+- Configurations enumerated in this run: 25,000 of 9,379,584 finite-grid combinations. This is queue enumeration only, not strategy testing.
+- Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.

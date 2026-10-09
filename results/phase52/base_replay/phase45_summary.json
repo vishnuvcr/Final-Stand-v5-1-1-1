@@ -1,0 +1,9 @@
+{
+  "new_strategies": 20,
+  "reused_phase43_strategies": 20,
+  "new_trade_rows": 5102,
+  "full_trade_rows": 9699,
+  "validation_freeze_rows": 6,
+  "holdout_confirmation_rows": 6,
+  "validation_positive_defined_risk_states": 7
+}
