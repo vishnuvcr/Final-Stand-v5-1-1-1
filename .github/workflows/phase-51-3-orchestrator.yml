@@ -40,21 +40,30 @@ jobs:
           HF_HUB_DISABLE_TELEMETRY: "1"
         run: python research/phase51_3_available_data_sweep.py
       - name: Audit
+        if: always()
         run: |
           set -euo pipefail
           test -s results/phase51/available_oos/sweep_summary.json
           python - <<'PY'
           import json
           d=json.load(open("results/phase51/available_oos/sweep_summary.json"))
+          print(json.dumps(d,indent=2), flush=True)
           assert d["window"] == ["2026-04-21","2026-07-21"]
+          assert d.get("partial_oos_only") is True
+          expected=set(d.get("expected_candidates", []))
+          assert expected == {"TT02","TT04","TT05"}, expected
+          assert set(d.get("results", {})) | set(d.get("errors", {})) == expected
+          for name, result in d.get("results", {}).items():
+              assert "phase51_3_gate" in result, f"{name}: missing candidate quality gate"
           assert not d["errors"], d["errors"]
-          print(json.dumps(d,indent=2))
           PY
       - name: Upload artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: phase51-3-available-oos-${{ github.run_id }}
           path: results/phase51/available_oos
+          if-no-files-found: warn
       - name: Publish artifacts to phase branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
