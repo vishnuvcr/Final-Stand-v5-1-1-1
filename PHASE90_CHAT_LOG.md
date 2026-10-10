@@ -33,3 +33,8 @@ The initial 2024 study run [38048410498](https://github.com/vishnuvcr/Final-Stan
 - Primary result: M1 MAE − M2 MAE = 0.0330 bps (paired session-cluster bootstrap 95% CI 0.0001 to 0.0562; bootstrap positive share 0.9750; 5000 resamples).
 - Raw market responses were not printed, committed, or uploaded as artifacts; 2026 was not requested.
 <!-- PHASE90_RUNTIME_END -->
+
+
+## Downstream continuation — Phase 91 (2026-10-10)
+
+Following the user's “Ok proceed” request after the Phase 90 result, Phase 91 was created on branch `phase-91-iv-temporal-replication-2023` to independently replicate the incremental IV prediction analysis on 2023 data. The child phase uses a separate cache and the same single primary endpoint, with a fixed 2023 OOS window. Draft PR [#41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41) is unmerged. The parent branch now contains a PR-triggered runner at [.github/workflows/phase91-pr-runner.yml](.github/workflows/phase91-pr-runner.yml). Execution is not yet verified; there is no numerical Phase 91 result to record. Phase 90 metrics remain unchanged.
