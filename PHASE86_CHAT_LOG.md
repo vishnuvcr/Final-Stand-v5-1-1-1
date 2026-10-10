@@ -21,3 +21,11 @@ Date: 2026-10-10
 - If successful, next step is an explicit instrument-master and option-history coverage audit; historical bid/ask/depth remain a separate gate.
 
 Only auditable user requests, decisions, actions and outcomes are recorded here; no hidden reasoning is copied.
+
+## Verified outcome — 2026-10-10
+- GitHub Actions run [38047007060](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047007060) completed successfully.
+- Secret was present; Dhan profile returned HTTP 200; token valid; Data API plan active.
+- One bounded historical candle probe returned HTTP 200 and 149 OHLC/timestamp candles.
+- Only status/boolean/count summaries were logged; raw profile and candle payloads were not printed or persisted.
+- Phase 86 closes as a connectivity PASS. The result does not prove historical option quote/depth access or profitability; no backtest or live order was attempted.
+- Next finite step: Phase 87 options instrument/contract coverage qualification, still no promotion and no Phase 83 holdout access.
