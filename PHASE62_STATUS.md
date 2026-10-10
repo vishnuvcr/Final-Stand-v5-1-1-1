@@ -22,3 +22,8 @@ Do not reopen Phase 51 replay until both missing dates and the required contract
 - Added `.github/workflows/phase62-optionsdata-sample-validation.yml` with branch-push trigger and `workflow_dispatch` manual run.
 - Raw Parquet files remain in the temporary runner directory; only aggregate diagnostics are uploaded. No data artifacts are committed.
 - The workflow was configured by a branch push; its runtime result has not yet been independently verified in this checkpoint. Exact target-date gate remains BLOCKED.
+
+
+## Live catalog review — 2026-10-10
+
+The vendor's public coverage page advertises NIFTY 1-minute options from January 2023 through October 2026. The target dates are within the overall advertised span, but exact daily file and contract coverage for 2026-07-28 and 2026-08-04 remains unverified. The 1-minute full-chain pack is listed at ₹7,249; no purchase was made. Local network access could not resolve the sample host, so the automated Actions run must be inspected before accepting the sample schema test. Current decision remains BLOCKED pending exact target sample and rights confirmation.
