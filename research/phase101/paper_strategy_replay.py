@@ -706,11 +706,26 @@ def run():
             tt=sorted([r for r in u02tr if r["model"]==m], key=lambda x:x["entry_date"])
             mm=net_trade_metrics([r["net_10_per_order"] for r in tt])
             ending=float(tt[-1]["account_equity_after"]) if tt else float(CAPITAL_U02)
+            worst_dd=max(tt,key=lambda x:float(x.get("account_drawdown_from_peak",0.0)),default=None)
+            peak_row=max(tt,key=lambda x:float(x.get("account_peak_to_date",CAPITAL_U02)),default=None)
+            max_dd=float(worst_dd.get("account_drawdown_from_peak",0.0)) if worst_dd else 0.0
+            peak_at_worst_dd=float(worst_dd.get("account_peak_to_date",CAPITAL_U02)) if worst_dd else float(CAPITAL_U02)
+            trough_at_worst_dd=float(worst_dd.get("account_equity_after",ending)) if worst_dd else ending
+            net_sum=float(sum(float(x["net_10_per_order"]) for x in tt))
+            equity_reconciliation_error=ending-(float(CAPITAL_U02)+net_sum)
             s={"paper_id":"U02","model":m,**mm,
                "initial_account_equity":float(CAPITAL_U02),
                "ending_account_equity":ending,
                "account_return_pct":100.0*(ending/CAPITAL_U02-1.0),
-               "max_account_drawdown_rupees":float(max((r["account_drawdown_from_peak"] for r in tt),default=0.0)),
+               "max_account_drawdown_rupees":max_dd,
+               "peak_equity_rupees":float(peak_row.get("account_peak_to_date",CAPITAL_U02)) if peak_row else float(CAPITAL_U02),
+               "peak_equity_date":str(peak_row.get("entry_date","")) if peak_row else "",
+               "peak_at_max_drawdown_rupees":peak_at_worst_dd,
+               "trough_at_max_drawdown_rupees":trough_at_worst_dd,
+               "trough_date_at_max_drawdown":str(worst_dd.get("entry_date","")) if worst_dd else "",
+               "max_account_drawdown_pct_of_peak":100.0*max_dd/peak_at_worst_dd if peak_at_worst_dd else None,
+               "equity_reconciliation_error_rupees":equity_reconciliation_error,
+               "equity_reconciliation_pass":bool(abs(equity_reconciliation_error)<0.01),
                "premium_deployment_cap_pct":95.0}
             for k in ["net_20_per_order","net_10_per_order_fee_stress_50pct","net_20_per_order_fee_stress_50pct","paper_025pct_each_side_plus_50_trade_cost_net"]:
                 s[k]=float(sum(x[k] for x in tt)) if tt else None
