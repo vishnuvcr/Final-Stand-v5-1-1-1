@@ -75,3 +75,8 @@ Append entries; never overwrite earlier failures.
 
 ## Run reconciliation — 2026-10-10T18:47:09Z
 - Workflow 38076670672 completed aggregate validation. No runner exception was raised; inspect report and model status CSV for explicit data/model blockers.
+
+
+## Corrected replay result — 2026-10-10T18:47:10Z
+- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076670672
+- Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.
