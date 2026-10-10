@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Bounded Phase 101 proxy tests for PDF methods U02 and U05."""
+# Environment revision: dependency versions are locked in requirements-phase101.txt.
 from __future__ import annotations
 import importlib, json, math, os, sys, traceback
 from collections import Counter
