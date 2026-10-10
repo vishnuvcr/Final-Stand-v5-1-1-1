@@ -1,0 +1,9 @@
+{
+  "source_file": ".cache/phase95/nifty_daily.csv",
+  "rows": 4487,
+  "first_date": "2007-09-17",
+  "last_date": "2025-12-31",
+  "evaluation_start": "2020-01-01",
+  "evaluation_end_exclusive": "2026-01-01",
+  "note": "0.05% turnover deduction is a transparent sensitivity proxy, not a verified historical Paytm Money fee schedule; index is not directly investable and this is not options P&L."
+}
