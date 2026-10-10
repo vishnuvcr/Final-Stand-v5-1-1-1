@@ -8,3 +8,8 @@
 - Retained the Phase 83 protected 2026 holdout boundary.
 - Created a new branch and registered ORB15_DEBIT_V1 plus a prior-only VIX risk filter. The test will use only DEV through 2023 and VAL through 2025 with a pinned source revision, next-minute entry/exit prices, Paytm Money brokerage, statutory fees/GST, slippage and severe cost stress.
 - Current status: implementation and runtime evidence pending. No numerical result is accepted yet.
+
+
+## Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
+- Result status: FAILED_BEFORE_NUMERICAL_RUN. Economic status: NOT_EVALUATED.
+- Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.

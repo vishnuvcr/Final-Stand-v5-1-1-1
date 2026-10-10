@@ -9,3 +9,8 @@ User: “Resume I want you to be optimistic and grill down to find a strategy!�
 - Registered a separate trade-level hypothesis instead of reselecting old validation winners: first 15-minute NIFTY opening-range breakout, one-lot defined-risk debit vertical, next-minute fills, deterministic target/stop/time exit, and a fixed prior-only India VIX filter arm.
 - Preserved protected Phase 83 2026 holdout and no-live-promotion rules.
 - Internal private reasoning is not included; this file records the visible user request, reproducible actions, and research results only.
+
+
+## Latest visible execution
+- Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
+- No private reasoning is stored; status and reproducible execution facts only.

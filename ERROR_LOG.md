@@ -2227,3 +2227,8 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No trades were evaluated and no P&L evidence was produced.
 - Correction: add matplotlib and restore literal GitHub Actions expressions.
 - Scientific specification, distance set, execution model and cost models unchanged.
+
+
+## Phase 98 execution issue
+- Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
+- Classified as non-evidence until the output and coverage gates pass.

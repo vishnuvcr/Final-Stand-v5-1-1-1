@@ -958,3 +958,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Tables: 40 aggregate rows, 20 inference tests; Holm-significant tests: 0.
 - No defined-risk candidate passed the frozen gate. The 2026 holdout remains sealed and no strategy was promoted.
 - The bounded Phase 80–83 study is closed; next research must be based on a new evidence source and preregistration.
+
+
+## Phase 98 automated checkpoint
+- Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
+- This was a trade-level, source-pinned replay. OHLC fill prices are proxies; no live strategy promotion.

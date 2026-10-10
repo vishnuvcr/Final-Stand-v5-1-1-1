@@ -17,3 +17,8 @@ A passing workflow only demonstrates reproducible computation. Phase 98 cannot a
 
 ## Correction incidents
 New errors, invalid outputs, workflow failures and fixes are appended below with run URLs. The first failing run remains in this log as an audit record. No failure is silently overwritten.
+
+
+## Automated execution issue — Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
+- Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.
+- Runner detail: See workflow logs and validation_report.json.
