@@ -19,6 +19,10 @@
 | U13 | Jafar et al. (2023), NIFTY close forecasting next 30 days | LSTM; backward-elimination LSTM; 14-period RSI; feature-selection ablation | Daily OHLCV + RSI | Phase 95 | Source-reported 95% accuracy is not taken at face value until the metric and 30-day target construction are verified. Feature selection occurs on training data only. |
 | U14 | Shaha (SSRN working paper), NIFTY long options | CCI-based trigger/rule, strict-ITM call/put selection, fixed hold/exit and stop rules as fully described in paper | CCI and NIFTY spot/options | Phase 98 | Phase 66 previously had zero completed trades/coverage on an OHLC proxy. Reuse that finding; rerun only if a materially better authorized source resolves source-period/contract gaps. |
 
+## Source-explicit options payoff strategies registered for Phase 99
+
+The following structures are explicitly named in U07 and have distinct registry rows: long call, short put, bull call spread, bull put spread, long put, bear put spread, short call, bear call spread, call butterfly, the source-labelled “Short Butterfly” put section (the text/legs need verification), long straddle, and short straddle. U05's discussion also motivates long/short straddle and long strangle as *operationalized comparison strategies*, not as exact reproductions of the paper's primary experiment. Strategy names are not sufficient to determine valid strike ordering or trade timing; the source payoff tables and example legs must be unit-tested before implementation. No signal rule may be invented and then described as source-reported.
+
 ## Cross-paper implementation register
 
 | Registry ID | Method/variant | Main question | Primary output | Status at Phase 94 |
@@ -30,6 +34,7 @@
 | M05 | Decision Tree regression | Does tree-based regression reproduce the paper? | Paper metric + common metrics | Planned |
 | M06 | MLP / SLP / RBF ANN | Do feed-forward architectures reproduce the source? | Paper metric + common metrics | Planned |
 | M07 | Random Forest | Can option/index predictions be reproduced? | Prediction metrics; option net P&L only if eligible | Planned |
+| M08 | XGBoost / gradient boosting / AdaBoost / SGD Regressor | Does boosted and stochastic-gradient regression performance hold OOS? | Prediction metrics | Planned |
 | M08 | XGBoost / gradient boosting / AdaBoost | Does boosted-tree performance hold OOS? | Prediction metrics | Planned |
 | M09 | LSTM | Does the common recurrent method reproduce? | Paper metric + common metrics | Planned |
 | M10 | RNN | Does a vanilla recurrent model reproduce? | Paper metric + common metrics | Planned |
