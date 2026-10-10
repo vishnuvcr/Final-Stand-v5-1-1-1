@@ -71,3 +71,11 @@
 ## Corrected run 38076670672 — 2026-10-10T18:47:10Z
 - Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 7; U02 costed trades 164; no 2026 option data; no strategy promoted.
 - U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
+
+
+## 2026-10-11 — Cost-stress audit correction
+
+- Audited the latest successful run's U02 trade ledger and found the additional 0.25%-per-side impact column omitted baseline date-effective fees and the repository execution-price convention. Corrected the stress calculation to use impacted raw prices, execution-price rounding/slippage, date-effective charges, and the additional ₹50 round-trip cost.
+- The corrected code commit is `c75b43da2592b02c520b2500b9f63e5d72a7b12d`. A push-triggered workflow is expected to regenerate derived outputs and validate the result contract.
+- Drawdown values have not been clipped or declared erroneous. The next audit will reconcile the model equity path, peak, trough and dates; drawdown can exceed initial capital if equity first rises materially above its starting value.
+- No strategy is promoted; 2026 option data remain excluded. Previous values in the additional-impact column are superseded until the new run passes.
