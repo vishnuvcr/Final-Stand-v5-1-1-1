@@ -101,3 +101,8 @@ Runs [38088253613](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/run
 - API probes returning rows: 0/10.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## Dhan expiry-code parameter correction
+
+The first API request reached Dhan but all 10 probes returned HTTP 400 `DH-905: expiryCode is required` because the provider apparently rejected the value 0 as missing. The script and machine-readable manifest now use `expiryCode: 1` (Next Expiry, matching the official sample request) for a bounded retry. Awaiting the retry result. This change affects data acquisition only; there is still no accepted data sample or strategy test.
