@@ -945,3 +945,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Exclusions: 182; file/schema errors: 0.
 - Registered structures/time windows only; 2026 holdout not scored. See results/phase81_intraday_overnight/report.md.
 - No strategy promoted; static OHLC-open model remains an execution proxy.
+
+
+## 2026-10-10 — Phase 82 expiry-cluster inference
+- Decision: NO_CANDIDATE_PASSES_PREDECLARED_GATE; paired rows: 11163; tests: 20.
+- Defined-risk variant-window gates passing: 0; 2026 holdout remains sealed.
+- Holm family includes all 20 one-tick primary tests; inferential outputs are persisted under results/phase82_expiry_cluster_inference/.

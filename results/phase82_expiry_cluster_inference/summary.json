@@ -1,0 +1,46 @@
+{
+  "phase": 82,
+  "decision": "NO_CANDIDATE_PASSES_PREDECLARED_GATE",
+  "input": {
+    "paired_csv": "results/phase81_intraday_overnight/paired_window_differences.csv",
+    "performance_csv": "results/phase81_intraday_overnight/summary_by_split_variant_window.csv",
+    "raw_market_data_loaded": false,
+    "2026_holdout_loaded_or_scored": false,
+    "invalid_numeric_pairs_dropped": 0,
+    "duplicate_policy": "fail closed on duplicate date/expiry/split/variant key"
+  },
+  "method": {
+    "primary_effect": "overnight minus intraday net P&L per matched date\u00d7variant pair in INR",
+    "primary_cost_case": "one adverse tick, Paytm Money \u20b910/order and frozen Phase 81 date-aware statutory fees",
+    "stress_cost_case": "two adverse ticks; reported as robustness, not a separate primary testing family",
+    "cluster_unit": "expiry",
+    "inference": "CR1 expiry-cluster-robust t test (df=clusters\u22121); 10,000 expiry-cluster bootstrap percentile 95% CI",
+    "multiplicity": "Holm adjustment across 20 primary hypotheses (10 variants \u00d7 DEV/VAL)",
+    "seed": 820102,
+    "bootstrap_replicates": 10000,
+    "alpha": 0.05
+  },
+  "coverage": {
+    "variants": 10,
+    "splits": [
+      "development",
+      "validation"
+    ],
+    "paired_rows": 11163,
+    "unique_expiry_clusters_overall": 238,
+    "tests": 20
+  },
+  "candidate_gate": {
+    "criterion": "defined-risk variant-window pair net-positive for the same horizon in both DEV and VAL at one-tick and two-tick costs",
+    "defined_risk_variants_checked": 18,
+    "passing_variants": 0,
+    "holdout_action": "do not open 2026 holdout unless a variant-window candidate passes this gate and its paired effect favors that window with Holm alpha below 0.05 in both DEV and VAL"
+  },
+  "limitations": [
+    "Inference is conditional on Phase 81 OHLC-open estimates; it does not establish executable fills.",
+    "Expiry clustering does not address every possible cross-expiry/session dependency.",
+    "A significant holding-window difference is not the same as profitable strategy returns.",
+    "The unbounded short ATM straddle is ineligible for promotion.",
+    "No 2026 holdout rows were accessed; no strategy was promoted."
+  ]
+}

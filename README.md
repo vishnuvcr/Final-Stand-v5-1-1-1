@@ -1,3 +1,16 @@
+# Resume checkpoint — 2026-10-10 (Phase 82 expiry-cluster inference)
+
+**Phase 82 decision: NO_CANDIDATE_PASSES_PREDECLARED_GATE**. The inference used 11,163 paired observations, 20 primary tests with Holm correction and 10,000 expiry-cluster bootstrap replicates per test. Defined-risk variant-window gates passing: 0. The 2026 holdout remained sealed and no strategy was promoted.
+
+- [Phase 82 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/PHASE82_RESEARCH_PLAN.md)
+- [Phase 82 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/PHASE82_STATUS.md)
+- [Phase 82 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/PHASE82_ERROR_LOG.md)
+- [Phase 82 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/results/phase82_expiry_cluster_inference/report.md)
+- [Phase 82 inference table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/results/phase82_expiry_cluster_inference/cluster_inference.csv)
+- [Phase 82 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 81 corrected paired horizon sweep)
 
 **Search-completeness answer:** no, every conceivable strategy combination has not been tested. Existing work covers a broad but finite structure/regime/selector/exit search. Phase 80 expands the literature inventory and Phase 81 tests one under-covered axis: matched intraday versus overnight holding windows for the same option-structure templates.
