@@ -106,10 +106,23 @@ jobs:
               status = vr.get('status','UNKNOWN')
               why = vr.get('error','')
           decision = json.loads(dp.read_text()) if dp.exists() else {}
-          econ = decision.get('primary_economic_status','NOT_EVALUATED')
           test_outcome = os.getenv('TEST_OUTCOME','unknown')
           replay_outcome = os.getenv('REPLAY_OUTCOME','skipped')
           audit_outcome = os.getenv('AUDIT_OUTCOME','skipped')
+          # A stale/partial result file can never override this execution's outcomes.
+          if test_outcome != 'success':
+              status = 'FAILED_BEFORE_NUMERICAL_RUN'
+              decision = {}
+              econ = 'NOT_EVALUATED'
+          elif replay_outcome != 'success':
+              status = 'REPLAY_NOT_SUCCESSFUL'
+              decision = {}
+              econ = 'NOT_EVALUATED'
+          elif audit_outcome != 'success':
+              status = 'OUTPUT_AUDIT_FAILED'
+              econ = 'NOT_ACCEPTED_OUTPUT_AUDIT_FAILED'
+          else:
+              econ = decision.get('primary_economic_status','NOT_EVALUATED')
           run_url = os.getenv('RUN_URL','')
           detail = (f'Run {os.getenv("RUN_ID","")} — tests={test_outcome}; replay={replay_outcome}; audit={audit_outcome}; '
                     f'runner_status={status}; economics={econ}; URL={run_url}')
@@ -125,6 +138,18 @@ jobs:
               f.write('\n\n## ' + detail + '\n- Result status: ' + status + '. Economic status: ' + econ + '.\n- Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.\n')
           with Path('PHASE98_CHAT_LOG.md').open('a') as f:
               f.write('\n\n## Latest visible execution\n- ' + detail + '\n- No private reasoning is stored; status and reproducible execution facts only.\n')
+          # Correct a prior provenance defect once: cancelled executions had inherited a stale PASS file.
+          err_path = Path('PHASE98_ERROR_LOG.md')
+          if 'E98-011' not in err_path.read_text():
+              with err_path.open('a') as f:
+                  f.write('\n\n## E98-011 — Stale output provenance in interrupted workflow attempts (2026-10-10)\n'
+                      '- Runs 38057921675, 38058351337, and 38058461330 were interrupted before a successful replay/audit. Their publisher read previously committed result files and emitted stale runner_status=PASS / NO_PROMOTION labels. Those runs are not economic evidence; any zero P&L values in their status entries are not measurements.\n'
+                      '- Correction: clear derived result files at the start of every run and derive published status from the current run test/replay/audit outcomes. Cancelled/failed replay now publishes REPLAY_NOT_SUCCESSFUL and NOT_EVALUATED. The README keeps a single current Phase 98 status block.\n')
+          root_err = Path('ERROR_LOG.md')
+          root_text = root_err.read_text()
+          if 'E98-011 — Stale output provenance' not in root_text:
+              with root_err.open('a') as f:
+                  f.write('\n\n## Phase 98 — stale output provenance correction\n- Interrupted runs 38057921675, 38058351337, and 38058461330 inherited stale committed PASS/status files. They are not performance evidence. The Phase 98 workflow now clears result outputs before each run and gates published status on current test/replay/audit outcomes.\n')
           failure = test_outcome != 'success' or replay_outcome != 'success' or audit_outcome != 'success' or status != 'PASS'
           if failure:
               with Path('PHASE98_ERROR_LOG.md').open('a') as f:
