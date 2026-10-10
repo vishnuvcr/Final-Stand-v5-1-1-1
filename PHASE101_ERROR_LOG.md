@@ -104,3 +104,11 @@ Append entries; never overwrite earlier failures.
 ## Corrected replay result — 2026-10-10T19:46:51Z
 - Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080831113
 - Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.
+
+
+## E101-006 resolution — 2026-10-11
+
+- Corrected stress-cost calculation was rerun successfully in workflow 38080831113. The extra-impact sensitivity now includes the common execution-price convention, date-effective baseline charges, and extra ₹50 round trip.
+- E101-007 drawdown-context gap resolved for the current output: peak/trough dates, peak equity, drawdown percent of peak, and ending-equity reconciliation fields are emitted. All three model equity reconciliations pass within ₹0.01.
+- Large rupee drawdowns are confirmed as mathematically consistent with account peaks above initial capital and a later near-total equity loss. This is a severe model-risk finding, not a reason to clip drawdown.
+- Remaining limitations: no verified Paytm Money contract notes, option OHLC is not bid/ask/depth, U02/U05 are proxy rather than exact paper-period replications, and no strategy is promoted.
