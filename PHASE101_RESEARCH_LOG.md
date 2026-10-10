@@ -22,3 +22,12 @@
 - U05 completed trades: 7; sample status: COMPUTED; audit status counts: {'EXCLUDED_FIRST_WEDNESDAY_NOT_SESSION': 5, 'BLOCKED_NO_EXACT_ENTRY_SNAPSHOT': 35, 'BLOCKED_NO_THURSDAY_INDEX_BAR': 1, 'COMPLETED': 7, 'BLOCKED_NO_EXACT_NEXT_MINUTE_EXIT': 5, 'BLOCKED_NO_PENULTIMATE_EXIT_BAR': 1, 'EXCLUDED_FIRST_THURSDAY_NOT_SESSION': 2}.
 - U02 predictions: 1330; completed trades: 896; model statuses: [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
 - Result files are aggregate/derived only. A model/data blocker is not a negative efficacy finding.
+
+
+## 2026-10-10 — First output review and correction
+
+- Run [38075221554](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38075221554) completed and published a preliminary U02/U05 proxy result set. It was not accepted after manual audit found two research-design defects.
+- U05 date audit showed the forecast could occur after the entry date in months when the first calendar Thursday preceded the first Wednesday. The trade calendar has been corrected and tested so entry is strictly after the forecast.
+- U02 had used the original ₹1 lakh capital cap on each trade rather than carrying equity forward. The simulator now updates account equity per model and blocks entries if premium cannot be funded while preserving cash for charges.
+- Added 95% moving-block bootstrap intervals for the mean net trade result when n >= 20; no precision claim for U05 if its resulting sample remains sparse.
+- The first result CSVs/report are superseded. The corrected runtime workflow is the only result set eligible for evaluation.
