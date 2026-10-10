@@ -44,8 +44,9 @@ For the same frozen option structure and same session, does holding the position
 These are fixed templates, not a claim they are optimal. For strategies 2 and 3, wing widths are the only structure variants; count each separately in the multiple-testing ledger.
 
 ### Holding-window definitions
-- Day session: derive ATM from the prior 09:19 minute close; enter on 09:20 candle open and exit on 15:20 candle open on the same valid session.
-- Overnight: derive ATM from prior 15:19 close; enter on 15:20 candle open and exit on next valid trading session's 09:20 candle open, same exact contracts and strikes.
+- Both windows share one ex-ante strike anchor: derive ATM from the prior 09:19 minute close and use the same exact expiry/strike/side basket for both matched windows.
+- Day session: enter on 09:20 candle open and exit on 15:20 candle open on the same valid session.
+- Overnight: enter the same strike basket on 15:20 candle open and exit on the next valid trading session's 09:20 candle open. The ATM anchor is intentionally held constant to make the time-window contrast paired and avoid changing the structure as a hidden second variable.
 - Use listed expiry strictly later than the entry date; skip expiry dates themselves and sessions where the next trading date is contract expiry, so no contract is silently switched or carried through expiry settlement.
 - Require each leg's exact expiry/strike/side and nonzero volume at entry and exit, positive open prices, and exact timestamps. No forward fill, sparse-strike ordinal mapping, or synthetic bars.
 - Exclude dates with missing or invalid option bars and log the reason. Report liquidity/coverage counts before interpreting performance.
