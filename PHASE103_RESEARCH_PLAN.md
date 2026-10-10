@@ -150,3 +150,9 @@ Phase 103.1 workflow: .github/workflows/phase103-dhan-data-api-audit.yml. The br
 ## Dhan expiry-code correction — 2026-10-11
 
 The first live probe using `expiryCode: 0` received HTTP 400 / `DH-905` / “expiryCode is required” for every symbol and side (run [38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054)). The official annexure lists 0 as current/near expiry, while the expired-options example request uses 1 and the annexure labels 1 as next expiry. To test a documented, nonzero value rather than guess further, the bounded retry changes the registered request to `expiryCode: 1` (next expiry). This is a documented API-behavior discrepancy, not an accepted data result. The result must state the chosen expiry code and actual returned data range. No P&L/strategy inference is allowed from this smoke-test.
+
+
+
+## First successful-request latency adjustment — 2026-10-11
+
+The first corrected request (`expiryCode: 1`) did not yield an aggregate report before the bounded retry was cancelled by a newer workflow run. This is a runtime-latency observation, not an API/data failure, because no response evidence was persisted. To keep the research bounded and diagnose the request independently, the next step is reduced to one known trading session (2026-08-03 inclusive to 2026-08-04 exclusive) and one HDFCBANK CALL probe. Only if that request completes will the probe set expand to PUT/other names and longer 30-day chunks. The API window remains capped at 30 calendar days per call.
