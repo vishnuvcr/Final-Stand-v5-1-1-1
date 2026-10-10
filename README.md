@@ -1151,7 +1151,7 @@ Phase 52 remains open but the current BASELINE pilot has only one replay pass an
 
 - **StockMojo:** advertises minute-level historical OI, premium, IV and Greeks, but its published terms prohibit bots, scraping, programmatic access and systematic data collection. It cannot be used by the automated GitHub research workflow.
 - **NiftyTrader:** documents bid/ask at close, free single-day CSVs and premium bulk downloads; its listed premium intraday snapshots (09:30, 11:30, 13:30, 15:00) do not match the frozen timestamps.
-- **TickBytes and OptionVault:** public samples show quote/depth fields, but the full historical datasets are licensed/private and target-date coverage and reuse/storage terms are unverified. They are the best licensed follow-up candidates, not accepted data sources.
+- **TickBytes and OptionVault:** public samples show quote/depth fields, but the full historical datasets are licensed/private and target-date coverage and reuse/storage terms are unverified. OptionVault's published coverage table places Level-2 data from January 2023, so it cannot cover the 2022-12-15 pilot event. They are the best licensed follow-up candidates, not accepted data sources.
 - **NSE:** live bid/ask is not a verified historical intraday quote archive, and the site terms restrict copying/aggregation.
 - **Current Hugging Face dataset:** usable for research-only OHLC/OI, but lacks bid/ask/depth and declares CC BY-NC 4.0.
 
