@@ -131,3 +131,10 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Status:** DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS; rows returned by 1/1 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089084020
+
+<!-- DHAN_API_RUN_38089152325_ATTEMPT_1 -->
+### E103-DHAN-38089152325 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS; rows returned by 1/1 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089152325

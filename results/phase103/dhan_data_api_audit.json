@@ -1,11 +1,12 @@
 {
   "phase": "103.1",
-  "run_id": "38089084020",
-  "generated_at_utc": "2026-10-10T21:49:40.138793+00:00",
+  "run_id": "38089152325",
+  "generated_at_utc": "2026-10-10T21:50:30.637694+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
     "to_exclusive": "2026-08-04",
-    "span_days": 1
+    "span_days": 1,
+    "request_mode": "documented_half_open"
   },
   "probe_limit": 1,
   "endpoint": "https://api.dhan.co/v2/charts/rollingoption",

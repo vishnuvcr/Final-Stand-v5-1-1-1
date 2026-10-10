@@ -3,13 +3,13 @@
 **Status:** DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS
 **Window:** 2026-08-03 inclusive to 2026-08-04 exclusive (1 days)
 **Probe limit:** 1
-**Run:** 38089084020
+**Run:** 38089152325
 
 This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.
 
 | Symbol | Side | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | First UTC | Last UTC | IST-date row counts | Rows outside requested dates |
 |---|---|---:|---|---|---|---:|---|---|---|---|---:|
-| HDFCBANK | CALL | 200 | DATA_RETURNED |  |  | 770 | True | 2026-08-03T03:45:00+00:00 | 2026-08-04T10:09:00+00:00  | {"2026-08-03": 385, "2026-08-04": 385} | 385 |
+| HDFCBANK | CALL | 200 | DATA_RETURNED |  |  | 770 | True | 2026-08-03T03:45:00+00:00 | 2026-08-04T10:09:00+00:00 | | {"2026-08-03": 385, "2026-08-04": 385} | 385 |
 
 ## Underlying ID mapping
 
