@@ -233,6 +233,18 @@ def exact_bar(series_map, key, ts):
     v = float(row.close)
     return v if np.isfinite(v) and v > 0 else None
 
+def select_itm_strike(chain_map, side: str, spot: float, trigger_ts):
+    """Choose the nearest strictly ITM strike present on the trigger minute only."""
+    available = sorted(k[1] for k in chain_map
+                       if k[0] == side and exact_bar(chain_map, k, trigger_ts) is not None)
+    if side == "CE":
+        itm = [strike for strike in available if strike < spot]
+        return max(itm) if itm else None
+    if side == "PE":
+        itm = [strike for strike in available if strike > spot]
+        return min(itm) if itm else None
+    raise ValueError(f"unsupported option side: {side}")
+
 def evaluate_trade(index: pd.DataFrame, chain_map, expiry: pd.Timestamp, candidate: dict):
     side = candidate["side"]
     trigger_ts = candidate["trigger_ts"]
@@ -240,16 +252,8 @@ def evaluate_trade(index: pd.DataFrame, chain_map, expiry: pd.Timestamp, candida
     if entry_ts.day > 15 or not bool(index.timestamp.eq(entry_ts).any()):
         return None, "entry_next_minute_missing_or_outside_window"
     entry_spot = float(index.loc[index.timestamp == trigger_ts, "close"].iloc[0])
-    # Select from option contracts actually observed on the trigger minute;
-    # do not use next-minute contract availability to choose the strike.
-    avail = sorted(k[1] for k in chain_map
-                   if k[0] == side and exact_bar(chain_map, k, trigger_ts) is not None)
-    if side == "CE":
-        itm = [k for k in avail if k < entry_spot]
-        strike = max(itm) if itm else None
-    else:
-        itm = [k for k in avail if k > entry_spot]
-        strike = min(itm) if itm else None
+    # Strike selection is based on trigger-minute availability, never future bars.
+    strike = select_itm_strike(chain_map, side, entry_spot, trigger_ts)
     if strike is None:
         return None, "no_strictly_itm_strike_observed_on_trigger_minute"
     key = (side, float(strike))
