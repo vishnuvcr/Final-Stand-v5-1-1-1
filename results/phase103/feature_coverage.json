@@ -1,0 +1,76 @@
+{
+  "option_source": {
+    "repo_id": "thetrademarkk/india-index-options-1m",
+    "revision": "3eacf762d401efd9a08e804592fa7882b354c4a2",
+    "license": "CC-BY-NC-4.0"
+  },
+  "trade_window": "2024-01-01 through 2025-12-31",
+  "session_days": 497,
+  "prior_session_global_daily": {
+    "available": true,
+    "rows": 523,
+    "covered_days": 523,
+    "coverage_pct": 105.23138832997988,
+    "columns": [
+      "SP500",
+      "NASDAQ",
+      "DOW",
+      "VIX",
+      "NIKKEI",
+      "SENSEX",
+      "USDINR",
+      "GOLD",
+      "CRUDE",
+      "SP500_ret1",
+      "NASDAQ_ret1",
+      "DOW_ret1",
+      "VIX_ret1",
+      "NIKKEI_ret1",
+      "SENSEX_ret1",
+      "USDINR_ret1",
+      "GOLD_ret1",
+      "CRUDE_ret1"
+    ]
+  },
+  "prior_publication_fii_dii": {
+    "available": true,
+    "rows": 0,
+    "covered_days": 0,
+    "coverage_pct": 0.0,
+    "columns": [
+      "fii_net",
+      "dii_net",
+      "fii_idx_fut_net",
+      "fii_idx_call_net",
+      "fii_idx_put_net",
+      "flow_pcr",
+      "flow_sentiment",
+      "fii_net_z20",
+      "dii_net_z20",
+      "fii_idx_fut_net_z20",
+      "fii_idx_call_net_z20",
+      "fii_idx_put_net_z20"
+    ]
+  },
+  "prior_publication_news_sentiment": {
+    "available": true,
+    "rows": 330,
+    "covered_days": 330,
+    "coverage_pct": 66.39839034205231,
+    "columns": [
+      "sent_mean",
+      "sent_std",
+      "sent_count",
+      "sent_pos",
+      "sent_neg"
+    ]
+  },
+  "india_vix_rows_2024_2025": 491,
+  "excluded_modalities": [
+    "FII/DII and sentiment were audited but not used in triggers because the existing validation feature manifest shows major FII/DII missingness and point-in-time sentiment timestamps are not independently qualified.",
+    "No option Greeks, futures basis, historical bid/ask/depth, or single-stock corporate actions are fabricated."
+  ],
+  "eligible_option_expiry_file_count": 104,
+  "latest_option_expiry_available": "2025-12-30",
+  "latest_underlying_timestamp": "2025-12-31 15:59:00+05:30"
+}

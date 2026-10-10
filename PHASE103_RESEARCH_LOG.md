@@ -8,3 +8,10 @@
 - Intended sample is 2024 development / 2025 validation. 2026 option data stay excluded.
 - Existing source notes show point-in-time FII/DII values absent throughout the earlier 2024–2025 feature validation sample; the primary rules therefore do not depend on missing flows. FII/DII/news source coverage will be audited and reported. No unavailable Greeks, futures, bid/ask or depth values will be invented.
 - Next: implement replay and regression tests, then let the phase workflow download only pinned data through the existing Hugging Face cache.
+
+
+## Replay completed — run 38084107201
+
+- Source revision pinned to 3eacf762d401efd9a08e804592fa7882b354c4a2; no 2026 option data loaded.
+- Output artifacts and source/cost/coverage audit were generated. Validation status: PASS.
+- Missing exits remain non-estimable, and conclusions apply only to this frozen sample/cost model.

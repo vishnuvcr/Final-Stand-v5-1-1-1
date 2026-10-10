@@ -23,3 +23,10 @@ Rules, data windows, costs, statistical tests and stopping criteria are frozen i
 - [ ] Publish report and update root README, root logs and error log.
 
 No candidate can be approved for live use based on this phase alone.
+
+
+## Runtime checkpoint — run 38084107201
+
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38084107201
+- Outcome: PASS; signals: 675; completed trades: 675; blocked exits: 0.
+- Promotion decision: NO STRATEGY PROMOTED. Passing a screen only qualifies for a separately preregistered independent validation.

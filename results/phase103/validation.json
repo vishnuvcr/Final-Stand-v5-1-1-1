@@ -1,0 +1,70 @@
+{
+  "phase": 103,
+  "status": "PASS",
+  "decision": "NO_STRATEGY_PROMOTED",
+  "pinned_source_revision": "3eacf762d401efd9a08e804592fa7882b354c4a2",
+  "option_data_limited_to_2025": true,
+  "holdout_2026_options_loaded": false,
+  "sessions_2024_2025": 497,
+  "sessions_with_eligible_expiry": 493,
+  "session_exclusions": 8,
+  "source_load_error_rows": 0,
+  "signal_attempts": 675,
+  "completed_trade_rows": 675,
+  "blocked_exit_rows": 0,
+  "all_signal_rows_have_audit": true,
+  "integrity_errors": [],
+  "results": [
+    {
+      "strategy": "S103-A_XAC_ORB",
+      "trades": 126,
+      "base_net": -10466.80223286501,
+      "stress_net": -25662.157474297397,
+      "severe_net": -37872.65987839939,
+      "coverage_pct": 100.0,
+      "ci95": [
+        -97.45856461328498,
+        20.84541870405163
+      ],
+      "holm_p": 1.0,
+      "eligible_for_independent_followup": false
+    },
+    {
+      "strategy": "S103-B_FBR",
+      "trades": 114,
+      "base_net": -6676.294344640042,
+      "stress_net": -20515.676591959906,
+      "severe_net": -32070.677770498587,
+      "coverage_pct": 100.0,
+      "ci95": [
+        -82.44253107435884,
+        33.69932816563948
+      ],
+      "holm_p": 1.0,
+      "eligible_for_independent_followup": false
+    },
+    {
+      "strategy": "S103-C_RC_VIX_IC",
+      "trades": 89,
+      "base_net": -7422.302658662454,
+      "stress_net": -27962.09249258246,
+      "severe_net": -35613.217214987024,
+      "coverage_pct": 100.0,
+      "ci95": [
+        -92.84806712553478,
+        28.540251173307272
+      ],
+      "holm_p": 1.0,
+      "eligible_for_independent_followup": false
+    }
+  ],
+  "limits": [
+    "OHLC open prices and adverse slippage are a proxy, not quote/depth fills.",
+    "Paytm Money charges are modeled by the existing date-effective assumptions and not verified contract notes.",
+    "The data license is CC-BY-NC-4.0; commercial deployment rights are not established.",
+    "FII/DII/sentiment are audited but not used as unqualified intraday inputs; no Greeks or futures basis are fabricated.",
+    "No 2026 options were loaded. Drawdown is cumulative daily P&L, not full intratrade mark-to-market."
+  ],
+  "checks_total": 3,
+  "checks_passed": 3
+}
