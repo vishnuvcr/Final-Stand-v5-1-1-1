@@ -88,9 +88,9 @@ def request_segment(start: date, end: date, side: str, response_key: str):
                 headers={"access-token": TOKEN, "Accept": "application/json", "Content-Type": "application/json"},
                 method="POST",
             )
-            for attempt in range(3):
+            for attempt in range(2):
                 try:
-                    with urllib.request.urlopen(req, timeout=35) as response:
+                    with urllib.request.urlopen(req, timeout=12) as response:
                         status = response.status
                         payload = json.loads(response.read().decode("utf-8"))
                     error_class = ""
@@ -98,12 +98,12 @@ def request_segment(start: date, end: date, side: str, response_key: str):
                 except urllib.error.HTTPError as exc:
                     status, error_class = int(exc.code), "HTTPError"
                     payload = {}
-                    if status not in (429, 500, 502, 503, 504) or attempt == 2:
+                    if status not in (429, 500, 502, 503, 504) or attempt == 1:
                         break
                     time.sleep(2 ** attempt)
                 except Exception as exc:
                     status, error_class, payload = 0, type(exc).__name__, {}
-                    if attempt == 2:
+                    if attempt == 1:
                         break
                     time.sleep(2 ** attempt)
             # Cache only successful HTTP responses. No raw response is printed or committed.
@@ -127,6 +127,7 @@ def request_segment(start: date, end: date, side: str, response_key: str):
         "array_lengths_aligned": aligned, "cache_hit": hit, "valid": ok,
         "error_class": error_class,
     })
+    print(f"WINDOW from={start} to={end} side={side} status={status} candles={candles} aligned={aligned} cache_hit={hit} valid={ok}", flush=True)
     if not ok:
         label = f"{start}–{end} {side}: HTTP {status}, candles={candles}, aligned={aligned}, error={error_class or 'schema/empty'}"
         ISSUES.append(label)
