@@ -1,0 +1,124 @@
+name: Phase 82 — Expiry-clustered inference and promotion gate
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-82-expiry-clustered-inference-gates]
+    paths:
+      - 'scripts/phase82_expiry_clustered_inference.py'
+      - '.github/workflows/phase82-expiry-clustered-inference.yml'
+permissions:
+  contents: write
+concurrency:
+  group: phase82-expiry-clustered-inference
+  cancel-in-progress: false
+jobs:
+  inference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-82-expiry-clustered-inference-gates
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Cache analysis packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: phase82-python312-numpy-pandas-scipy-matplotlib-v1
+      - name: Install inference packages
+        run: python -m pip install --no-input numpy pandas scipy matplotlib
+      - name: Run fixed DEV/VAL inference only
+        run: |
+          set -euo pipefail
+          python scripts/phase82_expiry_clustered_inference.py 2>&1 | tee phase82_run.log
+      - name: Validate outputs
+        run: |
+          set -euo pipefail
+          test -s results/phase82_inference/summary.json
+          test -s results/phase82_inference/report.md
+          test -s results/phase82_inference/net_profitability_inference.csv
+          test -s results/phase82_inference/horizon_difference_inference.csv
+          test -s results/phase82_inference/validation_adjusted_test_ledger.csv
+          test -s results/phase82_inference/figures/validation_horizon_difference.png
+          test -s results/phase82_inference/figures/validation_net_pnl.png
+      - name: Upload inference artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase82-expiry-clustered-inference
+          path: |
+            results/phase82_inference/
+            phase82_run.log
+          if-no-files-found: error
+      - name: Update status, research log and README
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('results/phase82_inference/summary.json').read_text())
+          status=(
+            '# Phase 82 Status\nDate: 2026-10-10\n'
+            f"Status: {s['decision']}\n\n"
+            f"- [x] Expiry-clustered inference completed on frozen Phase 81 DEV/VAL outputs.\n"
+            f"- [x] Validation tests: {s['counts']['validation_total_tests']}; Holm-adjusted as one family.\n"
+            f"- [x] Candidate rows meeting the pre-registered gate: {len(s['candidate_gate']['passing_candidates'])}.\n"
+            f"- [x] 2026 holdout opened: {s['holdout_opened']}; holdout remains sealed if no gate passes.\n"
+            '- [x] Report, tables and figures written under results/phase82_inference/.\n'
+          )
+          Path('PHASE82_STATUS.md').write_text(status)
+          with open('RESEARCH_LOG.md','a',encoding='utf-8') as f:
+            f.write(
+              '\n\n## 2026-10-10 — Phase 82 expiry-clustered inference\n'
+              f"- Decision: {s['decision']}; validation hypotheses: {s['counts']['validation_total_tests']}; passing candidates: {len(s['candidate_gate']['passing_candidates'])}.\n"
+              f"- 2026 holdout opened: {s['holdout_opened']}. Report: results/phase82_inference/report.md.\n"
+              '- The one-lot candle-open model is not executable quote evidence; no automatic trading action is enabled.\n'
+            )
+          top=(
+            '# Resume checkpoint — 2026-10-10 (Phase 82 inference)\n\n'
+            f"**Phase 82 decision: {s['decision']}.** The preregistered 60-test DEV/VAL inference family was analyzed with expiry clusters and Holm correction. {len(s['candidate_gate']['passing_candidates'])} defined-risk candidate(s) met all gates. "
+            f"The 2026 holdout was {'opened for a separate confirmation' if s['holdout_opened'] else 'not read; it remains sealed'}.\n\n"
+            '- [Phase 80 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_LITERATURE_REVIEW.md)\n'
+            '- [Phase 81 corrected sweep report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/results/phase81_intraday_overnight/report.md)\n'
+            '- [Phase 82 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-clustered-inference-gates/PHASE82_RESEARCH_PLAN.md)\n'
+            '- [Phase 82 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-clustered-inference-gates/PHASE82_STATUS.md)\n'
+            '- [Phase 82 inference report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-clustered-inference-gates/results/phase82_inference/report.md)\n'
+            '- [Phase 82 workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/${GITHUB_RUN_ID})\n\n'
+            'No strategy should be promoted from an isolated positive total. Historical bid/ask/depth remain unavailable; costs and adverse ticks are modeled.\n\n---\n\n'
+          )
+          readme=Path('README.md')
+          readme.write_text(top+readme.read_text())
+          PY
+      - name: Log workflow failure
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo
+            echo "## E82-005 — Inference workflow failure"
+            echo "- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/${GITHUB_RUN_ID}"
+            echo "- Commit: ${GITHUB_SHA}"
+            echo "- Failure occurred during the frozen inference pipeline; no result is considered valid unless all validated outputs are present."
+            echo "- Status: OPEN pending root-cause diagnosis."
+          } >> PHASE82_ERROR_LOG.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add PHASE82_ERROR_LOG.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Log Phase 82 inference workflow failure'
+            git pull --rebase origin phase-82-expiry-clustered-inference-gates
+            git push origin HEAD:phase-82-expiry-clustered-inference-gates
+          fi
+      - name: Persist inference outputs
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase82_inference/ PHASE82_STATUS.md RESEARCH_LOG.md README.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record Phase 82 expiry-clustered inference'
+          git pull --rebase origin phase-82-expiry-clustered-inference-gates
+          git push origin HEAD:phase-82-expiry-clustered-inference-gates
