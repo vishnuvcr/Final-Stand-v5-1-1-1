@@ -1,17 +1,15 @@
 name: Phase 64 — Paper-Derived CCI Strategy Tests
 
 on:
-  push:
-    branches:
-      - phase-64-paper-derived-strategy-tests
-    paths:
-      - ".github/workflows/phase64-paper-derived-strategy-tests.yml"
-      - "research/phase64_paper_strategy_tests.py"
-      - "research/phase64_report.py"
-      - "tests/test_phase64_strategy.py"
-      - "requirements-phase64.txt"
-      - "PHASE64_RESEARCH_PLAN.md"
+  schedule:
+    - cron: "17 * * * *"
   workflow_dispatch:
+    inputs:
+      force_rerun:
+        description: "Run again even if Phase 64 already has a completion marker"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -29,10 +27,32 @@ jobs:
       HF_HUB_DISABLE_TELEMETRY: "1"
       PYTHONUNBUFFERED: "1"
     steps:
-      - name: Checkout
+      - name: Checkout Phase 64 research branch
         uses: actions/checkout@v4
+        with:
+          ref: phase-64-paper-derived-strategy-tests
+
+      - name: Check finite-run completion marker and retry budget
+        id: gate
+        shell: bash
+        run: |
+          OUT="results/phase64_paper_strategy_tests"
+          COUNTER="$OUT/phase64_attempt_counter.json"
+          FORCE="${{ inputs.force_rerun }}"
+          ATTEMPTS=0
+          if [ -f "$COUNTER" ]; then ATTEMPTS="$(jq -r '.attempts // 0' "$COUNTER")"; fi
+          if [ -f "$OUT/phase64_completion_marker.json" ] && [ "$FORCE" != "true" ]; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Phase 64 already completed; finite stopping rule prevents repeat execution."
+          elif [ "$ATTEMPTS" -ge 3 ] && [ "$FORCE" != "true" ]; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Three automatic attempts have already failed. Automatic retries stopped; inspect the error log before manually forcing a new attempt."
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Set up Python
+        if: steps.gate.outputs.should_run == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -40,6 +60,7 @@ jobs:
           cache-dependency-path: requirements-phase64.txt
 
       - name: Restore pinned Hugging Face cache
+        if: steps.gate.outputs.should_run == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface/hub
@@ -48,22 +69,52 @@ jobs:
             hf-phase64-${{ runner.os }}-
 
       - name: Install bounded dependencies
+        if: steps.gate.outputs.should_run == 'true'
         run: python -m pip install --disable-pip-version-check -r requirements-phase64.txt
 
       - name: Syntax gate
+        if: steps.gate.outputs.should_run == 'true'
         run: |
           python -m py_compile research/phase64_paper_strategy_tests.py research/phase64_report.py
           python -m pytest -q tests/test_phase64_strategy.py
 
       - name: Run frozen development and validation test
+        if: steps.gate.outputs.should_run == 'true'
         run: python research/phase64_paper_strategy_tests.py
 
       - name: Generate report and figures
-        if: success()
+        if: steps.gate.outputs.should_run == 'true' && success()
         run: python research/phase64_report.py
 
+      - name: Validate outputs and write completion marker
+        if: steps.gate.outputs.should_run == 'true' && success()
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          out = Path("results/phase64_paper_strategy_tests")
+          required = ["summary.csv", "opportunity_audit.csv", "trade_ledger.csv",
+                      "source_manifest.json", "decision.json", "PHASE64_REPORT.md",
+                      "validation_net_pnl.png", "validation_equity.png"]
+          missing = [name for name in required if not (out / name).is_file() or (out / name).stat().st_size == 0]
+          if missing:
+              raise SystemExit("Missing/empty required aggregate outputs: " + ", ".join(missing))
+          manifest = json.loads((out / "source_manifest.json").read_text())
+          if manifest.get("explicit_2026_option_files_downloaded") != 0:
+              raise SystemExit("Holdout safeguard failed: 2026 option files were downloaded")
+          marker = {
+              "phase": 64, "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
+              "commit": os.environ.get("GITHUB_SHA"),
+              "dataset_revision": manifest.get("revision"),
+              "holdout_option_files_downloaded": 0,
+              "aggregate_outputs_validated": True
+          }
+          (out / "phase64_completion_marker.json").write_text(json.dumps(marker, indent=2) + "\n")
+          print(json.dumps(marker))
+          PY
+
       - name: Publish aggregate research outputs
-        if: success()
+        if: steps.gate.outputs.should_run == 'true' && success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -75,8 +126,25 @@ jobs:
             git push
           fi
 
+      - name: Record workflow failure in repository error log
+        if: failure() && steps.gate.outputs.should_run == 'true'
+        shell: bash
+        run: |
+          mkdir -p results/phase64_paper_strategy_tests
+          COUNTER="results/phase64_paper_strategy_tests/phase64_attempt_counter.json"
+          ATTEMPTS=0
+          if [ -f "$COUNTER" ]; then ATTEMPTS="$(jq -r '.attempts // 0' "$COUNTER")"; fi
+          ATTEMPTS="$((ATTEMPTS + 1))"
+          printf '{"attempts":%s,"last_failed_run_id":"%s","last_failed_commit":"%s"}\n' "$ATTEMPTS" "$GITHUB_RUN_ID" "$GITHUB_SHA" > "$COUNTER"
+          printf '\n\n## Automated run failure — %s\n- Workflow run: %s\n- Commit: %s\n- Attempt: %s/3 automatic attempts\n- Job conclusion: failure; inspect the linked Actions logs for the failed step. No numerical output from this run is accepted unless all research report and audit gates completed.\n- Automatic attempts stop at 3; a subsequent manually forced attempt needs concrete error correction and must preserve previous entries.\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_RUN_ID" "$GITHUB_SHA" "$ATTEMPTS" >> PHASE64_ERROR_LOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE64_ERROR_LOG.md "$COUNTER"
+          git commit -m "phase 64: log failed automated run and increment retry budget" || true
+          git push || true
+
       - name: Upload aggregate-only results
-        if: always()
+        if: always() && steps.gate.outputs.should_run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: phase64-paper-strategy-results-${{ github.run_id }}
