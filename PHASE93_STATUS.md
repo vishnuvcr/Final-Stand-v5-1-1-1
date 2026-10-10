@@ -45,7 +45,8 @@ The 2026 Phase 83 holdout remains sealed.
 
 ## Accepted validation
 
-- Workflow: [38053142927 — success](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053142927).
+- Initial stable validation: [38053142927 — success](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053142927).
+- Latest validation after the Shaha/Phase 66 cross-reference: [38053377409 — success](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053377409).
 - Validation report: [validation_report.json](results/phase93/validation_report.json): 14/14 audit sections, 14/14 filename mappings, references 1–29 in order, no validator errors.
 - Validation flags: no model/market data test run, Phase 83 2026 holdout not accessed, strategy promoted=false.
 - Automation corrections for wording and concurrent report publication are logged as E93-008 and E93-009.
