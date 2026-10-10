@@ -10,3 +10,10 @@
 - Frozen DEV through 2023, VAL 2024–2025; 2026 is explicitly protected and out of the Phase-64 runner. No parameter search on VAL, and no 2026 holdout testing.
 - Dataset source planned at a fixed HF revision. License attribution and non-commercial restriction will be recorded. No raw data or secrets will be committed.
 - Cost rules and data limitations are preregistered. No numerical strategy results are claimed at phase opening.
+
+
+## 2026-10-10 — Pre-acceptance point-in-time strike correction
+- Workflow run 38026911131 passed setup, dependency installation, py_compile and the current unit tests, but the numerical step was cancelled before any output was accepted.
+- Re-inspected the entry implementation and identified a prospective temporal bug: the strike universe was built from every contract minute in the expiry file. This could let future contract availability influence ITM selection at the earlier breakout.
+- Corrected to select the nearest strictly ITM contract from bars observed exactly at the breakout minute, then require the next exact minute's option close for entry. Added a regression test called test_strike_selection_uses_trigger_minute_availability_only.
+- Run 38026911131 is explicitly non-evidence; no P&L from it is accepted. Latest code must pass unit tests and complete the frozen DEV/VAL test before any interpretation.
