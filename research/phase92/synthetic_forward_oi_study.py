@@ -383,6 +383,8 @@ Run: {RUN_URL}
 Status: **{status}**  
 Sample: calendar 2022 only. Phase 90/91 cached payloads are not reused. The protected Phase 83 2026 holdout was not requested or loaded.
 
+**Research package:** [manuscript draft](MANUSCRIPT_DRAFT.md) · [supplementary materials](SUPPLEMENTARY_MATERIALS.md) · [cross-phase synthesis](CROSS_PHASE_FACTOR_SYNTHESIS.md) · [IV incremental effects figure](IV_INCREMENTAL_EFFECTS.svg) · [OOS MAE comparison figure](OOS_MAE_COMPARISON.svg)
+
 ## Coverage and data-quality summary
 - Options chunks valid: {sum(bool(x["valid"]) for x in COVERAGE)}/{len(COVERAGE)}.
 - India VIX chunks valid: {sum(bool(x["valid"]) for x in VIX_COVERAGE)}/{len(VIX_COVERAGE)}.
@@ -408,6 +410,10 @@ Option IV, close-derived synthetic proxy and OI features are lagged one full fiv
 | Split | Model | N | Sessions | MAE (bps) | RMSE (bps) | R² |
 |---|---|---:|---:|---:|---:|---:|
 {table if table else "| — | — | 0 | 0 | NA | NA | NA |"}
+
+**Figure 2.** Out-of-sample MAE comparison; lower is better.
+
+![Phase 92 OOS MAE comparison](OOS_MAE_COMPARISON.svg)
 
 ## Primary result
 {primary_text}
@@ -442,6 +448,11 @@ Strategy promotion: **NONE**.
 - [Phase branch workflow](.github/workflows/phase92-synthetic-forward-oi-2022.yml)
 - [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml)
 - [Detailed results](results/phase92/PHASE92_RESULTS.md)
+- [Research manuscript draft](results/phase92/MANUSCRIPT_DRAFT.md)
+- [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
+- [Cross-phase synthesis and stopping decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
+- [IV incremental effects figure](results/phase92/IV_INCREMENTAL_EFFECTS.svg)
+- [OOS MAE comparison figure](results/phase92/OOS_MAE_COMPARISON.svg)
 - [Summary JSON](results/phase92/summary.json)
 - [Coverage ledger](results/phase92/coverage.csv)
 - [Model metrics](results/phase92/model_metrics.csv)
@@ -497,6 +508,11 @@ Complete OOS rows/sessions: {summary.get("oos_n",0)}/{summary.get("oos_sessions"
 - [Phase 92 error log](PHASE92_ERROR_LOG.md)
 - [Phase 92 auditable chat log](PHASE92_CHAT_LOG.md)
 - [Detailed results](results/phase92/PHASE92_RESULTS.md)
+- [Research manuscript draft](results/phase92/MANUSCRIPT_DRAFT.md)
+- [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
+- [Cross-phase synthesis and stopping decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
+- [IV incremental effects figure](results/phase92/IV_INCREMENTAL_EFFECTS.svg)
+- [OOS MAE comparison figure](results/phase92/OOS_MAE_COMPARISON.svg)
 - [Cross-feature model metrics](results/phase92/model_metrics.csv)
 - [Coverage ledger](results/phase92/coverage.csv)
 - [Summary JSON](results/phase92/summary.json)
