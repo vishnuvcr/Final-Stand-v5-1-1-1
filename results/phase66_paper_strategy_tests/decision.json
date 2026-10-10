@@ -1,11 +1,11 @@
 {
-  "phase": 64,
+  "phase": 66,
   "decision": "RESEARCH_ONLY_NO_PROMOTION",
   "candidate_decisions": [
     {
       "variant": "CCI_BASE",
       "completed_trades": 0,
-      "coverage": 0.0,
+      "coverage": 0,
       "min20_trades": false,
       "coverage95": false,
       "positive_all_registered_cost_cases": false,
@@ -16,7 +16,7 @@
     {
       "variant": "CCI_EMA_FILTER",
       "completed_trades": 0,
-      "coverage": 0.0,
+      "coverage": 0,
       "min20_trades": false,
       "coverage95": false,
       "positive_all_registered_cost_cases": false,
