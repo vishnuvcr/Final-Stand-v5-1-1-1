@@ -17,7 +17,7 @@
 
 **Interpretation boundary:** predictive gain is not strategy P&L. Historical exact-contract bid/ask/depth, Paytm Money cost-adjusted fills, or live orders were not tested. No strategy has been promoted.
 
-**Next phase:** [Phase 91 2023 temporal replication plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_STATUS.md) · [draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41). Phase 91 completed in [Actions run 38049680438](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049680438). The 2023 replication did not establish an incremental IV gain: M1−M2 MAE +0.0001111 bps, 95% CI −0.0110700 to +0.0102532. No options strategy is promoted. [Cross-year synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/CROSS_YEAR_SYNTHESIS.md).
+**Subsequent bounded feature screen:** Phase 92's [2022 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/PHASE92_RESULTS.md) show the added synthetic-forward/OI feature block worsened MAE by 0.1708 bps (95% CI −0.2299 to −0.1152); see the [cross-phase synthesis and stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md). The rolling-ATM incremental-prediction line is now closed pending a materially new hypothesis or authorized exact-contract data. No options strategy is promoted.
 <!-- PHASE90_END -->
 
 <!-- PHASE89_START -->
