@@ -1,6 +1,6 @@
 # Phase 101 Status — Full PDF Strategy Replication Gap-Fill
 
-**State:** OPEN — first proxy outputs generated, but invalidated by a detected U05 calendar look-ahead and U02 capital-reuse flaw; corrected rerun pending  
+**State:** CORRECTED PROXY RUN VALIDATED — final paper-by-paper audit recorded below  
 **Branch:** `phase-101-full-pdf-strategy-replication`  
 **Updated:** 2026-10-10  
 **Strategy promotion:** NONE  
@@ -10,8 +10,8 @@
 
 | Work item | Prior evidence | Phase 101 action | State |
 |---|---|---|---|
-| U02 — ML NIFTY options signals (RF/XGBoost/LSTM) | First run improperly reused initial ₹1 lakh to size every trade | Re-run with separate sequential ₹1 lakh equity per model, 95% premium exposure cap, 5% fee reserve, block bootstrap interval when sample permits | RETESTING |
-| U05 — monthly trend/seasonality options rule | First run allowed some Thursday entries before Wednesday forecast | Re-run with first Thursday strictly after first Wednesday; preserve exclusions and publish sample-coverage limits | RETESTING |
+| U02 — ML NIFTY options signals (RF/XGBoost/LSTM) | First run improperly reused initial ₹1 lakh to size every trade | Re-run with separate sequential ₹1 lakh equity per model, 95% premium exposure cap, 5% fee reserve, block bootstrap interval when sample permits | VALIDATED_PROXY_TEST |
+| U05 — monthly trend/seasonality options rule | First run allowed some Thursday entries before Wednesday forecast | Re-run with first Thursday strictly after first Wednesday; preserve exclusions and publish sample-coverage limits | VALIDATED_PROXY_TEST |
 | U07 — payoff structures | Phase 99 algebra tested 13 structures over nine expiry spots; not historical P&L | Carry forward formula evidence; keep history P&L blocked absent entry signals/quotes | CARRIED FORWARD |
 | U10 — moving averages | Phase 96 fixed SMA/EMA screen | Carry forward descriptive comparison, not claim of exact reproduction | CARRIED FORWARD |
 | U14 — CCI options | Phase 66 zero completed trades; Phase 67 exact-time coverage 8/30 triggers, 5/30 next-minute rows; Phase 68 missing target-date audit | Carry forward no-expectancy-inference decision; no rule loosening | CARRIED FORWARD |
@@ -47,3 +47,13 @@ The first successful runtime output set is superseded and not accepted as final 
 - U05 completed trades: 10; sample status: COMPUTED; audit status counts: {'EXCLUDED_FIRST_WEDNESDAY_NOT_SESSION': 5, 'BLOCKED_NO_MATCHING_OPENING_WINDOW_OPTION': 30, 'BLOCKED_NO_EXACT_NEXT_MINUTE_EXIT': 6, 'BLOCKED_NO_THURSDAY_INDEX_BAR': 1, 'COMPLETED': 10, 'EXCLUDED_INSUFFICIENT_ACCOUNT_EQUITY': 3, 'EXCLUDED_FIRST_THURSDAY_NOT_SESSION': 1}.
 - U02 predictions: 1330; completed trades: 164; model statuses: [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
 - Result files are aggregate/derived only. A model/data blocker is not a negative efficacy finding.
+
+
+## Corrected runtime checkpoint — 2026-10-10T18:37:18Z
+
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076280351
+- Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; 14-paper matrix; no 2026 option data; no strategy promoted.
+- U05: 10 completed / 56 opportunities; status COMPUTED; audit counts {'EXCLUDED_FIRST_WEDNESDAY_NOT_SESSION': 5, 'BLOCKED_NO_MATCHING_OPENING_WINDOW_OPTION': 30, 'BLOCKED_NO_EXACT_NEXT_MINUTE_EXIT': 6, 'BLOCKED_NO_THURSDAY_INDEX_BAR': 1, 'COMPLETED': 10, 'EXCLUDED_INSUFFICIENT_ACCOUNT_EQUITY': 3, 'EXCLUDED_FIRST_THURSDAY_NOT_SESSION': 1}.
+- U02: 1330 predictions; 164 costed trades; model statuses [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
+- Account sizing: sequential per-model ₹1 lakh starting equity, 95% premium deployment limit, 5% fee reserve.
+- Bootstrap: circular moving-block 95% mean net-trade CI only when n>=20.
