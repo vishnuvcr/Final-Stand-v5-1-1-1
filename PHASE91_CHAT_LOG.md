@@ -27,10 +27,9 @@ User replied “Ok proceed” to continue the planned research following Phase 9
 - Created [draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41), targeting the Phase 90 branch; it remains unmerged.
 - Updated the README with the Phase 91 checkpoint and links.
 - Static review found and fixed a stale copied JSON metadata value (`phase: 90` → `phase: 91`) before any confirmed run; logged as E91-010.
-- Added a PR-triggered fallback workflow in the Phase 90 parent branch to attempt automatic execution on PR synchronization. Latest repository checks still did not surface an Actions run ID or result files. This remains an execution-verification blocker; no statistical conclusion is available yet.
-- The Phase 91 workflow contains `workflow_dispatch`, but availability of the UI's manual Run button is not confirmed because GitHub documents that a workflow must be present on the default branch for that button to be displayed. No workflow was claimed to have run.
+- Added a PR-triggered runner on the Phase 90 parent branch; this runner produced the completed [Phase 91 Actions run 38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830). A default-branch runner with `workflow_dispatch` was also installed to make automation and manual entry more discoverable; that newer runner was not needed to obtain the current result.
 
-Append the confirmed Actions run, actual data coverage and primary result when available. This is an auditable activity log, not a record of private reasoning.
+The pending-trigger paragraphs above are now superseded by the runtime record below. The final primary comparison is inconclusive for incremental predictive value because its registered confidence interval includes zero. This is an auditable activity log, not a record of private reasoning.
 
 <!-- PHASE91_RUNTIME_START -->
 ## Automated execution record — 38049302830
