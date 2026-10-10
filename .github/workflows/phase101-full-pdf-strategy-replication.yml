@@ -41,6 +41,10 @@ jobs:
           ref: phase-66-ohcl-paper-replication
           path: evidence/phase66
           persist-credentials: false
+      - name: Sync serialized phase run to latest branch tip
+        run: |
+          git fetch origin phase-101-full-pdf-strategy-replication
+          git reset --hard origin/phase-101-full-pdf-strategy-replication
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -136,6 +140,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase101_pdf_strategy_tests PHASE101_STATUS.md PHASE101_RESEARCH_LOG.md PHASE101_CHAT_LOG.md PHASE101_ERROR_LOG.md
           git diff --cached --quiet || git commit -m "phase 101: publish PDF strategy test results and status"
+          git fetch origin phase-101-full-pdf-strategy-replication
+          git rebase origin/phase-101-full-pdf-strategy-replication
           git push origin HEAD:phase-101-full-pdf-strategy-replication
       - name: Record runtime failure
         if: failure()
@@ -154,6 +160,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add PHASE101_ERROR_LOG.md results/phase101_pdf_strategy_tests || true
           git commit -m "phase 101: record failed replication run" || true
+          git fetch origin phase-101-full-pdf-strategy-replication
+          git rebase origin/phase-101-full-pdf-strategy-replication || true
           git push origin HEAD:phase-101-full-pdf-strategy-replication || true
       - name: Upload aggregate-only artifacts
         if: always()
