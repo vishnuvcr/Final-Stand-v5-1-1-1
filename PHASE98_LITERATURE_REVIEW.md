@@ -64,7 +64,19 @@ Paytm Money's published notice describes brokerage changes for new users from 25
 
 Source: Paytm Money, *Brokerage charges increase from 25th Aug ’23; existing users will continue on old brokerage charges*. https://www.paytmmoney.com/blog/brokerage-charges-increase-from-25th-aug-23-existing-users-will-continue-on-old-brokerage-charges/
 
-### 5. Research design consequences
+#### 6. Practitioner video and independent online backtest material (low evidential weight)
+
+The targeted search also found practitioner explainers and self-published NIFTY/Bank NIFTY analyses. These are useful for documenting what retail traders mean by a “15-minute ORB” and for discovering alternate hypotheses, but they are not peer-reviewed evidence. Their strategy definitions, fee assumptions, dataset quality, survivorship/selection risks, source data, and complete trade ledgers are not uniformly independently reproducible. They should not be assigned the same weight as a peer-reviewed paper or an audited replay.
+
+- **Stock Menthol (YouTube, 13 September 2026):** a video description titled around the 15-minute opening-range breakout discusses marking the first 15-minute range and adds a Fair Value Gap filter. The listing references a funded-trader service and a backtesting feature; the search listing alone does not establish independent net profitability. It is a description of a popular retail rule, not validation. https://www.youtube.com/watch?v=_PQHVKKGeB4
+- **Trader Swami (YouTube, 8 February 2023):** a “15 minute ORB” tutorial describes an intraday breakout and scanner for Bank Nifty, Nifty and stocks. Its description is educational and makes broad promotional claims; no verified source-faithful option-level results are established by the listing. https://www.youtube.com/watch?v=cLLEKlvplVQ
+- **Finance With Sai (19 March 2025):** a self-published Bank Nifty ORB backtest page explicitly says it compares results before and after slippage/charges. It is closer to the execution-cost question than a pure chart tutorial, but trades the index/spot signal and discusses implementation in F&O; its assumptions and sample still differ from this Phase 98 long/short option vertical. https://financewithsai.com/orb-backtest-on-banknifty/
+- **Intraday Lab (1 April 2026):** a self-published article reports an analysis of NIFTY's first 15-minute candle over 2017–2026. It states that popular breakout interpretations can fail, but the article is not peer reviewed and Phase 98 does not import its reported figures as ground truth. https://intradaylab.com/blog/nifty-first-15-minute-candle-analysis
+- **Intraday Lab (7 May 2026):** a separate practitioner article says it compared NIFTY breakout rules on about 12 months of data, including false-breakout observations. Because the search result does not provide a reproducible full data/ledger package, use it only as practitioner context. https://intradaylab.com/blog/breakout-trading-nifty-what-actually-works
+
+Across practitioner sources, the repeated warning is that an appealing chart rule is not equivalent to a tested, post-cost option strategy. Their claims are not aggregated or meta-analyzed here because the designs and evidence quality are not sufficiently comparable.
+
+## 5. Research design consequences
 
 These sources support the following fixed safeguards, all consistent with the Phase 98 preregistration:
 
@@ -92,7 +104,7 @@ These sources support the following fixed safeguards, all consistent with the Ph
 
 - The cited ORB papers are not direct NIFTY option-vertical replications. Indian instrument-level evidence with transparent option fills and costs remains the key gap this experiment addresses.
 - The recent 2026 cost-aware futures result is a preprint, not peer-reviewed; it is included as timely methodological context, not settled consensus.
-- This review does not claim systematic coverage of every database, YouTube video, or paper. Only sources with identifiable bibliographic or official provenance are summarized here; lower-quality promotional sources are not treated as empirical validation.
+- This is a targeted, source-quality-stratified review rather than an exhaustive systematic review of every database and video. Searches covered indexed academic/official sources and targeted YouTube/practitioner searches; inaccessible or non-reproducible source claims were not treated as evidence. Additional systematic screening and deduplication would be required before describing it as exhaustive.
 - The current dataset does not supply a full historical NBBO/depth tape; exact executable P&L remains unverified.
 - Broker charges need to be reconciled with the user's actual account tariff before interpreting net returns as personally realizable.
 
