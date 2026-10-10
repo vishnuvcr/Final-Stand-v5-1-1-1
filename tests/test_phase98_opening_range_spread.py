@@ -4,10 +4,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import numpy as np
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state, prep_options,
-    run_scenario, slip, holm, option_columns, arm_b_treatment
+    run_scenario, slip, holm, option_columns, arm_b_treatment, arrow_filter_bounds
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
@@ -98,3 +100,19 @@ def test_filtered_arm_fails_closed_when_vix_history_unavailable():
     assert arm_b_treatment({"available": False, "skip": False}) == "UNAVAILABLE"
     assert arm_b_treatment({"available": True, "skip": True}) == "SKIP"
     assert arm_b_treatment({"available": True, "skip": False}) == "TRADE"
+
+
+def test_timezone_typed_arrow_filter_bounds_read_parquet_rows(tmp_path):
+    from_zone = lambda minute: pd.Timestamp("2024-01-02 09:15", tz=TZ) + pd.Timedelta(minutes=minute)
+    ts_type = pa.timestamp("ns", tz="+05:30")
+    stamps = [from_zone(i).to_pydatetime() for i in (-1, 0, 1, 2)]
+    path = tmp_path / "typed_timestamp.parquet"
+    pq.write_table(pa.table({
+        "timestamp": pa.array(stamps, type=ts_type),
+        "value": [0, 1, 2, 3],
+    }), path)
+    low, high = arrow_filter_bounds(from_zone(0), from_zone(1), ts_type)
+    assert low.type == ts_type
+    assert high.type == ts_type
+    actual = pq.read_table(path, filters=[("timestamp", ">=", low), ("timestamp", "<=", high)])
+    assert actual.column("value").to_pylist() == [1, 2]
