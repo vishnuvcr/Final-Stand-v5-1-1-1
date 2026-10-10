@@ -1,3 +1,13 @@
+# Resume checkpoint — 2026-10-10 (Phase 74 fixed-strike stitch test)
+
+Phase 73 [run 38042070177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042070177) recorded 16/24 probes; all expiryCode=0 requests returned HTTP 400. Codes 1/2 returned rolling ATM-relative data, but exact expiry identity remains unresolved. The ATM series itself is not a fixed-contract series.
+
+Phase 74 tests whether querying all ATM-relative offsets (ATM-10 through ATM+10) and selecting bars by returned absolute strike can reconstruct fixed-strike minute histories. It covers only 2026-07-28 and 2026-08-04, uses codes 1/2, and stores aggregate per-strike coverage only—not raw prices. Even if stitching succeeds, exact expiry mapping and source rights remain required before any P&L replay.
+
+- [Phase 74 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/PHASE74_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/PHASE74_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/PHASE74_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/.github/workflows/phase74-fixed-strike-stitch-feasibility.yml)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 73 source suitability decision)
 
 Phase 73 [workflow run 38042070177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042070177) recorded 16/24 responses; all eight `expiryCode=0` probes returned HTTP 400. Codes 1/2 returned rows, but exact expiry dates are not established by these aggregate responses. The `strike` arrays contained only 7 distinct absolute strikes on 2026-07-28 and 5 on 2026-08-04 over the multi-session response. Because Dhan's API is explicitly rolling ATM-relative, its absolute strike can change through time.
