@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 START=date(2023,1,1)
-STOP=date(2024,1,1)  # exclusive; never request 2025 data
+STOP=date(2024,1,1)  # non-inclusive API boundary; retain only 2023 timestamps
 CACHE=Path(".cache/phase91/raw")
 OUT=Path("results/phase91")
 TOKEN=os.environ.get("DHAN_ACCESS_TOKEN","").strip()
