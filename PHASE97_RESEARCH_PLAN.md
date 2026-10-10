@@ -16,3 +16,5 @@ Does selecting strategies by a development-only risk-adjusted score improve regi
 
 ## Stop and limitations
 One run, fixed three regimes, no tuning. The source net50 is not proof of complete Paytm Money costs or executable fills. State-cell P&L cannot be called a deployable portfolio return without trade overlap and capital allocation. HIGH is extremely sparse. Stop after report, QA and PR.
+
+The registered workflow runs on plan/script/input pushes and has a manual workflow_dispatch entry point.
