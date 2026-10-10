@@ -1,3 +1,23 @@
+<!-- PHASE89_START -->
+# Resume checkpoint — Phase 89 rolling-options feature study
+
+**Status: COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations.** Automated run [38047563119](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047563119) requested 2025-only Dhan rolling ATM-relative CALL/PUT data and tested the four preregistered IV/OI associations. The protected Phase 83 2026 holdout was not requested or loaded.
+
+- [Phase 89 research plan](PHASE89_RESEARCH_PLAN.md)
+- [Phase 89 status](PHASE89_STATUS.md)
+- [Phase 89 error log](PHASE89_ERROR_LOG.md)
+- [Phase 89 auditable chat/decision log](PHASE89_CHAT_LOG.md)
+- [Phase 89 detailed results](results/phase89/PHASE89_RESULTS.md)
+- [Primary tests CSV](results/phase89/primary_tests.csv)
+- [Coverage ledger](results/phase89/coverage.csv)
+- [Daily coverage ledger](results/phase89/daily_coverage.csv)
+- [Split estimates](results/phase89/split_tests.csv)
+- [Summary JSON](results/phase89/summary.json)
+- [Automated workflow](.github/workflows/phase89-rolling-options-feature-study.yml)
+
+**Interpretation boundary:** feature association is not options-strategy profitability. No fixed-contract execution, bid/ask/depth, Greeks, VIX/futures, Paytm Money cost-adjusted fills or live orders were evaluated. No strategy has been promoted.
+<!-- PHASE89_END -->
+
 # Resume checkpoint — 2026-10-10 (Phase 88 coverage PASS; execution-data gate still closed)
 
 **All four Dhan rolling-options probes passed** in [Actions run 38047180848](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047180848):
