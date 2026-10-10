@@ -7,7 +7,10 @@
 - [Net P&L heatmap](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/figures/phase83_net_pnl_heatmap.svg)
 - [Supplementary performance ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/results/phase83_final_manuscript/supplementary_performance_ledger.csv)
 - [Supplementary inference ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/results/phase83_final_manuscript/supplementary_inference_ledger.csv)
+- [Phase 83 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/PHASE83_RESEARCH_PLAN.md)
 - [Phase 83 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/PHASE83_STATUS.md)
+- [Phase 83 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/PHASE83_ERROR_LOG.md)
+- [Successful Phase 83 build workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38046031945)
 
 ---
 
