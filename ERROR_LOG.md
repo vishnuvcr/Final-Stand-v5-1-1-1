@@ -2227,3 +2227,19 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - No trades were evaluated and no P&L evidence was produced.
 - Correction: add matplotlib and restore literal GitHub Actions expressions.
 - Scientific specification, distance set, execution model and cost models unchanged.
+
+
+# Phase 102 — Evidence ranking audit log (2026-10-11)
+
+### E102-001 — Cross-study raw P&L is not directly rankable
+**Type:** design limitation. **Resolution:** ranking is by evidence quality/next action, retaining native units and periods; no blended score was created.
+
+### E102-002 — TT-03 hold split too small for confirmatory evidence
+**Type:** evidence limitation. **Resolution:** rank TT-03 for independent revalidation only; 3 HOLD trades do not support promotion.
+
+### E102-003 — TT-04 / TT-05 temporal conflict
+**Type:** evidence limitation. **Resolution:** retain both positive partial-window results and negative historical HOLD results; do not tune around older holdouts.
+
+### E102-004 — Phase 102 validator assertion defects
+**Affected runs:** [38082218752](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082218752), [38082247835](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082247835), [38082297783](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082297783). Checks used an overly specific decimal substring and a phrase absent verbatim from the Phase 92 report. These caused 1–2 source-consistency assertions to fail despite expected numerical source findings. The assertions were rewritten to use the actual source wording and a stable numeric prefix; source strategy data were not changed.
+**Verification:** final run [38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704) passed 14/14 checks and 2/2 tests. Earlier failures remain preserved as audit history. No strategy was promoted.
