@@ -27,6 +27,6 @@ The initial study run and cached interpretation rerun both completed successfull
 - No token, raw response, row-level price, or hidden reasoning is logged.
 <!-- PHASE90_RUNTIME_END -->
 
-## E90-008 — downstream replication trigger not verified
+## E90-008 — downstream replication complete; result does not replicate the small 2024 gain
 
-The Phase 91 temporal replication was prepared on a separate branch and draft PR. A pull-request runner was added to this branch to allow automated execution of that child phase. At the latest repository check, no Phase 91 Actions run ID or aggregate output files had been surfaced. This is a child-phase execution blocker only; it does not change Phase 90's fixed sample, model result, or strategy decision. No credentials/raw data were logged and no strategy was promoted.
+Phase 91 completed successfully in [Actions run 38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830). The 2023 sample had 3,633 OOS rows across 60 sessions; M1−M2 MAE = +0.0001111 bps, 95% paired session-cluster CI −0.0110700 to +0.0102532. The interval crossed zero, so no incremental gain was established. This is a child-phase scientific result, not a Phase 90 execution error. No strategy P&L was computed or strategy promoted.
