@@ -1,0 +1,63 @@
+{
+  "phase": 79,
+  "decision": "NO_GO_INSUFFICIENT_EVIDENCE",
+  "scope": "Synthesis of existing audited evidence only; no new data retrieval or trading simulation.",
+  "evidence_matrix": [
+    {
+      "requirement": "Exact fixed-contract identity for every leg/time",
+      "status": "FAIL",
+      "evidence": "Phase 75: rolling Dhan response lacks per-bar exact expiry date; expiryCode/expiryFlag cannot establish contract expiry identity.",
+      "effect": "Affected legs cannot be replayed as exact contracts."
+    },
+    {
+      "requirement": "Complete target-date fixed-contract observations",
+      "status": "FAIL",
+      "evidence": "Phase 76 pinned HF dataset files for 2026-07-28 and 2026-08-04 contain trades only through 2026-07-02; expiry sessions absent.",
+      "effect": "Those expiry dates remain excluded; no imputation."
+    },
+    {
+      "requirement": "Automated-use and retention rights verified for complete sample",
+      "status": "UNVERIFIED",
+      "evidence": "Prior source gates did not accept a source satisfying all sample, rights and target-coverage requirements. HF dataset card indicates CC-BY-NC-4.0, which is not accepted here as a general commercial-use clearance.",
+      "effect": "No bulk raw-data caching/publication without documented terms."
+    },
+    {
+      "requirement": "Cost-aware reproducible accounting",
+      "status": "PARTIAL",
+      "evidence": "Phase 51-3/50B frozen engine outputs include Paytm Money cost scenarios and friction stresses; Phase 77 ledger reconciliation passed. OHLC-based outcomes are not quote/depth-executable fills.",
+      "effect": "Model accounting is reproducible but fill realism remains limited."
+    },
+    {
+      "requirement": "Temporal/out-of-sample stability",
+      "status": "FAIL",
+      "evidence": "Phase 78: TT-04 historical HOLD base -\u20b96,456.29 and +50% friction -\u20b911,148.57; TT-05 HOLD base -\u20b940,244.68 and \u20b920/order +50% friction -\u20b949,605.30, despite positive short partial-window outcomes.",
+      "effect": "No strategy promotion."
+    },
+    {
+      "requirement": "Reproducible audit trail",
+      "status": "PASS",
+      "evidence": "Phase 71\u201378 branches record plans/status/error logs and completed workflow evidence; Phase 77 ledger reconciliation had no count/net errors.",
+      "effect": "Sufficient to document the research no-go, not to claim profitability."
+    }
+  ],
+  "strategies": {
+    "TT-02": "Not supported in the available partial sample; negative in all four registered cost/friction cases.",
+    "TT-04": "Not promoted; partial-window gains conflict with negative historical HOLD; bootstrap intervals include zero.",
+    "TT-05": "Not promoted; partial-window gains conflict with negative historical HOLD; bootstrap intervals include zero."
+  },
+  "excluded_expiries": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "reopen_only_if": [
+    "A concrete source provides exact expiry/strike/side identity and complete target-date bars.",
+    "Documented license/API terms permit intended automated analysis and retention.",
+    "Quote/spread or defensible conservative execution assumptions and Paytm Money charges can be applied.",
+    "A pre-registered temporal test can be run without reusing the same holdout for tuning."
+  ],
+  "not_claimed": [
+    "This is not proof that all strategies are unprofitable.",
+    "No strategy is approved for live trading.",
+    "The result does not replace the final research manuscript; it defines the evidence boundary and stop decision."
+  ]
+}
