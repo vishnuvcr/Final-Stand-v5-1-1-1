@@ -43,4 +43,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase67_contract_coverage PHASE67_STATUS.md PHASE67_RESEARCH_LOG.md PHASE67_ERROR_LOG.md PHASE67_CHAT_LOG.md README.md
           git diff --cached --quiet || git commit -m "Phase 67: publish contract coverage diagnostics"
+          # Reconcile concurrent documentation commits before publishing generated outputs.
+          git pull --rebase origin "$GITHUB_REF_NAME"
           git push
