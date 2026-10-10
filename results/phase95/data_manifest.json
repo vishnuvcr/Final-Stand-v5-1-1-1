@@ -7,11 +7,10 @@
   "raw_data_committed": false,
   "phase83_holdout_accessed": false,
   "source_url": "https://finance.yahoo.com/quote/%5ENSEI/history/",
-  "cache_used": false,
-  "retrieved_at_utc": "2026-10-10T17:15:06.859734+00:00",
+  "cache_used": true,
+  "retrieved_at_utc": null,
   "rows": 4487,
   "first_date": "2007-09-17",
   "last_date": "2025-12-31",
-  "sha256": "73894ea5dd0db39182da83cd6d279670d7ae7f26d1ea31d64b1a183ee187b5f2",
-  "note": "Raw bars remain in Actions cache; not committed."
+  "sha256": "73894ea5dd0db39182da83cd6d279670d7ae7f26d1ea31d64b1a183ee187b5f2"
 }\n
