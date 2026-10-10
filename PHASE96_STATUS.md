@@ -19,8 +19,8 @@
 - [x] Primary endpoint and per-regime results reconciled.
 - [x] Result report, CSV and JSON saved.
 - [x] Error/chat logs updated.
-- [x] README checkpoint updated.
-- [x] Draft PR opened; remain unmerged.
+- [x] Phase 96 branch README checkpoint updated. Main-branch README update was blocked by repository write safety controls; do not claim main README changed.
+- [x] Draft PR [#46](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/46) opened against Phase 95; verified open/draft/unmerged.
 
 ## Limitations
 Retrospective summary-table analysis; no independent blind validation, no strategy replay, no new market data, no holdout use. State cells do not constitute a deployable portfolio. The source stress does not establish complete Paytm Money all-in costs or executable fills.
