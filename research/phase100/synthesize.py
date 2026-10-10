@@ -23,7 +23,10 @@ def main():
  ci=[r for r in close if fnum(r.get("bootstrap_ci_low"))>0]
  sig=[r for r in close if fnum(r.get("mae_improvement_vs_persistence"))>0 and fnum(r.get("bootstrap_ci_low"))>0 and fnum(r.get("holm_p_value"))<.05]
  p96=[r for r in readcsv(ROOT/"results/phase96/metrics.csv") if r.get("strategy")!="buy_hold"]
- p97=readjson(ROOT/"results/phase97/summary.json");p98=readjson(ROOT/"results/phase98/summary.json");p99=readjson(ROOT/"results/phase99/summary.json")\n claim_rows=readcsv(p95/"paper_claim_status.csv")\n reconcile_note=("The latest Phase 95 paper-claim reconciliation completed; the ledger is included in this supplement." if claim_rows else "Phase 95 paper-claim reconciliation has not completed; source-specific statuses remain provisional.")\n if claim_rows: shutil.copy2(p95/"paper_claim_status.csv",OUT/"phase95_paper_claim_status.csv")
+ p97=readjson(ROOT/"results/phase97/summary.json");p98=readjson(ROOT/"results/phase98/summary.json");p99=readjson(ROOT/"results/phase99/summary.json")
+ claim_rows=readcsv(p95/"paper_claim_status.csv")
+ reconcile_note=("The latest Phase 95 paper-claim reconciliation completed; the ledger is included in this supplement." if claim_rows else "Phase 95 paper-claim reconciliation has not completed; source-specific statuses remain provisional.")
+ if claim_rows: shutil.copy2(p95/"paper_claim_status.csv",OUT/"phase95_paper_claim_status.csv")
  paper_rows=[
  ("U01","Bansal et al. — multi-regressor stock-price forecasts","PARTIAL","Common NIFTY model-family screen; source universe/protocol not fully matched."),
  ("U02","Sherasiya — RF/XGBoost/LSTM options signals","DATA_BLOCKED","No point-in-time exact-contract training/label matrix; no option P&L."),
