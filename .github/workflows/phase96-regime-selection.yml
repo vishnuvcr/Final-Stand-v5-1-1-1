@@ -1,0 +1,35 @@
+name: Phase 96 Regime Selection
+on:
+  push:
+    branches:
+      - phase-96-vix-regime-adaptive-strategy-test
+    paths:
+      - research/phase96/run_regime_selection.py
+      - PHASE96_RESEARCH_PLAN.md
+      - results/phase45_ready_made/strategy_vix_summary.csv
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-96-vix-regime-adaptive-strategy-test
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python research/phase96/run_regime_selection.py
+      - name: Publish computed output
+        if: always()
+        run: |
+          if [ -f results/phase96/validation_report.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add results/phase96/regime_selection_results.csv results/phase96/validation_report.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Publish Phase 96 results"
+              git push origin HEAD:phase-96-vix-regime-adaptive-strategy-test
+            fi
+          fi

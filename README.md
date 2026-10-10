@@ -1,3 +1,19 @@
+<!-- PHASE96_CHECKPOINT_START -->
+## Phase 96 — VIX-Regime-Adaptive Strategy Selection
+
+**Status: COMPLETE — primary endpoint failed; NO PROMOTION.** The DEV-selected strategy for each of LOW, NORMAL and HIGH regimes was negative in validation under the source's 50%-friction scenario. Aggregate selected validation net50 was **−₹303,435.13**.
+
+- [Research plan](PHASE96_RESEARCH_PLAN.md) · [status](PHASE96_STATUS.md) · [error log](PHASE96_ERROR_LOG.md) · [visible chat log](PHASE96_CHAT_LOG.md)
+- [Detailed report](results/phase96/selection_report.md) · [machine report](results/phase96/validation_report.json) · [selected rows](results/phase96/regime_selection_results.csv) · [script](research/phase96/run_regime_selection.py) · [manual/push workflow](.github/workflows/phase96-regime-selection.yml)
+- LOW: `strap`, DEV +₹131,358.41, VAL −₹187,009.45 (49 trades).
+- NORMAL: `strip`, DEV +₹62,823.99, VAL −₹113,665.57 (49 trades).
+- HIGH: `short_iron_condor`, DEV +₹9,519.01, VAL −₹2,760.10 (3 trades; very sparse).
+- HIGH regime required feasibility amendments because no candidate had more than 3 matching validation trades; this result is descriptive only. No HOLD rows or Phase 83 2026 holdout were accessed, and no new market data or strategy replay ran.
+- Latest successful workflow [38054856414](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054856414). [Draft PR #46](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/46) remains unmerged.
+- This retrospective regime-selection method failed. Source stress is not proof of complete Paytm Money all-in costs or executable fills; no strategy is promoted.
+
+<!-- PHASE96_CHECKPOINT_END -->
+
 <!-- PHASE95_CHECKPOINT_START -->
 ## Phase 95 — Frozen-Universe Strategy Selection Test
 
