@@ -220,3 +220,15 @@ The latest accepted API smoke result currently remains a **data-boundary NO-GO**
 - Combined with the earlier [out-of-window result 38089152325](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089152325), the evidence indicates the Dhan endpoint treats its `toDate` as inclusive despite the current documentation describing it as non-inclusive.
 - Acquisition now translates the fixed research target `[start,end)` into provider `fromDate=start`, `toDate=end-1 day`, and checks timestamps against the original half-open window. No extra-date rows may be accepted.
 - Next run: all five frozen stock symbols × CALL/PUT, one common IST session (2026-08-03), using ten bounded API requests. This validates one-day cross-stock/side coverage only; it does not establish full-history coverage or strategy profitability.
+
+<!-- DHAN_API_RUN_38089336359_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38089336359, attempt 1 — 2026-10-10T21:53:28.424115+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-03 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

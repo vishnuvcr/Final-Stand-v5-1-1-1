@@ -181,3 +181,13 @@ The workflow failed before a machine-readable result was written. No source/data
 - Previous request with `fromDate=2026-08-03`, `toDate=2026-08-04` returned both 2026-08-03 and 2026-08-04. Therefore the provider appears to include its `toDate` even though the published spec says non-inclusive.
 - Corrected the client to send provider `toDate = target_end_exclusive - 1 day` while keeping validation against the half-open target dates. Added unit coverage and a corrected table builder.
 - Registered the next bounded audit as all five stocks × CALL/PUT for the same 2026-08-03 IST session (10 calls). The resulting report must show per-probe row counts, date bins, outside-window counts and equal-length arrays; strategy P&L remains out of scope.
+
+<!-- DHAN_API_RUN_38089336359_ATTEMPT_1 -->
+## Dhan Data API audit — run 38089336359, attempt 1 — 2026-10-10T21:53:28.424115+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-03 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
