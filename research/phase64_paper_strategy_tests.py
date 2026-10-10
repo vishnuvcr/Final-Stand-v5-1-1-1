@@ -465,13 +465,14 @@ def main():
             ret[pd.Period(pd.Timestamp(row.entry_ts).strftime("%Y-%m"), freq="M")] = float(row.net_10_per_order)
         result = moving_block_bootstrap(ret)
         infer[variant] = result
-        if result["p_two_sided"] is not None:
-            pvals.append(result["p_two_sided"])
-            names.append(variant)
-    if pvals:
-        adjusted = holm_adjust(pvals)
-        for nm, val in zip(names, adjusted):
-            infer[nm]["p_holm_2_candidates"] = float(val)
+        # Missing/underpowered candidates remain p=1 for the registered two-test
+        # Holm family; a computable candidate is not allowed to benefit from
+        # skipping its preregistered comparison.
+        pvals.append(float(result["p_two_sided"]) if result["p_two_sided"] is not None else 1.0)
+        names.append(variant)
+    adjusted = holm_adjust(pvals)
+    for nm, val in zip(names, adjusted):
+        infer[nm]["p_holm_2_candidates"] = float(val) if infer[nm]["p_two_sided"] is not None else None
     manifest = {"dataset": REPO, "revision": REVISION, "license_note": "CC-BY-NC-4.0; attributed source; raw files not included",
         "index_file": index_meta, "options_source_files": source_records[1:],
         "count_source_files": len(source_records), "monthly_expiry_proxy_count": len(monthly),
