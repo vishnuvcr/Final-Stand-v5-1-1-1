@@ -128,13 +128,20 @@ jobs:
                   f.write('\n\n## Phase 98 execution issue\n- ' + detail + '\n- Classified as non-evidence until the output and coverage gates pass.\n')
           with Path('RESEARCH_LOG.md').open('a') as f:
               f.write('\n\n## Phase 98 automated checkpoint\n- ' + detail + '\n- This was a trade-level, source-pinned replay. OHLC fill prices are proxies; no live strategy promotion.\n')
-          with Path('README.md').open('a') as f:
-              f.write('\n\n## Phase 98 — NIFTY opening-range debit spread\n\n'
-                  f'- Latest status: **{status}**; economic status: **{econ}**.\n'
-                  f'- Latest run: [{os.getenv("RUN_ID","")}]({run_url}).\n'
-                  '- Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).\n'
-                  '- Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).\n'
-                  '- Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.\n')
+          readme_path = Path('README.md')
+          readme = readme_path.read_text()
+          heading = '\n## Phase 98 — NIFTY opening-range debit spread'
+          if heading in readme:
+              readme = readme.split(heading, 1)[0]
+          readme_block = (
+              '\n\n## Phase 98 — NIFTY opening-range debit spread\n\n'
+              f'- Latest status: **{status}**; economic status: **{econ}**.\n'
+              f'- Latest run: [{os.getenv("RUN_ID","")}]({run_url}).\n'
+              '- Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).\n'
+              '- Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).\n'
+              '- Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.\n'
+          )
+          readme_path.write_text(readme.rstrip() + readme_block)
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
