@@ -1,0 +1,10 @@
+# Phase 101 Error and Limitation Log
+
+Append entries; never overwrite earlier failures.
+
+## Initialization — 2026-10-10
+
+- **E101-001 — Repo fetch attempt used an ambiguous multi-path request.** The first parallel fetch returned 404 because at least one requested path/ref did not exist. Resolved by querying each file individually and verifying the Phase 100 branch and repository identity. No research data or prior result was changed.
+- **L101-001 — Exact PDF replication is not uniformly identifiable.** U02 omits complete reproducible feature/model details; U05 has a dimensionally ambiguous expected-price equation and no numeric liquidity threshold; source-period option records are unavailable in the current pinned sample. These are to be preserved as limitations, not silently guessed away.
+- **L101-002 — Existing option archive limitations.** The accepted source revision is CC-BY-NC-4.0, has OHLCV/OI-style historical bars rather than bid/ask/depth, and does not cover the original U14 (2008–2018) or U05 historical period. Raw files must not be committed.
+- **L101-003 — Costs.** Brokerage scenarios and date-effective statutory/exchange fees are modelling assumptions supported by public rate schedules; tick/percentage slippage cannot reconstruct queue position, market impact or actual Paytm Money contract notes.
