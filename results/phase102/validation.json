@@ -1,0 +1,89 @@
+{
+  "phase": 102,
+  "status": "PASS",
+  "decision": "NO_STRATEGY_PROMOTED",
+  "source_artifacts_only": true,
+  "checks_passed": 14,
+  "checks_total": 14,
+  "failed_checks": [],
+  "checks": [
+    {
+      "check": "TT03 coverage/trade-count contract",
+      "passed": true,
+      "observed": "200/201 trades; 99.5025% coverage; one coverage exclusion"
+    },
+    {
+      "check": "TT03 positive registered cost scenarios",
+      "passed": true,
+      "observed": "₹89,669.15 base; ₹82,074.11 +50% friction; ₹60,834.11 ₹20/order +50%"
+    },
+    {
+      "check": "TT03 limited HOLD sample explicitly retained",
+      "passed": true,
+      "observed": "HOLD=3 trades; net ₹6,201.79"
+    },
+    {
+      "check": "TT03 terminal status not mistaken for promotion",
+      "passed": true,
+      "observed": "Source engine PASS; Phase 102 decision remains validation-only"
+    },
+    {
+      "check": "Phase 38 control comparator",
+      "passed": true,
+      "observed": "206 trades; net ₹63,672.58; max DD ₹61,960.87"
+    },
+    {
+      "check": "No tested Phase 38 overlay outranks control full-sample net",
+      "passed": true,
+      "observed": "Five overlays; all full-sample net below frozen control"
+    },
+    {
+      "check": "TT04/TT05 partial positive and stress values",
+      "passed": true,
+      "observed": "TT04 ₹13,271.51 / ₹5,897.66 stress; TT05 ₹17,098.15 / ₹9,850.12 stress"
+    },
+    {
+      "check": "TT04/TT05 temporal instability remains documented",
+      "passed": true,
+      "observed": "Historical HOLD TT04 −₹6,456.29; TT05 −₹40,244.68; Phase 79 no-go"
+    },
+    {
+      "check": "TT02 negative under registered costs",
+      "passed": true,
+      "observed": "13 trades; base −₹1,341.12; maximum registered friction −₹6,476.31"
+    },
+    {
+      "check": "U02 equity accounting reconciles and tested models depleted",
+      "passed": true,
+      "observed": "Three reconciled models; each ends below ₹100 from ₹1 lakh initial"
+    },
+    {
+      "check": "U05 seven-trade negative proxy not generalised",
+      "passed": true,
+      "observed": "7 completed trades; net −₹283,669.90; explicitly modern-sample proxy"
+    },
+    {
+      "check": "Phase 83 registered candidate gate",
+      "passed": true,
+      "observed": "18 candidate/window rows; zero passed"
+    },
+    {
+      "check": "Phase 92 predictor results not labelled strategy profitability",
+      "passed": true,
+      "observed": "Feature/forecast study retained separately from option strategy P&L"
+    },
+    {
+      "check": "Machine-readable scorecard complete and no candidate promoted",
+      "passed": true,
+      "observed": "10 scorecard rows; zero promotion decisions"
+    }
+  ],
+  "unit_tests": {
+    "passed": 2,
+    "total": 2
+  },
+  "workflow_run_id": 38082303704,
+  "workflow_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704",
+  "artifact_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704/artifacts/11681255736",
+  "caveat": "The validator verifies consistency of committed evidence. It does not backtest or certify profitability. Values are a published summary of the successful workflow output."
+}
