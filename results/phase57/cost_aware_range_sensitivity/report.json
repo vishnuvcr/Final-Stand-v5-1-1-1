@@ -1,0 +1,75 @@
+{
+  "adverse_slippage_per_leg_fill_inr": 0.05,
+  "bid_ask_spread_observed": false,
+  "brokerage_per_order_inr": [
+    20,
+    10
+  ],
+  "configuration_count": 40,
+  "cost_scenario_rows": 2286,
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "declared_license": "CC BY-NC 4.0",
+  "expected_cost_scenario_rows": 2286,
+  "fills_are_executable_quotes": false,
+  "grid_version": "phase52-grid-v1.3",
+  "holdout_used": false,
+  "input_event_ledger_sha256": "fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55",
+  "limitations": [
+    "OHLC high-low/open is a candle-range proxy, not bid/ask spread.",
+    "Exact option-bar OPEN plus fixed adverse slippage is a modeled fill, not a quote/tick executable fill.",
+    "The 40 configurations share the same event identities; configuration-event rows are not independent trades.",
+    "Aggregates across configurations are not a realizable portfolio P&L.",
+    "The source declares CC BY-NC 4.0; research-only, not commercial/live evidence.",
+    "No holdout, p-values, confidence intervals, strategy selection or promotion."
+  ],
+  "phase": 57,
+  "pilot_version": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
+  "planned_configuration_event_rows_per_threshold": 480,
+  "production_or_promotion_eligible": false,
+  "raw_data_committed": false,
+  "replay_pass_counts_by_threshold": {
+    "1000": 380,
+    "2": 1
+  },
+  "selected_event_count": 24,
+  "slippage_stress_pct": [
+    0,
+    50,
+    100
+  ],
+  "source_file_hashes": {
+    "index/NIFTY.parquet": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+    "options/NIFTY/2021-05-27.parquet": "46aef7e94628ea3c180e4deb4998a19fab2d1082fce0529cc5ba6bca7313e26e",
+    "options/NIFTY/2021-12-09.parquet": "b052768bb573a639dec2cd1a0128d40464c117e0a9628fd83757e06607b081a5",
+    "options/NIFTY/2022-06-16.parquet": "f30098c49e0ce1ecf556d281e6c355bc42cecb9715dec80d40587f08735354f3",
+    "options/NIFTY/2022-12-15.parquet": "b1cf4f5f3ac6516ea38d90bbc6311e8294941be2aac849b0de327b733b554f94",
+    "options/NIFTY/2023-06-22.parquet": "435935f842611d7a943bddf200f38dde1575a7b789741e797976d53ea604c2e6",
+    "options/NIFTY/2023-12-28.parquet": "afc826198ed386459f5f38ad5daa984b6a55093ffdf4d16e1c40489159fd87fd",
+    "options/NIFTY/2024-01-04.parquet": "c7e4da3130309c2695b134e3027e3ba40767f7b99359c0f9fe78fc0bc37f5dbf",
+    "options/NIFTY/2024-05-30.parquet": "7aa0b68ff53f2384cf8940036faa3243cf48733477bc4406eb18e94973283cb3",
+    "options/NIFTY/2024-10-17.parquet": "4afde72d45f8a83da1a1a066b8528d9fb7b530b5960f7f57f89a4c5440f1267e",
+    "options/NIFTY/2025-03-13.parquet": "8118362cc9e58b646ac98cdd7eaf59675b995ba907a07cba8819b477fcc84f61",
+    "options/NIFTY/2025-07-31.parquet": "64572ceb2a40e1cb45b7b688e6041e724ae034521ed82cfbd05d6b1a1c24941f",
+    "options/NIFTY/2025-12-30.parquet": "5ed78461988ce2d90d56aa54afa032a72c7889cbfed73d8f7d8b2239ff580541"
+  },
+  "statistical_inference_performed": false,
+  "status": "COST_AWARE_RANGE_SENSITIVITY_COMPLETE",
+  "status_counts_by_threshold": {
+    "1000": {
+      "BLOCKED_LEG_ELIGIBILITY": 100,
+      "REPLAY_PASS": 380
+    },
+    "2": {
+      "BLOCKED_LEG_ELIGIBILITY": 100,
+      "EXCLUDED_OHLC_RANGE_PROXY": 379,
+      "REPLAY_PASS": 1
+    }
+  },
+  "statutory_charges": "existing date-aware Phase43/Phase52 fee helper",
+  "strategy_ranking_performed": false,
+  "thresholds_pct": [
+    2,
+    1000
+  ]
+}

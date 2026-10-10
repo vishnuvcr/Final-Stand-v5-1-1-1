@@ -13,3 +13,12 @@ No Phase 57 errors recorded at initialization. The runner must fail closed on so
 - Correction: PA-57-001 narrows this independent reproduction to the 2% baseline and 1000% diagnostic endpoint, keeps all 40 configurations × 24 events and all costs, and enables cancellation of superseded workflow runs.
 - Verification: the new endpoint-reproduction workflow must pass 960-row reconciliation, source hash checks, six cost scenarios per pass and Phase56 endpoint comparison.
 - Status: MITIGATED; verification pending.
+
+## F57-PERSIST-001 — Direct push rejected after concurrent branch updates — RESOLVED
+
+- Original run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831
+- Symptom: replay step and artifact upload passed, but the final direct push was rejected non-fast-forward because plan/status commits arrived after the runner checkout.
+- Impact: output stayed in the uploaded artifact until exact Phase56 cost/P&L reconciliation and persistence recovery passed.
+- Correction: this recovery workflow downloads the pinned Phase57 and Phase56 artifacts, validates endpoint counts and all costs, then persists by fetch/rebase/retry without force-pushing.
+- Verification: recovery run [38021314847](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021314847) passed; 2,286 matched cost rows, zero field-level mismatches, and 13/13 source audit records PASS.
+- Status: RESOLVED; original workflow conclusion remains failure because of the checkpoint push.

@@ -1,0 +1,174 @@
+{
+  "status": "PASS",
+  "phase57_run_id": 38019819831,
+  "phase57_run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831",
+  "recovery_run_id": "38021314847",
+  "recovery_run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021314847",
+  "phase57_input_ledger_sha256": "fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55",
+  "phase56_input_ledger_sha256": "fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55",
+  "phase57_endpoint_rows": 960,
+  "status_counts_by_threshold": {
+    "1000": {
+      "BLOCKED_LEG_ELIGIBILITY": 100,
+      "REPLAY_PASS": 380
+    },
+    "2": {
+      "BLOCKED_LEG_ELIGIBILITY": 100,
+      "EXCLUDED_OHLC_RANGE_PROXY": 379,
+      "REPLAY_PASS": 1
+    }
+  },
+  "replay_pass_counts_by_threshold": {
+    "1000": 380,
+    "2": 1
+  },
+  "source_file_audit_records": 13,
+  "source_file_audit_all_pass": true,
+  "cost_rows": 2286,
+  "eligible_configuration_event_endpoint_groups": 381,
+  "cost_rows_per_eligible_group": 6,
+  "phase56_matching_cost_rows": 2286,
+  "phase57_matching_cost_rows": 2286,
+  "field_level_pnl_fee_mismatches": 0,
+  "max_absolute_difference_by_field": {
+    "gross_pnl_inr": 1.4210854715202004e-14,
+    "fees_brokerage_inr": 0.0,
+    "fees_exchange_inr": 1.3877787807814457e-17,
+    "fees_sebi_inr": 2.710505431213761e-20,
+    "fees_ipft_inr": 4.336808689942018e-19,
+    "fees_stt_inr": 6.938893903907228e-18,
+    "fees_stamp_duty_inr": 3.469446951953614e-18,
+    "fees_gst_inr": 0.0,
+    "fees_total_inr": 0.0,
+    "net_pnl_inr": 1.4210854715202004e-14,
+    "return_on_reference_capital_pct": 3.469446951953614e-18
+  },
+  "compared_fields": [
+    "gross_pnl_inr",
+    "fees_brokerage_inr",
+    "fees_exchange_inr",
+    "fees_sebi_inr",
+    "fees_ipft_inr",
+    "fees_stt_inr",
+    "fees_stamp_duty_inr",
+    "fees_gst_inr",
+    "fees_total_inr",
+    "net_pnl_inr",
+    "return_on_reference_capital_pct"
+  ],
+  "exact_endpoint_cost_matrix_match": true,
+  "aggregate_modeled_grid_sums": [
+    {
+      "threshold_pct": 2,
+      "brokerage_per_order_inr": 10.0,
+      "adverse_slippage_per_fill_inr": 0.05,
+      "cost_scenario_rows": 1,
+      "summed_configuration_event_net_pnl_inr": -166.19311155,
+      "unique_event_identities": 1,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 2,
+      "brokerage_per_order_inr": 10.0,
+      "adverse_slippage_per_fill_inr": 0.075,
+      "cost_scenario_rows": 1,
+      "summed_configuration_event_net_pnl_inr": -168.6923678,
+      "unique_event_identities": 1,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 2,
+      "brokerage_per_order_inr": 10.0,
+      "adverse_slippage_per_fill_inr": 0.1,
+      "cost_scenario_rows": 1,
+      "summed_configuration_event_net_pnl_inr": -171.19162405,
+      "unique_event_identities": 1,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 2,
+      "brokerage_per_order_inr": 20.0,
+      "adverse_slippage_per_fill_inr": 0.05,
+      "cost_scenario_rows": 1,
+      "summed_configuration_event_net_pnl_inr": -189.79311155,
+      "unique_event_identities": 1,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 2,
+      "brokerage_per_order_inr": 20.0,
+      "adverse_slippage_per_fill_inr": 0.075,
+      "cost_scenario_rows": 1,
+      "summed_configuration_event_net_pnl_inr": -192.2923678,
+      "unique_event_identities": 1,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 2,
+      "brokerage_per_order_inr": 20.0,
+      "adverse_slippage_per_fill_inr": 0.1,
+      "cost_scenario_rows": 1,
+      "summed_configuration_event_net_pnl_inr": -194.79162405,
+      "unique_event_identities": 1,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 1000,
+      "brokerage_per_order_inr": 10.0,
+      "adverse_slippage_per_fill_inr": 0.05,
+      "cost_scenario_rows": 380,
+      "summed_configuration_event_net_pnl_inr": 55926.11785338,
+      "unique_event_identities": 19,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 1000,
+      "brokerage_per_order_inr": 10.0,
+      "adverse_slippage_per_fill_inr": 0.075,
+      "cost_scenario_rows": 380,
+      "summed_configuration_event_net_pnl_inr": 54024.10985476,
+      "unique_event_identities": 19,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 1000,
+      "brokerage_per_order_inr": 10.0,
+      "adverse_slippage_per_fill_inr": 0.1,
+      "cost_scenario_rows": 380,
+      "summed_configuration_event_net_pnl_inr": 52122.10185615,
+      "unique_event_identities": 19,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 1000,
+      "brokerage_per_order_inr": 20.0,
+      "adverse_slippage_per_fill_inr": 0.05,
+      "cost_scenario_rows": 380,
+      "summed_configuration_event_net_pnl_inr": 36196.51785338,
+      "unique_event_identities": 19,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 1000,
+      "brokerage_per_order_inr": 20.0,
+      "adverse_slippage_per_fill_inr": 0.075,
+      "cost_scenario_rows": 380,
+      "summed_configuration_event_net_pnl_inr": 34294.50985477,
+      "unique_event_identities": 19,
+      "is_portfolio_pnl": false
+    },
+    {
+      "threshold_pct": 1000,
+      "brokerage_per_order_inr": 20.0,
+      "adverse_slippage_per_fill_inr": 0.1,
+      "cost_scenario_rows": 380,
+      "summed_configuration_event_net_pnl_inr": 32392.50185615,
+      "unique_event_identities": 19,
+      "is_portfolio_pnl": false
+    }
+  ],
+  "holdout_used": false,
+  "bid_ask_quotes_observed": false,
+  "live_or_commercial_promotion_allowed": false,
+  "interpretation": "Exact reproduction of Phase56 modeled OHLC-open price-reference results at 2% and 1000% endpoints. Aggregate configuration-event sums are not portfolio P&L and OHLC is not bid/ask."
+}
