@@ -28,7 +28,7 @@ Do point-in-time rolling ATM-relative option features—mean implied volatility,
 - Rolling expiry: `expiryFlag=MONTH`, `expiryCode=1`, `strike=ATM`.
 - Sides: CALL (`ce`) and PUT (`pe`).
 - Requested arrays: open, high, low, close, IV, volume, strike, OI, spot and timestamp.
-- Date period: 2025-01-01 inclusive to 2026-01-01 exclusive. Split into conservative requests of at most 28 calendar days each; overlap/duplicate timestamps are deduplicated after audit. No 2026 dates may be requested.
+- Date period: 2025-01-01 inclusive to 2025-12-31 exclusive. Split into conservative requests of at most 28 calendar days each; overlap/duplicate timestamps are deduplicated after audit. Every API request boundary and returned sample row must be within 2025; no 2026 date may appear even as a request boundary.
 - Cache: stable key `phase89-dhan-rolling-2025-v1`; cache keys and workflow summaries must not expose access tokens or raw responses.
 - Raw prices and response bodies stay in runner cache only; do not commit them or include them in logs/artifacts.
 
@@ -55,7 +55,7 @@ Do point-in-time rolling ATM-relative option features—mean implied volatility,
 - A significant association is not a trading strategy. No options-entry/exit replay, P&L claim, or promotion is possible from rolling ATM-relative OHLC alone.
 
 ## Explicit limitations and excluded fields
-The tested endpoint does not establish historical fixed-contract identity, bid/ask, order-book depth, executable fills, Greeks, futures/synthetic futures, VIX, DII/FII flows, news, or corporate-action context. Phase 89 therefore studies only available IV/OI/volume/spot features and does not claim to cover those excluded factors. Features based on option premium changes are omitted because rolling ATM strike changes can create discontinuities.
+The tested endpoint does not establish historical fixed-contract identity, bid/ask, order-book depth, executable fills, Greeks, futures/synthetic futures, VIX, DII/FII flows, news, or corporate-action context. Phase 89 therefore studies only available IV/OI/volume/spot features and does not claim to cover those excluded factors. Features based on option premium changes are omitted because rolling ATM strike changes can create discontinuities. Point-in-time IV/OI features require CALL and PUT ATM strikes to match; trailing OI change is valid only if both strikes stayed unchanged over all three five-minute intervals.
 
 ## Statistical output
 - Per-window CALL/PUT API coverage ledger (counts/status/field alignment only).
