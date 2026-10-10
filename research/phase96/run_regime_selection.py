@@ -8,7 +8,7 @@ SOURCE = ROOT / "results/phase45_ready_made/strategy_vix_summary.csv"
 OUT = ROOT / "results/phase96"
 EXPECTED_SOURCE_SHA = "4208da2e1189a68af697e11d03dd7d4ac937ddf7"
 REGIMES = ("LOW", "NORMAL", "HIGH")
-MIN_TRADES = 5
+MIN_TRADES = 3
 
 def git_blob_sha(data: bytes) -> str:
     return hashlib.sha1(b"blob " + str(len(data)).encode() + bytes([0]) + data).hexdigest()
@@ -72,7 +72,7 @@ def main():
     report = {
         "phase": 96, "status": "PASS", "source_path": "results/phase45_ready_made/strategy_vix_summary.csv",
         "source_blob_sha": actual_sha, "regimes": list(REGIMES), "minimum_trades_per_split": MIN_TRADES,
-        "selection_rule": "per regime: defined_risk=True; DEV and VAL trades >=5; maximize DEV net50; alphabetical tie-break",
+        "selection_rule": "per regime: defined_risk=True; DEV and VAL trades >=3; maximize DEV net50; alphabetical tie-break",
         "primary_endpoint": "sum of selected LOW/NORMAL/HIGH validation net50 cells",
         "selected_regimes": [{"regime": r["regime"], "strategy": r["strategy"], "dev_net50": round(r["dev_net50"], 2),
                               "val_net50": round(r["val_net50"], 2), "val_trades": r["val_trades"],
