@@ -57,3 +57,12 @@
 ## Corrected run 38076645768 — 2026-10-10T18:43:17Z
 - Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 7; U02 costed trades 164; no 2026 option data; no strategy promoted.
 - U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
+
+
+## Runtime checkpoint — 2026-10-10T18:47:09Z
+
+- Automated workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076670672
+- Validation report: COMPLETED_WITH_EXPLICIT_LIMITATIONS; 14-paper matrix present; 2026 option holdout not downloaded; no strategy promoted.
+- U05 completed trades: 7; sample status: COMPUTED; audit status counts: {'EXCLUDED_FIRST_WEDNESDAY_NOT_SESSION': 5, 'BLOCKED_NO_MATCHING_OPENING_WINDOW_OPTION': 26, 'EXCLUDED_ENTRY_PRECEDES_FORECAST': 7, 'BLOCKED_NO_EXACT_NEXT_MINUTE_EXIT': 6, 'BLOCKED_NO_THURSDAY_INDEX_BAR': 1, 'COMPLETED': 7, 'EXCLUDED_INSUFFICIENT_ACCOUNT_EQUITY': 3, 'EXCLUDED_FIRST_THURSDAY_NOT_SESSION': 1}.
+- U02 predictions: 1330; completed trades: 164; model statuses: [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
+- Result files are aggregate/derived only. A model/data blocker is not a negative efficacy finding.
