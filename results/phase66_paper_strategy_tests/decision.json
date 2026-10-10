@@ -1,0 +1,36 @@
+{
+  "phase": 64,
+  "decision": "RESEARCH_ONLY_NO_PROMOTION",
+  "candidate_decisions": [
+    {
+      "variant": "CCI_BASE",
+      "completed_trades": 0,
+      "coverage": 0.0,
+      "min20_trades": false,
+      "coverage95": false,
+      "positive_all_registered_cost_cases": false,
+      "statistical_gate": false,
+      "promotion_eligible": false,
+      "reason": "Phase 66 is research-only; >=20 trades/coverage/cost/statistical gates are necessary but not sufficient"
+    },
+    {
+      "variant": "CCI_EMA_FILTER",
+      "completed_trades": 0,
+      "coverage": 0.0,
+      "min20_trades": false,
+      "coverage95": false,
+      "positive_all_registered_cost_cases": false,
+      "statistical_gate": false,
+      "promotion_eligible": false,
+      "reason": "Phase 66 is research-only; >=20 trades/coverage/cost/statistical gates are necessary but not sufficient"
+    }
+  ],
+  "source_data_license": "CC-BY-NC-4.0",
+  "limitations": [
+    "monthly expiry uses last option-file expiry of each calendar month as a proxy",
+    "OHLC close execution with one-tick adverse slippage is not bid/ask/depth quote fidelity",
+    "2008-2018 source-paper interval is unavailable in the pinned dataset",
+    "2026 option files were not downloaded and holdout is excluded",
+    "only two fixed variants were registered"
+  ]
+}

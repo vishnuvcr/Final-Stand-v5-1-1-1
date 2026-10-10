@@ -1,0 +1,5 @@
+variant,split,monthly_expiries_with_files,qualified_signal_months,breakout_months,completed_trades,entry_or_exit_coverage,coverage_failures,win_rate,gross_after_slippage_rupees,net_10_per_order_rupees,net_10_order_50pct_stress_rupees,net_20_per_order_rupees,net_20_order_50pct_stress_rupees,net_10_order_paper_10pct_slippage_rupees,mean_net_per_trade,median_net_per_trade,profit_factor,max_cumulative_trade_pnl_drawdown_rupees,median_holding_minutes,validation_gate_n20,validation_gate_coverage95
+CCI_BASE,DEV,32,21,12,0,0.0,12,,0.0,0.0,0.0,0.0,0.0,0.0,,,,0.0,,False,False
+CCI_BASE,VAL,24,21,13,0,0.0,13,,0.0,0.0,0.0,0.0,0.0,0.0,,,,0.0,,False,False
+CCI_EMA_FILTER,DEV,32,4,4,0,0.0,4,,0.0,0.0,0.0,0.0,0.0,0.0,,,,0.0,,False,False
+CCI_EMA_FILTER,VAL,24,3,1,0,0.0,1,,0.0,0.0,0.0,0.0,0.0,0.0,,,,0.0,,False,False
