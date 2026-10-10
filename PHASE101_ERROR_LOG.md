@@ -80,3 +80,10 @@ Append entries; never overwrite earlier failures.
 ## Corrected replay result — 2026-10-10T18:47:10Z
 - Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076670672
 - Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.
+
+
+## Audit correction — 2026-10-11
+
+- **E101-006 — Additional adverse-impact stress omitted the baseline fee model.** Audit of the published U02 ledger found the `paper_025pct_each_side_plus_50_trade_cost_net` sensitivity applied percentage impact and ₹50 but did not apply the same execution-price convention and date-effective charges as the primary net P&L. This made cross-scenario comparisons invalid. Corrected `_trade_costs()` to impact raw entry/exit prices, apply the Phase 66 execution-price helper and date-effective charge helper, then subtract the additional ₹50 round-trip cost. Results from the previous stress column are superseded pending a new successful workflow run.
+- **L101-004 — Drawdown needs interpretation, not silent clipping.** The U02 drawdown is peak-to-trough rupees; an unusually large value may occur after a large account-equity peak produced by leveraged option-premium exposure and subsequent losses. The audit must report each model's maximum equity peak, trough, and corresponding dates alongside drawdown before concluding it is an accounting defect. Do not cap or normalize this value merely because it exceeds initial capital.
+- **Validation gate:** no strategy promotion; no 2026 option data; re-run the fixed suite after the code correction and inspect the newly generated trade ledger and summary.
