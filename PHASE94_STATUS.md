@@ -7,7 +7,7 @@
 
 ## Completed in this step
 - Defined the research question, preregistered hypotheses, common methodology, statistical gates and finite stop boundary.
-- Registered all 14 uploaded PDFs and 66 registered method/strategy rows across U01–U14, including the U04 SGD regressor and U07/U05 payoff structures.
+- Registered all 14 uploaded PDFs and 67 registered method/strategy rows across U01–U14, including the U04 SGD regressor and U07/U05 payoff structures.
 - Split execution into five bounded downstream study phases plus this registry phase and final synthesis.
 - Recorded why Phase 93's literature audit must not be mistaken for backtesting.
 - Preserved prior negative/inconclusive/data-blocked results and sealed-holdout rule.
