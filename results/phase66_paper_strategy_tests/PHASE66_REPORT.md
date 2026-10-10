@@ -28,6 +28,8 @@ Does the published daily CCI breakout rule on monthly NIFTY in-the-money long op
 | CCI_EMA_FILTER | DEV | 32 | 4 | 4 | 0 | 0.00 | NA | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | CCI_EMA_FILTER | VAL | 24 | 3 | 1 | 0 | 0.00 | NA | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
+**EMPTY-SAMPLE WARNING:** all four candidate/split rows have zero completed trades. The 0.00 monetary sum fields in the tables and validation chart are empty-sample placeholders, not realized returns. Win rate, expectancy, profit factor, drawdown and profitability are not estimable. No comparison with the paper’s reported net P&L or win rate is valid from this sample.
+
 ## Descriptive risk and trade statistics
 | Variant | Split | Mean net/trade | Median net/trade | Profit factor | Max trade-P&L drawdown | Median holding (minutes) |
 |---|---|---:|---:|---:|---:|---:|
