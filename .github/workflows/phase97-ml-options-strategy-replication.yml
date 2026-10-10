@@ -1,0 +1,32 @@
+name: Phase 97 ML Options Strategy Replication
+on:
+  push:
+    branches: [phase-97-ml-options-strategy-replication]
+    paths:
+      - 'research/phase97/**'
+      - 'PHASE97_*.md'
+      - '.github/workflows/phase97-ml-options-strategy-replication.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test fail-closed data gate
+        run: python -m pip install pytest && pytest -q research/phase97/test_audit_gate.py
+      - name: Audit eligible-data requirements
+        run: python research/phase97/audit_gate.py
+      - name: Publish gate outputs and logs
+        if: always()
+        run: |
+          mkdir -p results/phase97
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/phase97 PHASE97_STATUS.md PHASE97_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 97: publish ML options data-gate outcome"
+          git push
