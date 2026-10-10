@@ -1,0 +1,5 @@
+paper,method,status,reason
+U02 Sherasiya 2025,Random Forest options classifier,DATA_BLOCKED,Exact-contract aligned feature/label matrix unavailable in audited artifacts.
+U02 Sherasiya 2025,XGBoost options classifier,DATA_BLOCKED,Exact-contract aligned feature/label matrix unavailable in audited artifacts.
+U02 Sherasiya 2025,LSTM options classifier,DATA_BLOCKED,Exact-contract aligned feature/label matrix unavailable in audited artifacts.
+U02 Sherasiya 2025,Basic momentum comparator,PARTIAL_NOT_RUN,A fair comparison requires the same eligible option-label dates; none are available.
