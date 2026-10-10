@@ -10,3 +10,6 @@ Date: 2026-10-10
 | E87-004 | GUARDRAIL | API data may be subject to Dhan's terms and entitlement; public docs alone do not grant raw-data redistribution rights. | No raw payload caching or publication until applicable terms are confirmed. |
 
 Do not log credentials, raw option prices/payloads, personal account data, or hidden chain-of-thought. Log only auditable actions and outcomes.
+
+| E87-003 | RESOLVED / PASS | Final Actions run 38047113250: endpoint HTTP 200; 150 five-minute rolling option candles; OHLC, IV, volume, strike, OI, spot and timestamp arrays present; requested array lengths aligned. | One-series data-shape gate passed. This is not proof of broad coverage or historical bid/ask/depth. |
+| E87-005 | GUARDRAIL | The successful response is rolling ATM-relative data, not a guaranteed fixed listed contract history. | Require a separate date/expiry/strike coverage audit before strategy replay. |
