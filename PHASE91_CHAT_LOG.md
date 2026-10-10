@@ -21,4 +21,11 @@ User replied “Ok proceed” to continue the planned research following Phase 9
 7. No options strategy replay, transaction P&L inference, orders or strategy promotion in this phase.
 
 ## Execution log
-Workflow is added last so plan/status/logs and engine are present before automated execution. Append the final Actions run, data coverage and primary result here after the run. This is an auditable activity log, not a record of private reasoning.
+- Created branch `phase-91-iv-temporal-replication-2023` from the Phase 90 branch.
+- Added the preregistered plan, status, error log, decision log, isolated engine and workflow. Workflow commit: [c4d7ccdd6bdef1a1f8a6d0235bf2d9ae2abc52bf](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/c4d7ccdd6bdef1a1f8a6d0235bf2d9ae2abc52bf).
+- Added official Dhan date-range semantics to the plan using the documentation's explicit non-inclusive `toDate` definition: https://dhanhq.co/docs/v2/expired-options-data/.
+- Created [draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41), targeting the Phase 90 branch; it remains unmerged.
+- Updated the README with the Phase 91 checkpoint and links.
+- At the latest repo check, generated results were not yet present and no Actions run ID was surfaced by the available status check. This is recorded as a trigger/runtime-verification blocker only; no statistical conclusion is available yet.
+
+Append the confirmed Actions run, actual data coverage and primary result when available. This is an auditable activity log, not a record of private reasoning.
