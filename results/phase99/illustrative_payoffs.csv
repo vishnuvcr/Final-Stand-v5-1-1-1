@@ -1,0 +1,118 @@
+structure,expiry_spot,net_payoff_per_unit,legs_json,source_note
+Long call,70,-8,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,80,-8,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,90,-8,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,95,-8,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,100,-8,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,105,-3,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,110,2,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,120,12,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long call,130,22,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8}]",U07 source-defined directional payoff
+Long put,70,23,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,80,13,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,90,3,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,95,-2,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,100,-7,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,105,-7,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,110,-7,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,120,-7,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Long put,130,-7,"[{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",U07 source-defined directional payoff
+Short call,70,8,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,80,8,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,90,8,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,95,8,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,100,8,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,105,3,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,110,-2,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,120,-12,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short call,130,-22,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8}]",U07 source-defined; tail risk unbounded
+Short put,70,-23,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,80,-13,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,90,-3,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,95,2,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,100,7,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,105,7,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,110,7,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,120,7,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Short put,130,7,"[{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",U07 source-defined; downside liability substantial
+Bull call spread,70,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,80,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,90,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,95,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,100,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,105,0,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,110,5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,120,15,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull call spread,130,15,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":120,""premium"":3}]",Buy lower-strike call; sell higher-strike call
+Bull put spread,70,-6,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,80,-6,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,90,-6,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,95,-1,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,100,4,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,105,4,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,110,4,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,120,4,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bull put spread,130,4,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":2},{""right"":""put"",""side"":-1,""strike"":100,""premium"":6}]",Buy lower-strike put; sell higher-strike put
+Bear put spread,70,15,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,80,15,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,90,15,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,95,15,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,100,15,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,105,10,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,110,5,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,120,-5,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear put spread,130,-5,"[{""right"":""put"",""side"":1,""strike"":120,""premium"":9},{""right"":""put"",""side"":-1,""strike"":100,""premium"":4}]",Buy higher-strike put; sell lower-strike put
+Bear call spread,70,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,80,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,90,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,95,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,100,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,105,0,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,110,-5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,120,-15,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Bear call spread,130,-15,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":120,""premium"":3}]",Sell lower-strike call; buy higher-strike call
+Long call butterfly,70,-2,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,80,-2,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,90,-2,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,95,3,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,100,8,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,105,3,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,110,-2,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,120,-2,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Long call butterfly,130,-2,"[{""right"":""call"",""side"":1,""strike"":90,""premium"":14},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""call"",""side"":1,""strike"":110,""premium"":4}]",Buy lower/higher strikes; sell two middle strikes
+Put butterfly — legs per source,70,-2,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,80,-2,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,90,-2,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,95,3,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,100,8,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,105,3,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,110,-2,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,120,-2,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Put butterfly — legs per source,130,-2,"[{""right"":""put"",""side"":1,""strike"":90,""premium"":4},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":110,""premium"":14}]",Source labels this Short Butterfly despite legs matching a long butterfly shape
+Long straddle,70,15,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,80,5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,90,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,95,-10,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,100,-15,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,105,-10,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,110,-5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,120,5,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Long straddle,130,15,"[{""right"":""call"",""side"":1,""strike"":100,""premium"":8},{""right"":""put"",""side"":1,""strike"":100,""premium"":7}]",Long call and long put at same strike
+Short straddle,70,-15,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,80,-5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,90,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,95,10,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,100,15,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,105,10,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,110,5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,120,-5,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Short straddle,130,-15,"[{""right"":""call"",""side"":-1,""strike"":100,""premium"":8},{""right"":""put"",""side"":-1,""strike"":100,""premium"":7}]",Short call and short put at same strike
+Long strangle,70,12,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,80,2,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,90,-8,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,95,-8,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,100,-8,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,105,-8,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,110,-8,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,120,2,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed
+Long strangle,130,12,"[{""right"":""call"",""side"":1,""strike"":110,""premium"":4},{""right"":""put"",""side"":1,""strike"":90,""premium"":4}]",Illustrative operationalization; exact strikes/premiums are not uniquely prescribed

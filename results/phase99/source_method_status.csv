@@ -1,0 +1,7 @@
+paper,method,status,limitation
+U07,Long call / put; short call / put,ANALYTICAL_PAYOFF_REPLAY,No market premiums or fills
+U07,Bull/bear call and put spreads,ANALYTICAL_PAYOFF_REPLAY,"Source examples are analytical, not historical signal tests"
+U07,Call butterfly,ANALYTICAL_PAYOFF_REPLAY,Generic illustrative strikes/premiums used for curve checks
+U07,Put butterfly / Short Butterfly,SOURCE_AMBIGUITY,Heading conflicts with described legs; legs preserved
+U07,Long/short straddle; long strangle,ANALYTICAL_PAYOFF_REPLAY,Generic premiums/strikes; not a paper-exact trade signal
+U05,First Thursday; 3-year monthly average; 20% target; 30% stop; T+3 stop delay,RULE_EXTRACTED_MARKET_REPLAY_BLOCKED,Requires source-period exact-contract prices/liquidity and costed fills

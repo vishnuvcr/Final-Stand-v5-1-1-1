@@ -1,0 +1,17 @@
+{
+  "status": "PAYOFF_ALGEBRA_CHECKED_MARKET_PNL_BLOCKED",
+  "structures": 13,
+  "illustrative_spot_grid": [
+    70,
+    80,
+    90,
+    95,
+    100,
+    105,
+    110,
+    120,
+    130
+  ],
+  "option_pnl_is_historical": false,
+  "holdout_2026_accessed": false
+}
