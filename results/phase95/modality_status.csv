@@ -1,0 +1,8 @@
+input,status,note
+NIFTY OHLC daily,AVAILABLE,used in Phase 95
+USD/INR,NOT_ACQUIRED,U03 external-input reproduction remains partial
+FII/DII gross flows,NOT_VALIDATED,not silently substituted
+India VIX,NOT_ACQUIRED_IN_THIS_RUNNER,U06 feature model not fully reproduced
+Historical PCR and Greeks,DATA_GATE_PENDING,exact option-chain data required
+Point-in-time news/BERT sentiment,DATA_GATE_PENDING,U06 multimodal model not run
+Exact listed options quotes/depth,DATA_GATE_PENDING,no option P&L in Phase 95

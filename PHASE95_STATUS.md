@@ -1,15 +1,1 @@
-# Phase 95 Status — Daily Forecast Replication
-
-**Branch:** `phase-95-daily-forecast-model-replication`  
-**Status:** IMPLEMENTATION REGISTERED; empirical runtime pending  
-**Strategy promotion:** NONE
-
-## Checkpoints
-- [x] Source-related model families and fixed split registered.
-- [x] Runner, tests, dependency pins, aggregate outputs and push/manual workflow committed.
-- [ ] Acquire and validate daily NIFTY source data.
-- [ ] Run registered tabular and sequence variants on the fixed 2025 test block.
-- [ ] Reconcile all model failures, coverage and inferential outputs.
-- [ ] Complete the source-specific claim-matching audit and update manuscript.
-
-Workflow output must replace/update this file and the error log on success, failure or data blockage. CI success alone is not scientific reproduction. Common-data forecasts are partial if the paper's source universe/features/split differ. The Phase 83 2026 holdout remains sealed.
+# Phase 95 Status — Daily Forecast Replication\n\n**Last run:** 2026-10-10T17:16:51.571273+00:00\n**Status:** COMPLETED\n**Valid metric rows:** 132; **model failures:** 0\n**Data blocker:** none\n**Strategy promotion:** NONE\n\n- [Plan](PHASE95_RESEARCH_PLAN.md)\n- [Report](results/phase95/REPORT.md)\n- [Metrics](results/phase95/model_metrics.csv)\n- [Data manifest](results/phase95/data_manifest.json)\n- [Coverage](results/phase95/coverage.csv)\n- [Modality status](results/phase95/modality_status.csv)\n- [Error log](PHASE95_ERROR_LOG.md)\n- [Research log](PHASE95_RESEARCH_LOG.md)\n- [Chat log](PHASE95_CHAT_LOG.md)\n\nCommon-data forecasts are partial unless source protocols and metrics are matched. No options P&L is calculated in this phase. Phase 83 holdout remains sealed.\n

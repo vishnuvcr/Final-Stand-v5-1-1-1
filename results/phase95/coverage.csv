@@ -1,0 +1,13 @@
+target,train_window_years,status,train_rows,test_rows,reason
+Close,5,SAMPLE_GATE_PASS,1236,249,fixed target window; baseline available
+Open,5,SAMPLE_GATE_PASS,1236,249,fixed target window; baseline available
+High,5,SAMPLE_GATE_PASS,1236,249,fixed target window; baseline available
+Low,5,SAMPLE_GATE_PASS,1236,249,fixed target window; baseline available
+Close,10,SAMPLE_GATE_PASS,2458,249,fixed target window; baseline available
+Open,10,SAMPLE_GATE_PASS,2458,249,fixed target window; baseline available
+High,10,SAMPLE_GATE_PASS,2458,249,fixed target window; baseline available
+Low,10,SAMPLE_GATE_PASS,2458,249,fixed target window; baseline available
+Close,20,SAMPLE_GATE_PASS,4187,249,fixed target window; baseline available
+Open,20,SAMPLE_GATE_PASS,4187,249,fixed target window; baseline available
+High,20,SAMPLE_GATE_PASS,4187,249,fixed target window; baseline available
+Low,20,SAMPLE_GATE_PASS,4187,249,fixed target window; baseline available
