@@ -17,6 +17,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Restore validated daily data cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/phase95
+          key: phase95-nifty-daily-v1-${{ runner.os }}-${{ hashFiles('requirements-phase95.txt') }}
+          restore-keys: |
+            phase95-nifty-daily-v1-${{ runner.os }}-
       - name: Install bounded dependencies
         run: pip install pandas numpy pytest tabulate
       - name: Test replay controls
