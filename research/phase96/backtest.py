@@ -11,14 +11,21 @@ OUT = ROOT / "results/phase96"
 
 def load_prices(path: Path = DATA) -> pd.DataFrame:
     if not path.exists():
-        raise FileNotFoundError(f"validated cached daily data unavailable: {path}")
-    df = pd.read_csv(path)
-    date_col = next((c for c in df.columns if c.lower() in {"date", "datetime"}), None)
+        import yfinance as yf
+        path.parent.mkdir(parents=True, exist_ok=True)
+        downloaded = yf.download("^NSEI", start="2004-01-01", end="2026-01-01", auto_adjust=False, progress=False, threads=False)
+        if downloaded.empty:
+            raise RuntimeError("Yahoo Finance returned no NIFTY daily data")
+        downloaded.to_csv(path)
+    df = pd.read_csv(path, header=[0,1] if pd.read_csv(path, nrows=0).shape[1] > 3 else 0)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = [str(c[0]) for c in df.columns]
+    date_col = next((c for c in df.columns if str(c).lower() in {"date", "datetime"}), None)
     if date_col is None:
         raise ValueError("No date column in cached data")
     df[date_col] = pd.to_datetime(df[date_col], utc=True).dt.tz_convert(None)
     df = df.rename(columns={date_col: "date"})
-    cols = {c.lower(): c for c in df.columns}
+    cols = {str(c).lower(): c for c in df.columns}
     close_col = cols.get("close")
     open_col = cols.get("open")
     if close_col is None or open_col is None:
