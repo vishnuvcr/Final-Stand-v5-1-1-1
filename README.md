@@ -1,22 +1,20 @@
-<!-- PHASE93_START -->
-# Resume checkpoint — Phase 93 uploaded literature evidence audit
+<!-- PHASE94_START -->
+# Current checkpoint — Phase 94 paper-method replication program
 
-**Status: PASS — literature audit and bibliography validation complete.** This bounded phase reviewed all 14 uploaded papers and integrated them into the manuscript. The automated validator passed (14/14 paper sections, 14/14 filenames, references 1–29 in order, zero errors). No new strategy experiment was run; no strategy is promoted and the protected Phase 83 2026 holdout remains sealed.
+**Status: REGISTERED — the corpus has now been converted from a literature-only audit into a paper-by-paper empirical reproduction plan.** This phase creates the method register and finite execution sequence; it does not claim that the forecast models or trading strategies have already been backtested. No strategy is promoted. The Phase 83 2026 holdout remains sealed.
 
-- [Phase 93 plan](PHASE93_RESEARCH_PLAN.md)
-- [Phase 93 status](PHASE93_STATUS.md)
-- [Phase 93 error log](PHASE93_ERROR_LOG.md)
-- [Phase 93 auditable chat log](PHASE93_CHAT_LOG.md)
-- [Paper-by-paper uploaded literature audit](results/phase93/UPLOADED_LITERATURE_AUDIT.md)
-- [Automated coverage validator](research/phase93/validate_literature_audit.py)
-- [Validation report](results/phase93/validation_report.json)
-- [Latest successful GitHub Actions run 38053377409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053377409)
-- [Updated research manuscript](results/phase92/MANUSCRIPT_DRAFT.md)
-- [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
+- [Phase 94 research plan](PHASE94_RESEARCH_PLAN.md)
+- [Phase 94 status](PHASE94_STATUS.md)
+- [Machine-readable paper/method register](results/phase94/PAPER_METHOD_REGISTER.csv)
+- [Narrative method register, with exact/partial/data-blocked distinctions](results/phase94/PAPER_METHOD_REGISTER.md)
+- [Research log](PHASE94_RESEARCH_LOG.md) · [Error/limitation log](PHASE94_ERROR_LOG.md) · [Auditable chat/decision log](PHASE94_CHAT_LOG.md)
+- [Automatic and manual registry validator](.github/workflows/phase94-literature-replication-registry.yml)
+- Next finite stages: [Phase 95 forecast models](PHASE94_RESEARCH_PLAN.md#finite-execution-phases-separate-branches), Phase 96 moving averages/seasonality, Phase 97 ML option signal, Phase 98 CCI source-data gate, Phase 99 source-described option payoff strategies, and Phase 100 unified synthesis/manuscript.
 
-The additional literature contains daily index-price predictions, feature-context models (FII/DII, VIX, PCR, sentiment), conceptual option strategy descriptions, and paper-reported ML/CCI backtests. These are not independently reproduced strategy returns and do not close the exact-contract execution-quote/depth/cost gate. The Shaha CCI rule was already attempted in [Phase 66](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md), where both variants produced zero completed trades; performance was not estimable, so the same test should not be repeated without new source coverage.
+**Reproduction standard:** source-defined metrics will be recreated separately from standardized naïve-baseline comparisons with strict chronological splits, leakage checks, uncertainty intervals and correction for multiple comparisons. Reported “95%/99% accuracy” is a source claim until independently verified and is not equivalent to directional skill or options profit. Options P&L requires eligible exact-contract data and includes Paytm Money fees, statutory levies, spread, slippage and stressed costs.
 
-<!-- PHASE93_END -->
+Previously completed evidence remains linked: [Phase 92 predictor stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md) · [Phase 93 14-paper audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase93/UPLOADED_LITERATURE_AUDIT.md) · [Phase 66 CCI data-coverage outcome](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md).
+<!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
 # Resume checkpoint — Phase 92 synthetic-forward proxy and OI study
