@@ -14,6 +14,11 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - E91-008 — Safe publication: raw data stays in the Phase 91 Actions cache; only aggregate results and sanitized issue summaries are published.
 - E91-009 — Execution evidence: rolling ATM IV/spot prediction does not prove exact-contract fills/profitability; do not compute strategy P&L or promote a strategy from this phase.
 
-## Runtime issues
+## Runtime / trigger verification checkpoint — 2026-10-10
 
-No run recorded yet. Append the automated runtime summary after the workflow completes. Keep this log factual and make data/API failures explicit even if the workflow itself succeeds.
+- After registering the engine, workflow, and plan update, the branch still contained the initial PREREGISTERED status and no `results/phase91/summary.json` or `results/phase91/PHASE91_RESULTS.md` file was yet present.
+- The available repository status checks did not surface an Actions run ID for the latest phase commit. This is an execution-verification blocker, not a data result. It does **not** mean the model failed or the IV signal is absent.
+- Do not claim acquisition succeeded, do not infer a negative/positive replication result, and do not promote any strategy until the Actions-generated aggregate results are available.
+- Manual dispatch remains available in the workflow's GitHub Actions UI. The workflow itself is registered with both a branch/path push trigger and `workflow_dispatch`.
+
+Append the automated runtime summary here after a confirmed workflow run. Keep failures explicit even if the workflow process itself exits successfully.
