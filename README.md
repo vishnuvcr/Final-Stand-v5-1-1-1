@@ -1,3 +1,21 @@
+# Current research status — 2026-10-10 (Phase 60 evidence gate)
+
+**Decision: NO-GO for further factor-conditioned profitability runs using the currently accepted data.** This supersedes the older “Phase 52 resumed — next gates” checkpoint below.
+
+- **Phase 52 baseline:** 480 planned configuration-event rows; 379 excluded by the frozen 2% OHLC range proxy, 100 blocked by prior-minute OI eligibility, and only 1 replay pass. One executed row is not a meaningful profitability sample.
+- **Phase 54:** preregistered eligibility sensitivity admits 1, 1, 8, 24, 55, 91, 150, 227, 298, 345 and 380 rows at thresholds 2, 3, 4, 5, 6, 8, 10, 12, 15, 20 and 1000%. These are coverage counts only; OHLC range is not bid/ask spread.
+- **Phase 56/57:** 18,960 modeled OHLC reference scenarios were generated; independent reproduction matched 2,286 common scenarios with zero mismatches. This verifies reproducibility of the same model, not executable fills or live profitability. Five configuration-threshold pairs passed the severe-cost screen only at the 1000% diagnostic threshold, which is not a recommended trading rule.
+- **Phase 59 source audit:** 10 public/commercial source candidates reviewed; zero free/license-clear exact prior-minute OI sources and zero exact historical quote/depth sources accepted.
+- **Phase 60 evidence gate:** tests, decision validation, artifact upload and checkpoint persistence passed in [run 38021675579](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021675579). The gate is complete with a documented NO-GO; no strategy or factor selector is promoted and holdout remains untouched.
+
+**Reopen condition:** obtain a source with explicit automated access/storage/research rights and verify a small exact target-date/contract sample at 09:44, 09:45, 12:59, 13:00 and 15:15 IST. Preserve true zero vs missing OI, and obtain historical bid/ask plus quantities before making execution-quality claims. Only after adequate development/validation coverage is proven should costs (Paytm Money brokerage, statutory charges, adverse slippage and stress) be recomputed. Do not relax frozen gates to manufacture coverage.
+
+- [Phase 60 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-60-evidence-sufficiency-gate/PHASE60_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-60-evidence-sufficiency-gate/PHASE60_STATUS.md) · [Decision report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-60-evidence-sufficiency-gate/results/phase60/evidence_sufficiency/report.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-60-evidence-sufficiency-gate/PHASE60_ERROR_LOG.md)
+- [Phase 59 source report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/results/phase59/public_option_data_coverage/report.md)
+- [Phase 57 independent reproduction](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/results/phase57/cost_aware_range_sensitivity/phase56_endpoint_reconciliation.md)
+
+---
+
 ## Phase 52 resumed — next gates (2026-10-10)
 
 OpenChart investigation is closed at the user's request; its source audit remains in the branch history and no further requests are planned. Research resumes on the frozen Phase 52 pilot: repair checkpoint persistence, then decompose the 480 status rows (379 OHLC-range exclusions, 100 leg-eligibility blocks, one execution) and trace dominant exclusions to exact source rows/contracts/timestamps. Do not treat exclusions as losses or relax filters to increase trade count. No strategy is promoted and holdout remains untouched.
