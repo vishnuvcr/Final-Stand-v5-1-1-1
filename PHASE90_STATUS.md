@@ -20,3 +20,7 @@ Strategy promotion: **NONE**.
 M1 MAE − M2 MAE = 0.0330 bps (paired session-cluster bootstrap 95% CI 0.0001 to 0.0562; bootstrap positive share 0.9750; 5000 resamples).
 
 Complete OOS rows/sessions: 3604/60. Sample gate=PASS; India VIX gate=PASS. The Phase 83 2026 holdout remains sealed.
+
+## Downstream replication checkpoint
+
+Phase 91 has been registered on its own branch `phase-91-iv-temporal-replication-2023` with frozen 2023 DEV/validation/OOS splits. Draft PR [#41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41) is open and unmerged. A parent-branch PR runner is present at [.github/workflows/phase91-pr-runner.yml](.github/workflows/phase91-pr-runner.yml). At the last repository check, Phase 91 execution was not verified and its aggregate results were not published. This is not a change to Phase 90's result and no strategy is promoted.
