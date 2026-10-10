@@ -169,6 +169,8 @@ The expiry-cluster bootstrap and cluster-robust t tests quantify uncertainty con
 | Primary inferential tests | 20 |
 | 2026 holdout loaded/scored | No |
 
+![Figure 2. Net P&L by structure, split and holding window (one-tick costs)](../figures/phase83_net_pnl_heatmap.svg)
+
 ### 7.2 Absolute net performance
 All nine defined-risk structures recorded negative aggregate net P&L in both development and validation under both registered friction settings, for both intraday and overnight windows. None passes the candidate eligibility gate. The complete 40-row split×variant×window ledger—including trade counts, mean/median trade results, win rate, profit factor, drawdown, one-tick and two-tick totals, and fees—is retained in [Phase 81 summary_by_split_variant_window.csv](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/results/phase81_intraday_overnight/summary_by_split_variant_window.csv) and copied into the Phase 83 supplementary package.
 
@@ -187,6 +189,8 @@ Selected results are shown below; the full table retains all tests.
 | VAL — long iron fly W=300 | +64.56 | [−32.87, +159.43] | 0.19533 | 1.00000 |
 
 The development short-straddle contrast has a negative cluster-bootstrap interval and a small unadjusted p-value, but it does not survive Holm correction (adjusted p=0.08074) and is not eligible for promotion in any event. In validation, its interval crosses zero. The largest positive mean difference shown for the long iron fly W=300 has a confidence interval crossing zero and an adjusted p-value of 1.00. All other primary adjusted p-values are also at least 1.00 or otherwise above 0.05; none crosses the preregistered threshold.
+
+![Figure 1. Paired overnight-minus-intraday effects and expiry-cluster bootstrap intervals](../figures/phase83_forest_plot.svg)
 
 ### 7.4 Sensitivity to two-tick friction
 The two-tick contrast is reported separately. Because both matched windows receive the same adverse tick change per leg/fill, the difference of their outcomes may be similar or numerically unchanged even though each window’s absolute net P&L worsens. The absolute-performance ledger, not the paired contrast alone, is used for the candidate gate. The defined-risk structures remain negative in both splits under the stress model.
