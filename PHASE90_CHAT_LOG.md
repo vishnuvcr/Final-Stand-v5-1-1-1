@@ -21,7 +21,7 @@ User replied “Ok proceed” after Phase 89 recommended testing whether ATM IV 
 7. Publish only aggregate results and sanitized quality/error logs; no orders or strategy P&L replay.
 
 ## Execution
-Pending automated GitHub Actions run.
+The initial 2024 study run [38048410498](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498) and cached interpretation rerun [38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674) both completed successfully. The cached rerun reused the same frozen data, model specification and OOS sample; it added explicit effect-size context, without tuning or expanding the study.
 
 <!-- PHASE90_RUNTIME_START -->
 ## Automated execution record — 38048556674
