@@ -142,7 +142,7 @@ def load_chain_day(expiry,d):
     p=hf_hub_download(repo_id=HF_REPO,filename=name,repo_type="dataset",revision=HF_REVISION,token=os.getenv("HF_TOKEN") or None)
     pf=pq.ParquetFile(p);names=pf.schema_arrow.names;req={"timestamp","open","close","option_type","strike"}
     if not req.issubset(names):raise ValueError(f"option_schema_missing:{name}:{sorted(req-set(names))}")
-    cols=[c for c in ("timestamp","open","close","option_type","strike","volume","oi") if c in names]
+    cols=[c for c in ("timestamp","open","close","option_type","strike","volume","oi","open_interest") if c in names]
     SOURCE_SCHEMA[name]=names
     lo=pd.Timestamp(datetime.combine(d,time(9,15)),tz=TZ);hi=pd.Timestamp(datetime.combine(d,time(15,16)),tz=TZ)
     ts_type=pf.schema_arrow.field("timestamp").type
