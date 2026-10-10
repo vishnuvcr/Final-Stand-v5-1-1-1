@@ -484,12 +484,18 @@ def simulate_u02(p66,api,token,monthly,index,predictions,manifest):
                 if bars.empty:
                     audit.append({"model":model,"entry_date":str(d.date()),"status":"BLOCKED_NO_ENTRY_INDEX_BAR",
                                   "reason":"No 09:15-09:20 index bar","account_equity":equity}); continue
-                ix=bars.iloc[0]; et=ix.timestamp; spot=first_present(ix,["open","close"])
                 side="CE" if int(r["prediction_buy"])==1 else "PE"
-                pick=_pick_snapshot(chain.loc[chain.timestamp.eq(et)],side,spot,oic,volc)
+                ix=None; et=None; spot=np.nan; pick=None
+                for _, candidate in bars.iterrows():
+                    candidate_ts=candidate.timestamp
+                    candidate_spot=first_present(candidate,["open","close"])
+                    candidate_pick=_pick_snapshot(chain.loc[chain.timestamp.eq(candidate_ts)],side,candidate_spot,oic,volc)
+                    if candidate_pick is not None and np.isfinite(candidate_spot):
+                        ix=candidate; et=candidate_ts; spot=candidate_spot; pick=candidate_pick; break
                 if pick is None:
-                    audit.append({"model":model,"entry_date":str(d.date()),"entry_ts":str(et),"signal_side":side,
-                                  "status":"BLOCKED_NO_EXACT_ENTRY_OPTION","reason":"No same-minute ATM-side contract",
+                    audit.append({"model":model,"entry_date":str(d.date()),"signal_side":side,
+                                  "status":"BLOCKED_NO_MATCHING_OPENING_WINDOW_OPTION",
+                                  "reason":"No same-minute ATM-side contract during 09:15-09:20",
                                   "account_equity":equity}); continue
                 strike=float(pick.strike); entry=first_present(pick,["open","close"])
                 if not np.isfinite(entry) or entry<=0:
@@ -583,7 +589,7 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
     f"- Yahoo daily history for monthly-return calculation: {manifest.get('yahoo_daily_start')} through {manifest.get('yahoo_daily_end')} ({manifest.get('yahoo_daily_rows')} observations).","",
     "## 3. U05 — monthly seasonality options rule",
     "Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The first calendar Wednesday supplies the forecast; entry is on the first calendar Thursday strictly after that Wednesday to prevent look-ahead. No holiday substitution is made. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level among contracts present at the exact Thursday entry timestamp; only contemporaneous OI/volume can break ties.",
-    "The test uses one historical lot, a 20% premium target and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.","",
+    "The test uses the paper’s ₹3,00,000 initial capital, deploying no more than 90% of current equity per monthly trade; equity is carried forward and 10% is held as a safety reserve. Target is a 20% premium gain and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.","",
     f"- Months audited: {u05.get('evaluation_months')}; completed trades: {u05.get('completed_trades')}; status: {u05.get('status')}.",
     f"- Net P&L at ₹10/order: {_fmt(u05.get('net_pnl_rupees'))}; mean/trade: {_fmt(u05.get('mean_net_per_trade'))}; median: {_fmt(u05.get('median_net_per_trade'))}; win rate: {_fmt(u05.get('win_rate'))}; PF: {_fmt(u05.get('profit_factor'))}; max trade drawdown: {_fmt(u05.get('max_trade_equity_drawdown_rupees'))}.",
     f"- Net at ₹20/order: {_fmt(u05.get('net_20_per_order'))}; +50% charges stress: {_fmt(u05.get('net_10_per_order_fee_stress_50pct'))}; ₹20/order + stress: {_fmt(u05.get('net_20_per_order_fee_stress_50pct'))}; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): {_fmt(u05.get('paper_025pct_each_side_plus_50_trade_cost_net'))}.",
