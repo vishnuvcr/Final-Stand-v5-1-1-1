@@ -119,10 +119,27 @@ def prep_options(x):
         x["oi"] = x["open_interest"]
     for c in ("open","close","volume","oi"):
         if c in x.columns:x[c]=pd.to_numeric(x[c],errors="coerce")
-    return x[x.option_type.isin(["CE","PE"])&x.strike.notna()&x.timestamp.notna()].drop_duplicates().sort_values(["timestamp","option_type","strike"]).reset_index(drop=True)
+    x=x[x.option_type.isin(["CE","PE"])&x.strike.notna()&x.timestamp.notna()].drop_duplicates().sort_values(["timestamp","option_type","strike"]).reset_index(drop=True)
+    # Build one lookup per session so each target/stop check is O(1), rather than
+    # rescanning the full chain DataFrame for every bar and each option leg.
+    price_lookup={}
+    for ts,typ,strike,op,cl in x[["timestamp","option_type","strike","open","close"]].itertuples(index=False,name=None):
+        key=(ts,str(typ),round(float(strike),7))
+        if key in price_lookup:
+            price_lookup[key]=None  # preserve the old rule: ambiguous duplicate contracts are not a valid quote
+        else:
+            price_lookup[key]=(op,cl)
+    x.attrs["phase98_price_lookup"]=price_lookup
+    return x
 
 def val_at(x,ts,typ,strike,field):
     if field not in x.columns:return None
+    lookup=x.attrs.get("phase98_price_lookup")
+    if lookup is not None and field in ("open","close"):
+        value=lookup.get((ts,str(typ),round(float(strike),7)),"__MISSING__")
+        if value=="__MISSING__" or value is None:return None
+        v=value[0] if field=="open" else value[1]
+        return float(v) if pd.notna(v) and math.isfinite(float(v)) else None
     z=x[(x.timestamp==ts)&(x.option_type==typ)&np.isclose(x.strike.astype(float),float(strike),atol=1e-7,rtol=0)]
     if len(z)!=1:return None
     v=pd.to_numeric(pd.Series([z.iloc[0][field]]),errors="coerce").iloc[0]
