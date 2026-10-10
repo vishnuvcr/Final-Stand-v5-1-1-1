@@ -20,3 +20,9 @@
 - The workflow's always-run log publisher also failed because it staged a results directory that did not yet exist.
 - Corrected the test import path and made result-directory staging conditional.
 - The first failure and logging defect are explicitly retained in PHASE98_ERROR_LOG.md. Re-run regression tests before any source-pinned replay.
+
+
+## 2026-10-10 — Second and third pre-replay failures
+- Run 38057371871 reached test collection after the path fix and failed because the test imported a nonexistent name (fee_components instead of the runner's fees function).
+- Run 38057380129 repeated that same test import error. Its audit-publisher commit also conflicted on rebase because repository logs were manually updated while the workflow was active.
+- Neither run read source data or ran the strategy. The stale import is removed before the next run; future log edits will wait until the automated publisher finishes.
