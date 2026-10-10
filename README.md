@@ -1,15 +1,15 @@
 <!-- PHASE101_AUDIT_START -->
 # Phase 101 — PDF replication audit follow-up
 
-**Status: REVALIDATION REQUIRED.** The additional adverse-impact stress calculation was corrected to include the baseline execution-price convention and date-effective charges, plus the extra ₹50 round-trip cost. Previous values for this stress column are superseded pending a passing automated rerun. No strategy is promoted, and the 2026 options holdout remains excluded.
+**Status: REPLAY AND ACCOUNTING AUDIT PASSED; NO STRATEGY PROMOTED.** Workflow [38080831113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080831113) completed successfully after the cost-stress correction and equity-path audit. All three U02 models reconcile ending equity within ₹0.01, but each lost approximately 99.99% of its initial ₹100,000 account. Peak-to-trough drawdown approached 100% from much higher compounded equity peaks. Corrected extra-impact stress is negative for every model; bootstrap confidence intervals cross zero.
 
 - [Phase 101 research branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-101-full-pdf-strategy-replication)
-- [Phase 101 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/PHASE101_REPORT.md)
-- [Phase 101 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_STATUS.md)
-- [Research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_ERROR_LOG.md)
+- [Corrected Phase 101 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/PHASE101_REPORT.md)
+- [U02 equity and cost summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/u02_strategy_summary.csv)
+- [Phase status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_ERROR_LOG.md)
 - [Phase 101 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase101-full-pdf-strategy-replication.yml)
 
-Drawdown is being audited as peak-to-trough equity, including peak/trough chronology; it must not be clipped just because it exceeds initial capital.
+The results are proxy tests, not exact original-period replications. Paytm Money contract-note costs are not verified; 2026 options remain excluded. No profitable strategy is established.
 <!-- PHASE101_AUDIT_END -->
 
 ## Phase 101 — PDF strategy replication gap-fill OPEN (2026-10-10)
