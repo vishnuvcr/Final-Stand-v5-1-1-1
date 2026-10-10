@@ -22,3 +22,14 @@ User replied “Ok proceed” after Phase 89 recommended testing whether ATM IV 
 
 ## Execution
 Pending automated GitHub Actions run.
+
+<!-- PHASE90_RUNTIME_START -->
+## Automated execution record — 38048410498
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498
+- Status: PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX
+- VIX ID resolved dynamically: True
+- Options valid chunks=54/54; VIX valid chunks=5/5
+- OOS rows/sessions=3604/60
+- Primary result: M1 MAE − M2 MAE = 0.0330 bps (paired session-cluster bootstrap 95% CI 0.0001 to 0.0562; bootstrap positive share 0.9750; 5000 resamples).
+- Raw market responses were not printed, committed, or uploaded as artifacts; 2026 was not requested.
+<!-- PHASE90_RUNTIME_END -->

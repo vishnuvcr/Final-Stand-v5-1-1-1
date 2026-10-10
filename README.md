@@ -1,3 +1,23 @@
+<!-- PHASE90_START -->
+# Resume checkpoint — Phase 90 IV incremental-prediction study
+
+**Status: PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX.** Automated run [38048410498](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498). The independent sample is calendar 2024, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
+
+- [Phase 90 plan](PHASE90_RESEARCH_PLAN.md)
+- [Phase 90 status](PHASE90_STATUS.md)
+- [Phase 90 error log](PHASE90_ERROR_LOG.md)
+- [Phase 90 auditable chat log](PHASE90_CHAT_LOG.md)
+- [Detailed results](results/phase90/PHASE90_RESULTS.md)
+- [Summary JSON](results/phase90/summary.json)
+- [Coverage ledger](results/phase90/coverage.csv)
+- [Model metrics](results/phase90/model_metrics.csv)
+- [VIX-regime metrics](results/phase90/vix_regime_metrics.csv)
+- [Analysis engine](research/phase90/iv_incremental_study.py)
+- [Workflow](.github/workflows/phase90-iv-incremental-prediction.yml)
+
+**Interpretation boundary:** predictive gain is not strategy P&L. Historical exact-contract bid/ask/depth, Paytm Money cost-adjusted fills, or live orders were not tested. No strategy has been promoted.
+<!-- PHASE90_END -->
+
 <!-- PHASE89_START -->
 # Resume checkpoint — Phase 89 rolling-options feature study
 

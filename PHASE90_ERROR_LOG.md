@@ -13,3 +13,16 @@ Date opened: 2026-10-10. Never log credentials, raw response bodies, row-level m
 
 ## Runtime issues
 No run outcome recorded yet.
+
+<!-- PHASE90_RUNTIME_START -->
+## Runtime summary — 38048410498
+- Status: PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX
+- Options valid chunks: 54/54
+- VIX valid chunks: 5/5
+- Instrument master: UNIQUE_MATCH; candidate count=1
+- Paired rows: 18554
+- OOS rows/sessions: 3604/60
+- Issues:
+- No API/network/schema failures.
+- No token, raw response, row-level price, or hidden reasoning is logged.
+<!-- PHASE90_RUNTIME_END -->
