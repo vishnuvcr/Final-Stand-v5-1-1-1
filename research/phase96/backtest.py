@@ -83,10 +83,10 @@ def main():
         for short, long in ((5,20),(10,50),(20,100)):
             x = replay(df, kind, short, long)
             test = x[(x.date >= "2020-01-01") & (x.date < "2026-01-01")].copy()
-            rows.append(stats(test.strategy_return_net_proxy, test.equity_strategy, f"{kind}_{short}_{long}_net_proxy"))
-            rows.append(stats(test.buy_hold_return, test.equity_buy_hold, "buy_hold"))
             test["equity_strategy"] = (1 + test["strategy_return_net_proxy"]).cumprod()
             test["equity_buy_hold"] = (1 + test["buy_hold_return"]).cumprod()
+            rows.append(stats(test.strategy_return_net_proxy, test.equity_strategy, f"{kind}_{short}_{long}_net_proxy"))
+            rows.append(stats(test.buy_hold_return, test.equity_buy_hold, "buy_hold"))
             test["strategy"] = f"{kind}_{short}_{long}"
             curves.append(test[["date","strategy","signal","turnover","strategy_return_gross","strategy_return_net_proxy","buy_hold_return"]])
     pd.DataFrame(rows).to_csv(OUT / "metrics.csv", index=False)
