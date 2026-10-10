@@ -1,0 +1,38 @@
+name: Phase 62 — OptionsData sample validation
+
+on:
+  push:
+    branches:
+      - phase-62-optionsdata-sample-validation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase62-optionsdata-sample-validation
+  cancel-in-progress: false
+
+jobs:
+  sample-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ephemeral audit dependencies
+        run: python -m pip install --disable-pip-version-check pandas pyarrow
+      - name: Download and audit public sample in temporary storage
+        env:
+          PHASE62_REPORT: phase62_sample_audit.json
+        run: python scripts/phase62_validate_optionsdata_sample.py
+      - name: Publish aggregate-only report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase62-aggregate-audit
+          path: phase62_sample_audit.json
+          if-no-files-found: warn
+          retention-days: 30
