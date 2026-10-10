@@ -23,7 +23,7 @@ The test uses the paper’s ₹3,00,000 initial capital, deploying no more than 
 - Initial/ending account equity: ₹300,000.0000 / ₹16,330.1015; account return: -94.5566%; max account drawdown: ₹324,136.1184.
 - Mean net P&L/trade 95% circular moving-block bootstrap interval: not estimable to not estimable; status: SKIPPED_LT20_TRADES.
 - Net P&L at ₹10/order: -283,669.8985; mean/trade: -40,524.2712; median: -14,737.7245; win rate: 0.1429; PF: 0.1248; max trade drawdown: 324,136.1184.
-- Net at ₹20/order: -283,809.8985; +50% charges stress: -284,443.5978; ₹20/order + stress: -284,653.5978; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): -265,075.2937.
+- Net at ₹20/order: -283,809.8985; +50% charges stress: -284,443.5978; ₹20/order + stress: -284,653.5978; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): -288,026.9684.
 - A zero-trade sample is NOT ESTIMABLE, never reported as evidence of zero return. This does not recreate the original source period.
 
 ## 4. U02 — machine-learning Buy/Sell option method
