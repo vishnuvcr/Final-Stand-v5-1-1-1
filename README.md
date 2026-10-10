@@ -1311,3 +1311,17 @@ Corrected automated run [38027023283](https://github.com/vishnuvcr/Final-Stand-v
 Phase 64's corrected automated test completed, but both CCI candidates had zero completed trades and 0% breakout-trigger coverage. This is an evidence/data-coverage failure, not proof of negative expectancy. Phase 65 is opened on a separate branch to diagnose timestamp conventions, option-contract availability, exact next-minute coverage, and the day-15 boundary. The frozen strategy rules will not be loosened and 2026 holdout data will not be used. This is a single bounded diagnostic phase; no more CCI variants are registered until its root-cause report exists.
 
 - [Phase 65 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_ERROR_LOG.md).
+
+
+## Phase 65 — CCI timestamp/contract coverage audit
+
+**Status: implementation committed; automated data run must be verified before calling the audit complete.** Phase 64 produced zero completed CCI trades, so profitability was not estimable. Phase 65 adds a pinned-source diagnostic of exact trigger/next-minute timestamps and observed option-side/strict-ITM contract coverage. It forbids interpolation, proxy fills, strategy P&L, parameter changes, and 2026 holdout data.
+
+- [Phase 65 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_RESEARCH_PLAN.md)
+- [Phase 65 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_STATUS.md)
+- [Diagnostic runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/research/phase65_cci_data_coverage_audit.py)
+- [Manual/push workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/.github/workflows/phase65-cci-coverage-audit.yml)
+- [Research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_RESEARCH_LOG.md)
+- [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_ERROR_LOG.md)
+
+A static filename-regex issue was corrected before the data run and documented as F65-001. Do not infer successful execution from code commits; only aggregate outputs and a passing workflow run can close the phase. No strategy is promoted.
