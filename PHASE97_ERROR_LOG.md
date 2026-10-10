@@ -8,3 +8,5 @@
 
 ## Runtime errors
 - None recorded at phase start. Append all CI/data-gate errors and their resolution here.
+
+- 2026-10-10: Gate run 38072759556 completed successfully and wrote a bounded DATA_BLOCKED result. This is expected gate behaviour, not a runtime error. Model fitting remains blocked until eligible source data become available.
