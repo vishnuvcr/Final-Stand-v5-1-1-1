@@ -19,6 +19,19 @@
 - [Draft PR #42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42) remains open/draft/unmerged. [Default-branch manual runner; automatic runs are triggered by Phase 92 plan/engine pushes](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml).
 - **Final manuscript QA:** corrected equation rendering and the references heading; this documentation-only correction is recorded in [commit cc764f9](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/cc764f98c17349fd4d8821495a39e5010521c592) and logged as E92-014. Research estimates and the no-strategy-promotion decision are unchanged.
 
+## Phase 93 — uploaded-literature audit
+
+**Status: PASS — documentation and literature validation complete; no new market/P&L experiment.** The fixed set of 14 uploaded PDFs is mapped source-by-source, with author-reported claims distinguished from independently reproduced results. The manuscript references now cover all 14 additional papers; the automated validator found 14/14 audit entries, 14/14 filenames, references 1–29, and zero errors.
+
+- [Phase 93 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/PHASE93_STATUS.md)
+- [Phase 93 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/PHASE93_RESEARCH_PLAN.md)
+- [14-paper literature evidence audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase93/UPLOADED_LITERATURE_AUDIT.md)
+- [Validation report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase93/validation_report.json)
+- [Successful validator run 38053142927](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053142927)
+- [Updated manuscript draft](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase92/MANUSCRIPT_DRAFT.md)
+
+**Interpretation boundary:** most uploaded papers concern daily index-price prediction; a small number report options backtests but their results have not been independently reproduced here. This audit does not promote a strategy or resolve the exact-contract historical quotes/depth and fully costed execution gate. Phase 83's 2026 holdout remains sealed. [Draft PR #43](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/43) is for review and remains unmerged.
+
 ## Preceding IV evidence: Phases 89–91
 
 - **Phase 89, 2025 association study:** mean ATM IV association with next-15-minute absolute spot movement survived Holm correction, but association alone was not evidence of incremental model utility or profitability.
