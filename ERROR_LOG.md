@@ -2245,3 +2245,8 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Run 38057371871: regression-test collection imported fee_components, but runner exports fees; replay skipped.
 - Run 38057380129: the same test import issue persisted and the workflow logger hit a rebase conflict while audit files were also being updated directly.
 - No market data or P&L evidence was produced. Phase-specific details: PHASE98_ERROR_LOG.md on branch phase-98-nifty-opening-range-debit-spread.
+
+
+## Phase 98 execution issue
+- Run 38057516991 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057516991
+- Classified as non-evidence until the output and coverage gates pass.

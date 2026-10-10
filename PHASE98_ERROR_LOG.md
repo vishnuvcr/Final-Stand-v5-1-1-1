@@ -47,3 +47,8 @@ New errors, invalid outputs, workflow failures and fixes are appended below with
 - The same stale fee_components import still existed in the workflow's checked-out revision; numerical replay remained skipped.
 - The always-run publisher's local append conflicted with concurrently updated Phase 98 chat/error/research logs during git rebase. This happened while the logs were being updated directly through repository writes during the workflow; no numerical files were involved.
 - The test import is being corrected before the next run. No manual repository log edits should be made while the next run's publisher is active; let the workflow commit its audit checkpoint first.
+
+
+## Automated execution issue — Run 38057516991 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057516991
+- Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.
+- Runner detail: See workflow logs and validation_report.json.

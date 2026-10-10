@@ -26,3 +26,8 @@
 - Run 38057371871 reached test collection after the path fix and failed because the test imported a nonexistent name (fee_components instead of the runner's fees function).
 - Run 38057380129 repeated that same test import error. Its audit-publisher commit also conflicted on rebase because repository logs were manually updated while the workflow was active.
 - Neither run read source data or ran the strategy. The stale import is removed before the next run; future log edits will wait until the automated publisher finishes.
+
+
+## Run 38057516991 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057516991
+- Result status: FAILED_BEFORE_NUMERICAL_RUN. Economic status: NOT_EVALUATED.
+- Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.

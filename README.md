@@ -1405,3 +1405,12 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - Runs [38057371871](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871) and [38057380129](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057380129) still failed at pytest collection due to an unused, incorrect function import; both skipped the strategy replay.
 - The latter workflow also encountered a git rebase conflict while log files were updated concurrently. This is recorded as an orchestration issue, not strategy evidence.
 - Correction: remove the stale test import, then allow the automated status publisher to complete before further direct repository edits. No source data or trading result has been accepted from these attempts.
+
+
+## Phase 98 — NIFTY opening-range debit spread
+
+- Latest status: **FAILED_BEFORE_NUMERICAL_RUN**; economic status: **NOT_EVALUATED**.
+- Latest run: [38057516991](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057516991).
+- Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).
+- Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).
+- Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.
