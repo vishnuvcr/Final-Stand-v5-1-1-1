@@ -27,7 +27,7 @@ def validate(repo_root: Path) -> dict:
     checks.append(("option_discovery_urls_present", all(str(s.get("option_discovery_url", "")).startswith("https://") for s in stocks)))
     checks.append(("prior_results_not_reused_as_evidence", data.get("freeze_policy", {}).get("nifty_index_options_results_reused_as_stock_options_evidence") is False))
     checks.append(("prior_artifacts_marked_unmodified", data.get("freeze_policy", {}).get("prior_phase_artifacts_mutated") is False))
-    checks.append(("source_audit_gate_registered", "licence/retention/caching/derived-publication permissions" in data.get("phase_103_1_required_common_window_metrics", [])))
+    checks.append(("source_audit_gate_registered", any("licence/retention/caching/derived-publication permissions" in item for item in data.get("phase_103_1_required_common_window_metrics", []))))
     failures = [name for name, ok in checks if not ok]
     return {
         "phase": "103.0",
