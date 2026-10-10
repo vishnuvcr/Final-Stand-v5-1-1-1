@@ -234,7 +234,7 @@ def evaluate_trade(index: pd.DataFrame, chain_map, expiry: pd.Timestamp, candida
     side = candidate["side"]
     trigger_ts = candidate["trigger_ts"]
     entry_ts = trigger_ts + pd.Timedelta(minutes=1)
-    if entry_ts.day > 15 or entry_ts not in set(index.timestamp.values):
+    if entry_ts.day > 15 or not bool(index.timestamp.eq(entry_ts).any()):
         return None, "entry_next_minute_missing_or_outside_window"
     entry_spot = float(index.loc[index.timestamp == trigger_ts, "close"].iloc[0])
     avail = sorted(k[1] for k in chain_map if k[0] == side)
@@ -332,7 +332,7 @@ def summarize(trades: pd.DataFrame, opportunities: pd.DataFrame, variant: str, s
     cum = np.cumsum(net) if n else np.array([])
     peak = np.maximum.accumulate(np.r_[0.0, cum])[1:] if n else np.array([])
     dd = float(np.max(peak - cum)) if n else 0.0
-    trigger_rows = int((o.status == "breakout_found").sum())
+    trigger_rows = int(o.breakout_found.astype(bool).sum()) if "breakout_found" in o else 0
     completed = int((o.status == "completed").sum())
     coverage = completed / trigger_rows if trigger_rows else np.nan
     return {
@@ -429,7 +429,7 @@ def main():
             audit_row = {"variant": variant, "split": split, "expiry": expiry.strftime("%Y-%m-%d"),
                 "source_file": filename, "qualified_signals": len(signals), "status": status,
                 "signal_dates": ";".join(sorted({x["signal_date"].strftime("%Y-%m-%d") for x in signals})),
-                "trigger_ts": "", "failure_reason": ""}
+                "breakout_found": bool(events), "trigger_ts": "", "failure_reason": ""}
             if events:
                 ev = {**events[0], "variant": variant}
                 audit_row["trigger_ts"] = str(ev["trigger_ts"])
