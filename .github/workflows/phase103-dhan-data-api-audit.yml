@@ -21,7 +21,10 @@ on:
       - "research/phase103_stock_options/record_dhan_audit_status.py"
       - "tests/phase103/**"
       - ".github/workflows/phase103-dhan-data-api-audit.yml"
-      - "PHASE103_RESEARCH_PLAN.md"
+
+concurrency:
+  group: phase103-dhan-data-api-audit
+  cancel-in-progress: true
 
 permissions:
   contents: write
