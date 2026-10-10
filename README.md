@@ -1230,3 +1230,8 @@ Preliminary metadata review finds no source already proven to satisfy exact-cont
 
 - Run: [38021608375](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021608375); workflow status=failure; report missing or unaccepted. No conclusion accepted.
 - [Plan](PHASE60_RESEARCH_PLAN.md) · [Status](PHASE60_STATUS.md) · [Decision report](results/phase60/evidence_sufficiency/report.md) · [Error log](PHASE60_ERROR_LOG.md)
+
+## Phase 60 — evidence sufficiency gate
+
+- Run: [38021614375](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021614375); workflow status=failure; report missing or unaccepted. No conclusion accepted.
+- [Plan](PHASE60_RESEARCH_PLAN.md) · [Status](PHASE60_STATUS.md) · [Decision report](results/phase60/evidence_sufficiency/report.md) · [Error log](PHASE60_ERROR_LOG.md)
