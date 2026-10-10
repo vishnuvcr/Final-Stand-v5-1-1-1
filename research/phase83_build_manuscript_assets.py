@@ -21,7 +21,7 @@ def main():
     inf = pd.read_csv(P82 / "cluster_inference.csv")
     cand = pd.read_csv(P82 / "candidate_gate.csv")
     s82 = json.loads((P82 / "summary.json").read_text(encoding="utf-8"))
-    required_perf = {"split","variant","window","trades","total_net_1tick","total_net_2tick","mean_net_1tick","median_net_1tick","win_rate_1tick","profit_factor","max_drawdown_trade_order","total_fees_1tick"}
+    required_perf = {"split","variant","window","trades","total_net_1tick","total_net_2tick","mean_net_1tick","median_net_1tick","win_rate_1tick","profit_factor_1tick","max_drawdown_trade_order","total_fees_1tick"}
     required_inf = {"split","variant","n_pairs","n_expiry_clusters","mean_inr_per_pair","expiry_cluster_bootstrap_ci95_low","expiry_cluster_bootstrap_ci95_high","p_value_raw","p_value_holm_family20"}
     if required_perf.difference(perf.columns):
         raise ValueError(f"Phase 81 performance CSV lacks {sorted(required_perf.difference(perf.columns))}")
