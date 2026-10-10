@@ -4,5 +4,7 @@
   "target_branch": "phase-64-paper-derived-strategy-tests",
   "holdout": "2026 excluded",
   "raw_data_artifacts": false,
-  "created_at": "2026-10-10"
+  "created_at": "2026-10-10",
+  "latest_strategy_code_commit": "2e4f6c06067e9907be9db4d6862fbc24565714f3",
+  "trigger_update": "point-in-time strike selection regression test"
 }
