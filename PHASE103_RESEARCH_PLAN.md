@@ -145,3 +145,8 @@ Primary authorized acquisition path requested for Phase 103.1: DhanHQ Data API u
 - Raw Dhan payload retention and redistribution rights are not yet verified. The bounded API workflow publishes aggregate audit statistics only; raw response rows stay ephemeral until allowed storage is established. This avoids exposing licensed market data in the public repository.
 
 Phase 103.1 workflow: .github/workflows/phase103-dhan-data-api-audit.yml. The branch-push run and manual dispatch both perform unit tests, query the instrument master, call Dhan's expired stock-options endpoint, and automatically write the aggregate result/status/error checkpoint back to this branch.
+
+
+## Dhan expiry-code correction — 2026-10-11
+
+The first live probe using `expiryCode: 0` received HTTP 400 / `DH-905` / “expiryCode is required” for every symbol and side (run [38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054)). The official annexure lists 0 as current/near expiry, while the expired-options example request uses 1 and the annexure labels 1 as next expiry. To test a documented, nonzero value rather than guess further, the bounded retry changes the registered request to `expiryCode: 1` (next expiry). This is a documented API-behavior discrepancy, not an accepted data result. The result must state the chosen expiry code and actual returned data range. No P&L/strategy inference is allowed from this smoke-test.
