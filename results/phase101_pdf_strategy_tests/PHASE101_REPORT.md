@@ -16,17 +16,19 @@ This bounded follow-up tests U02 (RF/XGBoost/LSTM Buy/Sell options method) and U
 - Yahoo daily history for monthly-return calculation: 2015-01-02 through 2025-12-31 (2708 observations).
 
 ## 3. U05 — monthly seasonality options rule
-Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). First calendar Wednesday and Thursday are used literally; no holiday substitution. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level among contracts present at the exact Thursday entry timestamp; only contemporaneous OI/volume can break ties.
-The test uses one historical lot, a 20% premium target and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.
+Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The first calendar Wednesday supplies the forecast; entry is on the first calendar Thursday strictly after that Wednesday to prevent look-ahead. No holiday substitution is made. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level at the first 09:15–09:20 opening-window minute with matching underlying and option bars; only contemporaneous OI/volume can break ties.
+The test uses the paper’s ₹3,00,000 initial capital, deploying no more than 90% of current equity per monthly trade; equity is carried forward and 10% is held as a safety reserve. Target is a 20% premium gain and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.
 
-- Months audited: 56; completed trades: 7; status: COMPUTED.
-- Net P&L at ₹10/order: 15,322.5267; mean/trade: 2,188.9324; median: -78.7857; win rate: 0.2857; PF: 17.6615; max trade drawdown: 679.4094.
-- Net at ₹20/order: 15,182.5267; +50% charges stress: 15,153.1650; ₹20/order + stress: 14,943.1650; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): 14,889.1719.
+- Months audited: 56; completed trades: 10; status: COMPUTED.
+- Initial/ending account equity: ₹300,000.0000 / ₹24,678.2846; account return: -91.7739%; max account drawdown: ₹315,787.9353.
+- Mean net P&L/trade 95% circular moving-block bootstrap interval: not estimable to not estimable; status: SKIPPED_LT20_TRADES.
+- Net P&L at ₹10/order: -275,321.7154; mean/trade: -27,532.1715; median: -15,869.3201; win rate: 0.4000; PF: 0.2649; max trade drawdown: 315,787.9353.
+- Net at ₹20/order: -275,521.7154; +50% charges stress: -276,558.8231; ₹20/order + stress: -276,858.8231; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): -249,051.5562.
 - A zero-trade sample is NOT ESTIMABLE, never reported as evidence of zero return. This does not recreate the original source period.
 
 ## 4. U02 — machine-learning Buy/Sell option method
 The source label is implemented as next-session NIFTY close return greater than 1% = Buy; otherwise Sell. Train window ends in 2023; validation is 2024–2025. RF, XGBoost and a 5-session LSTM use fixed settings and no validation tuning. Features include past returns, moving-average gaps, RSI, realized volatility/range, ATM call/put premium ratios, straddle/spot ratio, days-to-expiry and log OI/volume if available. IV/Greeks are used only when they exist and are sufficiently populated in the training sample; missing features are not fabricated.
-A predicted Buy buys the nearest available ATM call; predicted Sell buys the nearest available ATM put on the next trading session. Entry uses the first observed 09:15–09:20 bar and exit uses the last available 15:25–15:30 bar for that contract. Capital is capped at ₹1,00,000.
+A predicted Buy buys the nearest available ATM call; predicted Sell buys the nearest available ATM put on the next trading session. Entry uses the first matching underlying-option timestamp within 09:15–09:20; exit uses the last available 15:25–15:30 bar for that contract. Each model has a separate ₹1,00,000 account; position size compounds trade-by-trade, premium deployment is capped at 95% of current equity, and entry is blocked if one lot cannot be funded while preserving the 5% fee reserve.
 
 ### Prediction metrics
 | Model | Status | Train rows | Validation rows | Accuracy | Balanced accuracy | Buy precision | Buy recall | F1 | ROC AUC | Always-sell accuracy |
@@ -36,11 +38,11 @@ A predicted Buy buys the nearest available ATM call; predicted Sell buys the nea
 | LSTM5 | COMPLETED | 260 | 432 | 0.6574 | 0.5732 | 0.1164 | 0.4722 | 0.1868 | 0.6011 | 0.9167 |
 
 ### Costed options results
-| Model | Trades | Net ₹10/order | Net ₹20/order | +50% fees | 0.25%/side + ₹50 | Win rate | Max drawdown |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| LSTM5 | 289 | -1,591,962.6432 | -1,597,742.6432 | -1,620,434.5898 | -1,256,226.5281 | 0.3149 | 2,523,256.3298 |
-| RF | 303 | -901,450.3112 | -907,510.3112 | -932,004.2168 | -665,552.1875 | 0.3300 | 1,830,344.8696 |
-| XGBOOST | 304 | -711,355.2262 | -717,435.2262 | -742,144.7144 | -473,952.9719 | 0.3289 | 1,837,700.2360 |
+| Model | Trades | Net P&L ₹10/order | Mean/trade 95% block-bootstrap CI | Ending account equity ₹ | Account return % | Net ₹20/order sensitivity | +50% fee stress | Win rate | Max account drawdown ₹ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LSTM5 | 62 | -99,981.5392 | -34,662.6960 to 41,663.9601 | 18.4608 | -99.9815 | -101,221.5392 | -116,327.3088 | 0.2742 | 1,353,180.1863 |
+| RF | 49 | -99,994.9604 | -8,475.4343 to 4,162.0952 | 5.0396 | -99.9950 | -100,974.9604 | -102,266.1906 | 0.2857 | 320,187.8184 |
+| XGBOOST | 53 | -99,991.4677 | -24,246.6369 to 20,524.2444 | 8.5323 | -99.9915 | -101,051.4677 | -103,043.4516 | 0.2642 | 980,242.1479 |
 
 ### Model statuses
 - RF: COMPLETED — 
@@ -69,8 +71,9 @@ A predicted Buy buys the nearest available ATM call; predicted Sell buys the nea
 | U14 | Shaha CCI NIFTY options rule | DATA_BLOCKED_ZERO_COMPLETED_TRADES | Phase 66 zero completed trades; Phases 67-68 found insufficient exact timing/contract coverage. |
 
 ## 6. Costs and statistical inference
+The mean net P&L/trade confidence interval uses a deterministic circular moving-block bootstrap (5-trade blocks, 3,000 resamples), and is reported only for at least 20 completed trades. The seasonality sample has fewer than 20 trades, so no bootstrap precision is claimed. Fee-stress totals are alternative charge scenarios on the primary simulated position path, not separately re-sized equity curves.
 Baseline uses the repository’s date-effective charge helper, ₹10/order brokerage, one ₹0.05 adverse tick per fill, statutory/exchange fees and GST where implemented. Sensitivities add ₹20/order brokerage, +50% charge stress, and a paper-specific 0.25% adverse price impact per side plus ₹50/trade. These are simulated costs, not verified historical Paytm Money contract notes or proof of executable fills.
-Classification accuracy alone is not evidence of profitable trading. Sparse trades, missing coverage and non-significant results are retained as limitations. No strategy is promoted.
+Classification accuracy alone is not evidence of profitable trading. U02 accounting is sequential per-model equity rather than reusing the initial ₹1 lakh on every trade. Sparse trades, missing coverage and confidence intervals crossing zero are not robust evidence. No strategy is promoted.
 
 ## 7. Strengths and limitations
 Strengths: pinned provenance; chronological development/validation split; no 2026 option data; explicit opportunity exclusions; training-only feature eligibility/imputation; conservative handling of bars that hit both target and stop.

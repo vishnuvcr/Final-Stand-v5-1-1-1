@@ -54,3 +54,7 @@ Append entries; never overwrite earlier failures.
 - Commit: 8abf66077650abc29c8fe75e1f372ec0dcb9d3a3
 - Numerical outputs from the failed run are not accepted. See `results/phase101_pdf_strategy_tests/phase101_runtime_error.json` when produced and inspect the Actions log.
 - Correct the root cause without weakening frozen strategy rules or opening 2026 data.
+
+
+## Run reconciliation — 2026-10-10T18:37:17Z
+- Workflow 38076280351 completed aggregate validation. No runner exception was raised; inspect report and model status CSV for explicit data/model blockers.

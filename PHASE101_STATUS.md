@@ -38,3 +38,12 @@
 
 ## Correction gate — 2026-10-10
 The first successful runtime output set is superseded and not accepted as final because U05 had look-ahead on months where the first Thursday preceded the first Wednesday, and U02 did not maintain account equity between signals. Both defects are corrected in the runner. The corrected phase results remain pending the next validated workflow run; no numerical finding from the first output set is promoted.
+
+
+## Runtime checkpoint — 2026-10-10T18:37:17Z
+
+- Automated workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076280351
+- Validation report: COMPLETED_WITH_EXPLICIT_LIMITATIONS; 14-paper matrix present; 2026 option holdout not downloaded; no strategy promoted.
+- U05 completed trades: 10; sample status: COMPUTED; audit status counts: {'EXCLUDED_FIRST_WEDNESDAY_NOT_SESSION': 5, 'BLOCKED_NO_MATCHING_OPENING_WINDOW_OPTION': 30, 'BLOCKED_NO_EXACT_NEXT_MINUTE_EXIT': 6, 'BLOCKED_NO_THURSDAY_INDEX_BAR': 1, 'COMPLETED': 10, 'EXCLUDED_INSUFFICIENT_ACCOUNT_EQUITY': 3, 'EXCLUDED_FIRST_THURSDAY_NOT_SESSION': 1}.
+- U02 predictions: 1330; completed trades: 164; model statuses: [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
+- Result files are aggregate/derived only. A model/data blocker is not a negative efficacy finding.
