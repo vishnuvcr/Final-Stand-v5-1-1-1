@@ -16,9 +16,12 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 
 ## Runtime / trigger verification checkpoint — 2026-10-10
 
+Static review caught a copied metadata literal: the Phase 91 engine emitted `"phase": 90` in the summary JSON. It was corrected to `"phase": 91` before any confirmed Phase 91 run (E91-010; no numeric result was affected because no result had been generated).
+
 - After registering the engine, workflow, and plan update, the branch still contained the initial PREREGISTERED status and no `results/phase91/summary.json` or `results/phase91/PHASE91_RESULTS.md` file was yet present.
 - The available repository status checks did not surface an Actions run ID for the latest phase commit. This is an execution-verification blocker, not a data result. It does **not** mean the model failed or the IV signal is absent.
 - Do not claim acquisition succeeded, do not infer a negative/positive replication result, and do not promote any strategy until the Actions-generated aggregate results are available.
-- Manual dispatch remains available in the workflow's GitHub Actions UI. The workflow itself is registered with both a branch/path push trigger and `workflow_dispatch`.
+- The Phase 91 branch workflow declares both a branch/path push trigger and `workflow_dispatch`. GitHub documents that the manual Run workflow button is available when the workflow file exists on the default branch; this branch-only workflow's actual manual-dispatch availability was not verified.
+- Added `.github/workflows/phase91-pr-runner.yml` to the Phase 90 parent branch as an automated pull-request fallback. Its execution is also not confirmed; no run ID or result files were surfaced by repository status checks at the time of this log.
 
 Append the automated runtime summary here after a confirmed workflow run. Keep failures explicit even if the workflow process itself exits successfully.
