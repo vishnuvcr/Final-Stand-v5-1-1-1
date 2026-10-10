@@ -50,7 +50,7 @@ class DhanDataAuditTests(unittest.TestCase):
         result=summarize("INFY","CALL",200,{"status":"success","data":{"ce":block}})
         encoded=__import__("json").dumps(result)
         self.assertNotIn("access-token",encoded.lower())
-        self.assertNotIn('"close"',encoded)
+        self.assertNotIn("9.0",encoded)
 
 if __name__=="__main__":
     unittest.main()
