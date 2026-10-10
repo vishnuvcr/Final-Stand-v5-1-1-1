@@ -32,3 +32,10 @@ The workflow failed before a machine-readable result was written. No source/data
 <!-- DHAN_API_RUN_38088262635 -->
 ## Dhan API audit did not produce output — run 38088262635
 The workflow failed before a machine-readable result was written. No source/data success is claimed.
+
+ 
+## 2026-10-11 — Dhan workflow preflight correction
+
+- Reviewed job logs for runs 38088253613 and 38088262635. The repository secret was present but masked; the Python test step failed before the Dhan HTTP request, so no authentication or historical-coverage result was produced.
+- Root cause: source-rights registration test had false-negative string matching. Corrected to substring-match the registered metrics and added tests for empty side blocks and output-summary safety.
+- Preserved both failed runs and the fallback-logging defect in E103-006/E103-007; fixed bridge printf handling in commit 52565b4. Next evidence must come from a new run that reaches the Dhan request step.
