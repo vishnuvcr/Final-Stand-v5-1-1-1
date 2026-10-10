@@ -30,7 +30,7 @@
 - [Successful validator run 38053142927](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053142927)
 - [Updated manuscript draft](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase92/MANUSCRIPT_DRAFT.md)
 
-**Interpretation boundary:** most uploaded papers concern daily index-price prediction; a small number report options backtests but their results have not been independently reproduced here. This audit does not promote a strategy or resolve the exact-contract historical quotes/depth and fully costed execution gate. Phase 83's 2026 holdout remains sealed. [Draft PR #43](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/43) is for review and remains unmerged.
+**Interpretation boundary:** most uploaded papers concern daily index-price prediction; a small number report options backtests but their results have not been independently reproduced here. The Shaha CCI rule has already been attempted in [Phase 66](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md): both frozen variants had zero completed trades and no estimable profitability, so do not repeat that test without materially better authorized data. This audit does not resolve the exact-contract historical quotes/depth and fully costed execution gate. Phase 83's 2026 holdout remains sealed. [Draft PR #43](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/43) is for review and remains unmerged.
 
 ## Preceding IV evidence: Phases 89–91
 
