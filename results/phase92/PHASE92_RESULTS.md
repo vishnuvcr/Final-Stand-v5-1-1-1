@@ -39,6 +39,10 @@ Option IV, close-derived synthetic proxy and OI features are lagged one full fiv
 | VALIDATION | M4_add_synthetic_proxy_and_OI | 3780 | 63 | 5.7466 | 7.5783 | 0.0749 |
 | CONFIRMATORY_OOS | M4_add_synthetic_proxy_and_OI | 3660 | 61 | 4.9922 | 6.6615 | 0.0550 |
 
+## Figure 1 — out-of-sample MAE comparison
+
+![Phase 92 OOS MAE comparison](OOS_MAE_COMPARISON.svg)
+
 ## Primary result
 M2 MAE − M4 MAE = -0.1708 bps (paired session-cluster bootstrap 95% CI -0.2299 to -0.1152; bootstrap positive share 0.0000; 5000 resamples; seed 90210).
 
