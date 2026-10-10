@@ -35,7 +35,7 @@ Do point-in-time rolling ATM-relative option features—mean implied volatility,
 ## Chronological splits and preregistered tests
 - DEV: 2025-01-01 through 2025-07-01 exclusive.
 - VALIDATION: 2025-07-01 through 2025-10-01 exclusive.
-- CONFIRMATORY OOS: 2025-10-01 through 2026-01-01 exclusive.
+- CONFIRMATORY OOS: 2025-10-01 through 2025-12-31 exclusive.
 - Target 1: absolute NIFTY spot return over exactly the next 15 minutes, expressed in basis points.
 - Target 2: signed NIFTY spot return over exactly the next 15 minutes, expressed in basis points.
 - Hypothesis 1: mean CALL/PUT ATM IV at t is associated with absolute next-15-minute spot return.
