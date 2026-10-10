@@ -10,7 +10,7 @@ No Phase 60 execution errors recorded at initialization.
 - Status: failure
 - Report present: False
 - No conclusion accepted.
-- Status: OPEN.
+- Status: RESOLVED by the corrections documented in F60-ROOT-001, F60-ROOT-002 and F60-PERSIST-001; this failed run's output was not accepted.
 
 ## F60-RUN-38021594949 — gate failure
 
@@ -18,7 +18,7 @@ No Phase 60 execution errors recorded at initialization.
 - Status: failure
 - Report present: True
 - No conclusion accepted.
-- Status: OPEN.
+- Status: RESOLVED by the corrections documented in F60-ROOT-001, F60-ROOT-002 and F60-PERSIST-001; this failed run's output was not accepted.
 
 ## F60-RUN-38021608375 — gate failure
 
@@ -26,7 +26,7 @@ No Phase 60 execution errors recorded at initialization.
 - Status: failure
 - Report present: True
 - No conclusion accepted.
-- Status: OPEN.
+- Status: RESOLVED by the corrections documented in F60-ROOT-001, F60-ROOT-002 and F60-PERSIST-001; this failed run's output was not accepted.
 
 ## F60-RUN-38021614375 — gate failure
 
@@ -34,7 +34,7 @@ No Phase 60 execution errors recorded at initialization.
 - Status: failure
 - Report present: True
 - No conclusion accepted.
-- Status: OPEN.
+- Status: RESOLVED by the corrections documented in F60-ROOT-001, F60-ROOT-002 and F60-PERSIST-001; this failed run's output was not accepted.
 
 ## F60-ROOT-001 — incorrect repository root / Phase59 report schema — RESOLVED
 
