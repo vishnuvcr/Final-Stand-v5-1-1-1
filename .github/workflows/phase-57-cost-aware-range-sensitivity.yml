@@ -8,7 +8,6 @@ on:
       - "research/phase52/historical_pilot_runner.py"
       - "research/phase52/replay_kernel.py"
       - "results/phase52/historical_pilot/event_replay.csv"
-      - ".github/workflows/phase-57-cost-aware-range-sensitivity.yml"
 
 permissions:
   contents: write
@@ -44,7 +43,7 @@ jobs:
         run: |
           cd research/phase57
           python -m unittest -v test_cost_aware_range_sensitivity.py
-      - name: Run frozen 11-threshold cost-aware replay
+      - name: Run frozen 2% and 1000% endpoint cost-aware replay
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python research/phase57/cost_aware_range_sensitivity.py
