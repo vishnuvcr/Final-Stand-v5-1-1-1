@@ -8,6 +8,7 @@
 - [Phase 91 error log](PHASE91_ERROR_LOG.md)
 - [Phase 91 auditable chat log](PHASE91_CHAT_LOG.md)
 - [Detailed results](results/phase91/PHASE91_RESULTS.md)
+- [Cross-year synthesis](results/phase91/CROSS_YEAR_SYNTHESIS.md)
 - [Summary JSON](results/phase91/summary.json)
 - [Coverage ledger](results/phase91/coverage.csv)
 - [Model metrics](results/phase91/model_metrics.csv)
