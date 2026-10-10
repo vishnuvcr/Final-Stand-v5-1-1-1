@@ -1,0 +1,52 @@
+{
+  "decision": "NO_GO_FREE_AUTOMATABLE_HISTORICAL_BID_ASK_DEPTH_AT_FROZEN_TIMESTAMPS",
+  "holdout_used": false,
+  "licensed_followup_candidates": [
+    "tickbytes",
+    "optionvault"
+  ],
+  "limitations": [
+    "This report validates a documented evidence registry; it does not crawl sites or independently verify vendor claims.",
+    "Public sample files do not prove full historical coverage for the Phase52 target dates/contracts.",
+    "OHLC/LTP and end-of-day bid/ask do not replace exact intraday bid/ask/depth at the frozen timestamps.",
+    "No purchase or license acceptance was made; licensed sources require explicit user authorization.",
+    "StockMojo's published terms prohibit automated extraction; it is not used in GitHub Actions."
+  ],
+  "manual_only_candidates": [
+    "stockmojo_timeseries"
+  ],
+  "phase": 58,
+  "pnl_recalculated": false,
+  "purchase_made": false,
+  "required_fields": [
+    "timestamp",
+    "expiry",
+    "strike",
+    "option_type",
+    "bid_price",
+    "ask_price",
+    "bid_quantity",
+    "ask_quantity"
+  ],
+  "required_timestamps_ist": {
+    "entries": [
+      "09:45",
+      "13:00"
+    ],
+    "exit": "15:15"
+  },
+  "scraping_against_terms": false,
+  "source_count": 6,
+  "source_decision_counts": {
+    "INSUFFICIENT_FOR_FROZEN_ENTRY_EXIT_TIMES": 1,
+    "MANUAL_FEATURE_RESEARCH_ONLY_NOT_AUTOMATABLE": 1,
+    "NOT_ACCEPTED_FOR_AUTOMATED_HISTORICAL_QUOTES": 1,
+    "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY": 2,
+    "RESEARCH_ONLY_NO_QUOTE_DEPTH": 1
+  },
+  "sources_eligible_for_automated_replay": [],
+  "sources_with_verified_exact_timestamps": 0,
+  "sources_with_verified_full_history_bid_ask_depth": 0,
+  "status": "SOURCE_FEASIBILITY_PASS_NO_GO_FOR_FREE_AUTOMATED_QUOTES",
+  "strategy_promotion_allowed": false
+}
