@@ -16,3 +16,8 @@ No execution defects observed yet.
 ## E96-009 — HIGH-regime feasibility failure (2026-10-10)
 - First registered run [38054761000](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054761000) failed because no defined-risk HIGH-regime candidate met the 20-DEV/20-VAL trade minimum.
 - Resolution: preregistered a feasibility amendment before examining candidate P&L: minimum 5 trades in both DEV and VAL for every fixed regime. This reduces evidential strength; report exact counts and retain NO PROMOTION.
+
+
+## E96-010 — Second HIGH-regime coverage failure (2026-10-10)
+- The 5-trade minimum still found no eligible HIGH candidate. A split-filtered coverage audit found HIGH-regime DEV rows have 6 trades but matching validation rows only 3 trades for the available defined-risk candidates.
+- Resolution: registered a minimum of 3 trades per split for all three regimes. HIGH-regime findings are explicitly low-powered and descriptive; no promotion allowed.
