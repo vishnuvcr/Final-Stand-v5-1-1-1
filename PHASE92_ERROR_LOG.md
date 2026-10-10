@@ -17,7 +17,8 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 ## Static review notes
 - Phase 92 uses a full one-bar feature lag to guard against Dhan's candle-start timestamp convention and avoid using candle close/OI/IV before a bar is complete.
 - If API or sample coverage gates fail, return INCONCLUSIVE and preserve error details; no imputed rows.
-- The default-branch workflow entry will run only on PR creation/reopening for this phase or via manual dispatch with the fixed branch. Its publication filters intentionally exclude generated status/result changes to avoid infinite workflow-trigger loops.
+- The default-branch workflow now runs on pushes to the Phase 92 branch when the preregistered plan or engine changes, and also supports `workflow_dispatch`. The Phase 91-base PR runner is limited to PR open/reopen, so generated result commits do not repeatedly relaunch analysis.
+- Run 38050752049 was reported as `action_required` without a job being exposed. This did not affect the accepted result; the push-triggered run 38050805106 completed acquisition, analysis and publication successfully.
 
 ## Execution / reporting corrections
 
