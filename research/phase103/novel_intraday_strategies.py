@@ -144,9 +144,7 @@ def global_breadth_direction(frame, day):
     if len(signs)<3: return None
     pos=sum(x>0 for x in signs); neg=sum(x<0 for x in signs)
     d=1 if pos>=3 else -1 if neg>=3 else 0
-    sensex=value(row,["SENSEX_ret1"])
-    if d==0 or not np.isfinite(sensex) or sensex==0 or int(np.sign(sensex))!=d: return None
-    return d
+    return d if d else None
 
 def prior_vix_low(vix,day):
     d=pd.Timestamp(day).tz_localize(None).normalize()
@@ -467,8 +465,7 @@ def run_discovery(root=ROOT,token=None):
                     row["severe_stress_net_rupees"]=completed["severe_stress_net_rupees"];row["session_status"]="TRADE_COMPLETED"
                 else:
                     row["session_status"]="EXECUTION_GAP"
-                    if attempt.get("status")=="BLOCKED_EXIT_NO_COMPLETE_OPEN":
-                        row["net_rupees"]=np.nan;row["stress_net_rupees"]=np.nan;row["severe_stress_net_rupees"]=np.nan
+                    row["net_rupees"]=np.nan;row["stress_net_rupees"]=np.nan;row["severe_stress_net_rupees"]=np.nan
             daily_rows.append({"strategy":strategy,"trade_date":str(day.date()),"split":split,**row})
         if ix%25==0:print(f"Phase 103 processed {ix}/{len(eligible)} eligible sessions, expiry={expiry.date()}",flush=True)
     tradesdf=pd.DataFrame(trades);coverdf=pd.DataFrame(coverage);daily=pd.DataFrame(daily_rows)
@@ -485,7 +482,7 @@ def run_discovery(root=ROOT,token=None):
             entry_gaps=int(ta.status.str.startswith("BLOCKED").sum()-exit_gaps)
             coverage_pct=100*ncompleted/nsignal if nsignal else 100.0
             daily_pnl=pd.to_numeric(sub.net_rupees,errors="coerce").to_numpy(float)
-            has_gap=exit_gaps>0 or not np.isfinite(daily_pnl).all()
+            has_gap=entry_gaps>0 or exit_gaps>0 or not np.isfinite(daily_pnl).all()
             boot={"status":"NOT_ESTIMABLE_COVERAGE_GAP","n_sessions":int(np.isfinite(daily_pnl).sum()),"mean_daily":None,"ci95_low":None,"ci95_high":None,"p_one_sided":None,"replicates":0} if has_gap else block_bootstrap(daily_pnl,RNG_SEED+STRATEGIES.index(strategy)+(0 if split=="development" else 100))
             p=pd.to_numeric(done.get("net_rupees",pd.Series(dtype=float)),errors="coerce").dropna().to_numpy(float)
             sp=pd.to_numeric(done.get("stress_net_rupees",pd.Series(dtype=float)),errors="coerce").dropna().to_numpy(float)
@@ -524,7 +521,7 @@ def run_discovery(root=ROOT,token=None):
        "all_signal_rows_have_audit":len(coverdf)==len(tradesdf),"integrity_errors":[],
        "results":[{"strategy":r["strategy"],"trades":r["completed_trades"],"base_net":r["net_completed_trades_rupees"],
        "stress_net":r["stress_net_completed_trades_rupees"],"severe_net":r["severe_stress_net_completed_trades_rupees"],
-       "coverage_pct":r["execution_coverage_pct"],"ci95":[r["mean_daily_net_ci95_low"],r["mean_daily_net_ci95_high"],
+       "coverage_pct":r["execution_coverage_pct"],"ci95":[r["mean_daily_net_ci95_low"],r["mean_daily_net_ci95_high"]],
        "holm_p":r["holm_adjusted_p_validation"],"eligible_for_independent_followup":r["candidate_eligible_for_independent_followup"]}
        for r in validations],
        "limits":["OHLC open prices and adverse slippage are a proxy, not quote/depth fills.",
