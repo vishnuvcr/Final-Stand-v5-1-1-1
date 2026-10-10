@@ -159,3 +159,15 @@ The earlier 30-day/10-probe request was cancelled before it produced a derived r
 - API probes returning rows: 1/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+<!-- DHAN_API_RUN_38089057160_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38089057160, attempt 1 — 2026-10-10T21:49:02.855491+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
