@@ -1329,7 +1329,7 @@ A static filename-regex issue was corrected before the data run and documented a
 
 ## Phase 66 — OHLC-based paper replication (opened 2026-10-10)
 
-**Status: plan and runner scaffold committed; numerical run not yet verified.** At the user's direction, Phase 66 proceeds using minute OHLC bars to reconstruct the CCI NIFTY options paper. This is an OHLC-reference backtest, not an exact reproduction of the original 2008–2018 dataset or quote-level execution. The frozen candidate rules are inherited from Phase 64; missing bars must not be imputed and 2026 holdout remains excluded.
+**Status: COMPLETE — numerical workflow passed; conclusion NO-GO / INSUFFICIENT EVIDENCE.** The OHLC rule test used 56 monthly-expiry proxy files and 436,424 NIFTY index-minute rows from the pinned 2021–2025 dataset. CCI_BASE produced 12 DEV / 13 VAL breakout triggers and CCI_EMA_FILTER 4 DEV / 1 VAL; all four candidate/split rows had zero completed trades and 0% entry/exit coverage. Profitability statistics are not estimable. ₹0 aggregate P&L fields are empty-sample placeholders, not realized returns. This is a partial rule reconstruction, not an exact numerical reproduction of the original October 2008–September 2018 paper; OHLC bars are not bid/ask/depth data and 2026 holdout option files were not downloaded.
 
 - [Phase 66 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/PHASE66_RESEARCH_PLAN.md)
 - [Phase 66 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/PHASE66_STATUS.md)
@@ -1339,3 +1339,12 @@ A static filename-regex issue was corrected before the data run and documented a
 - [Automated workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/.github/workflows/phase66-paper-derived-strategy-tests.yml)
 
 No paper profitability claim is considered reproduced until a successful run produces validated aggregate outputs. The existing Phase 64 zero-trade result remains non-evidence about strategy expectancy.
+
+
+**Phase 66 result artifacts**
+- [Completed report and limitations](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md)
+- [Candidate decisions](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/decision.json)
+- [Aggregate summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/summary.csv)
+- [Opportunity/coverage audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/opportunity_audit.csv)
+- [Pinned source manifest](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/source_manifest.json)
+- [Successful workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028140800)
