@@ -1,3 +1,17 @@
+# Resume checkpoint — 2026-10-10 (Phase 88 Dhan options gap coverage)
+
+**Phase 88: bounded coverage audit running.** Following Phase 86 connectivity PASS and Phase 87 expired-options data-shape PASS, this phase checks four rolling ATM-relative series: CALL and PUT for 2026-07-28 and 2026-08-04. Only HTTP status, candle count, field presence and array alignment are logged.
+
+- [Phase 88 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_RESEARCH_PLAN.md)
+- [Phase 88 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_STATUS.md)
+- [Phase 88 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_ERROR_LOG.md)
+- [Phase 88 auditable chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_CHAT_LOG.md)
+- [Phase 88 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/.github/workflows/phase88-dhan-options-gap-coverage.yml)
+
+**Interpretation gate:** this only tests rolling ATM-relative OHLC/IV/OI/volume/spot coverage. It cannot establish fixed-contract execution or historical bid/ask/depth. No strategy backtest or promotion; Paytm Money costs, slippage and latency remain mandatory and Phase 83 holdout remains sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 87 expired-options probe PASS)
 
 **Phase 87 bounded options-data probe passed.** Final Actions run [38047113250](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047113250) returned HTTP 200 and 150 five-minute rolling ATM-relative NIFTY index-option candles for 2026-07-28. OHLC, IV, volume, strike, OI, spot and timestamp arrays were present and their requested lengths aligned. Raw option values and response payloads were not printed or persisted.
