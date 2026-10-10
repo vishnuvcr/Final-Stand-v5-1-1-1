@@ -1,10 +1,10 @@
 {
   "status": "MODEL_DELTA_AUDIT_COMPLETE",
-  "created_at_utc": "2026-10-09T16:14:08.923719+00:00",
+  "created_at_utc": "2026-10-10T10:19:59.074257+00:00",
   "dataset": "thetrademarkk/india-index-options-1m",
   "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "audit_script_sha256": "9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3",
-  "replay_protocol_sha256": "f3e910a064cc7af18885617f9e4c25cf5ef901c491a6f40ffd124808cb71e6f6",
+  "replay_protocol_sha256": "5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6",
   "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
   "source_expiry_files_expected": 267,
   "source_expiry_files_audited": 267,

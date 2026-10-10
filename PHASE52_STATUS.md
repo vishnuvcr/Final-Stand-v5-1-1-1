@@ -468,3 +468,15 @@ First run failed closed on code-fingerprint drift and exposed escaped workflow e
 - Phase 60 evidence sufficiency and Phase 61 new-source restart audit both returned NO-GO. Five new leads reviewed; zero accepted for sample validation. No further empirical factor-conditioned testing is authorized until documented data-use rights and an exact target-date/contract sample are available.
 - **Current decision:** Phase 52 remains scientifically OPEN but empirically BLOCKED at the data-source gate. The 2% baseline has one eligible/executed row out of 480; no factor selector or strategy is promoted; holdout untouched.
 - **Next permitted action:** only resume source validation when written authorization or a genuinely new source with documented rights and exact sample/schema evidence is supplied. Do not repeat the same metadata-only source search or loosen the frozen OI/range gates.
+
+
+## Point-in-time delta audit — run 38043797172 (2026-10-10T10:20:05.827568+00:00)
+- Status: MODEL_DELTA_AUDIT_COMPLETE
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Audit source SHA256: 9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3
+- Replay protocol SHA256: 5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6
+- Expiry files audited/errors: 267/0
+- Expected/actual selection rows: 4272/4272
+- Rows with prior-OI-qualified selections: 3892
+- Exact entry fill bars available: 2232
+- Model delta is diagnostic only; no P&L or promotion.

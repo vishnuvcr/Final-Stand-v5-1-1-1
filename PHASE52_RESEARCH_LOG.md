@@ -596,3 +596,15 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - Phase 56/57 completed a finite cost-model sensitivity and independent reproduction. The matching modeled scenarios validate reproducibility, not execution quality or strategy profitability.
 - Phase 60/61 both conclude NO-GO for further empirical factor-conditioned testing: zero source leads accepted for sample validation. Repeating source discovery without new rights/sample evidence would violate the finite stopping rule.
 - Decision: preserve frozen strategy/event/cost/holdout rules and pause empirical efficacy work until written data-use authorization or a genuinely new source with an exact target sample and schema is documented. No strategy promoted.
+
+
+## Point-in-time delta audit — run 38043797172 (2026-10-10T10:20:05.827568+00:00)
+- Status: MODEL_DELTA_AUDIT_COMPLETE
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Audit source SHA256: 9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3
+- Replay protocol SHA256: 5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6
+- Expiry files audited/errors: 267/0
+- Expected/actual selection rows: 4272/4272
+- Rows with prior-OI-qualified selections: 3892
+- Exact entry fill bars available: 2232
+- Model delta is diagnostic only; no P&L or promotion.
