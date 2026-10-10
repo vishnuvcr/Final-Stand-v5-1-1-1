@@ -101,6 +101,10 @@ def mode_step(snap):
             c=Counter(dif.tolist());modes.append(float(sorted(c.items(),key=lambda v:(-v[1],v[0]))[0][0]))
     return modes[0] if modes else None
 
+def option_columns(names):
+    """Select only present option fields, including the source OI alias."""
+    return [c for c in ("timestamp","open","close","option_type","strike","volume","oi","open_interest") if c in names]
+
 def prep_options(x):
     if x.empty:return x
     x=x.copy();x["timestamp"]=localize(x.timestamp)
@@ -142,7 +146,7 @@ def load_chain_day(expiry,d):
     p=hf_hub_download(repo_id=HF_REPO,filename=name,repo_type="dataset",revision=HF_REVISION,token=os.getenv("HF_TOKEN") or None)
     pf=pq.ParquetFile(p);names=pf.schema_arrow.names;req={"timestamp","open","close","option_type","strike"}
     if not req.issubset(names):raise ValueError(f"option_schema_missing:{name}:{sorted(req-set(names))}")
-    cols=[c for c in ("timestamp","open","close","option_type","strike","volume","oi","open_interest") if c in names]
+    cols=option_columns(names)
     SOURCE_SCHEMA[name]=names
     lo=pd.Timestamp(datetime.combine(d,time(9,15)),tz=TZ);hi=pd.Timestamp(datetime.combine(d,time(15,16)),tz=TZ)
     ts_type=pf.schema_arrow.field("timestamp").type
