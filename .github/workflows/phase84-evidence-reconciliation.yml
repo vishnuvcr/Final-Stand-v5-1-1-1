@@ -1,0 +1,68 @@
+name: Phase 84 evidence reconciliation validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-84-cross-phase-evidence-reconciliation
+    paths:
+      - 'PHASE84_*.md'
+      - 'results/phase84_evidence_reconciliation/**'
+      - 'README.md'
+      - '.github/workflows/phase84-evidence-reconciliation.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'PHASE84_*.md'
+      - 'results/phase84_evidence_reconciliation/**'
+      - 'README.md'
+      - '.github/workflows/phase84-evidence-reconciliation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate evidence matrix and report
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+
+          root = Path(".")
+          matrix = root / "results/phase84_evidence_reconciliation/evidence_matrix.csv"
+          report = root / "results/phase84_evidence_reconciliation/decision_report.md"
+          required = {
+              "evidence_id", "category", "source_branch", "source_artifact",
+              "sample_or_coverage", "cost_assumptions", "key_result",
+              "inference_status", "promotion_status", "limitation", "next_action",
+          }
+          with matrix.open(newline="", encoding="utf-8") as f:
+              reader = csv.DictReader(f)
+              if set(reader.fieldnames or []) != required:
+                  raise SystemExit(f"Unexpected evidence matrix columns: {reader.fieldnames}")
+              rows = list(reader)
+          if len(rows) < 5:
+              raise SystemExit(f"Expected at least 5 evidence strata, found {len(rows)}")
+          ids = [r["evidence_id"] for r in rows]
+          if len(set(ids)) != len(ids) or any(not x for x in ids):
+              raise SystemExit("Evidence IDs must be unique and non-empty")
+          for i, row in enumerate(rows, start=2):
+              empty = [k for k, v in row.items() if not (v or "").strip()]
+              if empty:
+                  raise SystemExit(f"Row {i} has empty fields: {empty}")
+          if not report.is_file() or report.stat().st_size < 1000:
+              raise SystemExit("Decision report is missing or unexpectedly short")
+          for path in ["PHASE84_RESEARCH_PLAN.md", "PHASE84_STATUS.md",
+                       "PHASE84_ERROR_LOG.md", "PHASE84_CHAT_LOG.md", "README.md"]:
+              if not (root / path).is_file():
+                  raise SystemExit(f"Required audit file missing: {path}")
+          print(f"PASS: {len(rows)} evidence strata, unique IDs, complete cells, report and audit files present.")
+          PY
