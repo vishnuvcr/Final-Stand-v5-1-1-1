@@ -1,3 +1,16 @@
+<!-- PHASE94_CHECKPOINT_START -->
+## Phase 94 — Final Strategy Evidence Audit and Promotion Gate
+
+**Status: IN PROGRESS — canonical historical strategy source reconciliation pending. No strategy promoted.**
+
+- [Research plan](PHASE94_RESEARCH_PLAN.md) · [status](PHASE94_STATUS.md) · [error log](PHASE94_ERROR_LOG.md) · [auditable chat log](PHASE94_CHAT_LOG.md)
+- [Initial evidence register](results/phase94/strategy_evidence_register.csv) · [audit report](results/phase94/audit_report.md) · [structural validator](research/phase94/validate_strategy_evidence.py) · [manual/push workflow](.github/workflows/phase94-strategy-evidence-audit.yml)
+- Phase 66 CCI variants are non-estimable because all four variant/split rows had zero completed trades. Phases 89–92 are spot-magnitude predictor studies, not options P&L. Phase 93 literature claims remain unverified unless independently reproduced.
+- Historical TT candidates are held pending canonical ledger/run reconciliation; no numbers are inferred from chat summaries. Cost-adjusted review requires Paytm Money brokerage/statutory charges, spread, adverse slippage, latency, stress costs and exact-contract/fill evidence.
+- No new backtest is run by this phase. The Phase 92 predictor sweep stays closed and Phase 83's 2026 holdout remains sealed. This PR remains draft/unmerged.
+
+<!-- PHASE94_CHECKPOINT_END -->
+
 <!-- PHASE93_START -->
 # Resume checkpoint — Phase 93 uploaded literature evidence audit
 
