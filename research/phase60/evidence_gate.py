@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "research/phase59/source_registry.json"
 REPORT = ROOT / "results/phase59/public_option_data_coverage/report.json"
 OUT = ROOT / "results/phase60/evidence_sufficiency"
@@ -22,8 +22,8 @@ def evaluate() -> dict:
         raise AssertionError("Unexpected Phase59 report status")
     if source_report.get("source_count") != 10:
         raise AssertionError("Phase59 report source count mismatch")
-    oi = source_report.get("accepted_free_license_clear_exact_prior_minute_oi_sources")
-    quotes = source_report.get("accepted_free_license_clear_exact_quote_depth_sources")
+    oi = source_report.get("authorized_exact_intraday_oi_sources")
+    quotes = source_report.get("authorized_exact_quote_depth_sources")
     if oi != 0 or quotes != 0:
         raise AssertionError(f"Phase59 acceptance counts changed: OI={oi}, quote/depth={quotes}")
     decisions = {
@@ -67,8 +67,8 @@ def evaluate() -> dict:
         "source_audit": {
             "registry_source_count": len(sources),
             "phase59_report_source_count": source_report.get("source_count"),
-            "accepted_free_license_clear_exact_prior_minute_oi_sources": oi,
-            "accepted_free_license_clear_exact_quote_depth_sources": quotes,
+            "authorized_exact_prior_minute_oi_sources": oi,
+            "authorized_exact_quote_depth_sources": quotes,
             "purchases": False,
             "data_downloaded": False,
             "credentials_used": False
