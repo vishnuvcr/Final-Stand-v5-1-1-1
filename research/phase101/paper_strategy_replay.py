@@ -459,7 +459,7 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
     f"**Pinned dataset revision:** {PINNED_REVISION}  ",
     f"**Data end:** {manifest.get('underlying_last_timestamp_used')}  ",
     "**2026 options holdout:** not downloaded or evaluated.","",
-    "## 1. Questions and scope",
+    "## 1. Research question and scope",
     "This bounded follow-up tests U02 (RF/XGBoost/LSTM Buy/Sell options method) and U05 (monthly seasonality options procedure) where modern historical data allow proxy replay. Other methods are reconciled from the verified earlier phase outputs; they are not mislabelled as new tests.","",
     "## 2. Data/provenance",
     f"- Historical option dataset: {HF_REPO}, pinned revision {PINNED_REVISION}, CC-BY-NC-4.0. Raw data are not published.",
