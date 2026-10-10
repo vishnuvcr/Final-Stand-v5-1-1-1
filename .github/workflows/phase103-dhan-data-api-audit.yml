@@ -1,0 +1,78 @@
+name: Phase 103 — Dhan Stock-Options Data API Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date inclusive (YYYY-MM-DD; maximum 30-day window)"
+        required: true
+        default: "2026-08-02"
+        type: string
+      to_date:
+        description: "End date exclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-01"
+        type: string
+  push:
+    branches:
+      - phase-103-nifty50-stock-options
+    paths:
+      - "research/phase103_stock_options/dhan_data_audit.py"
+      - "research/phase103_stock_options/record_dhan_audit_status.py"
+      - "tests/phase103/**"
+      - ".github/workflows/phase103-dhan-data-api-audit.yml"
+      - "PHASE103_RESEARCH_PLAN.md"
+
+permissions:
+  contents: write
+
+jobs:
+  api-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_API_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_DATA_API_TOKEN }}
+      PHASE103_FROM_DATE: ${{ inputs.from_date || '2026-08-02' }}
+      PHASE103_TO_DATE: ${{ inputs.to_date || '2026-09-01' }}
+    steps:
+      - name: Checkout isolated Phase 103 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-103-nifty50-stock-options
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Unit-test audit code
+        run: python -m unittest discover -s tests/phase103 -p "test_*.py" -v
+      - name: Query Dhan instrument master and bounded expired-options data
+        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE"
+      - name: Publish status and error/limitation log
+        if: always()
+        run: |
+          if [ -f results/phase103/dhan_data_api_audit.json ]; then
+            python research/phase103_stock_options/record_dhan_audit_status.py
+          else
+            echo "Audit JSON missing; no result will be claimed."
+          fi
+      - name: Upload aggregate audit only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase103-dhan-data-api-audit
+          path: |
+            results/phase103/dhan_data_api_audit.json
+            results/phase103/DHAN_DATA_API_AUDIT.md
+          if-no-files-found: warn
+      - name: Commit derived audit, status and logs
+        if: always() && github.ref == 'refs/heads/phase-103-nifty50-stock-options'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md PHASE103_STATUS.md PHASE103_RESEARCH_LOG.md PHASE103_ERROR_LOG.md
+          if git diff --cached --quiet; then
+            echo "No result changes to commit."
+          else
+            git commit -m "Phase 103: record Dhan stock-options data audit"
+            git push origin HEAD:phase-103-nifty50-stock-options
+          fi
