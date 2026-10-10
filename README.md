@@ -1,15 +1,30 @@
 <!-- PHASE101_AUDIT_START -->
-# Phase 101 — audit correction and revalidation
+# Phase 101 — PDF strategy replication gap-fill
 
-**Status: REVALIDATION REQUIRED.** The extra adverse-impact stress calculation was corrected to include the same execution-price convention and date-effective charges as the baseline, plus the additional ₹50 round-trip cost. Previous values in that sensitivity column are superseded until the push-triggered workflow passes. No strategy is promoted; 2026 options remain excluded.
+**Status: COMPLETED WITH EXPLICIT LIMITATIONS; NO STRATEGY PROMOTED.** Final accounting/stress audit run [38080831113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080831113) passed. U02 RF/XGBoost/LSTM5 each ended down about 99.99% of their ₹100,000 simulated accounts; U05 had 7 completed trades from 56 opportunities and net −₹283,669.90 on ₹300,000. U05 is a modern-sample proxy, not an exact replication of the original paper.
 
-- [Phase 101 report](results/phase101_pdf_strategy_tests/PHASE101_REPORT.md)
-- [Phase 101 status](PHASE101_STATUS.md) · [research log](PHASE101_RESEARCH_LOG.md) · [error log](PHASE101_ERROR_LOG.md)
-- [workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase101-full-pdf-strategy-replication.yml)
-- [audit-corrected cost model](research/phase101/paper_strategy_replay.py)
+- [Phase 101 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-101-full-pdf-strategy-replication)
+- [Full Phase 101 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/PHASE101_REPORT.md)
+- [U02 account/cost audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/u02_strategy_summary.csv) · [U05 summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/u05_summary.csv)
+- [Phase plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_ERROR_LOG.md)
 
-Drawdown remains under audit as a peak-to-trough account metric; do not assume it is erroneous solely because it exceeds initial capital. No 2026 option data were loaded.
+Costs use a simulated date-effective model and adverse-impact stress, not verified historical Paytm Money contract notes. Options data stop at 2025-12-31; 2026 options remain excluded. No strategy is approved for live trading.
 <!-- PHASE101_AUDIT_END -->
+
+<!-- PHASE102_AUDIT_START -->
+# Phase 102 — Final evidence-based strategy ranking
+
+**Status: COMPLETE — GitHub Actions run [38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704) passed 14/14 artifact invariants and 2/2 unit tests. No strategy promoted.**
+
+- [Phase 102 research branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-102-final-strategy-ranking)
+- [Consolidated report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/results/phase102/PHASE102_REPORT.md) · [machine-readable scorecard](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/results/phase102/strategy_evidence_scorecard.csv) · [validation JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/results/phase102/validation.json)
+- [Phase plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_ERROR_LOG.md)
+- [Automated/manual workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/.github/workflows/phase102-final-strategy-ranking.yml) · [workflow output artifact](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704/artifacts/11681255736)
+
+**Decision:** TT-03 dynamic-N V5 is the first candidate for independent revalidation only: 200/201 candidates, 99.50% coverage, ₹89,669.15 net in its registered base scenario and ₹82,074.11 under +50% friction. Its hold split contains only 3 trades, so it is not independently validated. TT-04/TT-05 show partial-window positive results but conflict with negative historical HOLD results. The tested U02 implementations nearly depleted simulated accounts, U05's seven-trade proxy was negative, and Phase 83's 18 candidate/window variants all failed their gate. **Zero strategies are approved for live use.**
+
+Next numerical work is conditional on a new authorized, exact-contract, sufficiently large independent sample and defensible quote/fill assumptions including Paytm Money charges, spread, slippage and latency; do not retune on the same holdout or repeat unchanged failed source probes.
+<!-- PHASE102_AUDIT_END -->
 
 <!-- PHASE94_START -->
 # Final research checkpoint — Phase 100 complete
