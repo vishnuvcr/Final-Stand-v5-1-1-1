@@ -42,3 +42,22 @@ def test_u02_capital_is_registered_and_holdout_end_is_2025():
     assert r.CAPITAL_U02 == 100000.0
     assert str(r.VAL_END.date()) == "2025-12-31"
     assert r.PINNED_REVISION == "3eacf762d401efd9a08e804592fa7882b354c4a2"
+
+def test_u05_entry_date_is_strictly_after_forecast_wednesday():
+    wed, thu = r._u05_entry_dates(pd.Period("2021-07", freq="M"))
+    assert wed.date().isoformat() == "2021-07-07"
+    assert thu.date().isoformat() == "2021-07-08"
+    assert thu > wed
+
+def test_u05_entry_date_not_first_thursday_when_that_precedes_forecast():
+    wed, thu = r._u05_entry_dates(pd.Period("2023-06", freq="M"))
+    assert wed.date().isoformat() == "2023-06-07"
+    assert thu.date().isoformat() == "2023-06-08"
+    assert thu > wed
+
+def test_block_bootstrap_only_runs_with_sufficient_trade_count():
+    small = r.block_bootstrap_mean_ci(range(7))
+    assert small["bootstrap_status"] == "SKIPPED_LT20_TRADES"
+    large = r.block_bootstrap_mean_ci(range(100), replicates=200)
+    assert large["bootstrap_status"] == "COMPUTED_CIRCULAR_MOVING_BLOCK_CI"
+    assert large["mean_net_trade_ci95_low"] < large["mean_net_trade_ci95_high"]
