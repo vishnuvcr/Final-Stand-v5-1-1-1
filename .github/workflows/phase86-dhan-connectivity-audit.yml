@@ -1,0 +1,108 @@
+name: Phase 86 Dhan read-only connectivity audit
+on:
+  push:
+    branches:
+      - phase-86-dhan-api-connectivity-audit
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dhan-readonly-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate Dhan token and data-plan status without exposing account data
+        env:
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.error, urllib.request
+
+          token = os.environ.get("DHAN_ACCESS_TOKEN", "").strip()
+          summary = []
+          def report(line):
+              print(line)
+              summary.append(line)
+
+          if not token:
+              report("TOKEN_CONFIGURED=false")
+              report("RESULT=BLOCKED_SECRET_MISSING")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+                  f.write("# Phase 86 Dhan audit\n\n" + "\n".join("- " + x for x in summary) + "\n")
+              sys.exit(1)
+
+          report("TOKEN_CONFIGURED=true")
+          request = urllib.request.Request(
+              "https://api.dhan.co/v2/profile",
+              headers={"access-token": token, "Accept": "application/json"},
+              method="GET",
+          )
+          try:
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  status = response.status
+                  payload = json.loads(response.read().decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              status = exc.code
+              payload = {}
+          except Exception as exc:
+              # Print only the exception class, never request headers or response bodies.
+              report("PROFILE_REQUEST=NETWORK_OR_PARSE_ERROR")
+              report("ERROR_CLASS=" + type(exc).__name__)
+              report("RESULT=INCONCLUSIVE")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+                  f.write("# Phase 86 Dhan audit\n\n" + "\n".join("- " + x for x in summary) + "\n")
+              sys.exit(1)
+
+          report("PROFILE_HTTP_STATUS=" + str(status))
+          if status != 200 or not isinstance(payload, dict):
+              report("TOKEN_VALID=false")
+              report("RESULT=AUTHENTICATION_FAILED_OR_UNSUPPORTED")
+          else:
+              report("TOKEN_VALID=true")
+              data_plan = str(payload.get("dataPlan", "UNKNOWN")).strip().lower()
+              report("DATA_PLAN_ACTIVE=" + ("true" if data_plan == "active" else "false_or_unknown"))
+              if data_plan != "active":
+                  report("HISTORICAL_DATA_PROBE=SKIPPED_DATA_PLAN_NOT_CONFIRMED")
+                  report("RESULT=TOKEN_VALID_DATA_ACCESS_NOT_CONFIRMED")
+              else:
+                  # Small index-only probe; do not persist or print the returned market data.
+                  body = json.dumps({
+                      "securityId": "13",
+                      "exchangeSegment": "IDX_I",
+                      "instrument": "INDEX",
+                      "interval": "5",
+                      "oi": False,
+                      "fromDate": "2026-10-08 09:15:00",
+                      "toDate": "2026-10-09 15:30:00"
+                  }).encode("utf-8")
+                  probe = urllib.request.Request(
+                      "https://api.dhan.co/v2/charts/intraday",
+                      data=body,
+                      headers={"access-token": token, "Accept": "application/json",
+                               "Content-Type": "application/json"},
+                      method="POST",
+                  )
+                  try:
+                      with urllib.request.urlopen(probe, timeout=25) as response:
+                          probe_status = response.status
+                          market = json.loads(response.read().decode("utf-8"))
+                  except urllib.error.HTTPError as exc:
+                      probe_status, market = exc.code, {}
+                  except Exception as exc:
+                      report("HISTORICAL_PROBE=NETWORK_OR_PARSE_ERROR")
+                      report("PROBE_ERROR_CLASS=" + type(exc).__name__)
+                      market, probe_status = {}, 0
+
+                  report("HISTORICAL_HTTP_STATUS=" + str(probe_status))
+                  candle_count = len(market.get("timestamp", [])) if isinstance(market, dict) and isinstance(market.get("timestamp", []), list) else 0
+                  has_ohlc = isinstance(market, dict) and all(isinstance(market.get(k), list) for k in ("open", "high", "low", "close", "timestamp"))
+                  report("HISTORICAL_RESPONSE_HAS_OHLC_ARRAYS=" + ("true" if has_ohlc else "false"))
+                  report("HISTORICAL_CANDLE_COUNT=" + str(candle_count))
+                  if probe_status == 200 and has_ohlc and candle_count > 0:
+                      report("RESULT=TOKEN_AND_BASIC_HISTORICAL_CANDLE_PROBE_PASSED")
+                  else:
+                      report("RESULT=TOKEN_VALID_BUT_HISTORICAL_PROBE_NOT_CONFIRMED")
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("# Phase 86 Dhan audit\n\n" + "\n".join("- " + x for x in summary) + "\n")
+          PY
