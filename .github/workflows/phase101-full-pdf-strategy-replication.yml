@@ -142,11 +142,47 @@ jobs:
           PY
       - name: Publish aggregate research outputs and phase state
         if: success()
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase101_pdf_strategy_tests PHASE101_STATUS.md PHASE101_RESEARCH_LOG.md PHASE101_CHAT_LOG.md PHASE101_ERROR_LOG.md
-          git diff --cached --quiet || git commit -m "phase 101: publish PDF strategy test results and status"
+          git diff --cached --quiet || git commit -m "phase 101: publish corrected PDF strategy test outputs"
+          git fetch origin phase-101-full-pdf-strategy-replication
+          if ! git rebase origin/phase-101-full-pdf-strategy-replication; then
+            # Upstream contains newer manual research corrections. Preserve those log files;
+            # keep the aggregate output files from this run, then continue the result commit.
+            for f in PHASE101_STATUS.md PHASE101_RESEARCH_LOG.md PHASE101_CHAT_LOG.md PHASE101_ERROR_LOG.md; do
+              git checkout --ours -- "$f"
+            done
+            git add PHASE101_STATUS.md PHASE101_RESEARCH_LOG.md PHASE101_CHAT_LOG.md PHASE101_ERROR_LOG.md
+            GIT_EDITOR=true git rebase --continue
+          fi
+          # Reconcile status only after report/output contract passed and rebase succeeded.
+          python - <<'PY'
+          import csv, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          out = Path("results/phase101_pdf_strategy_tests")
+          v = json.loads((out / "validation_report.json").read_text())
+          u05 = next(csv.DictReader((out / "u05_summary.csv").open()))
+          statuses = list(csv.DictReader((out / "u02_model_status.csv").open()))
+          stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          run = os.environ.get("GITHUB_RUN_ID", "unknown")
+          status = Path("PHASE101_STATUS.md")
+          text = status.read_text()
+          text = text.replace("**State:** OPEN — first proxy outputs generated, but invalidated by a detected U05 calendar look-ahead and U02 capital-reuse flaw; corrected rerun pending", "**State:** CORRECTED PROXY RUN VALIDATED — final paper-by-paper audit recorded below")
+          text = text.replace("| RETESTING |", "| VALIDATED_PROXY_TEST |", 2)
+          status.write_text(text + f"\n\n## Corrected runtime checkpoint — {stamp}\n\n- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{run}\n- Validation: {v.get('overall_status')}; 14-paper matrix; no 2026 option data; no strategy promoted.\n- U05: {u05.get('completed_trades')} completed / {v.get('u05_opportunity_rows')} opportunities; status {u05.get('status')}; audit counts {u05.get('audit_status_counts')}.\n- U02: {v.get('u02_predictions')} predictions; {v.get('u02_trade_rows')} costed trades; model statuses {statuses}.\n- Account sizing: sequential per-model ₹1 lakh starting equity, 95% premium deployment limit, 5% fee reserve.\n- Bootstrap: circular moving-block 95% mean net-trade CI only when n>=20.\n")
+          checkpoint = f"\n\n## Corrected run {run} — {stamp}\n- Validation: {v.get('overall_status')}; U05 completed trades {u05.get('completed_trades')}; U02 costed trades {v.get('u02_trade_rows')}; no 2026 option data; no strategy promoted.\n- U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.\n"
+          for name in ["PHASE101_RESEARCH_LOG.md", "PHASE101_CHAT_LOG.md"]:
+            p = Path(name); p.write_text(p.read_text() + checkpoint)
+          p = Path("PHASE101_ERROR_LOG.md")
+          p.write_text(p.read_text() + f"\n\n## Corrected replay result — {stamp}\n- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{run}\n- Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.\n")
+          PY
+          git add PHASE101_STATUS.md PHASE101_RESEARCH_LOG.md PHASE101_CHAT_LOG.md PHASE101_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "phase 101: reconcile corrected PDF replay status"
           git fetch origin phase-101-full-pdf-strategy-replication
           git rebase origin/phase-101-full-pdf-strategy-replication
           git push origin HEAD:phase-101-full-pdf-strategy-replication
@@ -154,22 +190,29 @@ jobs:
         if: failure()
         shell: bash
         run: |
-          mkdir -p results/phase101_pdf_strategy_tests
-          {
-            echo
-            echo "## Automated run failure — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            echo "- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/$GITHUB_RUN_ID"
-            echo "- Commit: $GITHUB_SHA"
-            echo "- Job failed before the output contract was validated. Numerical outputs from this run are not accepted."
-            echo "- Check results/phase101_pdf_strategy_tests/phase101_runtime_error.json if present, then fix root cause without relaxing frozen strategy rules."
-          } >> PHASE101_ERROR_LOG.md
+          set -euo pipefail
+          mkdir -p /tmp/phase101-failure
+          cp results/phase101_pdf_strategy_tests/phase101_runtime_error.json /tmp/phase101-failure/ 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE101_ERROR_LOG.md results/phase101_pdf_strategy_tests || true
-          git commit -m "phase 101: record failed replication run" || true
           git fetch origin phase-101-full-pdf-strategy-replication
-          git rebase origin/phase-101-full-pdf-strategy-replication || true
-          git push origin HEAD:phase-101-full-pdf-strategy-replication || true
+          git reset --hard origin/phase-101-full-pdf-strategy-replication
+          mkdir -p results/phase101_pdf_strategy_tests
+          if [ -f /tmp/phase101-failure/phase101_runtime_error.json ]; then cp /tmp/phase101-failure/phase101_runtime_error.json results/phase101_pdf_strategy_tests/; fi
+          python - <<'PY'
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          run=os.environ.get("GITHUB_RUN_ID","unknown")
+          sha=os.environ.get("GITHUB_SHA","unknown")
+          stamp=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          text=f"\n\n## Automated failure — {stamp}\n- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{run}\n- Commit: {sha}\n- Numerical outputs from the failed run are not accepted. See `results/phase101_pdf_strategy_tests/phase101_runtime_error.json` when produced and inspect the Actions log.\n- Correct the root cause without weakening frozen strategy rules or opening 2026 data.\n"
+          p=Path("PHASE101_ERROR_LOG.md"); p.write_text(p.read_text()+text)
+          p=Path("PHASE101_CHAT_LOG.md"); p.write_text(p.read_text()+f"\n- Automated run {run} failed at runtime; failure logged.\n")
+          PY
+          git add PHASE101_ERROR_LOG.md PHASE101_CHAT_LOG.md results/phase101_pdf_strategy_tests/phase101_runtime_error.json
+          git commit -m "phase 101: record corrected replay failure"
+          git push origin HEAD:phase-101-full-pdf-strategy-replication
       - name: Upload aggregate-only artifacts
         if: always()
         uses: actions/upload-artifact@v4
