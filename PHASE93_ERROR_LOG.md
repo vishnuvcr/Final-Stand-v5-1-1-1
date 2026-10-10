@@ -28,3 +28,10 @@ No code or empirical market-data errors are registered at initialization. Docume
 - The research boundary was already intended; the wording mismatch was in the QA contract. The manuscript now explicitly says the source-reported CCI metrics have “not been independently reproduced by this project,” and the validator matches that explicit wording.
 - The workflow’s final failure-marker step was skipped after validation failure because its condition omitted `always()`; corrected it to run after the report-publication step as well. This is an automation diagnostic fix, not a model/data issue.
 - No market data, model, outcome, or holdout was accessed. Re-run the validation before marking Phase 93 complete.
+
+## E93-009 — concurrent validation-report publication race (2026-10-10)
+
+- Several sequential Contents API writes touched workflow-watched manuscript/validator files and triggered close-in-time Actions runs. More than one run attempted to publish a timestamped `validation_report.json`; a push based on a stale branch head was rejected as non-fast-forward.
+- Updated the publication step to refresh to the latest branch and regenerate the report before a bounded retry (three attempts). Updated the final failure marker so it runs after diagnostic publication.
+- Final run [38053142927](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053142927) completed successfully: validator PASS, 14 audit sections, 14 filename mappings, references 1–29, zero errors. The published JSON confirms the 2026 holdout was not accessed and no strategy was promoted.
+- This was an automation publication race, not a source-data, model, or statistical issue. No research result changed.
