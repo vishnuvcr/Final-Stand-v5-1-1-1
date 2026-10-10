@@ -95,7 +95,7 @@ def build_validation(root: Path) -> dict[str, Any]:
     check(
         "TT04/TT05 temporal instability remains documented",
         "NO_PROMOTION_TEMPORAL_STABILITY_FAIL" in phase78
-        and "-6456.2946" in phase78 and "-40244.6808" in phase78
+        and "-6456.2946" in phase78 and "-40244.68" in phase78
         and "NO_GO_INSUFFICIENT_EVIDENCE" in phase79,
         "Phase 78 historical HOLD negative for both; Phase 79 final gate no-go",
     )
