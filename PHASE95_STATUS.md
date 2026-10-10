@@ -23,10 +23,10 @@
 - [x] Plan and source/population frozen before execution.
 - [x] Script ran against fingerprint-verified source.
 - [x] Primary result reconciled against the source CSV.
-- [x] Workflow run [38054413016](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054413016) passed before final newline-only validator hardening; latest rerun after that correction is recorded in Actions.
+- [x] Latest workflow run [38054487643](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054487643) passed after the source fingerprint and JSON newline fixes.
 - [x] Result CSV and JSON generated; final report records the negative primary outcome.
 - [x] Status, error/chat logs and README checkpoint updated.
-- [ ] Draft PR opened and verified unmerged.
+- [x] Draft PR opened and verified unmerged.
 
 ## Decision
 **NO PROMOTION.** Development winner selection did not transfer to stressed validation. The summary-level stress does not prove complete Paytm Money all-in execution costs; exact-contract fill evidence and independent future OOS remain prerequisites for any new strategy evaluation.
