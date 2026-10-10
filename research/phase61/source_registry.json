@@ -1,0 +1,108 @@
+{
+  "phase": 61,
+  "as_of": "2026-10-10",
+  "mode": "public metadata and published documentation only; no private API calls, credentials, scraping, purchases or data downloads",
+  "frozen_target": {
+    "times_ist": [
+      "09:44",
+      "09:45",
+      "12:59",
+      "13:00",
+      "15:15"
+    ],
+    "fields": [
+      "date",
+      "timestamp_ist",
+      "underlying",
+      "expiry",
+      "strike",
+      "option_type",
+      "open_interest"
+    ],
+    "execution_fields": [
+      "bid_price",
+      "ask_price",
+      "bid_quantity",
+      "ask_quantity"
+    ],
+    "prior_oi_minimum": 100,
+    "baseline_ohlc_range_pct": 2
+  },
+  "candidates": [
+    {
+      "id": "moneyticks",
+      "name": "MoneyTicks historical options archive",
+      "url": "https://moneyticks.com/",
+      "evidence_url": "https://moneyticks.com/blog/kite-connect-expired-options-data",
+      "history_claim": "1-minute OHLC+OI; NIFTY/BANKNIFTY from Aug 2021 and SENSEX from Mar 2024; contract-addressed by underlying/expiry/strike/option type.",
+      "contract_identity": "Claimed exact expiry/strike/type keys",
+      "oi": "Claimed per-minute OI",
+      "bid_ask_depth": "Not documented in reviewed public page",
+      "timestamp_fit": "1-minute cadence plausibly covers target minute keys, but exact target-date/contract sample not validated",
+      "access": "Free catalogue browsing; API described with bearer key; site says archive is not for sale yet",
+      "rights": "No explicit automated research, caching/storage, redistribution or derived-result publication license verified",
+      "decision": "FOLLOW_UP_ONLY",
+      "reason": "Most promising OHLC/OI candidate, but access/licensing rights and exact sample validation remain unverified; no quote/depth fields established."
+    },
+    {
+      "id": "dhanhq_expired_options",
+      "name": "DhanHQ expired options historical API",
+      "url": "https://dhanhq.co/",
+      "evidence_url": "https://moneyticks.com/blog/kite-connect-expired-options-data",
+      "history_claim": "Secondary published source describes rolling history up to about five years with OI, IV, OHLC and volume; official scope/retention not verified in this metadata pass.",
+      "contract_identity": "Likely instrument/expiry keyed, exact API schema not verified",
+      "oi": "Secondary source claims OI",
+      "bid_ask_depth": "Historical bid/ask/depth not established",
+      "timestamp_fit": "Exact required timestamp availability not verified",
+      "access": "Broker account and authorized API credentials likely required; none used",
+      "rights": "Automated caching/storage and derived-result publication rights not verified",
+      "decision": "FOLLOW_UP_ONLY",
+      "reason": "Potential licensed OHLC/OI route, but account access, exact timestamp schema, target coverage and reuse rights are unresolved."
+    },
+    {
+      "id": "icici_breeze_historical_fo",
+      "name": "ICICI Direct Breeze historical F&O API",
+      "url": "https://api.icicidirect.com/",
+      "evidence_url": "https://moneyticks.com/blog/kite-connect-expired-options-data",
+      "history_claim": "Secondary published source describes roughly three years of historical F&O for account holders; exact current option/OI scope not verified",
+      "contract_identity": "Exact expired-contract schema not verified",
+      "oi": "Not verified for required historical option timestamps",
+      "bid_ask_depth": "Historical bid/ask/depth not established",
+      "timestamp_fit": "Exact 09:44/09:45/12:59/13:00/15:15 coverage not verified",
+      "access": "Authorized account/API credentials likely required; none used",
+      "rights": "Automated caching/storage and derived-result publication rights not verified",
+      "decision": "FOLLOW_UP_ONLY",
+      "reason": "Unverified API/data schema and access rights; not enough evidence for acceptance."
+    },
+    {
+      "id": "barath_upstox_collector",
+      "name": "BarathGB007 NSE options data collector",
+      "url": "https://github.com/BarathGB007/nse-options-data-collector",
+      "evidence_url": "https://github.com/BarathGB007/nse-options-data-collector",
+      "history_claim": "Open-source collector stores live 15-minute option-chain snapshots, OI, Greeks and bid/ask using an Upstox token; repository does not establish a retrospective archive for frozen historical events.",
+      "contract_identity": "Published schema includes symbol/expiry/strike/type",
+      "oi": "Current snapshots include OI",
+      "bid_ask_depth": "Current snapshots include bid/ask; historical archive is not proven",
+      "timestamp_fit": "15-minute schedule may miss exact 09:44/09:45/12:59/13:00/15:15 values; actual schedule listed 9:20-15:29",
+      "access": "Requires user/provider-authorized Upstox token; none used",
+      "rights": "MIT applies to code, not underlying exchange/broker market data; data rights not established",
+      "decision": "REJECT_FOR_FROZEN_REPLAY",
+      "reason": "A forward collector is not a source for historical target events, and the 15-minute cadence does not guarantee frozen exact timestamps."
+    },
+    {
+      "id": "zenodo_nifty_2017_2020",
+      "name": "Nifty spot/futures/options one-minute dataset 2017–2020",
+      "url": "https://zenodo.org/records/10899828",
+      "evidence_url": "https://zenodo.org/records/10899828",
+      "history_claim": "One-minute OHLC/volume for NIFTY spot, futures and options from 2017–2020",
+      "contract_identity": "Strike and option type described; actual expiry encoded by monthly folder conventions",
+      "oi": "No OI field documented in the dataset description",
+      "bid_ask_depth": "No bid/ask/depth documented",
+      "timestamp_fit": "Historical period ends 2020 and cannot cover frozen 2022–2025 candidate events",
+      "access": "Publicly downloadable record, but no data download performed",
+      "rights": "License metadata not established in this pass",
+      "decision": "REJECT_FOR_FROZEN_REPLAY",
+      "reason": "Period and required OI/quote fields do not meet frozen replay needs."
+    }
+  ]
+}
