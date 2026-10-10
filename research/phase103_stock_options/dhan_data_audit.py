@@ -8,6 +8,8 @@ from zoneinfo import ZoneInfo
 MASTER = "https://images.dhan.co/api-data/api-scrip-master.csv"
 ENDPOINT = "https://api.dhan.co/v2/charts/rollingoption"
 SYMBOLS = ["HDFCBANK", "ICICIBANK", "RELIANCE", "SBIN", "INFY"]
+DEFAULT_STRIKES = ["ATM", "ATM+1", "ATM+2", "ATM+3", "ATM-1", "ATM-2", "ATM-3"]
+ALLOWED_STRIKES = set(DEFAULT_STRIKES)
 # The provider currently rejects code 0 as missing; use the documented sample value 1 (next expiry).
 EXPIRY_CODE = 1
 FIELDS = ["open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp"]
@@ -27,6 +29,81 @@ def provider_to_date(start, target_end_exclusive):
     """Dhan empirically includes toDate; map [start, end) to inclusive provider dates."""
     check_window(start, target_end_exclusive)
     return (date.fromisoformat(target_end_exclusive) - timedelta(days=1)).isoformat()
+
+def parse_strikes(raw):
+    values = [x.strip().upper() for x in raw.split(",") if x.strip()]
+    if not values:
+        raise ValueError("At least one relative strike is required.")
+    if len(set(values)) != len(values):
+        raise ValueError("Relative strike list contains duplicates.")
+    invalid = [x for x in values if x not in ALLOWED_STRIKES]
+    if invalid:
+        raise ValueError("Unsupported relative strike(s): " + ", ".join(invalid))
+    return values
+
+def normalize_strike(value):
+    if value is None:
+        return None
+    try:
+        number = float(value)
+        if number != number or abs(number) == float("inf"):
+            return None
+        return format(number, ".10g")
+    except (ValueError, TypeError, OverflowError):
+        return None
+
+def summarize_surface(surface_blocks, requested_strikes):
+    """Aggregate relative-strike alignment; raw rows remain in runner memory only."""
+    groups = {}
+    for block in surface_blocks:
+        groups.setdefault((block["symbol"], block["option_type"]), []).append(block)
+    summaries = []
+    for (symbol, option_type), blocks in sorted(groups.items()):
+        by_offset = {}
+        for block in blocks:
+            records = {}
+            stamps, strikes = block.get("timestamps", []), block.get("strikes", [])
+            for i in range(min(len(stamps), len(strikes))):
+                try: ts = int(stamps[i])
+                except (ValueError, TypeError, OverflowError): continue
+                strike = normalize_strike(strikes[i])
+                if strike is not None: records[ts] = strike
+            vals = list(records.values())
+            by_offset[block["relative_strike"]] = {
+                "records": records, "timestamp_count": len(records),
+                "distinct_actual_strikes": len(set(vals)),
+                "actual_strike_changes": sum(vals[i] != vals[i-1] for i in range(1,len(vals))),
+                "first_actual_strike": vals[0] if vals else None,
+                "last_actual_strike": vals[-1] if vals else None}
+        record_sets = [v["records"] for v in by_offset.values()]
+        timestamp_sets = [set(x) for x in record_sets]
+        union_ts = set().union(*timestamp_sets) if timestamp_sets else set()
+        common_ts = set.intersection(*timestamp_sets) if timestamp_sets and all(timestamp_sets) else set()
+        strike_per_ts, key_counts, all_strikes = {}, {}, {}
+        for records in record_sets:
+            for ts, strike in records.items():
+                strike_per_ts.setdefault(ts, set()).add(strike)
+                key_counts[(ts,strike)] = key_counts.get((ts,strike),0)+1
+                all_strikes.setdefault(strike,set()).add(ts)
+        unique_counts = [len(x) for x in strike_per_ts.values()]
+        duplicates = sum(1 for n in key_counts.values() if n>1)
+        complete_strikes = sum(1 for times in all_strikes.values() if union_ts and len(times)==len(union_ts))
+        passed = (len(by_offset)==len(requested_strikes) and all(x in by_offset and by_offset[x]["timestamp_count"]>0 for x in requested_strikes)
+                  and bool(union_ts) and len(common_ts)==len(union_ts)
+                  and all(len(strike_per_ts.get(ts,set()))==len(requested_strikes) for ts in union_ts) and duplicates==0)
+        summaries.append({
+            "symbol":symbol,"option_type":option_type,"requested_relative_strikes":requested_strikes,
+            "offset_series_returned":len(by_offset),"common_timestamp_count_across_offsets":len(common_ts),
+            "union_timestamp_count":len(union_ts),
+            "minimum_distinct_actual_strikes_per_timestamp":min(unique_counts) if unique_counts else 0,
+            "maximum_distinct_actual_strikes_per_timestamp":max(unique_counts) if unique_counts else 0,
+            "distinct_actual_strikes_in_surface":len(all_strikes),
+            "actual_strikes_observed_at_every_union_timestamp":complete_strikes,
+            "duplicate_timestamp_actual_strike_keys_across_offsets":duplicates,
+            "per_offset":{k:{kk:vv for kk,vv in v.items() if kk!="records"} for k,v in by_offset.items()},
+            "relative_surface_alignment_gate":"PASS" if passed else "FAIL",
+            "interpretation":"Seven offset tapes align in time and expose distinct actual strikes at each timestamp; fixed-strike paths may be reconstructed from their in-memory union, subject to expiry identity and rights." if passed else "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."})
+    return summaries
 
 def map_underlyings(raw):
     rows = csv.DictReader(io.StringIO(raw.decode("utf-8-sig")))
@@ -84,9 +161,9 @@ def safe_error_details(raw, token):
     walk(obj)
     return found
 
-def query(token, security_id, option_type, start, end):
+def query(token, security_id, option_type, relative_strike, start, end):
     body = {"exchangeSegment":"NSE_FNO","interval":"1","securityId":str(security_id),
-            "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":EXPIRY_CODE,"strike":"ATM",
+            "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":EXPIRY_CODE,"strike":relative_strike,
             "drvOptionType":option_type,
             "requiredData":["open","high","low","close","iv","volume","strike","oi","spot"],
             "fromDate":start,"toDate":end}
@@ -107,9 +184,9 @@ def query(token, security_id, option_type, start, end):
     except (UnicodeDecodeError,json.JSONDecodeError):
         return code, None, {}
 
-def summarize(symbol, option_type, code, obj, safe_error=None, start=None, end=None):
+def summarize(symbol, option_type, relative_strike, code, obj, safe_error=None, start=None, end=None):
     side = "ce" if option_type=="CALL" else "pe"
-    x={"symbol":symbol,"requested_option_type":option_type,"http_status":code,
+    x={"symbol":symbol,"requested_option_type":option_type,"requested_relative_strike":relative_strike,"http_status":code,
        "status":"NO_RESPONSE","rows":0,"array_lengths_consistent":False,
        "nonempty_fields":{},"first_timestamp_utc":None,"last_timestamp_utc":None,
        "timestamp_counts_by_ist_date":{},"outside_requested_date_window_rows":None,
@@ -130,6 +207,13 @@ def summarize(symbol, option_type, code, obj, safe_error=None, start=None, end=N
         if isinstance(values,list): lens.append(len(values))
     ts=block.get("timestamp") if isinstance(block.get("timestamp"),list) else []
     x["rows"]=len(ts); x["array_lengths_consistent"]=bool(lens) and len(set(lens))==1
+    strike_values = block.get("strike") if isinstance(block.get("strike"), list) else []
+    normalized_strikes = [normalize_strike(v) for v in strike_values]
+    normalized_strikes = [v for v in normalized_strikes if v is not None]
+    x["distinct_actual_strikes"] = len(set(normalized_strikes))
+    x["actual_strike_changes"] = sum(normalized_strikes[i] != normalized_strikes[i-1] for i in range(1,len(normalized_strikes)))
+    x["first_actual_strike"] = normalized_strikes[0] if normalized_strikes else None
+    x["last_actual_strike"] = normalized_strikes[-1] if normalized_strikes else None
     if ts:
         local_dates=[]
         outside=0
