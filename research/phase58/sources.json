@@ -37,7 +37,9 @@
       "automation_eligible": false,
       "full_history_licensed": false,
       "decision": "NOT_ACCEPTED_FOR_AUTOMATED_HISTORICAL_QUOTES",
-      "limitations": "Live chain does not supply a verified exact historical series; do not scrape or aggregate data contrary to site terms."
+      "limitations": "Live chain does not supply a verified exact historical series; do not scrape or aggregate data contrary to site terms.",
+      "historical_bid_ask_depth_verified": false,
+      "exact_timestamps_verified": false
     },
     {
       "id": "stockmojo_timeseries",
@@ -57,7 +59,9 @@
       "automation_eligible": false,
       "full_history_licensed": false,
       "decision": "MANUAL_FEATURE_RESEARCH_ONLY_NOT_AUTOMATABLE",
-      "limitations": "Published terms prohibit bots, scraping, automated access and systematic collection/storage; do not use in GitHub Actions. Bid/ask/depth not documented."
+      "limitations": "Published terms prohibit bots, scraping, automated access and systematic collection/storage; do not use in GitHub Actions. Bid/ask/depth not documented.",
+      "historical_bid_ask_depth_verified": false,
+      "exact_timestamps_verified": false
     },
     {
       "id": "niftytrader_history",
@@ -78,7 +82,9 @@
       "automation_eligible": false,
       "full_history_licensed": false,
       "decision": "INSUFFICIENT_FOR_FROZEN_ENTRY_EXIT_TIMES",
-      "limitations": "Documented intraday snapshots do not align with 09:45/13:00 entries or exact 15:15 exit; EOD bid/ask alone cannot validate intraday fills."
+      "limitations": "Documented intraday snapshots do not align with 09:45/13:00 entries or exact 15:15 exit; EOD bid/ask alone cannot validate intraday fills.",
+      "historical_bid_ask_depth_verified": true,
+      "exact_timestamps_verified": false
     },
     {
       "id": "tickbytes",
@@ -99,7 +105,9 @@
       "automation_eligible": false,
       "full_history_licensed": false,
       "decision": "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY",
-      "limitations": "Repository MIT license applies to software; it does not establish redistribution rights for the private market-data feed. Need licensed sample for exact 2022-2025 target dates and automated access terms."
+      "limitations": "Repository MIT license applies to software; it does not establish redistribution rights for the private market-data feed. Need licensed sample for exact 2022-2025 target dates and automated access terms.",
+      "historical_bid_ask_depth_verified": true,
+      "exact_timestamps_verified": false
     },
     {
       "id": "optionvault",
@@ -117,7 +125,9 @@
       "automation_eligible": false,
       "full_history_licensed": false,
       "decision": "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY",
-      "limitations": "MIT code license and sample presence do not grant rights to the complete market-data dataset. Need exact target-date/contract coverage, data delivery method and reuse/storage license."
+      "limitations": "MIT code license and sample presence do not grant rights to the complete market-data dataset. Need exact target-date/contract coverage, data delivery method and reuse/storage license.",
+      "historical_bid_ask_depth_verified": true,
+      "exact_timestamps_verified": false
     },
     {
       "id": "huggingface_1m_ohlcv",
@@ -134,7 +144,9 @@
       "automation_eligible": true,
       "full_history_licensed": false,
       "decision": "RESEARCH_ONLY_NO_QUOTE_DEPTH",
-      "limitations": "No bid/ask/depth fields; non-commercial license; suitable for research feature/price-reference analysis only, not executable quote validation."
+      "limitations": "No bid/ask/depth fields; non-commercial license; suitable for research feature/price-reference analysis only, not executable quote validation.",
+      "historical_bid_ask_depth_verified": false,
+      "exact_timestamps_verified": false
     }
   ],
   "decision": "NO_GO_FREE_AUTOMATABLE_HISTORICAL_BID_ASK_DEPTH_AT_FROZEN_TIMESTAMPS",
