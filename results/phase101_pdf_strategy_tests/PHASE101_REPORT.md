@@ -75,6 +75,21 @@ The mean net P&L/trade confidence interval uses a deterministic circular moving-
 Baseline uses the repository’s date-effective charge helper, ₹10/order brokerage, one ₹0.05 adverse tick per fill, statutory/exchange fees and GST where implemented. Sensitivities add ₹20/order brokerage, +50% charge stress, and a paper-specific 0.25% adverse price impact per side plus ₹50/trade. These are simulated costs, not verified historical Paytm Money contract notes or proof of executable fills.
 Classification accuracy alone is not evidence of profitable trading. U02 accounting is sequential per-model equity rather than reusing the initial ₹1 lakh on every trade. Sparse trades, missing coverage and confidence intervals crossing zero are not robust evidence. No strategy is promoted.
 
+
+## 6A. Accounting and stress revalidation (2026-10-11)
+
+Workflow run [38080831113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080831113) completed successfully after the adverse-impact stress correction and peak/trough accounting fields were added. The U02 equity reconciliation passes for all three models: ending equity equals ₹100,000 initial equity plus summed net P&L within ₹0.01. The previous stress column is superseded.
+
+| Model | Trades | Net P&L | Ending equity | Peak equity | Peak-to-trough drawdown | Drawdown % of peak | Equity reconciliation | Extra-impact stress net |
+|---|---:|---:|---:|---:|---:|---:|---|---:|
+| LSTM5 | 62 | -₹99,981.54 | ₹18.46 | ₹1,353,198.65 | ₹1,353,180.19 | 99.9986% | PASS | -₹188,090.94 |
+| RF | 49 | -₹99,994.96 | ₹5.04 | ₹320,192.86 | ₹320,187.82 | 99.9984% | PASS | -₹111,734.08 |
+| XGBoost | 53 | -₹99,991.47 | ₹8.53 | ₹980,250.68 | ₹980,242.15 | 99.9991% | PASS | -₹115,920.57 |
+
+The large drawdowns are arithmetically consistent with the equity path: simulated accounts rose to large peaks through compounded position sizing and later collapsed to near-zero. They exceed initial capital because the peak equity exceeded initial capital; this is not an equity-reconciliation failure. It is nevertheless a severe risk outcome and the sizing rule is not suitable for live use. Each model ends down approximately 99.99% on the ₹100,000 account. All block-bootstrap 95% CIs for mean net trade P&L cross zero. The additional adverse-impact stress is negative for all models. No model or strategy is promoted.
+
+The corrected stress column applies 0.25% adverse impact to raw entry/exit prices, the Phase 66 execution-price convention, date-effective charges, and an additional ₹50 per round trip. These remain simulations, not verified Paytm Money contract-note costs.
+
 ## 7. Strengths and limitations
 Strengths: pinned provenance; chronological development/validation split; no 2026 option data; explicit opportunity exclusions; training-only feature eligibility/imputation; conservative handling of bars that hit both target and stop.
 Limitations: U02 and U05 do not recreate original paper periods or every undocumented choice; U05 expected-price arithmetic is ambiguous; full IV/Greeks/news inputs may be absent; OHLC cannot reproduce spread, depth, queue position, latency or broker contract notes; U06 remains blocked without point-in-time sentiment/news/FII/DII modalities.
