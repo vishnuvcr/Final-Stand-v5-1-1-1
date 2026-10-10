@@ -1,0 +1,97 @@
+name: Phase 103 — Novel Intraday Strategy Discovery
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-103-novel-intraday-strategy-discovery
+    paths:
+      - "PHASE103_RESEARCH_PLAN.md"
+      - "research/phase103/**"
+      - "tests/phase103/**"
+      - ".github/workflows/phase103-novel-intraday-strategy-discovery.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase103-novel-strategy-replay
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Restore pinned Hugging Face option data cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase103-hf-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+          restore-keys: |
+            phase101-hf-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+            hf-phase66-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+            phase103-hf-${{ runner.os }}-
+      - name: Install pinned numerical dependencies
+        run: |
+          python -m pip install --disable-pip-version-check numpy==1.26.4 pandas==2.2.3 pyarrow==18.1.0 huggingface_hub==0.30.2 matplotlib==3.9.2 tabulate==0.9.0
+      - name: Compile and run rule tests
+        run: |
+          python -m py_compile research/phase103/novel_intraday_strategies.py
+          python -m unittest discover -s tests/phase103 -p "test_*.py" -v
+      - name: Execute preregistered 2024–2025 replay
+        id: replay
+        run: python research/phase103/novel_intraday_strategies.py --repo-root .
+      - name: Record successful run status
+        if: success()
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          out = Path("results/phase103")
+          v = json.loads((out / "validation.json").read_text())
+          run = os.environ["RUN_ID"]
+          status = Path("PHASE103_STATUS.md")
+          status.write_text(status.read_text() + f"\n\n## Runtime checkpoint — run {run}\n\n- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{run}\n- Outcome: {v.get('status')}; signals: {v.get('signal_attempts')}; completed trades: {v.get('completed_trade_rows')}; blocked exits: {v.get('blocked_exit_rows')}.\n- Promotion decision: NO STRATEGY PROMOTED. Passing a screen only qualifies for a separately preregistered independent validation.\n")
+          log = Path("PHASE103_RESEARCH_LOG.md")
+          log.write_text(log.read_text() + f"\n\n## Replay completed — run {run}\n\n- Source revision pinned to {v.get('pinned_source_revision')}; no 2026 option data loaded.\n- Output artifacts and source/cost/coverage audit were generated. Validation status: {v.get('status')}.\n- Missing exits remain non-estimable, and conclusions apply only to this frozen sample/cost model.\n")
+          PY
+      - name: Record failure and preserve error history
+        if: failure()
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          printf "\n\n### Runtime failure — run %s\nReplay, source access, syntax or a unit test failed. No positive or negative profitability claim is accepted from this failed run. See the linked Actions logs for the exact step failure.\n" "$RUN_ID" >> PHASE103_ERROR_LOG.md
+          printf "\n\n## Runtime checkpoint — run %s\n**BLOCKED / FAILED**: inspect Actions logs; no strategy promotion or profitability conclusion is accepted from this failed run.\n" "$RUN_ID" >> PHASE103_STATUS.md
+      - name: Upload results and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase103-results-${{ github.run_id }}
+          path: |
+            results/phase103/
+            PHASE103_STATUS.md
+            PHASE103_RESEARCH_LOG.md
+            PHASE103_ERROR_LOG.md
+          if-no-files-found: warn
+      - name: Commit outputs and run logs
+        if: always()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/phase103 PHASE103_STATUS.md PHASE103_RESEARCH_LOG.md PHASE103_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 103: publish bounded strategy replay and audit logs"
+          git push
