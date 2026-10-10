@@ -1,3 +1,16 @@
+# Resume checkpoint — 2026-10-10 (Phase 67 diagnostic underway)
+
+Phase 66 remains the latest completed numerical strategy test: [verification run 38028425558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558) passed, but the frozen CCI_BASE and CCI_EMA_FILTER candidates produced zero completed trades. Profitability statistics are not estimable; no strategy is promoted.
+
+Phase 67 is the next bounded step. Its objective is to distinguish missing exact-minute option bars from schema/contract-mapping issues at the frozen Phase 66 DEV/VAL trigger timestamps. No rule changes, imputed fills, P&L calculations, 2026 data, or holdout access are allowed.
+
+- [Phase 67 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_RESEARCH_PLAN.md)
+- [Phase 67 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_STATUS.md)
+- [Phase 67 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_ERROR_LOG.md)
+- [Phase 67 chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_CHAT_LOG.md)
+
+The workflow-staged chat log was missing at initialization; it has now been created and documented as E67-004. Tests were extended for exact-next-minute missingness and UTC-to-IST date boundaries. The automated numerical output is not yet visible in the branch, so Phase 67 remains pending runtime verification. Do not interpret code commits as a completed audit.
+
 # Resume checkpoint — 2026-10-10 12:27 IST
 
 The latest completed research run remains Phase 66; no new strategy is promoted.
