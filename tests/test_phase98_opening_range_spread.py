@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from research.phase98_opening_range_spread import (
-    TZ, opening_range_signal, select_vertical, vix_filter_state,
+    TZ, opening_range_signal, select_vertical, vix_filter_state, prep_options,
     run_scenario, slip, holm
 )
 
@@ -76,3 +76,12 @@ def test_adverse_slippage_and_holm_are_monotone():
     assert slip(10.0, "sell", 2) == 9.90
     adjusted = holm([0.01, 0.03, 0.20])
     assert adjusted[0] <= adjusted[1] <= adjusted[2]
+
+
+def test_source_open_interest_column_is_normalized_without_imputation():
+    ts = pd.Timestamp("2024-01-02 09:31", tz=TZ)
+    raw = pd.DataFrame([{"timestamp": ts, "option_type": "CALL", "strike": 10000,
+                         "open": 10., "close": 11., "open_interest": 1234}])
+    out = prep_options(raw)
+    assert out.iloc[0]["option_type"] == "CE"
+    assert out.iloc[0]["oi"] == 1234
