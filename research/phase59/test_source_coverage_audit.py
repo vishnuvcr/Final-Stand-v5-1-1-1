@@ -1,6 +1,4 @@
 import importlib.util
-import json
-import tempfile
 import unittest
 from pathlib import Path
 
@@ -23,19 +21,28 @@ class Phase59Tests(unittest.TestCase):
         self.assertFalse(report["data_downloaded"])
         self.assertFalse(report["holdout_used"])
 
-    def test_missing_permission_cannot_be_overridden_by_fields(self):
+    def test_missing_permission_cannot_be_overridden_by_data_fields(self):
         registry=mod.load_registry()
-        candidate=dict(registry["sources"][0])
-        candidate["has_intraday_oi"]=True
-        candidate["has_expiry_and_strike"]=True
-        candidate["has_bid_ask_depth"]=True
-        candidate["exact_target_contract_coverage_verified"]=True
-        candidate["license_clear_for_automation"]=False
+        candidates=[]
+        for i, source in enumerate(registry["sources"][:8]):
+            candidate=dict(source)
+            candidate["id"]=f"test_candidate_{i}"
+            if i==0:
+                candidate.update({
+                    "has_intraday_oi":True,
+                    "has_expiry_and_strike":True,
+                    "has_bid_ask_depth":True,
+                    "exact_target_contract_coverage_verified":True,
+                    "license_clear_for_automation":False,
+                })
+            candidates.append(candidate)
         custom=dict(registry)
-        custom["sources"]=[candidate]*0 + [candidate]*8
-        # IDs must be unique even when records otherwise look adequate.
-        with self.assertRaises(ValueError):
-            mod.audit(custom)
+        custom["sources"]=candidates
+        out=mod.audit(custom)
+        first=next(row for row in out["sources"] if row["id"]=="test_candidate_0")
+        self.assertFalse(first["eligible_for_prior_minute_oi_replay"])
+        self.assertFalse(first["eligible_for_quote_depth_replay"])
+        self.assertNotIn("test_candidate_0",out["accepted_for_automated_replay"])
 
     def test_missing_required_schema_fails_closed(self):
         registry=mod.load_registry()
