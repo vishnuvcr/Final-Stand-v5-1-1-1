@@ -43,16 +43,16 @@ def test_u02_capital_is_registered_and_holdout_end_is_2025():
     assert str(r.VAL_END.date()) == "2025-12-31"
     assert r.PINNED_REVISION == "3eacf762d401efd9a08e804592fa7882b354c4a2"
 
-def test_u05_entry_date_is_strictly_after_forecast_wednesday():
+def test_u05_preserves_first_thursday_and_excludes_lookahead_months():
     wed, thu = r._u05_entry_dates(pd.Period("2021-07", freq="M"))
     assert wed.date().isoformat() == "2021-07-07"
-    assert thu.date().isoformat() == "2021-07-08"
-    assert thu > wed
+    assert thu.date().isoformat() == "2021-07-01"
+    assert thu < wed  # runner must exclude this opportunity, not slide to the second Thursday
 
-def test_u05_entry_date_not_first_thursday_when_that_precedes_forecast():
-    wed, thu = r._u05_entry_dates(pd.Period("2023-06", freq="M"))
-    assert wed.date().isoformat() == "2023-06-07"
-    assert thu.date().isoformat() == "2023-06-08"
+def test_u05_first_thursday_after_forecast_is_eligible():
+    wed, thu = r._u05_entry_dates(pd.Period("2024-06", freq="M"))
+    assert wed.date().isoformat() == "2024-06-05"
+    assert thu.date().isoformat() == "2024-06-06"
     assert thu > wed
 
 def test_block_bootstrap_only_runs_with_sufficient_trade_count():
