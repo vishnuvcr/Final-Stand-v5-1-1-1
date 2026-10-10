@@ -1,3 +1,18 @@
+# Resume checkpoint — 2026-10-10 (Phase 79 final evidence gate)
+
+**Final evidence decision: NO-GO for strategy promotion.** Phase 79 synthesized prior audits without new downloads or purchases. Fixed-contract identity/coverage for the two missing expiries remains unresolved; source rights and retention are not fully verified for a replacement complete sample; OHLC-only fills cannot prove executable outcomes; and TT-04/TT-05 positive partial-window results conflict with negative historical HOLD results. TT-02 is negative in the available partial sample. No strategy is approved for live trading. This is an evidence-sufficiency conclusion, not proof that every possible strategy is unprofitable.
+
+- [Phase 79 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-final-evidence-sufficiency-gate/PHASE79_RESEARCH_PLAN.md)
+- [Phase 79 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-final-evidence-sufficiency-gate/PHASE79_STATUS.md)
+- [Phase 79 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-final-evidence-sufficiency-gate/PHASE79_ERROR_LOG.md)
+- [Evidence matrix report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-final-evidence-sufficiency-gate/results/phase79_final_evidence_gate/report.md)
+- [Evidence matrix JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-final-evidence-sufficiency-gate/results/phase79_final_evidence_gate/summary.json)
+- [Workflow run 38043347115](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38043347115)
+
+Research reopens only if a concrete source provides exact fixed-contract target coverage with documented automated-use/retention rights, or if data acquisition is explicitly authorized. Any resumed test must retain Paytm Money charges, date-aware fees, adverse slippage/spread assumptions, independent temporal validation, and full audit logs.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 78 temporal stability)
 
 Phase 78 compared the frozen historical Phase 50B HOLD summaries with the short Phase 51-3 interval. TT-04 historical HOLD was -₹6,456.29 at base costs and -₹11,148.57 under +50% friction; TT-05 historical HOLD was -₹40,244.68 base and -₹49,605.30 under ₹20/order plus 50% friction. Both were positive in the April–July 2026 partial interval, but that sign disagreement is evidence of temporal instability—not proof of a newly durable edge. TT-04 and TT-05 are not promoted. The two missing expiries remain excluded.
