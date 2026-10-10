@@ -1,18 +1,18 @@
 <!-- PHASE94_START -->
-# Current checkpoint — Phase 96 moving-average / seasonality replication
+# Current checkpoint — Phase 97 ML options strategy replication
 
-**Status: IMPLEMENTATION CREATED; fixed replay pending Actions validation.** Phase 95 remains a common-data model-family screen, not exact replication of every PDF. Phase 96 adds a separate, preregistered signal-level test of SMA/EMA variants. No strategy is promoted; the Phase 83 2026 holdout remains sealed.
+**Status: DATA-BLOCKED by the automated evidence gate.** Phase 97's workflow passed, but the audited artifacts do not contain the point-in-time exact-contract feature/label matrix required to reproduce the paper's Random Forest, XGBoost and LSTM options signals. Zero models were trained; no options P&L was inferred; no strategy is promoted.
 
-- [Phase 96 research plan](PHASE96_RESEARCH_PLAN.md)
-- [Phase 96 status](PHASE96_STATUS.md)
-- [Research log](PHASE96_RESEARCH_LOG.md) · [Error/limitation log](PHASE96_ERROR_LOG.md) · [Auditable decision/chat log](PHASE96_CHAT_LOG.md)
-- [Deterministic replay engine](research/phase96/backtest.py) · [Unit tests](research/phase96/test_backtest.py)
-- [Automatic and manual workflow](.github/workflows/phase96-moving-average-seasonality-replication.yml)
-- [Finite execution plan and all 14-paper register](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-94-paper-method-replication-program/PHASE94_RESEARCH_PLAN.md) · [Method register CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-94-paper-method-replication-program/results/phase94/PAPER_METHOD_REGISTER.csv)
+- [Phase 97 plan](PHASE97_RESEARCH_PLAN.md) · [status](PHASE97_STATUS.md) · [report](results/phase97/REPORT.md)
+- [Required-field gate](results/phase97/data_gate.csv) · [Paper-method statuses](results/phase97/paper_method_status.csv) · [summary](results/phase97/summary.json)
+- [Research log](PHASE97_RESEARCH_LOG.md) · [error/limitation log](PHASE97_ERROR_LOG.md) · [decision log](PHASE97_CHAT_LOG.md)
+- [Automated/manual workflow](.github/workflows/phase97-ml-options-strategy-replication.yml) · [Actions run 38072759556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072759556)
 
-**Interpretation guardrail:** SMA/EMA parameter sets are operationalized sensitivities where paper details are not uniquely specified. NIFTY spot is not directly investable, and a generic turnover deduction is not a verified historical Paytm Money schedule. This phase does not infer options profitability from index returns. Exact-contract options P&L requires source-verified contract quotes/fills, brokerage, statutory levies, spread, slippage and stress tests.
+**Phase 96 signal screen:** the corrected SMA/EMA replay passed in [run 38072697008](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072697008). Across 1,486 sessions in 2020–2025, buy-and-hold returned 114.7%; the six MA variants returned 52.5%–100.9% under a 0.05% turnover sensitivity deduction and had smaller max drawdowns. SMA(10,50) and EMA(10,50) had higher unadjusted Sharpe estimates, but there are no significance tests and NIFTY spot is not directly investable. This is not options P&L or evidence of a robust trading edge. Phase 96 remains partial because paper-specific seasonality/timing rules need source-fidelity review.
 
-**Phase 95 interim finding:** the initial common-data close-target screen showed no statistically established MAE improvement over persistence among 75 model/window rows; final reconciled paper claim status is pending its active Actions run [38072245422](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072245422). Do not call the source papers disproven: source-specific modalities and splits were not all reproduced.
+**Phase 95:** the main forecast run completed 132/132 valid rows, but its reconciliation step failed on a manifest serialization defect. The parser fix is committed and a fresh workflow run is pending; no claim ledger from the failed reconciliation is accepted.
+
+The Phase 83 2026 holdout remains sealed. Exact options P&L requires contract-level point-in-time quotes/fills and Paytm Money brokerage, levies, spread, slippage and cost stress.
 <!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
