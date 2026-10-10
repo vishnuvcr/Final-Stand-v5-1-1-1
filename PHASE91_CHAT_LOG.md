@@ -46,3 +46,8 @@ The pending-trigger paragraphs above are now superseded by the runtime record be
 ## Cross-year decision — terminal Phase 91 conclusion
 
 Created [cross-year synthesis](results/phase91/CROSS_YEAR_SYNTHESIS.md) comparing the fixed 2024 Phase 90 result with the independent 2023 Phase 91 result. Phase 90 showed a small positive MAE improvement with its CI lower limit near zero; Phase 91's near-zero improvement had a confidence interval spanning both benefit and harm. The pre-specified incremental-IV line is stopped at its planned replication boundary; no further year search/tuning is warranted from this result. Reopen only for a materially new preregistered hypothesis or authorized exact-contract execution data. No trading strategy was promoted.
+
+
+## Downstream continuation — Phase 92 terminal result
+
+Following Phase 91's non-replication result, Phase 92 tested a new, fixed 2022 feature block without searching further IV years: lagged synthetic-forward proxy gap and CE/PE OI imbalance added to spot+VIX+IV. Latest run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106) completed successfully with gates passed, but its primary 95% CI was entirely negative; the feature block worsened MAE. See [cross-phase synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md). The registered predictor-screen line is closed at the Phase 92 stopping boundary. No strategy P&L or promotion.
