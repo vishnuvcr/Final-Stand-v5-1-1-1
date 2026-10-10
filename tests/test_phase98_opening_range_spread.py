@@ -9,7 +9,7 @@ import pyarrow.parquet as pq
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state, prep_options,
-    run_scenario, slip, holm, option_columns, arm_b_treatment, arrow_filter_bounds
+    run_scenario, slip, holm, option_columns, arm_b_treatment, arrow_filter_bounds, val_at
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
@@ -116,3 +116,21 @@ def test_timezone_typed_arrow_filter_bounds_read_parquet_rows(tmp_path):
     assert high.type == ts_type
     actual = pq.read_table(path, filters=[("timestamp", ">=", low), ("timestamp", "<=", high)])
     assert actual.column("value").to_pylist() == [1, 2]
+
+
+def test_prepared_option_price_lookup_is_exact_and_rejects_ambiguous_keys():
+    ts = pd.Timestamp("2024-01-02 09:31", tz=TZ)
+    tx = pd.Timestamp("2024-01-02 09:32", tz=TZ)
+    raw = pd.DataFrame([
+        {"timestamp": ts, "option_type": "CE", "strike": 10000, "open": 10., "close": 12.},
+        {"timestamp": tx, "option_type": "CE", "strike": 10000, "open": 12., "close": 13.},
+        {"timestamp": ts, "option_type": "CE", "strike": 10200, "open": 4., "close": 3.},
+    ])
+    chain = prep_options(raw)
+    assert val_at(chain, ts, "CE", 10000., "open") == 10.
+    assert val_at(chain, tx, "CE", 10000., "close") == 13.
+    assert val_at(chain, tx, "CE", 10200., "open") is None
+
+    ambiguous = pd.concat([raw.iloc[[0]], raw.iloc[[0]].assign(open=11.)], ignore_index=True)
+    ambiguous_chain = prep_options(ambiguous)
+    assert val_at(ambiguous_chain, ts, "CE", 10000., "open") is None
