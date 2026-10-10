@@ -16,14 +16,14 @@ This bounded follow-up tests U02 (RF/XGBoost/LSTM Buy/Sell options method) and U
 - Yahoo daily history for monthly-return calculation: 2015-01-02 through 2025-12-31 (2708 observations).
 
 ## 3. U05 — monthly seasonality options rule
-Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The first calendar Wednesday supplies the forecast; entry is on the first calendar Thursday strictly after that Wednesday to prevent look-ahead. No holiday substitution is made. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level at the first 09:15–09:20 opening-window minute with matching underlying and option bars; only contemporaneous OI/volume can break ties.
+Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The source specifies the first calendar Wednesday forecast and first calendar Thursday entry. When that first Thursday falls before Wednesday, the month is excluded rather than moving the trade to a second Thursday; no look-ahead or rule change is allowed. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level at the first 09:15–09:20 opening-window minute with matching underlying and option bars; only contemporaneous OI/volume can break ties.
 The test uses the paper’s ₹3,00,000 initial capital, deploying no more than 90% of current equity per monthly trade; equity is carried forward and 10% is held as a safety reserve. Target is a 20% premium gain and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.
 
-- Months audited: 56; completed trades: 10; status: COMPUTED.
-- Initial/ending account equity: ₹300,000.0000 / ₹24,678.2846; account return: -91.7739%; max account drawdown: ₹315,787.9353.
+- Months audited: 56; completed trades: 7; status: COMPUTED.
+- Initial/ending account equity: ₹300,000.0000 / ₹16,330.1015; account return: -94.5566%; max account drawdown: ₹324,136.1184.
 - Mean net P&L/trade 95% circular moving-block bootstrap interval: not estimable to not estimable; status: SKIPPED_LT20_TRADES.
-- Net P&L at ₹10/order: -275,321.7154; mean/trade: -27,532.1715; median: -15,869.3201; win rate: 0.4000; PF: 0.2649; max trade drawdown: 315,787.9353.
-- Net at ₹20/order: -275,521.7154; +50% charges stress: -276,558.8231; ₹20/order + stress: -276,858.8231; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): -249,051.5562.
+- Net P&L at ₹10/order: -283,669.8985; mean/trade: -40,524.2712; median: -14,737.7245; win rate: 0.1429; PF: 0.1248; max trade drawdown: 324,136.1184.
+- Net at ₹20/order: -283,809.8985; +50% charges stress: -284,443.5978; ₹20/order + stress: -284,653.5978; extra hypothetical 0.25% each-side impact plus ₹50/trade (not specified by U05): -265,075.2937.
 - A zero-trade sample is NOT ESTIMABLE, never reported as evidence of zero return. This does not recreate the original source period.
 
 ## 4. U02 — machine-learning Buy/Sell option method
