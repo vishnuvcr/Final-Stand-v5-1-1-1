@@ -1,0 +1,39 @@
+name: Phase 80 — Expanded universe and literature audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-80-expanded-universe-and-literature-audit]
+    paths:
+      - 'PHASE80_*.md'
+      - 'research/phase80_register_universe.py'
+      - '.github/workflows/phase80-expanded-universe-audit.yml'
+permissions:
+  contents: write
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-80-expanded-universe-and-literature-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Register source and strategy inventory
+        run: python research/phase80_register_universe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase80-expanded-universe-audit
+          path: results/phase80_universe_audit/
+          if-no-files-found: error
+      - name: Persist registry
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase80_universe_audit/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Phase 80 expanded universe audit'
+            git pull --rebase origin phase-80-expanded-universe-and-literature-audit
+            git push origin HEAD:phase-80-expanded-universe-and-literature-audit
+          fi
