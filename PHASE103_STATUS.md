@@ -232,3 +232,8 @@ The latest accepted API smoke result currently remains a **data-boundary NO-GO**
 - API probes returning rows: 1/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## Corrective workflow gate — 2026-10-11
+
+Run [38089336359](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089336359) is rejected: unit tests failed before any Dhan request; no data inference from it. The current workflow now clears stale output files before tests and validates that any JSON written belongs to the active Actions run. The date-adapter import is corrected. Await the next all-ten-probe run before accepting cross-stock sample availability.

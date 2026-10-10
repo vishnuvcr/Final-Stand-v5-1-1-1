@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"research"/"phase103_stock_options"))
-from dhan_data_audit import EXPIRY_CODE, check_window, map_underlyings, safe_error_details, summarize
+from dhan_data_audit import EXPIRY_CODE, check_window, map_underlyings, provider_to_date, safe_error_details, summarize
 
 class DhanDataAuditTests(unittest.TestCase):
     def test_next_expiry_value_matches_dhan_request_sample(self):

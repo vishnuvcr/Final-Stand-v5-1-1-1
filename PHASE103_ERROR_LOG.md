@@ -155,3 +155,9 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 
 ### E103-011 resolution addendum — empirically inclusive Dhan end date
 Run [38089220578](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089220578) requested `fromDate=toDate=2026-08-03` and returned 385 HDFCBANK CALL rows all dated 2026-08-03. The prior distinct-date query returned 385 rows on the start date and 385 on the end date, indicating practical inclusive-end behavior. The client now maps the registered target half-open range `[start,end)` to provider `fromDate=start`, `toDate=end-1 day`, and retains a strict timestamp gate. The old 770-row result remains rejected; subsequent requests must pass the timestamp gate before acceptance.
+
+
+### E103-012 — Wrong import in provider-date unit test and stale-output acceptance
+**Affected run:** [38089336359](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089336359).  
+**Symptom:** unit-test preflight failed with NameError because `provider_to_date` was referenced but not imported. The API call step was skipped. The status logger then reused the previous run's JSON and mistakenly printed its PASS status for the current run.  
+**Correction:** add the missing import; delete prior-run output files from the workflow workspace before any tests; make the status writer require the JSON `run_id` to equal the current `GITHUB_RUN_ID`; in fallback, record "no fresh result" rather than treating a stale artifact as current evidence. No data/strategy conclusions are based on this failed run.

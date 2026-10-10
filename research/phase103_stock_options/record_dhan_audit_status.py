@@ -18,6 +18,8 @@ def main():
     if not RESULT.exists():
         raise SystemExit("Dhan audit JSON missing; refusing to publish guessed status.")
     data=json.loads(RESULT.read_text(encoding="utf-8"))
+    if str(data.get("run_id")) != RUN:
+        raise SystemExit("Audit JSON belongs to a different run; refusing to record stale status.")
     marker=f"DHAN_API_RUN_{RUN}_ATTEMPT_{ATTEMPT}"
     status=data.get("status","UNKNOWN")
     probes=data.get("probes",[])
