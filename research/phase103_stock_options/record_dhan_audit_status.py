@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 RESULT=ROOT/"results/phase103/dhan_data_api_audit.json"
 RUN=os.getenv("GITHUB_RUN_ID","local")
+ATTEMPT=os.getenv("GITHUB_RUN_ATTEMPT","1")
 
 def append_once(path, marker, text):
     old=path.read_text(encoding="utf-8")
@@ -17,12 +18,12 @@ def main():
     if not RESULT.exists():
         raise SystemExit("Dhan audit JSON missing; refusing to publish guessed status.")
     data=json.loads(RESULT.read_text(encoding="utf-8"))
-    marker=f"DHAN_API_RUN_{RUN}"
+    marker=f"DHAN_API_RUN_{RUN}_ATTEMPT_{ATTEMPT}"
     status=data.get("status","UNKNOWN")
     probes=data.get("probes",[])
     returned=sum(int(v.get("rows",0) or 0)>0 for v in probes)
     summary=(
-      f"## Dhan Data API audit — run {RUN} — {datetime.now(timezone.utc).isoformat()}\n\n"
+      f"## Dhan Data API audit — run {RUN}, attempt {ATTEMPT} — {datetime.now(timezone.utc).isoformat()}\n\n"
       f"- **Result:** {status}.\n"
       f"- Window: {data.get('window',{}).get('from_inclusive')} inclusive to {data.get('window',{}).get('to_exclusive')} exclusive.\n"
       f"- Underlying IDs resolved: {sum(1 for m in data.get('underlying_map',{}).values() if m.get('security_id'))}/5.\n"
