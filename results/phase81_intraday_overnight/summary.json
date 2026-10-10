@@ -1,0 +1,56 @@
+{
+  "phase": 81,
+  "decision": "EXPLORATORY_SWEEP_COMPLETE_NO_PROMOTION",
+  "source": {
+    "dataset": "thetrademarkk/india-index-options-1m",
+    "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+    "license": "CC-BY-NC-4.0",
+    "raw_prices_committed": false
+  },
+  "universe": {
+    "declared_structure_variants": 10,
+    "paired_windows": [
+      "intraday",
+      "overnight"
+    ],
+    "paired_difference_tests": 10,
+    "session_assignment_count": 1139,
+    "expiry_files_loaded": 238,
+    "eligible_trade_rows": 10286,
+    "complete_paired_session_variant_count": 5143
+  },
+  "temporal_policy": {
+    "development_through": "2023-12-31",
+    "validation_through": "2025-12-31",
+    "holdout_2026": "not downloaded/read for this sweep and not ranked"
+  },
+  "exclusions": {
+    "records": 6202,
+    "reason_counts": {
+      "paired_sample_incomplete:intraday:duplicate_exact_contract_bar;overnight:duplicate_exact_contract_bar": 6039,
+      "paired_sample_incomplete:intraday:missing_exact_timestamp;overnight:missing_exact_timestamp": 110,
+      "missing_prior_0919_spot": 5,
+      "paired_sample_incomplete:intraday:duplicate_exact_contract_bar;overnight:missing_exact_contract_bar": 7,
+      "paired_sample_incomplete:intraday:duplicate_exact_contract_bar;overnight:missing_exact_timestamp": 1,
+      "paired_sample_incomplete:overnight:missing_exact_timestamp": 30,
+      "paired_sample_incomplete:intraday:missing_exact_contract_bar;overnight:missing_exact_contract_bar": 4,
+      "paired_sample_incomplete:intraday:missing_exact_contract_bar": 6
+    },
+    "file_errors": 0
+  },
+  "cost_model": {
+    "paytm_money_brokerage_per_executed_order_inr": 10.0,
+    "one_tick_inr": 0.05,
+    "stress_ticks_per_fill": 2,
+    "fee_schedule": "frozen Phase-45 historical model: STT 0.0625% before 2024-10-01 and 0.10% after; historical exchange/IPFT/SEBI, stamp duty and 18% GST; no expiry exercise assumed"
+  },
+  "limitations": [
+    "No bid/ask/depth; candle-open fills plus adverse tick are not executable quote evidence.",
+    "Short ATM straddle is unbounded-risk diagnostic-only, not eligible for live promotion.",
+    "Static multi-leg structures do not replicate the delta-hedged Bhat et al. (2024) paper.",
+    "Expiry-session dates and dates where next session equals expiry are skipped.",
+    "Only ten frozen structure variants were tested; this is not all combinations.",
+    "Lagged VIX summaries are descriptive and not independently selected for profitability.",
+    "2026 holdout was kept out of the computation and candidate ranking."
+  ]
+}

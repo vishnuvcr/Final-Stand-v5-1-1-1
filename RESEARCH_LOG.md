@@ -931,3 +931,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Holdout protected; TT06/TT07 P&L excluded.
 - No VIX filter promoted.
 - Next: preregistered far-OTM/strike-geometry gate.
+
+
+## 2026-10-10 — Phase 81 paired intraday/overnight sweep
+- Expiry files loaded: 238; paired trade rows: 10286; complete date×variant pairs: 5143.
+- Exclusions: 6202; file/schema errors: 0.
+- Registered structures/time windows only; 2026 holdout not scored. See results/phase81_intraday_overnight/report.md.
+- No strategy promoted; static OHLC-open model remains an execution proxy.
