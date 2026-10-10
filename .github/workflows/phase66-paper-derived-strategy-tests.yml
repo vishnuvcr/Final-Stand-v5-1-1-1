@@ -3,7 +3,7 @@ name: Phase 66 — Paper-Derived CCI Strategy Tests
 on:
   push:
     branches:
-      - phase-66-paper-derived-strategy-tests
+      - phase-66-ohcl-paper-replication
     paths:
       - ".github/workflows/phase66-paper-derived-strategy-tests.yml"
       - "research/phase66_paper_strategy_tests.py"
@@ -109,7 +109,7 @@ jobs:
           if manifest.get("explicit_2026_option_files_downloaded") != 0:
               raise SystemExit("Holdout safeguard failed: 2026 option files were downloaded")
           marker = {
-              "phase": 64, "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
+              "phase": 66, "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
               "commit": os.environ.get("GITHUB_SHA"),
               "dataset_revision": manifest.get("revision"),
               "holdout_option_files_downloaded": 0,
@@ -128,7 +128,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No aggregate result changes to publish."
           else
-            git commit -m "phase 64: publish aggregate CCI strategy test outputs"
+            git commit -m "phase 66: publish aggregate CCI strategy test outputs"
             git push
           fi
 
@@ -146,7 +146,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add PHASE66_ERROR_LOG.md "$COUNTER"
-          git commit -m "phase 64: log failed automated run and increment retry budget" || true
+          git commit -m "phase 66: log failed automated run and increment retry budget" || true
           git push || true
 
       - name: Upload aggregate-only results
