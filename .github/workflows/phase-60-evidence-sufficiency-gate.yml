@@ -42,8 +42,8 @@ jobs:
           r=json.loads(Path("results/phase60/evidence_sufficiency/report.json").read_text())
           assert r["status"] == "NO_GO_EMPIRICAL_FACTOR_STRATEGY_TESTING_DATA_EVIDENCE_INSUFFICIENT"
           assert r["source_audit"]["registry_source_count"] == 10
-          assert r["source_audit"]["accepted_free_license_clear_exact_prior_minute_oi_sources"] == 0
-          assert r["source_audit"]["accepted_free_license_clear_exact_quote_depth_sources"] == 0
+          assert r["source_audit"]["authorized_exact_prior_minute_oi_sources"] == 0
+          assert r["source_audit"]["authorized_exact_quote_depth_sources"] == 0
           assert r["cross_phase_evidence"]["phase52_baseline"]["executed_rows"] == 1
           assert r["cross_phase_evidence"]["phase57_independent_reproduction"]["mismatches"] == 0
           assert r["frozen_rules"]["holdout_used"] is False
