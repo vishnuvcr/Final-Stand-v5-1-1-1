@@ -27,7 +27,9 @@
 | short_iron_fly_w100 | 1 | defined |
 | short_iron_fly_w200 | 1 | defined |
 | short_iron_fly_w300 | 1 | defined |
-| long_iron_fly_w100_200_300 | 1 | debit-limited |
+| long_iron_fly_w100 | 1 | debit-limited |
+| long_iron_fly_w200 | 1 | debit-limited |
+| long_iron_fly_w300 | 1 | debit-limited |
 | short_iron_condor_100_300 | 1 | defined |
 | bull_put_credit_100_300 | 1 | defined |
 | bear_call_credit_100_300 | 1 | defined |
