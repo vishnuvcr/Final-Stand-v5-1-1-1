@@ -616,3 +616,10 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - **Scope of resolution:** this closes the specific omission of later legs after an OHLC-range exclusion. The 100 rows blocked at the resolver's prior-OI gate still contain only the leg(s) examined before early return in the Phase 52 canonical ledger. Their explicit observed OI failures are sufficient to keep them excluded in Phase 54; a full record for every leg is addressed separately by Phase 55.
 - **Scientific impact:** no strategy metric changed, no filter was relaxed, holdout untouched, and only one row passes at the frozen 2% threshold. No strategy or factor selector is promoted.
 - **Status:** RESOLVED for range-exclusion evidence; broader all-rows/all-legs invariant tracked in Phase 55.
+
+## Cross-phase disposition — 2026-10-10
+
+- The Phase 52 range-evidence serialization issue is resolved by verified replay [37992542028](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992542028) and the Phase 55 full selected-leg invariant run [37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572).
+- The Phase 54 self-test, failure-path persistence, and stale-input issues are resolved; the canonical-input rerun [38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487) passed and reconciled all 480 rows at all 11 thresholds.
+- Historical failed attempts above remain in this append-only log and are not erased. Their final corrective verifications are linked in the Phase 54 error log.
+- **Remaining research blocker is not a runner defect:** Phase 60/61 accepted zero data sources for sample validation. Empirical factor-conditioned profitability work remains blocked until documented access/use rights and an exact target-date/contract sample satisfy the restart gate. Do not label this source-evidence NO-GO as a code error or bypass it by relaxing frozen filters.
