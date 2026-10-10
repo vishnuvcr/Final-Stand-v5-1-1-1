@@ -19,7 +19,15 @@ Run one bounded 2022 study of a lagged ATM synthetic-forward proxy gap and CE/PE
 Because source candle timestamps are candle-start time and close-derived features cannot be known at the candle start, option-derived IV, OI, and synthetic-proxy values are lagged one whole 5-minute row; VIX close is also lagged one row. This conservative design is registered before execution. Direct FUTIDX basis is omitted rather than guessed because exact historical futures contract mapping is not supplied by the rolling-options endpoint.
 
 ## Execution log
-Phase 92 branch and preregistration files are being added. The next record must report the actual Actions run and result. Raw option prices and market payloads are not to be committed or uploaded.
+
+- Created branch `phase-92-synthetic-forward-oi-study-2022`, added the frozen plan/status/error/chat records, analysis engine, branch workflow, default-branch automation entry, and draft PR [#42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42). PR remains open/draft/unmerged.
+- First run [38050580381](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050580381) completed the data request and statistical analysis but failed the publication push due a non-fast-forward branch race. The run emitted a negative primary estimate; that first report was not treated as final because its final weekend-only option chunk was classified incorrectly.
+- A subsequent run [38050610192](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192) successfully published the report and exposed the weekend-only 2022-12-31 window as a false data-error classification.
+- Static review confirmed 2022-12-31 was a Saturday and the half-open request interval 2022-12-31 through 2023-01-01 contains no weekday. The engine now reports aligned, empty windows with no weekday as `NoWeekdayExpected` and valid coverage, without fabricating or imputing rows. It also distinguishes an entirely negative confidence interval from an interval that merely crosses zero.
+- Final accepted run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106) completed successfully using the fixed code. All 54 options windows and 5 VIX windows were valid; sample and train/validation gates passed.
+- Primary result: M2 MAE − M4 MAE = −0.1708363 bps (95% session-cluster bootstrap CI −0.2298769 to −0.1152015; 5,000 resamples, seed 90210). The interval is wholly below zero, so the synthetic-forward/OI block made out-of-sample magnitude predictions worse on this fixed sample.
+- Automation was changed to trigger on Phase 92 plan/engine pushes, with manual dispatch retained, while the PR runner reacts only to open/reopen to avoid retriggering on its generated output commit.
+- Raw market responses/prices were not committed or uploaded. Phase 83's 2026 holdout was not requested.
 
 <!-- PHASE92_RUNTIME_START -->
 ## Automated execution record — 38050805106
