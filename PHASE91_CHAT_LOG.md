@@ -41,3 +41,8 @@ The pending-trigger paragraphs above are now superseded by the runtime record be
 - Primary result: M1 MAE − M2 MAE = 0.0001 bps (paired session-cluster bootstrap 95% CI -0.0111 to 0.0103; bootstrap positive share 0.5240; 5000 resamples).
 - Raw market responses were not printed, committed, or uploaded as artifacts; 2026 was not requested.
 <!-- PHASE91_RUNTIME_END -->
+
+
+## Cross-year decision — terminal Phase 91 conclusion
+
+Created [cross-year synthesis](results/phase91/CROSS_YEAR_SYNTHESIS.md) comparing the fixed 2024 Phase 90 result with the independent 2023 Phase 91 result. Phase 90 showed a small positive MAE improvement with its CI lower limit near zero; Phase 91's near-zero improvement had a confidence interval spanning both benefit and harm. The pre-specified incremental-IV line is stopped at its planned replication boundary; no further year search/tuning is warranted from this result. Reopen only for a materially new preregistered hypothesis or authorized exact-contract execution data. No trading strategy was promoted.
