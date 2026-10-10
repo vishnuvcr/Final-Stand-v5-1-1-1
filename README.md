@@ -1,3 +1,18 @@
+# Resume checkpoint — 2026-10-10 (Phase 87 expired-options data qualification)
+
+**Phase 87: API probe running / result pending.** Following the Phase 86 connectivity PASS, this phase makes one bounded read-only request to Dhan's documented `/v2/charts/rollingoption` endpoint for five-minute NIFTY monthly-expiry ATM call data on 2026-07-28. The workflow logs only HTTP status, field presence and row count—not raw option prices or account data.
+
+- [Phase 87 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-87-expired-options-data-qualification/PHASE87_RESEARCH_PLAN.md)
+- [Phase 87 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-87-expired-options-data-qualification/PHASE87_STATUS.md)
+- [Phase 87 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-87-expired-options-data-qualification/PHASE87_ERROR_LOG.md)
+- [Phase 87 auditable chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-87-expired-options-data-qualification/PHASE87_CHAT_LOG.md)
+- [Phase 87 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-87-expired-options-data-qualification/.github/workflows/phase87-expired-options-qualification.yml)
+- [Official Dhan expired-options documentation](https://dhanhq.co/docs/v2/expired-options-data/)
+
+**Interpretation gate:** rolling ATM-relative OHLC/IV/OI/volume/spot is not exact-contract bid/ask/depth. A successful probe may justify a bounded coverage audit, not an executable profitability claim. No backtest or strategy promotion; Paytm Money costs, slippage and latency remain mandatory and Phase 83 holdout remains sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 86 Dhan connectivity PASS)
 
 **Phase 86 connectivity passed.** GitHub Actions run [38047007060](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047007060) confirmed the `DHAN_ACCESS_TOKEN` secret is present, Dhan profile HTTP 200, token valid, Data API plan active, and a bounded historical-candle request returned HTTP 200 with 149 five-minute index candles for 2026-10-08 to 2026-10-09. The workflow did not print or persist raw profile/market-data responses and did not place orders or run a strategy backtest.
