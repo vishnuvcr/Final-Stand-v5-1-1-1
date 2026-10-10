@@ -579,3 +579,11 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - Phase 54's bounded diagnostic sensitivity [run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101) consumed the same ledger (matching branch file contents and pinned revision) and passed all 11 threshold checks. Eligible rows by 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 1000% thresholds: 1, 1, 8, 24, 55, 91, 150, 227, 298, 345, 380; the 100 explicit OI blocks stay invariant and all rows reconcile to 480.
 - These counts establish sensitivity of coverage to an OHLC range proxy, not executable liquidity or profitability. The OHLC high-low/open metric is not bid/ask spread. No P&L was recalculated in Phase 54; no holdout or promotion.
 - Phase 55 is now extending the audit invariant to the remaining 100 OI-blocked rows: the resolver will continue through all selected legs and persist entry/OI/range/exit state instead of returning after the first failure. A new two-leg spread regression test is included; all-leg rerun/validation is in progress at [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521).
+
+
+## 2026-10-10 — Cross-phase evidence gate update
+
+- Phase 55 complete-leg audit passed 480/480 rows; Phase 54 threshold sensitivity reconciled all 480 rows at each of 11 thresholds.
+- Exact source diagnosis found 60 unique prior-minute contract-time keys with one row each and source-recorded OI=0, referenced by 220 blocked leg records. These remain blocked under the fixed OI>=100 rule; no evidence justifies loosening it.
+- Phase 56 modeled P&L sensitivity generated 18,960 price-reference cost scenarios on the canonical Phase 55 ledger. Five configuration-threshold pairs passed the severe-cost screen only at the 1000% diagnostic threshold; not a deployable portfolio or a strategy recommendation.
+- Main README contains accepted reports and links. Phase 52 factor-selector research remains open and no strategy is promoted. Await independent Phase57 source-replay reproduction before deciding whether any quote-validation leads merit further work.
