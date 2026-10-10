@@ -1,0 +1,38 @@
+name: Phase 102 — Final Strategy Ranking and Evidence Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-102-final-strategy-ranking
+    paths:
+      - "PHASE102_*.md"
+      - "research/phase102/**"
+      - "tests/phase102/**"
+      - "results/phase102/**"
+      - ".github/workflows/phase102-final-strategy-ranking.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout the branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run unit tests
+        run: python -m unittest discover -s tests/phase102 -p "test_*.py" -v
+      - name: Validate committed evidence and scorecard
+        run: python research/phase102/final_strategy_ranking.py --repo-root .
+      - name: Upload machine-readable validation result
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase102-evidence-validation
+          path: results/phase102/validation.json
+          if-no-files-found: error
