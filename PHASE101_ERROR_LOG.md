@@ -95,3 +95,7 @@ Append entries; never overwrite earlier failures.
 ## Corrected replay result — 2026-10-10T19:43:01Z
 - Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080659162
 - Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.
+
+
+## Run reconciliation — 2026-10-10T19:46:50Z
+- Workflow 38080831113 completed aggregate validation. No runner exception was raised; inspect report and model status CSV for explicit data/model blockers.
