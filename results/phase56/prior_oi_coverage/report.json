@@ -1,0 +1,44 @@
+{
+  "blocked_configuration_event_rows": 100,
+  "blocked_leg_references": 220,
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "holdout_used": false,
+  "interpretation": "Source-row diagnosis only; not strategy efficacy. The frozen OI >= 100 rule was not changed.",
+  "phase": 56,
+  "pnl_recalculated": false,
+  "raw_data_committed": false,
+  "row_reference_reconciliation": 220,
+  "source_classification_counts": {
+    "ZERO_OI": 60
+  },
+  "source_partitions": {
+    "2025-03-13": {
+      "exact_duplicate_rows_removed": 0,
+      "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+      "rows_after_exact_dedup": 341673,
+      "rows_before_exact_dedup": 341673,
+      "sha256": "8118362cc9e58b646ac98cdd7eaf59675b995ba907a07cba8819b477fcc84f61",
+      "source_path": "options/NIFTY/2025-03-13.parquet"
+    },
+    "2025-07-31": {
+      "exact_duplicate_rows_removed": 0,
+      "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+      "rows_after_exact_dedup": 370959,
+      "rows_before_exact_dedup": 370959,
+      "sha256": "64572ceb2a40e1cb45b7b688e6041e724ae034521ed82cfbd05d6b1a1c24941f",
+      "source_path": "options/NIFTY/2025-07-31.parquet"
+    },
+    "2025-12-30": {
+      "exact_duplicate_rows_removed": 4585,
+      "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+      "rows_after_exact_dedup": 270118,
+      "rows_before_exact_dedup": 274703,
+      "sha256": "5ed78461988ce2d90d56aa54afa032a72c7889cbfed73d8f7d8b2239ff580541",
+      "source_path": "options/NIFTY/2025-12-30.parquet"
+    }
+  },
+  "status": "PASS_SOURCE_ROW_DIAGNOSIS",
+  "strategy_promotion_allowed": false,
+  "unique_contract_timestamp_keys": 60
+}

@@ -15,3 +15,10 @@
 - Source diagnosis: PENDING.
 - Regression tests: PENDING.
 - Results/log persistence: PENDING.
+
+## Run 38018825640
+
+- Run: [38018825640](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018825640); job status=success; diagnostic=PASS_SOURCE_ROW_DIAGNOSIS.
+- Blocked rows=100; blocked leg references=220; unique exact keys=60.
+- Classification counts={"ZERO_OI": 60}.
+- Fixed OI >= 100 gate unchanged; no P&L, holdout use or strategy promotion.
