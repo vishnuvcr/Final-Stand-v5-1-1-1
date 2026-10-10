@@ -23,3 +23,9 @@
 - Classification counts={"ZERO_OI": 60}.
 - Fixed OI >= 100 gate unchanged; no P&L, holdout use or strategy promotion.
 \n## Final interpretation\n\nAll 60 unique expiry/timestamp/type/strike keys have exactly one matching source row in the pinned parquet files, and every row reports numeric open interest of zero. Those keys are referenced 220 times across the 100 blocked configuration-event rows. This resolves the immediate ambiguity: the source does not lack the exact prior-minute rows for these keys; it explicitly records OI=0. This does not prove the source's zero values perfectly represent exchange reality, but the frozen OI >= 100 gate correctly rejects them under the preregistered rule. No filter relaxation, P&L recalculation or strategy promotion.\n
+## Run 38018882316
+
+- Run: [38018882316](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018882316); job status=success; diagnostic=PASS_SOURCE_ROW_DIAGNOSIS.
+- Blocked rows=100; blocked leg references=220; unique exact keys=60.
+- Classification counts={"ZERO_OI": 60}.
+- Fixed OI >= 100 gate unchanged; no P&L, holdout use or strategy promotion.
