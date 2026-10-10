@@ -64,6 +64,19 @@ def main():
         lines.append("| " + " | ".join(map(str, cols)) + " |")
     lines += [
         "",
+        "## Descriptive risk and trade statistics",
+        "| Variant | Split | Mean net/trade | Median net/trade | Profit factor | Max trade-P&L drawdown | Median holding (minutes) |",
+        "|---|---|---:|---:|---:|---:|---:|"
+    ]
+    for row in summary.to_dict(orient="records"):
+        lines.append("| " + " | ".join(map(str, [
+            row["variant"], row["split"], fmt(row["mean_net_per_trade"]),
+            fmt(row["median_net_per_trade"]), fmt(row["profit_factor"]),
+            fmt(row["max_cumulative_trade_pnl_drawdown_rupees"]),
+            fmt(row["median_holding_minutes"])
+        ])) + " |")
+    lines += [
+        "",
         "## Statistical inference",
         "Only the two frozen variants form the candidate family. For validation, a three-month moving-block bootstrap CI for mean net per trade and a block sign-flip test are attempted only with at least 20 completed trades. Holm correction is applied across computable validation p-values. Underpowered samples report SKIPPED rather than a fabricated p-value.",
         "",
