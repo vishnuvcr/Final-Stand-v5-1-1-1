@@ -75,10 +75,11 @@ def source_manifest(api: HfApi, token: str | None):
     monthly = {}
     for d, name in sorted(expiries):
         key = d.strftime("%Y-%m")
-        # Within this dataset, the latest listed expiry of a calendar month is
-        # used as a *monthly-expiry proxy*. Exact historical monthly designation
-        # may differ; it is logged as a limitation.
-        monthly[key] = (d, name)
+        # Require a late-month expiry date so a missing weekly file does not
+        # cause an early-month expiry to be mislabeled as the monthly contract.
+        # This is a conservative proxy, not an exchange-calendar proof.
+        if d.day >= 20:
+            monthly[key] = (d, name)
     return monthly, sorted(expiries)
 
 def normalize_index(raw: pd.DataFrame):
@@ -474,7 +475,7 @@ def main():
     manifest = {"dataset": REPO, "revision": REVISION, "license_note": "CC-BY-NC-4.0; attributed source; raw files not included",
         "index_file": index_meta, "options_source_files": source_records[1:],
         "count_source_files": len(source_records), "monthly_expiry_proxy_count": len(monthly),
-        "expiry_files_in_DEV_VAL_count": len(expiry_files), "features_max_timestamp_used": str(index.timestamp.max()),
+        "expiry_files_in_DEV_VAL_count": len(expiry_files), "features_max_timestamp_used": str(index.timestamp.max()), "index_rows_used": int(len(index)),
         "explicit_2026_option_files_downloaded": 0,
         "splits": {"DEV": ["2021-05-27", "2023-12-31"], "VAL": ["2024-01-01", "2025-12-31"], "HOLD": "2026 excluded"},
         "candidate_universe": list(VARIANTS), "statistics": infer}
