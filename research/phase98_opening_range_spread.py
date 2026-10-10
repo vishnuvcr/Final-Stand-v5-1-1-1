@@ -8,6 +8,7 @@ from datetime import date, datetime, time
 from pathlib import Path
 import numpy as np
 import pandas as pd
+import pyarrow as pa
 import pyarrow.parquet as pq
 from huggingface_hub import HfApi, hf_hub_download
 
@@ -105,6 +106,8 @@ def prep_options(x):
     x=x.copy();x["timestamp"]=localize(x.timestamp)
     x["option_type"]=x.option_type.astype(str).str.upper().str.strip().replace({"CALL":"CE","PUT":"PE"})
     x["strike"]=pd.to_numeric(x.strike,errors="coerce")
+    if "oi" not in x.columns and "open_interest" in x.columns:
+        x["oi"] = x["open_interest"]
     for c in ("open","close","volume","oi"):
         if c in x.columns:x[c]=pd.to_numeric(x[c],errors="coerce")
     return x[x.option_type.isin(["CE","PE"])&x.strike.notna()&x.timestamp.notna()].drop_duplicates().sort_values(["timestamp","option_type","strike"]).reset_index(drop=True)
@@ -142,8 +145,10 @@ def load_chain_day(expiry,d):
     cols=[c for c in ("timestamp","open","close","option_type","strike","volume","oi") if c in names]
     SOURCE_SCHEMA[name]=names
     lo=pd.Timestamp(datetime.combine(d,time(9,15)),tz=TZ);hi=pd.Timestamp(datetime.combine(d,time(15,16)),tz=TZ)
-    typ=str(pf.schema_arrow.field("timestamp").type)
-    a,b=(lo.to_pydatetime(),hi.to_pydatetime()) if ("tz=" in typ or "timezone" in typ) else (lo.tz_localize(None).to_pydatetime(),hi.tz_localize(None).to_pydatetime())
+    ts_type=pf.schema_arrow.field("timestamp").type
+    # Match Arrow scalar type exactly, including unit and timezone, for predicate pushdown.
+    a=pa.scalar(lo.to_pydatetime(),type=ts_type)
+    b=pa.scalar(hi.to_pydatetime(),type=ts_type)
     tab=pq.read_table(p,columns=cols,filters=[("timestamp",">=",a),("timestamp","<=",b)])
     x=tab.to_pandas()
     if x.empty:return prep_options(x)
@@ -352,7 +357,8 @@ def main():
     (OUT/"decision.json").write_text(json.dumps(decision,indent=2,allow_nan=False))
     no26=not any(str(x).startswith("2026") for x in tdf.get("date",pd.Series(dtype=str)).tolist())
     checks={"all_loaded_expiry_content_at_or_before_2025_12_31":all(pd.Timestamp(re.search(r"(\d{4}-\d{2}-\d{2})\.parquet$",f).group(1),tz=TZ)<=MAX_EXPIRY for f in EXPIRY_FILES_USED),"no_2026_result_rows":no26,"protected_holdout_loaded":False}
-    vr={"status":"PASS","index_rows":len(idx),"index_sessions":len(groups),"expiry_files_seen_through_2025":len(expiries),"expiry_files_used":len(EXPIRY_FILES_USED),"signal_rows":len(tdf),"source_issues":ISSUES,"skip_reason_counts":dict(skips),"checks":checks}
+    accepted_checks = all(checks.values()) and len(ISSUES) == 0 and len(EXPIRY_FILES_USED) > 0
+    vr={"status":"PASS" if accepted_checks else "BLOCKED_SOURCE_OR_COVERAGE_ERRORS","index_rows":len(idx),"index_sessions":len(groups),"expiry_files_seen_through_2025":len(expiries),"expiry_files_used":len(EXPIRY_FILES_USED),"signal_rows":len(tdf),"source_issues":ISSUES,"skip_reason_counts":dict(skips),"checks":checks}
     (OUT/"validation_report.json").write_text(json.dumps(vr,indent=2,allow_nan=False))
     def money(x):return "NA" if pd.isna(x) else f"₹{x:,.2f}"
     report=["# Phase 98 — NIFTY Opening-Range Debit-Spread Results","",
@@ -373,7 +379,9 @@ def main():
       "- inference.json, decision.json, source_manifest.json, validation_report.json"]
     (OUT/"report.md").write_text("\n".join(report)+"\n")
     if ISSUES:(OUT/"source_issues.jsonl").write_text("".join(json.dumps(x,default=str)+"\n" for x in ISSUES))
-    print(json.dumps({"status":"PASS","decision":decision,"counts":dict(COUNTS),"skip_reasons":dict(skips)},indent=2,default=str))
+    print(json.dumps({"status":vr["status"],"decision":decision,"counts":dict(COUNTS),"skip_reasons":dict(skips)},indent=2,default=str))
+    if vr["status"] != "PASS":
+      raise RuntimeError("Phase 98 evidence gate failed: " + vr["status"])
   except Exception as e:
     issue={"stage":"fatal","error":repr(e),"traceback":traceback.format_exc()}
     (OUT/"validation_report.json").write_text(json.dumps({"status":"BLOCKED_OR_FAILED","error":repr(e),"traceback":traceback.format_exc(),"protected_2026_holdout_loaded":False},indent=2))
