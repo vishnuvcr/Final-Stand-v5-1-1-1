@@ -1,3 +1,17 @@
+<!-- PHASE101_AUDIT_START -->
+# Phase 101 — PDF replication audit follow-up
+
+**Status: REVALIDATION REQUIRED.** The additional adverse-impact stress calculation was corrected to include the baseline execution-price convention and date-effective charges, plus the extra ₹50 round-trip cost. Previous values for this stress column are superseded pending a passing automated rerun. No strategy is promoted, and the 2026 options holdout remains excluded.
+
+- [Phase 101 research branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-101-full-pdf-strategy-replication)
+- [Phase 101 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/results/phase101_pdf_strategy_tests/PHASE101_REPORT.md)
+- [Phase 101 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_STATUS.md)
+- [Research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-101-full-pdf-strategy-replication/PHASE101_ERROR_LOG.md)
+- [Phase 101 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase101-full-pdf-strategy-replication.yml)
+
+Drawdown is being audited as peak-to-trough equity, including peak/trough chronology; it must not be clipped just because it exceeds initial capital.
+<!-- PHASE101_AUDIT_END -->
+
 ## Phase 101 — PDF strategy replication gap-fill OPEN (2026-10-10)
 
 User-authorized bounded follow-up to Phase 100's finite stop. Phase 100 remains complete and its conclusions are unchanged. Phase 101 is registered on an isolated branch to test U02 (RF/XGBoost/LSTM Buy/Sell options proxy) and U05 (monthly seasonality options proxy), reconcile all 14 PDFs, and report every blocked/excluded event. It reuses the pinned 2021–2025 options dataset only; the 2026 options holdout remains sealed. **No strategy is promoted; runtime numerical output is pending verification.**
