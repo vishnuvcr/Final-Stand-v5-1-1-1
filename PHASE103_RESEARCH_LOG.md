@@ -237,3 +237,11 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - API probes returning rows: 7/7.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — HDFCBANK CALL relative-strike diagnostic
+
+- The bounded run [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649) ran 7/7 relative-strike requests with Dhan expiryCode=1; test job and API job completed successfully.
+- Each offset returned HTTP 200; row counts: ATM 385, ATM+1 385, ATM+2 385, ATM+3 385, ATM-1 385, ATM-2 385, ATM-3 384. All returned rows belonged to 2026-08-03 IST and arrays were consistent. Offset strike series each changed 8 times intraday, confirming that relative labels are not persistent contract identities.
+- The timestamp/actual-strike union contained 385 timestamps and 8 unique actual strikes, with 6 strikes present on every timestamp and zero duplicate timestamp/strike keys. The strict all-offset surface still fails since only 384 timestamps are common to all seven offsets; the one missing ATM-3 row was not imputed.
+- The oversized 70-probe run [38089794291](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089794291) was cancelled while the API step was running after a new bounded configuration arrived; it is not accepted as data evidence. Workflow default was reduced to seven HDFCBANK CALL offsets.

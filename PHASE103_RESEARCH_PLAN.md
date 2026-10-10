@@ -171,3 +171,8 @@ The 10/10 ATM source probes passed on 2026-08-03. Before any strategy test, the 
 - Raw timestamp and actual-strike sequences are joined in runner memory only. Publish aggregate counts per offset, actual-strike changes, common timestamps, distinct strikes per timestamp, duplicate (timestamp,strike) keys, and count of actual strikes present at every minute.
 - No raw option rows or strike-time series are committed or uploaded. Any API/schema, timestamp or array-integrity failure blocks data acceptance.
 - A one-day surface pass is not historical quote-depth validation or profitability evidence. Contract expiry identity, effective lot sizes/corporate actions, retention rights, bid/ask or a conservative execution proxy, Paytm Money fees, spread, slippage and latency remain separate required gates.
+
+
+## Phase 103.1B result — HDFCBANK CALL seven-offset panel (2026-10-11)
+
+Run [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649) passed its automated checks and returned valid data for all seven HDFCBANK CALL offsets on 2026-08-03. All requests were HTTP 200; ATM through ATM-2 returned 385 rows; ATM-3 returned 384. Array lengths and target-date checks passed, with zero rows outside the target date. The union contained 385 timestamps and eight observed actual strikes; six actual strikes had observations at every union timestamp; duplicate timestamp/strike keys across offsets were zero. However, strict common-timestamp alignment was 384/385 because ATM-3 lacked one row, so the full-surface gate remains FAIL. Keep the missing bar explicit; do not impute it. Continue by checking the seven-offset grid across remaining stock/side groups and calculate contract coverage by exact strike before candidate P&L.

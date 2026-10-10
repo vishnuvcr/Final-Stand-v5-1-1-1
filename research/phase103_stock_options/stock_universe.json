@@ -141,6 +141,38 @@
       "observed_behavior": "Dhan rolling-options endpoint included toDate rows in a request from 2026-08-03 to 2026-08-04 despite current documentation describing toDate as non-inclusive.",
       "adapter": "Preserve study target [from_date,to_date_exclusive), call Dhan with fromDate=from_date and toDate=(to_date_exclusive - 1 calendar day).",
       "validation": "Check every returned timestamp in Asia/Kolkata against the original half-open target window; any out-of-window row blocks the sample."
+    },
+    "strike_surface_audit": {
+      "last_run_id": "38089913649",
+      "target_date_ist": "2026-08-03",
+      "symbol": "HDFCBANK",
+      "option_type": "CALL",
+      "relative_offsets_tested": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "rows_by_offset": {
+        "ATM": 385,
+        "ATM+1": 385,
+        "ATM+2": 385,
+        "ATM+3": 385,
+        "ATM-1": 385,
+        "ATM-2": 385,
+        "ATM-3": 384
+      },
+      "union_timestamps": 385,
+      "common_timestamps_all_offsets": 384,
+      "distinct_actual_strikes_in_union": 8,
+      "actual_strikes_present_at_every_union_timestamp": 6,
+      "duplicate_timestamp_strike_keys": 0,
+      "out_of_window_rows": 0,
+      "strict_alignment_gate": "FAIL",
+      "next_gate": "Audit all remaining stock/side groups and report fixed-strike coverage using no imputation."
     }
   }
 }

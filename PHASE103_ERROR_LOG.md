@@ -178,3 +178,10 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Affected runs:** [38089656281](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281), [38089669894](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089669894).  
 **Finding:** the summarizer gained a `requested_relative_strike` positional parameter, but unit tests still passed the HTTP code in that position. The API step was skipped. The initial duplicate-key fixture also failed to create a true same-timestamp duplicate.  
 **Correction:** update all test calls with explicit `ATM`, test allowed relative strikes and surface alignment, and use a genuinely overlapping (timestamp,actual strike) fixture. The API must not run until tests pass.
+
+
+### E103-016 — Relative-strike panel has an incomplete offset row
+**Type:** data completeness limitation.
+**Run:** [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649).
+**Finding:** HDFCBANK CALL on 2026-08-03 returned 385 rows for ATM through ATM-2 and 384 rows for ATM-3. The combined offset surface has 384 common timestamps out of a 385-timestamp union, although six actual strikes are observed at every union timestamp and zero duplicate timestamp-strike keys are detected.
+**Decision:** strict full-surface gate remains FAIL; do not fill the missing bar. A fixed-strike path may only use timestamps where its actual strike is present. Extend to the other stock/side groups and report exact-strike coverage before strategy testing.
