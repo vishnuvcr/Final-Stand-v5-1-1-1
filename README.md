@@ -1,3 +1,19 @@
+# Resume checkpoint — 2026-10-10 (Phase 86 Dhan API audit)
+
+**Phase 86: CONNECTIVITY RESULT PENDING.** A bounded, read-only GitHub Actions workflow now checks `DHAN_ACCESS_TOKEN` against Dhan's profile endpoint and, only if the profile reports an active Data API plan, makes one small five-minute index-candle request. It prints status/boolean/count summaries only; it does not log the token, profile payload, identifiers, or raw candles. No orders or strategy backtests are run.
+
+- [Phase 86 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_RESEARCH_PLAN.md)
+- [Phase 86 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_STATUS.md)
+- [Phase 86 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_ERROR_LOG.md)
+- [Phase 86 auditable chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_CHAT_LOG.md)
+- [Phase 86 read-only connectivity workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/.github/workflows/phase86-dhan-connectivity-audit.yml)
+- [DhanHQ profile/auth documentation](https://dhanhq.co/docs/v2/authentication/)
+- [DhanHQ historical-data documentation](https://dhanhq.co/docs/v2/historical-data/)
+
+**Interpretation gate:** successful token/profile or index-candle checks do not prove historical option bid/ask and depth. No profitability inference or strategy promotion is allowed until exact option contracts and executable quote/depth coverage are independently qualified, with Paytm Money costs, slippage and latency included. Phase 83 holdout remains sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 85 source qualification)
 
 **Phase 85 finding: NO-GO for a new execution-quality replay using currently verified free sources.** Official NSE public daily reports are useful for EOD context, while richer historical data products are described as subscription-based. Public GitHub projects advertise relevant quote/depth fields but current public documentation does not establish complete target-date coverage and raw-data rights. No dataset was acquired, no paid data purchased, and no strategy test run.
