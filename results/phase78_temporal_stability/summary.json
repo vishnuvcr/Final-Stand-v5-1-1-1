@@ -1,0 +1,125 @@
+{
+  "phase": 78,
+  "decision": "NO_PROMOTION_TEMPORAL_STABILITY_FAIL",
+  "errors": [],
+  "strategies": {
+    "TT-04": {
+      "historical_engine_revision": "50B-TT04-COVERAGE-V3",
+      "partial_engine_revision": "50B-TT04-COVERAGE-V3",
+      "historical_total": {
+        "net": 55582.71410759852,
+        "net50": 11429.946161398038,
+        "net20": -1718.0858924014792,
+        "net20_50": -74521.25383860199
+      },
+      "historical_splits": {
+        "DEV": {
+          "net": 19111.02735857483,
+          "net50": -2384.0839621376717
+        },
+        "VAL": {
+          "net": 42927.981363772305,
+          "net50": 24962.597045658567
+        },
+        "HOLD": {
+          "net": -6456.294614748596,
+          "net50": -11148.566922122842
+        }
+      },
+      "partial_oos": {
+        "net": 13271.506311950925,
+        "net50": 10287.259467926428,
+        "net20": 10345.106311950924,
+        "net20_50": 5897.659467926425
+      },
+      "historical_hold_trades": 96,
+      "partial_oos_trades": 62,
+      "partial_window": [
+        "2026-04-21",
+        "2026-07-21"
+      ],
+      "partial_oos_only": true,
+      "hold_negative_all_cases": false,
+      "partial_positive_all_cases": true,
+      "temporal_sign_disagreement": true
+    },
+    "TT-05": {
+      "historical_engine_revision": "50B-TT05-COVERAGE-V2",
+      "partial_engine_revision": "50B-TT05-COVERAGE-V2",
+      "historical_total": {
+        "net": 52337.89053118351,
+        "net50": 9429.08579677552,
+        "net20": -3546.909468816504,
+        "net20_50": -74398.11420322448
+      },
+      "historical_splits": {
+        "DEV": {
+          "net": 12772.958021349828,
+          "net50": -8691.81296797518,
+          "net20": -17057.441978650175,
+          "net20_50": -53437.41296797517
+        },
+        "VAL": {
+          "net": 79809.61329243227,
+          "net50": 62203.79493864852,
+          "net20": 57436.81329243227,
+          "net20_50": 28644.59493864852
+        },
+        "HOLD": {
+          "net": -40244.680782598574,
+          "net50": -44082.89617389783,
+          "net20": -43926.280782598595,
+          "net20_50": -49605.29617389782
+        }
+      },
+      "partial_oos": {
+        "net": 17098.146574629933,
+        "net50": 14239.719861944934,
+        "net20": 14171.746574629931,
+        "net20_50": 9850.119861944935
+      },
+      "historical_hold_trades": 78,
+      "partial_oos_trades": 62,
+      "partial_window": [
+        "2026-04-21",
+        "2026-07-21"
+      ],
+      "partial_oos_only": true,
+      "hold_negative_all_cases": true,
+      "partial_positive_all_cases": true,
+      "temporal_sign_disagreement": true
+    },
+    "TT-02": {
+      "historical_engine_revision": "50B-TT02-COVERAGE-V3",
+      "partial_engine_revision": "50B-TT02-COVERAGE-V3",
+      "historical_total": {
+        "net": -3387.422432333182,
+        "net50": -32226.758648499665,
+        "net20": -47212.62243233317,
+        "net20_50": -97964.55864849966
+      },
+      "historical_splits": {},
+      "partial_oos": {
+        "net": -1341.120832479497,
+        "net50": -2936.306248719252,
+        "net20": -3701.120832479496,
+        "net20_50": -6476.306248719249
+      },
+      "historical_hold_trades": null,
+      "partial_oos_trades": 13,
+      "partial_window": [
+        "2026-04-21",
+        "2026-07-21"
+      ],
+      "partial_oos_only": true,
+      "hold_negative_all_cases": false,
+      "partial_positive_all_cases": false,
+      "temporal_sign_disagreement": false
+    }
+  },
+  "excluded_expiries": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "interpretation": "The historical split and partial-OOS window are not independent confirmation. A short positive interval does not erase a negative frozen HOLD result. No strategy promotion."
+}
