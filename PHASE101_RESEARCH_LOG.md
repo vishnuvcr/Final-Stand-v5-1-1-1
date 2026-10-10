@@ -103,3 +103,12 @@
 ## Corrected run 38080831113 — 2026-10-10T19:46:51Z
 - Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 7; U02 costed trades 164; no 2026 option data; no strategy promoted.
 - U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
+
+
+## 2026-10-11 — Corrected replay and equity audit passed
+
+- Workflow run [38080831113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080831113) completed successfully, including deterministic tests, U02/U05 replay, aggregate result-contract validation, publication and aggregate artifact upload.
+- Reconciled ending equity against initial capital plus summed net trade P&L for LSTM5, RF and XGBoost; all pass within ₹0.01.
+- The large peak-to-trough drawdowns are consistent with compounded equity peaks (₹1.353m LSTM5, ₹320.193k RF, ₹980.251k XGBoost) and subsequent account collapse. End equity is ₹18.46, ₹5.04 and ₹8.53 respectively. This reveals a serious sizing/risk fragility, not an arithmetic mismatch.
+- Corrected adverse-impact stress net is -₹188,090.94 LSTM5, -₹111,734.08 RF, -₹115,920.57 XGBoost. All baseline net P&L is around -₹100k and all mean-trade bootstrap CIs cross zero.
+- Phase 101 remains bounded; no strategy promotion and no 2026 option data loaded. Paytm Money exact contract-note costs remain unverified.
