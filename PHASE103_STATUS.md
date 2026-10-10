@@ -39,3 +39,15 @@ Only the universe-registration stage is complete. No historical stock-options da
 ## Next action and stopping rule
 
 Run the registration validator and GitHub Actions workflow. Then begin Phase 103.1 only with exact source rights and common-window coverage evidence. If no eligible source can support the required historical sample, stop the empirical path with a NO-GO report rather than repeatedly searching unchanged sources, loosening gates, or fabricating fills.
+
+
+## Dhan API integration — 2026-10-11
+
+- [x] DhanHQ expired-stock-options API chosen as the primary Phase 103.1 historical option source.
+- [x] Secure secret-based integration implemented in the isolated branch; the token is never emitted to logs or result artifacts.
+- [x] Bounded smoke-test workflow added with automatic branch-push and manual dispatch triggers.
+- [x] Workflow tests added for the 30-day request limit, fresh instrument ID mapping, array integrity and authentication error handling.
+- [ ] Confirm live GitHub Actions result and whether the configured repository secret is accepted by Dhan.
+- [ ] If endpoint succeeds, assess comparable sample coverage and strike/expiry reconstruction. No strategy P&L test until data and execution gates pass.
+
+API probe default window: 2026-08-02 inclusive to 2026-09-01 exclusive. This is a source feasibility window only, not a protected performance holdout. Dhan's endpoint returns rolling strike OHLC/IV/volume/OI/spot, not documented historical bid/ask/depth. No raw rows are committed or uploaded until data storage/redistribution permissions are verified.
