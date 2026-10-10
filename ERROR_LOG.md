@@ -2232,3 +2232,10 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 ## Phase 98 execution issue
 - Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
 - Classified as non-evidence until the output and coverage gates pass.
+
+
+## Phase 98 — first workflow attempt (2026-10-10)
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057309811
+- Regression test collection failed because the pytest process lacked the repository root on sys.path. The source-pinned replay was skipped; no market-data or P&L result exists.
+- The always-run logger also failed while staging a not-yet-created results directory. Both defects were corrected; the incident is preserved on branch phase-98-nifty-opening-range-debit-spread / PHASE98_ERROR_LOG.md.
+- No trading conclusion can be inferred from this infrastructure failure.
