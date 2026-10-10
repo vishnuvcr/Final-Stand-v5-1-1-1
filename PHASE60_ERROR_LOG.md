@@ -19,3 +19,11 @@ No Phase 60 execution errors recorded at initialization.
 - Report present: True
 - No conclusion accepted.
 - Status: OPEN.
+
+## F60-RUN-38021608375 — gate failure
+
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021608375
+- Status: failure
+- Report present: True
+- No conclusion accepted.
+- Status: OPEN.
