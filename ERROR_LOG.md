@@ -168,3 +168,12 @@ Phase 51-1 was stopped before OOS replay. The frozen OOS window remains 2026-04-
 ## Phase 102 — Final strategy ranking audit
 
 Phase-specific errors and corrections are recorded in [PHASE102_ERROR_LOG.md](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_ERROR_LOG.md). Three first-pass workflow runs had assertion mismatches caused by brittle text/decimal-format tests, not by a changed numerical result. Final run [38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704) passed 14/14 evidence checks and 2/2 tests. No strategy was promoted.
+
+
+
+
+## 2026-10-11 — Phase 103 Dhan Data API source limitations
+
+- A new branch probes the Dhan expired-stock-options rolling endpoint. The endpoint provides minute OHLC, IV, volume, OI, strike and spot but does not document historical bid/ask/depth; relative-strike series can change the actual strike through time.
+- Raw Dhan data have not been put in the public repository or artifacts while retention/republication rights remain unverified. The branch error log records the full limitations and stop rules.
+- No Phase 103 API access error is claimed before the automated run is observed. Branch status: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_STATUS.md
