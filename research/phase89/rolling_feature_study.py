@@ -14,7 +14,7 @@ ROOT = Path(".")
 CACHE = Path(".cache/phase89/raw")
 OUT = Path("results/phase89")
 START = date(2025, 1, 1)
-STOP = date(2026, 1, 1)  # exclusive; never request the protected 2026 holdout
+STOP = date(2025, 12, 31)  # exclusive; no API request or sample row may include a 2026 date
 FIELDS = ("open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp")
 SIDES = (("CALL", "ce"), ("PUT", "pe"))
 TOKEN = os.environ.get("DHAN_ACCESS_TOKEN", "").strip()
@@ -33,7 +33,7 @@ PRIMARY = [
 SPLITS = [
     ("DEV", date(2025, 1, 1), date(2025, 7, 1)),
     ("VALIDATION", date(2025, 7, 1), date(2025, 10, 1)),
-    ("CONFIRMATORY_OOS", date(2025, 10, 1), date(2026, 1, 1)),
+    ("CONFIRMATORY_OOS", date(2025, 10, 1), date(2025, 12, 31)),
 ]
 ISSUES: list[str] = []
 COVERAGE: list[dict] = []
@@ -194,6 +194,9 @@ def build_panel(calls: pd.DataFrame, puts: pd.DataFrame) -> pd.DataFrame:
     mismatch = spot_diff > 0.0002
     QUALITY["call_put_spot_mismatch_rows_excluded"] = int(mismatch.sum())
     merged = merged.loc[~mismatch].copy()
+    strike_pair_ok = np.isclose(merged["call_strike"], merged["put_strike"], rtol=0.0, atol=1e-9)
+    QUALITY["call_put_atm_strike_mismatch_rows_excluded"] = int((~strike_pair_ok).sum())
+    merged = merged.loc[strike_pair_ok].copy()
     merged["spot"] = (merged["call_spot"] + merged["put_spot"]) / 2
     merged = merged[(merged["spot"] > 0) & merged["timestamp"].notna()].copy()
     merged["session"] = merged["timestamp"].dt.strftime("%Y-%m-%d")
@@ -208,7 +211,13 @@ def build_panel(calls: pd.DataFrame, puts: pd.DataFrame) -> pd.DataFrame:
         g["oi_imbalance"] = (g["call_oi"] - g["put_oi"]) / oi_sum.replace(0, np.nan)
         lag3_minutes = (g["timestamp"] - g["timestamp"].shift(3)).dt.total_seconds() / 60
         oi_change = oi_sum / oi_sum.shift(3) - 1.0
-        g["oi_change_15m"] = oi_change.where(lag3_minutes == 15.0)
+        # OI is comparable across t-15m only if both rolling ATM strikes stayed fixed.
+        stable_contract_pair = (
+            g["call_strike"].eq(g["call_strike"].shift(3))
+            & g["put_strike"].eq(g["put_strike"].shift(3))
+            & g["call_strike"].eq(g["put_strike"])
+        )
+        g["oi_change_15m"] = oi_change.where((lag3_minutes == 15.0) & stable_contract_pair)
         future_minutes = (g["timestamp"].shift(-3) - g["timestamp"]).dt.total_seconds() / 60
         future_return = g["spot"].shift(-3) / g["spot"] - 1.0
         g["fwd15_bps"] = (future_return * 10000).where(future_minutes == 15.0)
@@ -310,13 +319,13 @@ def update_docs(status: str, summary: dict, primary_rows: list, split_rows: list
 
 Run: {RUN_URL}  
 Status: **{status}**  
-Data period requested: 2025-01-01 through 2026-01-01 exclusive. Protected 2026 Phase 83 holdout not requested or loaded.
+Data period requested: 2025-01-01 through 2025-12-31 exclusive. Protected 2026 Phase 83 holdout not requested or loaded.
 
 ## Data-quality and sample summary
 - Valid API window/side responses: {valid_coverage}/{total_coverage}.
 - Unique CALL timestamps: {QUALITY.get('call_rows_unique', 0)}; unique PUT timestamps: {QUALITY.get('put_rows_unique', 0)}.
 - Exact timestamp pairs before spot-consistency check: {QUALITY.get('paired_timestamp_rows_before_spot_check', 0)}.
-- Spot-mismatch pairs excluded: {QUALITY.get('call_put_spot_mismatch_rows_excluded', 0)}.
+- Spot-mismatch pairs excluded: {QUALITY.get('call_put_spot_mismatch_rows_excluded', 0)}.\n- CALL/PUT ATM-strike mismatches excluded: {QUALITY.get('call_put_atm_strike_mismatch_rows_excluded', 0)}.
 - Paired rows after spot check: {QUALITY.get('paired_panel_rows_after_spot_check', 0)} across {QUALITY.get('sessions_with_paired_data', 0)} sessions.
 - Confirmatory OOS complete observations: {oos_rows} across {oos_sessions} sessions.
 - OOS inferential gate (at least 1,000 complete rows and 30 sessions): **{'PASS' if adequate else 'FAIL — descriptive only'}**.
@@ -354,7 +363,7 @@ Interpret these only as predictive associations in an ATM-relative data represen
     save_csv(OUT / "primary_tests.csv", primary_rows, [
         "id","feature","target","label","n","sessions","beta_bps_per_sd","se_clustered","ci95_low","ci95_high","p_value","holm_p","oos_inference_gate"])
     compact = {
-        "phase": 89, "run_url": RUN_URL, "status": status, "requested_period": ["2025-01-01","2026-01-01_exclusive"],
+        "phase": 89, "run_url": RUN_URL, "status": status, "requested_period": ["2025-01-01","2025-12-31_exclusive"],
         "holdout_2026_requested": False, "valid_api_windows": valid_coverage, "total_api_windows": total_coverage,
         "quality": QUALITY, "oos_sessions": oos_sessions, "oos_complete_rows": oos_rows,
         "oos_inferential_gate": bool(adequate), "confirmatory_inference_allowed": bool(inference_allowed),
