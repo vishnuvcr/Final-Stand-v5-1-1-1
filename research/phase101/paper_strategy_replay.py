@@ -409,50 +409,96 @@ def predict_models(frame):
     return preds,metrics,status,info
 
 def simulate_u02(p66,api,token,monthly,index,predictions,manifest):
+    """One non-overlapping long-option trade/day; model-specific ₹1 lakh equity account.
+
+    Premium deployment is capped at 95% of current equity, preserving cash for charges.
+    Account equity updates after each realized trade; when one lot no longer fits, entries
+    are blocked instead of silently reusing the initial ₹1 lakh on every signal.
+    """
     trades,audit=[],[]
-    if not predictions: return trades,[{"status":"NO_MODEL_PREDICTIONS","reason":"Models emitted no validation predictions"}]
-    pf=pd.DataFrame(predictions); pf["entry_month"]=pf.entry_date.map(lambda x:pd.Timestamp(x).strftime("%Y-%m"))
-    for m,g in pf.groupby("entry_month",sort=True):
-        if m not in monthly:
-            for r in g.to_dict("records"): audit.append({"model":r["model"],"signal_date":str(r["signal_date"]),
-                "entry_date":str(r["entry_date"]),"status":"BLOCKED_NO_MONTHLY_OPTION_FILE","reason":m})
-            continue
-        expiry,filename=monthly[m]; raw,meta=p66.load_pinned(api,token,filename)
-        manifest.setdefault("option_source_files_used",[]).append(meta); chain=p66.normalize_chain(raw); del raw
-        oic=first_present_column(chain,["open_interest","oi","openinterest"]); volc=first_present_column(chain,["volume","vol","traded_volume"])
-        for r in g.to_dict("records"):
-            d=pd.Timestamp(r["entry_date"]).normalize(); bars=_day_bars(index,d)
-            bars=bars.loc[bars.timestamp.dt.time.between(pd.Timestamp("09:15").time(),pd.Timestamp("09:20").time())]
-            if bars.empty:
-                audit.append({"model":r["model"],"entry_date":str(d.date()),"status":"BLOCKED_NO_ENTRY_INDEX_BAR","reason":"No 09:15-09:20 index bar"}); continue
-            ix=bars.iloc[0]; et=ix.timestamp; spot=first_present(ix,["open","close"])
-            side="CE" if int(r["prediction_buy"])==1 else "PE"
-            pick=_pick_snapshot(chain.loc[chain.timestamp.eq(et)],side,spot,oic,volc)
-            if pick is None:
-                audit.append({"model":r["model"],"entry_date":str(d.date()),"entry_ts":str(et),"signal_side":side,
-                              "status":"BLOCKED_NO_EXACT_ENTRY_OPTION","reason":"No same-minute ATM-side contract"}); continue
-            strike=float(pick.strike); entry=first_present(pick,["open","close"])
-            if not np.isfinite(entry) or entry<=0:
-                audit.append({"model":r["model"],"entry_date":str(d.date()),"status":"BLOCKED_BAD_ENTRY_PRICE","reason":"Entry premium invalid"}); continue
-            lot=int(p66.lot_size_for_expiry(expiry)); entry_exec=float(p66.exec_px(entry,"buy"))
-            lots=int(CAPITAL_U02//(entry_exec*lot)) if entry_exec>0 else 0
-            if lots<1:
-                audit.append({"model":r["model"],"entry_date":str(d.date()),"status":"EXCLUDED_ONE_LOT_EXCEEDS_CAPITAL","reason":"₹100000 capital cannot fund one lot"}); continue
-            ct=chain.loc[chain.option_type.eq(side)&chain.strike.eq(strike)&chain.timestamp.dt.normalize().eq(d)].sort_values("timestamp")
-            ex=ct.loc[ct.timestamp.dt.time.between(pd.Timestamp("15:25").time(),pd.Timestamp("15:30").time())]
-            if ex.empty:
-                audit.append({"model":r["model"],"entry_date":str(d.date()),"status":"BLOCKED_NO_EXIT_BAR","reason":"No same-contract 15:25-15:30 bar"}); continue
-            xr=ex.iloc[-1]; xt=xr.timestamp; exitp=first_present(xr,["close"])
-            if not np.isfinite(exitp) or exitp<0:
-                audit.append({"model":r["model"],"entry_date":str(d.date()),"status":"BLOCKED_BAD_EXIT_PRICE","reason":"Exit premium invalid"}); continue
-            cost=_trade_costs(p66,et,xt,entry,exitp,lot*lots)
-            trades.append({"paper_id":"U02","model":r["model"],"signal_date":str(pd.Timestamp(r["signal_date"]).date()),
-              "entry_date":str(d.date()),"entry_ts":str(et),"exit_ts":str(xt),"actual_label_buy":int(r["actual_label_buy"]),
-              "prediction_buy":int(r["prediction_buy"]),"probability_buy":float(r["probability_buy"]),"signal_side":side,
-              "strike":strike,"entry_spot":spot,"entry_option_raw":entry,"exit_option_raw":exitp,"lots":lots,
-              "lot_size":lot,"capital_used_estimate":entry_exec*lot*lots,**cost})
-            audit.append({"model":r["model"],"entry_date":str(d.date()),"status":"COMPLETED","reason":"","side":side,"strike":strike})
-        del chain
+    if not predictions:
+        return trades,[{"status":"NO_MODEL_PREDICTIONS","reason":"Models emitted no validation predictions"}]
+    pf=pd.DataFrame(predictions)
+    pf["entry_month"]=pf.entry_date.map(lambda x:pd.Timestamp(x).strftime("%Y-%m"))
+    for model, mp in pf.groupby("model",sort=True):
+        equity=float(CAPITAL_U02)
+        model_peak=equity
+        for m,g in mp.groupby("entry_month",sort=True):
+            if m not in monthly:
+                for r in g.to_dict("records"):
+                    audit.append({"model":model,"signal_date":str(r["signal_date"]),
+                        "entry_date":str(r["entry_date"]),"status":"BLOCKED_NO_MONTHLY_OPTION_FILE","reason":m,
+                        "account_equity":equity})
+                continue
+            expiry,filename=monthly[m]
+            raw,meta=p66.load_pinned(api,token,filename)
+            manifest.setdefault("option_source_files_used",[]).append(meta)
+            chain=p66.normalize_chain(raw); del raw
+            oic=first_present_column(chain,["open_interest","oi","openinterest"])
+            volc=first_present_column(chain,["volume","vol","traded_volume"])
+            for r in g.sort_values("entry_date").to_dict("records"):
+                d=pd.Timestamp(r["entry_date"]).normalize()
+                if equity <= 0:
+                    audit.append({"model":model,"entry_date":str(d.date()),"status":"EXCLUDED_ACCOUNT_EQUITY_DEPLETED",
+                                  "reason":"Model account equity is non-positive","account_equity":equity})
+                    continue
+                bars=_day_bars(index,d)
+                bars=bars.loc[bars.timestamp.dt.time.between(pd.Timestamp("09:15").time(),pd.Timestamp("09:20").time())]
+                if bars.empty:
+                    audit.append({"model":model,"entry_date":str(d.date()),"status":"BLOCKED_NO_ENTRY_INDEX_BAR",
+                                  "reason":"No 09:15-09:20 index bar","account_equity":equity}); continue
+                ix=bars.iloc[0]; et=ix.timestamp; spot=first_present(ix,["open","close"])
+                side="CE" if int(r["prediction_buy"])==1 else "PE"
+                pick=_pick_snapshot(chain.loc[chain.timestamp.eq(et)],side,spot,oic,volc)
+                if pick is None:
+                    audit.append({"model":model,"entry_date":str(d.date()),"entry_ts":str(et),"signal_side":side,
+                                  "status":"BLOCKED_NO_EXACT_ENTRY_OPTION","reason":"No same-minute ATM-side contract",
+                                  "account_equity":equity}); continue
+                strike=float(pick.strike); entry=first_present(pick,["open","close"])
+                if not np.isfinite(entry) or entry<=0:
+                    audit.append({"model":model,"entry_date":str(d.date()),"status":"BLOCKED_BAD_ENTRY_PRICE",
+                                  "reason":"Entry premium invalid","account_equity":equity}); continue
+                lot=int(p66.lot_size_for_expiry(expiry))
+                entry_exec=float(p66.exec_px(entry,"buy"))
+                premium_per_lot=entry_exec*lot
+                # Keep 5% equity as a cash buffer for brokerage, exchange/STT/GST charges.
+                lots=int((equity*0.95)//premium_per_lot) if premium_per_lot>0 else 0
+                if lots<1:
+                    audit.append({"model":model,"entry_date":str(d.date()),"entry_ts":str(et),"signal_side":side,
+                                  "strike":strike,"status":"EXCLUDED_INSUFFICIENT_ACCOUNT_EQUITY",
+                                  "reason":"A lot cannot be funded while preserving the 5% fee reserve",
+                                  "account_equity":equity,"one_lot_premium_cost":premium_per_lot}); continue
+                ct=chain.loc[chain.option_type.eq(side)&chain.strike.eq(strike)&chain.timestamp.dt.normalize().eq(d)].sort_values("timestamp")
+                ex=ct.loc[ct.timestamp.dt.time.between(pd.Timestamp("15:25").time(),pd.Timestamp("15:30").time())]
+                if ex.empty:
+                    audit.append({"model":model,"entry_date":str(d.date()),"status":"BLOCKED_NO_EXIT_BAR",
+                                  "reason":"No same-contract 15:25-15:30 bar","account_equity":equity}); continue
+                xr=ex.iloc[-1]; xt=xr.timestamp; exitp=first_present(xr,["close"])
+                if not np.isfinite(exitp) or exitp<0:
+                    audit.append({"model":model,"entry_date":str(d.date()),"status":"BLOCKED_BAD_EXIT_PRICE",
+                                  "reason":"Exit premium invalid","account_equity":equity}); continue
+                cost=_trade_costs(p66,et,xt,entry,exitp,lot*lots)
+                before=equity
+                net=float(cost["net_10_per_order"])
+                after=before+net
+                model_peak=max(model_peak,after)
+                account_dd=max(0.0,model_peak-after)
+                rec={"paper_id":"U02","model":model,"signal_date":str(pd.Timestamp(r["signal_date"]).date()),
+                  "entry_date":str(d.date()),"entry_ts":str(et),"exit_ts":str(xt),
+                  "actual_label_buy":int(r["actual_label_buy"]),"prediction_buy":int(r["prediction_buy"]),
+                  "probability_buy":float(r["probability_buy"]),"signal_side":side,"strike":strike,
+                  "entry_spot":spot,"entry_option_raw":entry,"exit_option_raw":exitp,"lots":lots,
+                  "lot_size":lot,"capital_used_estimate":entry_exec*lot*lots,
+                  "account_equity_before":before,"account_equity_after":after,
+                  "account_return_pct_on_opening_equity":100.0*net/before if before else None,
+                  "account_peak_to_date":model_peak,"account_drawdown_from_peak":account_dd,
+                  "equity_deployment_limit_pct":95.0,**cost}
+                trades.append(rec)
+                audit.append({"model":model,"entry_date":str(d.date()),"status":"COMPLETED","reason":"",
+                              "side":side,"strike":strike,"lots":lots,"account_equity_before":before,
+                              "account_equity_after":after})
+                equity=after
+            del chain
     return trades,audit
 
 def paper_matrix(u02_metrics,u05_summary):
@@ -499,7 +545,7 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
     f"- Last underlying timestamp used: {manifest.get('underlying_last_timestamp_used')}; latest selected expiry: {manifest.get('maximum_option_expiry_selected')}.",
     f"- Yahoo daily history for monthly-return calculation: {manifest.get('yahoo_daily_start')} through {manifest.get('yahoo_daily_end')} ({manifest.get('yahoo_daily_rows')} observations).","",
     "## 3. U05 — monthly seasonality options rule",
-    "Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). First calendar Wednesday and Thursday are used literally; no holiday substitution. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level among contracts present at the exact Thursday entry timestamp; only contemporaneous OI/volume can break ties.",
+    "Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The first calendar Wednesday supplies the forecast; entry is on the first calendar Thursday strictly after that Wednesday to prevent look-ahead. No holiday substitution is made. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level among contracts present at the exact Thursday entry timestamp; only contemporaneous OI/volume can break ties.",
     "The test uses one historical lot, a 20% premium target and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.","",
     f"- Months audited: {u05.get('evaluation_months')}; completed trades: {u05.get('completed_trades')}; status: {u05.get('status')}.",
     f"- Net P&L at ₹10/order: {_fmt(u05.get('net_pnl_rupees'))}; mean/trade: {_fmt(u05.get('mean_net_per_trade'))}; median: {_fmt(u05.get('median_net_per_trade'))}; win rate: {_fmt(u05.get('win_rate'))}; PF: {_fmt(u05.get('profit_factor'))}; max trade drawdown: {_fmt(u05.get('max_trade_equity_drawdown_rupees'))}.",
@@ -507,7 +553,7 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
     "- A zero-trade sample is NOT ESTIMABLE, never reported as evidence of zero return. This does not recreate the original source period.","",
     "## 4. U02 — machine-learning Buy/Sell option method",
     "The source label is implemented as next-session NIFTY close return greater than 1% = Buy; otherwise Sell. Train window ends in 2023; validation is 2024–2025. RF, XGBoost and a 5-session LSTM use fixed settings and no validation tuning. Features include past returns, moving-average gaps, RSI, realized volatility/range, ATM call/put premium ratios, straddle/spot ratio, days-to-expiry and log OI/volume if available. IV/Greeks are used only when they exist and are sufficiently populated in the training sample; missing features are not fabricated.",
-    "A predicted Buy buys the nearest available ATM call; predicted Sell buys the nearest available ATM put on the next trading session. Entry uses the first observed 09:15–09:20 bar and exit uses the last available 15:25–15:30 bar for that contract. Capital is capped at ₹1,00,000.","",
+    "A predicted Buy buys the nearest available ATM call; predicted Sell buys the nearest available ATM put on the next trading session. Entry uses the first observed 09:15–09:20 bar and exit uses the last available 15:25–15:30 bar for that contract. Each model has a separate ₹1,00,000 account; position size compounds trade-by-trade, premium deployment is capped at 95% of current equity, and entry is blocked if one lot cannot be funded while preserving the 5% fee reserve.","",
     "### Prediction metrics","| Model | Status | Train rows | Validation rows | Accuracy | Balanced accuracy | Buy precision | Buy recall | F1 | ROC AUC | Always-sell accuracy |",
     "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for r in u02_metrics:
@@ -528,9 +574,10 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
       "## 5. Reconciled coverage of every uploaded PDF","| ID | Paper/method | Phase 101 status | Evidence and limitation |","|---|---|---|---|"]
     for r in matrix:
         lines.append(f"| {r['paper_id']} | {r['paper_or_method']} | {r['phase101_status']} | {r['evidence_and_limitation']} |")
-    lines += ["","## 6. Costs and statistical inference",
+    lines += ["","## 6. Costs and statistical inference
+The mean net P&L/trade confidence interval uses a deterministic circular moving-block bootstrap (5-trade blocks, 3,000 resamples), and is reported only for at least 20 completed trades. The seasonality sample has fewer than 20 trades, so no bootstrap precision is claimed. Fee-stress totals are alternative charge scenarios on the primary simulated position path, not separately re-sized equity curves.",
       "Baseline uses the repository’s date-effective charge helper, ₹10/order brokerage, one ₹0.05 adverse tick per fill, statutory/exchange fees and GST where implemented. Sensitivities add ₹20/order brokerage, +50% charge stress, and a paper-specific 0.25% adverse price impact per side plus ₹50/trade. These are simulated costs, not verified historical Paytm Money contract notes or proof of executable fills.",
-      "Classification accuracy alone is not evidence of profitable trading. Sparse trades, missing coverage and non-significant results are retained as limitations. No strategy is promoted.","",
+      "Classification accuracy alone is not evidence of profitable trading. U02 accounting is sequential per-model equity rather than reusing the initial ₹1 lakh on every trade. Sparse trades, missing coverage and confidence intervals crossing zero are not robust evidence. No strategy is promoted.","",
       "## 7. Strengths and limitations",
       "Strengths: pinned provenance; chronological development/validation split; no 2026 option data; explicit opportunity exclusions; training-only feature eligibility/imputation; conservative handling of bars that hit both target and stop.",
       "Limitations: U02 and U05 do not recreate original paper periods or every undocumented choice; U05 expected-price arithmetic is ambiguous; full IV/Greeks/news inputs may be absent; OHLC cannot reproduce spread, depth, queue position, latency or broker contract notes; U06 remains blocked without point-in-time sentiment/news/FII/DII modalities.","",
@@ -598,8 +645,15 @@ def run():
         sums=[]
         models=sorted(set([r["model"] for r in preds]+[r.get("model","") for r in metrics]))
         for m in models:
-            tt=[r for r in u02tr if r["model"]==m]
-            s={"paper_id":"U02","model":m,**net_trade_metrics([r["net_10_per_order"] for r in tt])}
+            tt=sorted([r for r in u02tr if r["model"]==m], key=lambda x:x["entry_date"])
+            mm=net_trade_metrics([r["net_10_per_order"] for r in tt])
+            ending=float(tt[-1]["account_equity_after"]) if tt else float(CAPITAL_U02)
+            s={"paper_id":"U02","model":m,**mm,
+               "initial_account_equity":float(CAPITAL_U02),
+               "ending_account_equity":ending,
+               "account_return_pct":100.0*(ending/CAPITAL_U02-1.0),
+               "max_account_drawdown_rupees":float(max((r["account_drawdown_from_peak"] for r in tt),default=0.0)),
+               "premium_deployment_cap_pct":95.0}
             for k in ["net_20_per_order","net_10_per_order_fee_stress_50pct","net_20_per_order_fee_stress_50pct","paper_025pct_each_side_plus_50_trade_cost_net"]:
                 s[k]=float(sum(x[k] for x in tt)) if tt else None
             s["coverage_status_counts"]=dict(Counter(x.get("status","") for x in u02aud if x.get("model")==m)); sums.append(s)
