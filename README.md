@@ -1,3 +1,23 @@
+<!-- PHASE92_START -->
+# Resume checkpoint — Phase 92 synthetic-forward proxy and OI study
+
+**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38050610192](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192). This fixed 2022 sample tests whether lagged rolling-ATM synthetic-forward gap and CALL/PUT OI imbalance improve next-15-minute absolute NIFTY spot-move prediction beyond spot, India VIX and IV. The protected 2026 holdout was not requested or loaded.
+
+- [Phase 92 plan](PHASE92_RESEARCH_PLAN.md)
+- [Phase 92 status](PHASE92_STATUS.md)
+- [Phase 92 error log](PHASE92_ERROR_LOG.md)
+- [Phase 92 auditable chat log](PHASE92_CHAT_LOG.md)
+- [Detailed results](results/phase92/PHASE92_RESULTS.md)
+- [Cross-feature model metrics](results/phase92/model_metrics.csv)
+- [Coverage ledger](results/phase92/coverage.csv)
+- [Summary JSON](results/phase92/summary.json)
+- [Analysis engine](research/phase92/synthetic_forward_oi_study.py)
+- [Phase branch workflow](.github/workflows/phase92-synthetic-forward-oi-2022.yml)
+- [Default-branch PR runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml)
+
+**Interpretation boundary:** predictor association is not strategy profitability. The synthetic-forward proxy is not actual traded futures price; rolling options do not provide exact-contract bid/ask/depth or fills. No strategy is promoted.
+<!-- PHASE92_END -->
+
 <!-- PHASE91_START -->
 # Resume checkpoint — Phase 91 IV incremental-prediction study
 
