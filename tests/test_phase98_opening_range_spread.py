@@ -7,7 +7,7 @@ import pandas as pd
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state,
-    run_scenario, fee_components, apply_slippage, holm
+    run_scenario, apply_slippage, holm
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
