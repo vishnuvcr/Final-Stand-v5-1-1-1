@@ -1,0 +1,131 @@
+name: Phase 59 — Public Option-Data Coverage Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-59-public-option-data-coverage-audit
+    paths:
+      - "research/phase59/**"
+      - ".github/workflows/phase-59-public-option-data-coverage-audit.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase59-public-option-data-coverage-audit
+  cancel-in-progress: false
+
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-59-public-option-data-coverage-audit
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate source registry
+        run: |
+          python -m unittest discover -s research/phase59 -p "test_*.py" -v
+          python research/phase59/source_coverage_audit.py
+      - name: Validate generated report and fail-closed decision
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/phase59/public_option_data_coverage/report.json")
+          r=json.loads(p.read_text())
+          assert r["status"] == "SOURCE_TRIAGE_COMPLETE_NO_GO_FOR_FREE_AUTOMATED_OI_AND_QUOTES"
+          assert r["source_count"] == 10
+          assert r["authorized_exact_intraday_oi_sources"] == 0
+          assert r["authorized_exact_quote_depth_sources"] == 0
+          assert r["accepted_for_automated_replay"] == []
+          assert not r["data_downloaded"] and not r["purchase_made"]
+          assert not r["credentials_used"] and not r["terms_violating_automation_used"]
+          assert not r["holdout_used"] and not r["strategy_promotion_allowed"]
+          assert all(not s["accepted_for_automated_replay"] for s in r["sources"])
+          print(json.dumps({k:v for k,v in r.items() if k not in {"sources","requirements","conclusion"}},indent=2))
+          PY
+      - name: Upload source audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase59-public-option-data-coverage-${{ github.run_id }}
+          path: results/phase59/public_option_data_coverage/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist status, research, error, chat and README checkpoint
+        if: always()
+        shell: bash
+        env:
+          PHASE_BRANCH: phase-59-public-option-data-coverage-audit
+          JOB_STATUS: ${{ job.status }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id=os.environ["RUN_ID"]
+          run_url=os.environ["RUN_URL"]
+          job_status=os.environ["JOB_STATUS"]
+          report_path=Path("results/phase59/public_option_data_coverage/report.json")
+          report=json.loads(report_path.read_text()) if report_path.exists() else None
+          valid=bool(report and report.get("status")=="SOURCE_TRIAGE_COMPLETE_NO_GO_FOR_FREE_AUTOMATED_OI_AND_QUOTES")
+          if valid:
+              summary=(
+                  f"- Run: [{run_id}]({run_url}); job status={job_status}; report status={report['status']}.\n"
+                  f"- Candidates={report['source_count']}; exact authorized prior-minute OI sources={report['authorized_exact_intraday_oi_sources']}; "
+                  f"exact authorized quote/depth sources={report['authorized_exact_quote_depth_sources']}.\n"
+                  f"- Licensed follow-up candidates={json.dumps(report['licensed_followup_candidates'])}; purchase made=false; data downloaded=false.\n"
+                  "- No strategy, source dataset, threshold or candidate was promoted. No holdout or credentials used.\n"
+              )
+          else:
+              summary=f"- Run: [{run_id}]({run_url}); job status={job_status}; report missing/invalid. No source or strategy conclusion accepted.\n"
+          status_file=Path("PHASE59_STATUS.md")
+          current=status_file.read_text(encoding="utf-8")
+          if valid and job_status=="success":
+              current=current.replace(
+                  "**Overall:** ACTIVE — metadata-only public-source triage; no download, purchase or strategy test.",
+                  "**Overall:** COMPLETE — bounded metadata-only source triage; NO-GO for free, license-clear exact-contract prior-minute OI and quote/depth."
+              )
+          status_file.write_text(current.rstrip()+f"\n\n## Automated checkpoint {run_id}\n\n"+summary,encoding="utf-8")
+          for filename,heading in [
+              ("PHASE59_RESEARCH_LOG.md",f"## Completed source audit run {run_id}"),
+              ("PHASE59_CHAT_LOG.md",f"## Automated checkpoint {run_id}")
+          ]:
+              p=Path(filename)
+              p.write_text(p.read_text(encoding="utf-8").rstrip()+f"\n\n{heading}\n\n"+summary,encoding="utf-8")
+          if job_status!="success" or not valid:
+              p=Path("PHASE59_ERROR_LOG.md")
+              p.write_text(p.read_text(encoding="utf-8").rstrip()+
+                  f"\n\n## F59-RUN-{run_id} — validation/workflow failure\n\n- Run: {run_url}\n- Job status={job_status}; valid report={valid}.\n- No source or strategy conclusion accepted.\n- Status: OPEN.\n",encoding="utf-8")
+          readme=Path("README.md")
+          readme.write_text(readme.read_text(encoding="utf-8").rstrip()+
+              f"\n\n## Phase 59 source coverage audit — run {run_id}\n\n"+summary+
+              "- [Plan](PHASE59_RESEARCH_PLAN.md) · [Status](PHASE59_STATUS.md) · [Report](results/phase59/public_option_data_coverage/report.md) · [Registry](research/phase59/source_registry.json)\n",encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE59_STATUS.md PHASE59_RESEARCH_LOG.md PHASE59_CHAT_LOG.md PHASE59_ERROR_LOG.md README.md
+          if [[ -d results/phase59/public_option_data_coverage ]]; then git add results/phase59/public_option_data_coverage; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record Phase59 public source coverage audit $RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            if git rebase origin/"$PHASE_BRANCH"; then
+              if git push origin "$PHASE_BRANCH"; then exit 0; fi
+            else
+              echo "Rebase conflict; preserving remote history and refusing force push." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+          done
+          exit 1
