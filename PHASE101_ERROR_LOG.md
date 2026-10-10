@@ -20,3 +20,10 @@ Append entries; never overwrite earlier failures.
 
 ## Run reconciliation — 2026-10-10T18:23:56Z
 - Workflow 38075221554 completed aggregate validation. No runner exception was raised; inspect report and model status CSV for explicit data/model blockers.
+
+
+## 2026-10-10 — Review of first successful output set (not accepted)
+
+- **E101-003 — U05 temporal leakage.** Runtime report `results/phase101_pdf_strategy_tests/PHASE101_REPORT.md` showed months where `thursday_date` preceded `wednesday_date` (e.g., July 2021 forecast Wednesday 7 July but entry Thursday 1 July). These trades used a future forecast. Corrected `_u05_entry_dates()` now selects the first calendar Thursday strictly after the first forecast Wednesday; deterministic tests added for July 2021 and June 2023. All earlier U05 numeric results are invalidated pending rerun.
+- **E101-004 — U02 capital was reused independently for each trade.** The first trade simulator sized every daily position from the initial ₹1 lakh and summed losses across hundreds of trades, which is not a viable single-account path. Corrected the simulator to track a separate sequential ₹1 lakh equity path per model, cap premium deployment at 95% of current equity, reserve 5% for fees, and block entries when one lot cannot be funded. Earlier U02 aggregate P&L and drawdown figures are invalidated pending rerun.
+- **M101-001 — Trade-return uncertainty.** Added deterministic circular moving-block bootstrap 95% CI for mean net P&L/trade when sample size is at least 20; samples below 20 are explicitly marked not estimable. This interval complements, but does not prove, account-level profitability.
