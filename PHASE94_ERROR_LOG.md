@@ -39,3 +39,9 @@
 - Root cause: two cross-paper register rows had only 10 columns instead of the required 11.
 - Correction: fixed both rows and rewrote the CSV with proper comma/quote escaping; validator now checks row width first and safely reports missing cells.
 - Status: correction committed; fresh workflow validation pending.
+
+## E94-011 — status validator expected wording that was not used
+- Run: [38070932954](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38070932954)
+- Failure: registry validator asserted that the literal phrase `no strategy` appeared in `PHASE94_STATUS.md`; the status file instead expressed the same decision as `Strategy promotion: NONE`.
+- Correction: validate the semantic status field (`strategy promotion` and `none`) rather than requiring specific prose wording.
+- Status: corrected; awaiting fresh validation.
