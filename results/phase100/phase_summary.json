@@ -1,5 +1,5 @@
 {
-  "synthesis_date": "2026-10-10T17:49:50.407186+00:00",
+  "synthesis_date": "2026-10-10T17:50:25.468969+00:00",
   "phase95": {
     "metrics_rows": 132,
     "close_rows": 75,
@@ -43,6 +43,8 @@
     "option_pnl_is_historical": false,
     "holdout_2026_accessed": false
   },
+  "phase95_claim_ledger_rows": 12,
+  "phase95_reconciliation_complete": true,
   "paper_count": 14,
   "strategy_promoted": false,
   "holdout_2026_accessed": false

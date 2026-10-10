@@ -114,5 +114,5 @@ The fixed 14 PDFs are registered as U01–U14 in Phase 94. Filenames, method map
 - paper_status.csv: machine-readable paper statuses.
 - phase_summary.json: machine-readable phase-level outcome summary.
 - phase96_total_return.svg: descriptive Phase 96 return comparison.
-- Phase 95 model metrics, data manifest, modality status, coverage and reconciliation ledger when published.
+- Phase 95 model metrics, data manifest, modality status, coverage and phase95_paper_claim_status.csv.
 - Phase 96 daily replay and metrics; Phase 97 data gate; Phase 98 evidence gate; Phase 99 payoff grid and source ambiguity ledger.
