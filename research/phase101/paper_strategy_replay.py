@@ -17,6 +17,7 @@ DEV_END = pd.Timestamp("2023-12-31", tz=TZ)
 VAL_START = pd.Timestamp("2024-01-01", tz=TZ)
 VAL_END = pd.Timestamp("2025-12-31 23:59:59", tz=TZ)
 CAPITAL_U02 = 100_000.0
+CAPITAL_U05 = 300_000.0
 SEED = 101021
 
 def first_present(row, names):
@@ -190,6 +191,9 @@ def _audit_row(base, status, reason):
 
 def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
     trades, audit = [], []
+    equity = float(CAPITAL_U05)
+    equity_peak = equity
+    max_account_drawdown = 0.0
     for m, (expiry, filename) in sorted(monthly.items()):
         period = pd.Period(m, "M"); wed, thu = _u05_entry_dates(period)
         base = {"paper_id":"U05","month":m,"expiry":str(expiry.date()),"source_file":filename,
@@ -215,20 +219,33 @@ def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
         if ibars.empty:
             audit.append(_audit_row({**base,"mean_prior_same_month_return":mean_ret,"expected_price":expected,"direction":side},
                                     "BLOCKED_NO_THURSDAY_INDEX_BAR","No underlying bar 09:15–09:20")); del chain; continue
-        ix = ibars.iloc[0]; entry_ts = ix.timestamp; spot = first_present(ix,["open","close"])
-        snap = chain.loc[chain.timestamp.eq(entry_ts)]
-        pick = _pick_snapshot(snap,side,expected,oi_col,vol_col)
+        # Use the earliest underlying minute in the opening window that also has a same-minute option quote.
+        ix = None; entry_ts = None; spot = np.nan; pick = None
+        for _, candidate in ibars.iterrows():
+            candidate_ts = candidate.timestamp
+            candidate_spot = first_present(candidate,["open","close"])
+            candidate_pick = _pick_snapshot(chain.loc[chain.timestamp.eq(candidate_ts)],side,expected,oi_col,vol_col)
+            if candidate_pick is not None and np.isfinite(candidate_spot):
+                ix = candidate; entry_ts = candidate_ts; spot = candidate_spot; pick = candidate_pick
+                break
         if pick is None:
             audit.append(_audit_row({**base,"mean_prior_same_month_return":mean_ret,"expected_price":expected,
-                "direction":side,"entry_ts":str(entry_ts),"entry_spot":spot},
-                "BLOCKED_NO_EXACT_ENTRY_SNAPSHOT","No same-minute option row for selected side")); del chain; continue
+                "direction":side,"opening_window":"09:15-09:20"},
+                "BLOCKED_NO_MATCHING_OPENING_WINDOW_OPTION","No same-minute selected-side option row during 09:15–09:20")); del chain; continue
         strike = float(pick.strike); entry_raw = first_present(pick,["open","close"])
+        lot = int(p66.lot_size_for_expiry(expiry))
         common = {**base,"mean_prior_same_month_return":mean_ret,"prior_same_month_periods":";".join(periods),
                   "expected_price":expected,"direction":side,"entry_ts":str(entry_ts),"entry_spot":spot,
-                  "strike":strike,"option_entry_raw":entry_raw,"lot_size":int(p66.lot_size_for_expiry(expiry))}
+                  "strike":strike,"option_entry_raw":entry_raw,"lot_size":lot,"account_equity_before":equity}
         if not np.isfinite(entry_raw) or entry_raw <= 0:
             audit.append(_audit_row(common,"BLOCKED_BAD_ENTRY_PRICE","Entry premium invalid")); del chain; continue
-        lot = common["lot_size"]
+        entry_exec = float(p66.exec_px(entry_raw,"buy"))
+        premium_per_lot = entry_exec * lot
+        # The paper commits 90% of a ₹3 lakh account and reserves 10% as a safety margin.
+        lots = int((equity * 0.90) // premium_per_lot) if premium_per_lot > 0 else 0
+        if lots < 1:
+            audit.append(_audit_row({**common,"one_lot_premium_cost":premium_per_lot},
+                "EXCLUDED_INSUFFICIENT_ACCOUNT_EQUITY","One lot does not fit within 90% of current equity")); del chain; continue
         bars = chain.loc[chain.option_type.eq(side)&chain.strike.eq(strike)].sort_values("timestamp")
         bars = bars.loc[bars.timestamp.gt(entry_ts)&bars.timestamp.dt.date.lt(expiry.date())].copy()
         future_sessions = [pd.Timestamp(d) for d in daily.index if pd.Timestamp(d).date()>thu.date() and pd.Timestamp(d).date()<expiry.date()]
@@ -260,14 +277,29 @@ def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
         common["stop_activation_date"] = str(stop_date.date()) if stop_date is not None else None
         if result["status"] != "COMPLETED":
             audit.append(_audit_row(common,result["status"],result.get("reason",""))); del chain; continue
-        cost = _trade_costs(p66,entry_ts,result["exit_ts"],entry_raw,result["exit_raw"],lot)
+        cost = _trade_costs(p66,entry_ts,result["exit_ts"],entry_raw,result["exit_raw"],lot*lots)
+        equity_before = equity
+        net = float(cost["net_10_per_order"])
+        equity = equity_before + net
+        equity_peak = max(equity_peak,equity)
+        drawdown = max(0.0,equity_peak-equity)
+        max_account_drawdown = max(max_account_drawdown,drawdown)
         trade={**common,"exit_ts":str(result["exit_ts"]),"exit_reason":result["exit_reason"],
-               "trigger_ts":str(result["trigger_ts"]),"option_exit_raw":float(result["exit_raw"]),**cost}
+               "trigger_ts":str(result["trigger_ts"]),"option_exit_raw":float(result["exit_raw"]),
+               "lots":lots,"capital_used_estimate":entry_exec*lot*lots,
+               "account_equity_after":equity,"account_return_pct_on_opening_equity":100.0*net/equity_before if equity_before else None,
+               "account_peak_to_date":equity_peak,"account_drawdown_from_peak":drawdown,**cost}
         trades.append(trade); audit.append({**common,"status":"COMPLETED","failure_reason":"",
+                                            "lots":lots,"capital_used_estimate":entry_exec*lot*lots,
+                                            "account_equity_after":equity,
                                             "exit_ts":str(result["exit_ts"]),"exit_reason":result["exit_reason"]})
         del chain
     met=net_trade_metrics([x["net_10_per_order"] for x in trades])
-    summary={"paper_id":"U05","strategy":"three-year same-month return; first Wednesday forecast; first Thursday option",
+    summary={"paper_id":"U05","strategy":"three-year same-month return; first Wednesday forecast; first later Thursday option",
+             "initial_account_equity":float(CAPITAL_U05),"ending_account_equity":float(equity),
+             "account_return_pct":100.0*(equity/CAPITAL_U05-1.0),
+             "max_account_drawdown_rupees":float(max_account_drawdown),
+             "equity_deployment_limit_pct":90.0,
              "evaluation_months":len(audit),"audit_status_counts":dict(Counter(x["status"] for x in audit)),**met}
     for k in ["net_20_per_order","net_10_per_order_fee_stress_50pct","net_20_per_order_fee_stress_50pct",
               "paper_025pct_each_side_plus_50_trade_cost_net"]:
