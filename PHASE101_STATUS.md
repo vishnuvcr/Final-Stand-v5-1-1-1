@@ -1,6 +1,6 @@
 # Phase 101 Status — Full PDF Strategy Replication Gap-Fill
 
-**State:** OPEN — plan registered; implementation/runtime validation pending  
+**State:** OPEN — runner implemented; data replay retry pending after logged Parquet-engine failure  
 **Branch:** `phase-101-full-pdf-strategy-replication`  
 **Updated:** 2026-10-10  
 **Strategy promotion:** NONE  
