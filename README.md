@@ -1,3 +1,16 @@
+<!-- PHASE103_STOCK_OPTIONS_START -->
+# Phase 103 — NIFTY 50 constituent stock-options research
+
+**Status: Dhan Data API integration registered; bounded access/coverage probe awaiting Actions verification.** Prior research and data remain frozen on prior branches; no earlier results were changed. Initial five-stock universe: HDFCBANK, ICICIBANK, RELIANCE, SBIN, INFY. No strategy backtest or profit ranking has yet been performed.
+
+- [Phase 103 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_RESEARCH_LOG.md) · [error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_ERROR_LOG.md) · [visible conversation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_CHAT_LOG.md)
+- [Five-stock selection and sourcing](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/results/phase103/STOCK_UNIVERSE_SELECTION.md) · [universe manifest](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/research/phase103_stock_options/stock_universe.json)
+- [Dhan Data API audit workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/.github/workflows/phase103-dhan-data-api-audit.yml) · [Dhan API documentation](https://dhanhq.co/docs/v2/expired-options-data/)
+
+The Phase 103.1 workflow uses a repository Actions secret for the Dhan access token and probes a common 30-day sample. Raw market rows are not committed or published until retention/republication rights are verified. Dhan's expired-options endpoint documents rolling-strike OHLC/IV/volume/OI/spot data, not historical bid/ask/depth; fixed-contract continuity and execution costs are mandatory later gates.
+<!-- PHASE103_STOCK_OPTIONS_END -->
+
 <!-- PHASE101_AUDIT_START -->
 # Phase 101 — PDF replication audit follow-up
 
