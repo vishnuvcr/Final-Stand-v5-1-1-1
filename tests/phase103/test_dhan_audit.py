@@ -39,5 +39,18 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertEqual(result["status"],"AUTH_401")
         self.assertEqual(result["rows"],0)
 
+    def test_requested_side_missing_is_not_reported_as_data(self):
+        result=summarize("SBIN","PUT",200,{"status":"success","data":{"ce":{"close":[10],"timestamp":[1754000000]},"pe":None}})
+        self.assertEqual(result["rows"],0)
+        self.assertNotEqual(result["status"],"DATA_RETURNED")
+
+    def test_summary_does_not_contain_api_secret_or_raw_rows(self):
+        # The summarizer only accepts one decoded response and emits counts/timestamps.
+        block={"close":[9.0,10.0],"timestamp":[1754000000,1754000060]}
+        result=summarize("INFY","CALL",200,{"status":"success","data":{"ce":block}})
+        encoded=__import__("json").dumps(result)
+        self.assertNotIn("access-token",encoded.lower())
+        self.assertNotIn('"close"',encoded)
+
 if __name__=="__main__":
     unittest.main()
