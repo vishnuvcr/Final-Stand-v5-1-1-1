@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-10  
 **Branch:** `phase-97-ml-options-strategy-replication`  
-**Status:** PLAN REGISTERED; source-data gate pending  
+**Status:** DATA-BLOCKED — automated gate completed successfully  
 **Strategy promotion:** NONE
 
 ## Scope
@@ -11,11 +11,13 @@ Sherasiya ML options strategy: Random Forest, XGBoost, LSTM, option Greeks/IV/un
 ## Required gate
 Exact-contract identity, point-in-time feature/label alignment, source provenance, and executable quote/fill fields. Rolling ATM-relative coverage alone is not sufficient.
 
-## Pending
-- Audit Phase 85 source qualification, Phase 89 coverage evidence, and Phase 94 method register.
-- Publish a field-by-field data gate, explicit blocked/partial statuses and a bounded result.
-- Train models only if eligible real labels/features pass the gate.
-- Update logs and README; do not access the 2026 holdout.
+## Completed
+- Automated workflow [38072759556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072759556) passed tests and published the data gate.
+- 13/13 required exact-contract, point-in-time, provenance, label and cost controls are blocked in the audited artifacts.
+- Random Forest, XGBoost and LSTM models trained: 0. Options P&L calculated: no. The momentum comparator is not run because no shared eligible labels/dates exist.
+
+## Decision
+This is a data sufficiency finding, not evidence that the paper models fail. No strategy is promoted. Re-open only when eligible exact-contract training and execution data are obtained.
 
 ## Records
 - [Plan](PHASE97_RESEARCH_PLAN.md)
