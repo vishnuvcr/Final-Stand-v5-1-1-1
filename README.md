@@ -1,25 +1,25 @@
 <!-- CURRENT_RESEARCH_CHECKPOINT_START -->
 # Final Stand v5 1-1-1 — Current Research Checkpoint (2026-10-10)
 
-## Current finite program: Phases 94–100
+## Phase 100 — manuscript generated; Phase 95 reconciliation is the final dependency
 
-**Phase 96:** corrected SMA/EMA signal screen passed automated tests and replay. Across 1,486 sessions in 2020–2025, buy-and-hold returned 114.7%; six operationalized SMA/EMA variants returned 52.5%–100.9% under a 0.05% turnover sensitivity deduction, with lower drawdowns. SMA(10,50) and EMA(10,50) had higher unadjusted Sharpe estimates but no inferential test; index spot is not directly investable and this is not options P&L. Phase 96 remains partial pending paper-specific seasonality/timing-rule reconciliation. [Plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-96-moving-average-seasonality-replication) · [successful corrected run 38072697008](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072697008)
+**The Phase 100 synthesis workflow passed** [run 38073229401](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073229401). It generated a structured manuscript, supplements, 14-paper status ledger, phase summary and SVG figure. Automated QA passed 15 required sections and all 14 paper rows. The manuscript is provisional until the corrected Phase 95 claim-reconciliation run finishes.
 
-**Phase 97:** the automated ML options data gate passed, but 13/13 required exact-contract/point-in-time/provenance/label/cost controls were blocked in the audited artifacts. No Random Forest, XGBoost or LSTM model was trained; no options P&L was computed. This is a data sufficiency conclusion, not proof that the paper's models fail. [Plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-97-ml-options-strategy-replication) · [Actions run 38072759556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072759556)
+- [Phase 100 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/MANUSCRIPT.md)
+- [Supplementary materials](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/SUPPLEMENTARY_MATERIALS.md)
+- [Validation report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/VALIDATION_REPORT.md)
+- [Paper status ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/paper_status.csv) · [machine-readable phase summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/phase_summary.json)
+- [Phase 100 plan/status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-100-cross-paper-reproducibility-synthesis)
 
-**Phase 98:** CCI options paper gate is registered. Existing Phase 66 zero-trade coverage and Phase 85 source no-go are not being rerun unchanged; Phase 87–89 rolling ATM-relative fields do not establish source-period exact-contract bid/ask/depth. [Plan/status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-98-cci-options-paper-replication-gate)
+## Evidence snapshot
 
-**Phase 95:** main forecast run completed 132/132 valid model rows with zero model failures. Its paper-claim reconciliation failed on a manifest serialization defect; a compatibility fix has been committed and a fresh Actions run is pending. The failed reconciliation output is not accepted. [Phase 95 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-95-daily-forecast-model-replication) · [latest Actions](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions)
+- **Phase 95:** 132/132 valid model rows, zero model execution failures. Its reconciliation step previously failed because the data manifest had a literal backslash-n suffix; parser fix is committed and the fresh run remains in progress.
+- **Phase 96:** corrected SMA/EMA screen passed on 1,486 sessions. Buy-and-hold returned 114.7%; variants returned 52.5%–100.9% with lower drawdowns under a generic 0.05% turnover sensitivity deduction. This is a descriptive NIFTY index screen, not options P&L.
+- **Phase 97:** exact-contract ML options gate completed; 13/13 required controls blocked, zero models trained, no P&L.
+- **Phase 98:** corrected CCI evidence gate passed; no new eligible exact-contract source established. No duplicate zero-coverage replay.
+- **Phase 99:** payoff arithmetic tests passed for 13 structures; historical options profitability remains data-blocked. U07 put-butterfly label/legs conflict is recorded.
 
-## Evidence and safety boundaries
-
-- No strategy has been promoted; no live orders are placed.
-- The Phase 83 2026 holdout remains sealed.
-- Forecast accuracy is not equivalent to profitable options trading.
-- No executable options P&L without exact eligible contracts, point-in-time quote/fill assumptions, Paytm Money brokerage, statutory levies, spread, slippage, latency and cost stress.
-- Phase 94's finite plan remains authoritative: Phase 99 operationalizes only fully specified source-described payoff strategies; Phase 100 produces the unified reproducibility assessment, figures/tables, manuscript and supplements.
-
-[Phase 94 research plan and 14-paper method register](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-94-paper-method-replication-program) · [Phase 92 predictor stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
+**Scientific conclusion:** no strategy is promoted. The available evidence does not establish a reproducible profitable options strategy; data blockers do not prove that source methods are unprofitable. The Phase 83 2026 holdout remains sealed. Any options P&L must include verified Paytm Money brokerage, statutory levies, bid/ask spread, slippage, latency and cost stress. Phase 100 is the finite synthesis stop boundary.
 <!-- CURRENT_RESEARCH_CHECKPOINT_END -->
 
 
