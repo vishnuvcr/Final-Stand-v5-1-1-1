@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
-      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
       HF_HUB_DISABLE_TELEMETRY: "1"
       PYTHONUNBUFFERED: "1"
     steps:
@@ -51,15 +51,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface/hub
-          key: phase101-hf-\${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+          key: phase101-hf-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
           restore-keys: |
-            phase101-hf-\${{ runner.os }}-
-            hf-phase66-\${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+            phase101-hf-${{ runner.os }}-
+            hf-phase66-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
       - name: Restore Phase 101 daily-market cache
         uses: actions/cache@v4
         with:
           path: .cache/phase101
-          key: phase101-yahoo-\${{ runner.os }}-nifty-daily-2015-2025-v1
+          key: phase101-yahoo-${{ runner.os }}-nifty-daily-2015-2025-v1
       - name: Install bounded dependencies
         run: python -m pip install --disable-pip-version-check -r requirements-phase101.txt
       - name: Static syntax and deterministic unit tests
@@ -159,7 +159,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase101-pdf-strategy-results-\${{ github.run_id }}
+          name: phase101-pdf-strategy-results-${{ github.run_id }}
           path: results/phase101_pdf_strategy_tests/
           if-no-files-found: warn
           retention-days: 30
