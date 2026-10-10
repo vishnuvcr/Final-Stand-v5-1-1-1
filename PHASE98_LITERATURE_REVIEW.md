@@ -76,6 +76,24 @@ The targeted search also found practitioner explainers and self-published NIFTY/
 
 Across practitioner sources, the repeated warning is that an appealing chart rule is not equivalent to a tested, post-cost option strategy. Their claims are not aggregated or meta-analyzed here because the designs and evidence quality are not sufficiently comparable.
 
+### 7. Indian-market microstructure, option efficiency and intraday volatility evidence
+
+**Aggarwal and Gupta (2009).** Using daily NIFTY 50 index-option closing data from January 2006 to March 2009, this paper examines call/put spreads, box spreads and butterfly convexity relationships while incorporating bid–ask, brokerage and taxes. It reports frequent and large box-spread relationship violations, but fewer violations in call/put spreads and convexity, and emphasizes that market frictions materially affected arbitrageurs' ability to capture violations. This is Indian options-market evidence, but it studies no-arbitrage relationships using older daily closes—not an intraday directional ORB strategy or modern weekly expiry verticals.
+
+Source: Aggarwal, N., & Gupta, M. (2009). *Empirical Evidence on the Efficiency of Index Options Market in India*. Asia-Pacific Journal of Management Research and Innovation, 5(3). https://doi.org/10.1177/097324700900500311
+
+**Vipul (2009).** “Box-spread arbitrage efficiency of Nifty index options: The Indian evidence” uses time-stamped transactions to identify box-spread mispricing. Its abstract reports that cost-adjusted opportunities could occur frequently but generally did not persist even for two minutes; liquidity/immediacy risk and volatility were related to observed mispricing. This supports strict timestamp-matched trading and skepticism about acting on stale or asynchronous option quotes. It does not directly validate the ORB signal.
+
+Source: Vipul (2009). *Box-spread arbitrage efficiency of Nifty index options: The Indian evidence*. Journal of Futures Markets, 29(6), 544–562. https://doi.org/10.1002/fut.20376
+
+**Patnaik and Thomas (2004).** “Profitability of Trading Strategies on High-Frequency Data, with Trading Costs” tests Indian equity-market momentum and contrarian rules on high-frequency order-book data for 1996–2002, with explicit execution/price-impact costs. The abstract reports short-run momentum profitability in some strategies but declining profits as the formation period lengthened, after controlling for microstructure effects. This is an older single-stock equity sample, not current NIFTY options, but it illustrates why signal horizon and executable prices matter.
+
+Source: Patnaik, T. C., & Thomas, S. (2004). *Profitability of Trading Strategies on High-Frequency Data, with Trading Costs*. SSRN working paper. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=568363
+
+**Chakrabarti and Kumar (2020).** This peer-reviewed study investigates the high-frequency (five-minute) relationship between NIFTY returns and model-free implied volatility. It reports a negative and asymmetric short-term relationship, with negative return innovations particularly associated with sharp rises in India VIX; its authors caution that simple VAR behavior does not fully explain extreme joint movements. The paper supports treating volatility and market direction as distinct quantities; it does not establish that a prior-day VIX percentile identifies profitable ORB sessions.
+
+Source: Chakrabarti, P., & Kumar, K. K. (2020). *High-Frequency Return-Implied Volatility Relationship: Empirical Evidence from Nifty and India VIX*. Journal of the Developing Areas, 54(3), 53–68. https://ideas.repec.org/a/jda/journl/vol.54year2020issue3pp53-68.html
+
 ## 5. Research design consequences
 
 These sources support the following fixed safeguards, all consistent with the Phase 98 preregistration:
@@ -110,12 +128,17 @@ These sources support the following fixed safeguards, all consistent with the Ph
 
 ## References
 
-1. Bailey, D. H., Borwein, J. M., López de Prado, M., & Zhu, Q. J. (2017). The Probability of Backtest Overfitting. *Journal of Computational Finance*. https://doi.org/10.21314/JCF.2016.322
-2. Fetna, M. (2026). Opening-Range Breakout Does Not Survive Trading Costs: A Pre-Registered 225-Cell Study on Sixteen Years of Futures Data. SSRN preprint. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7428398
-3. Harvey, C. R., Liu, Y., & Zhu, H. (2016). … and the Cross-Section of Expected Returns. *Review of Financial Studies, 29*(1), 5–68. https://doi.org/10.1093/rfs/hhv059
-4. Holmberg, U., Lönnbark, C., & Lundström, C. (2013). Assessing the profitability of intraday opening range breakout strategies. *Finance Research Letters, 10*(1), 27–33. https://doi.org/10.1016/j.frl.2012.09.001
-5. National Stock Exchange of India. India VIX Index and white paper. https://www.nseindia.com/static/products-services/indices-indiavix-index
-6. Paytm Money. Brokerage rate change notice effective 25 August 2023. https://www.paytmmoney.com/blog/brokerage-charges-increase-from-25th-aug-23-existing-users-will-continue-on-old-brokerage-charges/
-7. Tsai, Y.-C., Wu, M.-E., Syu, J.-H., Lei, C.-L., Wu, C.-S., Ho, J.-M., & Wang, C.-J. (2019). Assessing the Profitability of Timely Opening Range Breakout on Index Futures Markets. *IEEE Access, 7*, 32061–32071. https://doi.org/10.1109/ACCESS.2019.2899177
+1. Aggarwal, N., & Gupta, M. (2009). Empirical Evidence on the Efficiency of Index Options Market in India. *Asia-Pacific Journal of Management Research and Innovation, 5*(3). https://doi.org/10.1177/097324700900500311
+2. Bailey, D. H., Borwein, J. M., López de Prado, M., & Zhu, Q. J. (2017). The Probability of Backtest Overfitting. *Journal of Computational Finance*. https://doi.org/10.21314/JCF.2016.322
+3. Chakrabarti, P., & Kumar, K. K. (2020). High-Frequency Return-Implied Volatility Relationship: Empirical Evidence from Nifty and India VIX. *Journal of the Developing Areas, 54*(3), 53–68. https://ideas.repec.org/a/jda/journl/vol.54year2020issue3pp53-68.html
+4. Fetna, M. (2026). Opening-Range Breakout Does Not Survive Trading Costs: A Pre-Registered 225-Cell Study on Sixteen Years of Futures Data. SSRN preprint. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7428398
+5. Harvey, C. R., Liu, Y., & Zhu, H. (2016). … and the Cross-Section of Expected Returns. *Review of Financial Studies, 29*(1), 5–68. https://doi.org/10.1093/rfs/hhv059
+6. Holmberg, U., Lönnbark, C., & Lundström, C. (2013). Assessing the profitability of intraday opening range breakout strategies. *Finance Research Letters, 10*(1), 27–33. https://doi.org/10.1016/j.frl.2012.09.001
+7. National Stock Exchange of India. India VIX Index and white paper. https://www.nseindia.com/static/products-services/indices-indiavix-index
+8. Paytm Money. Brokerage rate change notice effective 25 August 2023. https://www.paytmmoney.com/blog/brokerage-charges-increase-from-25th-aug-23-existing-users-will-continue-on-old-brokerage-charges/
+9. Patnaik, T. C., & Thomas, S. (2004). Profitability of Trading Strategies on High-Frequency Data, with Trading Costs. SSRN working paper. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=568363
+10. Tsai, Y.-C., Wu, M.-E., Syu, J.-H., Lei, C.-L., Wu, C.-S., Ho, J.-M., & Wang, C.-J. (2019). Assessing the Profitability of Timely Opening Range Breakout on Index Futures Markets. *IEEE Access, 7*, 32061–32071. https://doi.org/10.1109/ACCESS.2019.2899177
 
 **Access date for web sources:** 2026-10-10.
+
+11. Vipul (2009). Box-spread arbitrage efficiency of Nifty index options: The Indian evidence. *Journal of Futures Markets, 29*(6), 544–562. https://doi.org/10.1002/fut.20376
