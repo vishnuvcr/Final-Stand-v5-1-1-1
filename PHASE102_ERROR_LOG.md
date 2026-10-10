@@ -18,3 +18,11 @@
 **Resolution:** preserve both results and no-go decision; do not retune or erase the earlier negative sample.
 
 No Phase 102 runtime test errors have been observed yet. This file must be appended to if any validator or workflow error occurs; resolved entries must remain in the record.
+
+
+### E102-004 — Initial source-text assertions were too brittle
+**Affected runs:** [38082218752](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082218752), [38082247835](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082247835), [38082297783](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082297783).  
+**Symptom:** 12/14 or 13/14 source-artifact checks passed; specific narrative checks failed although the underlying reports documented the intended result.  
+**Cause:** one decimal-prefix assertion expected `-40244.6808` while the source number is `-40244.680782...`; a factor-report assertion expected text (“not a direction classifier”) not present verbatim in the source report.  
+**Correction:** use a stable numeric prefix and assert source-supported phrases (factor study was not pooled and contains explicit strategy-P&L limits). No numerical source artifacts, strategy rules or evidence interpretations were changed.  
+**Verification:** [run 38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704) passed all 14 checks and 2 unit tests; validation artifact uploaded. Earlier failed runs are retained as non-final audit history.
