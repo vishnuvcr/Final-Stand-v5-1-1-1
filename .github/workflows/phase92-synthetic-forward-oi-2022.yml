@@ -1,12 +1,8 @@
 name: Phase 92 — synthetic-forward proxy and OI study (2022)
 
+# Automatic PR execution is handled by the Phase 91-base runner.
+# This workflow remains the Phase 92 manual-dispatch entry point.
 on:
-  push:
-    branches:
-      - phase-92-synthetic-forward-oi-study-2022
-    paths:
-      - "PHASE92_RESEARCH_PLAN.md"
-      - "research/phase92/**"
   workflow_dispatch:
 
 permissions:
