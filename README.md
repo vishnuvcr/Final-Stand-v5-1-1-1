@@ -1116,7 +1116,7 @@ This resolves the immediate data diagnosis: the exclusions are caused by source-
 
 ## Phase 56 — Cost-aware OHLC price-reference P&L sensitivity (CLOSED / NON-EXECUTABLE)
 
-The previously failing, preregistered Phase 56 analysis was repaired and accepted in [run 38019146547](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019146547). The validator defect was that it rejected the canonical underscored OI reason; normalization and regression tests now pass. The bounded matrix reconciled 480 rows, 40 configurations, 24 event identities, all 11 thresholds and all 18,960 cost scenarios (₹10/₹20 brokerage × six adverse-slippage cases). The 100 hard prior-OI blocks remained ineligible at every threshold.
+The previously failing, preregistered Phase 56 analysis was repaired and accepted in [canonical-input run 38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348). The validator defect was that it rejected the canonical underscored OI reason; normalization and regression tests now pass. The bounded matrix reconciled 480 rows, 40 configurations, 24 event identities, all 11 thresholds and all 18,960 cost scenarios (₹10/₹20 brokerage × six adverse-slippage cases). The 100 hard prior-OI blocks remained ineligible at every threshold.
 
 | OHLC range threshold | Eligible configuration-event rows | Grid sum at ₹10/order + ₹0.05 slip | Grid sum at ₹20/order + ₹0.50 slip |
 |---:|---:|---:|---:|
@@ -1140,3 +1140,6 @@ The previously failing, preregistered Phase 56 analysis was repaired and accepte
 ## Next gate after Phase 56 price-reference sensitivity
 
 Phase 52 remains open but the current BASELINE pilot has only one replay pass and does not test factor-selector efficacy. The next valid work is to improve source-backed candidate/event coverage or obtain independent, legally usable executable quote data; the Phase 56 result is not a reason to weaken OI eligibility. Any subsequent strategy test must retain Paytm Money brokerage/statutory costs and adverse slippage, chronological splits, multiple-testing controls and an untouched holdout.
+
+
+**Provenance correction:** the final accepted Phase 56 report is from canonical-input run [38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348), which uses the exact Phase 55 ledger blob `06f9b0d39652923bae052dd82f2c779ada111da3` and SHA-256 `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`. The earlier accepted run's only ledger differences were the 100 exclusion-reason strings; it is superseded for input provenance, and the computed metrics reproduced exactly.
