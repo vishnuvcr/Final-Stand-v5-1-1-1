@@ -1,0 +1,95 @@
+{
+  "phase": 60,
+  "status": "NO_GO_EMPIRICAL_FACTOR_STRATEGY_TESTING_DATA_EVIDENCE_INSUFFICIENT",
+  "created_at_utc": "2026-10-10",
+  "source_audit": {
+    "registry_source_count": 10,
+    "phase59_report_source_count": 10,
+    "authorized_exact_prior_minute_oi_sources": 0,
+    "authorized_exact_quote_depth_sources": 0,
+    "purchases": false,
+    "data_downloaded": false,
+    "credentials_used": false
+  },
+  "cross_phase_evidence": {
+    "phase52_baseline": {
+      "run": "37992542028",
+      "planned_rows": 480,
+      "status_counts": {
+        "EXCLUDED_OHLC_RANGE_PROXY": 379,
+        "BLOCKED_LEG_ELIGIBILITY": 100,
+        "REPLAY_PASS": 1
+      },
+      "executed_rows": 1,
+      "interpretation": "One baseline row is insufficient for strategy ranking or statistical inference."
+    },
+    "phase54_coverage_sensitivity": {
+      "run": "38018639487",
+      "threshold_pct": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        12,
+        15,
+        20,
+        1000
+      ],
+      "eligible_rows": [
+        1,
+        1,
+        8,
+        24,
+        55,
+        91,
+        150,
+        227,
+        298,
+        345,
+        380
+      ],
+      "interpretation": "Eligibility coverage only; OHLC range is not bid/ask spread."
+    },
+    "phase56_cost_reference": {
+      "run": "38019323348",
+      "modeled_scenario_rows": 18960,
+      "severe_cost_screen_pairs_only_at_1000pct": 5,
+      "interpretation": "Diagnostic OHLC model sensitivity; not executable fills or strategy winners."
+    },
+    "phase57_independent_reproduction": {
+      "run": "38021314847",
+      "common_scenarios": 2286,
+      "mismatches": 0,
+      "interpretation": "Reproduces the same OHLC reference model; does not validate market executability."
+    },
+    "phase59_source_feasibility": {
+      "run": "38020729139",
+      "candidates": 10,
+      "accepted_exact_prior_minute_oi_sources": 0,
+      "accepted_exact_quote_depth_sources": 0,
+      "interpretation": "No accepted free/license-clear source meets the frozen exact-timestamp requirements."
+    }
+  },
+  "frozen_rules": {
+    "phase52_rows": 480,
+    "prior_minute_oi_minimum": 100,
+    "baseline_ohlc_range_pct": 2,
+    "holdout_used": false,
+    "grid_changed": false,
+    "costs_changed": false,
+    "strategy_promoted": false
+  },
+  "decision": "STOP new factor-conditioned profitability runs until the restart checklist is met.",
+  "restart_requirements": [
+    "Document explicit license, automated access, caching/storage and derived-result publication rights, or find a new source with clear rights.",
+    "Verify a small exact target-date/contract sample at 09:44, 09:45, 12:59, 13:00 and 15:15 IST, with actual expiry, strike and CE/PE identity.",
+    "Do not coerce missing OI to zero; preserve source values and distinguish missing, true zero, duplicate and conflicting rows.",
+    "For execution-quality claims, verify historical bid price, ask price, bid quantity and ask quantity at required entry/exit times; OHLC/LTP is not a substitute.",
+    "Demonstrate enough eligible development/validation events before inferential comparison; holdout stays untouched.",
+    "Recalculate Paytm Money brokerage, statutory charges, adverse slippage and stress cases only after valid coverage is proven."
+  ],
+  "conclusion": "The current data supports reproducibility and eligibility-coverage diagnostics, not a defensible profitability conclusion for factor-conditioned option strategy selection. No candidate is promoted."
+}
