@@ -26,6 +26,8 @@ User replied “Ok proceed” to continue the planned research following Phase 9
 - Added official Dhan date-range semantics to the plan using the documentation's explicit non-inclusive `toDate` definition: https://dhanhq.co/docs/v2/expired-options-data/.
 - Created [draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41), targeting the Phase 90 branch; it remains unmerged.
 - Updated the README with the Phase 91 checkpoint and links.
-- At the latest repo check, generated results were not yet present and no Actions run ID was surfaced by the available status check. This is recorded as a trigger/runtime-verification blocker only; no statistical conclusion is available yet.
+- Static review found and fixed a stale copied JSON metadata value (`phase: 90` → `phase: 91`) before any confirmed run; logged as E91-010.
+- Added a PR-triggered fallback workflow in the Phase 90 parent branch to attempt automatic execution on PR synchronization. Latest repository checks still did not surface an Actions run ID or result files. This remains an execution-verification blocker; no statistical conclusion is available yet.
+- The Phase 91 workflow contains `workflow_dispatch`, but availability of the UI's manual Run button is not confirmed because GitHub documents that a workflow must be present on the default branch for that button to be displayed. No workflow was claimed to have run.
 
 Append the confirmed Actions run, actual data coverage and primary result when available. This is an auditable activity log, not a record of private reasoning.
