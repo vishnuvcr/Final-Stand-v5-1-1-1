@@ -8,6 +8,7 @@ on:
       - ".github/workflows/phase66-paper-derived-strategy-tests.yml"
       - "research/phase66_paper_strategy_tests.py"
       - "research/phase66_report.py"
+      - "research/phase66_cost_helpers.py"
       - "tests/test_phase66_strategy.py"
       - "requirements-phase66.txt"
       - "PHASE66_RESEARCH_PLAN.md"
