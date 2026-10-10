@@ -47,7 +47,7 @@ Only the two frozen variants form the candidate family. For validation, a three-
 ## Opportunity and data-quality audit
 See opportunity_audit.csv for monthly expiry, signal counts, breakout status, and exact failure reason. Coverage is completed trades divided by monthly expiries with a breakout trigger. No-strike, missing-entry, target/stop-without-next-minute-fill, and missing terminal close cases are not imputed.
 
-Audit counts: CCI_BASE / entry_next_minute_missing_or_outside_window: 9; CCI_BASE / missing_exact_next_minute_entry_option_bar: 16; CCI_BASE / no_qualified_cci_signal: 14; CCI_BASE / signal_without_later_breakout: 17; CCI_EMA_FILTER / entry_next_minute_missing_or_outside_window: 3; CCI_EMA_FILTER / missing_exact_next_minute_entry_option_bar: 2; CCI_EMA_FILTER / no_qualified_cci_signal: 49; CCI_EMA_FILTER / signal_without_later_breakout: 2.
+Audit counts: CCI_BASE / entry_next_minute_missing_or_outside_window: 9; CCI_BASE / missing_exact_next_minute_entry_option_bar: 2; CCI_BASE / no_qualified_cci_signal: 14; CCI_BASE / no_strictly_itm_strike_observed_on_trigger_minute: 14; CCI_BASE / signal_without_later_breakout: 17; CCI_EMA_FILTER / entry_next_minute_missing_or_outside_window: 3; CCI_EMA_FILTER / missing_exact_next_minute_entry_option_bar: 1; CCI_EMA_FILTER / no_qualified_cci_signal: 49; CCI_EMA_FILTER / no_strictly_itm_strike_observed_on_trigger_minute: 1; CCI_EMA_FILTER / signal_without_later_breakout: 2.
 
 ## Execution-cost specification
 - Primary execution uses observed option close plus one adverse ₹0.05 tick for entry and minus one tick for exit. Existing Phase-43 historical lot size and date-aware statutory cost helper is reused.
