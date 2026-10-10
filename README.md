@@ -1,3 +1,15 @@
+# Resume checkpoint — 2026-10-10 (Phase 75 contract identity finding)
+
+Phase 74 stitching passed, but Phase 75 found that the DhanHQ rolling response does not document an explicit expiry date per bar. The frozen missing-expiry dates are 2026-07-28 and 2026-08-04. Do not infer expiry identity from relative expiry codes or strike coverage; the affected strategy replay remains blocked pending an authorized fixed-contract source.
+
+- [Phase 75 findings](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_FINDINGS.md)
+- [Phase 75 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_RESEARCH_PLAN.md)
+- [Phase 75 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_STATUS.md)
+- [Phase 75 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_ERROR_LOG.md)
+- [Phase 74 stitch workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042154732)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 74 fixed-strike stitch test)
 
 Phase 73 [run 38042070177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042070177) recorded 16/24 probes; all expiryCode=0 requests returned HTTP 400. Codes 1/2 returned rolling ATM-relative data, but exact expiry identity remains unresolved. The ATM series itself is not a fixed-contract series.
