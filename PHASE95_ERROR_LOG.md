@@ -14,3 +14,5 @@ The fixed 2025 test is chronological relative to this runner's train cutoff but 
 
 ## E95-RUNTIME
 No run-specific error recorded yet.
+
+- 2026-10-10, Actions run 38072248144: forecast tests and model run passed (132/132 valid rows, zero model failures), but reconciliation failed because the manifest writer serialized a literal backslash-n suffix, causing JSONDecodeError. Fixed reconciliation to tolerate that legacy suffix; the next run must confirm the full reconcile/README/claim-ledger steps pass. No source claim ledger from the failed reconcile is accepted.
