@@ -104,7 +104,7 @@ The dataset schema uses timezone-aware IST timestamps and exposes an `open_inter
 
 ## Review of the user-supplied PDF literature set
 
-I also reviewed the 13 PDFs supplied in this project conversation. These papers cover Indian options trading, derivative strategies, NIFTY price-level forecasting, machine learning, moving averages, investor flows, sentiment and volatility. They are not all direct ORB studies. Their reported classification accuracy or index-price error metrics cannot be converted into expected option-strategy profitability without a leakage-safe signal definition, executable contract selection, leg-specific fills, costs and a complete out-of-sample trade ledger.
+I also reviewed all 14 PDFs supplied in this project conversation. These papers cover Indian options trading, derivative strategies, NIFTY price-level forecasting, machine learning, moving averages, investor flows, sentiment and volatility. They are not all direct ORB studies. Their reported classification accuracy or index-price error metrics cannot be converted into expected option-strategy profitability without a leakage-safe signal definition, executable contract selection, leg-specific fills, costs and a complete out-of-sample trade ledger.
 
 ### Direct options / strategy papers
 
