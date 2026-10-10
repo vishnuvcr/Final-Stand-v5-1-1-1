@@ -1,3 +1,21 @@
+<!-- PHASE93_START -->
+# Resume checkpoint — Phase 93 uploaded literature evidence audit
+
+**Status: LITERATURE SYNTHESIS DRAFTED; AUTOMATED BIBLIOGRAPHY VALIDATION PENDING.** This bounded phase reviews all 14 uploaded papers and integrates them into the manuscript. It is a documentation/evidence-synthesis task, not a new strategy experiment. No strategy is promoted and the protected Phase 83 2026 holdout remains sealed.
+
+- [Phase 93 plan](PHASE93_RESEARCH_PLAN.md)
+- [Phase 93 status](PHASE93_STATUS.md)
+- [Phase 93 error log](PHASE93_ERROR_LOG.md)
+- [Phase 93 auditable chat log](PHASE93_CHAT_LOG.md)
+- [Paper-by-paper uploaded literature audit](results/phase93/UPLOADED_LITERATURE_AUDIT.md)
+- [Automated coverage validator](research/phase93/validate_literature_audit.py)
+- [Updated research manuscript](results/phase92/MANUSCRIPT_DRAFT.md)
+- [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
+
+The additional literature contains daily index-price predictions, feature-context models (FII/DII, VIX, PCR, sentiment), conceptual option strategy descriptions, and paper-reported ML/CCI backtests. These are not independently reproduced strategy returns and do not close the exact-contract execution-quote/depth/cost gate.
+
+<!-- PHASE93_END -->
+
 <!-- PHASE92_START -->
 # Resume checkpoint — Phase 92 synthetic-forward proxy and OI study
 
