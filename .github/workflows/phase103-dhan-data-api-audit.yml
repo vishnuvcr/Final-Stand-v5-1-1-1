@@ -41,7 +41,8 @@ jobs:
     env:
       DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_API_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_DATA_API_TOKEN }}
       PHASE103_FROM_DATE: ${{ inputs.from_date || '2026-08-02' }}
-      PHASE103_TO_DATE: ${{ inputs.to_date || '2026-09-01' }}
+      PHASE103_TO_DATE: ${{ inputs.to_date || '2026-08-04' }}
+      PHASE103_MAX_PROBES: ${{ inputs.max_probes || 1 }}
     steps:
       - name: Checkout isolated Phase 103 branch
         uses: actions/checkout@v4
