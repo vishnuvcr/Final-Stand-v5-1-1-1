@@ -1,16 +1,24 @@
 # Phase 71 — DhanHQ bounded historical-options pilot
 
-Decision: **BLOCKED_NO_DHAN_ACCESS_TOKEN**
+Decision: **PILOT_TARGET_ROWS_FOUND**
 
-Checked at UTC: 2026-10-10T08:18:06.753502+00:00
+Checked at UTC: 2026-10-10T09:32:16.653172+00:00
 
 ## Aggregate results
 
 | Target session | Expiry flag | Side | Returned rows | Target-session rows | Decision |
 |---|---|---:|---:|---:|---|
+| 2026-07-28 | WEEK | CALL | 750 | 375 | ROWS_FOUND |
+| 2026-07-28 | WEEK | PUT | 750 | 375 | ROWS_FOUND |
+| 2026-07-28 | MONTH | CALL | 750 | 375 | ROWS_FOUND |
+| 2026-07-28 | MONTH | PUT | 750 | 375 | ROWS_FOUND |
+| 2026-08-04 | WEEK | CALL | 770 | 385 | ROWS_FOUND |
+| 2026-08-04 | WEEK | PUT | 770 | 385 | ROWS_FOUND |
+| 2026-08-04 | MONTH | CALL | 770 | 385 | ROWS_FOUND |
+| 2026-08-04 | MONTH | PUT | 770 | 385 | ROWS_FOUND |
 
 ## Interpretation
 
-The authenticated API probe was not run because repository secret DHAN_ACCESS_TOKEN is absent. No purchase was made. Configure the secret only after confirming an active DhanHQ Data API subscription and permitted research/data-retention terms.
+At least one configured ATM-relative probe returned target-session rows. Inspect per-probe coverage and expiry-code semantics before expanding the pull.
 
 No raw market rows or credentials are stored in this report. A passing target-date probe only confirms that some ATM-relative rows exist; it does not establish full-chain coverage, executable bid/ask fills, complete expiry mapping, or profitability.

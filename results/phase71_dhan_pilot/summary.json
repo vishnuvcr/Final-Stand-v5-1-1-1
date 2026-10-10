@@ -1,6 +1,76 @@
 {
-  "checked_at_utc": "2026-10-10T08:18:06.753502+00:00",
-  "decision": "BLOCKED_NO_DHAN_ACCESS_TOKEN",
-  "probes": [],
-  "interpretation": "The authenticated API probe was not run because repository secret DHAN_ACCESS_TOKEN is absent. No purchase was made. Configure the secret only after confirming an active DhanHQ Data API subscription and permitted research/data-retention terms."
+  "checked_at_utc": "2026-10-10T09:32:16.653172+00:00",
+  "decision": "PILOT_TARGET_ROWS_FOUND",
+  "targets": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "probes": [
+    {
+      "target_date": "2026-07-28",
+      "expiry_flag": "WEEK",
+      "side": "CALL",
+      "rows": 750,
+      "target_session_rows": 375,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-07-28",
+      "expiry_flag": "WEEK",
+      "side": "PUT",
+      "rows": 750,
+      "target_session_rows": 375,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-07-28",
+      "expiry_flag": "MONTH",
+      "side": "CALL",
+      "rows": 750,
+      "target_session_rows": 375,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-07-28",
+      "expiry_flag": "MONTH",
+      "side": "PUT",
+      "rows": 750,
+      "target_session_rows": 375,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-08-04",
+      "expiry_flag": "WEEK",
+      "side": "CALL",
+      "rows": 770,
+      "target_session_rows": 385,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-08-04",
+      "expiry_flag": "WEEK",
+      "side": "PUT",
+      "rows": 770,
+      "target_session_rows": 385,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-08-04",
+      "expiry_flag": "MONTH",
+      "side": "CALL",
+      "rows": 770,
+      "target_session_rows": 385,
+      "status": "ROWS_FOUND"
+    },
+    {
+      "target_date": "2026-08-04",
+      "expiry_flag": "MONTH",
+      "side": "PUT",
+      "rows": 770,
+      "target_session_rows": 385,
+      "status": "ROWS_FOUND"
+    }
+  ],
+  "errors": [],
+  "interpretation": "At least one configured ATM-relative probe returned target-session rows. Inspect per-probe coverage and expiry-code semantics before expanding the pull."
 }
