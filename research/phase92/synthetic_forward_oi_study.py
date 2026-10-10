@@ -109,10 +109,14 @@ def options_chunk(start,end,side,key,allow_split=True):
     lengths=[len(x) for x in arrays if isinstance(x,list)]
     aligned=len(lengths)==len(FIELDS) and len(set(lengths))==1
     n=len(block.get("timestamp",[])) if isinstance(block.get("timestamp",[]),list) else 0
-    valid=aligned and n>0
+    has_weekday=any((start+timedelta(days=offset)).weekday()<5 for offset in range(max((end-start).days,0)))
+    # A zero-row, well-formed response for an interval consisting only of weekend days
+    # is expected market-calendar coverage, not a missing-data error.
+    no_weekday_observed=(aligned and n==0 and not has_weekday)
+    valid=aligned and (n>0 or no_weekday_observed)
     COVERAGE.append({"source":"options","from_date":start.isoformat(),"to_date_exclusive":end.isoformat(),
         "side":side,"http_status":status,"rows":n,"arrays_aligned":aligned,"cache_hit":hit,"valid":valid,
-        "error_class":"" if valid else "SchemaOrEmpty"})
+        "error_class":"" if n>0 else ("NoWeekdayExpected" if no_weekday_observed else "SchemaOrEmpty")})
     log(f"OPTIONS {start}/{end}/{side} status={status} rows={n} aligned={aligned} cache_hit={hit} valid={valid}")
     if not valid:
         ISSUES.append(f"Options {start}–{end} {side}: schema or array-alignment gate failed.")
@@ -411,7 +415,7 @@ Option IV, close-derived synthetic proxy and OI features are lagged one full fiv
 ## Effect size
 {effect_context}
 
-Decision rule: claim added predictive value only if all data/sample gates pass and the entire 95% paired session-cluster bootstrap interval for M2 MAE − M4 MAE is above zero. An interval crossing zero does not establish a gain, and does not prove the features contain no information.
+Decision rule: claim added predictive value only if all data/sample gates pass and the entire 95% paired session-cluster bootstrap interval for M2 MAE − M4 MAE is above zero. If the entire interval is below zero, the feature block degraded prediction in this fixed sample; if it includes zero, no gain is established. Neither outcome is strategy P&L evidence and neither proves the features contain no information.
 
 ## Descriptive VIX regimes
 VIX tertiles are determined on DEV data. The following are descriptive only and must not be used to select features or strategies:
@@ -571,8 +575,10 @@ def main():
             status="INCONCLUSIVE — DEV/validation training sample gate failed"
         elif primary.get("ci95_low") is not None and primary["ci95_low"]>0:
             status="PASS — lagged synthetic-forward/OI feature block adds OOS magnitude-prediction value; not strategy evidence"
+        elif primary.get("ci95_high") is not None and primary["ci95_high"]<0:
+            status="NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample"
         else:
-            status="NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero"
+            status="NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes zero"
     summary.update({"phase":92,"run_url":RUN_URL,"status":status,
         "requested_period":["2022-01-01","2023-01-01_exclusive"],
         "holdout_2026_requested":False,"instrument_master":MASTER,"quality":QUALITY,
