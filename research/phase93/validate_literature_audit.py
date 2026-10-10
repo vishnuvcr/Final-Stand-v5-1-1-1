@@ -85,7 +85,7 @@ def main() -> int:
         "### 3.5 Indian NIFTY index-forecasting and technical-feature studies",
         "### 3.6 Indian options-strategy studies",
         "### 3.7 Research gap",
-        "not independently reproduced by this project",
+        "are not independently reproduced by this project",
         "Paytm Money",
         "Phase 83",
     ):
