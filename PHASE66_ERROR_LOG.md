@@ -14,3 +14,11 @@
 - Status: follow-up in Phase 65 found coverage blockers; Phase 66 must confirm from its outputs.
 - Impact: expectancy, win rate, profit factor, drawdown and P&L inference are not estimable when trade count is zero.
 - Mitigation: report coverage first and do not fabricate fills.
+
+
+## Automated run failure — 2026-10-10T05:35:48Z
+- Workflow run: 38028015865
+- Commit: 9eabb1c8d321db08ad624cdc5617fff61b749434
+- Attempt: 1/3 automatic attempts
+- Job conclusion: failure; inspect the linked Actions logs for the failed step. No numerical output from this run is accepted unless all research report and audit gates completed.
+- Automatic attempts stop at 3; a subsequent manually forced attempt needs concrete error correction and must preserve previous entries.
