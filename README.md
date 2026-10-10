@@ -1072,3 +1072,31 @@ The workflow [37995733702](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/act
 - [Phase56 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_ERROR_LOG.md) · [Automated workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/.github/workflows/phase-56-ohlc-pnl-sensitivity.yml)
 
 **Research-wide guardrails:** no holdout used; no strategy promoted; source revision remains pinned to `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; CC BY-NC 4.0 rules prohibit commercial use/promotion of this data; OHLC open fills remain simulated reference prices, not confirmed executions. No profitability conclusion is established.
+
+
+# Latest continuation checkpoint — 2026-10-10 — Phase 55 and Phase 54 accepted
+
+## Phase 55 — Complete selected-leg audit (CLOSED / PASS)
+
+The bounded repair replay passed in [run 37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572). The frozen 480-row ledger reconciles to 379 OHLC-range-proxy exclusions, 100 strict prior-minute OI blocks, and one baseline replay pass. The audit verified 480/480 rows have the expected number of selected-leg records with unique leg IDs, on the pinned source revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`. This closes serialization/data-integrity repair only; it does not improve eligible sample size or establish strategy efficacy.
+
+- [Phase 55 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_RESEARCH_PLAN.md)
+- [Phase 55 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_STATUS.md)
+- [Phase 55 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_ERROR_LOG.md)
+- [Repaired event replay ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/results/phase52/historical_pilot/event_replay.csv)
+
+## Phase 54 — OHLC-reference sensitivity (CLOSED / COVERAGE ONLY)
+
+After syncing the Phase 55 repaired ledger, [run 38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487) passed regression tests, sensitivity computation, 480-row reconciliation, artifact upload and log persistence. The input fingerprint is `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`; all 480 rows have complete leg payloads, including explicit hard prior-OI blockers. Across the preregistered range thresholds (2, 3, 4, 5, 6, 8, 10, 12, 15, 20 and 1000%), eligible row counts were 1, 1, 8, 24, 55, 91, 150, 227, 298, 345 and 380 respectively. Every threshold reconciled to 480 rows; the 100 OI blockers remained invariant and entry-data rejects were zero.
+
+These counts are eligibility sensitivity only. OHLC high-low/open is not a quoted bid/ask spread, and relaxing the diagnostic range threshold does not validate fills, exits or profitability. No P&L was recomputed, holdout remained untouched, and no strategy was promoted.
+
+- [Phase 54 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_RESEARCH_PLAN.md)
+- [Phase 54 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md)
+- [Phase 54 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_ERROR_LOG.md)
+- [Sensitivity report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/report.md)
+- [Threshold table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/threshold_sensitivity.csv)
+
+## Next research gate
+
+Continue Phase 52's factor-conditioned strategy research only after resolving the upstream data-coverage limitations and the source-license/executable-quote constraints. The 480-row BASELINE pilot is not a factor-selector experiment, has only one baseline replay pass, and cannot support strategy ranking. The finite grid size (9,379,584 configurations) remains queue size, not tested count. Do not promote a strategy or use the 2026 holdout until a predeclared, adequately covered, cost-aware replay and statistical validation pass.
