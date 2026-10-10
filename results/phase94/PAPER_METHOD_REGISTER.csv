@@ -1,0 +1,52 @@
+registry_id,paper_id,source_short,title_target,method_id,method_name,inputs_or_rule,planned_phase,replication_type,prior_evidence,status
+R001,U01,Bansal et al. 2022,prices for 12 Indian companies,M02,KNN regressor,historical prices,95,forecast model,none recorded,PLANNED
+R002,U01,Bansal et al. 2022,prices for 12 Indian companies,M03,Linear Regression,historical prices,95,forecast model,none recorded,PLANNED
+R003,U01,Bansal et al. 2022,prices for 12 Indian companies,M04,Support Vector Regression,historical prices,95,forecast model,none recorded,PLANNED
+R004,U01,Bansal et al. 2022,prices for 12 Indian companies,M05,Decision Tree Regression,historical prices,95,forecast model,none recorded,PLANNED
+R005,U01,Bansal et al. 2022,prices for 12 Indian companies,M09,LSTM,historical price sequences,95,forecast model,paper-level source claim only,PLANNED
+R006,U02,Sherasiya 2025,NIFTY options buy-sell signals,M07,Random Forest,"Greeks, IV, underlying; contract identity required",97,options signal,source metrics unverified,DATA_GATE_PENDING
+R007,U02,Sherasiya 2025,NIFTY options buy-sell signals,M08,XGBoost,"Greeks, IV, underlying; contract identity required",97,options signal,source metrics unverified,DATA_GATE_PENDING
+R008,U02,Sherasiya 2025,NIFTY options buy-sell signals,M09,LSTM,"Greeks, IV, underlying; contract identity required",97,options signal,source metrics unverified,DATA_GATE_PENDING
+R009,U02,Sherasiya 2025,NIFTY options buy-sell signals,MOMENTUM,Basic momentum comparator,underlying trend signal,97,baseline,source comparator,PLANNED
+R010,U03,Bumrah & Budhani 2023,NIFTY daily close,M04,SVM,"USD FX, FII gross buys/sells, NIFTY",95,forecast model,source split 65/35 and 70/30 described,PLANNED
+R011,U03,Bumrah & Budhani 2023,NIFTY daily close,M06,RBF neural model,"USD FX, FII gross buys/sells, NIFTY",95,forecast model,source methodology,PLANNED
+R012,U03,Bumrah & Budhani 2023,NIFTY daily close,M06,MLP neural model,"USD FX, FII gross buys/sells, NIFTY",95,forecast model,reported stronger method,PLANNED
+R013,U03,Bumrah & Budhani 2023,NIFTY daily close,M06,SLP neural model,"USD FX, FII gross buys/sells, NIFTY",95,forecast model,source methodology,PLANNED
+R014,U04,Sain & Singh 2026,next-day NIFTY open/close,M01,Naive persistence,prior close/open baseline,95,baseline,source explicit baseline,PLANNED
+R015,U04,Sain & Singh 2026,next-day NIFTY open/close,M03,Linear Regression,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R016,U04,Sain & Singh 2026,next-day NIFTY open/close,M03,Lasso,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R017,U04,Sain & Singh 2026,next-day NIFTY open/close,M03,Ridge,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R018,U04,Sain & Singh 2026,next-day NIFTY open/close,M03,Elastic Net,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R019,U04,Sain & Singh 2026,next-day NIFTY open/close,M05,Decision Tree Regressor,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R020,U04,Sain & Singh 2026,next-day NIFTY open/close,M07,Random Forest,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R021,U04,Sain & Singh 2026,next-day NIFTY open/close,M08,Gradient Boosting,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R022,U04,Sain & Singh 2026,next-day NIFTY open/close,M08,AdaBoost Regressor,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R023,U04,Sain & Singh 2026,next-day NIFTY open/close,M08,XGBoost,"OHLCV; optional indicator features",95,forecast model,source methodology,PLANNED
+R024,U05,Atheetha et al. 2019,options timing/rules,M20,EMA trend rule,monthly trend and average method,96/99,rule-based,source-specific reconstruction needed,PLANNED
+R025,U05,Atheetha et al. 2019,options timing/rules,M21,Simple-average/monthly-seasonality,first Thursday entry; T+3 timing; stop loss,96/99,rule-based options,source rules to extract,PLANNED
+R026,U06,Naik & Inamdar 2024,NIFTY trend,LSTM+BERT,BERT news sentiment,LSTM price + news sentiment + FII/DII/VIX/PCR,95,multimodal forecast,point-in-time sentiment/data required,DATA_GATE_PENDING
+R027,U08,Harish et al. 2023,NIFTY direction/price,M09,LSTM,normalized daily time series,95,forecast model,reported 83.88% accuracy unverified,PLANNED
+R028,U09,Kallimath et al.,NIFTY price,M03,Linear Regression,price history,95,forecast model,full metadata/settings verification needed,PLANNED
+R029,U09,Kallimath et al.,NIFTY price,M09,LSTM,sequence data,95,forecast model,source method,PLANNED
+R030,U09,Kallimath et al.,NIFTY price,M11,GRU,sequence data,95,forecast model,source method,PLANNED
+R031,U09,Kallimath et al.,NIFTY price,M12,CNN,sequence data,95,forecast model,source method,PLANNED
+R032,U09,Kallimath et al.,NIFTY price,M10,RNN,sequence data,95,forecast model,source method,PLANNED
+R033,U09,Kallimath et al.,NIFTY price,M13,TCN,sequence data,95,forecast model,source method,PLANNED
+R034,U09,Kallimath et al.,NIFTY price,M14,LSTM+GRU,sequence data,95,hybrid model,source method,PLANNED
+R035,U09,Kallimath et al.,NIFTY price,M15,CNN+RNN,sequence data,95,hybrid model,source method,PLANNED
+R036,U09,Kallimath et al.,NIFTY price,M16,CNN+TCN,sequence data,95,hybrid model,source method,PLANNED
+R037,U09,Kallimath et al.,NIFTY price,M17,LSTM+TCN,sequence data,95,hybrid model,source method,PLANNED
+R038,U10,Mahajan et al. 2025,NIFTY trend/return,M20,SMA crossover,source period and windows to extract,96,rule-based index test,reported crossover not significant versus passive,PLANNED
+R039,U10,Mahajan et al. 2025,NIFTY trend/return,M20,EMA crossover,source period and windows to extract,96,rule-based index test,reported crossover not significant versus passive,PLANNED
+R040,U10,Mahajan et al. 2025,NIFTY trend/return,M20,Buy-and-hold comparator,source period and window alignment,96,benchmark,source paired t-test; add dependence-aware inference,PLANNED
+R041,U11,Fathali et al. 2022,NIFTY price,M10,RNN,source sequence settings,95,forecast model,source evaluation,PLANNED
+R042,U11,Fathali et al. 2022,NIFTY price,M09,LSTM,source sequence settings,95,forecast model,reported lower errors than RNN/CNN,PLANNED
+R043,U11,Fathali et al. 2022,NIFTY price,M12,CNN,source sequence settings,95,forecast model,source evaluation,PLANNED
+R044,U12,Kumar & Sharma 2016,next-day OHLC,M06,MLP backpropagation,OHLCV and turnover; 2006-04 to 2016-05,95,forecast model,reported accuracy 99.2152% and RMSE .0079 unverified,PLANNED
+R045,U12,Kumar & Sharma 2016,next-day OHLC,M06,Levenberg-Marquardt backprop,OHLCV and turnover as specified,95,forecast model,include only where exact source specification supports,PLANNED
+R046,U13,Jafar et al. 2023,NIFTY close up to 30-day horizon,M09,LSTM,OHLCV + 14-period RSI,95,forecast model,source reported 95% accuracy unverified,PLANNED
+R047,U13,Jafar et al. 2023,NIFTY close up to 30-day horizon,M18,Backward-elimination LSTM,feature elimination on training data only,95,forecast model,reported improvement; leakage risk to audit,PLANNED
+R048,U14,Shaha, NIFTY option CCI,CCI,CCI long-option rule,strict-ITM options and source exit/stop rules,98,options strategy,Phase 66 zero trades/coverage; no identical replay,DATA_GATE_PENDING
+R049,CROSS,U01/U04/U09/U11,Ungrouped common price-level tasks,M01,Naive persistence,identical dates per model,95,baseline,required common comparator,PLANNED
+R050,CROSS,U06,LSTM+BERT plus context,Incremental feature ablations,price-only / +sentiment / +FII-DII / +VIX / +PCR,95,ablation,only as data permits,PLANNED
+R051,CROSS,U05/U07,options strategy overview,Payoff structures explicitly named in paper,structure-specific payoff diagrams; no invented entry triggers,99,payoff taxonomy,exact inventory pending full text extraction,PLANNED
