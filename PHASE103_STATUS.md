@@ -249,3 +249,8 @@ Run [38089336359](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 - API probes returning rows: 10/10.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+<!-- DHAN_NO_RESULT_RUN_38089656281 -->
+### No fresh Dhan audit result
+Run 38089656281 produced no current-run JSON; prior run output was not accepted.

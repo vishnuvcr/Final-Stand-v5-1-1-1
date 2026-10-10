@@ -161,3 +161,9 @@ Run [38089220578](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 **Affected run:** [38089336359](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089336359).  
 **Symptom:** unit-test preflight failed with NameError because `provider_to_date` was referenced but not imported. The API call step was skipped. The status logger then reused the previous run's JSON and mistakenly printed its PASS status for the current run.  
 **Correction:** add the missing import; delete prior-run output files from the workflow workspace before any tests; make the status writer require the JSON `run_id` to equal the current `GITHUB_RUN_ID`; in fallback, record "no fresh result" rather than treating a stale artifact as current evidence. No data/strategy conclusions are based on this failed run.
+
+
+<!-- DHAN_NO_RESULT_RUN_38089656281 -->
+### E103-RUN-38089656281 — No fresh audit JSON for this run
+Tests, network requests or audit generation did not produce a machine result whose run_id matches the current Actions run. Any prior JSON is not valid evidence for this run.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281

@@ -208,3 +208,8 @@ The workflow failed before a machine-readable result was written. No source/data
 - API probes returning rows: 10/10.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+<!-- DHAN_NO_RESULT_RUN_38089656281 -->
+## Dhan audit no result — run 38089656281
+No current-run JSON was produced; previous audit data were not accepted as this run's output.
