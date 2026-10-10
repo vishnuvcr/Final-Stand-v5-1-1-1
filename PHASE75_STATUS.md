@@ -1,18 +1,23 @@
 # Phase 75 Status
 Date: 2026-10-10
-Status: PLAN FROZEN; IMPLEMENTATION NOT YET RUN.
+Status: BLOCKED — EXACT EXPIRY IDENTITY NOT EXPOSED BY THE CURRENT ROLLING RESPONSE.
 
-## Prior phase result
-Phase 74 completed successfully in [workflow run 38042154732](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042154732). Fixed-strike stitching is mechanically feasible for some strikes in each tested group.
+## Completed checks
+- [x] Read the frozen Phase 51-1 source-gate record; missing expiry dates are 2026-07-28 and 2026-08-04.
+- [x] Reconciled Phase 74 result: all 16 groups passed stitching feasibility, with full coverage for some strikes per group.
+- [x] Reviewed DhanHQ rolling expired-options response documentation.
+- [x] Recorded findings in [PHASE75_FINDINGS.md](PHASE75_FINDINGS.md).
 
-## Current blocker
-Exact historical expiry identity and strategy-leg mapping remain unresolved. Phase 74 tested only two dates and aggregate strike coverage; it did not prove the intended expiry date for any frozen strategy leg.
+## Finding
+DhanHQ's rolling endpoint selects contracts using relative expiry flags/codes and ATM-relative strikes. The documented response does not expose an explicit expiry-date field per bar. The Phase 74 stitch audit can recover a continuous absolute-strike series for some strikes, but cannot prove which exact expiry that series represents. Do not infer expiry from counts or code numbers.
 
-## Checklist
-- [ ] Read frozen strategy artifacts and enumerate required legs.
-- [ ] Obtain official expiry/contract evidence for each target date.
-- [ ] Verify whether Dhan rolling-option metadata can identify exact expiry.
-- [ ] Publish leg-level PASS/BLOCKED results with provenance.
-- [ ] Update README and error log after workflow outcome.
+## Next path
+Use an authorized fixed-contract historical dataset or official contract-wise archive that identifies expiry date, absolute strike and option type. Validate minute-level coverage and retention rights before any replay. NSE's historical contract-wise archive is documented at https://www.nseindia.com/all-reports-derivatives; if it supplies only daily bars for the target dates, use it for identity validation only, not intraday P&L.
 
-No P&L replay or strategy promotion is authorized until identity and data-rights gates pass.
+## Remaining gates
+- [ ] Obtain exact expiry/strike/side identity for every frozen strategy leg.
+- [ ] Confirm rights to retain raw data.
+- [ ] Validate execution assumptions; OHLC is not bid/ask/depth.
+- [ ] Include Paytm Money costs and conservative slippage/spread in any later replay.
+
+No P&L replay or strategy promotion is authorized by this phase.
