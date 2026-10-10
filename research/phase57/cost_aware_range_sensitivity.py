@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "research" / "phase52"))
 import historical_pilot_runner as runner  # noqa: E402
 
-THRESHOLDS = [2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 1000]
+THRESHOLDS = [2, 1000]
 REVISION = "0f4800e43e6f96cec0794369d78eb4d3c4211ef5"
 OUT = ROOT / "results" / "phase57" / "cost_aware_range_sensitivity"
 
