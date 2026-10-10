@@ -243,13 +243,20 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--from-date",default=os.getenv("PHASE103_FROM_DATE","2026-08-03"))
     p.add_argument("--to-date",default=os.getenv("PHASE103_TO_DATE","2026-08-04"),help="exclusive")
-    p.add_argument("--max-probes",type=int,default=int(os.getenv("PHASE103_MAX_PROBES","1")),
-                   help="maximum number of symbol/side API probes for this bounded run")
+    p.add_argument("--max-probes",type=int,default=int(os.getenv("PHASE103_MAX_PROBES","70")),
+                   help="maximum number of symbol/side/strike API probes for this bounded run")
+    p.add_argument("--strikes",default=os.getenv("PHASE103_STRIKES",",".join(DEFAULT_STRIKES)),
+                   help="comma-separated Dhan relative strikes; allowed offsets are ATM and ATM +/- 1..3")
     p.add_argument("--out-dir",default="results/phase103")
     a=p.parse_args(); days=check_window(a.from_date,a.to_date)
     api_to_date=provider_to_date(a.from_date,a.to_date)
-    if not 1 <= a.max_probes <= len(SYMBOLS) * 2:
-        p.error("--max-probes must be from 1 through 10")
+    try:
+        strikes=parse_strikes(a.strikes)
+    except ValueError as exc:
+        p.error(str(exc))
+    max_possible=len(SYMBOLS)*2*len(strikes)
+    if not 1 <= a.max_probes <= max_possible:
+        p.error(f"--max-probes must be from 1 through {max_possible} for the selected relative strikes")
     out=Path(a.out_dir); out.mkdir(parents=True,exist_ok=True)
     result={"phase":"103.1","run_id":os.getenv("GITHUB_RUN_ID","local"),
         "generated_at_utc":datetime.now(timezone.utc).isoformat(),
@@ -257,8 +264,9 @@ def main():
                   "request_mode":"half_open_target_window_with_inclusive_provider_toDate_adjustment"},
         "provider_request_window":{"fromDate":a.from_date,"toDate_inclusive":provider_to_date(a.from_date,a.to_date)},
         "probe_limit":a.max_probes,
+        "requested_relative_strikes":strikes,
         "endpoint":ENDPOINT,"instrument_master_sha256":None,"instrument_master_bytes":None,
-        "underlying_map":{},"probes":[],"raw_rows_persisted":False,
+        "underlying_map":{},"probes":[],"surface_audit":[],"raw_rows_persisted":False,
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
         "known_limits":["Rolling strikes can change actual strike over time.",
           "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
@@ -278,19 +286,33 @@ def main():
         if not token:
             result["status"]="BLOCKED_NO_DHAN_ACCESS_TOKEN"
         else:
+            surface_blocks = []
             for sym in SYMBOLS:
                 m=result["underlying_map"].get(sym,{})
                 for side in ["CALL","PUT"]:
+                    for relative_strike in strikes:
+                        if len(result["probes"]) >= a.max_probes:
+                            break
+                        if not m.get("security_id"):
+                            result["probes"].append({"symbol":sym,"requested_option_type":side,
+                                "requested_relative_strike":relative_strike,"status":"BLOCKED_UNDERLYING_ID"})
+                            continue
+                        code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date)
+                        result["probes"].append(summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date))
+                        # Raw timestamps and actual strikes exist only in memory to audit the cross-offset panel.
+                        side_key = "ce" if side == "CALL" else "pe"
+                        if obj and isinstance(obj.get("data"), dict) and isinstance(obj["data"].get(side_key), dict):
+                            data_block=obj["data"][side_key]
+                            if isinstance(data_block.get("timestamp"), list) and isinstance(data_block.get("strike"), list):
+                                surface_blocks.append({"symbol":sym,"option_type":side,
+                                    "relative_strike":relative_strike,
+                                    "timestamps":data_block["timestamp"],"strikes":data_block["strike"]})
+                        time.sleep(1.1)
                     if len(result["probes"]) >= a.max_probes:
                         break
-                    if not m.get("security_id"):
-                        result["probes"].append({"symbol":sym,"requested_option_type":side,"status":"BLOCKED_UNDERLYING_ID"})
-                        continue
-                    code,obj,safe_error=query(token,m["security_id"],side,a.from_date,api_to_date)
-                    result["probes"].append(summarize(sym,side,code,obj,safe_error,a.from_date,a.to_date))
-                    time.sleep(1.1)
                 if len(result["probes"]) >= a.max_probes:
                     break
+            result["surface_audit"]=summarize_surface(surface_blocks, strikes)
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
             error_codes={str(v.get("api_error_code","")).upper() for v in result["probes"] if v.get("api_error_code")}
             auth_count=sum(v.get("status") in ["AUTH_401","AUTH_403"] for v in result["probes"])
@@ -302,6 +324,8 @@ def main():
                 result["status"]="REQUEST_SCHEMA_OR_PARAMETER_ERROR"
             elif outside_count > 0:
                 result["status"]="DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS"
+            elif any(v.get("rows",0)>0 and not v.get("array_lengths_consistent",False) for v in result["probes"]):
+                result["status"]="ARRAY_LENGTH_INTEGRITY_FAIL"
             elif len(result["probes"])==a.max_probes and rows_count==a.max_probes: result["status"]="PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES"
             elif rows_count: result["status"]="PARTIAL_DATA_RETURNED"
             else: result["status"]="NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
@@ -309,22 +333,38 @@ def main():
     lines=["# Phase 103.1 — Dhan Data API smoke test","",f"**Status:** {result['status']}",
       f"**Target window (IST):** {a.from_date} inclusive to {a.to_date} exclusive ({days} days)",
       f"**Dhan request dates:** fromDate={a.from_date}; toDate={api_to_date} (empirically inclusive; target end remains exclusive)",
+      f"**Relative strikes:** {', '.join(strikes)}",
       f"**Probe limit:** {a.max_probes}",
       f"**Run:** {result['run_id']}","",
       "This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.",
-      "","| Symbol | Side | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | First UTC | Last UTC | IST-date row counts | Rows outside requested dates |",
-      "|---|---|---:|---|---|---|---:|---|---|---|---|---:|"]
+      "","| Symbol | Side | Offset | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | Distinct actual strikes | Strike changes | First strike | Last strike | First UTC | Last UTC | IST-date row counts | Rows outside dates |",
+      "|---|---|---|---:|---|---|---|---:|---|---:|---:|---|---|---|---|---|---:|"]
     for v in result.get("probes",[]):
-        lines.append("| {symbol} | {side} | {http} | {status} | {code} | {message} | {rows} | {consistent} | {first} | {last} |".format(
-          symbol=v.get("symbol",""),side=v.get("requested_option_type",""),http=v.get("http_status",""),
-          status=v.get("status",""),code=v.get("api_error_code") or "",
+        lines.append("| {symbol} | {side} | {offset} | {http} | {status} | {code} | {message} | {rows} | {consistent} | {distinct} | {changes} | {first_strike} | {last_strike} | {first} | {last} |".format(
+          symbol=v.get("symbol",""),side=v.get("requested_option_type",""),offset=v.get("requested_relative_strike",""),
+          http=v.get("http_status",""),status=v.get("status",""),code=v.get("api_error_code") or "",
           message=(v.get("api_error_message") or "").replace("|","/"),
           rows=v.get("rows",0),consistent=v.get("array_lengths_consistent",False),
+          distinct=v.get("distinct_actual_strikes",0),changes=v.get("actual_strike_changes",0),
+          first_strike=v.get("first_actual_strike") or "",last_strike=v.get("last_actual_strike") or "",
           first=v.get("first_timestamp_utc") or "",last=v.get("last_timestamp_utc") or ""))
         # Append IST date-bin and out-of-window audit columns without shifting the table.
         lines[-1] = lines[-1].rstrip()[:-1] + " | {} | {} |".format(
           json.dumps(v.get("timestamp_counts_by_ist_date",{}),sort_keys=True),
           v.get("outside_requested_date_window_rows") if v.get("outside_requested_date_window_rows") is not None else "n/a")
+    lines += ["","## Relative-strike surface / fixed-contract continuity audit","",
+      "| Symbol | Side | Offsets returned | Common timestamps | Union timestamps | Min distinct strikes/minute | Max distinct strikes/minute | Distinct actual strikes | Strikes seen every minute | Duplicate timestamp-strike keys | Surface gate |",
+      "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
+    for v in result.get("surface_audit",[]):
+        lines.append("| {symbol} | {side} | {n} | {common} | {union} | {minv} | {maxv} | {distinct} | {complete} | {dupes} | {gate} |".format(
+          symbol=v.get("symbol",""),side=v.get("option_type",""),n=v.get("offset_series_returned",0),
+          common=v.get("common_timestamp_count_across_offsets",0),union=v.get("union_timestamp_count",0),
+          minv=v.get("minimum_distinct_actual_strikes_per_timestamp",0),
+          maxv=v.get("maximum_distinct_actual_strikes_per_timestamp",0),
+          distinct=v.get("distinct_actual_strikes_in_surface",0),
+          complete=v.get("actual_strikes_observed_at_every_union_timestamp",0),
+          dupes=v.get("duplicate_timestamp_actual_strike_keys_across_offsets",0),
+          gate=v.get("relative_surface_alignment_gate","NOT_ESTIMABLE")))
     lines += ["","## Underlying ID mapping","","| Symbol | ID resolved | Status |","|---|---|---|"]
     for sym,m in result.get("underlying_map",{}).items():
         lines.append("| {} | {} | {} |".format(sym,"yes" if m.get("security_id") else "no",m.get("status")))
@@ -332,8 +372,11 @@ def main():
     (out/"DHAN_DATA_API_AUDIT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
     print(json.dumps({"phase":"103.1","status":result["status"],"window":result["window"],
       "underlying_ids_resolved":sum(1 for x in result.get("underlying_map",{}).values() if x.get("security_id")),
-      "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],
-      "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),"rows_outside_requested_date_window_total":result.get("rows_outside_requested_date_window_total",0)},indent=2))
+      "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"relative_strikes":strikes,
+      "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),
+      "surface_groups":len(result.get("surface_audit",[])),
+      "surface_gates_passed":sum(1 for x in result.get("surface_audit",[]) if x.get("relative_surface_alignment_gate")=="PASS"),
+      "rows_outside_requested_date_window_total":result.get("rows_outside_requested_date_window_total",0)},indent=2))
     return 0
 
 if __name__=="__main__":
