@@ -1,5 +1,8 @@
 name: Phase 91 — temporal replication of IV incremental prediction (2023)
 
+# Push/manual entry point. The Phase 90 base branch also supplies a pull_request-triggered
+# runner so this study can execute automatically when its draft PR is synchronized.
+
 on:
   push:
     branches:
