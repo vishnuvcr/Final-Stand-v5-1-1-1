@@ -969,3 +969,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Initial Actions run 38057309811 failed at test collection (repository import path); the market-data replay was correctly skipped.
 - The workflow logger then failed at git add because no result folder existed yet. The test import and conditional result staging were corrected.
 - No strategy P&L, source-coverage finding, or economic inference was produced by this run. Refer to the Phase 98 branch logs for the full audit.
+
+
+## 2026-10-10 — Phase 98 follow-up execution attempts
+- Runs 38057371871 and 38057380129 did not reach data replay: tests failed to import a stale cost-function name.
+- The third run's publisher also encountered a concurrent rebase conflict on audit logs. No P&L was produced. The errors are recorded and corrected before a clean rerun.
