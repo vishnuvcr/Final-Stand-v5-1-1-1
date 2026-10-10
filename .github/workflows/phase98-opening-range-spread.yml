@@ -15,7 +15,8 @@ permissions:
 
 concurrency:
   group: phase98-opening-range-debit-spread
-  cancel-in-progress: false
+  # Prefer the newest corrected code over an obsolete long-running replay.
+  cancel-in-progress: true
 
 jobs:
   replay:
