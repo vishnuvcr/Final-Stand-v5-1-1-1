@@ -15,7 +15,12 @@ pos=[r for r in close if n(r,"mae_improvement_vs_persistence")>0]
 ci=[r for r in close if n(r,"bootstrap_ci_low")>0]
 sig=[r for r in close if n(r,"mae_improvement_vs_persistence")>0 and n(r,"bootstrap_ci_low")>0 and n(r,"holm_p_value")<.05]
 directions=[n(r,"directional_accuracy_pct") for r in close if math.isfinite(n(r,"directional_accuracy_pct"))]
-manifest_text=(OUT/"data_manifest.json").read_text(encoding="utf-8")\n# Earlier writer emitted a literal backslash-n suffix; tolerate and document that serialization defect.\nif manifest_text.endswith("\\\\n"):\n manifest_text=manifest_text[:-2]\nmanifest=json.loads(manifest_text)
+manifest_text=(OUT/"data_manifest.json").read_text(encoding="utf-8")
+# Earlier writer emitted a literal backslash-n suffix; tolerate and document that serialization defect.
+if manifest_text.endswith("\\\
+"):
+ manifest_text=manifest_text[:-2]
+manifest=json.loads(manifest_text)
 claims=[
 ("U01","Five regressors vs LSTM on 12 Indian stocks; SMAPE/RMSE/R2","Common NIFTY screen only; source universe, exact dates/split and source inputs not matched.","PARTIAL_COMMON_SCREEN_ONLY"),
 ("U02","RF/XGBoost/LSTM options signals and reported trading metrics","No source options feature matrix, exact signals or executable options P&L in Phase 95.","DATA_GATE_PENDING"),
