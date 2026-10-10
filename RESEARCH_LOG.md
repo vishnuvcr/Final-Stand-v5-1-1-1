@@ -159,3 +159,11 @@ Phase 51-1 stopped fail-closed on data availability before any fresh OOS strateg
 - User requested the Dhan data API access token as the data source. Added secret-based Dhan expired-options API client and a 30-day smoke test (ATM monthly CE/PE for all five names), instrument-master ID resolution, focused unit tests, aggregate-only results, and status/error-log automation. No credential or raw API rows are published.
 - The Dhan API workflow is bridged from the default branch to permit manual dispatch, and the Phase 103 branch remains the checkout/commit target. [Launch bridge](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase103-dhan-data-api-bridge.yml) · [Phase 103 plan/status/logs](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options).
 - The live API result has not been confirmed in the available tool results at this checkpoint. Do not claim Dhan data was successfully acquired until a run artifact exists. Dhan's endpoint returns rolling-strike OHLC/IV/volume/OI/spot but not documented historical bid/ask/depth, so contract continuity and executable fills remain explicit gates.
+
+
+
+## 2026-10-11 — Dhan API live probe and parameter correction
+
+- The first executed Dhan API smoke test, [run 38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054), passed the unit tests, downloaded the 26,116,616-byte instrument master (SHA-256 `2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173`), and resolved HDFCBANK, ICICIBANK, RELIANCE, SBIN and INFY. The ten expired-options requests returned HTTP 400 with `DH-905: expiryCode is required`; no option rows were returned.
+- The request incorrectly appeared to be missing `expiryCode: 0` to the provider. Its annexure lists zero as current/near expiry, but the request example uses `1` (next expiry). Code and registry were updated to test `expiryCode: 1`, with an additional unit test. Retry [run 38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181) was initiated with safe allow-listed error diagnostics.
+- The result is pending until the retry report is persisted. No strategy P&L or success conclusion is drawn. All raw option rows remain unpublished pending retention/republication-rights verification.
