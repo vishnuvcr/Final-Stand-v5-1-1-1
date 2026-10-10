@@ -1,0 +1,72 @@
+name: Phase 64 — Paper-Derived CCI Strategy Tests
+
+on:
+  push:
+    branches:
+      - phase-64-paper-derived-strategy-tests
+    paths:
+      - ".github/workflows/phase64-paper-derived-strategy-tests.yml"
+      - "research/phase64_paper_strategy_tests.py"
+      - "research/phase64_report.py"
+      - "tests/test_phase64_strategy.py"
+      - "requirements-phase64.txt"
+      - "PHASE64_RESEARCH_PLAN.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase64-paper-derived-tests
+  cancel-in-progress: false
+
+jobs:
+  cci-paper-strategy-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-phase64.txt
+
+      - name: Restore pinned Hugging Face cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: hf-phase64-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+          restore-keys: |
+            hf-phase64-${{ runner.os }}-
+
+      - name: Install bounded dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-phase64.txt
+
+      - name: Syntax gate
+        run: |
+          python -m py_compile research/phase64_paper_strategy_tests.py research/phase64_report.py
+          python -m pytest -q tests/test_phase64_strategy.py
+
+      - name: Run frozen development and validation test
+        run: python research/phase64_paper_strategy_tests.py
+
+      - name: Generate report and figures
+        if: success()
+        run: python research/phase64_report.py
+
+      - name: Upload aggregate-only results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase64-paper-strategy-results-${{ github.run_id }}
+          path: results/phase64_paper_strategy_tests/
+          if-no-files-found: warn
+          retention-days: 30
