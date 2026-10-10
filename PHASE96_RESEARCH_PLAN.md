@@ -24,3 +24,7 @@ Execution note: the registered workflow is triggered by pushes to the plan/scrip
 
 ## Preregistered feasibility amendment — 2026-10-10
 The initial run found no eligible HIGH-regime candidate at the 20-trade minimum. Before inspecting any strategy's profitability output, the minimum was reduced to 5 trades in both DEV and VAL for all three fixed regimes so the method can be evaluated at all. This lowers precision and increases small-sample risk; trade counts are reported per state and no promotion is permitted.
+
+
+## Second feasibility amendment — 2026-10-10
+After the 5-trade attempt also failed the HIGH-regime coverage gate, an isolated coverage audit showed that the maximum matching validation trade count for any defined-risk HIGH candidate is 3. The minimum is therefore set to 3 for all three regimes, using coverage counts only as the amendment rationale. This means HIGH-regime estimates are extremely sparse and are descriptive only; aggregate positive results cannot trigger promotion.
