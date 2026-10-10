@@ -124,3 +124,10 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Affected run:** [38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181).  
 **Finding:** the request step did not finish before a newer workflow revision cancelled the run; the API did not persist a machine-readable response. The run is not evidence that data are present or absent.  
 **Correction:** introduced a strict maximum-probe option and changed the next smoke test to one symbol/side on one trading session. If it succeeds, expand incrementally and log each verified chunk; if it fails or times out, capture its safe error status and stop to diagnose.
+
+<!-- DHAN_API_RUN_38089084020_ATTEMPT_1 -->
+### E103-DHAN-38089084020 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS; rows returned by 1/1 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089084020

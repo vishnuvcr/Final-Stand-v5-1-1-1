@@ -1,15 +1,15 @@
 # Phase 103.1 — Dhan Data API smoke test
 
-**Status:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES
+**Status:** DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS
 **Window:** 2026-08-03 inclusive to 2026-08-04 exclusive (1 days)
 **Probe limit:** 1
-**Run:** 38088975571
+**Run:** 38089084020
 
 This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.
 
-| Symbol | Side | HTTP | Status | Rows | Arrays consistent | First UTC | Last UTC |
-|---|---|---:|---|---:|---|---|---|
-| HDFCBANK | CALL | 200 | DATA_RETURNED |  |  | 770 | True | 2026-08-03T03:45:00+00:00 | 2026-08-04T10:09:00+00:00 |
+| Symbol | Side | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | First UTC | Last UTC | IST-date row counts | Rows outside requested dates |
+|---|---|---:|---|---|---|---:|---|---|---|---|---:|
+| HDFCBANK | CALL | 200 | DATA_RETURNED |  |  | 770 | True | 2026-08-03T03:45:00+00:00 | 2026-08-04T10:09:00+00:00  | {"2026-08-03": 385, "2026-08-04": 385} | 385 |
 
 ## Underlying ID mapping
 
@@ -25,4 +25,5 @@ This is a data-feasibility probe, not a strategy test. The token and raw rows ar
 
 - Rolling strikes can change actual strike over time.
 - This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.
-- A single 30-day probe does not establish full-history completeness or independent test sufficiency.
+- One stock/side probe does not establish full-history completeness or independent test sufficiency.
+- Returned timestamps are audited in Asia/Kolkata against the documented half-open request window; out-of-window rows block accepting the sample.
