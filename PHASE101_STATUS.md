@@ -11,7 +11,7 @@
 | Work item | Prior evidence | Phase 101 action | State |
 |---|---|---|---|
 | U02 — ML NIFTY options signals (RF/XGBoost/LSTM) | First run improperly reused initial ₹1 lakh to size every trade | Re-run with separate sequential ₹1 lakh equity per model, 95% premium exposure cap, 5% fee reserve, block bootstrap interval when sample permits | VALIDATED_PROXY_TEST |
-| U05 — monthly trend/seasonality options rule | First run allowed some Thursday entries before Wednesday forecast | Re-run with first Thursday strictly after first Wednesday; preserve exclusions and publish sample-coverage limits | VALIDATED_PROXY_TEST |
+| U05 — monthly trend/seasonality options rule | First run allowed some Thursday entries before Wednesday forecast | Re-run with literal first-Thursday entry; exclude months where that Thursday precedes the Wednesday signal; publish coverage limits | VALIDATED_PROXY_TEST |
 | U07 — payoff structures | Phase 99 algebra tested 13 structures over nine expiry spots; not historical P&L | Carry forward formula evidence; keep history P&L blocked absent entry signals/quotes | CARRIED FORWARD |
 | U10 — moving averages | Phase 96 fixed SMA/EMA screen | Carry forward descriptive comparison, not claim of exact reproduction | CARRIED FORWARD |
 | U14 — CCI options | Phase 66 zero completed trades; Phase 67 exact-time coverage 8/30 triggers, 5/30 next-minute rows; Phase 68 missing target-date audit | Carry forward no-expectancy-inference decision; no rule loosening | CARRIED FORWARD |
@@ -57,3 +57,7 @@ The first successful runtime output set is superseded and not accepted as final 
 - U02: 1330 predictions; 164 costed trades; model statuses [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
 - Account sizing: sequential per-model ₹1 lakh starting equity, 95% premium deployment limit, 5% fee reserve.
 - Bootstrap: circular moving-block 95% mean net-trade CI only when n>=20.
+
+
+## Source-fidelity correction — 2026-10-10
+The first corrected run prevented look-ahead by shifting some entries to the second Thursday. Audit showed this altered the paper's stated first-Thursday rule. The latest runner now preserves the literal first Thursday and explicitly excludes months where it precedes the first-Wednesday forecast. A final source-faithful replay is pending. Previous U05 P&L remains superseded.
