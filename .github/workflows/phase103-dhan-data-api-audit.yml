@@ -9,9 +9,9 @@ on:
         default: "2026-08-03"
         type: string
       to_date:
-        description: "End date exclusive (YYYY-MM-DD)"
+        description: "End date (YYYY-MM-DD); set equal to start to diagnose provider boundary behavior"
         required: true
-        default: "2026-08-04"
+        default: "2026-08-03"
         type: string
       max_probes:
         description: "Maximum underlying/side API probes (1–10); start with 1 for smoke test"
@@ -41,7 +41,7 @@ jobs:
     env:
       DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_API_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_DATA_API_TOKEN }}
       PHASE103_FROM_DATE: ${{ inputs.from_date || '2026-08-03' }}
-      PHASE103_TO_DATE: ${{ inputs.to_date || '2026-08-04' }}
+      PHASE103_TO_DATE: ${{ inputs.to_date || '2026-08-03' }}
       PHASE103_MAX_PROBES: ${{ inputs.max_probes || 1 }}
     steps:
       - name: Checkout isolated Phase 103 branch

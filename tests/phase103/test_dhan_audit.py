@@ -10,8 +10,9 @@ class DhanDataAuditTests(unittest.TestCase):
     def test_next_expiry_value_matches_dhan_request_sample(self):
         self.assertEqual(EXPIRY_CODE, 1)
 
-    def test_window_maximum_is_30_days(self):
+    def test_window_maximum_is_30_days_and_allows_endpoint_diagnostic(self):
         self.assertEqual(check_window("2026-08-02","2026-09-01"),30)
+        self.assertEqual(check_window("2026-08-03","2026-08-03"),0)
         with self.assertRaises(ValueError):
             check_window("2026-08-01","2026-09-01")
 

@@ -154,3 +154,12 @@ The workflow failed before a machine-readable result was written. No source/data
 - API probes returning rows: 1/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — Dhan date-boundary and stale-artifact diagnosis
+
+- Run [38088975571](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088975571) verified a successful 1-probe API request after the workflow environment was fixed. It initially counted 770 rows.
+- After adding IST-date counts, runs [38089084020](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089084020) and [38089152325](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089152325) independently showed 385 rows on 2026-08-03 and 385 on 2026-08-04 from a request whose toDate was 2026-08-04. Since the official docs say toDate is non-inclusive, the sample is flagged for date-window mismatch.
+- Corrected the audit script to produce aligned columns and count out-of-window rows. The resulting status is `DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS`, not a clean pass.
+- Earlier run [38088846052](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088846052) had passed tests but failed before an API request due to an absent `PHASE103_MAX_PROBES` env variable; its status logger repeated stale prior JSON, which is logged as E103-010. Future acceptance requires JSON `run_id` to match Actions run ID.
+- Next action is a single HDFCBANK CALL query using equal start/end date values to test endpoint boundary behaviour, then re-run an ordinary half-open request with strict post-fetch range filtering. No further stock probes/backtests until this date-boundary gate is understood.

@@ -138,3 +138,16 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Status:** DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS; rows returned by 1/1 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089152325
+
+
+### E103-010 — Automatic Dhan workflow omitted PHASE103_MAX_PROBES
+**Type:** workflow configuration defect.  
+**Affected run:** [38088846052](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088846052).  
+**Symptom:** 12 unit tests passed, but the API command failed before making a request because `--max-probes` received an empty string. The workflow environment did not define `PHASE103_MAX_PROBES` and still passed the old date defaults. The inherited previous audit JSON was then mistakenly repeated by the status step; it is not evidence from run 38088846052.  
+**Correction:** wired `PHASE103_MAX_PROBES` into both workflows, corrected bounded dates, and required each audit conclusion to be tied to the machine JSON's `run_id`. Future status review must check run IDs to avoid stale-artifact confusion.
+
+### E103-011 — Dhan response exceeded documented non-inclusive date window
+**Type:** source response/date-boundary issue.  
+**Affected runs:** [38089084020](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089084020), [38089152325](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089152325).  
+**Finding:** request `fromDate=2026-08-03`, `toDate=2026-08-04` returned 770 HDFCBANK CALL rows, of which 385 have IST date 2026-08-03 and 385 have IST date 2026-08-04. Dhan documentation describes `toDate` as non-inclusive. The audit now marks `DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS`; no strategy use is allowed until date semantics are explained and extra rows can be deterministically trimmed/reconciled.  
+**Next diagnostic:** use equal `fromDate` and `toDate` for one bounded diagnostic request to determine whether the server treats the end date inclusively. This is a diagnostic, not a change to the registered half-open data definition.
