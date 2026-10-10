@@ -52,7 +52,7 @@ def summarize(payload, day, flag, side):
     parsed = [parse_stamp(x) for x in timestamps]
     valid = [x for x in parsed if x is not None]
     target = [x for x in valid if x.date().isoformat() == day]
-    regular = [x for x in target if dt.time(9, 15) <= x.time().replace(tzinfo=None) <= dt.time(15, 30)]
+    regular = [x for x in target if dt.time(9, 15) <= x.time().replace(tzinfo=None) < dt.time(15, 30)]
     epoch_keys = [x.timestamp() for x in valid]
     unique_keys = set(epoch_keys)
     duplicate_count = len(epoch_keys) - len(unique_keys)
