@@ -8,12 +8,14 @@ on:
       - 'results/phase51/available_oos/**'
       - '.github/workflows/phase77-partial-oos-inference.yml'
 permissions:
-  contents: read
+  contents: write
 jobs:
   inference-audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: phase-77-partial-oos-inference-audit
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -27,3 +29,14 @@ jobs:
           name: phase77-partial-oos-inference
           path: results/phase77_partial_oos_inference/
           if-no-files-found: error
+      - name: Persist aggregate results to phase branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase77_partial_oos_inference/summary.json results/phase77_partial_oos_inference/report.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Phase 77 partial-OOS inference results'
+            git pull --rebase origin phase-77-partial-oos-inference-audit
+            git push origin HEAD:phase-77-partial-oos-inference-audit
+          fi
