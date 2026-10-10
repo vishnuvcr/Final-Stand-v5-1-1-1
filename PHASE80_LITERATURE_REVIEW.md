@@ -86,3 +86,86 @@ This synthesis separates claims reported by sources from results independently r
 
 ## Overall judgement
 This literature review justifies further structured testing but not a claim that all combinations have been tried. It records reproducible hypotheses and evidence boundaries. Finish the bounded registered phases before considering another hypothesis.
+
+
+## 5. Paper-by-paper addendum from the uploaded PDFs
+
+This section adds a more granular evidence map for the papers attached to this project. Across the forecast-centric papers, the reported endpoint is generally index-price prediction (accuracy, R², RMSE, MAE or MAPE), not option P&L under exact contracts and realistic fills.
+
+### Bansal et al. (2022), Procedia Computer Science 215, 247–265
+- Title: “Stock Market Prediction with High Accuracy using Machine Learning Techniques.” The PDF compares classic machine-learning forecasting methods including KNN, linear regression and support-vector approaches.
+- Research value: a baseline-method catalogue for index direction/price prediction.
+- Major boundary: price prediction accuracy alone cannot select the correct option expiry/strike, handle theta/IV changes, or measure after-cost profitability. The headline "high accuracy" must be interpreted against a naive persistence/majority-class baseline and chronological evaluation.
+- Decision: no direct option strategy result is imported.
+
+### Bumrah & Budhani (2023), International Journal on Recent and Innovation Trends in Computing and Communication
+- Title: “An Efficient Approach to Forecasting the NIFTY-50 Indian Stock Market's Daily Closing Price with Artificial Neural Networks.”
+- Data/factors reported: NIFTY daily average closing price, dollar exchange rate, FII gross purchase and sale; models include SVM, RBF and single-/multi-layer perceptrons, with MLP reported best.
+- Research value: suggests dollar/foreign-institutional-flow features, if lagged and independently sourced, as possible forecast covariates.
+- Boundary: correlation/regression of daily index prices is not evidence FII data adds incremental net-options alpha. FII flows are published aggregate data, and timestamp alignment matters.
+
+### Fathali, Kodia & Ben Said (2022), Applied Artificial Intelligence
+- Title: “Stock Market Prediction of NIFTY 50 Index Applying Machine Learning Techniques.” DOI: https://doi.org/10.1080/08839514.2022.2111134
+- Research value: a comparatively prominent journal treatment of supervised NIFTY price prediction.
+- Boundary: even a well-performing index forecaster still needs a separate option policy, calibrated probabilities, transaction-cost treatment and out-of-sample trading evaluation before it becomes evidence for a strategy.
+
+### Sain & Singh (2026), Cureus Journal of Computer Science
+- Title: “Open and Close Price Forecasting of the NIFTY 50 Stock Index Using Machine Learning: A Multi-Window Study of Feature Engineering and Model Tuning.” DOI: https://doi.org/10.7759/s44389-026-00306-5; published 1 October 2026.
+- Design: 12 supervised models against Naïve Persistence, forecasting next-day index open/close across 5-, 10- and 20-year windows, with chronological train/test split and a TimeSeriesSplit tuning setup.
+- Reported result: linear models (Linear Regression, Ridge and Lasso) generalize more consistently than RF/XGBoost across longer windows; RF/XGBoost can be worse than naive on 10/20-year samples. The paper explains tree extrapolation ceilings as the index makes new highs.
+- Research value: supports retaining naive/linear baselines and varying training-window length, rather than assuming complex ML is superior.
+- Boundary: forecast errors on index levels still do not establish options profits; the article itself recommends rolling-origin/walk-forward follow-up.
+
+### Jafar et al. (2023/2024), Journal of Risk and Financial Management 16(4), 423
+- Title: “Forecasting of NIFTY 50 Index Price by Using Backward Elimination with an LSTM Model.”
+- Reported result: backward-feature-elimination LSTM outperforms a plain LSTM in next-30-day closing-price prediction; the abstract reports 95% “accuracy.”
+- Research value: supports feature selection as a possible dimensionality-control method.
+- Boundary: price-level “accuracy” is not directly comparable to a trading return metric and can be inflated by index-level persistence; no options trade ledger is reported in the reviewed abstract.
+
+### Kumar (2025), SSRN — reinforcement learning
+- Title: “Proximal Policy Optimization for Intraday Trading of NIFTY Index Call Options: A Deep Reinforcement Learning Study.” https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5768582 (working paper).
+- Abstract describes a long-only one-lot call-option policy trained on 2015–2023 and tested 2024–Aug 2025 under base and 3x slippage, with rewards based on mark-to-market equity net of modeled costs. It reports high risk-adjusted performance in a stylized simulator.
+- Research value: a distinct family not equivalent to the existing static-shape sweeps.
+- Limitations: SSRN working paper, no cited references shown in the search record, one asset/direction and stylized simulator; claimed results are not independently reproduced. It must not be added midway to Phase 81 or treated as validation.
+- Decision: record as a future independently specified replication lead, not a promoted candidate.
+
+### Agarwal (2026), SSRN — NIFTY variance-risk-premium anatomy
+- Title: “The Variance Risk Premium in Nifty 50: A Structural Anatomy Across Nine Empirical Filters.” https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6530119 (working paper).
+- Abstract reports 43M+ one-minute option bars from Aug 2022 to Mar 2026 (887 sessions), ATM IV derived via Black-76 and realized volatility using Yang–Zhang; reported VRP is positive on 74.9% of days with mean +1.208 volatility points, AR(1) 0.7861 and 25.1% inversions.
+- Research value: reinforces use of point-in-time IV/RV, a preregistered estimator, and tail-aware inference; reported serial dependence may be useful for forecasting.
+- Limitations: self-reported working-paper result and source/rights/contract coverage must be verified; positive measured VRP does not imply capturable net strategy P&L.
+
+### Additional uploaded ML and index-forecasting papers
+- ISMLA+7481.pdf: compares Linear Regression, LSTM, GRU, CNN, RNN, TCN and hybrids using MSE, R², RMSE, MAE and MAPE on a NIFTY dataset. Useful as an algorithm-benchmark catalogue, not options-performance evidence.
+- Stock_Market_Index_Forecasting_of_Nifty.pdf (Kumar & Sharma, 2016): MLP/ANN forecast of index levels; its reported 99.2152% “accuracy” is not a net trading return. Requires understanding the error definition and persistence baseline.
+- IJSDR2309053.pdf: reports 83.88% forecast accuracy and studies NIFTY / financial-sector index series using historical-price methods and Granger/impulse-response framing. The forecast metric does not test option fills.
+- IJCSE-V11I10P106.pdf (Naik & Inamdar, 2024): combines temporal ML and news/sentiment for NIFTY prediction. Potential idea only if news publication timestamps and point-in-time text are auditable; no option-execution proof.
+- D0801051829.pdf (Atheetha et al., 2019): compares selected stocks/sectors and seasonality/trend/returns using options concepts and statistical metrics. It does not provide a modern, contract-complete intraday options-chain execution ledger; any seasonality result is exposed to multiple-testing risk.
+- IJNRD2205074.pdf (2022): mostly educational/qualitative option-structure survey, useful to validate payoff logic rather than to claim an edge.
+
+### Shah (2019), CCI source paper — additional risk detail
+- The supplied SSRN paper reports about 9–10 signals/year and roughly nine-day average holding, describes maximum risk around 58.65% of initial investment, and notes two consecutive losing trades could require a 117.30% loss buffer relative to one starting trade allocation.
+- The source claims attractive CCI-based ITM-option performance, but the Phase 66 Final Stand translation had zero completed trades for both CCI_BASE and CCI_EMA_FILTER. An empty replication cannot validate or falsify profitability; deterministic source-rule translation and sample coverage would need diagnosis without tuning to get trades.
+
+### Mahajan et al. (2025), moving averages — result nuance
+- The uploaded Journal of Informatics Education and Research paper analyzes NIFTY 50 SMA/EMA trends over 2010–2023 and reports very high correlation/regression fit to the index level. However, it also says the paired test did not find statistically significant evidence that Golden Cross/Death Cross improves returns over a passive approach.
+- This is a cautionary null for interpreting high regression R²/correlation as a tradable signal. Index-level forecast results are not option P&L.
+
+## 6. New official regulatory context and source leads (10 October 2026)
+
+- SEBI published updated official reports on 20 August 2026 titled “Study - Profitability of Individual Traders in the Equity Derivatives Segment (FY25–FY26)” and “Study - Trading Behaviour of Individual Traders in the Equity Derivatives Segment (FY25–FY26)”. Links: [profitability study](https://www.sebi.gov.in/reports-and-statistics/research/aug-2026/study-profitability-of-individual-traders-in-the-equity-derivatives-segment-fy25-fy26-_103835.html) and [trading behaviour study](https://www.sebi.gov.in/reports-and-statistics/research/aug-2026/study-trading-behaviour-of-individual-traders-in-the-equity-derivatives-segment-fy25-fy26-_103836.html). This review confirms their existence/date, but detailed figures have not been extracted into the project's data ledger yet and are not quoted here.
+- A prior SEBI release (23 Sep 2024) said 93% of individual traders lost money in equity F&O from FY22–FY24 and aggregate losses exceeded ₹1.8 lakh crore across those three financial years: https://www.sebi.gov.in/media-and-notifications/press-releases/sep-2024/updated-sebi-study-reveals-93-of-individual-traders-incurred-losses-in-equity-fando-between-fy22-and-fy24-aggregate-losses-exceed-1-8-lakh-crores-over-three-years_86906.html. This is population-level context, not proof about any particular strategy.
+- A separate data route surfaced in Bhat et al.'s data-availability statement: the Zenodo one-minute NIFTY dataset (2017–2020), 320.9 MB, with spot, front futures and per-strike option OHLCV: https://zenodo.org/records/10899828. Its license field is blank, so contents are metadata-only until rights are clarified. Do not ingest or redistribute raw bars without permission.
+
+## 7. Literature-to-project mapping
+| Research theme | Existing project coverage | New lead | Current action |
+|---|---|---|---|
+| Intraday vs overnight option returns | New Phase 81 paired static-structure horizon sweep | Bhat et al. (2024) delta-hedged result | Compare only with explicit method caveat |
+| IV/RV / volatility-risk premium | India VIX regime work Phase 40–50B; no promoted strategy | Mutum (2020), Patra (2025), Agarwal (2026), Pillai (2026) | Keep IV/RV as future frozen selector study after source/rights validation |
+| Direction/sentiment | Feature and ensemble/selector work | Mutum ADR/PCOI; Naik & Inamdar news sentiment; FII/USD factors | Require timestamped point-in-time inputs and incremental net P&L |
+| RL / policy learning | Existing ensemble/selector policy research is not identical to learned position-action policy | Kumar (2025) PPO | Future replication lead only, not added after Phase 81 freeze |
+| Moving averages / classical indicators | Prior indicator tests and CCI replication issue | Mahajan (2025), older ML price predictors | Do not equate correlation/accuracy with options profitability |
+| All-strategy search completeness | Phase 45 tests 20 new shapes plus 22 reused families; other phases test regime/selector/exit axes | New papers add distinct hypotheses, not proof of an edge | Maintain a finite registered test matrix; no endless expanding grid |
+
+## 8. Literature review conclusion
+The review does not identify a robust, reproducibly proven net-profitable NIFTY options strategy that can simply be adopted unchanged. It identifies useful research axes—holding horizon, correctly estimated VRP/IV-RV, sentiment/flow features, and a separately controlled learned policy—but several newer claims are working papers or forecast-only research. The current registered Phase 81 comparison should be completed and inferred before launching another family. All new claims remain external hypotheses until a dated trade ledger with exact contracts, fees, slippage, risk, and validation is reproducibly generated.
