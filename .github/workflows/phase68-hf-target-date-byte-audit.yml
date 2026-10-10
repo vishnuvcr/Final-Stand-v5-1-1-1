@@ -1,0 +1,71 @@
+name: Phase 68 HF Target-Date Byte Audit
+
+on:
+  push:
+    branches: [phase-68-hf-target-date-byte-audit]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase68-hf-target-date-byte-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-68-hf-target-date-byte-audit
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check huggingface_hub pyarrow pandas
+      - name: Validate current target file bytes
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/phase68_hf_target_date_audit.py
+      - name: Create aggregate report
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = Path("results/phase68_hf_target_date_audit/summary.json")
+          dest = Path("results/phase68_hf_target_date_audit/report.md")
+          dest.parent.mkdir(parents=True, exist_ok=True)
+          if source.exists():
+              d = json.loads(source.read_text())
+              lines = ["# Phase 68 — Fresh HF target-date byte audit", "",
+                       f"**Decision:** `{d.get('decision')}`", "",
+                       f"- Source: `{d.get('source')}`",
+                       f"- Revision: `{d.get('revision')}`", "",
+                       "| Target | Available | Bytes | SHA-256 | Rows | Target-session rows | Unique target minutes |",
+                       "|---|---:|---:|---|---:|---:|---:|"]
+              for r in d.get("targets", []):
+                  lines.append("| {date} | {available} | {bytes} | {sha256} | {rows} | {target_session_rows} | {unique_target_minutes} |".format(
+                      date=r.get("date"), available=r.get("available", False), bytes=r.get("bytes", ""),
+                      sha256=r.get("sha256", ""), rows=r.get("rows", ""),
+                      target_session_rows=r.get("target_session_rows", ""), unique_target_minutes=r.get("unique_target_minutes", "")))
+              lines += ["", "Raw Parquet files are not included in this report or uploaded as artifacts.",
+                        "This is a source gate only; it does not calculate P&L or establish executable quotes."]
+              dest.write_text("\n".join(lines) + "\n")
+          else:
+              dest.write_text("# Phase 68 — Fresh HF target-date byte audit\n\nNo aggregate JSON was produced; inspect workflow logs.\n")
+          PY
+      - name: Publish aggregate diagnostics
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase68_hf_target_date_audit/summary.json results/phase68_hf_target_date_audit/report.md
+          if ! git diff --cached --quiet; then
+            git commit -m "results(phase68): publish aggregate target-date audit"
+            git push origin HEAD:phase-68-hf-target-date-byte-audit
+          fi
