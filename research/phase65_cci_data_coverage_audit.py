@@ -32,7 +32,7 @@ def run():
     idx=idx.drop_duplicates("timestamp").set_index("timestamp",drop=False).sort_index()
     audit=pd.read_csv(ROOT/"results"/"phase64_paper_strategy_tests"/"opportunity_audit.csv")
     audit=audit.loc[audit["trigger_ts"].notna() & audit["trigger_ts"].astype(str).ne("")].copy()
-    rx=re.compile(r"options/NIFTY/(\\d{4}-\\d{2}-\\d{2})\\.parquet$")
+    rx=re.compile(r"options/NIFTY/(\d{4}-\d{2}-\d{2})\.parquet$")
     names=set(files); cache={}; rows=[]
     for _,ev in audit.iterrows():
         try: trigger=pd.Timestamp(ev["trigger_ts"])
