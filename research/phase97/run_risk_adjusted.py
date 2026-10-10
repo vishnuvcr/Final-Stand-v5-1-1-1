@@ -57,3 +57,5 @@ def main():
     (OUT/"validation_report.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     print(json.dumps(report,indent=2))
 if __name__=="__main__": main()
+
+# Frozen Phase 97 method; no validation-based selection.
