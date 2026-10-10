@@ -128,3 +128,20 @@ No automated result can by itself authorise live deployment. The final report mu
 ## 7. Phase 103.1 first task
 
 Do a metadata/rights audit first, then acquire/cache only authorised samples. Build a comparable liquidity coverage score before strategy backtests. If full historical option quote/depth data are unavailable, test a narrower EOD/defined-risk research question only if the exact strategy can be tested with defensible prices; label the evidence accordingly. Do not invent historical Greeks, spreads or order-book depth.
+
+
+## Dhan Data API integration amendment — 2026-10-11
+
+Primary authorized acquisition path requested for Phase 103.1: DhanHQ Data API using the repository Actions secret. Official documentation identifies POST /v2/charts/rollingoption for expired options on a rolling basis, with minute bars, up to five years, and a maximum 30-day window per call. Supported fields include OHLC, IV, volume, OI, strike and spot; stock options support ATM through ATM+3/ATM-3. The instrument security ID will be resolved fresh from Dhan's published instrument master rather than hardcoded.
+
+- API docs: https://dhanhq.co/docs/v2/expired-options-data/
+- Instrument master: https://dhanhq.co/docs/v2/instruments/
+- Endpoint: https://api.dhan.co/v2/charts/rollingoption
+- Secret reference: the workflow accepts DHAN_ACCESS_TOKEN, DHAN_API_ACCESS_TOKEN, DHAN_TOKEN or DHAN_DATA_API_TOKEN. Values must never be printed, committed or placed in artifacts.
+- First smoke test: HDFCBANK, ICICIBANK, RELIANCE, SBIN and INFY; ATM monthly CALL and PUT; 2026-08-02 inclusive through 2026-09-01 exclusive. This 30-day window is a data-feasibility sample, not a strategy holdout or strategy-P&L sample.
+- If successful, Phase 103.1 expands data coverage with rolling 30-day chunks, then audits actual returned rows, timestamp coverage, array-length integrity, missing-versus-zero OI and source/schema changes before candidate rules are developed.
+- Rolling relative strikes may map to different actual strikes over time. Do not treat a single ATM-offset series as a persistent fixed-strike contract. Any later strategy must reconstruct contract identity using actual strike/expiry and must exclude intervals when contract identity cannot be preserved.
+- This expired-options endpoint does not document historical bid/ask/depth. Quote quality, spread and fills cannot be called historically observed from this endpoint alone. Later P&L must either add an authorized historical quote source or transparently use a conservative, explicitly proxy-based execution model with a no-go gate where evidence is insufficient.
+- Raw Dhan payload retention and redistribution rights are not yet verified. The bounded API workflow publishes aggregate audit statistics only; raw response rows stay ephemeral until allowed storage is established. This avoids exposing licensed market data in the public repository.
+
+Phase 103.1 workflow: .github/workflows/phase103-dhan-data-api-audit.yml. The branch-push run and manual dispatch both perform unit tests, query the instrument master, call Dhan's expired stock-options endpoint, and automatically write the aggregate result/status/error checkpoint back to this branch.
