@@ -1,3 +1,73 @@
+# Resume checkpoint — 2026-10-10 (Phase 76 alternate fixed-contract source result)
+
+Phase 76 tested the exact Hugging Face expiry files for 2026-07-28 and 2026-08-04. Both files exist and expose expiry/strike/option_type fields, but both stop at trade date 2026-07-02; neither has expiry-session rows or any full 375-bar contract on the expiry date. **Decision: NO-GO for filling these two expiry gaps from this source. Exclude the two expiries and continue with the remaining validated sample under the frozen research plan.** The corrected audit is [workflow run 38042745566](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042745566); its aggregate report is available as a workflow artifact.
+
+- [Phase 76 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/PHASE76_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/PHASE76_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/PHASE76_ERROR_LOG.md) · [Audit script](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/scripts/phase76_hf_fixed_contract_audit.py) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/.github/workflows/phase76-hf-fixed-contract-source-audit.yml)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 75 contract identity finding)
+
+Phase 74 stitching passed, but Phase 75 found that the DhanHQ rolling response does not document an explicit expiry date per bar. The frozen missing-expiry dates are 2026-07-28 and 2026-08-04. Do not infer expiry identity from relative expiry codes or strike coverage; the affected strategy replay remains blocked pending an authorized fixed-contract source.
+
+- [Phase 75 findings](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_FINDINGS.md)
+- [Phase 75 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_RESEARCH_PLAN.md)
+- [Phase 75 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_STATUS.md)
+- [Phase 75 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-75-expiry-contract-identity/PHASE75_ERROR_LOG.md)
+- [Phase 74 stitch workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042154732)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 74 fixed-strike stitch test)
+
+Phase 73 [run 38042070177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042070177) recorded 16/24 probes; all expiryCode=0 requests returned HTTP 400. Codes 1/2 returned rolling ATM-relative data, but exact expiry identity remains unresolved. The ATM series itself is not a fixed-contract series.
+
+Phase 74 tests whether querying all ATM-relative offsets (ATM-10 through ATM+10) and selecting bars by returned absolute strike can reconstruct fixed-strike minute histories. It covers only 2026-07-28 and 2026-08-04, uses codes 1/2, and stores aggregate per-strike coverage only—not raw prices. Even if stitching succeeds, exact expiry mapping and source rights remain required before any P&L replay.
+
+- [Phase 74 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/PHASE74_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/PHASE74_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/PHASE74_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-74-fixed-strike-stitch-feasibility/.github/workflows/phase74-fixed-strike-stitch-feasibility.yml)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 73 source suitability decision)
+
+Phase 73 [workflow run 38042070177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042070177) recorded 16/24 responses; all eight `expiryCode=0` probes returned HTTP 400. Codes 1/2 returned rows, but exact expiry dates are not established by these aggregate responses. The `strike` arrays contained only 7 distinct absolute strikes on 2026-07-28 and 5 on 2026-08-04 over the multi-session response. Because Dhan's API is explicitly rolling ATM-relative, its absolute strike can change through time.
+
+**Decision: NO-GO for using this endpoint alone to compute frozen fixed-contract position P&L.** Clean timestamps and OHLC arrays do not fix contract continuity. Do not use these rolling series as if they were a single held option contract. The source may still support carefully scoped rolling-relative factor analysis, subject to data-use rights. The next research step should test exact historical contract mapping against an authorized source or a fixed-contract dataset; no paid pack has been purchased.
+
+- [Phase 73 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_ERROR_LOG.md) · [Aggregate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/results/phase73_expiry_strike_mapping/report.md)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 73 expiry-code comparison)
+
+Phase 72 audit passed [run 38041988143](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041988143). All eight probes had unique timestamps, aligned required arrays and no >1-minute gaps within the regular session. 2026-07-28 had 375 session bars. 2026-08-04 had 375 regular-session bars plus 10 off-session rows through 15:39 IST; those are excluded.
+
+The material remaining blocker is contract mapping. Official DhanHQ docs define expiryCode 0=current/near expiry, 1=next expiry, 2=far expiry ([annexure](https://dhanhq.co/docs/v2/annexure/)). Phase 71 used code 1 only, so its data cannot be assumed to match the intended expiry. Phase 73 compares codes 0/1/2 and audits rolling strike metadata across the same two dates. No replay or promotion until exact expiry and absolute strike requirements are verified.
+
+- [Phase 73 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/.github/workflows/phase73-dhan-expiry-strike-mapping.yml)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 72 audit result)
+
+Phase 72 [workflow run 38041988143](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041988143) passed its aggregate-only audit. Across all eight probes, timestamps were unique, required arrays aligned, no >1-minute gaps were found within the regular session, and OHLC values passed basic validity checks. On 2026-07-28 each probe had 375 regular-session minute bars. On 2026-08-04 each had 375 regular-session bars plus 10 off-session rows extending to 15:39 IST; those extra rows must be excluded.
+
+**Important blocker:** Phase 71 used `expiryCode=1`. DhanHQ's official annexure defines 0=current/near expiry, 1=next expiry, and 2=far expiry ([official annexure](https://dhanhq.co/docs/v2/annexure/)). Therefore these clean rows do not prove coverage of the exact contracts needed by frozen strategies. Phase 73 must compare expiry codes and map target expiry/strike semantics before any replay. No P&L or strategy promotion yet.
+
+- [Phase 72 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_ERROR_LOG.md) · [Aggregate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/results/phase72_dhan_integrity_audit/report.md)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 72 integrity audit)
+
+Phase 71 authenticated connectivity test [completed successfully](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041733380). The Dhan endpoint returned target-date timestamps for both previously missing sessions, but its aggregate count anomaly remains unresolved: 375 target-date rows per probe on 2026-07-28 and 385 on 2026-08-04, with total response counts 750 and 770. This is not yet accepted as complete contract coverage.
+
+Phase 72 now audits duplicate timestamps, IST session bounds, gaps, required field-array alignment and OHLC consistency using the same eight bounded probes. The workflow writes aggregate diagnostics only; it does not commit raw market data or credentials. No Phase 51 replay or strategy promotion until contract/expiry semantics, strategy strike coverage and permitted data-retention rights are validated.
+
+- [Phase 72 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/.github/workflows/phase72-dhan-data-integrity-audit.yml) · [Script](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/scripts/phase72_dhan_integrity_audit.py)
+
+---
+
 ## Phase 67 — latest completed diagnostic (2026-10-10)
 
 **Decision: insufficient evidence for rule-faithful replay; no strategy promotion.** [Actions run 38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) passed end-to-end. Among 30 frozen DEV/VAL trigger rows, 8 had an exact trigger-minute observation, 5 an exact next-minute observation, and 8 had ±2-minute context. Context bars are not fills; ITM/side/expiry mapping and execution-grade quote/depth remain unproven. No P&L or profitability inference is justified.
