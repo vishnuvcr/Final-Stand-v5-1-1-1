@@ -63,3 +63,6 @@ Append entries; never overwrite earlier failures.
 ## Corrected replay result — 2026-10-10T18:37:18Z
 - Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076280351
 - Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.
+
+
+- **E101-005 — U05 no-look-ahead correction changed the source's calendar rule.** An intermediate fix shifted a first-Thursday entry to the second Thursday when the forecast came later, which avoided leakage but no longer tested the published rule. That intermediate result is superseded. The current rule retains the literal first Thursday and excludes the opportunity if it precedes Wednesday's forecast. Regression tests now assert that July 2021 is excluded and June 2024 remains eligible.
