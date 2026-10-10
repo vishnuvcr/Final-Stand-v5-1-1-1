@@ -1,0 +1,48 @@
+name: Phase 94 Strategy Evidence Audit
+
+on:
+  push:
+    branches: [phase-94-strategy-evidence-audit]
+    paths:
+      - "results/phase94/strategy_evidence_register.csv"
+      - "results/phase94/audit_report.md"
+      - "research/phase94/validate_strategy_evidence.py"
+      - "PHASE94_RESEARCH_PLAN.md"
+      - ".github/workflows/phase94-strategy-evidence-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase94-strategy-evidence-audit
+  cancel-in-progress: false
+
+jobs:
+  validate-register:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-94-strategy-evidence-audit
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate audit register structure
+        run: python research/phase94/validate_strategy_evidence.py
+      - name: Publish validation report
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -f results/phase94/validation_report.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add results/phase94/validation_report.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Publish Phase 94 audit validation report"
+              git push origin HEAD:phase-94-strategy-evidence-audit
+            fi
+          fi

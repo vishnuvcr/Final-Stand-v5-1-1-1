@@ -1,0 +1,8 @@
+candidate_id,strategy,canonical_result,run_id,completed_trades,candidates,coverage,base_net_inr,stress50_net_inr,net20_order_inr,net20_stress50_inr,hold_net_inr,hold_trades,drawdown_inr,evidence_grade,decision
+TT02,Calendar replay,results/phase50b/tt02_calendar_replay/summary.json,37572837253,247,252,98.02%,-3387.42,-32226.76,-47212.62,-97964.56,NA,NA,NA,B,NO-GO negative across all cost cases
+TT03,Dynamic-n baseline,results/phase50b/tt03_dynamic_n_replay/summary.json,37620274641,200,201,99.50%,89669.15,82074.11,75509.15,60834.11,6201.79,3,13609.54,B,RESEARCH ONLY no promotion; only 3 chronological HOLD trades and statistical robustness gate failed
+TT03_OTM350,Far OTM350 geometry,results/phase50b/tt03_far_otm/OTM350/summary.json,not in checked summary,200,201,99.50%,69552.06,62094.34,55392.06,40854.34,5105.64,3,9953.07,B,RESEARCH ONLY; only 3 HOLD trades and statistical robustness gate failed
+TT04,Premium-match straddle,results/phase50b/tt04_premium_match_replay/summary.json,not in checked summary,1214,1232,98.54%,55582.71,11429.95,-1718.09,-74521.25,-6456.29,96,52596.80,B,NO-GO at higher cost stress and negative HOLD
+TT05,Short straddle,results/phase50b/tt05_short_straddle_replay/summary.json,not in checked summary,1184,1225,96.65%,52337.89,9429.09,-3546.91,-74398.11,-40244.68,78,60511.53,B,NO-GO at higher cost stress and negative HOLD
+TT06,Intraday asym replay,results/phase50b/tt06_intraday_asym_replay/terminal_classification.json,37722386852,NA,983,70.40%,NA,NA,NA,NA,NA,NA,NA,C,TERMINAL FAIL_COVERAGE; diagnostic P&L excluded
+TT07,Dynamic IC ratio replay,results/phase50b/tt07_dynamic_ic_ratio_replay/terminal_classification.json,37746729676,NA,59,1.69%,NA,NA,NA,NA,NA,NA,NA,C,TERMINAL FAIL_COVERAGE; diagnostic P&L excluded

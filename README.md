@@ -1,3 +1,17 @@
+<!-- PHASE94_CHECKPOINT_START -->
+## Phase 94 — Final Strategy Evidence Audit and Promotion Gate
+
+**Status: COMPLETE — bounded evidence audit; decision NO PROMOTION.** The full historical repository has not been normalized into one numeric leaderboard because versions, costs, splits and execution assumptions are not directly comparable.
+
+- [Research plan](PHASE94_RESEARCH_PLAN.md) · [status](PHASE94_STATUS.md) · [error log](PHASE94_ERROR_LOG.md) · [auditable chat log](PHASE94_CHAT_LOG.md)
+- [Final decision](results/phase94/FINAL_DECISION.md) · [initial evidence register](results/phase94/strategy_evidence_register.csv) · [canonical Phase 50B reconciliation](results/phase94/phase50b_reconciliation.md) · [machine-readable rows](results/phase94/phase50b_canonical_reconciliation.csv) · [legacy summary scan](results/phase94/legacy_strategy_summary_scan.md)
+- [Audit report](results/phase94/audit_report.md) · [structural validator](research/phase94/validate_strategy_evidence.py) · [manual/push workflow](.github/workflows/phase94-strategy-evidence-audit.yml) · [validation report](results/phase94/validation_report.json) · [successful workflow run 38053840727](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053840727) · [draft PR #44](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/44)
+- Phase 50B-6 tested 16 frozen hypotheses and found no robust-positive strategy. TT-02 is negative across four recorded cost scenarios. TT-04/TT-05 turn negative under ₹20/order scenarios and have negative chronological HOLD results. TT-03/OTM350 have positive point estimates but only three chronological HOLD trades each and fail the registered statistical robustness gate. TT-06/07 fail coverage.
+- Phase 66 CCI variants are non-estimable (zero completed trades). Phases 89–92 are predictors, not options P&L. Phase 93 author-reported literature metrics are not independent replications.
+- No new backtest or market/model experiment was run. No strategy promoted. Paytm Money brokerage/statutory charges, spread, adverse slippage, latency, stressed costs and exact-contract/fill evidence remain mandatory gates. Phase 83's protected 2026 holdout remains sealed.
+
+<!-- PHASE94_CHECKPOINT_END -->
+
 <!-- PHASE93_START -->
 # Resume checkpoint — Phase 93 uploaded literature evidence audit
 
