@@ -207,8 +207,8 @@ def validate_ledger(
                     f"OI-blocked row has no observed required-leg OI failure: "
                     f"{row['configuration_id']}::{row['event_id']}"
                 )
-            reason = (row.get("exclusion_reason") or "").lower()
-            if "prior-bar oi" not in reason and "prior oi" not in reason:
+            reason = (row.get("exclusion_reason") or "").lower().replace("_", " ").replace("-", " ")
+            if "prior oi" not in reason and "prior open interest" not in reason:
                 raise ValueError("OI-blocked row does not retain its canonical reason")
             hard_oi_rows += 1
         else:
