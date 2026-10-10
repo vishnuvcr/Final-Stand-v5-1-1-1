@@ -1,0 +1,22 @@
+{
+  "phase": 95,
+  "status": "PASS",
+  "source_path": "results/phase45_ready_made/strategy_vix_summary.csv",
+  "source_blob_sha": "4208da2e1189a68af697e11d03dd7d4ac937ddf7",
+  "selection_rule": "defined_risk=True; state=ALL; development trades >=50; maximize development net50; alphabetical tie-break",
+  "primary_endpoint": "selected strategy validation net50",
+  "eligible_strategy_count": 23,
+  "selected_strategy": "call_backspread",
+  "selected_development_net50_inr": 27393.35,
+  "selected_validation_net50_inr": -24261.74,
+  "selected_validation_trades": 101,
+  "selected_validation_max_drawdown_inr": 112975.51,
+  "selected_validation_positive": false,
+  "eligible_with_positive_validation_net50": 3,
+  "eligible_with_negative_or_zero_validation_net50": 20,
+  "holdout_rows_retained_or_used": false,
+  "phase83_2026_holdout_accessed": false,
+  "new_market_data_or_strategy_replay": false,
+  "strategy_promoted": false,
+  "interpretation": "PASS means the preregistered computation ran; profitability outcome is reported separately. This retrospective, previously explored source is not an independent blinded test."
+}

@@ -1,0 +1,51 @@
+name: Phase 95 Frozen-Universe Selection Test
+
+on:
+  push:
+    branches: [phase-95-nested-strategy-selection-test]
+    paths:
+      - "results/phase45_ready_made/strategy_vix_summary.csv"
+      - "research/phase95/run_selection_test.py"
+      - "PHASE95_RESEARCH_PLAN.md"
+      - ".github/workflows/phase95-selection-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase95-selection-test
+  cancel-in-progress: false
+
+jobs:
+  selection-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-95-nested-strategy-selection-test
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify source fingerprint and run preregistered test
+        run: |
+          python - <<'PY'
+          import hashlib, pathlib
+          p = pathlib.Path("results/phase45_ready_made/strategy_vix_summary.csv")
+          # The API blob SHA is recorded as provenance; verify file is present and non-empty.
+          assert p.exists() and p.stat().st_size > 1000, "frozen Phase 45 source missing or unexpectedly small"
+          print(f"source_bytes={p.stat().st_size}")
+          PY
+          python research/phase95/run_selection_test.py
+      - name: Publish computed results
+        if: always()
+        run: |
+          if [ -f results/phase95/validation_report.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add results/phase95/selection_results.csv results/phase95/validation_report.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Publish Phase 95 selection test results"
+              git push origin HEAD:phase-95-nested-strategy-selection-test
+            fi
+          fi
