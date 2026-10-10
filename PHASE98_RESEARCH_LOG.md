@@ -59,3 +59,8 @@
 ## Run 38058461330 — tests=success; replay=cancelled; audit=skipped; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058461330
 - Result status: PASS. Economic status: NO_PROMOTION.
 - Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.
+
+
+## Run 38058519330 — tests=success; replay=cancelled; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058519330
+- Result status: FAILED_BEFORE_NUMERICAL_RUN. Economic status: NOT_EVALUATED.
+- Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.

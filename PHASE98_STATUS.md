@@ -1,13 +1,13 @@
 # Phase 98 Status — NIFTY Opening-Range Debit Spread
 
-**Latest execution:** PASS  
-**Economic status:** NO_PROMOTION  
+**Latest execution:** FAILED_BEFORE_NUMERICAL_RUN  
+**Economic status:** NOT_EVALUATED  
 **Tests / replay / audit:** success / cancelled / skipped  
-**Latest run:** [38058461330](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058461330)
+**Latest run:** [38058519330](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058519330)
 
 ## Decision
 
-Arm A validation net: ₹0.00; severe stress: ₹0.00.
+No accepted numerical outcome.
 
 No live or paper promotion is allowed from Phase 98. Protected 2026 holdout remains unopened.
 

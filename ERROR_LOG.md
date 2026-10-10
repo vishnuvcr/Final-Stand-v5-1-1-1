@@ -2271,3 +2271,8 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 ## Phase 98 execution issue
 - Run 38058461330 — tests=success; replay=cancelled; audit=skipped; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058461330
 - Classified as non-evidence until the output and coverage gates pass.
+
+
+## Phase 98 execution issue
+- Run 38058519330 — tests=success; replay=cancelled; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058519330
+- Classified as non-evidence until the output and coverage gates pass.

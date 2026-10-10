@@ -1005,3 +1005,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 ## Phase 98 automated checkpoint
 - Run 38058461330 — tests=success; replay=cancelled; audit=skipped; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058461330
 - This was a trade-level, source-pinned replay. OHLC fill prices are proxies; no live strategy promotion.
+
+
+## Phase 98 automated checkpoint
+- Run 38058519330 — tests=success; replay=cancelled; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058519330
+- This was a trade-level, source-pinned replay. OHLC fill prices are proxies; no live strategy promotion.
