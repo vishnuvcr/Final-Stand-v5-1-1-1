@@ -1,0 +1,32 @@
+name: Phase 98 CCI Options Paper Replication Gate
+on:
+  push:
+    branches: [phase-98-cci-options-paper-replication-gate]
+    paths:
+      - 'research/phase98/**'
+      - 'PHASE98_*.md'
+      - '.github/workflows/phase98-cci-options-paper-replication-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test source-data gate
+        run: python -m pip install pytest && pytest -q research/phase98/test_cci_gate.py
+      - name: Reconcile prior evidence
+        run: python research/phase98/cci_gate.py
+      - name: Publish gate outputs
+        if: always()
+        run: |
+          mkdir -p results/phase98
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/phase98 PHASE98_STATUS.md PHASE98_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 98: publish CCI source-data gate"
+          git push
