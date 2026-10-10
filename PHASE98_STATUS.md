@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-10  
 **Branch:** `phase-98-cci-options-paper-replication-gate`  
-**Status:** PLAN REGISTERED; evidence reconciliation pending  
+**Status:** INITIAL TEST FAILED; assertion corrected; rerun pending  
 **Strategy promotion:** NONE
 
 ## Existing evidence
@@ -10,10 +10,12 @@
 - Phase 85 source qualification recorded no-go for a new execution-quality replay using then-verified free sources.
 - Phase 87–89 verified limited rolling ATM-relative fields but did not establish exact-contract bid/ask/depth or source-period execution coverage.
 
+## Completed
+- Registered the bounded CCI evidence-gate protocol and explicit no-identical-rerun stop rule.
+
 ## Pending
-- Reconcile source reports and field requirements automatically.
-- Decide whether any new authorized evidence justifies a distinct replay.
-- Record outcome and update README.
+- Re-run the corrected unit test and evidence gate.
+- Accept DATA_BLOCKED only after the gate completes and publishes outputs.
 - Do not access the 2026 holdout.
 
 ## Records
