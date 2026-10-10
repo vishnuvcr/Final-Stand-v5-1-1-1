@@ -137,7 +137,8 @@ jobs:
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add PHASE98_STATUS.md PHASE98_ERROR_LOG.md PHASE98_RESEARCH_LOG.md PHASE98_CHAT_LOG.md README.md ERROR_LOG.md RESEARCH_LOG.md results/phase98_opening_range_spread
+          git add PHASE98_STATUS.md PHASE98_ERROR_LOG.md PHASE98_RESEARCH_LOG.md PHASE98_CHAT_LOG.md README.md ERROR_LOG.md RESEARCH_LOG.md
+          if [ -d results/phase98_opening_range_spread ]; then git add results/phase98_opening_range_spread; fi
           git diff --cached --quiet && exit 0
           git commit -m 'phase98: publish replay status and research audit trail'
           git fetch origin phase-98-nifty-opening-range-debit-spread
