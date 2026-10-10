@@ -21,6 +21,15 @@ All results are fixed-one-lot rupee P&L sums, not compounded account returns. Th
       S103-B_FBR development                246                   138               138                     0          0                   100.0                -11333.391867                       -26171.896337                              -36890.938923                    -82.126028                     -139.177645  0.282609       0.486685                   11333.391867 COMPUTED_CIRCULAR_BLOCK_BOOTSTRAP             -46.070699               -74.557369                -18.366374     0.999000                         NaN                                        False       NOT_PROMOTED
 S103-C_RC_VIX_IC development                246                    82                82                     0          0                   100.0                 -5132.594791                       -22086.496754                              -27673.880662                    -62.592619                      -67.793878  0.390244       0.564434                    7872.259153 COMPUTED_CIRCULAR_BLOCK_BOOTSTRAP             -20.864206               -44.801389                  3.205053     0.958008                         NaN                                        False       NOT_PROMOTED
 
+## Literature context (reviewed after rule preregistration; no rules changed)
+
+Tsai et al. (2019, IEEE Access) tested timely opening-range breakout on one-minute index-futures data across DJIA, S&P 500, NASDAQ, HSI and TAIEX for 2003–2013 and reported positive results in that sample. This is adjacent futures evidence, not proof for NIFTY options. Source: https://doi.org/10.1109/ACCESS.2019.2899177.
+A September 2026 SSRN preprint by Fetna tests 225 opening-range breakout configurations on nine U.S. futures markets and reports that zero met its preregistered cost-and-stability hurdle. It is a preprint, not India-specific, and should not be treated as a direct replication. Source: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7428398.
+Perz's SPX 0DTE iron-condor paper reports two variants profitable over an approximately 12-month sample, while Pillai's 2026 NIFTY volatility-risk-premium preprint reports negative net annualized returns for four short-volatility strategies after costs and highlights tail risk. The findings differ in underlying, data, fills and risk controls; neither substitutes for this replay. Sources: https://doi.org/10.5171/2024.4452224 and https://papers.ssrn.com/sol3/Delivery.cfm/6876580.pdf?abstractid=6876580&mirid=1&type=2.
+Indian index-option pricing and box-spread studies report that transaction costs reduce the proportion of apparent option mispricings that can be exploited. Sources: https://doi.org/10.1177/0971890714558709 and https://doi.org/10.1002/fut.20376.
+Paytm Money's public F&O FAQ states ₹10 per executed unique order, while its published blog documents account-cohort differences. NSE's STT table reports 0.10% on option-sale premium through 31 March 2026 and 0.15% from 1 April 2026; our sample ends in 2025. These public schedules do not confirm the user's own historical contract notes. Sources: https://www.paytmmoney.com/stocks/customer/fno-faq/trading/order-placement/what-is-overnight-order-type, https://www.paytmmoney.com/blog/brokerage-charges-increase-from-25th-aug-23-existing-users-will-continue-on-old-brokerage-charges/, https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax.
+These sources provide external context only; they were reviewed after the strategy rules were frozen and did not change parameters. We do not claim the rule combinations are unprecedented worldwide.
+
 ## Coverage and execution audit
 
 - Signals: 675; completed trades: 675; blocked exits: 0.
@@ -41,9 +50,18 @@ S103-C_RC_VIX_IC development                246                    82           
   "session_days": 497,
   "prior_session_global_daily": {
     "available": true,
-    "rows": 523,
-    "covered_days": 523,
-    "coverage_pct": 105.23138832997988,
+    "source_rows_in_period": 523,
+    "covered_sessions": 403,
+    "sample_sessions": 497,
+    "coverage_pct": 81.08651911468813,
+    "required_columns": [
+      "SP500_ret1",
+      "NASDAQ_ret1",
+      "DOW_ret1",
+      "NIKKEI_ret1"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
     "columns": [
       "SP500",
       "NASDAQ",
@@ -67,9 +85,16 @@ S103-C_RC_VIX_IC development                246                    82           
   },
   "prior_publication_fii_dii": {
     "available": true,
-    "rows": 0,
-    "covered_days": 0,
+    "source_rows_in_period": 0,
+    "covered_sessions": 0,
+    "sample_sessions": 497,
     "coverage_pct": 0.0,
+    "required_columns": [
+      "fii_net",
+      "dii_net"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
     "columns": [
       "fii_net",
       "dii_net",
@@ -87,15 +112,36 @@ S103-C_RC_VIX_IC development                246                    82           
   },
   "prior_publication_news_sentiment": {
     "available": true,
-    "rows": 330,
-    "covered_days": 330,
-    "coverage_pct": 66.39839034205231,
+    "source_rows_in_period": 330,
+    "covered_sessions": 383,
+    "sample_sessions": 497,
+    "coverage_pct": 77.06237424547284,
+    "required_columns": [
+      "sent_mean"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
     "columns": [
       "sent_mean",
       "sent_std",
       "sent_count",
       "sent_pos",
       "sent_neg"
+    ]
+  },
+  "india_vix_previous_session": {
+    "available": true,
+    "source_rows_in_period": 491,
+    "covered_sessions": 497,
+    "sample_sessions": 497,
+    "coverage_pct": 100.0,
+    "required_columns": [
+      "close"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
+    "columns": [
+      "close"
     ]
   },
   "india_vix_rows_2024_2025": 491,

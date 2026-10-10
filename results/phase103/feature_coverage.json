@@ -8,9 +8,18 @@
   "session_days": 497,
   "prior_session_global_daily": {
     "available": true,
-    "rows": 523,
-    "covered_days": 523,
-    "coverage_pct": 105.23138832997988,
+    "source_rows_in_period": 523,
+    "covered_sessions": 403,
+    "sample_sessions": 497,
+    "coverage_pct": 81.08651911468813,
+    "required_columns": [
+      "SP500_ret1",
+      "NASDAQ_ret1",
+      "DOW_ret1",
+      "NIKKEI_ret1"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
     "columns": [
       "SP500",
       "NASDAQ",
@@ -34,9 +43,16 @@
   },
   "prior_publication_fii_dii": {
     "available": true,
-    "rows": 0,
-    "covered_days": 0,
+    "source_rows_in_period": 0,
+    "covered_sessions": 0,
+    "sample_sessions": 497,
     "coverage_pct": 0.0,
+    "required_columns": [
+      "fii_net",
+      "dii_net"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
     "columns": [
       "fii_net",
       "dii_net",
@@ -54,15 +70,36 @@
   },
   "prior_publication_news_sentiment": {
     "available": true,
-    "rows": 330,
-    "covered_days": 330,
-    "coverage_pct": 66.39839034205231,
+    "source_rows_in_period": 330,
+    "covered_sessions": 383,
+    "sample_sessions": 497,
+    "coverage_pct": 77.06237424547284,
+    "required_columns": [
+      "sent_mean"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
     "columns": [
       "sent_mean",
       "sent_std",
       "sent_count",
       "sent_pos",
       "sent_neg"
+    ]
+  },
+  "india_vix_previous_session": {
+    "available": true,
+    "source_rows_in_period": 491,
+    "covered_sessions": 497,
+    "sample_sessions": 497,
+    "coverage_pct": 100.0,
+    "required_columns": [
+      "close"
+    ],
+    "missing_required_columns": [],
+    "max_source_age_days": 7,
+    "columns": [
+      "close"
     ]
   },
   "india_vix_rows_2024_2025": 491,

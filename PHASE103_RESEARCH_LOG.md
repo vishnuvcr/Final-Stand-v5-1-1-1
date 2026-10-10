@@ -15,3 +15,10 @@
 - Source revision pinned to 3eacf762d401efd9a08e804592fa7882b354c4a2; no 2026 option data loaded.
 - Output artifacts and source/cost/coverage audit were generated. Validation status: PASS.
 - Missing exits remain non-estimable, and conclusions apply only to this frozen sample/cost model.
+
+
+## Replay completed — run 38084876846
+
+- Source revision pinned to 3eacf762d401efd9a08e804592fa7882b354c4a2; no 2026 option data loaded.
+- Output artifacts and source/cost/coverage audit were generated. Validation status: PASS.
+- Missing exits remain non-estimable, and conclusions apply only to this frozen sample/cost model.
