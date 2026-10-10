@@ -93,7 +93,7 @@ def main():
     # Regression checks prevent silent changes to the frozen input/result interpretation.
     if len(eligible) != 23 or selected["strategy"] != "call_backspread" or selected["val_net50"] >= 0:
         raise SystemExit("Frozen expected result changed; investigate source/version before interpreting.")
-    (OUT / "validation_report.json").write_text(json.dumps(report, indent=2) + "\\n", encoding="utf-8")
+    (OUT / "validation_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
 if __name__ == "__main__":
     main()
