@@ -1,0 +1,16 @@
+# Phase 67 Contract/Minute Coverage
+
+**Decision: diagnostic only; no strategy promotion.**
+
+{
+  "phase": 67,
+  "source": "thetrademarkk/india-index-options-1m",
+  "revision": "3eacf762d401efd9a08e804592fa7882b354c4a2",
+  "trigger_rows": 30,
+  "exact_trigger_minute_rows": 8,
+  "exact_next_minute_rows": 5,
+  "rows_with_pm2_context": 8,
+  "decision": "DIAGNOSTIC_ONLY_NO_STRATEGY_PROMOTION"
+}
+
+Nearby bars are diagnostic context only and are never substituted as fills. This audit does not prove ITM mapping or executable liquidity; no entry rules are relaxed.
