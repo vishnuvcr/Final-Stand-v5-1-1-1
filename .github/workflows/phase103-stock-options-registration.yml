@@ -1,0 +1,38 @@
+name: Phase 103 — NIFTY 50 Stock-Options Registration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-103-nifty50-stock-options
+    paths:
+      - "PHASE103_*.md"
+      - "research/phase103_stock_options/**"
+      - "tests/phase103/**"
+      - "results/phase103/**"
+      - ".github/workflows/phase103-stock-options-registration.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-registration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout the isolated research branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test stock-universe registration
+        run: python -m unittest discover -s tests/phase103 -p "test_*.py" -v
+      - name: Validate registration manifest
+        run: python research/phase103_stock_options/validate_registration.py --repo-root .
+      - name: Upload registration audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase103-stock-universe-registration
+          path: results/phase103/registration_validation.json
+          if-no-files-found: error
