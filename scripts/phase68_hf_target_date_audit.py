@@ -29,7 +29,11 @@ for day in targets:
         lower = {c.lower(): c for c in table.column_names}
         tscol = next((lower[k] for k in ("timestamp","datetime","date_time","time","date") if k in lower), None)
         if tscol:
-            ts = pd.to_datetime(table[tscol].to_pandas(), errors="coerce", utc=True).dt.tz_convert("Asia/Kolkata")
+            ts = pd.to_datetime(table[tscol].to_pandas(), errors="coerce")
+            if ts.dt.tz is None:
+                ts = ts.dt.tz_localize("Asia/Kolkata", ambiguous="NaT", nonexistent="NaT")
+            else:
+                ts = ts.dt.tz_convert("Asia/Kolkata")
             mask = ts.dt.date == pd.Timestamp(day).date()
             rec.update({"timestamp_column": tscol, "target_session_rows": int(mask.sum()),
                         "unique_target_minutes": int(ts[mask].nunique()),
