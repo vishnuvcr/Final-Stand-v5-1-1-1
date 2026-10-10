@@ -53,7 +53,7 @@ jobs:
           fi
 
       - name: Mark audit failure after publishing diagnostics
-        if: steps.validate.outcome == 'failure'
+        if: always() && steps.validate.outcome == 'failure'
         run: |
           echo "Phase 93 audit validation failed; inspect validation_report.json."
           exit 1
