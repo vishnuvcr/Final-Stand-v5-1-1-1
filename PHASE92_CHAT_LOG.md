@@ -56,3 +56,10 @@ Created [MANUSCRIPT_DRAFT.md](results/phase92/MANUSCRIPT_DRAFT.md), a structured
 ## Literature expansion and final package audit
 
 Expanded the manuscript literature review using publisher/official pages for Blair, Poon & Taylor (2001) on VIX versus intraday returns, Jiang & Tian (2005) on model-free IV, Bollerslev, Tauchen & Zhou (2009) on variance risk premia, and Novy-Marx & Velikov (2016) on trading costs. The manuscript now distinguishes these studies' targets/markets/horizons from the repository's 15-minute NIFTY spot-magnitude target. The manuscript's reference list includes DOI links; new figures are [IV_INCREMENTAL_EFFECTS.svg](results/phase92/IV_INCREMENTAL_EFFECTS.svg) and [OOS_MAE_COMPARISON.svg](results/phase92/OOS_MAE_COMPARISON.svg). No empirical model, sample, or result was changed during manuscript editing.
+
+## Final repository verification after user continuation — 2026-10-10
+
+- User instruction: “Ok proceed”. Checked the main README, Phase 92 frozen plan, status, error log, auditable chat/decision log, manuscript, and branch workflow before acting.
+- Verified Actions run [38051908021](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051908021): job `predictor-study` and all substantive steps completed successfully, including the frozen analysis and aggregate publication. This is a cache-backed verification run, not a new sample or a new hypothesis test; the accepted analytical run remains [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106).
+- Corrected the main README checkpoint to label the original accepted analysis run separately from the latest verification run. No model, data, split, endpoint, costs, or strategy decision changed.
+- Terminal decision unchanged: Phase 92 completes the planned rolling-ATM predictor line. No strategy is promoted; Phase 83's 2026 holdout remains sealed. Reopen empirical trading evaluation only if authorized exact-contract historical quotes/depth and point-in-time execution evidence become available, with Paytm Money charges, spread, slippage, latency, and stressed costs included.
