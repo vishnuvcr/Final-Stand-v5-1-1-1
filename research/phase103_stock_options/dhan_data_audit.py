@@ -201,10 +201,14 @@ def main():
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
             error_codes={str(v.get("api_error_code","")).upper() for v in result["probes"] if v.get("api_error_code")}
             auth_count=sum(v.get("status") in ["AUTH_401","AUTH_403"] for v in result["probes"])
+            outside_count=sum(int(v.get("outside_requested_date_window_rows",0) or 0) for v in result["probes"])
+            result["rows_outside_requested_date_window_total"]=outside_count
             if auth_count or error_codes.intersection({"806","807","808","809","810","DH-901","DH-902"}):
                 result["status"]="BLOCKED_AUTHENTICATION_OR_DATA_API_ENTITLEMENT"
             elif error_codes.intersection({"814","DH-905"}):
                 result["status"]="REQUEST_SCHEMA_OR_PARAMETER_ERROR"
+            elif outside_count > 0:
+                result["status"]="DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS"
             elif len(result["probes"])==a.max_probes and rows_count==a.max_probes: result["status"]="PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES"
             elif rows_count: result["status"]="PARTIAL_DATA_RETURNED"
             else: result["status"]="NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
@@ -235,7 +239,7 @@ def main():
     print(json.dumps({"phase":"103.1","status":result["status"],"window":result["window"],
       "underlying_ids_resolved":sum(1 for x in result.get("underlying_map",{}).values() if x.get("security_id")),
       "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],
-      "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0)},indent=2))
+      "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),"rows_outside_requested_date_window_total":result.get("rows_outside_requested_date_window_total",0)},indent=2))
     return 0
 
 if __name__=="__main__":
