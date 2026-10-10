@@ -1,12 +1,12 @@
 {
   "phase": "103.1",
-  "run_id": "38089152325",
-  "generated_at_utc": "2026-10-10T21:50:30.637694+00:00",
+  "run_id": "38089220578",
+  "generated_at_utc": "2026-10-10T21:51:35.348889+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
-    "to_exclusive": "2026-08-04",
-    "span_days": 1,
-    "request_mode": "documented_half_open"
+    "to_exclusive": "2026-08-03",
+    "span_days": 0,
+    "request_mode": "same_date_endpoint_semantics_diagnostic"
   },
   "probe_limit": 1,
   "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
@@ -45,27 +45,26 @@
       "requested_option_type": "CALL",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 770,
+      "rows": 385,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 770,
-        "high": 770,
-        "low": 770,
-        "close": 770,
-        "iv": 770,
-        "volume": 770,
-        "strike": 770,
-        "oi": 770,
-        "spot": 770,
-        "timestamp": 770
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-04T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385,
-        "2026-08-04": 385
+        "2026-08-03": 385
       },
-      "outside_requested_date_window_rows": 385,
+      "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null
     }
@@ -78,6 +77,6 @@
     "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
     "Returned timestamps are audited in Asia/Kolkata against the documented half-open request window; out-of-window rows block accepting the sample."
   ],
-  "status": "DATA_RETURNED_WITH_OUT_OF_WINDOW_ROWS",
-  "rows_outside_requested_date_window_total": 385
+  "status": "PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES",
+  "rows_outside_requested_date_window_total": 0
 }

@@ -200,3 +200,15 @@ The earlier 30-day/10-probe request was cancelled before it produced a derived r
 ## Date-boundary gate — latest result
 
 The latest accepted API smoke result currently remains a **data-boundary NO-GO**, not a source-access NO-GO: authentication worked and the API returned data, but 385 of 770 timestamps were on the non-requested end date. The equal-date diagnostic is now registered with default probe limit 1. Do not advance to all five stocks or strategy P&L until the query-boundary behavior is documented and deterministic timestamp filtering is tested.
+
+<!-- DHAN_API_RUN_38089220578_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38089220578, attempt 1 — 2026-10-10T21:51:44.041591+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-03 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
