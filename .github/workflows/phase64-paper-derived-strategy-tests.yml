@@ -1,6 +1,9 @@
 name: Phase 64 — Paper-Derived CCI Strategy Tests
 
 on:
+  pull_request:
+    paths:
+      - "research/phase64_trigger.json"
   schedule:
     - cron: "17 * * * *"
   workflow_dispatch:
