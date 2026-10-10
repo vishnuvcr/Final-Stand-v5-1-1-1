@@ -1347,4 +1347,4 @@ No paper profitability claim is considered reproduced until a successful run pro
 - [Aggregate summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/summary.csv)
 - [Opportunity/coverage audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/opportunity_audit.csv)
 - [Pinned source manifest](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/source_manifest.json)
-- [Successful workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028140800)
+- [Successful workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558)
