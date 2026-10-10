@@ -112,7 +112,7 @@ def make_estimator(name: str):
         "random_forest":lambda:RandomForestRegressor(n_estimators=100,max_depth=5,min_samples_leaf=3,n_jobs=1,random_state=SEED),
         "gradient_boosting":lambda:GradientBoostingRegressor(n_estimators=100,max_depth=2,learning_rate=.05,random_state=SEED),
         "adaboost":lambda:AdaBoostRegressor(estimator=DecisionTreeRegressor(max_depth=2,random_state=SEED),n_estimators=80,learning_rate=.05,random_state=SEED),
-        "mlp":lambda:MLPRegressor(hidden_layer_sizes=(32,16),max_iter=250,early_stopping=True,random_state=SEED),
+        "mlp":lambda:MLPRegressor(hidden_layer_sizes=(32,16),max_iter=250,early_stopping=False,random_state=SEED),
         "slp":lambda:MLPRegressor(hidden_layer_sizes=(),activation="identity",solver="lbfgs",max_iter=500,random_state=SEED)}
     if name=="xgboost":
         from xgboost import XGBRegressor
@@ -241,14 +241,14 @@ def run_suite(X:pd.DataFrame,T:pd.DataFrame):
                     r2=float(1-np.sum(err**2)/np.sum((y-np.mean(y))**2)) if np.sum((y-np.mean(y))**2)>0 else None
                     row={"paper_method_ids":PAPER_MAP.get(name,""),"model":name,"target":target,"train_window_years":yrs,
                          "train_rows":len(tri),"test_rows":len(y),"test_first":str(pd.to_datetime(td).min().date()),"test_last":str(pd.to_datetime(td).max().date()),
-                         "mae":mae,"rmse":float(np.sqrt(np.mean(err**2))),"r2":r2,
+                         "mae":mae,"mse":float(np.mean(err**2)),"rmse":float(np.sqrt(np.mean(err**2))),"smape_pct":float(np.mean(2*abs(err)/(abs(y)+abs(pred)+1e-12))*100),"r2":r2,
                          "mape_pct":float(np.mean(abs(err/np.where(abs(y)<1e-9,np.nan,y)))*100),
                          "persistence_mae":bmae,"mae_improvement_vs_persistence":bmae-mae,
                          "directional_accuracy_pct":float(np.mean(np.sign(pred-prev)==np.sign(y-prev))*100) if target=="Close" else None,
                          "bootstrap_ci_low":None,"bootstrap_ci_high":None,"hac_p_value":None,"holm_p_value":None,
                          "decision_vs_persistence":"PENDING_INFERENCE","status":"OK",
                          "replication_scope":"PARTIAL_COMMON_NIFTY_ADAPTATION"}
-                    metric.append(row); pred_store[(target,yrs,name)]={"y":y,"pred":pred,"baseline":base}
+                    metric.append(row); pred_store[(target,yrs,name)]={"y":y,"pred":pred,"baseline":base,"target_dates":pd.to_datetime(td).astype(str).to_numpy(),"previous_close":prev}
                 except Exception as e:
                     metric.append({"paper_method_ids":PAPER_MAP.get(name,""),"model":name,"target":target,"train_window_years":yrs,
                                    "train_rows":len(tri),"test_rows":len(tei),"status":"MODEL_FAILED","error":f"{type(e).__name__}: {str(e)[:250]}",
@@ -271,7 +271,7 @@ def run_suite(X:pd.DataFrame,T:pd.DataFrame):
             if row["decision_vs_persistence"]=="MAE_GAIN_CI_ABOVE_ZERO" and p>=.05: row["decision_vs_persistence"]="CI_GAIN_BUT_HOLM_P_NOT_SIGNIFICANT"
     return metric,pred_store,pd.DataFrame(cover)
 
-def write_outputs(raw,manifest,metrics,coverage,blocker=None):
+def write_outputs(raw,manifest,metrics,coverage,blocker=None,preds=None):
     OUT.mkdir(parents=True,exist_ok=True)
     (OUT/"data_manifest.json").write_text(json.dumps(manifest,indent=2,default=str)+"\\n",encoding="utf-8")
     pd.DataFrame(metrics).to_csv(OUT/"model_metrics.csv",index=False); coverage.to_csv(OUT/"coverage.csv",index=False)
@@ -352,7 +352,7 @@ def main():
     manifest={"source":"Yahoo Finance ^NSEI","requested_start":"2004-01-01","requested_end_exclusive":"2026-01-01","test_start":"2025-01-01","test_end_exclusive":"2026-01-01","raw_data_committed":False,"phase83_holdout_accessed":False}
     try:
         raw,info=acquire_daily_data(); manifest.update(info); X,T=add_features(raw)
-        metrics,preds,cov=run_suite(X,T); write_outputs(raw,manifest,metrics,cov)
+        metrics,preds,cov=run_suite(X,T); write_outputs(raw,manifest,metrics,cov,preds=preds)
         print(json.dumps({"status":"COMPLETED","metrics_rows":len(metrics),"valid":sum(r.get("status")=="OK" for r in metrics),"failed":sum(r.get("status")=="MODEL_FAILED" for r in metrics),"sha256":manifest.get("sha256")},indent=2))
     except Exception as e:
         reason=f"{type(e).__name__}: {str(e)}"
