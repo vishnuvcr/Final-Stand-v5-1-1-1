@@ -1,7 +1,7 @@
 <!-- PHASE91_START -->
 # Resume checkpoint — Phase 91 IV incremental-prediction study
 
-**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38050576808](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050576808). The independent sample is calendar 2023, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
+**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38050932108](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050932108). The independent sample is calendar 2023, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
 
 - [Phase 91 plan](PHASE91_RESEARCH_PLAN.md)
 - [Phase 91 status](PHASE91_STATUS.md)
