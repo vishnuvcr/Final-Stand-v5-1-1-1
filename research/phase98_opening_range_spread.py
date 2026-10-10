@@ -92,6 +92,11 @@ def vix_filter_state(vix,d):
     q=float(hist.quantile(.75))
     return {"available":True,"skip":close>q,"prior_close":close,"threshold":q,"prior_observation_date":str(p.iloc[-1].date.date())}
 
+def arm_b_treatment(vf):
+    """Fail the filtered arm closed when its prior-only VIX state is unavailable."""
+    if not vf.get("available", False): return "UNAVAILABLE"
+    return "SKIP" if vf.get("skip", False) else "TRADE"
+
 def mode_step(snap):
     modes=[]
     for typ in ("CE","PE"):
@@ -281,14 +286,16 @@ def main():
         for k in ("arm_a_base_net","arm_a_stress_net","arm_b_base_net","arm_b_stress_net"):dr[k]=np.nan
         daily.append(dr);continue
       if sig["status"]=="NO_BREAKOUT":skips["NO_BREAKOUT"]+=1;daily.append(dr);continue
-      st,entry=sig["signal_ts"],sig["signal_ts"]+pd.Timedelta(minutes=1);bskip=bool(vf.get("available") and vf.get("skip"))
+      st,entry=sig["signal_ts"],sig["signal_ts"]+pd.Timedelta(minutes=1);b_state=arm_b_treatment(vf);bskip=b_state=="SKIP";b_unavailable=b_state=="UNAVAILABLE"
       j=bisect_left(expiries,pd.Timestamp(d,tz=TZ))
       if j>=len(expiries) or expiries[j]>MAX_EXPIRY:
         status="NO_ALLOWED_EXPIRY_BEFORE_2026";skips[status]+=1
         rows.append({"date":d.isoformat(),"split":split,"signal_ts":str(st),"entry_ts":str(entry),"direction":sig["direction"],"status":status,"arm_b_filter_skip":bskip})
+        dr["arm_a_unknown"]=True
+        dr["arm_a_base_net"]=dr["arm_a_stress_net"]=np.nan
         if not bskip:
-          dr["arm_a_unknown"]=dr["arm_b_unknown"]=True
-          for k in ("arm_a_base_net","arm_a_stress_net","arm_b_base_net","arm_b_stress_net"):dr[k]=np.nan
+          dr["arm_b_unknown"]=True
+          dr["arm_b_base_net"]=dr["arm_b_stress_net"]=np.nan
         daily.append(dr);continue
       expiry=expiries[j]
       try:chain=load_chain_day(expiry,d)
@@ -316,17 +323,23 @@ def main():
         "base_trigger":base.get("trigger"),"stress_trigger":stress.get("trigger"),"base_exit_ts":base.get("exit_ts"),"stress_exit_ts":stress.get("exit_ts"),
         "base_path_coverage":base.get("path_coverage"),"stress_path_coverage":stress.get("path_coverage"),
         "base_defined_max_loss_rupees":base.get("max_defined_loss_rupees"),"base_potential_max_profit_rupees":base.get("potential_max_profit_rupees"),
-        "base_status":base.get("status"),"arm_a_taken":bok,"arm_b_taken":bok and not bskip,"status":status}
+        "base_status":base.get("status"),"arm_a_taken":bok,"arm_b_taken":bok and not bskip and not b_unavailable,"status":status}
       rows.append(rec)
       if bok:
         dr["arm_a_base_net"]=float(base["net"]);dr["arm_a_stress_net"]=float(stress["net"]) if sok else np.nan
         if not sok:dr["arm_a_unknown"]=True
-        if not bskip:
+        if b_unavailable:
+          dr["arm_b_unknown"]=True
+          dr["arm_b_base_net"]=dr["arm_b_stress_net"]=np.nan
+        elif not bskip:
           dr["arm_b_base_net"]=float(base["net"]);dr["arm_b_stress_net"]=float(stress["net"]) if sok else np.nan
           if not sok:dr["arm_b_unknown"]=True
-      elif not bskip:
-        dr["arm_a_unknown"]=dr["arm_b_unknown"]=True
-        for k in ("arm_a_base_net","arm_a_stress_net","arm_b_base_net","arm_b_stress_net"):dr[k]=np.nan
+      else:
+        dr["arm_a_unknown"]=True
+        dr["arm_a_base_net"]=dr["arm_a_stress_net"]=np.nan
+        if not bskip:
+          dr["arm_b_unknown"]=True
+          dr["arm_b_base_net"]=dr["arm_b_stress_net"]=np.nan
       daily.append(dr)
       if (n+1)%50==0:pd.DataFrame(rows).to_csv(OUT/"trade_ledger_progress.csv",index=False)
     tdf,pdf=pd.DataFrame(rows),pd.DataFrame(daily)
