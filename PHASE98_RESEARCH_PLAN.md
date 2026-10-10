@@ -87,6 +87,7 @@ Stop after one frozen strategy test, audit, inference, and manuscript/report pub
 2. Phase 90/91 are an annual replication pair for IV's small magnitude-prediction gain; Phase 91 did not establish the gain. Phase 92 found its registered rolling-ATM synthetic-proxy/OI block degraded the studied magnitude predictor. These are context only, not direct breakout evidence.
 3. Public NIFTY option OHLCV(+OI) data are incomplete for far strikes/illiquid contracts and lack historical quotes/depth; all OHLC-based fills must be labelled modeled.
 4. Relevant general safeguards: Bailey & López de Prado (2014), The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality, Journal of Portfolio Management 40(5), 94–107, DOI 10.3905/jpm.2014.40.5.094. Phase 98 uses a single hypothesis pair and no search grid, with independent confirmation required before promotion.
+5. Supplementary, source-quality-stratified literature review: [PHASE98_LITERATURE_REVIEW.md](PHASE98_LITERATURE_REVIEW.md). It covers ORB evidence, Indian options/volatility studies, official India VIX methodology, multiple-testing safeguards, broker tariffs, targeted practitioner/video material, and the pinned dataset's coverage caveats. It is context only and does not change the preregistered test.
 
 ## 10. Phase checkpoints
 
