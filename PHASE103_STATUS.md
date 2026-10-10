@@ -296,3 +296,15 @@ Next: run the same offsets across all five stocks and both CALL/PUT sides, recor
 - API probes returning rows: 7/7.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+<!-- DHAN_API_RUN_38090149633_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38090149633, attempt 1 — 2026-10-10T22:08:14.651375+00:00
+
+- **Result:** PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 59/60.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

@@ -185,3 +185,10 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Run:** [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649).
 **Finding:** HDFCBANK CALL on 2026-08-03 returned 385 rows for ATM through ATM-2 and 384 rows for ATM-3. The combined offset surface has 384 common timestamps out of a 385-timestamp union, although six actual strikes are observed at every union timestamp and zero duplicate timestamp-strike keys are detected.
 **Decision:** strict full-surface gate remains FAIL; do not fill the missing bar. A fixed-strike path may only use timestamps where its actual strike is present. Extend to the other stock/side groups and report exact-strike coverage before strategy testing.
+
+<!-- DHAN_API_RUN_38090149633_ATTEMPT_1 -->
+### E103-DHAN-38090149633 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE; rows returned by 59/60 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38090149633
