@@ -79,3 +79,6 @@
 - The corrected code commit is `c75b43da2592b02c520b2500b9f63e5d72a7b12d`. A push-triggered workflow is expected to regenerate derived outputs and validate the result contract.
 - Drawdown values have not been clipped or declared erroneous. The next audit will reconcile the model equity path, peak, trough and dates; drawdown can exceed initial capital if equity first rises materially above its starting value.
 - No strategy is promoted; 2026 option data remain excluded. Previous values in the additional-impact column are superseded until the new run passes.
+
+
+- Extended U02 summary output to expose maximum account equity and date, peak/trough at the maximum drawdown, drawdown as a percentage of its peak, and an ending-equity reconciliation check. This distinguishes a legitimate compounded-equity drawdown from a bookkeeping mismatch without clipping the reported rupee value. Code commit: `ef34c38aeca5ddc73ee1f948e4216f2fba8bb5bd`.
