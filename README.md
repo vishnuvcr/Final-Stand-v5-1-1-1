@@ -1,51 +1,25 @@
 <!-- CURRENT_RESEARCH_CHECKPOINT_START -->
 # Final Stand v5 1-1-1 — Current Research Checkpoint (2026-10-10)
 
-## Latest completed predictor screen: Phase 92 (2022)
+## Current finite program: Phases 94–100
 
-**Result: NEGATIVE incremental predictive value for the combined rolling synthetic-forward proxy + CALL/PUT OI block.** The fixed 2022 study's sample, training and VIX gates passed; the full data/coverage audit passed after correctly classifying the final weekend-only interval as an expected empty window.
+**Phase 96:** corrected SMA/EMA signal screen passed automated tests and replay. Across 1,486 sessions in 2020–2025, buy-and-hold returned 114.7%; six operationalized SMA/EMA variants returned 52.5%–100.9% under a 0.05% turnover sensitivity deduction, with lower drawdowns. SMA(10,50) and EMA(10,50) had higher unadjusted Sharpe estimates but no inferential test; index spot is not directly investable and this is not options P&L. Phase 96 remains partial pending paper-specific seasonality/timing-rule reconciliation. [Plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-96-moving-average-seasonality-replication) · [successful corrected run 38072697008](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072697008)
 
-- Valid coverage: 54/54 option windows and 5/5 India VIX windows.
-- Validated paired CALL/PUT rows: 18,579 over 248 sessions; zero spot mismatches, one strike mismatch excluded.
-- Confirmatory OOS: 3,660 observations across 61 sessions.
-- Baseline M2 (spot + VIX + IV) MAE: **4.8214 bps**.
-- M3 adding the synthetic-forward proxy gap MAE: **4.8791 bps**.
-- M4 adding OI imbalance as well MAE: **4.9922 bps**.
-- Primary M2−M4 MAE difference: **−0.1708363 bps**, paired session-cluster bootstrap 95% CI **−0.2298769 to −0.1152015** (5,000 resamples, seed 90210). The entire interval is below zero; adding the feature block worsened out-of-sample spot-move magnitude prediction in this fixed sample.
+**Phase 97:** the automated ML options data gate passed, but 13/13 required exact-contract/point-in-time/provenance/label/cost controls were blocked in the audited artifacts. No Random Forest, XGBoost or LSTM model was trained; no options P&L was computed. This is a data sufficiency conclusion, not proof that the paper's models fail. [Plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-97-ml-options-strategy-replication) · [Actions run 38072759556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072759556)
 
-[Phase 92 detailed results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/PHASE92_RESULTS.md) · [research manuscript draft](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/MANUSCRIPT_DRAFT.md) · [supplementary materials](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/SUPPLEMENTARY_MATERIALS.md) · [IV incremental effects figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/IV_INCREMENTAL_EFFECTS.svg) · [OOS MAE comparison figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/OOS_MAE_COMPARISON.svg) · [cross-phase factor synthesis / stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md) · [summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/summary.json) · [coverage ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/coverage.csv) · [model metrics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/model_metrics.csv) · [Accepted analysis run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106) · [latest cache-backed verification run 38051908021](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051908021)
+**Phase 98:** CCI options paper gate is registered. Existing Phase 66 zero-trade coverage and Phase 85 source no-go are not being rerun unchanged; Phase 87–89 rolling ATM-relative fields do not establish source-period exact-contract bid/ask/depth. [Plan/status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-98-cci-options-paper-replication-gate)
 
-- [Phase 92 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_CHAT_LOG.md)
-- [Draft PR #42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42) remains open/draft/unmerged. [Default-branch manual runner; automatic runs are triggered by Phase 92 plan/engine pushes](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml).
-- **Final manuscript QA:** corrected equation rendering and the references heading; this documentation-only correction is recorded in [commit cc764f9](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/cc764f98c17349fd4d8821495a39e5010521c592) and logged as E92-014. Research estimates and the no-strategy-promotion decision are unchanged.
+**Phase 95:** main forecast run completed 132/132 valid model rows with zero model failures. Its paper-claim reconciliation failed on a manifest serialization defect; a compatibility fix has been committed and a fresh Actions run is pending. The failed reconciliation output is not accepted. [Phase 95 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-95-daily-forecast-model-replication) · [latest Actions](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions)
 
-## Phase 93 — uploaded-literature audit
+## Evidence and safety boundaries
 
-**Status: PASS — documentation and literature validation complete; no new market/P&L experiment.** The fixed set of 14 uploaded PDFs is mapped source-by-source, with author-reported claims distinguished from independently reproduced results. The manuscript references now cover all 14 additional papers; the automated validator found 14/14 audit entries, 14/14 filenames, references 1–29, and zero errors.
+- No strategy has been promoted; no live orders are placed.
+- The Phase 83 2026 holdout remains sealed.
+- Forecast accuracy is not equivalent to profitable options trading.
+- No executable options P&L without exact eligible contracts, point-in-time quote/fill assumptions, Paytm Money brokerage, statutory levies, spread, slippage, latency and cost stress.
+- Phase 94's finite plan remains authoritative: Phase 99 operationalizes only fully specified source-described payoff strategies; Phase 100 produces the unified reproducibility assessment, figures/tables, manuscript and supplements.
 
-- [Phase 93 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/PHASE93_STATUS.md)
-- [Phase 93 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/PHASE93_RESEARCH_PLAN.md)
-- [14-paper literature evidence audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase93/UPLOADED_LITERATURE_AUDIT.md)
-- [Validation report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase93/validation_report.json)
-- [Latest successful validator run 38053377409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053377409)
-- [Updated manuscript draft](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase92/MANUSCRIPT_DRAFT.md)
-
-**Interpretation boundary:** most uploaded papers concern daily index-price prediction; a small number report options backtests but their results have not been independently reproduced here. The Shaha CCI rule has already been attempted in [Phase 66](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md): both frozen variants had zero completed trades and no estimable profitability, so do not repeat that test without materially better authorized data. This audit does not resolve the exact-contract historical quotes/depth and fully costed execution gate. Phase 83's 2026 holdout remains sealed. [Draft PR #43](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/43) is for review and remains unmerged.
-
-## Preceding IV evidence: Phases 89–91
-
-- **Phase 89, 2025 association study:** mean ATM IV association with next-15-minute absolute spot movement survived Holm correction, but association alone was not evidence of incremental model utility or profitability.
-- **Phase 90, 2024 incremental test:** M1−M2 MAE improvement +0.0330 bps, 95% CI +0.0001 to +0.0562 over 3,604 OOS rows / 60 sessions—a very small positive result.
-- **Phase 91, independent 2023 replication:** +0.0001111 bps improvement, 95% CI −0.0110700 to +0.0102532; no incremental gain established.
-
-Taken together, the fixed studies do not establish a reliable temporally replicable ATM-IV prediction edge. See the [Phase 91 cross-year synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/CROSS_YEAR_SYNTHESIS.md) and the [Phase 92 cross-phase synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md).
-
-## Terminal decision for this predictor line
-
-The preregistered rolling-ATM IV / synthetic-proxy / OI predictor screen is closed at Phase 92's stop boundary. Do not search additional years or tune the features to obtain a positive result. Reopen only for a materially new, preregistered hypothesis or authorized execution-grade data that can identify exact listed contracts and historical executable quotes.
-
-**No options strategy is approved or promoted for live trading.** These are studies of absolute next-15-minute *spot-return magnitude*, not direction, options P&L, futures basis, or executable fills. Phase 92's (K+C-P) value is an ATM-relative proxy—not an actual traded FUTIDX price or arbitrage signal. Phase 60/61 source gates for exact-contract OI/quotes remain closed; do not repeat rejected metadata-only searches. A future strategy replay must include Paytm Money brokerage, statutory charges, spread, adverse slippage, latency and cost stress. The protected Phase 83 2026 holdout remains sealed.
-
+[Phase 94 research plan and 14-paper method register](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-94-paper-method-replication-program) · [Phase 92 predictor stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
 <!-- CURRENT_RESEARCH_CHECKPOINT_END -->
 
 
