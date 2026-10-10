@@ -1100,3 +1100,20 @@ These counts are eligibility sensitivity only. OHLC high-low/open is not a quote
 ## Next research gate
 
 Continue Phase 52's factor-conditioned strategy research only after resolving the upstream data-coverage limitations and the source-license/executable-quote constraints. The 480-row BASELINE pilot is not a factor-selector experiment, has only one baseline replay pass, and cannot support strategy ranking. The finite grid size (9,379,584 configurations) remains queue size, not tested count. Do not promote a strategy or use the 2026 holdout until a predeclared, adequately covered, cost-aware replay and statistical validation pass.
+
+
+## Phase 56 — Exact prior-minute OI source diagnosis (CLOSED / PASS)
+
+[Run 38018825640](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018825640) passed the regression tests and audited all exact contract-time keys behind the 100 Phase 52 prior-OI-blocked rows. Of 220 blocked leg references, there are 60 unique expiry/timestamp/type/strike keys across the 2025-03-13, 2025-07-31 and 2025-12-30 partitions. All 60 keys have exactly one exact prior-minute source row, and all 60 source rows explicitly report numeric OI=0. No key was missing or duplicated. The partition hashes matched the pinned Phase 52 source audit.
+
+This resolves the immediate data diagnosis: the exclusions are caused by source-recorded zero OI, not absence of the exact prior-minute row. It does not prove that the dataset's zero values perfectly represent exchange reality, but under the frozen OI >= 100 gate they remain correctly ineligible. No filter was relaxed, no P&L was recomputed, holdout remains untouched, and no strategy was promoted.
+
+- [Phase 56 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/PHASE56_RESEARCH_PLAN.md)
+- [Phase 56 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/PHASE56_STATUS.md)
+- [Phase 56 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/PHASE56_ERROR_LOG.md)
+- [Exact contract-time audit CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/results/phase56/prior_oi_coverage/contract_oi_audit.csv)
+- [Machine-readable report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/results/phase56/prior_oi_coverage/report.json)
+
+## Next gate after Phase 56
+
+Phase 52 remains open but the current BASELINE pilot has only one replay pass and does not test factor-selector efficacy. The next valid work is to improve source-backed candidate/event coverage or obtain independent, legally usable executable quote data; the Phase 56 result is not a reason to weaken OI eligibility. Any subsequent strategy test must retain Paytm Money brokerage/statutory costs and adverse slippage, chronological splits, multiple-testing controls and an untouched holdout.
