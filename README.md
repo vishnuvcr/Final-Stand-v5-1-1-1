@@ -1187,3 +1187,27 @@ The canonical Phase 52 baseline pilot still has only **1 of 480** configuration-
 - [Phase 56 P&L sensitivity report and cost matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-56-ohlc-pnl-sensitivity/results/phase56/ohlc_pnl_sensitivity)
 - [Phase 57 independent replay plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-57-cost-aware-range-sensitivity-replay)
 - [Phase 58 source registry and feasibility report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-58-quote-source-feasibility-audit)
+
+## Phase 59 — Expanded public option-data coverage audit (CLOSED / NO-GO)
+
+[Automated audit run 38020729139](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38020729139) passed the registry validator, three regression tests, report reconciliation and checkpoint persistence. Ten additional/existing source candidates were screened using public metadata and published access terms only.
+
+- **0 sources** are authorized and verified for exact-contract prior-minute OI at the frozen 09:44/12:59 IST times.
+- **0 sources** are authorized and verified for exact historical bid/ask/depth at 09:45/13:00 entries and 15:15 exits.
+- [rissin/nse-options-intraday](https://huggingface.co/datasets/rissin/nse-options-intraday) describes intraday Upstox rows with NaN OI; its daily bhavcopy rows are not prior-minute OI.
+- [artist-23/nifty-options-data](https://huggingface.co/datasets/artist-23/nifty-options-data) exposes OI but its visible schema lacks the contract expiry field and the page has no dataset card/license grant; it is not accepted.
+- [OptionsData.shop](https://www.optionsdata.shop/guides/nse-option-chain-historical-data-csv-parquet) advertises minute OHLC/OI but no bid/ask; [TickBytes](https://github.com/QuantDev-stack/TickBytes) and [OptionVault](https://github.com/QuantDev-stack/OptionVault) remain licensed quote/depth leads with unverified exact target coverage. No purchases or raw-data downloads were made.
+
+Phase 59 is closed. Reopen only with explicit source-access/license authorization and an exact target-date/contract sample; do not impute OI, treat OHLC as spread, or loosen the frozen OI filter.
+
+- [Phase 59 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/PHASE59_RESEARCH_PLAN.md)
+- [Phase 59 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/PHASE59_STATUS.md)
+- [Source registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/research/phase59/source_registry.json)
+- [Generated source report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/results/phase59/public_option_data_coverage/report.md)
+
+## Phase 57 — Independent cost-aware replay (ACTIVE)
+
+[Run 38019819831](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831) passed regression tests and is replaying the frozen baseline 2% endpoint and diagnostic 1000% endpoint against the pinned option-bar source and existing cost kernel. This run has not yet produced an accepted report. Its acceptance gates are 480 outcomes per endpoint, no replay exceptions, six cost scenarios per pass, Phase 56 cost reconciliation and persisted source hashes/results.
+
+- [Phase 57 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_RESEARCH_PLAN.md)
+- [Phase 57 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_STATUS.md)
