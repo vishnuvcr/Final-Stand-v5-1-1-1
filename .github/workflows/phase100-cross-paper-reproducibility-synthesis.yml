@@ -1,0 +1,37 @@
+name: Phase 100 Cross-Paper Reproducibility Synthesis
+on:
+  push:
+    branches: [phase-100-cross-paper-reproducibility-synthesis]
+    paths:
+      - 'research/phase100/**'
+      - 'PHASE100_*.md'
+      - '.github/workflows/phase100-cross-paper-reproducibility-synthesis.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  synthesis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout latest Phase 95 evidence
+        uses: actions/checkout@v4
+        with:
+          ref: phase-95-daily-forecast-model-replication
+          path: evidence/phase95
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test synthesis controls
+        run: python -m pip install pytest && pytest -q research/phase100/test_synthesis.py
+      - name: Generate manuscript, figures and appendices
+        run: python research/phase100/synthesize.py
+      - name: Update phase status and publish
+        if: always()
+        run: |
+          mkdir -p results/phase100
+          git config user.name github-actions[bot]
+          git config user.email 41898282+vishnuvcr@users.noreply.github.com
+          git add results/phase100 PHASE100_STATUS.md PHASE100_ERROR_LOG.md PHASE100_RESEARCH_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 100: publish cross-paper manuscript and synthesis"
+          git push
