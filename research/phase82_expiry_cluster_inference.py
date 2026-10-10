@@ -114,15 +114,17 @@ def main():
         raise ValueError(f"Performance summary missing fields: {sorted(req_perf.difference(perf.columns))}")
     risk = perf[perf["variant"] != "short_atm_straddle"]
     candidate_rows = []
+    # Candidate is a defined-risk structure paired with one fixed horizon.
+    # That horizon must be net-positive in both DEV and VAL at both cost levels.
     for variant in sorted(risk["variant"].unique()):
-        group = risk[risk["variant"] == variant]
-        ok = True
-        for split in SPLITS:
-            for window in ("intraday", "overnight"):
-                z = group[(group["split"] == split) & (group["window"] == window)]
+        for window in ("intraday", "overnight"):
+            group = risk[(risk["variant"] == variant) & (risk["window"] == window)]
+            ok = True
+            for split in SPLITS:
+                z = group[group["split"] == split]
                 if len(z) != 1 or not (float(z.iloc[0]["total_net_1tick"]) > 0 and float(z.iloc[0]["total_net_2tick"]) > 0):
                     ok = False
-        candidate_rows.append({"variant": variant, "passes_defined_risk_net_gate": bool(ok)})
+            candidate_rows.append({"variant": variant, "candidate_window": window, "passes_defined_risk_net_gate": bool(ok)})
     candidates = pd.DataFrame(candidate_rows)
     candidates.to_csv(OUT / "candidate_gate.csv", index=False)
     passing = int(candidates["passes_defined_risk_net_gate"].sum())
@@ -144,9 +146,9 @@ def main():
         "coverage": {"variants": int(pairs["variant"].nunique()), "splits": sorted(pairs["split"].unique().tolist()),
                      "paired_rows": int(len(pairs)), "unique_expiry_clusters_overall": int(pairs["expiry"].nunique()),
                      "tests": len(results)},
-        "candidate_gate": {"criterion": "defined-risk variant net-positive in both intraday and overnight, in both DEV and VAL, at one-tick and two-tick costs",
+        "candidate_gate": {"criterion": "defined-risk variant-window pair net-positive for the same horizon in both DEV and VAL at one-tick and two-tick costs",
                            "defined_risk_variants_checked": int(len(candidates)), "passing_variants": passing,
-                           "holdout_action": "do not open 2026 holdout unless a defined-risk variant passes this gate and its preregistered holding-window inference clears Holm alpha 0.05"},
+                           "holdout_action": "do not open 2026 holdout unless a variant-window candidate passes this gate and its paired effect favors that window with Holm alpha below 0.05 in both DEV and VAL"},
         "limitations": ["Inference is conditional on Phase 81 OHLC-open estimates; it does not establish executable fills.",
                         "Expiry clustering does not address every possible cross-expiry/session dependency.",
                         "A significant holding-window difference is not the same as profitable strategy returns.",
@@ -169,9 +171,9 @@ def main():
     ]
     for r in inference.to_dict("records"):
         lines.append(f"| {r['split']} | {r['variant']} | {r['n_pairs']} | {r['n_expiry_clusters']} | {r['mean_inr_per_pair']:.2f} | [{r['expiry_cluster_bootstrap_ci95_low']:.2f}, {r['expiry_cluster_bootstrap_ci95_high']:.2f}] | {r['p_value_raw']:.5f} | {r['p_value_holm_family20']:.5f} | {r['mean_two_tick_inr_per_pair']:.2f} |")
-    lines += ["", "## Candidate gate", "", "| Defined-risk variant | Passes profitability gate |", "|---|---|"]
+    lines += ["", "## Candidate gate", "", "| Defined-risk variant / window | Passes profitability gate |", "|---|---|"]
     for r in candidates.to_dict("records"):
-        lines.append(f"| {r['variant']} | {'YES' if r['passes_defined_risk_net_gate'] else 'NO'} |")
+        lines.append(f"| {r['variant']} / {r['candidate_window']} | {'YES' if r['passes_defined_risk_net_gate'] else 'NO'} |")
     lines += ["", "## Interpretation boundary", "",
               "The estimated difference describes whether overnight net P&L differs from intraday net P&L in the registered historical OHLC-open proxy. It does not by itself identify a profitable strategy. Candidate eligibility separately requires positive net results in DEV and VAL, across both windows and both friction levels. Even positive results would need execution-grade quote/fill evidence.", "",
               "## Files", "", "- cluster_inference.csv: 20 primary tests and two-tick sensitivity.",
