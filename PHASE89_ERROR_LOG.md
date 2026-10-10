@@ -15,7 +15,7 @@ Rule: log API/network/schema/data-quality and analysis-gate issues. Never log cr
 - E89-009 — Audit identified potential ATM strike-roll contamination of trailing OI change. The corrected analysis excludes CALL/PUT ATM-strike mismatches and requires both strikes to remain unchanged over the trailing 15-minute window.
 
 ## Runtime issues
-No run outcome recorded yet.
+The final corrected run is recorded below. Earlier failures and superseded provisional estimates are not accepted as final evidence.
 
 <!-- PHASE89_RUNTIME_START -->
 ## Runtime summary — 38047775690
