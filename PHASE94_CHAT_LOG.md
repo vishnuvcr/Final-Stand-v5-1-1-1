@@ -25,3 +25,11 @@ User said “Ok proceed” to begin the proposed Final Strategy Evidence Audit a
 
 ## Decision safeguards
 No strategy is promoted by this phase. No live-trading recommendation is made. Phase 83's protected 2026 holdout is not accessed. Paytm Money brokerage, statutory charges, spread, adverse slippage, latency, cost stress and exact-contract/fill evidence remain required gates.
+
+## Final decision — 2026-10-10
+
+- Scanned the existing Phase 43 corrected VIX summary (22 strategy labels), Phase 45 ready-made/VIX summary (42 strategy labels), and Phase 48 multi-expiry summary (3 strategy labels). Their split-level results show temporal instability, several non-defined-risk candidates and negative multi-expiry results; no cross-phase pooled ranking was produced.
+- Added [legacy_strategy_summary_scan.md](results/phase94/legacy_strategy_summary_scan.md) and [FINAL_DECISION.md](results/phase94/FINAL_DECISION.md). The final decision is NO PROMOTION because Phase 50B-6's registered 16-hypothesis all-cost/Holm gate found no robust-positive strategy and the legacy tables are not directly comparable.
+- Updated the README checkpoint and Phase 94 status. Draft PR [#44](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/44) remains open/draft/unmerged.
+- The structural validator's PASS covers the initial 8-row evidence register only; it does not certify profitability or exhaustiveness. Phase 94 is a bounded decision audit, not a fully normalized cross-phase leaderboard.
+- No backtest or model/market experiment ran. Phase 83's protected 2026 holdout remains sealed.
