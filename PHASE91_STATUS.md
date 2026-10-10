@@ -21,3 +21,7 @@ Strategy promotion: **NONE**.
 M1 MAE − M2 MAE = 0.0001 bps (paired session-cluster bootstrap 95% CI -0.0111 to 0.0103; bootstrap positive share 0.5240; 5000 resamples).
 
 Complete OOS rows/sessions: 3633/60. Sample gate=PASS; India VIX gate=PASS. The Phase 83 2026 holdout remains sealed.
+
+## Downstream factor-screen checkpoint — Phase 92
+
+Phase 92 completed on the independent 2022 sample in [run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106). The synthetic-forward proxy + OI block worsened OOS MAE relative to spot+VIX+IV: M2−M4 MAE = −0.1708363 bps, paired session-cluster 95% CI −0.2298769 to −0.1152015. All data/sample gates passed (54/54 options windows, 5/5 VIX, 3,660 OOS rows/61 sessions). See [Phase 92 detailed results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/PHASE92_RESULTS.md) and [cross-phase synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md). No strategy P&L was run and no strategy is promoted.
