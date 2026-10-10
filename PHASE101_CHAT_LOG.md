@@ -61,3 +61,12 @@ This file records user requests, research decisions, execution status, and corre
 ## Corrected run 38080831113 — 2026-10-10T19:46:51Z
 - Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 7; U02 costed trades 164; no 2026 option data; no strategy promoted.
 - U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
+
+
+## 2026-10-11 — Resume after cost and drawdown audit
+
+- **User request:** “Resume” / “Continue”.
+- **Action:** Checked Phase 101 Actions run 38080831113; it completed successfully. Verified regenerated U02 summary includes peak/trough and equity reconciliation fields.
+- **Finding:** All three U02 account equity reconciliations pass within ₹0.01. However, each account ended down approximately 99.99%; large peak-to-trough drawdowns are consistent with large compounded peaks and near-total subsequent losses.
+- **Cost stress:** Corrected additional 0.25%-per-side impact plus ₹50 round-trip cost, including the same execution-price convention and date-effective baseline charges, is negative for all three models.
+- **Decision:** No strategy promoted. Updated report, status, research log, error log and main README. Continue only with evidence-backed, bounded paper coverage gaps; keep 2026 options holdout sealed. No hidden chain-of-thought is stored.
