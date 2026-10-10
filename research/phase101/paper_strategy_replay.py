@@ -52,6 +52,30 @@ def option_exit_decision(entry_price, bar_high, bar_low, stop_active,
     if target_hit: return "TARGET_20PCT"
     return None
 
+def block_bootstrap_mean_ci(values, block_size=5, replicates=3000):
+    """Circular moving-block bootstrap CI for mean net P&L/trade; descriptive only."""
+    a = np.asarray(list(values), dtype=float)
+    a = a[np.isfinite(a)]
+    n = len(a)
+    result = {"bootstrap_status": "SKIPPED_LT20_TRADES", "bootstrap_block_size": None,
+              "bootstrap_replicates": 0, "mean_net_trade_ci95_low": None,
+              "mean_net_trade_ci95_high": None}
+    if n < 20:
+        return result
+    b = min(int(block_size), n)
+    rng = np.random.default_rng(SEED + n + b)
+    blocks_needed = int(np.ceil(n / b))
+    means = np.empty(int(replicates), dtype=float)
+    offsets = np.arange(b)
+    for i in range(int(replicates)):
+        starts = rng.integers(0, n, size=blocks_needed)
+        ix = ((starts[:, None] + offsets[None, :]) % n).ravel()[:n]
+        means[i] = float(a[ix].mean())
+    lo, hi = np.quantile(means, [0.025, 0.975])
+    return {"bootstrap_status": "COMPUTED_CIRCULAR_MOVING_BLOCK_CI",
+            "bootstrap_block_size": b, "bootstrap_replicates": int(replicates),
+            "mean_net_trade_ci95_low": float(lo), "mean_net_trade_ci95_high": float(hi)}
+
 def net_trade_metrics(values):
     a = np.asarray(list(values), dtype=float)
     a = a[np.isfinite(a)]
@@ -59,14 +83,18 @@ def net_trade_metrics(values):
         return {"completed_trades": 0, "status": "NOT_ESTIMABLE_ZERO_TRADES",
                 "net_pnl_rupees": None, "mean_net_per_trade": None,
                 "median_net_per_trade": None, "win_rate": None,
-                "profit_factor": None, "max_trade_equity_drawdown_rupees": None}
-    eq = np.cumsum(a); peak = np.maximum.accumulate(np.r_[0.0, eq])[1:]
+                "profit_factor": None, "max_trade_equity_drawdown_rupees": None,
+                **block_bootstrap_mean_ci([])}
+    eq = np.cumsum(a)
+    peak = np.maximum.accumulate(np.r_[0.0, eq])[1:]
     wins, losses = a[a > 0], a[a < 0]
     pf = float(wins.sum()/abs(losses.sum())) if len(losses) else (float("inf") if len(wins) else None)
     return {"completed_trades": int(len(a)), "status": "COMPUTED",
             "net_pnl_rupees": float(a.sum()), "mean_net_per_trade": float(a.mean()),
             "median_net_per_trade": float(np.median(a)), "win_rate": float((a > 0).mean()),
-            "profit_factor": pf, "max_trade_equity_drawdown_rupees": float(np.max(peak-eq))}
+            "profit_factor": pf, "max_trade_equity_drawdown_rupees": float(np.max(peak-eq)),
+            **block_bootstrap_mean_ci(a, block_size=5)}
+
 
 def _get_p66():
     p = ROOT / "evidence" / "phase66" / "research"
@@ -156,6 +184,9 @@ def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
     trades, audit = [], []
     for m, (expiry, filename) in sorted(monthly.items()):
         period = pd.Period(m, "M"); wed = _first_weekday(period,2).normalize(); thu = _first_weekday(period,3).normalize()
+        # Do not permit look-ahead: the first Thursday must strictly follow the Wednesday forecast.
+        while thu <= wed:
+            thu += pd.Timedelta(days=7)
         base = {"paper_id":"U05","month":m,"expiry":str(expiry.date()),"source_file":filename,
                 "wednesday_date":str(wed.date()),"thursday_date":str(thu.date())}
         periods = [str(pd.Period(year=period.year-k, month=period.month, freq="M")) for k in (1,2,3)]
