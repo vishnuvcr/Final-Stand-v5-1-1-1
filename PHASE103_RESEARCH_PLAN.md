@@ -156,3 +156,8 @@ The first live probe using `expiryCode: 0` received HTTP 400 / `DH-905` / “exp
 ## First successful-request latency adjustment — 2026-10-11
 
 The first corrected request (`expiryCode: 1`) did not yield an aggregate report before the bounded retry was cancelled by a newer workflow run. This is a runtime-latency observation, not an API/data failure, because no response evidence was persisted. To keep the research bounded and diagnose the request independently, the next step is reduced to one known trading session (2026-08-03 inclusive to 2026-08-04 exclusive) and one HDFCBANK CALL probe. Only if that request completes will the probe set expand to PUT/other names and longer 30-day chunks. The API window remains capped at 30 calendar days per call.
+
+
+## Date-range correction after empirical boundary diagnostic — 2026-10-11
+
+The official documentation says `toDate` is non-inclusive, but observed Dhan responses include the date specified in `toDate`: the request `fromDate=2026-08-03`, `toDate=2026-08-04` yielded 385 rows on each of 3 and 4 August. A same-date request (`fromDate=toDate=2026-08-03`) returned 385 rows on 3 August only. The acquisition client therefore preserves the research target window as half-open `[fromDate,toDate)` and sets the provider request's end date to `target_end_exclusive - 1 calendar day`. It then audits returned rows against the original target window in Asia/Kolkata and rejects any extra dates. This is evidence-driven handling of observed API behavior, not a change to target dates or strategy rules.

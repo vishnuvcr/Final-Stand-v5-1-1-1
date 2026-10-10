@@ -173,3 +173,11 @@ The workflow failed before a machine-readable result was written. No source/data
 - API probes returning rows: 1/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — Resolve Dhan end-date semantics
+
+- The same-date diagnostic [38089220578](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089220578) succeeded for HDFCBANK CALL and returned 385 rows with timestamps exclusively on 2026-08-03.
+- Previous request with `fromDate=2026-08-03`, `toDate=2026-08-04` returned both 2026-08-03 and 2026-08-04. Therefore the provider appears to include its `toDate` even though the published spec says non-inclusive.
+- Corrected the client to send provider `toDate = target_end_exclusive - 1 day` while keeping validation against the half-open target dates. Added unit coverage and a corrected table builder.
+- Registered the next bounded audit as all five stocks × CALL/PUT for the same 2026-08-03 IST session (10 calls). The resulting report must show per-probe row counts, date bins, outside-window counts and equal-length arrays; strategy P&L remains out of scope.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bounded DhanHQ expired stock-options data probe; never prints token or raw rows."""
 import argparse, csv, hashlib, io, json, os, time, urllib.error, urllib.request
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -19,11 +19,14 @@ def get_bytes(url, timeout=30):
 
 def check_window(start, end):
     days = (date.fromisoformat(end) - date.fromisoformat(start)).days
-    if days < 0 or days > 30:
-        raise ValueError("Rolling-options API accepts at most 30 calendar days per request.")
-    # span=0 is allowed only as a diagnostic to determine whether the endpoint treats
-    # equal fromDate/toDate as a one-day inclusive query despite the published non-inclusive note.
+    if days < 1 or days > 30:
+        raise ValueError("The target window must be 1–30 calendar days; end date is exclusive.")
     return days
+
+def provider_to_date(start, target_end_exclusive):
+    """Dhan empirically includes toDate; map [start, end) to inclusive provider dates."""
+    check_window(start, target_end_exclusive)
+    return (date.fromisoformat(target_end_exclusive) - timedelta(days=1)).isoformat()
 
 def map_underlyings(raw):
     rows = csv.DictReader(io.StringIO(raw.decode("utf-8-sig")))
@@ -132,15 +135,12 @@ def summarize(symbol, option_type, code, obj, safe_error=None, start=None, end=N
         outside=0
         start_day=date.fromisoformat(start) if start else None
         end_day=date.fromisoformat(end) if end else None
-        same_date_diagnostic=bool(start_day and end_day and start_day==end_day)
         for stamp in ts:
             try:
                 dt_utc=datetime.fromtimestamp(int(stamp),timezone.utc)
                 dt_local=dt_utc.astimezone(ZoneInfo("Asia/Kolkata"))
                 local_dates.append(dt_local.date().isoformat())
-                if same_date_diagnostic and dt_local.date() != start_day:
-                    outside += 1
-                elif start_day and end_day and not same_date_diagnostic and not (start_day <= dt_local.date() < end_day):
+                if start_day and end_day and not (start_day <= dt_local.date() < end_day):
                     outside += 1
             except (ValueError,TypeError,OverflowError,OSError):
                 continue
@@ -163,20 +163,23 @@ def main():
                    help="maximum number of symbol/side API probes for this bounded run")
     p.add_argument("--out-dir",default="results/phase103")
     a=p.parse_args(); days=check_window(a.from_date,a.to_date)
+    api_to_date=provider_to_date(a.from_date,a.to_date)
     if not 1 <= a.max_probes <= len(SYMBOLS) * 2:
         p.error("--max-probes must be from 1 through 10")
     out=Path(a.out_dir); out.mkdir(parents=True,exist_ok=True)
     result={"phase":"103.1","run_id":os.getenv("GITHUB_RUN_ID","local"),
         "generated_at_utc":datetime.now(timezone.utc).isoformat(),
         "window":{"from_inclusive":a.from_date,"to_exclusive":a.to_date,"span_days":days,
-                  "request_mode":"same_date_endpoint_semantics_diagnostic" if a.from_date==a.to_date else "documented_half_open"},
+                  "request_mode":"half_open_target_window_with_inclusive_provider_toDate_adjustment"},
+        "provider_request_window":{"fromDate":a.from_date,"toDate_inclusive":provider_to_date(a.from_date,a.to_date)},
         "probe_limit":a.max_probes,
         "endpoint":ENDPOINT,"instrument_master_sha256":None,"instrument_master_bytes":None,
         "underlying_map":{},"probes":[],"raw_rows_persisted":False,
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
         "known_limits":["Rolling strikes can change actual strike over time.",
           "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
-          "One stock/side probe does not establish full-history completeness or independent test sufficiency.", "Returned timestamps are audited in Asia/Kolkata against the documented half-open request window; out-of-window rows block accepting the sample."],
+          "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
+          "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."],
         "status":"PENDING"}
     try:
         master=get_bytes(MASTER)
@@ -199,7 +202,7 @@ def main():
                     if not m.get("security_id"):
                         result["probes"].append({"symbol":sym,"requested_option_type":side,"status":"BLOCKED_UNDERLYING_ID"})
                         continue
-                    code,obj,safe_error=query(token,m["security_id"],side,a.from_date,a.to_date)
+                    code,obj,safe_error=query(token,m["security_id"],side,a.from_date,api_to_date)
                     result["probes"].append(summarize(sym,side,code,obj,safe_error,a.from_date,a.to_date))
                     time.sleep(1.1)
                 if len(result["probes"]) >= a.max_probes:
@@ -220,7 +223,8 @@ def main():
             else: result["status"]="NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
     (out/"dhan_data_api_audit.json").write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
     lines=["# Phase 103.1 — Dhan Data API smoke test","",f"**Status:** {result['status']}",
-      f"**Window:** {(a.from_date + ' same-date endpoint-semantics diagnostic') if a.from_date==a.to_date else (a.from_date + ' inclusive to ' + a.to_date + ' exclusive (' + str(days) + ' days)')}",
+      f"**Target window (IST):** {a.from_date} inclusive to {a.to_date} exclusive ({days} days)",
+      f"**Dhan request dates:** fromDate={a.from_date}; toDate={api_to_date} (empirically inclusive; target end remains exclusive)",
       f"**Probe limit:** {a.max_probes}",
       f"**Run:** {result['run_id']}","",
       "This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.",
@@ -233,8 +237,8 @@ def main():
           message=(v.get("api_error_message") or "").replace("|","/"),
           rows=v.get("rows",0),consistent=v.get("array_lengths_consistent",False),
           first=v.get("first_timestamp_utc") or "",last=v.get("last_timestamp_utc") or ""))
-        # Check provider dates; equal-date requests are an explicitly labelled semantics diagnostic.
-        lines[-1] = lines[-1].rstrip() + " | {} | {} |".format(
+        # Append IST date-bin and out-of-window audit columns without shifting the table.
+        lines[-1] = lines[-1].rstrip()[:-1] + " | {} | {} |".format(
           json.dumps(v.get("timestamp_counts_by_ist_date",{}),sort_keys=True),
           v.get("outside_requested_date_window_rows") if v.get("outside_requested_date_window_rows") is not None else "n/a")
     lines += ["","## Underlying ID mapping","","| Symbol | ID resolved | Status |","|---|---|---|"]

@@ -212,3 +212,11 @@ The latest accepted API smoke result currently remains a **data-boundary NO-GO**
 - API probes returning rows: 1/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## Date-boundary resolution and next data gate — 2026-10-11
+
+- The same-date endpoint diagnostic [run 38089220578](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089220578) returned 385 HDFCBANK CALL rows only on 2026-08-03.
+- Combined with the earlier [out-of-window result 38089152325](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089152325), the evidence indicates the Dhan endpoint treats its `toDate` as inclusive despite the current documentation describing it as non-inclusive.
+- Acquisition now translates the fixed research target `[start,end)` into provider `fromDate=start`, `toDate=end-1 day`, and checks timestamps against the original half-open window. No extra-date rows may be accepted.
+- Next run: all five frozen stock symbols × CALL/PUT, one common IST session (2026-08-03), using ten bounded API requests. This validates one-day cross-stock/side coverage only; it does not establish full-history coverage or strategy profitability.
