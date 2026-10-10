@@ -83,7 +83,7 @@
       "full_history_licensed": false,
       "decision": "INSUFFICIENT_FOR_FROZEN_ENTRY_EXIT_TIMES",
       "limitations": "Documented intraday snapshots do not align with 09:45/13:00 entries or exact 15:15 exit; EOD bid/ask alone cannot validate intraday fills.",
-      "historical_bid_ask_depth_verified": true,
+      "historical_bid_ask_depth_verified": false,
       "exact_timestamps_verified": false
     },
     {
@@ -106,7 +106,7 @@
       "full_history_licensed": false,
       "decision": "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY",
       "limitations": "Repository MIT license applies to software; it does not establish redistribution rights for the private market-data feed. Need licensed sample for exact 2022-2025 target dates and automated access terms.",
-      "historical_bid_ask_depth_verified": true,
+      "historical_bid_ask_depth_verified": false,
       "exact_timestamps_verified": false
     },
     {
@@ -126,7 +126,7 @@
       "full_history_licensed": false,
       "decision": "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY",
       "limitations": "MIT code license and sample presence do not grant rights to the complete market-data dataset. Need exact target-date/contract coverage, data delivery method and reuse/storage license.",
-      "historical_bid_ask_depth_verified": true,
+      "historical_bid_ask_depth_verified": false,
       "exact_timestamps_verified": false
     },
     {
