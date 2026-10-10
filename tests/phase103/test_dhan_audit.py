@@ -28,6 +28,21 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertEqual(result["HDFCBANK"]["security_id"],"1333")
         self.assertEqual(result["HDFCBANK"]["status"],"MATCHED")
 
+    def test_summary_counts_rows_by_ist_date_and_flags_out_of_window(self):
+        import datetime
+        # 2026-08-03 03:45 UTC = 09:15 IST; 2026-08-04 03:45 UTC is next IST session.
+        stamps=[
+            int(datetime.datetime(2026,8,3,3,45,tzinfo=datetime.timezone.utc).timestamp()),
+            int(datetime.datetime(2026,8,4,3,45,tzinfo=datetime.timezone.utc).timestamp())
+        ]
+        block={"open":[10,11],"high":[11,12],"low":[9,10],"close":[10.5,11.5],
+          "iv":[20,21],"volume":[100,120],"strike":[800,800],"oi":[200,220],"spot":[805,806],
+          "timestamp":stamps}
+        result=summarize("HDFCBANK","CALL",200,{"status":"success","data":{"ce":block}},
+                         None,"2026-08-03","2026-08-04")
+        self.assertEqual(result["timestamp_counts_by_ist_date"],{"2026-08-03":1,"2026-08-04":1})
+        self.assertEqual(result["outside_requested_date_window_rows"],1)
+
     def test_payload_summary_checks_arrays(self):
         block={"open":[10,11],"high":[11,12],"low":[9,10],"close":[10.5,11.5],
           "iv":[20,21],"volume":[100,120],"strike":[800,800],"oi":[200,220],"spot":[805,806],
