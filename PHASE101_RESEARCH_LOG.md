@@ -82,3 +82,5 @@
 
 
 - Extended U02 summary output to expose maximum account equity and date, peak/trough at the maximum drawdown, drawdown as a percentage of its peak, and an ending-equity reconciliation check. This distinguishes a legitimate compounded-equity drawdown from a bookkeeping mismatch without clipping the reported rupee value. Code commit: `ef34c38aeca5ddc73ee1f948e4216f2fba8bb5bd`.
+
+- Added a unit test using a deterministic synthetic Phase 66 cost helper to verify the adverse-impact sensitivity includes execution-price rounding, baseline charges, and the extra ₹50. The synthetic helper is a test fixture only and is not presented as a broker tariff. Test commit: `770571241898d2d408efc4f0bb73bf531bbabfee`.
