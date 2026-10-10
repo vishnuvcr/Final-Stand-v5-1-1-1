@@ -565,13 +565,16 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
         lines.append("| "+" | ".join(str(x) for x in [r.get("model",""),r.get("status",""),r.get("training_rows",""),r.get("validation_rows",""),
           _fmt(r.get("accuracy")),_fmt(r.get("balanced_accuracy")),_fmt(r.get("precision_buy")),_fmt(r.get("recall_buy")),
           _fmt(r.get("f1_buy")),_fmt(r.get("roc_auc")),_fmt(r.get("always_sell_accuracy"))])+" |")
-    lines += ["","### Costed options results","| Model | Trades | Net ₹10/order | Net ₹20/order | +50% fees | 0.25%/side + ₹50 | Win rate | Max drawdown |",
-      "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    lines += ["","### Costed options results","| Model | Trades | Net P&L ₹10/order | Mean/trade 95% block-bootstrap CI | Ending account equity ₹ | Account return % | Net ₹20/order sensitivity | +50% fee stress | Win rate | Max account drawdown ₹ |",
+      "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for r in u02_summaries:
+        ci = (f"{_fmt(r.get('mean_net_trade_ci95_low'))} to {_fmt(r.get('mean_net_trade_ci95_high'))}"
+              if r.get("bootstrap_status") == "COMPUTED_CIRCULAR_MOVING_BLOCK_CI"
+              else str(r.get("bootstrap_status", "NOT_ESTIMABLE")))
         lines.append("| "+" | ".join(str(x) for x in [r.get("model",""),r.get("completed_trades",0),_fmt(r.get("net_pnl_rupees")),
+          ci,_fmt(r.get("ending_account_equity")),_fmt(r.get("account_return_pct")),
           _fmt(r.get("net_20_per_order")),_fmt(r.get("net_10_per_order_fee_stress_50pct")),
-          _fmt(r.get("paper_025pct_each_side_plus_50_trade_cost_net")),_fmt(r.get("win_rate")),
-          _fmt(r.get("max_trade_equity_drawdown_rupees"))])+" |")
+          _fmt(r.get("win_rate")),_fmt(r.get("max_account_drawdown_rupees"))])+ " |")
     lines += ["","### Model statuses"]
     for r in model_status: lines.append(f"- {r.get('model')}: {r.get('status')} — {r.get('error','')}")
     lines += ["",f"- Training/validation feature rows: {info.get('training_rows')} / {info.get('validation_rows')}.",
