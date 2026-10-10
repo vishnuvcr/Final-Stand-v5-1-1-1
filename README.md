@@ -1,17 +1,19 @@
-# Resume checkpoint — 2026-10-10 (Phase 84 cross-phase evidence reconciliation)
+# Resume checkpoint — 2026-10-10 (Phase 84 completed)
 
-**Phase 84 status: evidence reconciliation initiated; no new strategy promotion.** The Phase 83 experiment is terminal for its registered universe. This branch separates those results from the historical canonical control, partial-OOS TT-04/TT-05 diagnostics, and under-covered Phase 52/66 tests. Cross-study raw P&L is not used to declare a single winner.
+**Phase 84 is complete and automated validation passed** in [GitHub Actions run 38046389765](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38046389765). This synthesis does not authorize a new strategy. It keeps the Phase 83 terminal no-go separate from the canonical Phase 38 control, partial Phase 51-3 TT-04/TT-05 diagnostics, and under-covered Phase 52/66 tests. Cross-study raw P&L is not used to declare a winner.
 
 - [Phase 84 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_RESEARCH_PLAN.md)
 - [Phase 84 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_STATUS.md)
 - [Phase 84 evidence matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/results/phase84_evidence_reconciliation/evidence_matrix.csv)
 - [Phase 84 decision report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/results/phase84_evidence_reconciliation/decision_report.md)
 - [Phase 84 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_ERROR_LOG.md)
-- [Phase 84 decision/chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_CHAT_LOG.md)
+- [Phase 84 chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_CHAT_LOG.md)
+- [Draft PR #34](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/34)
 
-**Current decision:** no strategy is promoted. The next numerical study is conditional on documented source rights, exact fixed-contract coverage, and quote/depth-quality execution evidence. No paid data has been purchased and the Phase 83 2026 holdout remains sealed.
+**Next gate:** only open a new numerical study after documented data-use rights, exact fixed-contract coverage, and—if executable profitability is claimed—historical bid/ask and size/depth are verified. Include Paytm Money costs, slippage and latency in its preregistration. Do not reopen the sealed Phase 83 holdout or repeat rejected source probes.
 
 ---
+
 
 # Resume checkpoint — 2026-10-10 (Phase 83 final manuscript)
 
