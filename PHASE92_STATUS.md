@@ -16,7 +16,6 @@ Strategy promotion: **NONE**.
 - [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
 - [IV incremental effects figure](results/phase92/IV_INCREMENTAL_EFFECTS.svg)
 - [OOS MAE comparison figure](results/phase92/OOS_MAE_COMPARISON.svg)
-- [OOS MAE comparison figure](results/phase92/OOS_MAE_COMPARISON.svg)
 - [Cross-phase factor synthesis and stopping decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
 - [Summary JSON](results/phase92/summary.json)
 - [Coverage ledger](results/phase92/coverage.csv)
