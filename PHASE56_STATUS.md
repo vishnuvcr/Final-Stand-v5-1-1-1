@@ -1,6 +1,6 @@
 # Phase 56 status — OHLC price-reference P&L sensitivity
 
-**Overall:** OPEN — preregistered diagnostic P&L sensitivity; no strategy promotion.  
+**Overall:** COMPLETE — preregistered diagnostic P&L sensitivity passed; no strategy promotion.  
 **Branch:** `phase-56-ohlc-pnl-sensitivity`  
 **Parent:** Phase 55 leg-audit payload repair; Phase 54 coverage sensitivity.  
 **Input:** `results/phase52/historical_pilot/event_replay.csv`; 480 frozen configuration-event rows.  
@@ -13,12 +13,12 @@ The parent ledger is expected to reconcile to 379 `EXCLUDED_OHLC_RANGE_PROXY`, 1
 
 ## Gates
 - [x] Freeze research question, event universe, threshold grid and cost assumptions in [plan](PHASE56_RESEARCH_PLAN.md).
-- [ ] Verify input fingerprint, 480 rows and full selected-leg status.
-- [ ] Match eligibility counts at every threshold to Phase 54.
-- [ ] Compute every preregistered brokerage/slippage combination from exact stored open references.
-- [ ] Validate cost arithmetic, invariants, output completeness and regression tests.
-- [ ] Persist machine-readable CSV/JSON/Markdown outputs, append logs and update README.
-- [ ] Close after the finite matrix; no further optimization in this phase.
+- [x] Verify input fingerprint, 480 rows and full selected-leg status.
+- [x] Match eligibility counts at every threshold to Phase 54.
+- [x] Compute every preregistered brokerage/slippage combination from exact stored open references.
+- [x] Validate cost arithmetic, invariants, output completeness and regression tests.
+- [x] Persist machine-readable CSV/JSON/Markdown outputs, append logs and update README.
+- [x] Close after the finite matrix; no further optimization in this phase.
 
 **Scientific prior:** this is a price-reference sensitivity, not an executable backtest. An OHLC range proxy is not a quoted bid/ask spread; no result is promotable.
 
@@ -41,3 +41,4 @@ The parent ledger is expected to reconcile to 379 `EXCLUDED_OHLC_RANGE_PROXY`, 1
 - Output matrix: 132 threshold/cost summaries; 5,280 configuration summaries; 924 family summaries; 18,960 non-executable price-reference trade scenarios; 440 severe-cost configuration-threshold screens.
 - Configurations passing the severe-cost screen at any threshold=5; passing configuration-threshold pairs=5.
 - All costs/slippage are modeled assumptions; candle range is not bid/ask spread; no holdout used and no strategy is promoted.
+\n## Final decision — Phase 56 closed\n\nAccepted run: [38019146547](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019146547). All 480 input rows and all selected-leg payloads passed validation. The 11 thresholds reproduced Phase 54 eligibility counts exactly; 18,960 modeled cost-scenario rows were computed across 11 thresholds, two brokerage levels and six adverse-slippage assumptions. Five configuration-threshold pairs passed the preregistered severe-cost screen, all at the 1000% diagnostic threshold; these are quote-validation leads only, not strategy winners. No holdout, statistical significance claim, executable-fill claim or promotion. The OHLC range proxy is not a spread.\n
