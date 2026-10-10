@@ -42,7 +42,10 @@
       "access": "Free catalogue browsing; API described with bearer key; site says archive is not for sale yet",
       "rights": "No explicit automated research, caching/storage, redistribution or derived-result publication license verified",
       "decision": "FOLLOW_UP_ONLY",
-      "reason": "Most promising OHLC/OI candidate, but access/licensing rights and exact sample validation remain unverified; no quote/depth fields established."
+      "reason": "Most promising OHLC/OI candidate, but access/licensing rights and exact sample validation remain unverified; no quote/depth fields established.",
+      "rights_cleared": false,
+      "sample_validated": false,
+      "exact_contract_schema_verified": false
     },
     {
       "id": "dhanhq_expired_options",
@@ -57,7 +60,10 @@
       "access": "Broker account and authorized API credentials likely required; none used",
       "rights": "Automated caching/storage and derived-result publication rights not verified",
       "decision": "FOLLOW_UP_ONLY",
-      "reason": "Potential licensed OHLC/OI route, but account access, exact timestamp schema, target coverage and reuse rights are unresolved."
+      "reason": "Potential licensed OHLC/OI route, but account access, exact timestamp schema, target coverage and reuse rights are unresolved.",
+      "rights_cleared": false,
+      "sample_validated": false,
+      "exact_contract_schema_verified": false
     },
     {
       "id": "icici_breeze_historical_fo",
@@ -72,7 +78,10 @@
       "access": "Authorized account/API credentials likely required; none used",
       "rights": "Automated caching/storage and derived-result publication rights not verified",
       "decision": "FOLLOW_UP_ONLY",
-      "reason": "Unverified API/data schema and access rights; not enough evidence for acceptance."
+      "reason": "Unverified API/data schema and access rights; not enough evidence for acceptance.",
+      "rights_cleared": false,
+      "sample_validated": false,
+      "exact_contract_schema_verified": false
     },
     {
       "id": "barath_upstox_collector",
@@ -87,7 +96,10 @@
       "access": "Requires user/provider-authorized Upstox token; none used",
       "rights": "MIT applies to code, not underlying exchange/broker market data; data rights not established",
       "decision": "REJECT_FOR_FROZEN_REPLAY",
-      "reason": "A forward collector is not a source for historical target events, and the 15-minute cadence does not guarantee frozen exact timestamps."
+      "reason": "A forward collector is not a source for historical target events, and the 15-minute cadence does not guarantee frozen exact timestamps.",
+      "rights_cleared": false,
+      "sample_validated": false,
+      "exact_contract_schema_verified": false
     },
     {
       "id": "zenodo_nifty_2017_2020",
@@ -102,7 +114,10 @@
       "access": "Publicly downloadable record, but no data download performed",
       "rights": "License metadata not established in this pass",
       "decision": "REJECT_FOR_FROZEN_REPLAY",
-      "reason": "Period and required OI/quote fields do not meet frozen replay needs."
+      "reason": "Period and required OI/quote fields do not meet frozen replay needs.",
+      "rights_cleared": false,
+      "sample_validated": false,
+      "exact_contract_schema_verified": false
     }
   ]
 }
