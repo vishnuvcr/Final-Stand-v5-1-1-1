@@ -25,3 +25,11 @@
 - Impact: the final git add step could fail with a pathspec error, preventing derived report/status publication.
 - Correction: created PHASE67_CHAT_LOG.md on phase-67-contract-coverage-diagnostic. Regression tests were also added to the test file to trigger the configured push workflow.
 - Verification: source files are committed; no Phase 67 aggregate result is visible yet, so the workflow itself is not yet marked PASS.
+
+
+## E67-005 — GitHub Actions Python setup failed before audit
+- Status: correction committed; rerun verification pending.
+- Evidence: [workflow run 38032877348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38032877348) failed in `actions/setup-python@v5`; dependency installation, tests, and numerical audit were skipped; zero artifacts were produced.
+- Root-cause hypothesis: `cache: pip` was enabled without a dependency manifest or `cache-dependency-path`, so setup-python could not resolve a cache key. This is consistent with the failed setup step; full log text was not available in the connector response.
+- Correction: removed pip caching from the workflow rather than adding a fake manifest. Dependency installation remains explicit in the next step.
+- Prevention: keep dependency caching disabled until a tracked requirements/pyproject file is introduced; never mark the numerical audit complete based on a setup-only run.
