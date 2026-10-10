@@ -23,8 +23,8 @@ class EvidenceGateTests(unittest.TestCase):
 
     def test_source_gate_requires_zero_accepted_sources(self):
         result = mod.evaluate()
-        self.assertEqual(result["source_audit"]["accepted_free_license_clear_exact_prior_minute_oi_sources"], 0)
-        self.assertEqual(result["source_audit"]["accepted_free_license_clear_exact_quote_depth_sources"], 0)
+        self.assertEqual(result["source_audit"]["authorized_exact_prior_minute_oi_sources"], 0)
+        self.assertEqual(result["source_audit"]["authorized_exact_quote_depth_sources"], 0)
 
     def test_report_is_no_go_not_a_profitability_claim(self):
         result = mod.evaluate()
