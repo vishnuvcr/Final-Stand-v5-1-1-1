@@ -622,8 +622,8 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
       "## 5. Reconciled coverage of every uploaded PDF","| ID | Paper/method | Phase 101 status | Evidence and limitation |","|---|---|---|---|"]
     for r in matrix:
         lines.append(f"| {r['paper_id']} | {r['paper_or_method']} | {r['phase101_status']} | {r['evidence_and_limitation']} |")
-    lines += ["","## 6. Costs and statistical inference
-The mean net P&L/trade confidence interval uses a deterministic circular moving-block bootstrap (5-trade blocks, 3,000 resamples), and is reported only for at least 20 completed trades. The seasonality sample has fewer than 20 trades, so no bootstrap precision is claimed. Fee-stress totals are alternative charge scenarios on the primary simulated position path, not separately re-sized equity curves.",
+    lines += ["","## 6. Costs and statistical inference",
+      "The mean net P&L/trade confidence interval uses a deterministic circular moving-block bootstrap (5-trade blocks, 3,000 resamples), and is reported only for at least 20 completed trades. The seasonality sample has fewer than 20 trades, so no bootstrap precision is claimed. Fee-stress totals are alternative charge scenarios on the primary simulated position path, not separately re-sized equity curves.",
       "Baseline uses the repository’s date-effective charge helper, ₹10/order brokerage, one ₹0.05 adverse tick per fill, statutory/exchange fees and GST where implemented. Sensitivities add ₹20/order brokerage, +50% charge stress, and a paper-specific 0.25% adverse price impact per side plus ₹50/trade. These are simulated costs, not verified historical Paytm Money contract notes or proof of executable fills.",
       "Classification accuracy alone is not evidence of profitable trading. U02 accounting is sequential per-model equity rather than reusing the initial ₹1 lakh on every trade. Sparse trades, missing coverage and confidence intervals crossing zero are not robust evidence. No strategy is promoted.","",
       "## 7. Strengths and limitations",
