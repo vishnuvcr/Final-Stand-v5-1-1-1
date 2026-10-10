@@ -18,3 +18,5 @@ This is a retrospective method on previously explored summary data, not independ
 
 ## Deliverables
 Research script, workflow with manual run, CSV/JSON results, report, status/error/chat logs and README update. Stop after reproducible result and QA.
+
+Execution note: the registered workflow is triggered by pushes to the plan/script/input paths and also has a manual workflow_dispatch entry point.
