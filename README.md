@@ -1,26 +1,33 @@
 <!-- CURRENT_RESEARCH_CHECKPOINT_START -->
 # Final Stand v5 1-1-1 — Current Research Checkpoint (2026-10-10)
 
-## Latest completed predictive study: Phase 90
+## Latest completed predictive study: Phase 91 temporal replication
 
-**Finding: a small incremental out-of-sample prediction gain, not trading-strategy evidence.** On the independent 2024 sample, adding rolling ATM-relative mean CALL/PUT IV to a frozen lagged-spot + India VIX model reduced absolute next-15-minute NIFTY spot-move prediction MAE by **0.0330 bps** (paired session-cluster bootstrap 95% CI **0.0001 to 0.0562 bps**; 3,604 OOS rows over 60 sessions). The effect is marginal, with its lower confidence limit close to zero; it needs independent replication. No options strategy was promoted and no strategy P&L was inferred.
+**Result: NO INCREMENTAL IV GAIN ESTABLISHED in the preregistered 2023 replication.** Data-quality and sample gates passed, but the measured MAE improvement was effectively zero and its confidence interval crossed zero. This does not prove IV contains no information; it means the registered replication did not establish reliable incremental prediction. No options strategy was promoted.
 
-- [Phase 90 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_ERROR_LOG.md) · [results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/PHASE90_RESULTS.md) · [summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/summary.json) · [Actions run 38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674)
+- Sample: calendar 2023 only; DEV Jan–Jun, validation Jul–Sep (report-only), confirmatory OOS Oct–Dec.
+- Coverage: 54/54 options chunks and 5/5 India VIX chunks passed; unique VIX instrument-master match.
+- Paired CALL/PUT rows: 18,473 across 246 sessions, with zero spot mismatches and zero strike mismatches.
+- Confirmatory OOS: 3,633 observations across 60 sessions; VIX coverage 99.978% in OOS.
+- Primary endpoint: M1 MAE − M2 MAE = **+0.0001111 bps**; paired session-cluster bootstrap 95% CI **−0.0110700 to +0.0102532 bps**, 5,000 resamples; bootstrap-positive share 52.4%.
+- OOS MAE: M1 spot+VIX = 3.9156 bps; M2 spot+VIX+IV = 3.9155 bps. Relative MAE reduction is ~0.0028%, with confidence interval crossing zero.
 
-## Current phase: Phase 91 temporal replication on 2023 data
+[Phase 91 results report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/PHASE91_RESULTS.md) · [summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/summary.json) · [coverage ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/coverage.csv) · [model metrics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/model_metrics.csv) · [Actions run 38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830)
 
-Phase 91 is preregistered on a separate branch to test the same model family on a distinct year: DEV Jan–Jun 2023, reporting-only validation Jul–Sep, confirmatory OOS Oct–Dec. The sample is bounded to 2023-01-01 inclusive through 2024-01-01 exclusive; it has its own cache namespace, single primary endpoint and fixed-seed session-cluster bootstrap.
+- [Phase 91 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_CHAT_LOG.md) · [engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/research/phase91/iv_incremental_study.py)
+- [Phase 91 draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41) remains unmerged. [Default-branch automated/manual runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml).
 
-**Execution status: NOT YET VERIFIED.** At the latest repository check, the Phase 91 aggregate results and summary JSON were absent and no Actions run ID/checks were surfaced for the head commit. This is a workflow-execution blocker—not a negative or positive statistical finding. Do not infer that IV either did or did not replicate until the actual run, coverage and sample gates are verified.
+## Preceding study: Phase 90 (2024)
 
-- [Phase 91 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_CHAT_LOG.md) · [engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/research/phase91/iv_incremental_study.py) · [branch workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/.github/workflows/phase91-iv-temporal-replication-2023.yml)
-- [Phase 91 draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41) · [parent-branch PR runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/.github/workflows/phase91-pr-runner.yml)
+Phase 90 had found a small positive incremental OOS prediction result: M1–M2 MAE difference +0.0330 bps, 95% CI +0.0001 to +0.0562 bps over 3,604 OOS observations / 60 sessions. The 2023 temporal replication did not reproduce it. Taken together, the evidence does **not** justify using rolling ATM IV as an incremental predictor within a trading rule without a new preregistered research question and further independent evidence.
+
+[Phase 90 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/PHASE90_RESULTS.md) · [Phase 90 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_STATUS.md) · [Actions run 38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674)
 
 ## Strategy and data-quality gate
 
-**No strategy is approved for live deployment.** Rolling ATM-relative IV/spot data predicts spot-move magnitude only; it does not establish directional skill, causal effect, exact listed-contract premium fills, historical bid/ask/depth, or cost-adjusted options P&L. Any future strategy replay must use authorized exact-contract data and include Paytm Money brokerage, statutory charges, spread, slippage, latency and stress costs. The protected Phase 83 2026 holdout remains sealed.
+**No strategy is approved for live deployment.** These studies model near-term spot-move magnitude; they do not establish direction, causality, exact listed-contract premium fills, historic bid/ask/depth, or cost-adjusted options P&L. Any later strategy replay requires authorized exact-contract data and Paytm Money brokerage, statutory charges, spread, slippage, latency and stress costs. The protected Phase 83 2026 holdout remains sealed.
 
-The broader historical options replay is still source/coverage-gated: no fabricated or imputed fills, shortened OOS window, or unverified free-data source is accepted as executable strategy evidence.
+The rolling-IV incremental-prediction line is now closed at its planned one-replication stop: one positive 2024 sample and one non-replicating 2023 sample. Reopen it only with a materially new hypothesis or improved execution-grade data, not by searching years until a positive result appears. Broader historical strategy replay remains source/coverage-gated; no fabricated fills, shortened OOS window or unverified source is accepted as executable evidence.
 
 <!-- CURRENT_RESEARCH_CHECKPOINT_END -->
 
