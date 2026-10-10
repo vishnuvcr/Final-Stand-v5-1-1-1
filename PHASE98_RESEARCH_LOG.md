@@ -36,3 +36,11 @@
 ## Run 38057561258 — tests=success; replay=success; audit=success; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258
 - Result status: PASS. Economic status: NO_PROMOTION.
 - Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.
+
+
+## 2026-10-10 — Phase 98 first source-pinned replay: BLOCKED, not performance evidence
+- Workflow [38057561258](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258) passed its test and artifact steps, but result audit found 0 option expiry files loaded, 0 trades, and 1,126 option-chain load exceptions.
+- The common exception is a PyArrow timestamp-filter mismatch: data schema timestamp[ns, tz=+05:30] versus filter timestamp timestamp[s, tz=Asia/Kolkata].
+- This means no empirical strategy conclusion, positive or negative, is estimable from the run. The report's technical PASS label is over-permissive and is being corrected.
+- The schema also exposes open_interest rather than oi; the field will be explicitly normalized when present, without imputing absent OI.
+- The strategy preregistration is unchanged. Next: type the filter scalars to the exact Parquet timestamp field, add regressions, and make source exceptions fail the evidence-acceptance gate. No 2026 holdout is accessed.
