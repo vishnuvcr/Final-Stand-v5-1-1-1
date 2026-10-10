@@ -9,7 +9,7 @@ import pyarrow.parquet as pq
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state, prep_options,
-    run_scenario, slip, holm, option_columns, arm_b_treatment, arrow_filter_bounds, val_at
+    run_scenario, slip, holm, option_columns, arm_b_treatment, arrow_filter_bounds, val_at, mark_unpriced_signal_unknown, unknown_session_counts
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
@@ -134,3 +134,27 @@ def test_prepared_option_price_lookup_is_exact_and_rejects_ambiguous_keys():
     ambiguous = pd.concat([raw.iloc[[0]], raw.iloc[[0]].assign(open=11.)], ignore_index=True)
     ambiguous_chain = prep_options(ambiguous)
     assert val_at(ambiguous_chain, ts, "CE", 10000., "open") is None
+
+
+def test_missing_option_chain_keeps_arm_a_unknown_even_when_arm_b_skips():
+    d = {
+        "arm_a_base_net": 0., "arm_a_stress_net": 0.,
+        "arm_b_base_net": 0., "arm_b_stress_net": 0.,
+        "arm_a_unknown": False, "arm_b_unknown": False,
+    }
+    mark_unpriced_signal_unknown(d, bskip=True)
+    assert d["arm_a_unknown"] is True
+    assert np.isnan(d["arm_a_base_net"]) and np.isnan(d["arm_a_stress_net"])
+    assert d["arm_b_unknown"] is False
+    assert d["arm_b_base_net"] == 0. and d["arm_b_stress_net"] == 0.
+
+def test_explicit_unknown_flags_block_inference_when_base_return_is_finite():
+    val = pd.DataFrame({
+        "arm_a_unknown": [False, True, False],
+        "arm_b_unknown": [False, False, True],
+    })
+    h1 = np.array([100., 200., -10.])
+    h2 = np.array([0., -20., np.nan])
+    u1, u2 = unknown_session_counts(val, h1, h2)
+    assert u1 == 1
+    assert u2 == 2

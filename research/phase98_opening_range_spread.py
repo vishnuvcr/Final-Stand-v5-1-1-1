@@ -97,6 +97,20 @@ def arm_b_treatment(vf):
     if not vf.get("available", False): return "UNAVAILABLE"
     return "SKIP" if vf.get("skip", False) else "TRADE"
 
+def mark_unpriced_signal_unknown(dr,bskip):
+    """An observed signal with missing option prices is unknown for every arm that would trade."""
+    dr["arm_a_unknown"]=True
+    dr["arm_a_base_net"]=dr["arm_a_stress_net"]=np.nan
+    if not bskip:
+        dr["arm_b_unknown"]=True
+        dr["arm_b_base_net"]=dr["arm_b_stress_net"]=np.nan
+
+def unknown_session_counts(val,h1,h2):
+    """Count explicit unknown flags even when another scenario return is finite."""
+    ua=val["arm_a_unknown"].fillna(True).to_numpy(dtype=bool)
+    ub=val["arm_b_unknown"].fillna(True).to_numpy(dtype=bool)
+    return int((~np.isfinite(h1)|ua).sum()), int((~np.isfinite(h2)|ua|ub).sum())
+
 def mode_step(snap):
     modes=[]
     for typ in ("CE","PE"):
@@ -311,11 +325,7 @@ def main():
       if j>=len(expiries) or expiries[j]>MAX_EXPIRY:
         status="NO_ALLOWED_EXPIRY_BEFORE_2026";skips[status]+=1
         rows.append({"date":d.isoformat(),"split":split,"signal_ts":str(st),"entry_ts":str(entry),"direction":sig["direction"],"status":status,"arm_b_filter_skip":bskip})
-        dr["arm_a_unknown"]=True
-        dr["arm_a_base_net"]=dr["arm_a_stress_net"]=np.nan
-        if not bskip:
-          dr["arm_b_unknown"]=True
-          dr["arm_b_base_net"]=dr["arm_b_stress_net"]=np.nan
+        mark_unpriced_signal_unknown(dr,bskip)
         daily.append(dr);continue
       expiry=expiries[j]
       try:chain=load_chain_day(expiry,d)
@@ -326,9 +336,7 @@ def main():
         status=vert["status"];skips[status]+=1
         rows.append({"date":d.isoformat(),"expiry":str(expiry.date()),"split":split,"signal_ts":str(st),"entry_ts":str(entry),
           "direction":sig["direction"],"status":status,"arm_b_filter_skip":bskip,"vix_prior_close":vf.get("prior_close"),"vix_threshold":vf.get("threshold")})
-        if not bskip:
-          dr["arm_a_unknown"]=dr["arm_b_unknown"]=True
-          for k in ("arm_a_base_net","arm_a_stress_net","arm_b_base_net","arm_b_stress_net"):dr[k]=np.nan
+        mark_unpriced_signal_unknown(dr,bskip)
         daily.append(dr);continue
       lot=lot_size_for_expiry(expiry);base=run_scenario(chain,d,entry,sig["direction"],vert,lot,1,10.,1.);stress=run_scenario(chain,d,entry,sig["direction"],vert,lot,2,20.,1.5)
       bok=base.get("status")=="COMPLETE";sok=stress.get("status")=="COMPLETE";status="COMPLETE" if bok else base.get("status","UNKNOWN");skips[status]+=1
@@ -369,7 +377,7 @@ def main():
     monthly=pdf[pdf.split=="validation"].copy();monthly["month"]=monthly.date.str[:7]
     monthly.groupby("month",as_index=False)[["arm_a_base_net","arm_a_stress_net","arm_b_base_net","arm_b_stress_net"]].sum(min_count=1).to_csv(OUT/"monthly_stability.csv",index=False)
     val=pdf[pdf.split=="validation"].sort_values("date");h1=val.arm_a_base_net.to_numpy(float);h2=(val.arm_b_base_net-val.arm_a_base_net).to_numpy(float)
-    u1=int((~np.isfinite(h1)).sum());u2=int((~np.isfinite(h2)).sum())
+    u1,u2=unknown_session_counts(val,h1,h2)
     an=int(ss[(ss.arm=="arm_a")&(ss.split=="validation")].completed_trades.iloc[0]);bn=int(ss[(ss.arm=="arm_b")&(ss.split=="validation")].completed_trades.iloc[0]);rng=np.random.default_rng(SEED)
     def test(x,unknown,n):
       if unknown:return {"status":"NOT_ESTIMABLE_UNKNOWN_SESSIONS","mean":None,"ci95":None,"p":None}
