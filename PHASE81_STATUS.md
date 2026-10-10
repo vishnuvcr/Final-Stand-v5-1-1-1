@@ -1,11 +1,9 @@
 # Phase 81 Status
 Date: 2026-10-10
-Status: CORRECTED RE-RUN IN PROGRESS — INITIAL SUMMARY SUPERSEDED.
+Status: EXPLORATORY SWEEP COMPLETE — NO STRATEGY PROMOTION.
 
-- [x] First registered sweep completed, but initial duplicate diagnostics showed 6,039 pair-attempt exclusions.
-- [x] Root cause found: the initial snapshot key omitted explicit expiry identity and did not distinguish identical duplicate rows from conflicting duplicates.
-- [x] Corrected snapshot key includes expiry. Identical open+volume duplicates are deterministically collapsed; conflicting observations are excluded and counted.
-- [x] Error logged as E81-006; correction committed.
-- [ ] Verify corrected workflow result, data-quality counters and paired coverage.
-- [ ] Only after verification, freeze descriptive development/validation summaries and open Phase 82 inference if coverage is adequate.
-- No holdout was loaded; no strategy was promoted.
+- [x] Frozen sweep completed on pinned dataset revision 0f4800e43e6f96cec0794369d78eb4d3c4211ef5.
+- [x] Expiry files loaded: 238; paired trade rows: 22326; paired date×variant differences: 11163.
+- [x] Exclusion records: 182; file errors: 0.
+- [x] Development/validation summaries and two-tick stress generated. 2026 holdout remains sealed.
+- [x] Candidate promotion deferred to inferential/holdout phase; OHLC is not executable quote evidence.

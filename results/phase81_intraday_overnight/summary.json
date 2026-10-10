@@ -16,8 +16,8 @@
     "paired_difference_tests": 10,
     "session_assignment_count": 1139,
     "expiry_files_loaded": 238,
-    "eligible_trade_rows": 10286,
-    "complete_paired_session_variant_count": 5143
+    "eligible_trade_rows": 22326,
+    "complete_paired_session_variant_count": 11163
   },
   "temporal_policy": {
     "development_through": "2023-12-31",
@@ -25,18 +25,22 @@
     "holdout_2026": "not downloaded/read for this sweep and not ranked"
   },
   "exclusions": {
-    "records": 6202,
+    "records": 182,
     "reason_counts": {
-      "paired_sample_incomplete:intraday:duplicate_exact_contract_bar;overnight:duplicate_exact_contract_bar": 6039,
       "paired_sample_incomplete:intraday:missing_exact_timestamp;overnight:missing_exact_timestamp": 110,
+      "paired_sample_incomplete:overnight:missing_exact_timestamp": 50,
       "missing_prior_0919_spot": 5,
-      "paired_sample_incomplete:intraday:duplicate_exact_contract_bar;overnight:missing_exact_contract_bar": 7,
-      "paired_sample_incomplete:intraday:duplicate_exact_contract_bar;overnight:missing_exact_timestamp": 1,
-      "paired_sample_incomplete:overnight:missing_exact_timestamp": 30,
-      "paired_sample_incomplete:intraday:missing_exact_contract_bar;overnight:missing_exact_contract_bar": 4,
+      "paired_sample_incomplete:intraday:missing_exact_contract_bar;overnight:missing_exact_contract_bar": 11,
       "paired_sample_incomplete:intraday:missing_exact_contract_bar": 6
     },
     "file_errors": 0
+  },
+  "data_quality": {
+    "rows_with_expiry_not_matching_file_name": 0,
+    "rows_with_invalid_identity_fields": 0,
+    "identical_duplicate_rows_collapsed": 122310,
+    "conflicting_duplicate_contract_minute_keys": 0,
+    "note": "Only duplicates identical on open and volume for the same timestamp/expiry/side/strike are collapsed; conflicting duplicates remain excluded."
   },
   "cost_model": {
     "paytm_money_brokerage_per_executed_order_inr": 10.0,
