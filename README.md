@@ -1,3 +1,11 @@
+# Resume checkpoint — 2026-10-10 (Phase 76 alternate fixed-contract source result)
+
+Phase 76 tested the exact Hugging Face expiry files for 2026-07-28 and 2026-08-04. Both files exist and expose expiry/strike/option_type fields, but both stop at trade date 2026-07-02; neither has expiry-session rows or any full 375-bar contract on the expiry date. **Decision: NO-GO for filling these two expiry gaps from this source. Exclude the two expiries and continue with the remaining validated sample under the frozen research plan.** The corrected audit is [workflow run 38042745566](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042745566); its aggregate report is available as a workflow artifact.
+
+- [Phase 76 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/PHASE76_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/PHASE76_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/PHASE76_ERROR_LOG.md) · [Audit script](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/scripts/phase76_hf_fixed_contract_audit.py) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-76-hf-fixed-contract-source-audit/.github/workflows/phase76-hf-fixed-contract-source-audit.yml)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 75 contract identity finding)
 
 Phase 74 stitching passed, but Phase 75 found that the DhanHQ rolling response does not document an explicit expiry date per bar. The frozen missing-expiry dates are 2026-07-28 and 2026-08-04. Do not infer expiry identity from relative expiry codes or strike coverage; the affected strategy replay remains blocked pending an authorized fixed-contract source.
