@@ -20,3 +20,10 @@
 - Impact: any output produced by that code would be non-evidence for the strategy test. No completed report/summary was accepted.
 - Correction: extracted select_itm_strike; it only considers call/put contracts with a valid observed close on the exact trigger minute. Entry still requires an observed option close at the next exact minute. Added a regression test for a strike present only in the future.
 - Status: PATCHED; awaiting the corrected run. This is an implementation correction before accepting results, not a post-result strategy-rule change.
+
+## F64-001 resolution / F64-002 outcome — 2026-10-10
+- F64-001 (future contract availability could affect strike choice) was patched before accepted numerical output. Selector now uses contracts with an observed bar at the exact trigger minute; a regression test covers future-only contracts.
+- Corrected run 38027023283 passed workflow steps and published aggregate outputs.
+- The test generated zero completed trades across DEV and VAL. Failure reasons are recorded in opportunity_audit.csv; common blockers are absent trigger-minute ITM option observations, absent exact next-minute option bars, and entry time falling outside the frozen calendar-day window.
+- Consequence: cannot infer profitability or non-profitability. This is a failed evidence/coverage gate. Do not count empty P&L sums as measured zero return. No strategy promoted.
+- Follow-up is restricted to a bounded timestamp/contract-coverage audit. Do not loosen rules or search variants to obtain a positive result.
