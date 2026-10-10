@@ -23,3 +23,12 @@ No numerical conclusion yet. The research plan is frozen; next gate is code/data
 - A source-code self-audit found that contract selection must be based on contracts observable at the breakout minute, not on later availability.
 - Correction committed: strike candidates must have an observed bar at the trigger minute; the actual entry price must still exist at the exact following minute. A regression test covers future-only contract availability.
 - The cancelled run is non-evidence. Current numerical test status remains PENDING; inspect the corrected automated run and its outputs before interpreting results.
+
+## Final numerical run — 2026-10-10
+
+- Corrected run https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38027023283 completed successfully: syntax/unit tests, numerical runner, report generation, output validation, aggregate publication and artifact upload all passed.
+- Data gate: 56 late-month option files in the pinned source; 32 DEV and 24 VAL monthly-expiry proxies; 2026 option files downloaded = 0.
+- Strategy result: 0 completed trades in all four variant/split combinations. CCI_BASE produced 12 DEV / 13 VAL breakout-triggered opportunities, but none passed entry/coverage gates. CCI_EMA_FILTER produced 4 DEV / 1 VAL breakout-triggered opportunity, also with zero completed trades.
+- Therefore P&L, win rate, expectancy, profit factor and drawdown are not estimable; printed zero sums are empty-sample placeholders, not evidence of zero economic return. Both candidates fail minimum 20 validation trades and 95% trigger coverage. No statistical inference was attempted.
+- Decision: RESEARCH_ONLY_NO_PROMOTION; empirical strategy efficacy remains untested because the chosen dataset/execution protocol could not produce covered trades. This is a data/protocol failure, not evidence that CCI has negative expectancy.
+- Frequent failures include no strictly ITM contract with an observed bar at the trigger minute, missing exact next-minute option bar, and entry minute outside the calendar-day window. Do not relax these gates or impute prices to force trades. Next action is a bounded data timestamp/contract-coverage audit, not another parameter search.
