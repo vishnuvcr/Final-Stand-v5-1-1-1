@@ -2239,3 +2239,9 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Regression test collection failed because the pytest process lacked the repository root on sys.path. The source-pinned replay was skipped; no market-data or P&L result exists.
 - The always-run logger also failed while staging a not-yet-created results directory. Both defects were corrected; the incident is preserved on branch phase-98-nifty-opening-range-debit-spread / PHASE98_ERROR_LOG.md.
 - No trading conclusion can be inferred from this infrastructure failure.
+
+
+## Phase 98 — repeated pre-replay failures (2026-10-10)
+- Run 38057371871: regression-test collection imported fee_components, but runner exports fees; replay skipped.
+- Run 38057380129: the same test import issue persisted and the workflow logger hit a rebase conflict while audit files were also being updated directly.
+- No market data or P&L evidence was produced. Phase-specific details: PHASE98_ERROR_LOG.md on branch phase-98-nifty-opening-range-debit-spread.
