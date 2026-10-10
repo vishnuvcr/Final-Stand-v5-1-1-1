@@ -1,7 +1,7 @@
 # Phase 56 research plan — OHLC price-reference P&L sensitivity
 
 **Branch:** `phase-56-ohlc-pnl-sensitivity`  
-**Status at initialization:** OPEN — preregistered diagnostic analysis, no strategy promotion  
+**Status:** COMPLETE — preregistered diagnostic analysis accepted; no strategy promotion  
 **Parent evidence:** Phase 55 all-leg audit ledger; Phase 54 fixed 11-threshold coverage sensitivity  
 **Dataset revision:** `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`  
 **Sample:** frozen 40 configurations × 24 event identities = 480 configuration-event rows  
@@ -141,3 +141,8 @@ Stop after this fixed 132-combination cost/threshold matrix, coverage/P&L valida
 Only operational decisions, actions, results and errors belong in the repository; do not record private chain-of-thought. Update this plan only if the proposed scientific design changes. Every software or validation failure must append to the error log, and every bounded run must update status/research/chat records and the README.
 
 **Phase status at plan creation:** OPEN; code/tests/workflow and output verification pending.
+
+
+## Final status update — 2026-10-10
+
+The frozen matrix completed in [run 38019146547](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019146547). All acceptance criteria passed: 480-row reconciliation, complete leg payloads, Phase 54 threshold counts, 132 threshold/cost summaries, 5,280 configuration summaries, 924 family summaries, 18,960 trade-scenario rows, 440 severe-cost screens, monotonic slippage/brokerage invariants and untouched holdout. The five severe-cost screen passes occur only at the 1000% diagnostic threshold; none is a production candidate. Phase 56 is closed per its stop rule.
