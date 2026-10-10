@@ -1205,17 +1205,18 @@ Phase 59 is closed. Reopen only with explicit source-access/license authorizatio
 - [Source registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/research/phase59/source_registry.json)
 - [Generated source report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-59-public-option-data-coverage-audit/results/phase59/public_option_data_coverage/report.md)
 
-## Phase 57 — Independent cost-aware replay (ACTIVE)
+## Phase 57 — Independent cost-aware endpoint replay (COMPLETE)
 
-[Run 38019819831](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831) passed regression tests and is replaying the frozen baseline 2% endpoint and diagnostic 1000% endpoint against the pinned option-bar source and existing cost kernel. This run has not yet produced an accepted report. Its acceptance gates are 480 outcomes per endpoint, no replay exceptions, six cost scenarios per pass, Phase 56 cost reconciliation and persisted source hashes/results.
+The source-driven Phase 57 replay passed its computational step and uploaded artifact in [run 38019819831](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831). Its final direct Git push failed non-fast-forward after concurrent plan/status commits. The artifact was recovered and validated by [recovery run 38021314847](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021314847); that workflow downloaded the exact Phase 57 artifact and canonical Phase 56 artifact, checked all endpoint/status/cost invariants, and persisted the verified outputs using fetch/rebase/retry without force-pushing.
+
+- **2% baseline endpoint:** 480 rows = 379 OHLC-range exclusions, 100 fixed prior-OI blockers, 1 replay pass.
+- **1000% diagnostic endpoint:** 480 rows = 100 fixed prior-OI blockers, 380 price-reference passes.
+- **Cost audit:** 2,286 scenarios, six brokerage/slippage combinations per eligible config-event-endpoint row; 13/13 pinned source files audited successfully.
+- **Independent reproduction:** all 2,286 common Phase 57 / Phase 56 scenarios matched. Zero mismatches across gross P&L, each statutory fee component, total fees, net P&L and modeled return. Canonical input SHA-256: `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`.
+
+**Conclusion:** this validates reproducibility of the existing non-executable OHLC-open model, not trading profitability. The 1000% threshold nearly removes the range gate and is not recommended. The 2% baseline still has one passing row out of 480. Candle range is not bid/ask spread; OHLC-open plus fixed slippage is not an executable quote. No holdout, factor-selector efficacy claim, strategy ranking or promotion.
 
 - [Phase 57 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_RESEARCH_PLAN.md)
 - [Phase 57 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_STATUS.md)
-### Phase 56 robustness interpretation addendum — 2026-10-10
-
-A post-run audit of the accepted severe-cost screen found five configuration-threshold pairs meeting the coded screen at the **1000% diagnostic threshold only** (₹20/order brokerage, ₹0.50 adverse slippage per fill, and at least 10 event identities). The leave-one-event-out minimum is reported separately and is not a required predicate in that screen: three of five pairs had a positive leave-one-event-out minimum; two did not. This makes clear that even these five are descriptive leads, not winning strategies.
-
-- Positive leave-one-event-out minimum: 2432b3ba491006a1f15a (LONG_STRADDLE, offset 3, 13:00 IST; summed modeled net ₹11,813.17; min after leaving one event out +₹3,953.36); 60c2d16b969965ff2b15 (BEAR_CALL_SPREAD, offset 1, 13:00 IST; ₹1,570.09; min +₹1,133.31); f96abfc5c945c889729f (BEAR_CALL_SPREAD, offset 1 / wing 3, 13:00 IST; ₹3,076.01; min +₹2,384.07).
-- Event-sensitive aggregate-screen passes: 0a2c71c6e12e773afc2d (LONG_STRADDLE; ₹3,002.47; leave-one-event-out minimum −₹3,558.39) and c31e45a39d28e22b70b2 (BUY_PUT; ₹3,495.90; minimum −₹1,680.54).
-
-These are configuration-event grid sums, not portfolio returns. All five rely on the 1000% near-removal range gate and OHLC-open price references; they cannot validate real quotes or executable fills. The research source declares CC BY-NC 4.0 and no strategy is promoted. See the [Phase 56 status/log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_STATUS.md).
+- [Phase 57 endpoint reconciliation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/results/phase57/cost_aware_range_sensitivity/phase56_endpoint_reconciliation.md)
+- [Phase 57 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_ERROR_LOG.md)
