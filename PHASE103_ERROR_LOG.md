@@ -30,3 +30,27 @@ No runtime execution error is recorded at initialization. Any failed workflow/ru
 **Type:** data-governance limitation.  
 **Risk:** committing or publicly artifacting raw API rows may exceed the subscription or market-data licence permitted use.  
 **Resolution:** API audit emits aggregate counts and timestamp ranges only. Raw values remain ephemeral until permitted storage/retention rights are confirmed. The research still needs reusable data storage for later phases; use an approved private store if applicable rather than publishing raw market data to this public repository.
+
+
+<!-- DHAN_API_RUN_38088253613 -->
+### E103-DHAN-38088253613 — No audit output produced
+A workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613
+
+
+<!-- GITHUB_RUN_ID -->
+### E103-DHAN-38088253613 — No audit output produced
+A workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613
+
+
+<!-- GITHUB_REPOSITORY -->
+### E103-DHAN-38088253613 — No audit output produced
+A workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613
+
+
+<!-- GITHUB_RUN_ID -->
+### E103-DHAN-38088253613 — No audit output produced
+A workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613

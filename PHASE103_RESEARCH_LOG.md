@@ -22,3 +22,8 @@
 - Added derived-only audit outputs and automatic status/error logging on the research branch. Raw payloads remain ephemeral until applicable retention and republication rights are verified.
 - Local validation of the Python code and four focused unit tests passed before committing; Dhan network response is pending the GitHub Actions run.
 - No strategy rules, P&L, stock ranking by outcome or holdout use is part of this step.
+
+
+<!-- DHAN_API_RUN_38088253613 -->
+## Dhan API audit did not produce output — run 38088253613
+The workflow failed before a machine-readable result was written. No source/data success is claimed.

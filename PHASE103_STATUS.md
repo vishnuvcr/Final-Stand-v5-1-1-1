@@ -51,3 +51,8 @@ Run the registration validator and GitHub Actions workflow. Then begin Phase 103
 - [ ] If endpoint succeeds, assess comparable sample coverage and strike/expiry reconstruction. No strategy P&L test until data and execution gates pass.
 
 API probe default window: 2026-08-02 inclusive to 2026-09-01 exclusive. This is a source feasibility window only, not a protected performance holdout. Dhan's endpoint returns rolling strike OHLC/IV/volume/OI/spot, not documented historical bid/ask/depth. No raw rows are committed or uploaded until data storage/redistribution permissions are verified.
+
+
+<!-- DHAN_API_RUN_38088253613 -->
+### Dhan audit did not produce output
+Run 38088253613 failed before a machine-readable result was written; inspect its Actions log. No API success or strategy result is claimed.
