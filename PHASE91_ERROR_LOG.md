@@ -14,17 +14,20 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - E91-008 — Safe publication: raw data stays in the Phase 91 Actions cache; only aggregate results and sanitized issue summaries are published.
 - E91-009 — Execution evidence: rolling ATM IV/spot prediction does not prove exact-contract fills/profitability; do not compute strategy P&L or promote a strategy from this phase.
 
-## Runtime / trigger verification checkpoint — 2026-10-10
+## Static and orchestration issues — resolved / superseded by completed run
 
-Static review caught a copied metadata literal: the Phase 91 engine emitted `"phase": 90` in the summary JSON. It was corrected to `"phase": 91` before any confirmed Phase 91 run (E91-010; no numeric result was affected because no result had been generated).
+- E91-010 — Static review found the copied engine initially emitted `"phase": 90` in the aggregate summary. It was corrected to `"phase": 91` before the completed run; the published summary verifies `phase: 91` and the registered period `2023-01-01` through `2024-01-01` exclusive.
+- The initial repository check did not expose a run ID/results; this pending-trigger status was superseded by completed workflow run [38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830). Job, engine, and aggregate publication steps all completed successfully.
+- Phase 91 branch workflow declares `workflow_dispatch`; its Run button availability on the branch itself was not separately verified. The Phase90-base PR-triggered runner executed this PR's bounded study and published to the Phase91 branch; its availability is sufficient for the completed study.
 
-- After registering the engine, workflow, and plan update, the branch still contained the initial PREREGISTERED status and no `results/phase91/summary.json` or `results/phase91/PHASE91_RESULTS.md` file was yet present.
-- The available repository status checks did not surface an Actions run ID for the latest phase commit. This is an execution-verification blocker, not a data result. It does **not** mean the model failed or the IV signal is absent.
-- Do not claim acquisition succeeded, do not infer a negative/positive replication result, and do not promote any strategy until the Actions-generated aggregate results are available.
-- The Phase 91 branch workflow declares both a branch/path push trigger and `workflow_dispatch`. GitHub documents that the manual Run workflow button is available when the workflow file exists on the default branch; this branch-only workflow's actual manual-dispatch availability was not verified.
-- Added `.github/workflows/phase91-pr-runner.yml` to the Phase 90 parent branch as an automated pull-request fallback. Its execution is also not confirmed; no run ID or result files were surfaced by repository status checks at the time of this log.
+## Final runtime result
 
-Append the automated runtime summary here after a confirmed workflow run. Keep failures explicit even if the workflow process itself exits successfully.
+- Run: [38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830), workflow job `temporal-replication`, overall conclusion `success`.
+- Options windows: 54/54 valid; India VIX windows: 5/5 valid; unique VIX instrument-master match.
+- Paired CALL/PUT rows after validation: 18,473 across 246 sessions; zero spot mismatches and zero strike mismatches. India VIX coverage 99.984%; OOS VIX coverage 99.978%.
+- Confirmatory OOS: 3,633 complete observations across 60 sessions. Both registered quality gates passed.
+- Primary M1 MAE − M2 MAE: +0.0001111 bps; 95% paired session-cluster bootstrap CI −0.0110700 to +0.0102532 bps; positive share 52.4% (5,000 resamples, seed 90210). The interval crosses zero; no incremental gain was established.
+- No API/network/schema failures. The workflow itself passed, but the primary research hypothesis did not meet its registered acceptance rule. This distinction is deliberate.
 
 <!-- PHASE91_RUNTIME_START -->
 ## Runtime summary — 38049302830
