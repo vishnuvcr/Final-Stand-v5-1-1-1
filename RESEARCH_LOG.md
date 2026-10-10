@@ -167,3 +167,12 @@ Phase 51-1 stopped fail-closed on data availability before any fresh OOS strateg
 - The first executed Dhan API smoke test, [run 38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054), passed the unit tests, downloaded the 26,116,616-byte instrument master (SHA-256 `2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173`), and resolved HDFCBANK, ICICIBANK, RELIANCE, SBIN and INFY. The ten expired-options requests returned HTTP 400 with `DH-905: expiryCode is required`; no option rows were returned.
 - The request incorrectly appeared to be missing `expiryCode: 0` to the provider. Its annexure lists zero as current/near expiry, but the request example uses `1` (next expiry). Code and registry were updated to test `expiryCode: 1`, with an additional unit test. Retry [run 38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181) was initiated with safe allow-listed error diagnostics.
 - The result is pending until the retry report is persisted. No strategy P&L or success conclusion is drawn. All raw option rows remain unpublished pending retention/republication-rights verification.
+
+
+## 2026-10-11 — Dhan stock-options data source validated for a common one-day sample
+
+- Accepted API/access run [38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338) passed 13 automated tests and 10/10 stock-side probes for HDFCBANK, ICICIBANK, RELIANCE, SBIN and INFY (CALL and PUT) on the 2026-08-03 IST session.
+- Each returned 385 minute rows; arrays were consistent; all returned timestamps fell in the requested IST session with zero out-of-window rows. Dhan instrument IDs were resolved from its master at runtime. API token values and raw minute rows were not printed, committed or artifacted.
+- Dhan date semantics were measured rather than assumed: distinct start/end request returned end-date rows despite documentation saying non-inclusive; same-date request returned just that day. The code compensates by mapping the target half-open window `[start,end)` to provider `fromDate=start`, `toDate=end-1 day`, then checks all IST dates.
+- Seven-offset strike continuity code is being validated separately. The initial 70-probe request is not accepted because it did not complete an aggregate run; a seven-call HDFCBANK CALL offset diagnostic is now the default. This is data-source engineering, not strategy testing.
+- Phase 103 status/details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options.
