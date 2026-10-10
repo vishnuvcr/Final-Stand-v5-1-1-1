@@ -49,3 +49,5 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - No API/network/schema failures.
 - No token, raw response, row-level price, or hidden reasoning is logged.
 <!-- PHASE92_RUNTIME_END -->
+
+- E92-014 — Documentation reconciliation: the main README initially linked the accepted analysis run but did not label the later successful cache-backed verification run separately. The README now labels accepted analysis run 38050805106 and verification run 38051908021. No sample, model, endpoint, or analytical result changed.
