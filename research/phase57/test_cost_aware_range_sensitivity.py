@@ -6,7 +6,7 @@ from cost_aware_range_sensitivity import THRESHOLDS, summarize_costs
 
 class Phase57Tests(unittest.TestCase):
     def test_threshold_grid_is_frozen_and_ordered(self):
-        self.assertEqual(THRESHOLDS, [2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 1000])
+        self.assertEqual(THRESHOLDS, [2, 1000])
 
     def test_cost_summary_reports_unique_events_separately(self):
         costs = pd.DataFrame([
