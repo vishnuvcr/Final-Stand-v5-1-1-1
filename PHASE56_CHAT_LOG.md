@@ -25,3 +25,13 @@ Private chain-of-thought is not stored here. Operational decisions, tests, outco
 - Output matrix: 132 threshold/cost summaries; 5,280 configuration summaries; 924 family summaries; 18,960 non-executable price-reference trade scenarios; 440 severe-cost configuration-threshold screens.
 - Configurations passing the severe-cost screen at any threshold=5; passing configuration-threshold pairs=5.
 - All costs/slippage are modeled assumptions; candle range is not bid/ask spread; no holdout used and no strategy is promoted.
+
+## Automated run 38019323348
+
+- Run: [38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348); workflow=success; report=accepted; status=OHLC_PRICE_REFERENCE_PNL_SENSITIVITY_COMPLETE_NON_EXECUTABLE.
+- Input rows=480; SHA-256=fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55; pinned revision=0f4800e43e6f96cec0794369d78eb4d3c4211ef5.
+- Parent statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}; complete leg payloads=480.
+- Eligible rows by threshold={"10": 150, "1000": 380, "12": 227, "15": 298, "2": 1, "20": 345, "3": 1, "4": 8, "5": 24, "6": 55, "8": 91}.
+- Output matrix: 132 threshold/cost summaries; 5,280 configuration summaries; 924 family summaries; 18,960 non-executable price-reference trade scenarios; 440 severe-cost configuration-threshold screens.
+- Configurations passing the severe-cost screen at any threshold=5; passing configuration-threshold pairs=5.
+- All costs/slippage are modeled assumptions; candle range is not bid/ask spread; no holdout used and no strategy is promoted.

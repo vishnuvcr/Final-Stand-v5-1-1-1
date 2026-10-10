@@ -3,7 +3,7 @@
 **NON-EXECUTABLE PRICE-REFERENCE SENSITIVITY — not a quote-based backtest, liquidity validation, or strategy recommendation.**
 
 - Input rows: 480
-- Input SHA-256: 8b0a1167573fdbd7ee32c77bcf493b79db23f8eeeb67aa92700a15c4e8c3683f
+- Input SHA-256: fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55
 - Pinned revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
 - Parent status counts: {"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}
 - Full selected-leg payload rows: 480

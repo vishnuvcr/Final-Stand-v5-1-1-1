@@ -1,11 +1,11 @@
 {
   "phase": "56",
   "status": "OHLC_PRICE_REFERENCE_PNL_SENSITIVITY_COMPLETE_NON_EXECUTABLE",
-  "created_at_utc": "2026-10-10T03:02:54.212476+00:00",
+  "created_at_utc": "2026-10-10T03:05:38.843355+00:00",
   "input": {
     "path": "results/phase52/historical_pilot/event_replay.csv",
     "row_count": 480,
-    "input_sha256": "8b0a1167573fdbd7ee32c77bcf493b79db23f8eeeb67aa92700a15c4e8c3683f",
+    "input_sha256": "fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55",
     "pinned_dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
     "parent_grid": "phase52-grid-v1.3",
     "parent_pilot": "phase52-historical-base-pilot-v0.2.1-audit-provenance",
