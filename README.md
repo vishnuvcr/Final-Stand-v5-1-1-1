@@ -1398,3 +1398,10 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - A secondary logging defect caused the failure publisher to fail before an output folder existed. Both failures have been appended to the root and phase-specific error logs, and fixes are committed before rerun.
 - [Phase 98 plan](PHASE98_RESEARCH_PLAN.md) · [preregistration](PHASE98_PRE_REGISTRATION.md) · [status](PHASE98_STATUS.md) · [error log](PHASE98_ERROR_LOG.md) · [research log](PHASE98_RESEARCH_LOG.md) · [workflow](.github/workflows/phase98-opening-range-spread.yml).
 - Phase 83's 2026 holdout remains protected; no strategy promoted.
+
+
+### Phase 98 continuation — additional pre-replay failures
+
+- Runs [38057371871](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871) and [38057380129](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057380129) still failed at pytest collection due to an unused, incorrect function import; both skipped the strategy replay.
+- The latter workflow also encountered a git rebase conflict while log files were updated concurrently. This is recorded as an orchestration issue, not strategy evidence.
+- Correction: remove the stale test import, then allow the automated status publisher to complete before further direct repository edits. No source data or trading result has been accepted from these attempts.
