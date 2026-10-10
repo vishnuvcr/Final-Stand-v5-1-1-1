@@ -1,0 +1,111 @@
+name: Phase 60 — Evidence Sufficiency Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-60-evidence-sufficiency-gate
+    paths:
+      - ".github/workflows/phase-60-evidence-sufficiency-gate.yml"
+      - "research/phase60/**"
+      - "research/phase59/source_registry.json"
+      - "results/phase59/public_option_data_coverage/report.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase60-evidence-gate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-60-evidence-sufficiency-gate
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run regression tests and evidence gate
+        run: |
+          python -m unittest research.phase60.test_evidence_gate -v
+          python research/phase60/evidence_gate.py
+      - name: Validate decision report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("results/phase60/evidence_sufficiency/report.json").read_text())
+          assert r["status"] == "NO_GO_EMPIRICAL_FACTOR_STRATEGY_TESTING_DATA_EVIDENCE_INSUFFICIENT"
+          assert r["source_audit"]["registry_source_count"] == 10
+          assert r["source_audit"]["accepted_free_license_clear_exact_prior_minute_oi_sources"] == 0
+          assert r["source_audit"]["accepted_free_license_clear_exact_quote_depth_sources"] == 0
+          assert r["cross_phase_evidence"]["phase52_baseline"]["executed_rows"] == 1
+          assert r["cross_phase_evidence"]["phase57_independent_reproduction"]["mismatches"] == 0
+          assert r["frozen_rules"]["holdout_used"] is False
+          print("Phase60 decision gate PASS: no-go correctly asserted.")
+          PY
+      - name: Upload decision artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase60-evidence-gate-${{ github.run_id }}
+          path: results/phase60/evidence_sufficiency/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist phase checkpoint
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id=os.environ["GITHUB_RUN_ID"]
+          repo=os.environ["GITHUB_REPOSITORY"]
+          url=f"https://github.com/{repo}/actions/runs/{run_id}"
+          status=os.environ.get("JOB_STATUS","unknown")
+          p=Path("results/phase60/evidence_sufficiency/report.json")
+          report=json.loads(p.read_text()) if p.exists() else None
+          if report and status=="success":
+              summary=(f"- Run: [{run_id}]({url}); workflow status=success.\n"
+                       f"- Decision: {report['status']}. Phase52 executed rows={report['cross_phase_evidence']['phase52_baseline']['executed_rows']}/480.\n"
+                       f"- Phase59 accepted exact OI sources={report['source_audit']['accepted_free_license_clear_exact_prior_minute_oi_sources']}; quote/depth sources={report['source_audit']['accepted_free_license_clear_exact_quote_depth_sources']}.\n"
+                       "- No new data downloaded, no holdout used, no strategy promoted. Empirical strategy testing remains blocked pending the documented restart requirements.\n")
+          else:
+              summary=f"- Run: [{run_id}]({url}); workflow status={status}; report missing or unaccepted. No conclusion accepted.\n"
+          for name, heading in [
+              ("PHASE60_STATUS.md",f"## Automated checkpoint {run_id}"),
+              ("PHASE60_RESEARCH_LOG.md",f"## Automated checkpoint {run_id}"),
+              ("PHASE60_CHAT_LOG.md",f"## Automated checkpoint {run_id}")
+          ]:
+              f=Path(name); f.write_text(f.read_text(encoding="utf-8").rstrip()+"\n\n"+heading+"\n\n"+summary,encoding="utf-8")
+          if status!="success" or report is None:
+              f=Path("PHASE60_ERROR_LOG.md")
+              f.write_text(f.read_text(encoding="utf-8").rstrip()+f"\n\n## F60-RUN-{run_id} — gate failure\n\n- Run: {url}\n- Status: {status}\n- Report present: {report is not None}\n- No conclusion accepted.\n- Status: OPEN.\n",encoding="utf-8")
+          readme=Path("README.md")
+          readme.write_text(readme.read_text(encoding="utf-8").rstrip()+f"\n\n## Phase 60 — evidence sufficiency gate\n\n"+summary+
+              "- [Plan](PHASE60_RESEARCH_PLAN.md) · [Status](PHASE60_STATUS.md) · [Decision report](results/phase60/evidence_sufficiency/report.md) · [Error log](PHASE60_ERROR_LOG.md)\n",encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE60_STATUS.md PHASE60_RESEARCH_LOG.md PHASE60_CHAT_LOG.md PHASE60_ERROR_LOG.md README.md
+          if [[ -d results/phase60/evidence_sufficiency ]]; then git add results/phase60/evidence_sufficiency; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase60 evidence gate checkpoint $GITHUB_RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin phase-60-evidence-sufficiency-gate
+            if git rebase origin/phase-60-evidence-sufficiency-gate; then
+              if git push origin phase-60-evidence-sufficiency-gate; then exit 0; fi
+            else
+              git rebase --abort || true
+              exit 1
+            fi
+          done
+          exit 1
