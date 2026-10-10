@@ -46,6 +46,36 @@ def map_underlyings(raw):
             out[sym] = {"security_id":None,"status":"NOT_FOUND" if not ids else "AMBIGUOUS"}
     return out
 
+def safe_error_details(raw, token):
+    """Extract only allow-listed error codes/messages; never persist response bodies or credentials."""
+    try:
+        obj = json.loads(raw.decode("utf-8", errors="replace"))
+    except (json.JSONDecodeError, AttributeError):
+        return {}
+    if not isinstance(obj, dict):
+        return {}
+    found = {}
+    code_keys = {"error_code", "errorcode", "code", "status_code"}
+    message_keys = {"error_message", "errormessage", "message", "error_description", "description"}
+    def walk(node):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                lowered = str(key).casefold()
+                if lowered in code_keys and isinstance(value, (str, int, float)):
+                    found.setdefault("api_error_code", str(value)[:80])
+                elif lowered in message_keys and isinstance(value, (str, int, float)):
+                    message = " ".join(str(value).split())[:240]
+                    if token:
+                        message = message.replace(token, "[REDACTED]")
+                    found.setdefault("api_error_message", message)
+                elif isinstance(value, dict):
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node[:10]:
+                walk(item)
+    walk(obj)
+    return found
+
 def query(token, security_id, option_type, start, end):
     body = {"exchangeSegment":"NSE_FNO","interval":"1","securityId":str(security_id),
             "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":0,"strike":"ATM",
@@ -59,22 +89,26 @@ def query(token, security_id, option_type, start, end):
         with urllib.request.urlopen(req,timeout=60) as r:
             code, raw = r.status, r.read()
     except urllib.error.HTTPError as e:
-        return e.code, None
+        raw = e.read()
+        return e.code, None, safe_error_details(raw, token)
     except (urllib.error.URLError, TimeoutError):
-        return 0, None
+        return 0, None, {}
     try:
         obj=json.loads(raw.decode("utf-8"))
-        return code, obj if isinstance(obj,dict) else None
+        return code, obj if isinstance(obj,dict) else None, {}
     except (UnicodeDecodeError,json.JSONDecodeError):
-        return code, None
+        return code, None, {}
 
-def summarize(symbol, option_type, code, obj):
+def summarize(symbol, option_type, code, obj, safe_error=None):
     side = "ce" if option_type=="CALL" else "pe"
     x={"symbol":symbol,"requested_option_type":option_type,"http_status":code,
        "status":"NO_RESPONSE","rows":0,"array_lengths_consistent":False,
-       "nonempty_fields":{},"first_timestamp_utc":None,"last_timestamp_utc":None}
+       "nonempty_fields":{},"first_timestamp_utc":None,"last_timestamp_utc":None,
+       "api_error_code":(safe_error or {}).get("api_error_code"),
+       "api_error_message":(safe_error or {}).get("api_error_message")}
     if obj is None:
-        x["status"]={401:"AUTH_401",403:"AUTH_403",429:"RATE_LIMIT_429"}.get(code,"HTTP_OR_NETWORK_ERROR")
+        x["status"]={401:"AUTH_401",403:"AUTH_403",429:"RATE_LIMIT_429",
+                     400:"HTTP_400_BAD_REQUEST"}.get(code,"HTTP_OR_NETWORK_ERROR")
         return x
     block=(obj.get("data") or {}).get(side) if isinstance(obj.get("data"),dict) else None
     x["status"]=str(obj.get("status","UNKNOWN"))
@@ -132,12 +166,16 @@ def main():
                     if not m.get("security_id"):
                         result["probes"].append({"symbol":sym,"requested_option_type":side,"status":"BLOCKED_UNDERLYING_ID"})
                         continue
-                    code,obj=query(token,m["security_id"],side,a.from_date,a.to_date)
-                    result["probes"].append(summarize(sym,side,code,obj))
+                    code,obj,safe_error=query(token,m["security_id"],side,a.from_date,a.to_date)
+                    result["probes"].append(summarize(sym,side,code,obj,safe_error))
                     time.sleep(1.1)
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
+            error_codes={str(v.get("api_error_code","")).upper() for v in result["probes"] if v.get("api_error_code")}
             auth_count=sum(v.get("status") in ["AUTH_401","AUTH_403"] for v in result["probes"])
-            if auth_count: result["status"]="BLOCKED_AUTHENTICATION_OR_DATA_API_ENTITLEMENT"
+            if auth_count or error_codes.intersection({"806","807","808","809","810","DH-901","DH-902"}):
+                result["status"]="BLOCKED_AUTHENTICATION_OR_DATA_API_ENTITLEMENT"
+            elif error_codes.intersection({"814","DH-905"}):
+                result["status"]="REQUEST_SCHEMA_OR_PARAMETER_ERROR"
             elif len(result["probes"])==10 and rows_count==10: result["status"]="PASS_API_DATA_RETURNED_FOR_ALL_10_PROBES"
             elif rows_count: result["status"]="PARTIAL_DATA_RETURNED"
             else: result["status"]="NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
@@ -149,9 +187,11 @@ def main():
       "","| Symbol | Side | HTTP | Status | Rows | Arrays consistent | First UTC | Last UTC |",
       "|---|---|---:|---|---:|---|---|---|"]
     for v in result.get("probes",[]):
-        lines.append("| {symbol} | {side} | {http} | {status} | {rows} | {consistent} | {first} | {last} |".format(
+        lines.append("| {symbol} | {side} | {http} | {status} | {code} | {message} | {rows} | {consistent} | {first} | {last} |".format(
           symbol=v.get("symbol",""),side=v.get("requested_option_type",""),http=v.get("http_status",""),
-          status=v.get("status",""),rows=v.get("rows",0),consistent=v.get("array_lengths_consistent",False),
+          status=v.get("status",""),code=v.get("api_error_code") or "",
+          message=(v.get("api_error_message") or "").replace("|","/"),
+          rows=v.get("rows",0),consistent=v.get("array_lengths_consistent",False),
           first=v.get("first_timestamp_utc") or "",last=v.get("last_timestamp_utc") or ""))
     lines += ["","## Underlying ID mapping","","| Symbol | ID resolved | Status |","|---|---|---|"]
     for sym,m in result.get("underlying_map",{}).items():
