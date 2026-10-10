@@ -1,19 +1,15 @@
 <!-- PHASE94_START -->
-# Current checkpoint — Phase 99 options strategy taxonomy replay
+# Current checkpoint — Phase 100 cross-paper reproducibility synthesis
 
-**Status: analytical payoff formulas passed; historical market P&L remains DATA-BLOCKED.** Phase 99 tests 13 source-described or explicitly operationalized option structures across nine illustrative expiry prices. Premiums/strikes in the generic examples are arithmetic test inputs, not historical NIFTY quotes.
+**Status: manuscript generated and validated; final Phase 95 paper-claim reconciliation is pending.** Phase 100 workflow [38073229401](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073229401) passed and produced a structured manuscript, supplementary materials, 14-paper status ledger, machine-readable summary and SVG figure. Automated QA passed 15 required sections and all 14 paper rows.
 
-- [Phase 99 plan](PHASE99_RESEARCH_PLAN.md) · [status](PHASE99_STATUS.md) · [report](results/phase99/REPORT.md)
-- [Illustrative payoff grid](results/phase99/illustrative_payoffs.csv) · [source method statuses](results/phase99/source_method_status.csv) · [summary](results/phase99/summary.json)
-- [Research log](PHASE99_RESEARCH_LOG.md) · [error log](PHASE99_ERROR_LOG.md) · [decision log](PHASE99_CHAT_LOG.md)
-- [Workflow](.github/workflows/phase99-options-strategy-taxonomy-replay.yml) · [successful run 38073059250](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073059250)
+- [Manuscript](results/phase100/MANUSCRIPT.md) · [supplements](results/phase100/SUPPLEMENTARY_MATERIALS.md) · [validation report](results/phase100/VALIDATION_REPORT.md)
+- [Paper status ledger](results/phase100/paper_status.csv) · [phase summary](results/phase100/phase_summary.json) · [Phase 96 figure](results/phase100/phase96_total_return.svg)
+- [Phase 100 plan/status](PHASE100_RESEARCH_PLAN.md) · [research log](PHASE100_RESEARCH_LOG.md) · [error log](PHASE100_ERROR_LOG.md) · [decision log](PHASE100_CHAT_LOG.md)
 
-**Source finding:** U07's “Short Butterfly” put section describes long 1 lower-strike put, short 2 middle-strike puts, and long 1 higher-strike put—legs that produce a long-butterfly payoff. The mismatch is preserved as a source ambiguity. U05's first-Thursday/T+3/20%-target/30%-stop procedure cannot be replayed as a historical options strategy without exact-contract prices, liquidity and early-exit fills.
+**Current scientific conclusion:** no strategy is promoted. The Phase 96 SMA/EMA index screen is descriptive only; Phase 97 ML options and Phase 98 CCI are data-blocked; Phase 99 validates payoff algebra but not historical profitability. Exact-contract options P&L remains unavailable under the accepted evidence.
 
-- [Phase 98 CCI gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-98-cci-options-paper-replication-gate): DATA-BLOCKED; no new eligible source established.
-- [Phase 97 ML options gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-97-ml-options-strategy-replication): 13 required controls blocked; no model trained.
-- [Phase 96 SMA/EMA screen](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-96-moving-average-seasonality-replication): operationalized index screen passed; source-specific seasonality/timing remains partial.
-- Phase 100 is the final cross-paper synthesis and manuscript phase; no strategy has been promoted and the 2026 holdout remains sealed.
+**One final dependency remains:** Phase 95's corrected reconciliation workflow is still running. The synthesis must be refreshed after that run publishes the claim ledger; until then, paper-specific statuses remain provisional. Phase 83's 2026 holdout remains sealed.
 <!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
