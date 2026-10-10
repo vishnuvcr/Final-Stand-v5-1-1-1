@@ -7,7 +7,7 @@ import pandas as pd
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state, prep_options,
-    run_scenario, slip, holm, option_columns
+    run_scenario, slip, holm, option_columns, arm_b_treatment
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
@@ -92,3 +92,9 @@ def test_option_loader_requests_source_open_interest_alias():
     assert "open_interest" in cols
     assert "oi" not in cols
     assert option_columns(["timestamp", "open", "close", "option_type", "strike", "oi"])[-1] == "oi"
+
+
+def test_filtered_arm_fails_closed_when_vix_history_unavailable():
+    assert arm_b_treatment({"available": False, "skip": False}) == "UNAVAILABLE"
+    assert arm_b_treatment({"available": True, "skip": True}) == "SKIP"
+    assert arm_b_treatment({"available": True, "skip": False}) == "TRADE"
