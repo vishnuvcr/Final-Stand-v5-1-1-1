@@ -32,3 +32,8 @@ This file records user requests, research decisions, execution status, and corre
 - U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
 
 - **Further U05 audit:** shifting to the second Thursday avoided look-ahead but modified the published rule. The revised code keeps the literal first Thursday and excludes months where it comes before the first-Wednesday forecast. Previous U05 results are superseded; rerun pending.
+
+
+## Corrected run 38076645768 — 2026-10-10T18:43:17Z
+- Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 7; U02 costed trades 164; no 2026 option data; no strategy promoted.
+- U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
