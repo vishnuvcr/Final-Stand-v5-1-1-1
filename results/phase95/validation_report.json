@@ -14,9 +14,9 @@
   "selected_validation_positive": false,
   "eligible_with_positive_validation_net50": 3,
   "eligible_with_negative_or_zero_validation_net50": 20,
-  "holdout_rows_loaded": false,
+  "holdout_rows_retained_or_used": false,
   "phase83_2026_holdout_accessed": false,
   "new_market_data_or_strategy_replay": false,
   "strategy_promoted": false,
   "interpretation": "PASS means the preregistered computation ran; profitability outcome is reported separately. This retrospective, previously explored source is not an independent blinded test."
-}
+}\n
