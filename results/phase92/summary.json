@@ -1,0 +1,61 @@
+{
+  "oos_n": 3660,
+  "oos_sessions": 61,
+  "sample_gate_pass": true,
+  "vix_gate_pass": true,
+  "paired_rows": 18579,
+  "paired_sessions": 248,
+  "dev_complete_rows": 7357,
+  "validation_complete_rows": 3780,
+  "oos_complete_rows": 3660,
+  "training_gate_pass": true,
+  "phase": 92,
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106",
+  "status": "NEGATIVE INCREMENTAL VALUE \u2014 synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample",
+  "requested_period": [
+    "2022-01-01",
+    "2023-01-01_exclusive"
+  ],
+  "holdout_2026_requested": false,
+  "instrument_master": {
+    "status": "UNIQUE_MATCH",
+    "candidate_count": 1,
+    "security_id_resolved": true,
+    "candidate_ids": [
+      "21"
+    ],
+    "instrument": "INDEX",
+    "segment": "I"
+  },
+  "quality": {
+    "call_duplicate_rows_removed": 0,
+    "put_duplicate_rows_removed": 0,
+    "call_rows": 18597,
+    "put_rows": 18595,
+    "paired_timestamps_before_checks": 18580,
+    "spot_mismatch_excluded": 0,
+    "strike_mismatch_excluded": 1,
+    "paired_rows_after_checks": 18579,
+    "paired_sessions": 248,
+    "vix_row_coverage": 0.9831530222293988,
+    "oos_vix_coverage": 0.9862655330281229,
+    "iv_mean_valid_share": 0.9866515958878304,
+    "synthetic_gap_valid_share": 0.9866515958878304,
+    "oi_imbalance_valid_share": 0.9866515958878304
+  },
+  "options_chunks_valid": 54,
+  "options_chunks_total": 54,
+  "vix_chunks_valid": 5,
+  "vix_chunks_total": 5,
+  "primary": {
+    "delta_mae_bps": -0.17083628058508094,
+    "ci95_low": -0.2298768554185347,
+    "ci95_high": -0.11520151413086274,
+    "positive_share": 0.0,
+    "replicates": 5000,
+    "seed": 90210
+  },
+  "issue_count": 0,
+  "primary_comparison": "M2_spot_VIX_plus_IV versus M4_add_synthetic_proxy_and_OI",
+  "features_lagged_one_full_five_minute_row": true
+}
