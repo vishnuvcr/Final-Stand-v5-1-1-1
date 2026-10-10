@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-10  
 **Branch:** `phase-96-moving-average-seasonality-replication`  
-**Status:** IMPLEMENTATION UNDER CI REPAIR; fixed replay pending latest Actions run  
+**Status:** INITIAL REPLAY PASSED; drawdown-window correction committed; corrected rerun pending  
 **Strategy promotion:** NONE
 
 ## Completed
@@ -13,10 +13,9 @@
 - Preserved distinction between signal-level index tests and executable option P&L.
 
 ## Pending
-- Implement and test deterministic signal/backtest functions.
-- Run one fixed chronological evaluation and produce result/coverage files.
-- Reconcile paper-by-paper source fidelity, update README and logs.
-- Verify Phase 95 workflow reconciliation separately; no final status is inferred while its Actions run is active.
+- Re-run after the drawdown calculation correction and accept only outputs from the corrected commit.
+- Add inference/uncertainty and paper-specific seasonality/timing rule audit before declaring Phase 96 complete.
+- Verify Phase 95 reconciliation separately; its workflow remains active at last check.
 
 ## Quality guardrails
 No 2026 holdout access; no same-close execution for close-derived signals; no invented option quotes, strikes, stop rules or fill assumptions; all unresolved source settings remain partial/data-blocked. A negative or empty outcome is recorded rather than tuned away.
