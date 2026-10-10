@@ -7,3 +7,8 @@
 - Phase 56 verified all 60 unique prior-OI-blocked contract-time keys have one exact source row reporting OI=0; the 100 configuration-event rows remain correctly blocked under the frozen OI >= 100 rule.
 - Phase 57 is a new, separately frozen exploratory replay to calculate modeled P&L under the 11 preregistered OHLC range thresholds using the existing exact-bar kernel and all six brokerage/slippage scenarios.
 - OHLC range is not bid/ask spread; no executable-liquidity or live/commercial conclusion is allowed.
+
+
+## 2026-10-10 — Bounded independent replay amended
+
+The 11-threshold matrix is already canonical in Phase 56. Phase 57 is now an independent source-driven reproduction at 2% and 1000% endpoints only, to control repeated full-frame scans while still checking the source resolver and cost kernel. The previous in-progress 11-threshold run is superseded; no output from it will be accepted. All scientific gates remain frozen.
