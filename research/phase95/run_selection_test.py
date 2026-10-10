@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Run one preregistered DEV->VAL selection-stability test; never reads holdout rows."""
-import csv, json
+"""Run one preregistered DEV->VAL selection-stability test; drops holdout rows immediately."""
+import csv, hashlib, json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -8,16 +8,28 @@ SOURCE = ROOT / "results/phase45_ready_made/strategy_vix_summary.csv"
 OUT = ROOT / "results/phase95"
 EXPECTED_SOURCE_SHA = "4208da2e1189a68af697e11d03dd7d4ac937ddf7"
 
+def git_blob_sha(data: bytes) -> str:
+    return hashlib.sha1(f"blob {len(data)}\\0".encode() + data).hexdigest()
+
 def main():
     if not SOURCE.exists():
         raise SystemExit(f"Missing frozen source CSV: {SOURCE}")
+    source_bytes = SOURCE.read_bytes()
+    actual_sha = git_blob_sha(source_bytes)
+    if actual_sha != EXPECTED_SOURCE_SHA:
+        raise SystemExit(f"Frozen source fingerprint mismatch: expected {EXPECTED_SOURCE_SHA}, got {actual_sha}")
+    rows = []
     with SOURCE.open(newline="", encoding="utf-8") as f:
-        all_rows = list(csv.DictReader(f))
-    required = {"strategy", "split", "state", "trades", "net", "net50", "max_dd", "defined_risk"}
-    if not all_rows or not required.issubset(all_rows[0]):
-        raise SystemExit("Source CSV missing required fields")
-    # Critical boundary: filter out holdout rows before all other processing.
-    rows = [r for r in all_rows if r["split"] in {"development", "validation"} and r["state"] == "ALL"]
+        reader = csv.DictReader(f)
+        required = {"strategy", "split", "state", "trades", "net", "net50", "max_dd", "defined_risk"}
+        if not reader.fieldnames or not required.issubset(reader.fieldnames):
+            raise SystemExit("Source CSV missing required fields")
+        for row in reader:
+            # Inspect split only to exclude the protected split; never retain or inspect other fields from it.
+            if row.get("split") not in {"development", "validation"}:
+                continue
+            if row.get("state") == "ALL":
+                rows.append(row)
     candidates = {}
     for row in rows:
         candidates.setdefault(row["strategy"], {})[row["split"]] = row
@@ -49,11 +61,10 @@ def main():
         row["selected_by_dev_rule"] = row["strategy"] == selected["strategy"]
         row["validation_net50_positive"] = row["val_net50"] > 0
     OUT.mkdir(parents=True, exist_ok=True)
-    csv_path = OUT / "selection_results.csv"
     fields = ["development_rank", "strategy", "dev_trades", "dev_net", "dev_net50", "dev_max_dd",
               "val_trades", "val_net", "val_net50", "val_max_dd", "selected_by_dev_rule",
               "validation_net50_positive"]
-    with csv_path.open("w", newline="", encoding="utf-8") as f:
+    with (OUT / "selection_results.csv").open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         w.writerows(eligible)
@@ -61,7 +72,7 @@ def main():
         "phase": 95,
         "status": "PASS",
         "source_path": "results/phase45_ready_made/strategy_vix_summary.csv",
-        "source_blob_sha": EXPECTED_SOURCE_SHA,
+        "source_blob_sha": actual_sha,
         "selection_rule": "defined_risk=True; state=ALL; development trades >=50; maximize development net50; alphabetical tie-break",
         "primary_endpoint": "selected strategy validation net50",
         "eligible_strategy_count": len(eligible),
@@ -73,13 +84,16 @@ def main():
         "selected_validation_positive": selected["val_net50"] > 0,
         "eligible_with_positive_validation_net50": sum(r["val_net50"] > 0 for r in eligible),
         "eligible_with_negative_or_zero_validation_net50": sum(r["val_net50"] <= 0 for r in eligible),
-        "holdout_rows_loaded": False,
+        "holdout_rows_retained_or_used": False,
         "phase83_2026_holdout_accessed": False,
         "new_market_data_or_strategy_replay": False,
         "strategy_promoted": False,
         "interpretation": "PASS means the preregistered computation ran; profitability outcome is reported separately. This retrospective, previously explored source is not an independent blinded test."
     }
-    (OUT / "validation_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    # Regression checks prevent silent changes to the frozen input/result interpretation.
+    if len(eligible) != 22 or selected["strategy"] != "call_backspread" or selected["val_net50"] >= 0:
+        raise SystemExit("Frozen expected result changed; investigate source/version before interpreting.")
+    (OUT / "validation_report.json").write_text(json.dumps(report, indent=2) + "\\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
 if __name__ == "__main__":
     main()
