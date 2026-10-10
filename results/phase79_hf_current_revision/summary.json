@@ -1,0 +1,80 @@
+{
+  "phase": 79,
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "decision": "BLOCKED_CURRENT_SOURCE_INCOMPLETE",
+  "targets": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "errors": [],
+  "files": {
+    "2026-07-28": {
+      "file": "options/NIFTY/2026-07-28.parquet",
+      "sha256": "f9c3a6d1e4498274644ccbfeb8aeb3d545fc2ce1a12b908f450360a643e40d17",
+      "rows": 320359,
+      "columns": [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "open_interest",
+        "trading_day",
+        "symbol",
+        "strike",
+        "option_type",
+        "expiry"
+      ],
+      "file_timestamp_min": "2026-06-15T09:15:00+05:30",
+      "file_timestamp_max": "2026-07-02T15:30:00+05:30",
+      "explicit_expiry_rows": 320359,
+      "expiry_session_rows": 0,
+      "regular_session_rows": 0,
+      "unique_regular_timestamps": 0,
+      "first_regular_timestamp": null,
+      "last_regular_timestamp": null,
+      "rows_with_missing_strike_or_side": 0,
+      "contract_side_strike_groups": 0,
+      "complete_375_groups": 0,
+      "valid_ohlc": true,
+      "contract_groups": []
+    },
+    "2026-08-04": {
+      "file": "options/NIFTY/2026-08-04.parquet",
+      "sha256": "8de2f08cef1456c448c4fc4be0d9d586a1b26af30bf67990171385361af92f9c",
+      "rows": 2646,
+      "columns": [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "open_interest",
+        "trading_day",
+        "symbol",
+        "strike",
+        "option_type",
+        "expiry"
+      ],
+      "file_timestamp_min": "2026-06-24T10:08:00+05:30",
+      "file_timestamp_max": "2026-07-02T15:29:00+05:30",
+      "explicit_expiry_rows": 2646,
+      "expiry_session_rows": 0,
+      "regular_session_rows": 0,
+      "unique_regular_timestamps": 0,
+      "first_regular_timestamp": null,
+      "last_regular_timestamp": null,
+      "rows_with_missing_strike_or_side": 0,
+      "contract_side_strike_groups": 0,
+      "complete_375_groups": 0,
+      "valid_ohlc": true,
+      "contract_groups": []
+    }
+  },
+  "raw_data_committed": false,
+  "license": "CC-BY-NC-4.0 (as listed on dataset card); non-commercial use only; educational/as-is disclaimer",
+  "caveat": "A complete OHLC bar set is data coverage only, not proof of executable fills, spread, or depth. Expiry/strike/side mapping must be validated before replay."
+}
