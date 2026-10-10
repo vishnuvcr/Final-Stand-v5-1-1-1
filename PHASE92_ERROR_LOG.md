@@ -19,8 +19,21 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - If API or sample coverage gates fail, return INCONCLUSIVE and preserve error details; no imputed rows.
 - The default-branch workflow entry will run only on PR creation/reopening for this phase or via manual dispatch with the fixed branch. Its publication filters intentionally exclude generated status/result changes to avoid infinite workflow-trigger loops.
 
-## Runtime
-No run has been verified yet. Append the sanitized runtime result after the workflow completes. A successful Actions job does not itself imply the predictive-gain hypothesis passed.
+## Execution / reporting corrections
+
+- E92-011 — Expected weekend-only window: initial runs marked the 2022-12-31 to 2023-01-01 zero-row CALL and PUT intervals as schema failures. Calendar check showed the only date in the half-open interval was Saturday; there was no weekday trading session. The engine now marks a well-formed zero-row window with no weekday in its bounds as `valid=true`, `error_class=NoWeekdayExpected`. No observation was imputed and the analytical sample did not change.
+- E92-012 — Non-fast-forward publication failure: run [38050580381](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050580381) completed acquisition and analysis but failed to push result files because the branch head had changed concurrently. The next complete run published the aggregates successfully; latest result is run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106).
+- E92-013 — Trigger wiring: an additional PR run was reported as `action_required` with no job exposed. The default-branch runner now uses a push trigger limited to Phase 92 plan/engine changes plus `workflow_dispatch`; the base-branch PR trigger is limited to open/reopen to avoid rerunning the study on its own generated result commit.
+- The weekend-only coverage correction and outcome-label correction changed reporting/validation classification only; the data rows, split, features, fitting period, primary endpoint and bootstrap settings were unchanged.
+
+## Final runtime result — accepted
+
+- Actions run: [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106), overall conclusion `success`; analysis and result publication steps completed successfully.
+- Options windows valid: 54/54 (the last CALL/PUT interval is correctly annotated `NoWeekdayExpected`, zero rows); India VIX windows valid: 5/5; exactly one India VIX instrument-master match.
+- Paired options observations after checks: 18,579 across 248 sessions; zero spot mismatches, one strike-mismatch timestamp excluded.
+- OOS: 3,660 observations across 61 sessions. Complete DEV and validation rows were 7,357 and 3,780. VIX coverage, OOS VIX, and sample/training gates passed.
+- Primary M2 MAE − M4 MAE: −0.1708363 bps; paired session-cluster bootstrap 95% CI −0.2298769 to −0.1152015 bps; positive bootstrap share 0/5,000 (seed 90210). Because the entire interval is below zero, the added synthetic-forward/OI feature block worsened predictive MAE in this fixed sample.
+- No API/network/schema failures in the accepted run. This is a spot-move predictor result, not exact futures-basis, executable-fill, or strategy P&L evidence. No strategy promoted; Phase 83 2026 holdout untouched.
 
 <!-- PHASE92_RUNTIME_START -->
 ## Runtime summary — 38050805106
