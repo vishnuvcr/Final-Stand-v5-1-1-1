@@ -1,0 +1,57 @@
+{
+  "phase": 82,
+  "decision": "NO_CANDIDATE_GATE_PASS_HOLDOUT_REMAINS_SEALED",
+  "holdout_opened": false,
+  "input_revision": "Phase 81 persisted corrected run 38044579698",
+  "temporal_policy": {
+    "development_through": "2023-12-31",
+    "validation_through": "2025-12-31",
+    "holdout_2026": "not loaded/read/scored; remains sealed unless a gate passes"
+  },
+  "inference": {
+    "cluster_unit": "listed expiry",
+    "cluster_estimand": "equal-weight mean of within-expiry daily outcomes",
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 820026,
+    "holm_adjustment": "single family-wise family across 60 validation tests",
+    "pnl_tests_one_sided_positive": 40,
+    "horizon_tests_two_sided": 20,
+    "tests_total": 60
+  },
+  "candidate_gate": {
+    "criteria": [
+      "defined-risk only",
+      "at least 100 complete validation trades",
+      "at least 50 expiry clusters",
+      "positive total net at two-tick friction",
+      "95% expiry-cluster bootstrap lower bound > 0",
+      "Holm-adjusted p < 0.05 across the full 60-test family"
+    ],
+    "passing_candidates": []
+  },
+  "integrity": {
+    "holdout_dates_read": false,
+    "unbounded_short_atm_straddle_excluded_from_promotion": true,
+    "fills": "option candle opens plus adverse tick; not bid/ask/depth-confirmed"
+  },
+  "counts": {
+    "trades_rows": 22326,
+    "paired_difference_rows": 11163,
+    "validation_net_tests": 40,
+    "validation_horizon_tests": 20,
+    "validation_total_tests": 60
+  },
+  "validation": {
+    "defined_risk_candidates_total": 18,
+    "defined_risk_positive_stress_totals": 0,
+    "net_positive_unbounded_diagnostic_rows": 0,
+    "horizon_test_ci_include_zero": 20,
+    "horizon_test_count": 20
+  },
+  "limits": [
+    "Inference corrects Phase 82's registered family but not every experiment attempted in earlier phases.",
+    "Expiry clusters may remain correlated across time, particularly through persistent regimes.",
+    "The data have OHLC but no historical bid/ask/depth; fee and tick assumptions do not prove executable prices.",
+    "Phase 81 strategy set is broad but not all possible combinations."
+  ]
+}

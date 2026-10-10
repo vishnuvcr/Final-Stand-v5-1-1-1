@@ -945,3 +945,9 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Exclusions: 182; file/schema errors: 0.
 - Registered structures/time windows only; 2026 holdout not scored. See results/phase81_intraday_overnight/report.md.
 - No strategy promoted; static OHLC-open model remains an execution proxy.
+
+
+## 2026-10-10 — Phase 82 expiry-clustered inference
+- Decision: NO_CANDIDATE_GATE_PASS_HOLDOUT_REMAINS_SEALED; validation hypotheses: 60; passing candidates: 0.
+- 2026 holdout opened: False. Report: results/phase82_inference/report.md.
+- The one-lot candle-open model is not executable quote evidence; no automatic trading action is enabled.

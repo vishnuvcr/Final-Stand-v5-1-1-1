@@ -1,3 +1,18 @@
+# Resume checkpoint — 2026-10-10 (Phase 82 inference)
+
+**Phase 82 decision: NO_CANDIDATE_GATE_PASS_HOLDOUT_REMAINS_SEALED.** The preregistered 60-test DEV/VAL inference family was analyzed with expiry clusters and Holm correction. 0 defined-risk candidate(s) met all gates. The 2026 holdout was not read; it remains sealed.
+
+- [Phase 80 literature review](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_LITERATURE_REVIEW.md)
+- [Phase 81 corrected sweep report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/results/phase81_intraday_overnight/report.md)
+- [Phase 82 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-clustered-inference-gates/PHASE82_RESEARCH_PLAN.md)
+- [Phase 82 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-clustered-inference-gates/PHASE82_STATUS.md)
+- [Phase 82 inference report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-clustered-inference-gates/results/phase82_inference/report.md)
+- [Phase 82 workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/${GITHUB_RUN_ID})
+
+No strategy should be promoted from an isolated positive total. Historical bid/ask/depth remain unavailable; costs and adverse ticks are modeled.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 81 corrected paired horizon sweep)
 
 **Search-completeness answer:** no, every conceivable strategy combination has not been tested. Existing work covers a broad but finite structure/regime/selector/exit search. Phase 80 expands the literature inventory and Phase 81 tests one under-covered axis: matched intraday versus overnight holding windows for the same option-structure templates.

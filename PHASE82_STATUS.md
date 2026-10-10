@@ -1,9 +1,9 @@
 # Phase 82 Status
 Date: 2026-10-10
-Status: REGISTERED — INFERENCE WORKFLOW PENDING.
+Status: NO_CANDIDATE_GATE_PASS_HOLDOUT_REMAINS_SEALED
 
-- [x] Created separately from Phase 81 after corrected data persistence.
-- [x] Frozen 60-test family, expiry-cluster resampling, Holm adjustment and two-tick promotion gate.
-- [x] Holdout remains sealed unless a defined-risk strategy meets the frozen rule.
-- [ ] Execute inference and validate that no 2026 data were read.
-- [ ] Publish inference CSVs, figures, candidate gate and manuscript handoff.
+- [x] Expiry-clustered inference completed on frozen Phase 81 DEV/VAL outputs.
+- [x] Validation tests: 60; Holm-adjusted as one family.
+- [x] Candidate rows meeting the pre-registered gate: 0.
+- [x] 2026 holdout opened: False; holdout remains sealed if no gate passes.
+- [x] Report, tables and figures written under results/phase82_inference/.
