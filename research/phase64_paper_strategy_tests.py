@@ -80,6 +80,8 @@ def source_manifest(api: HfApi, token: str | None):
         # This is a conservative proxy, not an exchange-calendar proof.
         if d.day >= 20:
             monthly[key] = (d, name)
+    if not monthly:
+        raise RuntimeError("pinned revision has no late-month expiry files suitable for the frozen monthly-expiry proxy")
     return monthly, sorted(expiries)
 
 def normalize_index(raw: pd.DataFrame):
@@ -253,7 +255,7 @@ def evaluate_trade(index: pd.DataFrame, chain_map, expiry: pd.Timestamp, candida
         return None, "missing_exact_next_minute_entry_option_bar"
     # Exit on the last trading session strictly before expiry (the paper's
     # second-last contract day), using only observed NIFTY trading sessions.
-    all_days = sorted(index.timestamp.dt.normalize().unique())
+    all_days = sorted(index.timestamp.dt.normalize().drop_duplicates().tolist())
     prior_days = [d for d in all_days if pd.Timestamp(d).date() < expiry.date()]
     if not prior_days:
         return None, "no_penultimate_trading_session"
