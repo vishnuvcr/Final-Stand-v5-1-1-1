@@ -1325,3 +1325,10 @@ Phase 64's corrected automated test completed, but both CCI candidates had zero 
 - [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_ERROR_LOG.md)
 
 A static filename-regex issue was corrected before the data run and documented as F65-001. Do not infer successful execution from code commits; only aggregate outputs and a passing workflow run can close the phase. No strategy is promoted.
+
+
+## Phase 67 — contract/minute coverage diagnostic (2026-10-10)
+
+Phase 67 is a bounded diagnostic following the Phase 66 zero-trade result. The first push-triggered workflow [38032877348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38032877348) failed during Python setup before dependency installation, tests or numerical analysis; no outputs were produced. The workflow's unsupported pip cache configuration has been removed. This is an engineering fix only, not evidence of strategy performance. Await the next run and inspect its aggregate outputs before closing this phase.
+
+- [Phase 67 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_ERROR_LOG.md) · [chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_CHAT_LOG.md) · [workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/.github/workflows/phase67-contract-coverage-diagnostic.yml).
