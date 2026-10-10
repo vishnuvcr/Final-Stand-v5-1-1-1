@@ -43,6 +43,7 @@ jobs:
           assert md_path.exists() and plan_path.exists() and status_path.exists()
           plan = plan_path.read_text(encoding="utf-8")
           assert all(f"phase-{n}-" in plan for n in range(95,101)), "downstream phase missing from plan"
-          assert "no strategy" in status_path.read_text(encoding="utf-8").lower()
+          status_text = status_path.read_text(encoding="utf-8").lower()
+          assert "strategy promotion" in status_text and "none" in status_text, "strategy promotion status is missing"
           print(f"PASS: {len(rows)} registry rows across {len({r['paper_id'] for r in rows})} papers; required columns and downstream phases present.")
           PY
