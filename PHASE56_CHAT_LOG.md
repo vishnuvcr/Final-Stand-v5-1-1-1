@@ -35,3 +35,15 @@ Private chain-of-thought is not stored here. Operational decisions, tests, outco
 - Output matrix: 132 threshold/cost summaries; 5,280 configuration summaries; 924 family summaries; 18,960 non-executable price-reference trade scenarios; 440 severe-cost configuration-threshold screens.
 - Configurations passing the severe-cost screen at any threshold=5; passing configuration-threshold pairs=5.
 - All costs/slippage are modeled assumptions; candle range is not bid/ask spread; no holdout used and no strategy is promoted.
+
+## Supplemental robustness interpretation — severe-cost screen (2026-10-10)
+
+An independent read of the accepted `robustness_screen.csv` confirms five configuration-threshold pairs pass the **coded** severe-cost screen at the 1000% diagnostic threshold, using ₹20/order and ₹0.50 adverse slippage per fill. The code's screen is defined as at least 10 distinct event identities plus positive aggregate configuration-event net P&L. It reports leave-one-event-out minimum separately; that minimum is **not** part of the current pass condition.
+
+- `2432b3ba491006a1f15a` — LONG_STRADDLE, ATM offset 3 steps, entry 13:00 IST: grid-sum net ₹11,813.17 across 10 event identities; leave-one-event-out minimum +₹3,953.36.
+- `60c2d16b969965ff2b15` — BEAR_CALL_SPREAD, ATM offset 1 step, entry 13:00 IST: grid-sum net ₹1,570.09 across 10 event identities; leave-one-event-out minimum +₹1,133.31.
+- `f96abfc5c945c889729f` — BEAR_CALL_SPREAD, ATM offset 1 step, wing 3 steps, entry 13:00 IST: grid-sum net ₹3,076.01 across 10 event identities; leave-one-event-out minimum +₹2,384.07.
+- `0a2c71c6e12e773afc2d` — LONG_STRADDLE, ATM offset 1 step, entry 13:00 IST: grid-sum net ₹3,002.47 across 10 event identities; leave-one-event-out minimum −₹3,558.39.
+- `c31e45a39d28e22b70b2` — BUY_PUT, ATM offset 1 step, entry 13:00 IST: grid-sum net ₹3,495.90 across 10 event identities; leave-one-event-out minimum −₹1,680.54.
+
+**Interpretation:** three of five have a positive leave-one-event-out minimum; two are visibly event-sensitive under this additional descriptive check. This post-run reading does not alter the preregistered screen, select a configuration, or establish a strategy result. Every pair uses the 1000% near-removal diagnostic threshold, OHLC-open price references rather than executable quotes, and overlapping configuration-event samples; sums are not portfolio P&L. The source remains CC BY-NC 4.0 and no promotion/holdout use is permitted. These IDs are merely leads for authorized quote validation if the data-license gate is later resolved.
