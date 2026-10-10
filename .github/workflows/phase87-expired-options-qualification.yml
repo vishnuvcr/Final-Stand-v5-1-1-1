@@ -71,9 +71,13 @@ jobs:
           count = len(timestamps)
           report("RESPONSE_HAS_OPTION_BLOCK=" + ("true" if bool(selected) else "false"))
           report("OPTION_CANDLE_COUNT=" + str(count))
-          for key in ("open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp"):
+          keys = ("open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp")
+          for key in keys:
               value = selected.get(key) if isinstance(selected, dict) else None
               report("FIELD_" + key.upper() + "_ARRAY=" + ("true" if isinstance(value, list) else "false"))
+          lengths = [len(selected[k]) for k in keys if isinstance(selected.get(k), list)] if isinstance(selected, dict) else []
+          aligned = len(lengths) == len(keys) and len(set(lengths)) == 1
+          report("REQUESTED_ARRAY_LENGTHS_ALIGNED=" + ("true" if aligned else "false"))
           if status == 200 and count > 0 and all(isinstance(selected.get(k), list) for k in ("open", "high", "low", "close", "timestamp")):
               report("RESULT=EXPIRED_OPTIONS_OHLC_PROBE_PASSED")
           elif status == 200:
