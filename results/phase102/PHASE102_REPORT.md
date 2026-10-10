@@ -1,6 +1,6 @@
 # Phase 102 — Final Strategy Ranking and Evidence Reconciliation
 
-**Status at publication:** ranking drafted; automated validation pending.  
+**Status:** COMPLETED — automated validation passed (14/14 source-artifact checks; 2/2 unit tests). [Final workflow run 38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704).  
 **Decision:** no strategy promoted.  
 **Scope:** evidence from existing committed repository outputs only; no new market data or strategy tuning.
 
@@ -26,7 +26,7 @@ The scorecard ranks **next-action priority by evidence grade**, not universal re
 
 ## 2. Consolidated scorecard
 
-See [strategy_evidence_scorecard.csv](strategy_evidence_scorecard.csv). “Stress net” is only compared within the same source's own scenario model.
+See [strategy_evidence_scorecard.csv](strategy_evidence_scorecard.csv) and [validation output](validation.json). The workflow also uploads [phase102-evidence-validation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704/artifacts/11681255736). “Stress net” is only compared within the same source's own scenario model.
 
 | Priority | Method | Committed numerical evidence | Evidence status | Decision |
 |---:|---|---|---|---|
@@ -76,7 +76,11 @@ This phase does not initiate that numerical validation because this ranking work
 
 The evidence supports **one next candidate for further independent testing (TT-03 dynamic-N V5)**, but **zero strategies validated for live deployment**. The next finite experiment should focus on TT-03 only if genuinely new authorized exact-contract data and realistic execution assumptions pass preflight. TT-04/TT-05 should not be tuned against their contradictory hold results; U02/U05 paper proxies should not be promoted; and Phase 83's closed candidate universe should not be repeatedly searched. If no authorized independent sample becomes available, the scientifically correct endpoint is a documented no-go rather than an endless backtest loop.
 
-## 7. Reproducibility and links
+## 7. Automated validation result
+
+The final GitHub Actions run finished with 14/14 invariant checks passing and both unit tests passing. The checker cross-validates key reported values against the original committed JSON/CSV/Markdown artifacts. Earlier failed checks were limited to overly strict text-format assertions; their records remain in the error log and the final check was successful. The validator is an evidence-consistency checker, not an independent raw-data backtest.
+
+## 8. Reproducibility and links
 
 - [Phase 50B TT-03 evidence](../phase50b/tt03_dynamic_n_replay/summary.json)
 - [Phase 38 control status](../../../PHASE38_STATUS.md)
