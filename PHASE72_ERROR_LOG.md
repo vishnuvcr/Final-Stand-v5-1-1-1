@@ -20,3 +20,9 @@ Date: 2026-10-10
 ## B72-004 — no historical bid/ask/depth
 - Status: KNOWN LIMITATION.
 - Impact: source bars cannot support observed executable fills. Later P&L must be modeled and stress tested with Paytm Money fees and conservative spread/slippage; label limitations explicitly.
+
+
+## B72-005 — Workflow fired before all phase files were committed
+- Status: RESOLVED.
+- Evidence: initial run [38041953753](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041953753) started after the workflow file commit but before the audit script commit, and failed because the script was not yet present at that commit.
+- Resolution: subsequent run [38041956746](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041956746) executed the script and published aggregate results successfully. The regular-session upper bound was then tightened to exclude 15:30 and later timestamps; a fresh run is triggered by that code correction.
