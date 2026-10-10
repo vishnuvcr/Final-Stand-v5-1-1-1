@@ -1,0 +1,56 @@
+{
+  "oos_n": 3633,
+  "oos_sessions": 60,
+  "sample_gate_pass": true,
+  "vix_gate_pass": true,
+  "paired_rows": 18473,
+  "paired_sessions": 246,
+  "dev_rows_with_iv": 7339,
+  "validation_rows_with_iv": 3814,
+  "oos_rows_with_iv": 3633,
+  "oos_sessions_with_iv": 60,
+  "phase": 91,
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050932108",
+  "status": "NO INCREMENTAL GAIN ESTABLISHED \u2014 primary bootstrap interval includes or falls below zero",
+  "requested_period": [
+    "2023-01-01",
+    "2024-01-01_exclusive"
+  ],
+  "holdout_2026_requested": false,
+  "instrument_master": {
+    "status": "UNIQUE_MATCH",
+    "candidate_count": 1,
+    "security_id_resolved": true,
+    "candidate_ids": [
+      "21"
+    ],
+    "instrument": "INDEX",
+    "segment": "I"
+  },
+  "quality": {
+    "call_duplicate_rows_removed": 0,
+    "put_duplicate_rows_removed": 0,
+    "call_rows": 18497,
+    "put_rows": 18494,
+    "paired_timestamps_before_checks": 18473,
+    "spot_mismatch_excluded": 0,
+    "strike_mismatch_excluded": 0,
+    "paired_rows_after_checks": 18473,
+    "paired_sessions": 246,
+    "vix_row_coverage": 0.9998376008228225,
+    "oos_vix_coverage": 0.9997799779977998
+  },
+  "options_chunks_valid": 54,
+  "options_chunks_total": 54,
+  "vix_chunks_valid": 5,
+  "vix_chunks_total": 5,
+  "primary": {
+    "delta_mae_bps": 0.00011109644635354243,
+    "ci95_low": -0.011070019280587406,
+    "ci95_high": 0.010253182032923623,
+    "positive_share": 0.524,
+    "replicates": 5000,
+    "seed": 90210
+  },
+  "issue_count": 0
+}

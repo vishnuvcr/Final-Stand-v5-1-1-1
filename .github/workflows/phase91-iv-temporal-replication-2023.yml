@@ -1,0 +1,75 @@
+name: Phase 91 — temporal replication of IV incremental prediction (2023)
+
+# Push/manual entry point. The Phase 90 base branch also supplies a pull_request-triggered
+# runner so this study can execute automatically when its draft PR is synchronized.
+
+on:
+  push:
+    branches:
+      - phase-91-iv-temporal-replication-2023
+    paths:
+      - ".github/workflows/phase91-iv-temporal-replication-2023.yml"
+      - "research/phase91/**"
+      - "PHASE91_RESEARCH_PLAN.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase91-iv-temporal-replication-2023
+  cancel-in-progress: false
+
+jobs:
+  temporal-replication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Check out registered phase branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned analysis dependencies
+        run: python -m pip install --disable-pip-version-check "numpy==2.2.6" "pandas==2.2.3"
+
+      - name: Restore or initialize isolated Phase 91 private data cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/phase91/raw
+          key: phase91-dhan-rolling-2023-v1
+
+      - name: Acquire and analyze frozen 2023 replication
+        id: study
+        continue-on-error: true
+        env:
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: python research/phase91/iv_incremental_study.py
+
+      - name: Publish aggregate outputs, README checkpoint, and logs
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE91_STATUS.md PHASE91_ERROR_LOG.md PHASE91_CHAT_LOG.md README.md
+          git add -f results/phase91/coverage.csv results/phase91/model_metrics.csv results/phase91/vix_regime_metrics.csv results/phase91/summary.json results/phase91/PHASE91_RESULTS.md 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Phase 91: publish temporal IV replication results"
+            git push origin "HEAD:${{ github.ref_name }}"
+          else
+            echo "No aggregate result or log changes to commit."
+          fi
+
+      - name: Mark engine/operational failure after publication
+        if: steps.study.outcome == 'failure'
+        run: |
+          echo "Phase 91 analysis engine failed; inspect committed status and sanitized error log."
+          exit 1

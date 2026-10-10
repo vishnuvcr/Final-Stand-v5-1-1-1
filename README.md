@@ -1,3 +1,34 @@
+<!-- PHASE92_CHILD_START -->
+# Downstream checkpoint — Phase 92 (2022 synthetic-forward proxy + OI)
+
+**Result: the added feature block worsened fixed OOS spot-magnitude prediction.** Latest run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106), 3,660 OOS rows / 61 sessions, 54/54 option windows and 5/5 VIX windows valid. M2−M4 MAE = −0.1708363 bps; session-cluster 95% CI −0.2298769 to −0.1152015. No strategy is promoted.
+
+- [Phase 92 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/PHASE92_RESULTS.md)
+- [Cross-phase synthesis / stop decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
+- [Phase 92 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md)
+<!-- PHASE92_CHILD_END -->
+
+<!-- PHASE91_START -->
+# Resume checkpoint — Phase 91 IV incremental-prediction study
+
+**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38050932108](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050932108). The independent sample is calendar 2023, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
+
+- [Phase 91 plan](PHASE91_RESEARCH_PLAN.md)
+- [Phase 91 status](PHASE91_STATUS.md)
+- [Phase 91 error log](PHASE91_ERROR_LOG.md)
+- [Phase 91 auditable chat log](PHASE91_CHAT_LOG.md)
+- [Detailed results](results/phase91/PHASE91_RESULTS.md)
+- [Summary JSON](results/phase91/summary.json)
+- [Coverage ledger](results/phase91/coverage.csv)
+- [Model metrics](results/phase91/model_metrics.csv)
+- [VIX-regime metrics](results/phase91/vix_regime_metrics.csv)
+- [Analysis engine](research/phase91/iv_incremental_study.py)
+- [Phase branch workflow](.github/workflows/phase91-iv-temporal-replication-2023.yml)
+- [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
+
+**Interpretation boundary:** predictive gain is not strategy P&L. Historical exact-contract bid/ask/depth, Paytm Money cost-adjusted fills, or live orders were not tested. No strategy has been promoted.
+<!-- PHASE91_END -->
+
 <!-- PHASE90_START -->
 # Resume checkpoint — Phase 90 IV incremental-prediction study
 
