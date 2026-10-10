@@ -1,3 +1,18 @@
+# Resume checkpoint — 2026-10-10 (Phase 84 cross-phase evidence reconciliation)
+
+**Phase 84 status: evidence reconciliation initiated; no new strategy promotion.** The Phase 83 experiment is terminal for its registered universe. This branch separates those results from the historical canonical control, partial-OOS TT-04/TT-05 diagnostics, and under-covered Phase 52/66 tests. Cross-study raw P&L is not used to declare a single winner.
+
+- [Phase 84 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_RESEARCH_PLAN.md)
+- [Phase 84 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_STATUS.md)
+- [Phase 84 evidence matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/results/phase84_evidence_reconciliation/evidence_matrix.csv)
+- [Phase 84 decision report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/results/phase84_evidence_reconciliation/decision_report.md)
+- [Phase 84 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_ERROR_LOG.md)
+- [Phase 84 decision/chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_CHAT_LOG.md)
+
+**Current decision:** no strategy is promoted. The next numerical study is conditional on documented source rights, exact fixed-contract coverage, and quote/depth-quality execution evidence. No paid data has been purchased and the Phase 83 2026 holdout remains sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 83 final manuscript)
 
 **Final conclusion for Phases 80–83: NO-GO for new-strategy promotion.** Phase 81 produced 11,163 matched observations; Phase 82 ran 20 expiry-clustered primary tests with Holm correction and found no adjusted-significant test. Zero of 18 defined-risk structure–horizon candidates passed the positive-net gate across DEV/VAL at one-/two-tick costs. The 2026 holdout was not opened. This closes the registered experiment; it does not prove every possible option strategy is unprofitable or adjudicate unrelated canonical strategies.
