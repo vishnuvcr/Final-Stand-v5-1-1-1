@@ -41,3 +41,8 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - No API/network/schema failures.
 - No token, raw response, row-level price, or hidden reasoning is logged.
 <!-- PHASE91_RUNTIME_END -->
+
+
+## Downstream Phase 92 checkpoint
+
+No new Phase 91 error arose. The next branch, Phase 92, completed its bounded 2022 synthetic-forward/OI predictor study in [run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106). Its primary result was negative incremental value for the added feature block (M2−M4 MAE −0.1708363 bps; 95% CI −0.2298769 to −0.1152015). The cross-phase result is documented in [CROSS_PHASE_FACTOR_SYNTHESIS.md](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md). The Phase 83 2026 holdout remains sealed; no strategy was promoted.
