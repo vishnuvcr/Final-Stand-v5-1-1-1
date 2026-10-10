@@ -17,3 +17,9 @@
 - Re-inspected the entry implementation and identified a prospective temporal bug: the strike universe was built from every contract minute in the expiry file. This could let future contract availability influence ITM selection at the earlier breakout.
 - Corrected to select the nearest strictly ITM contract from bars observed exactly at the breakout minute, then require the next exact minute's option close for entry. Added a regression test called test_strike_selection_uses_trigger_minute_availability_only.
 - Run 38026911131 is explicitly non-evidence; no P&L from it is accepted. Latest code must pass unit tests and complete the frozen DEV/VAL test before any interpretation.
+
+## 2026-10-10 — Corrected Phase 64 run completed
+- Run 38027023283 completed successfully after the point-in-time strike-selection correction. Syntax/unit tests, numerical runner, report generation, output validation and publication passed; marker confirms zero 2026 option files downloaded.
+- Aggregate results: 56 late-month expiry-file proxies (32 DEV, 24 VAL); CCI_BASE 0 completed trades despite 12 DEV/13 VAL breakout-trigger opportunities; CCI_EMA_FILTER 0 completed trades despite 4 DEV/1 VAL triggers.
+- These zero-trade samples cannot estimate returns, win rate, expectancy, profit factor, or drawdown. Empty sums printed as 0 are not measured zero P&L. Both candidates fail >=20 validation trades and >=95% trigger coverage.
+- Decision remains NO PROMOTION. Treat this as data/protocol coverage failure, not evidence that the CCI concept has negative expectancy. Next action is one bounded timestamp/contract-coverage audit; no parameter expansion or gate relaxation.
