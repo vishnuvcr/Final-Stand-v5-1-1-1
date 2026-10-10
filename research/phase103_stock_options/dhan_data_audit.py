@@ -212,7 +212,7 @@ def main():
     (out/"DHAN_DATA_API_AUDIT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
     print(json.dumps({"phase":"103.1","status":result["status"],"window":result["window"],
       "underlying_ids_resolved":sum(1 for x in result.get("underlying_map",{}).values() if x.get("security_id")),
-      "probes":len(result.get("probes",[])),
+      "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],
       "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0)},indent=2))
     return 0
 
