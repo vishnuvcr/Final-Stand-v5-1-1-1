@@ -12,6 +12,7 @@ Strategy promotion: **NONE**.
 - [Phase branch workflow](.github/workflows/phase91-iv-temporal-replication-2023.yml)
 - [Default-branch PR runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
 - [Detailed results](results/phase91/PHASE91_RESULTS.md)
+- [Cross-year synthesis and stopping decision](results/phase91/CROSS_YEAR_SYNTHESIS.md)
 - [Summary JSON](results/phase91/summary.json)
 - [Coverage ledger](results/phase91/coverage.csv)
 - [Model metrics](results/phase91/model_metrics.csv)
