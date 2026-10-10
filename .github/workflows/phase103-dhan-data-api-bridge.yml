@@ -54,7 +54,7 @@ jobs:
           else
             marker="DHAN_API_RUN_${GITHUB_RUN_ID}"
             if ! grep -q "$marker" PHASE103_ERROR_LOG.md; then
-              printf "\n\n<!-- %s -->\n### E103-DHAN-${GITHUB_RUN_ID} — No audit output produced\nA workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.\nRun: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\n" "$marker" "GITHUB_RUN_ID" "GITHUB_REPOSITORY" "GITHUB_RUN_ID" >> PHASE103_ERROR_LOG.md
+              printf "\n\n<!-- %s -->\n### E103-DHAN-%s — No audit output produced\nA workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.\nRun: https://github.com/%s/actions/runs/%s\n" "$marker" "$GITHUB_RUN_ID" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> PHASE103_ERROR_LOG.md
               printf "\n\n<!-- %s -->\n### Dhan audit did not produce output\nRun ${GITHUB_RUN_ID} failed before a machine-readable result was written; inspect its Actions log. No API success or strategy result is claimed.\n" "$marker" >> PHASE103_STATUS.md
               printf "\n\n<!-- %s -->\n## Dhan API audit did not produce output — run ${GITHUB_RUN_ID}\nThe workflow failed before a machine-readable result was written. No source/data success is claimed.\n" "$marker" >> PHASE103_RESEARCH_LOG.md
             fi
