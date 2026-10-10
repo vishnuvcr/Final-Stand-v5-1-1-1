@@ -1,0 +1,165 @@
+name: Phase 101 — Full PDF Strategy Replication
+on:
+  push:
+    branches: [phase-101-full-pdf-strategy-replication]
+    paths:
+      - 'research/phase101/**'
+      - 'tests/test_phase101_replay.py'
+      - 'requirements-phase101.txt'
+      - 'PHASE101_RESEARCH_PLAN.md'
+      - '.github/workflows/phase101-full-pdf-strategy-replication.yml'
+  workflow_dispatch:
+    inputs:
+      force_rerun:
+        description: "Run the frozen Phase 101 suite again"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase101-full-pdf-strategy-replication
+  cancel-in-progress: false
+
+jobs:
+  replicate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      HF_TOKEN: \${{ secrets.HF_TOKEN }}
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Checkout Phase 101 branch
+        uses: actions/checkout@v4
+      - name: Checkout validated Phase 66 data helpers
+        uses: actions/checkout@v4
+        with:
+          repository: vishnuvcr/Final-Stand-v5-1-1-1
+          ref: phase-66-ohcl-paper-replication
+          path: evidence/phase66
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-phase101.txt
+      - name: Restore pinned Hugging Face cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase101-hf-\${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+          restore-keys: |
+            phase101-hf-\${{ runner.os }}-
+            hf-phase66-\${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+      - name: Restore Phase 101 daily-market cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/phase101
+          key: phase101-yahoo-\${{ runner.os }}-nifty-daily-2015-2025-v1
+      - name: Install bounded dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-phase101.txt
+      - name: Static syntax and deterministic unit tests
+        run: |
+          python -m py_compile research/phase101/paper_strategy_replay.py
+          python -m pytest -q tests/test_phase101_replay.py
+      - name: Run U02 and U05 historical proxy tests
+        run: python research/phase101/paper_strategy_replay.py
+      - name: Validate aggregate result contract
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import pandas as pd
+          out = Path("results/phase101_pdf_strategy_tests")
+          required = [
+            "PHASE101_REPORT.md", "u05_trade_ledger.csv", "u05_opportunity_audit.csv",
+            "u05_summary.csv", "u02_model_metrics.csv", "u02_model_status.csv",
+            "u02_predictions.csv", "u02_coverage_audit.csv", "u02_trade_ledger.csv",
+            "u02_strategy_summary.csv", "paper_test_matrix.csv",
+            "phase101_source_manifest.json", "validation_report.json",
+            "u02_feature_manifest.json", "net_pnl_comparison.svg"
+          ]
+          missing = [f for f in required if not (out / f).is_file() or (out / f).stat().st_size == 0]
+          if missing:
+            raise SystemExit("Missing/empty Phase 101 outputs: " + ", ".join(missing))
+          manifest = json.loads((out / "phase101_source_manifest.json").read_text())
+          validation = json.loads((out / "validation_report.json").read_text())
+          matrix = pd.read_csv(out / "paper_test_matrix.csv")
+          u05_audit = pd.read_csv(out / "u05_opportunity_audit.csv")
+          if len(matrix) != 14 or matrix.paper_id.nunique() != 14:
+            raise SystemExit("The final paper matrix must contain 14 unique PDFs")
+          if manifest.get("holdout_2026_option_files_downloaded") != 0:
+            raise SystemExit("2026 options holdout safeguard failed")
+          if str(manifest.get("maximum_option_expiry_selected", "")) > "2025-12-31":
+            raise SystemExit("An option expiry later than 2025-12-31 was selected")
+          if len(u05_audit) != validation.get("u05_opportunity_rows"):
+            raise SystemExit("U05 audit row count disagrees with validation report")
+          if validation.get("strategy_promoted") is not False:
+            raise SystemExit("A strategy must not be promoted by this phase")
+          report = (out / "PHASE101_REPORT.md").read_text()
+          for heading in ["Research question", "U05", "U02", "Conclusion", "Limitations", "Future work"]:
+            if heading.lower() not in report.lower():
+              raise SystemExit(f"Required report section missing: {heading}")
+          print(json.dumps({"validation":"PASS","paper_rows":len(matrix),
+            "u05_trades":validation.get("u05_trade_rows"),"u02_trades":validation.get("u02_trade_rows"),
+            "holdout_2026_option_files_downloaded":0,"strategy_promoted":False}, indent=2))
+          PY
+      - name: Reconcile status and research log
+        if: success()
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          out = Path("results/phase101_pdf_strategy_tests")
+          v = json.loads((out / "validation_report.json").read_text())
+          u05 = next(csv.DictReader((out / "u05_summary.csv").open()))
+          statuses = list(csv.DictReader((out / "u02_model_status.csv").open()))
+          stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+          run = os.environ.get("GITHUB_RUN_ID", "unknown")
+          block = f"""\n\n## Runtime checkpoint — {stamp}\n\n- Automated workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/{run}\n- Validation report: {v.get('overall_status')}; 14-paper matrix present; 2026 option holdout not downloaded; no strategy promoted.\n- U05 completed trades: {u05.get('completed_trades')}; sample status: {u05.get('status')}; audit status counts: {u05.get('audit_status_counts')}.\n- U02 predictions: {v.get('u02_predictions')}; completed trades: {v.get('u02_trade_rows')}; model statuses: {statuses}.\n- Result files are aggregate/derived only. A model/data blocker is not a negative efficacy finding.\n"""
+          p = Path("PHASE101_STATUS.md")
+          p.write_text(p.read_text() + block)
+          Path("PHASE101_RESEARCH_LOG.md").write_text(Path("PHASE101_RESEARCH_LOG.md").read_text() + block)
+          Path("PHASE101_CHAT_LOG.md").write_text(Path("PHASE101_CHAT_LOG.md").read_text() + f"\n\n- **Automated result:** run {run}; status reconciled at {stamp}; no strategy promotion.\n")
+          Path("PHASE101_ERROR_LOG.md").write_text(Path("PHASE101_ERROR_LOG.md").read_text() + f"\n\n## Run reconciliation — {stamp}\n- Workflow {run} completed aggregate validation. No runner exception was raised; inspect report and model status CSV for explicit data/model blockers.\n")
+          PY
+      - name: Publish aggregate research outputs and phase state
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase101_pdf_strategy_tests PHASE101_STATUS.md PHASE101_RESEARCH_LOG.md PHASE101_CHAT_LOG.md PHASE101_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "phase 101: publish PDF strategy test results and status"
+          git push origin HEAD:phase-101-full-pdf-strategy-replication
+      - name: Record runtime failure
+        if: failure()
+        shell: bash
+        run: |
+          mkdir -p results/phase101_pdf_strategy_tests
+          {
+            echo
+            echo "## Automated run failure — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/$GITHUB_RUN_ID"
+            echo "- Commit: $GITHUB_SHA"
+            echo "- Job failed before the output contract was validated. Numerical outputs from this run are not accepted."
+            echo "- Check results/phase101_pdf_strategy_tests/phase101_runtime_error.json if present, then fix root cause without relaxing frozen strategy rules."
+          } >> PHASE101_ERROR_LOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE101_ERROR_LOG.md results/phase101_pdf_strategy_tests || true
+          git commit -m "phase 101: record failed replication run" || true
+          git push origin HEAD:phase-101-full-pdf-strategy-replication || true
+      - name: Upload aggregate-only artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase101-pdf-strategy-results-\${{ github.run_id }}
+          path: results/phase101_pdf_strategy_tests/
+          if-no-files-found: warn
+          retention-days: 30
