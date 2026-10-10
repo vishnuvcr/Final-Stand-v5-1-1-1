@@ -16,3 +16,9 @@
 **Type:** sample limitation.  
 **Finding:** pinned Phase 101 dataset manifest ends at 2025-12-31 for underlying prices and maximum selected option expiry 2025-12-30.  
 **Resolution:** run 2024 development and 2025 validation only; no result can be described as a 2026 confirmatory holdout.
+
+### E103-004 — Workflow bootstrap/cleanup defect (run 38083985382)
+**Type:** infrastructure error; no strategy replay executed and no P&L evidence produced.
+**Symptoms:** setup-python failed because pip caching searched for a requirements.txt or pyproject.toml that the branch did not contain. The always-run cleanup then failed to commit because results/phase103 did not exist before replay.
+**Correction:** removed implicit pip cache discovery for this workflow; retained the explicit Hugging Face cache; changed cleanup to commit status/logs regardless of replay startup and add result artifacts only when that directory exists.
+**Status:** corrected in workflow commit 9421c155993ec3603e91bc329f56aa4ea0955f52; replacement automatic run will validate the correction.
