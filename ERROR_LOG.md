@@ -177,3 +177,11 @@ Phase-specific errors and corrections are recorded in [PHASE102_ERROR_LOG.md](ht
 - A new branch probes the Dhan expired-stock-options rolling endpoint. The endpoint provides minute OHLC, IV, volume, OI, strike and spot but does not document historical bid/ask/depth; relative-strike series can change the actual strike through time.
 - Raw Dhan data have not been put in the public repository or artifacts while retention/republication rights remain unverified. The branch error log records the full limitations and stop rules.
 - No Phase 103 API access error is claimed before the automated run is observed. Branch status: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_STATUS.md
+
+
+
+## Phase 103 — Dhan Data API request correction (2026-10-11)
+
+- First live attempt [38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054) resolved the five underlying IDs but received HTTP 400 / `DH-905` / `expiryCode is required` on all ten probes because the request specified `expiryCode: 0`. This was a request-parameter rejection, not evidence of missing options history.
+- Official docs are inconsistent at this point: the [expired-options sample](https://dhanhq.co/docs/v2/expired-options-data/) uses code 1, while the [annexure](https://dhanhq.co/docs/v2/annexure/) labels code 0 Current/Near Expiry. A bounded retry uses code 1 (Next Expiry) and records only allow-listed error messages with secret redaction.
+- Retry [38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181) is in progress at this checkpoint. No raw payloads or access-token values are recorded. Detailed history is on [Phase 103 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_ERROR_LOG.md).
