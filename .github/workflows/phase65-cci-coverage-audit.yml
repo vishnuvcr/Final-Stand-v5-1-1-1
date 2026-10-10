@@ -63,12 +63,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
           cat >> PHASE65_RESEARCH_LOG.md <<EOF
 
           ## Automated diagnostic run — ${GITHUB_RUN_ID}
           - Run commit: ${GITHUB_SHA}
           - Aggregate-only timestamp/contract audit completed; raw market rows were not published.
-          - See `results/phase65_cci_data_coverage_audit/aggregate_report.md`.
+          - See results/phase65_cci_data_coverage_audit/aggregate_report.md.
           EOF
           cat > PHASE65_STATUS.md <<EOF
           # Phase 65 status
@@ -85,6 +87,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME" || true
           printf '\n## Workflow failure — run %s\n- Commit: %s\n- Inspect the failing step in GitHub Actions logs; no strategy promotion occurred.\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" >> PHASE65_ERROR_LOG.md
           git add PHASE65_ERROR_LOG.md
           git commit -m "Log Phase 65 workflow failure" || true
