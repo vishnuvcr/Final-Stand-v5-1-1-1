@@ -19,4 +19,4 @@
   "new_market_data_or_strategy_replay": false,
   "strategy_promoted": false,
   "interpretation": "PASS means the preregistered computation ran; profitability outcome is reported separately. This retrospective, previously explored source is not an independent blinded test."
-}\n
+}
