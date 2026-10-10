@@ -7,7 +7,7 @@ import pandas as pd
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state, prep_options,
-    run_scenario, slip, holm
+    run_scenario, slip, holm, option_columns
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
@@ -85,3 +85,10 @@ def test_source_open_interest_column_is_normalized_without_imputation():
     out = prep_options(raw)
     assert out.iloc[0]["option_type"] == "CE"
     assert out.iloc[0]["oi"] == 1234
+
+
+def test_option_loader_requests_source_open_interest_alias():
+    cols = option_columns(["timestamp", "open", "close", "option_type", "strike", "volume", "open_interest"])
+    assert "open_interest" in cols
+    assert "oi" not in cols
+    assert option_columns(["timestamp", "open", "close", "option_type", "strike", "oi"])[-1] == "oi"
