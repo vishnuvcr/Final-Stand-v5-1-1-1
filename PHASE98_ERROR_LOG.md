@@ -34,3 +34,16 @@ New errors, invalid outputs, workflow failures and fixes are appended below with
 - In the same run, the always-run publishing step failed at git add because results/phase98_opening_range_spread did not exist when tests failed before the numerical step.
 - This prevented that workflow from persisting the failure to repository logs; it did not affect any numerical evidence because no replay ran.
 - Correction: result-directory staging is now conditional, so status and error logs can still be committed on pre-replay failures. This incident is separately logged rather than hidden.
+
+
+## E98-008 — Stale cost-function name in regression-test imports (2026-10-10)
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
+- After the repository import path was fixed, pytest failed at collection because the test imported fee_components, but the actual runner function is named fees.
+- The replay was skipped and no source data or strategy returns were produced.
+- Correction: remove the unused, stale fee_components test import. The executed fee schedule is exercised through run_scenario.
+
+## E98-009 — Follow-up attempt repeated test collection failure and log-publisher rebase conflict (2026-10-10)
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057380129
+- The same stale fee_components import still existed in the workflow's checked-out revision; numerical replay remained skipped.
+- The always-run publisher's local append conflicted with concurrently updated Phase 98 chat/error/research logs during git rebase. This happened while the logs were being updated directly through repository writes during the workflow; no numerical files were involved.
+- The test import is being corrected before the next run. No manual repository log edits should be made while the next run's publisher is active; let the workflow commit its audit checkpoint first.
