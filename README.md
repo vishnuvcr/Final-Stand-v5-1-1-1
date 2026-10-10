@@ -1389,3 +1389,12 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).
 - Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).
 - Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.
+
+
+## Phase 98 — NIFTY Opening-Range Debit Spread (2026-10-10)
+
+- A separate branch registered a fixed opening-range breakout debit-spread test and prior-only India VIX risk-filter comparator.
+- The first workflow [38057309811](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057309811) failed during test collection because the repository root was absent from the import path. The replay was skipped; no P&L evidence exists from the attempt.
+- A secondary logging defect caused the failure publisher to fail before an output folder existed. Both failures have been appended to the root and phase-specific error logs, and fixes are committed before rerun.
+- [Phase 98 plan](PHASE98_RESEARCH_PLAN.md) · [preregistration](PHASE98_PRE_REGISTRATION.md) · [status](PHASE98_STATUS.md) · [error log](PHASE98_ERROR_LOG.md) · [research log](PHASE98_RESEARCH_LOG.md) · [workflow](.github/workflows/phase98-opening-range-spread.yml).
+- Phase 83's 2026 holdout remains protected; no strategy promoted.
