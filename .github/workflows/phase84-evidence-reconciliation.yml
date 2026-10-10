@@ -13,6 +13,7 @@ on:
   pull_request:
     branches:
       - main
+      - phase-83-final-manuscript-closeout
     paths:
       - 'PHASE84_*.md'
       - 'results/phase84_evidence_reconciliation/**'
