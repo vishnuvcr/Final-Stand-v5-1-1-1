@@ -11,3 +11,14 @@
 - Evidence leads: official NIFTY 50 snapshot (as of 2026-02-27), NSE index/derivatives pages, and stock-specific stock-option pages. The public pages differ in their last data timestamp and do not, alone, demonstrate an adequate licensed historical sample.
 - No raw market data downloaded, no holdout opened, no strategy code run and no profitability claim made.
 - Next step: add registration manifest/validator/unit tests and a manual/branch-push Actions workflow; then run it to validate the registry.
+
+
+## 2026-10-11 — Dhan Data API integration
+
+- User explicitly requested use of the Dhan Data API access token for this new stock-options study.
+- Verified official Dhan documentation for historical rolling expired stock-options, the five-year lookback description, 30-day per-call limit, supported option fields, relative-strike limitations, and official instrument-master CSV.
+- Added secure GitHub Actions secret lookup via common secret-name aliases. Only the secret reference is in code; token values are not printed, committed or uploaded.
+- Added a bounded 10-probe sample: five stock underlyings x ATM monthly CALL/PUT over a common 30-day historical window. Instrument IDs are resolved from a fresh Dhan master download, not hardcoded.
+- Added derived-only audit outputs and automatic status/error logging on the research branch. Raw payloads remain ephemeral until applicable retention and republication rights are verified.
+- Local validation of the Python code and four focused unit tests passed before committing; Dhan network response is pending the GitHub Actions run.
+- No strategy rules, P&L, stock ranking by outcome or holdout use is part of this step.
