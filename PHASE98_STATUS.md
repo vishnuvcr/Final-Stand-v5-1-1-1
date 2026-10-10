@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-10  
 **Branch:** `phase-98-cci-options-paper-replication-gate`  
-**Status:** INITIAL TEST FAILED; assertion corrected; rerun pending  
+**Status:** DATA-BLOCKED — automated evidence gate completed  
 **Strategy promotion:** NONE
 
 ## Existing evidence
@@ -11,12 +11,10 @@
 - Phase 87–89 verified limited rolling ATM-relative fields but did not establish exact-contract bid/ask/depth or source-period execution coverage.
 
 ## Completed
-- Registered the bounded CCI evidence-gate protocol and explicit no-identical-rerun stop rule.
-
-## Pending
-- Re-run the corrected unit test and evidence gate.
-- Accept DATA_BLOCKED only after the gate completes and publishes outputs.
-- Do not access the 2026 holdout.
+- Corrected the test assertion and reran successfully in [Actions run 38072980317](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072980317).
+- Evidence gate published 8 evidence rows. It found no new qualified source that closes the original-period exact-contract/quote/fill gaps.
+- Decision: do not rerun the same CCI proxy; original method remains data-blocked and profitability is not estimable from zero completed trades.
+- No access to the 2026 holdout.
 
 ## Records
 - [Plan](PHASE98_RESEARCH_PLAN.md)
