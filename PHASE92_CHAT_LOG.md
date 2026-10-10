@@ -30,8 +30,8 @@ Because source candle timestamps are candle-start time and close-derived feature
 - Raw market responses/prices were not committed or uploaded. Phase 83's 2026 holdout was not requested.
 
 <!-- PHASE92_RUNTIME_START -->
-## Automated execution record — 38051802080
-- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051802080
+## Automated execution record — 38051908021
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051908021
 - Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample
 - VIX ID resolved dynamically: True
 - Options valid chunks=54/54; VIX valid chunks=5/5

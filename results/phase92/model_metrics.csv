@@ -1,11 +1,11 @@
 split,model,features,n,sessions,mae_bps,rmse_bps,r2
-VALIDATION,M0_spot_only,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos,3780,63,6.033720936314906,7.709913851150977,0.04251841309043425
-CONFIRMATORY_OOS,M0_spot_only,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos,3660,61,5.471948584193561,6.944397254337912,-0.02692770031195524
+VALIDATION,M0_spot_only,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos,3780,63,6.0337209363149045,7.709913851150977,0.04251841309043436
+CONFIRMATORY_OOS,M0_spot_only,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos,3660,61,5.47194858419356,6.944397254337911,-0.026927700311955016
 VALIDATION,M1_spot_plus_VIX,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15,3780,63,5.779132304387069,7.569996459288589,0.07695530014921503
-CONFIRMATORY_OOS,M1_spot_plus_VIX,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15,3660,61,4.798682629673769,6.610885555365061,0.06934217535194864
-VALIDATION,M2_spot_VIX_plus_IV,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean,3780,63,5.778823123306958,7.564292628484022,0.07834576508004287
+CONFIRMATORY_OOS,M1_spot_plus_VIX,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15,3660,61,4.798682629673769,6.610885555365062,0.06934217535194853
+VALIDATION,M2_spot_VIX_plus_IV,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean,3780,63,5.778823123306958,7.564292628484021,0.0783457650800431
 CONFIRMATORY_OOS,M2_spot_VIX_plus_IV,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean,3660,61,4.821400881190499,6.600307852359746,0.0723179783349649
 VALIDATION,M3_add_synthetic_forward_proxy,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean;synthetic_gap_bps,3780,63,5.7762765777717515,7.5691262319341375,0.07716750964791963
 CONFIRMATORY_OOS,M3_add_synthetic_forward_proxy,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean;synthetic_gap_bps,3660,61,4.879104522742629,6.620820987234008,0.06654272116143711
 VALIDATION,M4_add_synthetic_proxy_and_OI,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean;synthetic_gap_bps;oi_imbalance,3780,63,5.746622601549257,7.578313693191533,0.07492586824369174
-CONFIRMATORY_OOS,M4_add_synthetic_proxy_and_OI,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean;synthetic_gap_bps;oi_imbalance,3660,61,4.992237161775581,6.661498365387945,0.05503742967277114
+CONFIRMATORY_OOS,M4_add_synthetic_proxy_and_OI,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean;synthetic_gap_bps;oi_imbalance,3660,61,4.99223716177558,6.661498365387944,0.055037429672771365

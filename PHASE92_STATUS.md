@@ -2,7 +2,7 @@
 
 Date: 2026-10-10  
 Status: **NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample**  
-Latest workflow run: [38051802080](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051802080)  
+Latest workflow run: [38051908021](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051908021)  
 Strategy promotion: **NONE**.
 
 - [Research plan](PHASE92_RESEARCH_PLAN.md)
@@ -12,6 +12,11 @@ Strategy promotion: **NONE**.
 - [Phase branch workflow](.github/workflows/phase92-synthetic-forward-oi-2022.yml)
 - [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml)
 - [Detailed results](results/phase92/PHASE92_RESULTS.md)
+- [Research manuscript draft](results/phase92/MANUSCRIPT_DRAFT.md)
+- [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
+- [Cross-phase synthesis and stopping decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
+- [IV incremental effects figure](results/phase92/IV_INCREMENTAL_EFFECTS.svg)
+- [OOS MAE comparison figure](results/phase92/OOS_MAE_COMPARISON.svg)
 - [Summary JSON](results/phase92/summary.json)
 - [Coverage ledger](results/phase92/coverage.csv)
 - [Model metrics](results/phase92/model_metrics.csv)

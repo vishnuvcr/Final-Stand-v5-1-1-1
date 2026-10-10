@@ -1,8 +1,10 @@
 # Phase 92 Results — synthetic-forward proxy and CALL/PUT OI imbalance
 
-Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051802080  
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051908021  
 Status: **NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample**  
 Sample: calendar 2022 only. Phase 90/91 cached payloads are not reused. The protected Phase 83 2026 holdout was not requested or loaded.
+
+**Research package:** [manuscript draft](MANUSCRIPT_DRAFT.md) · [supplementary materials](SUPPLEMENTARY_MATERIALS.md) · [cross-phase synthesis](CROSS_PHASE_FACTOR_SYNTHESIS.md) · [IV incremental effects figure](IV_INCREMENTAL_EFFECTS.svg) · [OOS MAE comparison figure](OOS_MAE_COMPARISON.svg)
 
 ## Coverage and data-quality summary
 - Options chunks valid: 54/54.
@@ -38,6 +40,10 @@ Option IV, close-derived synthetic proxy and OI features are lagged one full fiv
 | CONFIRMATORY_OOS | M3_add_synthetic_forward_proxy | 3660 | 61 | 4.8791 | 6.6208 | 0.0665 |
 | VALIDATION | M4_add_synthetic_proxy_and_OI | 3780 | 63 | 5.7466 | 7.5783 | 0.0749 |
 | CONFIRMATORY_OOS | M4_add_synthetic_proxy_and_OI | 3660 | 61 | 4.9922 | 6.6615 | 0.0550 |
+
+**Figure 2.** Out-of-sample MAE comparison; lower is better.
+
+![Phase 92 OOS MAE comparison](OOS_MAE_COMPARISON.svg)
 
 ## Primary result
 M2 MAE − M4 MAE = -0.1708 bps (paired session-cluster bootstrap 95% CI -0.2299 to -0.1152; bootstrap positive share 0.0000; 5000 resamples; seed 90210).
