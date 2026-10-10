@@ -114,3 +114,13 @@ The workflow failed before a machine-readable result was written. No source/data
 - API probes returning rows: 1/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+<!-- DHAN_API_RUN_38089043087_ATTEMPT_1 -->
+## Dhan Data API audit — run 38089043087, attempt 1 — 2026-10-10T21:48:48.952462+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
