@@ -1,0 +1,38 @@
+name: Phase 79 — Final evidence sufficiency gate
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-79-final-evidence-sufficiency-gate]
+    paths:
+      - 'scripts/phase79_final_evidence_gate.py'
+      - '.github/workflows/phase79-final-evidence-gate.yml'
+permissions:
+  contents: write
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-79-final-evidence-sufficiency-gate
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthesize audited evidence
+        run: python scripts/phase79_final_evidence_gate.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase79-final-evidence-gate
+          path: results/phase79_final_evidence_gate/
+          if-no-files-found: error
+      - name: Persist report to research branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase79_final_evidence_gate/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Phase 79 final evidence sufficiency decision'
+            git pull --rebase origin phase-79-final-evidence-sufficiency-gate
+            git push origin HEAD:phase-79-final-evidence-sufficiency-gate
+          fi
