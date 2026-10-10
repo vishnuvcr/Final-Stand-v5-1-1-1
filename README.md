@@ -17,6 +17,7 @@
 
 - [Phase 92 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_CHAT_LOG.md)
 - [Draft PR #42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42) remains open/draft/unmerged. [Default-branch manual runner; automatic runs are triggered by Phase 92 plan/engine pushes](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml).
+- **Final manuscript QA:** corrected equation rendering and the references heading; this documentation-only correction is recorded in [commit cc764f9](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/cc764f98c17349fd4d8821495a39e5010521c592) and logged as E92-014. Research estimates and the no-strategy-promotion decision are unchanged.
 
 ## Preceding IV evidence: Phases 89–91
 
