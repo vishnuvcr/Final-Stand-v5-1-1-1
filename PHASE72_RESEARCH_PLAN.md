@@ -20,7 +20,7 @@ For each of the eight date/flag/side combinations, record:
 - required array lengths and mismatches versus timestamp count;
 - valid OHLC price rows, invalid/non-positive rows, and basic OHLC consistency counts where fields are available.
 
-## Gates
+## Official semantic clarification\nThe DhanHQ Annexure defines expiryCode 0=current/near expiry, 1=next expiry, 2=far expiry. Phase 71 used code 1 only, so its successful rows do not prove that the target strategy expiry was returned. See https://dhanhq.co/docs/v2/annexure/.\n\n## Gates
 1. A workflow pass means the audit ran, not that the data are accepted.
 2. A session is only coverage-eligible if timestamps and fields are aligned, session boundaries are understood, strike/expiry semantics are validated, and the needed strategy strikes are covered.
 3. The response uses rolling ATM-relative strikes; never infer full-chain coverage.
