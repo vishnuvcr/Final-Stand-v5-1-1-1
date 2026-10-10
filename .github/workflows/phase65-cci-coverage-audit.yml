@@ -1,0 +1,91 @@
+name: Phase 65 — CCI timestamp and contract coverage audit
+on:
+  push:
+    branches: [phase-65-cci-data-coverage-audit]
+    paths:
+      - ".github/workflows/phase65-cci-coverage-audit.yml"
+      - "research/phase65_cci_data_coverage_audit.py"
+      - "tests/test_phase65_coverage_audit.py"
+      - "requirements-phase65.txt"
+      - "PHASE65_RESEARCH_PLAN.md"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: phase65-cci-coverage-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-phase65.txt
+      - name: Restore pinned dataset cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: hf-phase65-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
+      - name: Install bounded dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-phase65.txt
+      - name: Syntax and unit tests
+        run: |
+          python -m py_compile research/phase65_cci_data_coverage_audit.py
+          python -m pytest -q tests/test_phase65_coverage_audit.py
+      - name: Run bounded coverage audit
+        run: python research/phase65_cci_data_coverage_audit.py
+      - name: Validate aggregate-only outputs
+        run: |
+          test -s results/phase65_cci_data_coverage_audit/aggregate_report.md
+          test -s results/phase65_cci_data_coverage_audit/aggregate_coverage.csv
+          test -s results/phase65_cci_data_coverage_audit/diagnostic.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/phase65_cci_data_coverage_audit/diagnostic.json")
+          d=json.loads(p.read_text())
+          assert d["holdout_2026_files_downloaded"] == 0
+          assert d["raw_data_published"] is False
+          assert d["event_count"] > 0
+          PY
+      - name: Publish derived aggregates and update phase log
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cat >> PHASE65_RESEARCH_LOG.md <<EOF
+
+          ## Automated diagnostic run — ${GITHUB_RUN_ID}
+          - Run commit: ${GITHUB_SHA}
+          - Aggregate-only timestamp/contract audit completed; raw market rows were not published.
+          - See `results/phase65_cci_data_coverage_audit/aggregate_report.md`.
+          EOF
+          cat > PHASE65_STATUS.md <<EOF
+          # Phase 65 status
+
+          **Status: COMPLETED — timestamp/contract diagnostic only.** Workflow run: ${GITHUB_RUN_ID}. No strategy P&L, parameter search, holdout use, or strategy promotion. Results: [aggregate report](results/phase65_cci_data_coverage_audit/aggregate_report.md). If exact observed-bar coverage remains inadequate, retain NO-GO.
+          EOF
+          git add results/phase65_cci_data_coverage_audit PHASE65_RESEARCH_LOG.md PHASE65_STATUS.md
+          git commit -m "Record Phase 65 timestamp coverage audit"
+          git push
+      - name: Record failure in phase error log
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          printf '\n## Workflow failure — run %s\n- Commit: %s\n- Inspect the failing step in GitHub Actions logs; no strategy promotion occurred.\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" >> PHASE65_ERROR_LOG.md
+          git add PHASE65_ERROR_LOG.md
+          git commit -m "Log Phase 65 workflow failure" || true
+          git push || true
