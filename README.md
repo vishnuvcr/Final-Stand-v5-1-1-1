@@ -29,6 +29,20 @@ Phase 90 had found a small positive incremental OOS prediction result: M1–M2 M
 
 The rolling-IV incremental-prediction line is now closed at its planned one-replication stop: one positive 2024 sample and one non-replicating 2023 sample. Reopen it only with a materially new hypothesis or improved execution-grade data, not by searching years until a positive result appears. Broader historical strategy replay remains source/coverage-gated; no fabricated fills, shortened OOS window or unverified source is accepted as executable evidence.
 
+
+
+## Current phase: Phase 92 synthetic-forward proxy + OI predictor study
+
+**Status: PREREGISTERED; GitHub Actions run is pending.** The finite 2022 study asks whether a lagged rolling-ATM synthetic-forward proxy gap and CALL/PUT OI imbalance add predictive value beyond spot features, India VIX and IV. It is explicitly **not** an actual futures-price/arbitrage test or a strategy P&L test.
+
+- [Phase 92 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_RESEARCH_PLAN.md)
+- [Phase 92 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_ERROR_LOG.md) · [auditable log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_CHAT_LOG.md)
+- [Analysis engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/research/phase92/synthetic_forward_oi_study.py) · [workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/.github/workflows/phase92-synthetic-forward-oi-2022.yml)
+- [Draft PR #42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42) · [Actions run 38050610192](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192)
+- [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml)
+
+All predictors derived from the rolling option/VIX candles are lagged one full five-minute row to guard against candle-start timestamps. Direct historical FUTIDX basis, Greeks, bid/ask/depth and cost-adjusted option execution remain outside this phase because the available rolling endpoint does not establish those inputs. Phase 60/61 source gates are not reopened; no strategy is promoted.
+
 <!-- CURRENT_RESEARCH_CHECKPOINT_END -->
 
 
