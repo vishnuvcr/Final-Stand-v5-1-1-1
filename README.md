@@ -1,3 +1,15 @@
+# Resume checkpoint — 2026-10-10 (Phase 79 current-revision recheck)
+
+Phase 79 rechecked the Hugging Face dataset HEAD through the configured secret in GitHub Actions. The API returned the same revision as Phase 76 (`0f4800e43e6f96cec0794369d78eb4d3c4211ef5`). The two named NIFTY files remain stale: 28 July file ends 2 July; 4 August file also ends 2 July. Both contain zero target-expiry-session rows and zero complete 375-bar target-day contracts. Decision: exclude both dates; do not infer coverage from filenames or expiry metadata. Raw Parquet files were not committed. Dataset card is CC-BY-NC-4.0, so commercial use is not cleared.
+
+- [Phase 79 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-hf-current-revision-recheck/PHASE79_RESEARCH_PLAN.md)
+- [Phase 79 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-hf-current-revision-recheck/PHASE79_STATUS.md)
+- [Phase 79 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-hf-current-revision-recheck/PHASE79_ERROR_LOG.md)
+- [Phase 79 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-79-hf-current-revision-recheck/results/phase79_hf_current_revision/report.md)
+- [Phase 79 workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38043349637)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 78 temporal stability)
 
 Phase 78 compared the frozen historical Phase 50B HOLD summaries with the short Phase 51-3 interval. TT-04 historical HOLD was -₹6,456.29 at base costs and -₹11,148.57 under +50% friction; TT-05 historical HOLD was -₹40,244.68 base and -₹49,605.30 under ₹20/order plus 50% friction. Both were positive in the April–July 2026 partial interval, but that sign disagreement is evidence of temporal instability—not proof of a newly durable edge. TT-04 and TT-05 are not promoted. The two missing expiries remain excluded.
