@@ -324,7 +324,6 @@ def bootstrap_delta(df,base_col,aug_col,seed=90210,nboot=5000):
         be=np.concatenate([np.abs(groups[i].target_abs15_bps.to_numpy()-groups[i][base_col].to_numpy()) for i in indexes])
         ae=np.concatenate([np.abs(groups[i].target_abs15_bps.to_numpy()-groups[i][aug_col].to_numpy()) for i in indexes])
         vals[k]=be.mean()-ae.mean()
-    observed=float(np.mean(np.abs(df.target_abs15_bps-df[base_col])-0)+0)  # replaced below with paired MAE expression
     observed=float(np.mean(np.abs(df.target_abs15_bps-df[base_col]))-np.mean(np.abs(df.target_abs15_bps-df[aug_col])))
     lo,hi=np.quantile(vals,[.025,.975])
     return {"delta_mae_bps":observed,"ci95_low":float(lo),"ci95_high":float(hi),
@@ -347,6 +346,13 @@ def publish(status,metrics_rows,primary,regime_rows,summary):
         primary_text="Not estimable: the VIX/data/model gate did not yield a valid matched comparison."
     else:
         primary_text=f"M1 MAE − M2 MAE = {fmt(primary['delta_mae_bps'])} bps (paired session-cluster bootstrap 95% CI {fmt(primary['ci95_low'])} to {fmt(primary['ci95_high'])}; bootstrap positive share {fmt(primary.get('positive_share'))}; {primary.get('replicates',0)} resamples)."
+    m1_oos=next((x for x in metrics_rows if x["split"]=="CONFIRMATORY_OOS" and x["model"]=="M1_spot_plus_VIX"),None)
+    m2_oos=next((x for x in metrics_rows if x["split"]=="CONFIRMATORY_OOS" and x["model"]=="M2_spot_VIX_plus_IV"),None)
+    if m1_oos and m2_oos and m1_oos.get("mae_bps"):
+        relative=100.0*(m1_oos["mae_bps"]-m2_oos["mae_bps"])/m1_oos["mae_bps"]
+        effect_context=(f"The OOS MAE falls from {fmt(m1_oos['mae_bps'])} to {fmt(m2_oos['mae_bps'])} bps, a {fmt(relative)}% relative reduction; RMSE falls by {fmt(m1_oos['rmse_bps']-m2_oos['rmse_bps'])} bps and R² moves from {fmt(m1_oos['r2'])} to {fmt(m2_oos['r2'])}. The lower confidence limit ({fmt(primary.get('ci95_low'))} bps) is very close to zero, so the gain is small and should be independently replicated before strategy use.")
+    else:
+        effect_context="Effect-size context is not estimable because matched OOS model metrics are missing."
     report=f"""# Phase 90 Results — incremental IV prediction beyond spot and India VIX
 
 Run: {RUN_URL}  
@@ -374,6 +380,9 @@ All model scaling and coefficients are fit on DEV only. Validation cannot tune t
 
 ## Preregistered primary endpoint
 {primary_text}
+
+## Effect size and caution
+{effect_context}
 
 Decision rule: only claim incremental predictive value if the sample and VIX gates pass and the 95% bootstrap interval for M1 MAE − M2 MAE is wholly above zero. Otherwise the registered test does not establish a gain; that is not proof IV has no information.
 
@@ -527,7 +536,7 @@ def main():
         if not vixgate: status="INCONCLUSIVE — India VIX security-ID/join coverage gate failed; no VIX-adjusted conclusion"
         elif not samplegate: status="INCONCLUSIVE — confirmatory sample gate failed; metrics descriptive only"
         elif primary.get("ci95_low") is not None and primary["ci95_low"]>0:
-            status="PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX"
+            status="PASS — small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence"
         else: status="NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero"
     summary.update({"phase":90,"run_url":RUN_URL,"status":status,
         "requested_period":["2024-01-01","2024-12-31_exclusive"],"holdout_2026_requested":False,
