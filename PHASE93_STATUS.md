@@ -1,7 +1,7 @@
 # Phase 93 Status — Uploaded Literature Audit
 
 **Date:** 2026-10-10  
-**Status:** IN PROGRESS — source extraction complete; critical synthesis and manuscript integration being recorded  
+**Status:** IN PROGRESS — literature audit drafted and manuscript integration completed; automated validation pending  
 **Branch:** phase-93-uploaded-literature-audit  
 **Strategy promotion:** NONE
 
@@ -30,8 +30,8 @@ The uploaded literature motivates diverse hypotheses, but it does not by itself 
 
 ## Gates
 
-- [ ] All 14 documents classified and bibliographic details recorded.
-- [ ] Manuscript references and relevant review paragraphs updated.
+- [x] All 14 documents classified and bibliographic details recorded.
+- [x] Manuscript references and relevant review paragraphs updated.
 - [ ] Automated literature coverage validator passes.
 - [ ] README links/status are updated and verified.
 - [ ] Pull request created as draft and left unmerged.
