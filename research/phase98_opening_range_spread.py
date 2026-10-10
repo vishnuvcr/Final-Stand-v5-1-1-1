@@ -357,7 +357,7 @@ def main():
     (OUT/"decision.json").write_text(json.dumps(decision,indent=2,allow_nan=False))
     no26=not any(str(x).startswith("2026") for x in tdf.get("date",pd.Series(dtype=str)).tolist())
     checks={"all_loaded_expiry_content_at_or_before_2025_12_31":all(pd.Timestamp(re.search(r"(\d{4}-\d{2}-\d{2})\.parquet$",f).group(1),tz=TZ)<=MAX_EXPIRY for f in EXPIRY_FILES_USED),"no_2026_result_rows":no26,"protected_holdout_loaded":False}
-    accepted_checks = all(checks.values()) and len(ISSUES) == 0 and len(EXPIRY_FILES_USED) > 0
+    accepted_checks = (checks["all_loaded_expiry_content_at_or_before_2025_12_31"] and checks["no_2026_result_rows"] and checks["protected_holdout_loaded"] is False and len(ISSUES) == 0 and len(EXPIRY_FILES_USED) > 0)
     vr={"status":"PASS" if accepted_checks else "BLOCKED_SOURCE_OR_COVERAGE_ERRORS","index_rows":len(idx),"index_sessions":len(groups),"expiry_files_seen_through_2025":len(expiries),"expiry_files_used":len(EXPIRY_FILES_USED),"signal_rows":len(tdf),"source_issues":ISSUES,"skip_reason_counts":dict(skips),"checks":checks}
     (OUT/"validation_report.json").write_text(json.dumps(vr,indent=2,allow_nan=False))
     def money(x):return "NA" if pd.isna(x) else f"₹{x:,.2f}"
