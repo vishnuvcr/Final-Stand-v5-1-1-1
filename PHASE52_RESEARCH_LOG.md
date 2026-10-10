@@ -587,3 +587,12 @@ Inspection of the committed historical-pilot report found a provenance inconsist
 - Exact source diagnosis found 60 unique prior-minute contract-time keys with one row each and source-recorded OI=0, referenced by 220 blocked leg records. These remain blocked under the fixed OI>=100 rule; no evidence justifies loosening it.
 - Phase 56 modeled P&L sensitivity generated 18,960 price-reference cost scenarios on the canonical Phase 55 ledger. Five configuration-threshold pairs passed the severe-cost screen only at the 1000% diagnostic threshold; not a deployable portfolio or a strategy recommendation.
 - Main README contains accepted reports and links. Phase 52 factor-selector research remains open and no strategy is promoted. Await independent Phase57 source-replay reproduction before deciding whether any quote-validation leads merit further work.
+
+## 2026-10-10 — Cross-phase evidence gate and bounded stop
+
+- Phase 55 run [37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572) passed the family-appropriate selected-leg invariant for all 480 rows.
+- Phase 54 run [38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487) consumed the synchronized canonical ledger (SHA-256 `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`) and reconciled all 11 preregistered thresholds to 480 rows.
+- Coverage counts at thresholds 2/3/4/5/6/8/10/12/15/20/1000% were 1/1/8/24/55/91/150/227/298/345/380. This is eligibility coverage only; the OHLC range proxy is not bid/ask spread, and no Phase 54 P&L was computed.
+- Phase 56/57 completed a finite cost-model sensitivity and independent reproduction. The matching modeled scenarios validate reproducibility, not execution quality or strategy profitability.
+- Phase 60/61 both conclude NO-GO for further empirical factor-conditioned testing: zero source leads accepted for sample validation. Repeating source discovery without new rights/sample evidence would violate the finite stopping rule.
+- Decision: preserve frozen strategy/event/cost/holdout rules and pause empirical efficacy work until written data-use authorization or a genuinely new source with an exact target sample and schema is documented. No strategy promoted.
