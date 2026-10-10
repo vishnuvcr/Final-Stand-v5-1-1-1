@@ -213,9 +213,8 @@ def main():
     hv=valh[valh["friction_ticks"]==1].sort_values("mean_expiry_cluster")
     fig,ax=plt.subplots(figsize=(10,6))
     y=np.arange(len(hv))
-    ax.errorbar(hv["mean_expiry_cluster"],y,
-                xerr=np.vstack([hv["mean_expiry_cluster"]-hv["ci95_lo"],hv["ci95_hi"]-hv["mean_expiry_cluster"]]),
-                fmt="o",capsize=3)
+    ax.hlines(y, hv["ci95_lo"], hv["ci95_hi"])
+    ax.plot(hv["mean_expiry_cluster"], y, "o")
     ax.axvline(0,linestyle="--")
     ax.set_yticks(y); ax.set_yticklabels(hv["variant"])
     ax.set_xlabel("Overnight minus intraday net P&L (₹ / expiry-cluster average)")
