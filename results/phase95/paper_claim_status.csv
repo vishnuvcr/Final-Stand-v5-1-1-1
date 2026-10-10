@@ -1,0 +1,13 @@
+paper_id,source_claim_or_method,phase95_observation,reproduction_status
+U01,Five regressors vs LSTM on 12 Indian stocks; SMAPE/RMSE/R2,"Common NIFTY screen only; source universe, exact dates/split and source inputs not matched.",PARTIAL_COMMON_SCREEN_ONLY
+U02,RF/XGBoost/LSTM options signals and reported trading metrics,"No source options feature matrix, exact signals or executable options P&L in Phase 95.",DATA_GATE_PENDING
+U03,SVM/RBF/MLP/SLP with USD/INR and FII gross buy/sell,Price-only approximation; exogenous data and source split configurations not matched.,PARTIAL_COMMON_SCREEN_ONLY
+U04,5/10/20-year daily NIFTY model comparisons,Windows/families tested on common 2025 test; source ablations/tuning/protocol need matching.,PARTIAL_COMMON_SCREEN_ONLY
+U06,"LSTM+BERT with news, FII/DII, India VIX and PCR",Historical external modalities not used; full multimodal method untested.,DATA_GATE_PENDING
+U08,LSTM NIFTY forecast; source-reported 83.88% accuracy,Common one-step 2025 test differs from source sample and metric; claim not recreated.,PARTIAL_COMMON_SCREEN_ONLY
+U09,RNN/LSTM/GRU/CNN/TCN and hybrids on source Kaggle data,Yahoo price-only data; source options/OI features and optimizer sweep not reproduced.,PARTIAL_COMMON_SCREEN_ONLY
+U11,RNN/LSTM/CNN forecast comparison,Common-data family screen only; source settings/data/split need matching.,PARTIAL_COMMON_SCREEN_ONLY
+U12,MLP/backprop next-day OHLC; source-reported 99.2152% accuracy,Approximation only; source turnover feature and scaled metric not reproduced.,PARTIAL_COMMON_SCREEN_ONLY
+U13,"LSTM/backward-elimination LSTM, RSI14 and longer horizon",Common one-step price-only variant; source horizon/features/protocol not reproduced.,PARTIAL_COMMON_SCREEN_ONLY
+U05/U07,Source-described options payoff structures,Reserved for Phase 99 source extraction and eligible-contract replay with all-in costs.,QUEUED_PHASE_99
+U10/U14,Remaining methods in the 14-paper corpus,"Queued in the registered Phase 96–100 sequence, outside Phase 95 runner.",QUEUED_LATER_PHASE
