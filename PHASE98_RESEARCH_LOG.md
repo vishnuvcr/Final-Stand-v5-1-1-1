@@ -13,3 +13,10 @@
 ## Run 38057371871 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057371871
 - Result status: FAILED_BEFORE_NUMERICAL_RUN. Economic status: NOT_EVALUATED.
 - Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.
+
+
+## 2026-10-10 — First workflow failure and remediation
+- Actions run 38057309811 failed at pytest collection because the repository root was not on sys.path. The strategy replay was skipped; this produced no market-data or performance evidence.
+- The workflow's always-run log publisher also failed because it staged a results directory that did not yet exist.
+- Corrected the test import path and made result-directory staging conditional.
+- The first failure and logging defect are explicitly retained in PHASE98_ERROR_LOG.md. Re-run regression tests before any source-pinned replay.
