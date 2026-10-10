@@ -33,7 +33,7 @@ def main():
     )
     append_once(ROOT/"PHASE103_RESEARCH_LOG.md",marker,f"<!-- {marker} -->\n"+summary)
     append_once(ROOT/"PHASE103_STATUS.md",marker,f"<!-- {marker} -->\n### Latest Dhan API data gate\n\n"+summary)
-    if status!="PASS_API_DATA_RETURNED_FOR_ALL_10_PROBES":
+    if status!="PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES":
         error=(f"### E103-DHAN-{RUN} — Dhan API access/data gate did not fully pass\n"
           f"**Type:** runtime/access/data-availability gate.\n"
           f"**Status:** {status}; rows returned by {returned}/{len(probes)} probes.\n"
