@@ -18,6 +18,8 @@ Scope: summarize rolling-ATM NIFTY option-factor predictive studies from Phases 
 
 ## Phase 92 model comparison
 
+[Figure 1 — OOS MAE comparison](OOS_MAE_COMPARISON.svg)
+
 The registered feature block is a lagged rolling-ATM proxy only: (F_{syn}=K+C-P), with its spot-normalized gap, plus previous-bar ((OI_{CE}-OI_{PE})/(OI_{CE}+OI_{PE})). Dhan candle-close-derived features and VIX are lagged by a full five-minute row.
 
 | OOS model | MAE (bps) | RMSE (bps) | R² |
