@@ -1,0 +1,35 @@
+name: Phase 97 Risk-Adjusted Selection
+on:
+  push:
+    branches:
+      - phase-97-risk-adjusted-regime-selection
+    paths:
+      - research/phase97/run_risk_adjusted.py
+      - PHASE97_RESEARCH_PLAN.md
+      - results/phase45_ready_made/strategy_vix_summary.csv
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-97-risk-adjusted-regime-selection
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python research/phase97/run_risk_adjusted.py
+      - name: Publish results
+        if: always()
+        run: |
+          if [ -f results/phase97/validation_report.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add results/phase97/risk_adjusted_results.csv results/phase97/validation_report.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Publish Phase 97 risk-adjusted results"
+              git push origin HEAD:phase-97-risk-adjusted-regime-selection
+            fi
+          fi
