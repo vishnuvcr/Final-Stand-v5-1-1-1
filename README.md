@@ -18,9 +18,9 @@
 
 ---
 
-## Phase 52 resumed — next gates (2026-10-10)
+## Phase 52 resumed — current gate (updated 2026-10-10)
 
-OpenChart investigation is closed at the user's request; its source audit remains in the branch history and no further requests are planned. Research resumes on the frozen Phase 52 pilot: repair checkpoint persistence, then decompose the 480 status rows (379 OHLC-range exclusions, 100 leg-eligibility blocks, one execution) and trace dominant exclusions to exact source rows/contracts/timestamps. Do not treat exclusions as losses or relax filters to increase trade count. No strategy is promoted and holdout remains untouched.
+OpenChart investigation remains closed at the user's request. Phase 52 persistence and leg-evidence repairs are complete; Phase 55 audited all 480 selected-leg payloads, and Phase 54 recomputed all 11 preregistered coverage thresholds against the canonical ledger. The remaining blocker is source sufficiency, not a runner defect: Phase 60 and Phase 61 returned NO-GO, with zero accepted sources for exact-sample validation. Do not repeat the same source search, treat exclusions as losses, or relax filters. Empirical factor-conditioned profitability testing remains paused until documented data-use rights and an exact target-date/contract sample are available. No strategy is promoted and holdout remains untouched.
 
 - [Phase 52 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_RESEARCH_PLAN.md)
 - [Phase 52 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md)
