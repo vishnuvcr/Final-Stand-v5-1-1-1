@@ -108,12 +108,13 @@
       "frequency_minutes": 1,
       "strike": "ATM",
       "expiry_flag": "MONTH",
-      "expiry_code": 0,
+      "expiry_code": 1,
       "option_types": [
         "CALL",
         "PUT"
       ],
-      "probes_expected": 10
+      "probes_expected": 10,
+      "expiry_code_label": "Next Expiry"
     },
     "fields": [
       "open",
@@ -133,6 +134,7 @@
       "Raw retention/republication rights not yet verified",
       "Raw payloads are not committed or uploaded; derived aggregate audit only"
     ],
-    "next_gate": "Verify actual Actions API run; then audit coverage and fixed-contract reconstructability before strategy P&L."
+    "next_gate": "Verify actual Actions API run; then audit coverage and fixed-contract reconstructability before strategy P&L.",
+    "note": "Initial expiryCode=0 was rejected by the API with DH-905 'expiryCode is required' for all 10 probes, despite the annexure describing 0 as current/near expiry. Retry uses expiryCode=1, the sample request value and documented Next Expiry, and will be audited separately."
   }
 }
