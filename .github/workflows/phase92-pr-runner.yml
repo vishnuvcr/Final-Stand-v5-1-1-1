@@ -1,16 +1,6 @@
 name: Phase 92 — automatic PR runner for synthetic-forward/OI study
 
 on:
-  pull_request:
-    branches:
-      - phase-91-iv-temporal-replication-2023
-    types:
-      - opened
-      - reopened
-    paths:
-      - "PHASE92_RESEARCH_PLAN.md"
-      - "research/phase92/**"
-      - ".github/workflows/phase92-synthetic-forward-oi-2022.yml"
   workflow_dispatch:
 
 permissions:
