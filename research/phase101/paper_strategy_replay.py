@@ -150,11 +150,9 @@ def _first_weekday(period, weekday):
     return day + pd.Timedelta(days=(weekday-day.weekday()) % 7)
 
 def _u05_entry_dates(period):
-    """Forecast on the first calendar Wednesday; enter only on a later Thursday."""
+    """Return the source-specified first Wednesday and first Thursday without shifting either."""
     wed = _first_weekday(period, 2).normalize()
     thu = _first_weekday(period, 3).normalize()
-    while thu <= wed:
-        thu += pd.Timedelta(days=7)
     return wed, thu
 
 def _day_bars(index, date):
@@ -198,6 +196,10 @@ def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
         period = pd.Period(m, "M"); wed, thu = _u05_entry_dates(period)
         base = {"paper_id":"U05","month":m,"expiry":str(expiry.date()),"source_file":filename,
                 "wednesday_date":str(wed.date()),"thursday_date":str(thu.date())}
+        if thu <= wed:
+            audit.append(_audit_row(base,"EXCLUDED_ENTRY_PRECEDES_FORECAST",
+                "The paper specifies first-Thursday entry, but that date precedes the first-Wednesday forecast; no second-Thursday substitution or look-ahead is allowed"))
+            continue
         periods = [str(pd.Period(year=period.year-k, month=period.month, freq="M")) for k in (1,2,3)]
         prior = [month_returns.get(x,np.nan) for x in periods]
         if not np.isfinite(prior).all():
@@ -295,7 +297,7 @@ def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
                                             "exit_ts":str(result["exit_ts"]),"exit_reason":result["exit_reason"]})
         del chain
     met=net_trade_metrics([x["net_10_per_order"] for x in trades])
-    summary={"paper_id":"U05","strategy":"three-year same-month return; first Wednesday forecast; first later Thursday option",
+    summary={"paper_id":"U05","strategy":"three-year same-month return; first Wednesday forecast; source first-Thursday option, with pre-forecast dates excluded",
              "initial_account_equity":float(CAPITAL_U05),"ending_account_equity":float(equity),
              "account_return_pct":100.0*(equity/CAPITAL_U05-1.0),
              "max_account_drawdown_rupees":float(max_account_drawdown),
@@ -588,7 +590,7 @@ def _write_report(matrix,u05,u02_metrics,u02_summaries,model_status,info,manifes
     f"- Last underlying timestamp used: {manifest.get('underlying_last_timestamp_used')}; latest selected expiry: {manifest.get('maximum_option_expiry_selected')}.",
     f"- Yahoo daily history for monthly-return calculation: {manifest.get('yahoo_daily_start')} through {manifest.get('yahoo_daily_end')} ({manifest.get('yahoo_daily_rows')} observations).","",
     "## 3. U05 — monthly seasonality options rule",
-    "Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The first calendar Wednesday supplies the forecast; entry is on the first calendar Thursday strictly after that Wednesday to prevent look-ahead. No holiday substitution is made. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level at the first 09:15–09:20 opening-window minute with matching underlying and option bars; only contemporaneous OI/volume can break ties.",
+    "Source wording uses an ambiguous expression equivalent to opening price plus average return. This run uses Wednesday open × (1 + the mean of the preceding three annual returns for the same calendar month). The source specifies the first calendar Wednesday forecast and first calendar Thursday entry. When that first Thursday falls before Wednesday, the month is excluded rather than moving the trade to a second Thursday; no look-ahead or rule change is allowed. Positive mean selects CE and negative mean selects PE. Entry strike is closest to the expected index level at the first 09:15–09:20 opening-window minute with matching underlying and option bars; only contemporaneous OI/volume can break ties.",
     "The test uses the paper’s ₹3,00,000 initial capital, deploying no more than 90% of current equity per monthly trade; equity is carried forward and 10% is held as a safety reserve. Target is a 20% premium gain and a 30% premium stop that activates on the third subsequent trading session. If target and stop are both crossed inside one minute, stop is prioritized. Trigger exits require the exact next-minute bar; absent a target/stop, exit uses an observed penultimate-session bar before expiry.","",
     f"- Months audited: {u05.get('evaluation_months')}; completed trades: {u05.get('completed_trades')}; status: {u05.get('status')}.",
     f"- Initial/ending account equity: ₹{_fmt(u05.get('initial_account_equity'))} / ₹{_fmt(u05.get('ending_account_equity'))}; account return: {_fmt(u05.get('account_return_pct'))}%; max account drawdown: ₹{_fmt(u05.get('max_account_drawdown_rupees'))}.",
