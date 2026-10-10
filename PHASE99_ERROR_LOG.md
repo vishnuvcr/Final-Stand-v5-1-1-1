@@ -8,3 +8,5 @@
 
 ## Runtime errors
 - None recorded at phase start. Record every test or workflow defect and its fix here.
+
+- 2026-10-10: Phase 99 workflow [38073059250](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073059250) passed. The payoff calculator is analytical only; no market-data or cost model was run. U07 put-butterfly source inconsistency is explicitly logged.
