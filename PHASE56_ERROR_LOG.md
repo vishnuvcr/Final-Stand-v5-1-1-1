@@ -30,3 +30,14 @@ No Phase 56 execution errors recorded at initialization.
 - Report accepted: False; report present: False
 - No result or strategy conclusion accepted.
 - Status: OPEN.
+
+
+## F56-VALIDATION-002 — Normalized prior-bar wording still rejected — FIXED, VERIFICATION RUN TRIGGERED
+
+- Failing verification run: [38019102367](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019102367).
+- Symptom: two unit tests still failed at the canonical OI reason check after the first validator correction.
+- Root cause: converting hyphens to spaces changes “prior-bar OI” into “prior bar OI”; the updated check accepted “prior OI” and “prior open interest” but omitted “prior bar OI”.
+- Correction: explicitly accept the normalized phrases “prior OI”, “prior bar OI” and “prior open interest”, including the canonical underscore form after normalization.
+- Scientific impact: tests failed before the P&L analysis; no outputs accepted.
+- Verification: a new automatic workflow run is triggered by this correction. Full regression suite and all report invariants must pass.
+- Status: FIX APPLIED; awaiting verification.
