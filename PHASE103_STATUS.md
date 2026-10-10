@@ -61,3 +61,7 @@ Run 38088253613 failed before a machine-readable result was written; inspect its
 <!-- DHAN_API_RUN_38088262635 -->
 ### Dhan audit did not produce output
 Run 38088262635 failed before a machine-readable result was written; inspect its Actions log. No API success or strategy result is claimed.
+
+ 
+## Failed preflight runs — resolved code defect, Dhan still untested
+Runs [38088253613](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613) and [38088262635](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635) stopped at the unit-test step because a source-rights validator assertion was too literal. The validator is corrected and additional response-summary tests were committed to trigger a clean retry. **Neither run queried Dhan; no data access conclusion can be drawn from them.**
