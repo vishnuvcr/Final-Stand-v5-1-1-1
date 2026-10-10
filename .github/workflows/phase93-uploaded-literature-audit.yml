@@ -39,18 +39,34 @@ jobs:
         id: validate
         run: python research/phase93/validate_literature_audit.py
 
-      - name: Publish validation report
+      - name: Publish validation report (race-safe)
         if: always()
+        env:
+          PHASE_BRANCH: ${{ github.ref_name }}
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+actions-bot@users.noreply.github.com"
-          git add results/phase93/validation_report.json
-          if ! git diff --cached --quiet; then
+          # Multiple audited-document commits may trigger close together. Rebase
+          # is avoided because competing timestamped JSON reports can conflict;
+          # instead, refresh to the latest branch and regenerate the report.
+          for attempt in 1 2 3; do
+            git fetch origin "${PHASE_BRANCH}"
+            git reset --hard "origin/${PHASE_BRANCH}"
+            python research/phase93/validate_literature_audit.py || true
+            git add results/phase93/validation_report.json
+            if git diff --cached --quiet; then
+              echo "Validation report already current."
+              exit 0
+            fi
             git commit -m "Phase 93: publish uploaded-literature audit validation"
-            git push origin "HEAD:${{ github.ref_name }}"
-          else
-            echo "No validation report changes to publish."
-          fi
+            if git push origin "HEAD:${PHASE_BRANCH}"; then
+              exit 0
+            fi
+            echo "Branch advanced during publication; retrying (attempt ${attempt}/3)."
+          done
+          echo "Unable to publish validation report after three attempts."
+          exit 1
 
       - name: Mark audit failure after publishing diagnostics
         if: always() && steps.validate.outcome == 'failure'
