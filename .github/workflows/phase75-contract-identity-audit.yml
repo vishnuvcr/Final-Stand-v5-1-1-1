@@ -1,0 +1,24 @@
+name: Phase 75 — Contract identity audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-75-expiry-contract-identity]
+    paths:
+      - 'scripts/phase75_contract_identity_audit.py'
+      - '.github/workflows/phase75-contract-identity-audit.yml'
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bounded audit
+        run: python scripts/phase75_contract_identity_audit.py
+      - name: Publish report as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase75-contract-identity-report
+          path: results/phase75_contract_identity/
+          if-no-files-found: error
