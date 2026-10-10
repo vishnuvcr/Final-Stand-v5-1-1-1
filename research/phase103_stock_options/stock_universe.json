@@ -1,0 +1,90 @@
+{
+  "phase": "103.0",
+  "as_of_date": "2026-10-11",
+  "status": "selected_pending_registration_validation",
+  "selection_note": "Initial five-stock research basket. Selected from the official NIFTY 50 constituent weight snapshot dated 2026-02-27, cross-checked for stock-option contract discovery/activity. This is not claimed to be a synchronized top-five average-option-volume ranking; comparable common-window liquidity audit is mandatory before strategy testing.",
+  "freeze_policy": {
+    "parent_ref": "main",
+    "prior_phase_artifacts_mutated": false,
+    "nifty_index_options_results_reused_as_stock_options_evidence": false,
+    "protected_2026_index_options_holdout_accessed": false
+  },
+  "official_sources": {
+    "nifty50_snapshot": "https://niftyindices.com/docs/default-source/indices/nifty-50/nifty-50-whitepaper_2026.pdf",
+    "nifty50_page_and_constituent_download": "https://www.nseindia.in/static/products-services/indices-nifty50-index",
+    "nse_equity_derivatives_underlyings": "https://www.nseindia.com/static/products-services/equity-derivatives-list-underlyings-information",
+    "nse_option_chain": "https://www.nseindia.com/option-chain"
+  },
+  "stocks": [
+    {
+      "priority": 1,
+      "symbol": "HDFCBANK",
+      "company": "HDFC Bank Ltd.",
+      "sector": "Financial Services",
+      "nifty50_weight_pct": 11.83,
+      "weight_snapshot_date": "2026-02-27",
+      "snapshot_rank": 1,
+      "selection_rationale": "Highest-weight constituent in the cited official snapshot; publicly discoverable listed stock-option calls and puts.",
+      "option_discovery_url": "https://www.moneycontrol.com/india/fnoquote/hdfcbank/HDF01/2026-10-27/OPTSTK/CE/860.00/true"
+    },
+    {
+      "priority": 2,
+      "symbol": "ICICIBANK",
+      "company": "ICICI Bank Ltd.",
+      "sector": "Financial Services",
+      "nifty50_weight_pct": 8.58,
+      "weight_snapshot_date": "2026-02-27",
+      "snapshot_rank": 2,
+      "selection_rationale": "Second-highest weight in the cited official snapshot; NSE stock-options page shows multiple listed calls and puts.",
+      "option_discovery_url": "https://www.nseindia.com/get-quote/derivatives/ICICIBANK/ICICI-Bank-Limited"
+    },
+    {
+      "priority": 3,
+      "symbol": "RELIANCE",
+      "company": "Reliance Industries Ltd.",
+      "sector": "Oil, Gas & Consumable Fuels",
+      "nifty50_weight_pct": 8.20,
+      "weight_snapshot_date": "2026-02-27",
+      "snapshot_rank": 3,
+      "selection_rationale": "Third-highest weight in the cited official snapshot; NSE stock-derivatives page exposes stock-option calls/puts and contract information.",
+      "option_discovery_url": "https://www.nseindia.com/get-quote/derivatives/RELIANCE/Reliance-Industries-Limited"
+    },
+    {
+      "priority": 4,
+      "symbol": "SBIN",
+      "company": "State Bank of India",
+      "sector": "Financial Services",
+      "nifty50_weight_pct": 4.34,
+      "weight_snapshot_date": "2026-02-27",
+      "snapshot_rank": 6,
+      "selection_rationale": "Sixth by weight in the cited official snapshot; NSE page shows listed stock-option calls and puts with recent expiry contract activity.",
+      "option_discovery_url": "https://www.nseindia.com/get-quote/derivatives/SBIN/State-Bank-of-India"
+    },
+    {
+      "priority": 5,
+      "symbol": "INFY",
+      "company": "Infosys Ltd.",
+      "sector": "Information Technology",
+      "nifty50_weight_pct": 3.97,
+      "weight_snapshot_date": "2026-02-27",
+      "snapshot_rank": 7,
+      "selection_rationale": "Seventh by weight in the cited official snapshot; public stock-options quote reports active listed calls and puts.",
+      "option_discovery_url": "https://www.moneycontrol.com/india/fnoquote/infosys/IT/2026-10-27/OPTSTK/CE/1040.00/true"
+    }
+  ],
+  "phase_103_1_required_common_window_metrics": [
+    "eligible underlying sessions and exact option-contract sessions",
+    "option premium turnover and contract volume by expiry/strike/right",
+    "open interest and change in open interest (preserving missing versus true zero)",
+    "bid-ask spread, spread as a fraction of mid-price and quote depth where licensed",
+    "active-strike and expiry coverage, stale/crossed quote diagnostics",
+    "missingness, file provenance, licence/retention/caching/derived-publication permissions",
+    "date-effective contract multiplier/lot size, expiry calendar and corporate actions"
+  ],
+  "not_started": [
+    "historical strategy backtests",
+    "profitability ranking",
+    "Paytm Money contract-note reconciliation",
+    "independent stock-options holdout test"
+  ]
+}
