@@ -41,3 +41,12 @@ No Phase 56 execution errors recorded at initialization.
 - Scientific impact: tests failed before the P&L analysis; no outputs accepted.
 - Verification: a new automatic workflow run is triggered by this correction. Full regression suite and all report invariants must pass.
 - Status: FIX APPLIED; awaiting verification.
+
+
+## F56-VALIDATION-001 / F56-VALIDATION-002 — RESOLVED
+
+- Corrected the reason validator to normalize underscores/hyphens and accept “prior OI”, “prior bar OI” and “prior open interest” wording while retaining the explicit OI<100 hard-block invariant.
+- Verification: [run 38019146547](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019146547) passed syntax validation, all five regression tests, deterministic self-test, complete matrix generation, output invariant validation, artifact upload and checkpoint persistence.
+- Accepted outputs: 480-row parent reconciliation, 11 threshold counts matching Phase 54, 18,960 cost-scenario rows, and all monotonic cost invariants PASS.
+- Scientific impact of prior failed runs: no result was accepted from them; the failures occurred before P&L output. No strategy conclusion was changed by the repair.
+- Status: RESOLVED; Phase 56 closed as non-executable price-reference sensitivity.
