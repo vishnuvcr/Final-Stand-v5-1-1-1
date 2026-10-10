@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 from research.phase103.novel_intraday_strategies import (
     adverse_fill, block_bootstrap, charges, compression_setup, find_failed_break_signal,
-    find_orb_signal, first_complete_open, opening_range, prior_vix_low,
+    find_orb_signal, first_complete_open, opening_range, prior_vix_low, source_coverage_stats,
 )
 
 class Phase103StrategyUnitTests(unittest.TestCase):
@@ -67,6 +67,18 @@ class Phase103StrategyUnitTests(unittest.TestCase):
         self.assertEqual(result[0], t2)
         self.assertEqual(result[1][("CE", 100.0)], 2.5)
         self.assertIsNone(first_complete_open(t0, t1, [t0, t1], snapshots, legs))
+
+    def test_feature_coverage_is_bounded_by_sample_sessions_and_strictly_lagged(self):
+        frame = pd.DataFrame({
+            "date": pd.to_datetime(["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"]),
+            "ret": [0.1, 0.2, float("nan"), 0.4],
+        })
+        sessions = pd.to_datetime(["2024-01-02", "2024-01-03", "2024-01-04"])
+        stats = source_coverage_stats(frame, list(sessions), ["ret"])
+        self.assertEqual(stats["sample_sessions"], 3)
+        self.assertEqual(stats["covered_sessions"], 2)
+        self.assertAlmostEqual(stats["coverage_pct"], 200.0 / 3.0)
+        self.assertLessEqual(stats["coverage_pct"], 100.0)
 
     def test_bootstrap_does_not_infer_from_tiny_sample(self):
         result = block_bootstrap([1.0, -1.0, 2.0], seed=10)

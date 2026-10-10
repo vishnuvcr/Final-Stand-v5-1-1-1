@@ -305,20 +305,53 @@ def daily_feature_map(global_daily,vix,day):
             "prior_vix_level":float(level) if np.isfinite(level) else None,
             "prior_vix_threshold_75":float(threshold) if np.isfinite(threshold) else None}
 
+def source_coverage_stats(frame,session_days,required_cols,max_age_days=7):
+    sample_days=[pd.Timestamp(d).tz_localize(None).normalize() for d in session_days
+                 if pd.Timestamp("2024-01-01")<=pd.Timestamp(d).tz_localize(None).normalize()<=pd.Timestamp("2025-12-31")]
+    if frame.empty:
+        return {"available":False,"source_rows_in_period":0,"covered_sessions":0,
+                "sample_sessions":len(sample_days),"coverage_pct":0.0,
+                "required_columns":list(required_cols),"columns":[]}
+    p=frame[(frame.date>=pd.Timestamp("2024-01-01"))&(frame.date<=pd.Timestamp("2025-12-31"))]
+    numeric=[c for c in p.columns if c!="date" and pd.api.types.is_numeric_dtype(p[c])]
+    missing=[c for c in required_cols if c not in frame.columns]
+    covered=0
+    if not missing:
+        for day in sample_days:
+            row=previous_row(frame,day)
+            if row is None:
+                continue
+            age=(pd.Timestamp(day)-pd.Timestamp(row["date"])).days
+            if age<0 or age>int(max_age_days):
+                continue
+            good=True
+            for col in required_cols:
+                try:
+                    v=float(row[col])
+                    if not np.isfinite(v):
+                        good=False
+                        break
+                except (TypeError,ValueError):
+                    good=False
+                    break
+            if good:
+                covered+=1
+    return {"available":True,"source_rows_in_period":int(len(p)),"covered_sessions":int(covered),
+            "sample_sessions":int(len(sample_days)),
+            "coverage_pct":float(100*covered/max(len(sample_days),1)),
+            "required_columns":list(required_cols),"missing_required_columns":missing,
+            "max_source_age_days":int(max_age_days),"columns":numeric}
+
 def build_feature_audit(root,session_days,global_daily,flow_daily,sent_daily,vix):
-    def stats(frame):
-        if frame.empty:return {"available":False,"rows":0,"covered_days":0,"coverage_pct":0.0,"columns":[]}
-        p=frame[(frame.date>=pd.Timestamp("2024-01-01"))&(frame.date<=pd.Timestamp("2025-12-31"))]
-        numeric=[c for c in p.columns if c!="date" and pd.api.types.is_numeric_dtype(p[c])]
-        n=int(p[numeric].notna().any(axis=1).sum()) if numeric else 0
-        return {"available":True,"rows":len(p),"covered_days":n,"coverage_pct":100*n/max(len(session_days),1),"columns":numeric}
     return {"option_source":{"repo_id":HF_REPO,"revision":PINNED_REVISION,"license":"CC-BY-NC-4.0"},
       "trade_window":"2024-01-01 through 2025-12-31","session_days":len(session_days),
-      "prior_session_global_daily":stats(global_daily),"prior_publication_fii_dii":stats(flow_daily),
-      "prior_publication_news_sentiment":stats(sent_daily),
+      "prior_session_global_daily":source_coverage_stats(global_daily,session_days,ASSET_RETURNS),
+      "prior_publication_fii_dii":source_coverage_stats(flow_daily,session_days,["fii_net","dii_net"]),
+      "prior_publication_news_sentiment":source_coverage_stats(sent_daily,session_days,["sent_mean"]),
+      "india_vix_previous_session":source_coverage_stats(vix,session_days,["close"]),
       "india_vix_rows_2024_2025":int(((vix.date>=pd.Timestamp("2024-01-01"))&(vix.date<=pd.Timestamp("2025-12-31"))).sum()),
       "excluded_modalities":["FII/DII and sentiment were audited but not used in triggers because the existing validation feature manifest shows major FII/DII missingness and point-in-time sentiment timestamps are not independently qualified.",
-       "No option Greeks, futures basis, historical bid/ask/depth, or single-stock corporate actions are fabricated." ]}
+       "No option Greeks, futures basis, historical bid/ask/depth, or single-stock corporate actions are fabricated."]}
 
 def execute_candidate(strategy,day,bars,snapshots,signal,meta,expiry,lot):
     sig_ts=pd.Timestamp(signal["signal_ts"])
@@ -555,6 +588,13 @@ def _write_report(summary,result,audit):
       "## 2025 validation results","",display.to_string(index=False),"",
       "All results are fixed-one-lot rupee P&L sums, not compounded account returns. The decision statistic is mean net rupees per eligible session, including zero outcomes on sessions with no signal. A missing exit leaves that session non-estimable and disables inference rather than fabricating a price.","",
       "## Development results","",summary[summary.split=="development"].to_string(index=False),"",
+      "## Literature context (reviewed after rule preregistration; no rules changed)","",
+      "Tsai et al. (2019, IEEE Access) tested timely opening-range breakout on one-minute index-futures data across DJIA, S&P 500, NASDAQ, HSI and TAIEX for 2003–2013 and reported positive results in that sample. This is adjacent futures evidence, not proof for NIFTY options. Source: https://doi.org/10.1109/ACCESS.2019.2899177.",
+      "A September 2026 SSRN preprint by Fetna tests 225 opening-range breakout configurations on nine U.S. futures markets and reports that zero met its preregistered cost-and-stability hurdle. It is a preprint, not India-specific, and should not be treated as a direct replication. Source: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7428398.",
+      "Perz's SPX 0DTE iron-condor paper reports two variants profitable over an approximately 12-month sample, while Pillai's 2026 NIFTY volatility-risk-premium preprint reports negative net annualized returns for four short-volatility strategies after costs and highlights tail risk. The findings differ in underlying, data, fills and risk controls; neither substitutes for this replay. Sources: https://doi.org/10.5171/2024.4452224 and https://papers.ssrn.com/sol3/Delivery.cfm/6876580.pdf?abstractid=6876580&mirid=1&type=2.",
+      "Indian index-option pricing and box-spread studies report that transaction costs reduce the proportion of apparent option mispricings that can be exploited. Sources: https://doi.org/10.1177/0971890714558709 and https://doi.org/10.1002/fut.20376.",
+      "Paytm Money's public F&O FAQ states ₹10 per executed unique order, while its published blog documents account-cohort differences. NSE's STT table reports 0.10% on option-sale premium through 31 March 2026 and 0.15% from 1 April 2026; our sample ends in 2025. These public schedules do not confirm the user's own historical contract notes. Sources: https://www.paytmmoney.com/stocks/customer/fno-faq/trading/order-placement/what-is-overnight-order-type, https://www.paytmmoney.com/blog/brokerage-charges-increase-from-25th-aug-23-existing-users-will-continue-on-old-brokerage-charges/, https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax.",
+      "These sources provide external context only; they were reviewed after the strategy rules were frozen and did not change parameters. We do not claim the rule combinations are unprecedented worldwide.","",
       "## Coverage and execution audit","",
       f"- Signals: {result['signal_attempts']}; completed trades: {result['completed_trade_rows']}; blocked exits: {result['blocked_exit_rows']}.",
       f"- Option file load failures: {result['source_load_error_rows']}; eligible sessions: {result['sessions_with_eligible_expiry']}.",
