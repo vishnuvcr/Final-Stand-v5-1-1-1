@@ -3,6 +3,7 @@
 import argparse, csv, hashlib, io, json, os, time, urllib.error, urllib.request
 from datetime import date, datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 MASTER = "https://images.dhan.co/api-data/api-scrip-master.csv"
 ENDPOINT = "https://api.dhan.co/v2/charts/rollingoption"
@@ -101,11 +102,12 @@ def query(token, security_id, option_type, start, end):
     except (UnicodeDecodeError,json.JSONDecodeError):
         return code, None, {}
 
-def summarize(symbol, option_type, code, obj, safe_error=None):
+def summarize(symbol, option_type, code, obj, safe_error=None, start=None, end=None):
     side = "ce" if option_type=="CALL" else "pe"
     x={"symbol":symbol,"requested_option_type":option_type,"http_status":code,
        "status":"NO_RESPONSE","rows":0,"array_lengths_consistent":False,
        "nonempty_fields":{},"first_timestamp_utc":None,"last_timestamp_utc":None,
+       "timestamp_counts_by_ist_date":{},"outside_requested_date_window_rows":None,
        "api_error_code":(safe_error or {}).get("api_error_code"),
        "api_error_message":(safe_error or {}).get("api_error_message")}
     if obj is None:
@@ -124,10 +126,26 @@ def summarize(symbol, option_type, code, obj, safe_error=None):
     ts=block.get("timestamp") if isinstance(block.get("timestamp"),list) else []
     x["rows"]=len(ts); x["array_lengths_consistent"]=bool(lens) and len(set(lens))==1
     if ts:
-        try:
-            x["first_timestamp_utc"]=datetime.fromtimestamp(int(ts[0]),timezone.utc).isoformat()
-            x["last_timestamp_utc"]=datetime.fromtimestamp(int(ts[-1]),timezone.utc).isoformat()
-        except (ValueError,TypeError,OverflowError,OSError): pass
+        local_dates=[]
+        outside=0
+        start_day=date.fromisoformat(start) if start else None
+        end_day=date.fromisoformat(end) if end else None
+        for stamp in ts:
+            try:
+                dt_utc=datetime.fromtimestamp(int(stamp),timezone.utc)
+                dt_local=dt_utc.astimezone(ZoneInfo("Asia/Kolkata"))
+                local_dates.append(dt_local.date().isoformat())
+                if start_day and end_day and not (start_day <= dt_local.date() < end_day):
+                    outside += 1
+            except (ValueError,TypeError,OverflowError,OSError):
+                continue
+        x["first_timestamp_utc"]=datetime.fromtimestamp(int(ts[0]),timezone.utc).isoformat()
+        x["last_timestamp_utc"]=datetime.fromtimestamp(int(ts[-1]),timezone.utc).isoformat()
+        by_date={}
+        for d in local_dates:
+            by_date[d]=by_date.get(d,0)+1
+        x["timestamp_counts_by_ist_date"]=by_date
+        x["outside_requested_date_window_rows"]=outside if start_day and end_day else None
     if ts and x["nonempty_fields"].get("close",0): x["status"]="DATA_RETURNED"
     elif str(obj.get("status","")).lower()=="success": x["status"]="SUCCESS_EMPTY_FOR_REQUESTED_SIDE"
     return x
@@ -152,7 +170,7 @@ def main():
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
         "known_limits":["Rolling strikes can change actual strike over time.",
           "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
-          "A single 30-day probe does not establish full-history completeness or independent test sufficiency."],
+          "One stock/side probe does not establish full-history completeness or independent test sufficiency.", "Returned timestamps are audited in Asia/Kolkata against the documented half-open request window; out-of-window rows block accepting the sample."],
         "status":"PENDING"}
     try:
         master=get_bytes(MASTER)
@@ -176,7 +194,7 @@ def main():
                         result["probes"].append({"symbol":sym,"requested_option_type":side,"status":"BLOCKED_UNDERLYING_ID"})
                         continue
                     code,obj,safe_error=query(token,m["security_id"],side,a.from_date,a.to_date)
-                    result["probes"].append(summarize(sym,side,code,obj,safe_error))
+                    result["probes"].append(summarize(sym,side,code,obj,safe_error,a.from_date,a.to_date))
                     time.sleep(1.1)
                 if len(result["probes"]) >= a.max_probes:
                     break
@@ -196,8 +214,8 @@ def main():
       f"**Probe limit:** {a.max_probes}",
       f"**Run:** {result['run_id']}","",
       "This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.",
-      "","| Symbol | Side | HTTP | Status | Rows | Arrays consistent | First UTC | Last UTC |",
-      "|---|---|---:|---|---:|---|---|---|"]
+      "","| Symbol | Side | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | First UTC | Last UTC | IST-date row counts | Rows outside requested dates |",
+      "|---|---|---:|---|---|---|---:|---|---|---|---|---:|"]
     for v in result.get("probes",[]):
         lines.append("| {symbol} | {side} | {http} | {status} | {code} | {message} | {rows} | {consistent} | {first} | {last} |".format(
           symbol=v.get("symbol",""),side=v.get("requested_option_type",""),http=v.get("http_status",""),
@@ -205,6 +223,10 @@ def main():
           message=(v.get("api_error_message") or "").replace("|","/"),
           rows=v.get("rows",0),consistent=v.get("array_lengths_consistent",False),
           first=v.get("first_timestamp_utc") or "",last=v.get("last_timestamp_utc") or ""))
+        # Check that provider data matches its documented half-open [fromDate, toDate) window.
+        lines[-1] = lines[-1][:-1] + " | {} | {} |".format(
+          json.dumps(v.get("timestamp_counts_by_ist_date",{}),sort_keys=True),
+          v.get("outside_requested_date_window_rows") if v.get("outside_requested_date_window_rows") is not None else "n/a")
     lines += ["","## Underlying ID mapping","","| Symbol | ID resolved | Status |","|---|---|---|"]
     for sym,m in result.get("underlying_map",{}).items():
         lines.append("| {} | {} | {} |".format(sym,"yes" if m.get("security_id") else "no",m.get("status")))
