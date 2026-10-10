@@ -12,6 +12,18 @@
 The results are proxy tests, not exact original-period replications. Paytm Money contract-note costs are not verified; 2026 options remain excluded. No profitable strategy is established.
 <!-- PHASE101_AUDIT_END -->
 
+<!-- PHASE102_AUDIT_START -->
+# Phase 102 — Final evidence-based strategy ranking
+
+**Status: COMPLETE.** Final validation run [38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704) passed 14/14 evidence invariants and 2/2 unit tests. **No strategy is approved for live trading.**
+
+- [Phase 102 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-102-final-strategy-ranking)
+- [Consolidated report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/results/phase102/PHASE102_REPORT.md) · [strategy scorecard](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/results/phase102/strategy_evidence_scorecard.csv) · [validation JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/results/phase102/validation.json)
+- [Plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/PHASE102_ERROR_LOG.md) · [workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-102-final-strategy-ranking/.github/workflows/phase102-final-strategy-ranking.yml)
+
+**Finding:** TT-03 dynamic-N V5 is only the first candidate for an independent validation because the costed baseline stays positive under registered stress scenarios. Its HOLD split has only three trades, so this is not confirmation. TT-04/TT-05 conflict with negative historical HOLD results; U02/U05 tested proxies are negative; Phase 83's registered defined-risk variants all failed their candidate gate. New numerical validation requires authorized exact-contract data, enough independent expiries/events and realistic execution assumptions including Paytm Money charges, spread, slippage and latency.
+<!-- PHASE102_AUDIT_END -->
+
 ## Phase 101 — PDF strategy replication gap-fill OPEN (2026-10-10)
 
 User-authorized bounded follow-up to Phase 100's finite stop. Phase 100 remains complete and its conclusions are unchanged. Phase 101 is registered on an isolated branch to test U02 (RF/XGBoost/LSTM Buy/Sell options proxy) and U05 (monthly seasonality options proxy), reconcile all 14 PDFs, and report every blocked/excluded event. It reuses the pinned 2021–2025 options dataset only; the 2026 options holdout remains sealed. **No strategy is promoted; runtime numerical output is pending verification.**
