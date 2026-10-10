@@ -38,7 +38,8 @@ jobs:
           ids = [r["registry_id"] for r in rows]
           assert len(ids) == len(set(ids)), "duplicate registry_id"
           assert {f"U{i:02}" for i in range(1,15)}.issubset({r["paper_id"] for r in rows}), "some paper IDs missing"
-          assert all(all(r.get(k, "").strip() for k in required) for r in rows), "blank required cell"
+          assert all(all(str(r.get(k) or "").strip() for k in required) for r in rows), "blank required cell"
+          assert all(len(row) == len(reader.fieldnames or []) for row in rows), "CSV row width mismatch"
           assert md_path.exists() and plan_path.exists() and status_path.exists()
           plan = plan_path.read_text(encoding="utf-8")
           assert all(f"phase-{n}-" in plan for n in range(95,101)), "downstream phase missing from plan"
