@@ -1,0 +1,71 @@
+name: Phase 58 — Quote/depth source feasibility
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/phase58/**"
+      - ".github/workflows/phase-58-quote-source-feasibility-audit.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase-58-quote-source-feasibility-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-58-quote-source-feasibility-audit
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate registry and run tests
+        run: |
+          cd research/phase58
+          python -m unittest -v test_source_registry.py
+          cd ../..
+          python research/phase58/validate_source_registry.py
+      - name: Upload source audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase58-source-feasibility-${{ github.run_id }}
+          path: results/phase58/quote_source_feasibility/**
+          if-no-files-found: warn
+      - name: Persist phase checkpoint
+        if: always()
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id=os.environ["RUN_ID"]
+          url=os.environ["RUN_URL"]
+          status=os.environ["JOB_STATUS"]
+          p=Path("results/phase58/quote_source_feasibility/report.json")
+          report=json.loads(p.read_text()) if p.exists() else {"status":"NO_REPORT","decision":"NO_CONCLUSION"}
+          line=(f"\n## Run {run_id}\n\n- Run: [{run_id}]({url}); job status={status}; report={report.get('status','NO_REPORT')}.\n"
+                f"- Sources audited={report.get('source_count','n/a')}; eligible automated quote sources={report.get('sources_eligible_for_automated_replay','n/a')}.\n"
+                f"- Decision={report.get('decision','NO_CONCLUSION')}; no purchase or scraping against terms.\n")
+          for name in ["PHASE58_STATUS.md","PHASE58_RESEARCH_LOG.md","PHASE58_CHAT_LOG.md"]:
+              with Path(name).open("a") as f: f.write(line)
+          if status!="success" or report.get("status")!="SOURCE_FEASIBILITY_PASS_NO_GO_FOR_FREE_AUTOMATED_QUOTES":
+              with Path("PHASE58_ERROR_LOG.md").open("a") as f:
+                  f.write(f"\n## F58-RUN-{run_id} — validation failed or registry decision changed\n\n- Run: {url}\n- Job status={status}; report={report.get('status','NO_REPORT')}.\n- No source is accepted until full history, exact timestamps, automation permission and license are verified.\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE58_STATUS.md PHASE58_RESEARCH_LOG.md PHASE58_CHAT_LOG.md PHASE58_ERROR_LOG.md results/phase58/quote_source_feasibility
+          git diff --cached --quiet || git commit -m "Record Phase58 source feasibility checkpoint"
+          git push origin HEAD:phase-58-quote-source-feasibility-audit
