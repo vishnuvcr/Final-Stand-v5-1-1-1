@@ -1,8 +1,15 @@
 name: Phase 92 — synthetic-forward proxy and OI study (2022)
 
-# Automatic PR execution is handled by the Phase 91-base runner.
-# This workflow remains the Phase 92 manual-dispatch entry point.
+# Automatic runs occur only for preregistered plan/engine/workflow changes.
+# Result/status/log commits are outside the trigger paths, preventing rerun loops.
 on:
+  push:
+    branches:
+      - phase-92-synthetic-forward-oi-study-2022
+    paths:
+      - "PHASE92_RESEARCH_PLAN.md"
+      - "research/phase92/**"
+      - ".github/workflows/phase92-synthetic-forward-oi-2022.yml"
   workflow_dispatch:
 
 permissions:
@@ -50,7 +57,7 @@ jobs:
         if: always()
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+actions-bot@users.noreply.github.com"
           git add PHASE92_STATUS.md PHASE92_ERROR_LOG.md PHASE92_CHAT_LOG.md README.md
           git add -f results/phase92/coverage.csv results/phase92/model_metrics.csv results/phase92/vix_regime_metrics.csv results/phase92/summary.json results/phase92/PHASE92_RESULTS.md 2>/dev/null || true
           if ! git diff --cached --quiet; then
