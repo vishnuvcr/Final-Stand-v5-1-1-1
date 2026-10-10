@@ -1441,3 +1441,12 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).
 - Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).
 - Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.
+
+
+## Phase 98 — NIFTY opening-range debit spread
+
+- Latest status: **PASS**; economic status: **NO_PROMOTION**.
+- Latest run: [38058351337](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058351337).
+- Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).
+- Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).
+- Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.
