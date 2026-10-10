@@ -1,0 +1,29 @@
+name: Phase 77 — Partial-OOS inference audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-77-partial-oos-inference-audit]
+    paths:
+      - 'scripts/phase77_partial_oos_inference.py'
+      - 'results/phase51/available_oos/**'
+      - '.github/workflows/phase77-partial-oos-inference.yml'
+permissions:
+  contents: read
+jobs:
+  inference-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check numpy pandas
+      - name: Run reconciliation and cluster bootstrap
+        run: python scripts/phase77_partial_oos_inference.py
+      - name: Upload aggregate results
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase77-partial-oos-inference
+          path: results/phase77_partial_oos_inference/
+          if-no-files-found: error
