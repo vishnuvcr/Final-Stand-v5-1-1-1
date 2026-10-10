@@ -1,3 +1,30 @@
+<!-- CURRENT_RESEARCH_CHECKPOINT_START -->
+# Final Stand v5 1-1-1 — Current Research Checkpoint (2026-10-10)
+
+## Latest completed predictive study: Phase 90
+
+**Finding: a small incremental out-of-sample prediction gain, not trading-strategy evidence.** On the independent 2024 sample, adding rolling ATM-relative mean CALL/PUT IV to a frozen lagged-spot + India VIX model reduced absolute next-15-minute NIFTY spot-move prediction MAE by **0.0330 bps** (paired session-cluster bootstrap 95% CI **0.0001 to 0.0562 bps**; 3,604 OOS rows over 60 sessions). The effect is marginal, with its lower confidence limit close to zero; it needs independent replication. No options strategy was promoted and no strategy P&L was inferred.
+
+- [Phase 90 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_ERROR_LOG.md) · [results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/PHASE90_RESULTS.md) · [summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/summary.json) · [Actions run 38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674)
+
+## Current phase: Phase 91 temporal replication on 2023 data
+
+Phase 91 is preregistered on a separate branch to test the same model family on a distinct year: DEV Jan–Jun 2023, reporting-only validation Jul–Sep, confirmatory OOS Oct–Dec. The sample is bounded to 2023-01-01 inclusive through 2024-01-01 exclusive; it has its own cache namespace, single primary endpoint and fixed-seed session-cluster bootstrap.
+
+**Execution status: NOT YET VERIFIED.** At the latest repository check, the Phase 91 aggregate results and summary JSON were absent and no Actions run ID/checks were surfaced for the head commit. This is a workflow-execution blocker—not a negative or positive statistical finding. Do not infer that IV either did or did not replicate until the actual run, coverage and sample gates are verified.
+
+- [Phase 91 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_CHAT_LOG.md) · [engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/research/phase91/iv_incremental_study.py) · [branch workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/.github/workflows/phase91-iv-temporal-replication-2023.yml)
+- [Phase 91 draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41) · [parent-branch PR runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/.github/workflows/phase91-pr-runner.yml)
+
+## Strategy and data-quality gate
+
+**No strategy is approved for live deployment.** Rolling ATM-relative IV/spot data predicts spot-move magnitude only; it does not establish directional skill, causal effect, exact listed-contract premium fills, historical bid/ask/depth, or cost-adjusted options P&L. Any future strategy replay must use authorized exact-contract data and include Paytm Money brokerage, statutory charges, spread, slippage, latency and stress costs. The protected Phase 83 2026 holdout remains sealed.
+
+The broader historical options replay is still source/coverage-gated: no fabricated or imputed fills, shortened OOS window, or unverified free-data source is accepted as executable strategy evidence.
+
+<!-- CURRENT_RESEARCH_CHECKPOINT_END -->
+
+
 ## Phase 67 — latest completed diagnostic (2026-10-10)
 
 **Decision: insufficient evidence for rule-faithful replay; no strategy promotion.** [Actions run 38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) passed end-to-end. Among 30 frozen DEV/VAL trigger rows, 8 had an exact trigger-minute observation, 5 an exact next-minute observation, and 8 had ±2-minute context. Context bars are not fills; ITM/side/expiry mapping and execution-grade quote/depth remain unproven. No P&L or profitability inference is justified.
