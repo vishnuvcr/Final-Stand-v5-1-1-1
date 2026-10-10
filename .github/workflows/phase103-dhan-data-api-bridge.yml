@@ -20,6 +20,8 @@ on:
 
 # Bounded first sample only; later retrieval windows must be registered and audited.
 
+# Diagnostic retry: report allow-listed Dhan API error codes only; never persist raw error bodies or credentials.
+
 concurrency:
   group: phase103-dhan-data-api-audit
   cancel-in-progress: true
