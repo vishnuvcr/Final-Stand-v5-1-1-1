@@ -32,5 +32,6 @@ jobs:
             echo "No report changes to commit."
           else
             git commit -m "Record Phase 71 DhanHQ pilot outcome"
+            git pull --rebase origin "$GITHUB_REF_NAME"
             git push
           fi
