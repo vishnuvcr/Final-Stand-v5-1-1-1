@@ -4,11 +4,14 @@ on:
     branches: [phase-100-cross-paper-reproducibility-synthesis]
     paths:
       - 'research/phase100/**'
-      - 'PHASE100_*.md'
       - '.github/workflows/phase100-cross-paper-reproducibility-synthesis.yml'
   workflow_dispatch:
 permissions:
   contents: write
+
+concurrency:
+  group: phase100-synthesis
+  cancel-in-progress: false
 jobs:
   synthesis:
     runs-on: ubuntu-latest
