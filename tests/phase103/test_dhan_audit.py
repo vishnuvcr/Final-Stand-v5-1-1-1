@@ -4,9 +4,12 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"research"/"phase103_stock_options"))
-from dhan_data_audit import check_window, map_underlyings, safe_error_details, summarize
+from dhan_data_audit import EXPIRY_CODE, check_window, map_underlyings, safe_error_details, summarize
 
 class DhanDataAuditTests(unittest.TestCase):
+    def test_next_expiry_value_matches_dhan_request_sample(self):
+        self.assertEqual(EXPIRY_CODE, 1)
+
     def test_window_maximum_is_30_days(self):
         self.assertEqual(check_window("2026-08-02","2026-09-01"),30)
         with self.assertRaises(ValueError):
