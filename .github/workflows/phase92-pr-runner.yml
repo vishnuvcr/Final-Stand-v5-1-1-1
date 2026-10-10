@@ -1,13 +1,6 @@
 name: Phase 92 — automated synthetic-forward/OI predictor study
 
 on:
-  push:
-    branches:
-      - phase-92-synthetic-forward-oi-study-2022
-    paths:
-      - "PHASE92_RESEARCH_PLAN.md"
-      - "research/phase92/**"
-      - ".github/workflows/phase92-synthetic-forward-oi-2022.yml"
   workflow_dispatch:
 
 permissions:
@@ -19,7 +12,7 @@ concurrency:
 
 jobs:
   predictor-study:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
