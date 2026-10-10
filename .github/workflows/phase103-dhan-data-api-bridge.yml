@@ -14,10 +14,15 @@ on:
         default: "2026-08-04"
         type: string
       max_probes:
-        description: "Maximum underlying/side API probes (1–10); start with one"
+        description: "Maximum symbol/side/relative-strike API probes (1–70)"
         required: true
-        default: 1
+        default: 70
         type: number
+      strikes:
+        description: "Dhan relative strike offsets to audit"
+        required: true
+        default: "ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3"
+        type: string
   push:
     branches: [main]
     paths:
@@ -44,12 +49,15 @@ jobs:
       DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_API_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_DATA_API_TOKEN }}
       PHASE103_FROM_DATE: ${{ inputs.from_date || '2026-08-03' }}
       PHASE103_TO_DATE: ${{ inputs.to_date || '2026-08-04' }}
-      PHASE103_MAX_PROBES: ${{ inputs.max_probes || 1 }}
+      PHASE103_MAX_PROBES: ${{ inputs.max_probes || 70 }}
+      PHASE103_STRIKES: ${{ inputs.strikes || 'ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3' }}
     steps:
       - name: Check out the isolated Phase 103 branch
         uses: actions/checkout@v4
         with:
           ref: phase-103-nifty50-stock-options
+      - name: Remove stale prior-run audit outputs
+        run: rm -f results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -57,7 +65,7 @@ jobs:
       - name: Run Phase 103 tests
         run: python -m unittest discover -s tests/phase103 -p "test_*.py" -v
       - name: Query Dhan instrument master and bounded expired-options data
-        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE" --max-probes "$PHASE103_MAX_PROBES"
+        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE" --max-probes "$PHASE103_MAX_PROBES" --strikes "$PHASE103_STRIKES"
       - name: Record data status and limitations
         if: always()
         run: |
