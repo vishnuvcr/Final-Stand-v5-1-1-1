@@ -9,7 +9,7 @@ OUT = ROOT / "results/phase95"
 EXPECTED_SOURCE_SHA = "4208da2e1189a68af697e11d03dd7d4ac937ddf7"
 
 def git_blob_sha(data: bytes) -> str:
-    return hashlib.sha1(f"blob {len(data)}\\0".encode() + data).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(data)).encode() + bytes([0]) + data).hexdigest()
 
 def main():
     if not SOURCE.exists():
@@ -91,7 +91,7 @@ def main():
         "interpretation": "PASS means the preregistered computation ran; profitability outcome is reported separately. This retrospective, previously explored source is not an independent blinded test."
     }
     # Regression checks prevent silent changes to the frozen input/result interpretation.
-    if len(eligible) != 22 or selected["strategy"] != "call_backspread" or selected["val_net50"] >= 0:
+    if len(eligible) != 23 or selected["strategy"] != "call_backspread" or selected["val_net50"] >= 0:
         raise SystemExit("Frozen expected result changed; investigate source/version before interpreting.")
     (OUT / "validation_report.json").write_text(json.dumps(report, indent=2) + "\\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
