@@ -52,3 +52,13 @@ New errors, invalid outputs, workflow failures and fixes are appended below with
 ## Automated execution issue — Run 38057516991 — tests=failure; replay=skipped; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057516991
 - Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.
 - Runner detail: See workflow logs and validation_report.json.
+
+
+## E98-010 — Source-pinned replay falsely passed with zero option chains (2026-10-10)
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258
+- The workflow's tests, runner, and artifact checks exited successfully, but the persisted report shows 0 option expiry files loaded, 0 completed trades, and 1,126 option-chain load errors. The result is not performance evidence and the economic hypothesis is NOT ESTIMABLE.
+- Root cause from the recorded errors: PyArrow compared a Parquet timestamp column declared as timestamp[ns, tz=+05:30] with filter bounds serialized as timestamp[s, tz=Asia/Kolkata]; the timezone identifiers differ, so all filtered chain reads failed with ArrowNotImplementedError.
+- The data schema also names open interest open_interest, while the first runner only requested oi. This has not created valid OI observations and must be mapped explicitly for diagnostics; missing OI must never be imputed as zero.
+- The published technical status PASS is too permissive because the workflow did not reject source-load exceptions. It is corrected to a source/data blocker for this run.
+- Resolution: construct PyArrow filter scalars using the exact timestamp type from the Parquet schema, map open_interest to the internal OI field only when present, add regression tests for timezone-typed filtering/schema aliases, and make source-read exceptions fail the result audit. Strategy rules, split dates, thresholds, and cost scenarios remain unchanged.
+- No 2026 data/holdout was loaded; no strategy or parameter was promoted.
