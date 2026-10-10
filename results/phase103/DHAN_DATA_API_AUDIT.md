@@ -2,7 +2,7 @@
 
 **Status:** REQUEST_SCHEMA_OR_PARAMETER_ERROR
 **Window:** 2026-08-02 inclusive to 2026-09-01 exclusive (30 days)
-**Run:** 38088499642
+**Run:** 38088524054
 
 This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.
 
