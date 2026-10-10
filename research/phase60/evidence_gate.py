@@ -126,6 +126,7 @@ def evaluate() -> dict:
     ]
     (OUT / "report.md").write_text("\n".join(lines), encoding="utf-8")
     print(json.dumps({"status":gate["status"],"source_count":len(sources),"oi_sources":oi,"quote_depth_sources":quotes,"output":str(OUT)},indent=2))
+    return gate
 
 
 if __name__ == "__main__":
