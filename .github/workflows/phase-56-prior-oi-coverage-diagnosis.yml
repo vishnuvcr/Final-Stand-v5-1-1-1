@@ -1,0 +1,81 @@
+name: Phase 56 — Prior-minute OI coverage diagnosis
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/phase56/**"
+      - "PHASE56_*.md"
+      - "results/phase52/historical_pilot/event_replay.csv"
+      - ".github/workflows/phase-56-prior-oi-coverage-diagnosis.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase-56-prior-oi-coverage-diagnosis
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-56-prior-oi-coverage-diagnosis
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install bounded diagnostic dependencies
+        run: python -m pip install --disable-pip-version-check pandas pyarrow huggingface_hub
+      - name: Regression tests
+        run: |
+          cd research/phase56
+          python -m unittest -v test_oi_coverage_diagnostic.py
+      - name: Run exact source-row diagnosis
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase56/oi_coverage_diagnostic.py
+      - name: Upload diagnosis artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase56-prior-oi-diagnosis-${{ github.run_id }}
+          path: |
+            results/phase56/prior_oi_coverage/**
+          if-no-files-found: warn
+      - name: Persist results and phase checkpoint
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id=os.environ["RUN_ID"]
+          run_url=os.environ["RUN_URL"]
+          status=os.environ["JOB_STATUS"]
+          p=Path("results/phase56/prior_oi_coverage/report.json")
+          report=json.loads(p.read_text()) if p.exists() else {"status":"NO_REPORT","error_type":"workflow_step_failed"}
+          line=(f"\n## Run {run_id}\n\n- Run: [{run_id}]({run_url}); job status={status}; diagnostic={report.get('status','NO_REPORT')}.\n"
+                f"- Blocked rows={report.get('blocked_configuration_event_rows','n/a')}; blocked leg references={report.get('blocked_leg_references','n/a')}; unique exact keys={report.get('unique_contract_timestamp_keys','n/a')}.\n"
+                f"- Classification counts={json.dumps(report.get('source_classification_counts',{}),sort_keys=True)}.\n"
+                "- Fixed OI >= 100 gate unchanged; no P&L, holdout use or strategy promotion.\n")
+          for name in ["PHASE56_STATUS.md","PHASE56_RESEARCH_LOG.md","PHASE56_CHAT_LOG.md"]:
+              path=Path(name)
+              with path.open("a") as f: f.write(line)
+          if status != "success" or report.get("status") != "PASS_SOURCE_ROW_DIAGNOSIS":
+              with Path("PHASE56_ERROR_LOG.md").open("a") as f:
+                  f.write(f"\n## F56-RUN-{run_id} — source diagnosis did not pass\n\n- Run: {run_url}\n- Job status={status}; report status={report.get('status','NO_REPORT')}; error={report.get('error_type','none')}: {report.get('error','not available')}\n- No output is accepted as a source-row conclusion.\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE56_STATUS.md PHASE56_RESEARCH_LOG.md PHASE56_CHAT_LOG.md PHASE56_ERROR_LOG.md results/phase56/prior_oi_coverage
+          git diff --cached --quiet || git commit -m "Record Phase56 prior OI source diagnosis checkpoint"
+          git push origin HEAD:phase-56-prior-oi-coverage-diagnosis
