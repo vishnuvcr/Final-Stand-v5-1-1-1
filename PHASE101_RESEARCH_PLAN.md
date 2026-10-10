@@ -22,7 +22,7 @@ After reconciling all 14 uploaded PDFs against Phases 95–100, can the remainin
 
 ## Source-faithful limits (must remain explicit)
 
-- U05 describes an expected-price formula dimensionally ambiguously (“opening price + average return”). This phase will operationalize it as Wednesday open × (1 + mean of the previous three returns for the same calendar month). The signal is therefore a transparent proxy, not a perfect transcription. Source selection between CE and PE is inferred from the sign of the expected move; this inference will be disclosed.
+- U05 describes an expected-price formula dimensionally ambiguously (“opening price + average return”). This phase will operationalize it as Wednesday open × (1 + mean of the previous three returns for the same calendar month). The signal is therefore a transparent proxy, not a perfect transcription. The first Thursday must be strictly after the forecast Wednesday; no entry is allowed before the forecast is observable. Source selection between CE and PE is inferred from the sign of the expected move; this inference will be disclosed.
 - U05 says “highest liquidity” but gives no numerical liquidity cutoff. Strike-distance to expected price is the primary ranking; available entry-time OI/volume breaks ties. No future-session liquidity is allowed.
 - The available options archive begins in 2021 and ends in 2025, not the U05 source period. A modern-sample replay is not an exact historical reproduction.
 - U02 omits a complete reproducible feature schema and model configuration. The test must use only features observable in the pinned data at signal time; missing IV/Greeks/news modalities are recorded and not fabricated. A proxy win is not the paper's exact result.
@@ -40,7 +40,7 @@ After reconciling all 14 uploaded PDFs against Phases 95–100, can the remainin
 5. Run U02 chronological RF/XGBoost/LSTM-proxy predictions and the corresponding one-session ATM call/put simulation. Report both predictive classification quality and costed option results; neither substitutes for the other.
 6. Run deterministic tests for target timing, T+3 stop activation, no-lookahead strike selection, capital/lot sizing, fee arithmetic, temporal split and payoff sign.
 7. Reconcile all U01–U14 against prior verified branch outputs and Phase 101 results in a paper-level matrix. If a previous phase output is unavailable, retain its prior documented status and do not manufacture data.
-8. Generate the manuscript-style report, CSV/JSON ledgers, equity/drawdown figures, source manifest, validation report and logs. If a test fails, preserve the error and fix only the root cause; no rule changes or result-driven tuning.
+8. Generate the manuscript-style report, CSV/JSON ledgers, equity/drawdown figures, source manifest, validation report and logs. Report circular moving-block bootstrap 95% intervals for mean net trade P&L only when at least 20 completed trades are available; otherwise mark precision NOT ESTIMABLE. If a test fails, preserve the error and fix only the root cause; no rule changes or result-driven tuning.
 9. Stop after one corrected, validated run and status reconciliation. Any additional research needs a new bounded plan.
 
 ## Acceptance criteria
