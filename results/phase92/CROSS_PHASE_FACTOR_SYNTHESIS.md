@@ -50,6 +50,13 @@ Reopen only for either:
 
 A future trading-strategy replay must use exact contract identity and valid timestamps, retain out-of-sample discipline, and report Paytm Money brokerage, statutory charges, spread, adverse slippage, latency and cost-stress cases. Phase 60/61 source-gates remain closed; do not repeat rejected metadata-only searches. Phase 83's 2026 holdout remains sealed.
 
+## Research manuscript and supplement
+
+- [Full structured manuscript draft](MANUSCRIPT_DRAFT.md)
+- [Supplementary methods and tables](SUPPLEMENTARY_MATERIALS.md)
+- [IV incremental effects figure](IV_INCREMENTAL_EFFECTS.svg)
+- [Phase 92 OOS MAE comparison figure](OOS_MAE_COMPARISON.svg)
+
 ## Audit links
 
 - [Phase 89 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-89-rolling-options-feature-study/results/phase89/PHASE89_RESULTS.md)
