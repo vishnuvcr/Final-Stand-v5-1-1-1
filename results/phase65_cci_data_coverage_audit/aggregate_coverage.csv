@@ -1,0 +1,5 @@
+variant,split,events,trigger_index_exact,entry_index_exact,option_file_found,side_trigger_any,side_entry_any,events_with_strict_itm_trigger_contract,median_nearest_side_offset_seconds
+CCI_BASE,DEV,12,12,6,12,1,0,1,864240.0
+CCI_BASE,VAL,13,13,10,13,5,5,1,480.0
+CCI_EMA_FILTER,DEV,4,4,2,4,1,0,1,643200.0
+CCI_EMA_FILTER,VAL,1,1,0,1,0,0,0,480.0
