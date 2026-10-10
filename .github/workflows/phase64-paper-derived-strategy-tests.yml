@@ -57,20 +57,24 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-phase64.txt
 
-      - name: Restore pinned Hugging Face cache\n        if: steps.gate.outputs.should_run == 'true'\n        uses: actions/cache@v4
+      - name: Restore pinned Hugging Face cache
+        if: steps.gate.outputs.should_run == 'true'\n        uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface/hub
           key: hf-phase64-${{ runner.os }}-3eacf762d401efd9a08e804592fa7882b354c4a2
           restore-keys: |
             hf-phase64-${{ runner.os }}-
 
-      - name: Install bounded dependencies\n        if: steps.gate.outputs.should_run == 'true'\n        run: python -m pip install --disable-pip-version-check -r requirements-phase64.txt
+      - name: Install bounded dependencies
+        if: steps.gate.outputs.should_run == 'true'\n        run: python -m pip install --disable-pip-version-check -r requirements-phase64.txt
 
-      - name: Syntax gate\n        if: steps.gate.outputs.should_run == 'true'\n        run: |
+      - name: Syntax gate
+        if: steps.gate.outputs.should_run == 'true'\n        run: |
           python -m py_compile research/phase64_paper_strategy_tests.py research/phase64_report.py
           python -m pytest -q tests/test_phase64_strategy.py
 
-      - name: Run frozen development and validation test\n        if: steps.gate.outputs.should_run == 'true'\n        run: python research/phase64_paper_strategy_tests.py
+      - name: Run frozen development and validation test
+        if: steps.gate.outputs.should_run == 'true'\n        run: python research/phase64_paper_strategy_tests.py
 
       - name: Generate report and figures
         if: steps.gate.outputs.should_run == 'true' && success()
