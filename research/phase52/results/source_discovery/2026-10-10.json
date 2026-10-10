@@ -430,6 +430,5 @@
       "reason": "YOUTUBE_API_KEY secret is not configured. Existing Phase 46 video ledger remains available; do not claim a fresh full-channel crawl."
     }
   ],
-  "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence."
 }

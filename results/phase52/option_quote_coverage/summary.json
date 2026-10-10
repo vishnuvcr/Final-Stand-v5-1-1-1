@@ -1,6 +1,6 @@
 {
   "status": "OPTION_QUOTE_COVERAGE_AUDIT_COMPLETE",
-  "created_at_utc": "2026-10-09T16:00:15.164866+00:00",
+  "created_at_utc": "2026-10-10T10:11:31.199275+00:00",
   "dataset": "thetrademarkk/india-index-options-1m",
   "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "expected_event_rows": 1068,

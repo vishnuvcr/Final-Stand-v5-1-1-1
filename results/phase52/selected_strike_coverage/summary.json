@@ -1,8 +1,8 @@
 {
   "status": "SELECTED_STRIKE_ATM_OFFSET_COVERAGE_AUDIT_COMPLETE",
   "audit_script_sha256": "49f0b09b3fd61b102bcc232686c842d6fd22534b6d1207d10a017befb1322f55",
-  "replay_protocol_sha256": "f3e910a064cc7af18885617f9e4c25cf5ef901c491a6f40ffd124808cb71e6f6",
-  "created_at_utc": "2026-10-09T16:11:39.692855+00:00",
+  "replay_protocol_sha256": "5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6",
+  "created_at_utc": "2026-10-10T10:15:17.821542+00:00",
   "dataset": "thetrademarkk/india-index-options-1m",
   "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
