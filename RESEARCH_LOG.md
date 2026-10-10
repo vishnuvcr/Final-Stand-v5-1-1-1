@@ -150,3 +150,12 @@ Phase 51-1 stopped fail-closed on data availability before any fresh OOS strateg
 - Published and audited [Phase 102 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-102-final-strategy-ranking); final workflow [38082303704](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38082303704) passed 14/14 evidence invariants and 2/2 unit tests.
 - TT-03 dynamic-N V5 is the only high-priority revalidation candidate, not a live recommendation: the hold split has three trades. TT-04/05 fail temporal-stability evidence; U02/U05 results do not support their tested implementations; no candidate was promoted.
 - The full plan, scorecard, report, validation JSON and phase logs are linked in the main README. No new market data were downloaded or holdout tuned.
+
+
+## 2026-10-11 — Phase 103 Dhan stock-options research registered
+
+- User requested a separate five-stock NIFTY constituent options study while keeping prior research/data frozen. Created isolated branch `phase-103-nifty50-stock-options` from `main`; prior result artifacts are not modified.
+- Initial stock basket: HDFCBANK, ICICIBANK, RELIANCE, SBIN, INFY. Selection is based on an official constituent-weight snapshot dated 2026-02-27 and option-contract discovery, not a claimed synchronized top-five average-option-volume rank.
+- User requested the Dhan data API access token as the data source. Added secret-based Dhan expired-options API client and a 30-day smoke test (ATM monthly CE/PE for all five names), instrument-master ID resolution, focused unit tests, aggregate-only results, and status/error-log automation. No credential or raw API rows are published.
+- The Dhan API workflow is bridged from the default branch to permit manual dispatch, and the Phase 103 branch remains the checkout/commit target. [Launch bridge](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase103-dhan-data-api-bridge.yml) · [Phase 103 plan/status/logs](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options).
+- The live API result has not been confirmed in the available tool results at this checkpoint. Do not claim Dhan data was successfully acquired until a run artifact exists. Dhan's endpoint returns rolling-strike OHLC/IV/volume/OI/spot but not documented historical bid/ask/depth, so contract continuity and executable fills remain explicit gates.
