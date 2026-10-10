@@ -31,7 +31,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
 
       - name: Install fixed analysis dependencies
         run: python -m pip install --disable-pip-version-check "numpy==2.2.6" "pandas==2.2.3" "statsmodels==0.14.5"
@@ -46,10 +45,10 @@ jobs:
         id: study
         continue-on-error: true
         env:
-          DHAN_ACCESS_TOKEN: \${{ secrets.DHAN_ACCESS_TOKEN }}
-          GITHUB_REPOSITORY: \${{ github.repository }}
-          GITHUB_REF_NAME: \${{ github.ref_name }}
-          GITHUB_RUN_ID: \${{ github.run_id }}
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
         run: python research/phase89/rolling_feature_study.py
 
       - name: Commit aggregate results and phase logs
@@ -61,7 +60,7 @@ jobs:
           git add -f results/phase89/coverage.csv results/phase89/daily_coverage.csv results/phase89/split_tests.csv results/phase89/primary_tests.csv results/phase89/summary.json results/phase89/PHASE89_RESULTS.md 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "Phase 89: publish rolling-options feature study results"
-            git push origin "HEAD:\${{ github.ref_name }}"
+            git push origin "HEAD:${{ github.ref_name }}"
           else
             echo "No aggregate documentation/result changes to commit."
           fi
