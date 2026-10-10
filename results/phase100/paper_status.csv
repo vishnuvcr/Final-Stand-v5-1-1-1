@@ -1,0 +1,15 @@
+paper_id,paper_or_method,final_status,evidence_and_limitation
+U01,Bansal et al. — multi-regressor stock-price forecasts,PARTIAL,Common NIFTY model-family screen; source universe/protocol not fully matched.
+U02,Sherasiya — RF/XGBoost/LSTM options signals,DATA_BLOCKED,No point-in-time exact-contract training/label matrix; no option P&L.
+U03,Bumrah & Budhani — NIFTY ANN with FX/FII features,PARTIAL,Common price-only screen; USD/INR and FII gross-flow inputs not matched.
+U04,Sain & Singh — multi-window NIFTY model comparison,PARTIAL,Common daily model-family screen; source-specific protocol and feature ablations not fully matched.
+U05,Atheetha et al. — monthly trend/seasonality options procedure,PARTIAL_DATA_BLOCKED,Rule extracted; exact-contract premiums/liquidity/early exits not available for historical replay.
+U06,"Naik & Inamdar — sentiment/news, LSTM and market features",DATA_BLOCKED,"Point-in-time BERT/news, FII/DII, VIX and PCR modalities not reproduced in Phase 95."
+U07,Chatterjee et al. — options payoff structures,PARTIAL_ANALYTICAL,13 payoff structures checked algebraically; historical trading P&L blocked; put-butterfly source ambiguity.
+U08,Fathali et al. — NIFTY forecasting,PARTIAL,Common one-step screen does not recreate source sample/metric claim.
+U09,Deep-learning NIFTY model families/hybrids,PARTIAL,Common-data family screen; source dataset/features/settings not matched.
+U10,Moving-average NIFTY paper,PARTIAL,SMA/EMA sensitivity screen run; source-specific rules and statistical inference incomplete.
+U11,NIFTY RNN/LSTM/CNN forecast comparison,PARTIAL,"Common-data screen, not exact source replication."
+U12,MLP/backprop OHLC forecast,PARTIAL,Common-data screen; source turnover/metric construction not reproduced.
+U13,LSTM/backward feature elimination and RSI,PARTIAL,Price-only common screen; source horizon/features not fully matched.
+U14,CCI options study by Shaha,DATA_BLOCKED,Phase 66 had zero completed trades; Phase 98 found no new qualified exact-contract source.

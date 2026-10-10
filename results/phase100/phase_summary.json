@@ -1,0 +1,49 @@
+{
+  "synthesis_date": "2026-10-10T17:48:33.702855+00:00",
+  "phase95": {
+    "metrics_rows": 132,
+    "close_rows": 75,
+    "positive_mae_gain_rows": 3,
+    "ci_above_zero_rows": 0,
+    "holm_significant_positive_gain_rows": 0
+  },
+  "phase96": {
+    "ma_variants": 6,
+    "result_status": "signal_screen_only_partial"
+  },
+  "phase97": {
+    "status": "DATA_BLOCKED",
+    "models_trained": 0,
+    "option_pnl_computed": false,
+    "holdout_2026_accessed": false,
+    "gate_rows": 13
+  },
+  "phase98": {
+    "status": "DATA_BLOCKED_NO_NEW_ELIGIBLE_SOURCE",
+    "new_replay_run": false,
+    "reason": "No newly qualified source data",
+    "option_pnl_computed": false,
+    "holdout_2026_accessed": false,
+    "evidence_rows": 8
+  },
+  "phase99": {
+    "status": "PAYOFF_ALGEBRA_CHECKED_MARKET_PNL_BLOCKED",
+    "structures": 13,
+    "illustrative_spot_grid": [
+      70,
+      80,
+      90,
+      95,
+      100,
+      105,
+      110,
+      120,
+      130
+    ],
+    "option_pnl_is_historical": false,
+    "holdout_2026_accessed": false
+  },
+  "paper_count": 14,
+  "strategy_promoted": false,
+  "holdout_2026_accessed": false
+}
