@@ -1,0 +1,85 @@
+name: Phase 88 Dhan options gap coverage audit
+on:
+  push:
+    branches:
+      - phase-88-dhan-options-gap-coverage-audit
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bounded-gap-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Probe two registered missing sessions and both option sides
+        env:
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, sys, time, urllib.error, urllib.request
+          token = os.environ.get("DHAN_ACCESS_TOKEN", "").strip()
+          summary = []
+          def report(line):
+              print(line)
+              summary.append(line)
+          if not token:
+              report("TOKEN_CONFIGURED=false")
+              report("RESULT=BLOCKED_SECRET_MISSING")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+                  f.write("# Phase 88 bounded coverage audit\n\n" + "\n".join("- " + x for x in summary) + "\n")
+              sys.exit(1)
+          report("TOKEN_CONFIGURED=true")
+          dates = ("2026-07-28", "2026-08-04")
+          sides = (("CALL", "ce"), ("PUT", "pe"))
+          all_pass = True
+          for date in dates:
+              for side, response_key in sides:
+                  body = json.dumps({
+                      "exchangeSegment": "NSE_FNO",
+                      "interval": "5",
+                      "securityId": 13,
+                      "instrument": "OPTIDX",
+                      "expiryFlag": "MONTH",
+                      "expiryCode": 1,
+                      "strike": "ATM",
+                      "drvOptionType": side,
+                      "requiredData": ["open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot"],
+                      "fromDate": date,
+                      "toDate": "2026-07-29" if date == "2026-07-28" else "2026-08-05"
+                  }).encode("utf-8")
+                  request = urllib.request.Request(
+                      "https://api.dhan.co/v2/charts/rollingoption",
+                      data=body,
+                      headers={"access-token": token, "Accept": "application/json", "Content-Type": "application/json"},
+                      method="POST",
+                  )
+                  try:
+                      with urllib.request.urlopen(request, timeout=30) as response:
+                          status = response.status
+                          payload = json.loads(response.read().decode("utf-8"))
+                  except urllib.error.HTTPError as exc:
+                      status, payload = exc.code, {}
+                  except Exception as exc:
+                      report(f"DATE={date} SIDE={side} RESULT=NETWORK_OR_PARSE_ERROR CLASS={type(exc).__name__}")
+                      all_pass = False
+                      time.sleep(1)
+                      continue
+                  data = payload.get("data", {}) if isinstance(payload, dict) else {}
+                  block = data.get(response_key) if isinstance(data, dict) else None
+                  block = block if isinstance(block, dict) else {}
+                  keys = ("open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp")
+                  arrays = [block.get(k) for k in keys]
+                  lengths = [len(v) for v in arrays if isinstance(v, list)]
+                  aligned = len(lengths) == len(keys) and len(set(lengths)) == 1
+                  count = len(block.get("timestamp", [])) if isinstance(block.get("timestamp", []), list) else 0
+                  passed = status == 200 and count > 0 and aligned
+                  report(f"DATE={date} SIDE={side} HTTP_STATUS={status} CANDLES={count} ALL_FIELDS_ARRAYS=" + str(all(isinstance(v, list) for v in arrays)).lower() + " LENGTHS_ALIGNED=" + str(aligned).lower() + " PASS=" + str(passed).lower())
+                  if not passed:
+                      all_pass = False
+                  time.sleep(1)
+          report("RESULT=ALL_FOUR_SERIES_PASSED" if all_pass else "RESULT=ONE_OR_MORE_SERIES_FAILED")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("# Phase 88 bounded coverage audit\n\n" + "\n".join("- " + x for x in summary) + "\n")
+          if not all_pass:
+              sys.exit(1)
+          PY
