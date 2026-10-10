@@ -951,3 +951,10 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - Decision: NO_CANDIDATE_PASSES_PREDECLARED_GATE; paired rows: 11163; tests: 20.
 - Defined-risk variant-window gates passing: 0; 2026 holdout remains sealed.
 - Holm family includes all 20 one-tick primary tests; inferential outputs are persisted under results/phase82_expiry_cluster_inference/.
+
+
+## 2026-10-10 — Phase 83 final manuscript and terminal closeout
+- Complete manuscript built at manuscript/phase83_final_manuscript.md; figure/table builder summary: results/phase83_final_manuscript/build_summary.json.
+- Tables: 40 aggregate rows, 20 inference tests; Holm-significant tests: 0.
+- No defined-risk candidate passed the frozen gate. The 2026 holdout remains sealed and no strategy was promoted.
+- The bounded Phase 80–83 study is closed; next research must be based on a new evidence source and preregistration.

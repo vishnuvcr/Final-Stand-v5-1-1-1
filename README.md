@@ -1,3 +1,16 @@
+# Resume checkpoint — 2026-10-10 (Phase 83 final manuscript)
+
+**Final conclusion for Phases 80–83: NO-GO for new-strategy promotion.** Phase 81 produced 11,163 matched observations; Phase 82 ran 20 expiry-clustered primary tests with Holm correction and found no adjusted-significant test. Zero of 18 defined-risk structure–horizon candidates passed the positive-net gate across DEV/VAL at one-/two-tick costs. The 2026 holdout was not opened. This closes the registered experiment; it does not prove every possible option strategy is unprofitable or adjudicate unrelated canonical strategies.
+
+- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/manuscript/phase83_final_manuscript.md)
+- [Forest plot](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/figures/phase83_forest_plot.svg)
+- [Net P&L heatmap](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/figures/phase83_net_pnl_heatmap.svg)
+- [Supplementary performance ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/results/phase83_final_manuscript/supplementary_performance_ledger.csv)
+- [Supplementary inference ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/results/phase83_final_manuscript/supplementary_inference_ledger.csv)
+- [Phase 83 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/PHASE83_STATUS.md)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 82 expiry-cluster inference)
 
 **Phase 82 decision: NO_CANDIDATE_PASSES_PREDECLARED_GATE**. The inference used 11,163 paired observations, 20 primary tests with Holm correction and 10,000 expiry-cluster bootstrap replicates per test. Defined-risk variant-window gates passing: 0. The 2026 holdout remained sealed and no strategy was promoted.

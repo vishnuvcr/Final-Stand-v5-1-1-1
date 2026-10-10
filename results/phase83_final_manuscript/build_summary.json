@@ -1,0 +1,19 @@
+{
+  "phase": 83,
+  "build": "from Phase 81/82 derived aggregate summaries only",
+  "raw_market_data_loaded": false,
+  "2026_holdout_loaded_or_scored": false,
+  "performance_rows": 40,
+  "inference_tests": 20,
+  "defined_risk_horizon_gates": 18,
+  "defined_risk_candidates_passing": 0,
+  "all_defined_risk_totals_negative_in_all_split_horizon_cost_cases": true,
+  "holm_significant_primary_tests": 0,
+  "phase82_decision": "NO_CANDIDATE_PASSES_PREDECLARED_GATE",
+  "figures": [
+    "figures/phase83_forest_plot.svg",
+    "figures/phase83_forest_plot.png",
+    "figures/phase83_net_pnl_heatmap.svg",
+    "figures/phase83_net_pnl_heatmap.png"
+  ]
+}
