@@ -19,7 +19,9 @@ families=[
  {"family":"short_iron_fly_w100","legs":"-1 CE ATM, -1 PE ATM, +1 CE ATM+100, +1 PE ATM-100","risk":"defined"},
  {"family":"short_iron_fly_w200","legs":"same with 200-point wings","risk":"defined"},
  {"family":"short_iron_fly_w300","legs":"same with 300-point wings","risk":"defined"},
- {"family":"long_iron_fly_w100_200_300","legs":"+1 CE ATM, +1 PE ATM, -1 CE ATM+W, -1 PE ATM-W","risk":"debit-limited"},
+ {"family":"long_iron_fly_w100","legs":"+1 CE ATM, +1 PE ATM, -1 CE ATM+100, -1 PE ATM-100","risk":"debit-limited"},
+ {"family":"long_iron_fly_w200","legs":"+1 CE ATM, +1 PE ATM, -1 CE ATM+200, -1 PE ATM-200","risk":"debit-limited"},
+ {"family":"long_iron_fly_w300","legs":"+1 CE ATM, +1 PE ATM, -1 CE ATM+300, -1 PE ATM-300","risk":"debit-limited"},
  {"family":"short_iron_condor_100_300","legs":"+1 PE ATM-300, -1 PE ATM-100, -1 CE ATM+100, +1 CE ATM+300","risk":"defined"},
  {"family":"bull_put_credit_100_300","legs":"-1 PE ATM-100, +1 PE ATM-300","risk":"defined"},
  {"family":"bear_call_credit_100_300","legs":"-1 CE ATM+100, +1 CE ATM+300","risk":"defined"}
