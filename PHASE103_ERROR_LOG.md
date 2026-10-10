@@ -60,3 +60,16 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613
 ### E103-DHAN-38088262635 — No audit output produced
 A workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.
 Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
+
+ 
+### E103-006 — Registration test prevented the first Dhan API call
+**Affected runs:** [38088253613](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613), [38088262635](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635).  
+**Symptom:** Dhan audit job stopped at unit tests; network/API step was skipped.  
+**Cause:** registration validator used exact list membership for a rights-audit phrase that is included as a clause within a longer metric entry.  
+**Correction:** validator now checks whether any registered metric contains the phrase. Additional response tests were added and a new push-triggered run has been requested by committing tests.  
+**Accepted evidence:** none from either run. The environment shows a masked Dhan secret was injected, but no API request was made. Do not treat this as confirmed Dhan access.
+ 
+### E103-007 — Failure-fallback logging formatter emitted duplicate malformed entries
+**Type:** workflow logging defect.  
+**Finding:** the default-branch bridge's first fallback used incorrect `printf` arguments, so two failed preflight runs created extra entries containing literal placeholder labels. The duplicated entries are not separate underlying data errors.  
+**Correction:** the bridge formatter was corrected in commit [52565b4](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/52565b4f6f7e2e89af916f768addfc232e02af22); historical entries are preserved for auditability. Subsequent fallback entries should be checked for the one-marker-per-run invariant.
