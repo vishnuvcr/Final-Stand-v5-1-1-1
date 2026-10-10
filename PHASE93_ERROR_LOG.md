@@ -21,3 +21,10 @@ Opened: 2026-10-10. Keep this log to reproducible defects and corrective actions
 ## Corrections
 
 No code or empirical market-data errors are registered at initialization. Documentation and bibliography issues discovered during the audit will be logged here with IDs and fixes.
+
+## E93-008 — literature-validator wording mismatch (2026-10-10)
+
+- Workflow run [38052939360](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38052939360) found 14 audit sections, 14 filename mappings, and all manuscript reference numbers 1–29, but failed one exact-substring check because the manuscript said “have not been reproduced in Final Stand” rather than the validator's expected “not independently reproduced”.
+- The research boundary was already intended; the wording mismatch was in the QA contract. The manuscript now explicitly says the source-reported CCI metrics have “not been independently reproduced by this project,” and the validator matches that explicit wording.
+- The workflow’s final failure-marker step was skipped after validation failure because its condition omitted `always()`; corrected it to run after the report-publication step as well. This is an automation diagnostic fix, not a model/data issue.
+- No market data, model, outcome, or holdout was accessed. Re-run the validation before marking Phase 93 complete.
