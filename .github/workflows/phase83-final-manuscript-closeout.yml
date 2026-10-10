@@ -1,0 +1,143 @@
+name: Phase 83 — Final manuscript assets and closeout
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-83-final-manuscript-closeout]
+    paths:
+      - 'research/phase83_build_manuscript_assets.py'
+      - '.github/workflows/phase83-final-manuscript-closeout.yml'
+permissions:
+  contents: write
+concurrency:
+  group: phase83-final-manuscript-closeout
+  cancel-in-progress: false
+jobs:
+  manuscript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-83-final-manuscript-closeout
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install figure-build dependencies
+        run: python -m pip install --no-input numpy pandas matplotlib
+      - name: Build figures and complete supplementary ledgers
+        run: |
+          set -euo pipefail
+          python research/phase83_build_manuscript_assets.py 2>&1 | tee phase83_build.log
+      - name: Validate manuscript and all generated assets
+        run: |
+          set -euo pipefail
+          test -s manuscript/phase83_final_manuscript.md
+          test -s results/phase83_final_manuscript/build_summary.json
+          test -s results/phase83_final_manuscript/supplementary_performance_ledger.csv
+          test -s results/phase83_final_manuscript/supplementary_inference_ledger.csv
+          test -s results/phase83_final_manuscript/supplementary_candidate_gate.csv
+          test -s figures/phase83_forest_plot.svg
+          test -s figures/phase83_forest_plot.png
+          test -s figures/phase83_net_pnl_heatmap.svg
+          test -s figures/phase83_net_pnl_heatmap.png
+          grep -q '## 11. Conclusion' manuscript/phase83_final_manuscript.md
+          grep -q '## 12. Future research directions' manuscript/phase83_final_manuscript.md
+          grep -q '2026 holdout' manuscript/phase83_final_manuscript.md
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('results/phase83_final_manuscript/build_summary.json').read_text())
+          assert s['performance_rows']==40, s
+          assert s['inference_tests']==20, s
+          assert s['defined_risk_horizon_gates']==18, s
+          assert s['defined_risk_candidates_passing']==0, s
+          assert s['holm_significant_primary_tests']==0, s
+          assert s['all_defined_risk_totals_negative_in_all_split_horizon_cost_cases'], s
+          assert not s['raw_market_data_loaded'] and not s['2026_holdout_loaded_or_scored'], s
+          print('Validated complete manuscript build and terminal research gate.')
+          PY
+      - name: Upload manuscript bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase83-final-manuscript-bundle
+          path: |
+            manuscript/phase83_final_manuscript.md
+            figures/phase83_forest_plot.*
+            figures/phase83_net_pnl_heatmap.*
+            results/phase83_final_manuscript/
+            phase83_build.log
+          if-no-files-found: error
+      - name: Update Phase 83 status, research log and README
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('results/phase83_final_manuscript/build_summary.json').read_text())
+          status=(
+            '# Phase 83 Status\nDate: 2026-10-10\nStatus: FINAL MANUSCRIPT AND SUPPLEMENTARY ASSETS BUILT — BOUNDED STUDY CLOSED.\n\n'
+            f"- [x] Manuscript: manuscript/phase83_final_manuscript.md\n"
+            f"- [x] Figure builder completed; performance rows: {s['performance_rows']}; inference tests: {s['inference_tests']}.\n"
+            f"- [x] Supplementary ledgers: 40 performance rows; 20 inference rows; 18 defined-risk variant-window gates.\n"
+            f"- [x] Holm-significant primary tests: {s['holm_significant_primary_tests']}; defined-risk candidates passing gate: {s['defined_risk_candidates_passing']}.\n"
+            '- [x] 2026 holdout not loaded; no strategy promoted from Phases 80–83.\n'
+            '- [x] Current registered study closed at planned stopping point; new research requires new evidence and a separate preregistration.\n'
+          )
+          Path('PHASE83_STATUS.md').write_text(status,encoding='utf-8')
+          with open('RESEARCH_LOG.md','a',encoding='utf-8') as f:
+            f.write(
+              '\n\n## 2026-10-10 — Phase 83 final manuscript and terminal closeout\n'
+              f"- Complete manuscript built at manuscript/phase83_final_manuscript.md; figure/table builder summary: results/phase83_final_manuscript/build_summary.json.\n"
+              f"- Tables: {s['performance_rows']} aggregate rows, {s['inference_tests']} inference tests; Holm-significant tests: {s['holm_significant_primary_tests']}.\n"
+              '- No defined-risk candidate passed the frozen gate. The 2026 holdout remains sealed and no strategy was promoted.\n'
+              '- The bounded Phase 80–83 study is closed; next research must be based on a new evidence source and preregistration.\n'
+            )
+          readme=Path('README.md')
+          prior=readme.read_text(encoding='utf-8')
+          marker='# Resume checkpoint — 2026-10-10 (Phase 83 final manuscript)'
+          checkpoint=(
+            marker+'\n\n'
+            '**Final conclusion for Phases 80–83: NO-GO for new-strategy promotion.** Phase 81 produced 11,163 matched observations; Phase 82 ran 20 expiry-clustered primary tests with Holm correction and found no adjusted-significant test. Zero of 18 defined-risk structure–horizon candidates passed the positive-net gate across DEV/VAL at one-/two-tick costs. The 2026 holdout was not opened. This closes the registered experiment; it does not prove every possible option strategy is unprofitable or adjudicate unrelated canonical strategies.\n\n'
+            '- [Final manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/manuscript/phase83_final_manuscript.md)\n'
+            '- [Forest plot](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/figures/phase83_forest_plot.svg)\n'
+            '- [Net P&L heatmap](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/figures/phase83_net_pnl_heatmap.svg)\n'
+            '- [Supplementary performance ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/results/phase83_final_manuscript/supplementary_performance_ledger.csv)\n'
+            '- [Supplementary inference ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/results/phase83_final_manuscript/supplementary_inference_ledger.csv)\n'
+            '- [Phase 83 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-83-final-manuscript-closeout/PHASE83_STATUS.md)\n\n---\n\n'
+          )
+          if marker in prior:
+            rest=prior[prior.index(marker):]
+            prior=rest[rest.index('---')+3:].lstrip() if '---' in rest else rest
+          readme.write_text(checkpoint+prior,encoding='utf-8')
+          PY
+      - name: Log workflow failure
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo
+            echo "## E83-005 — Manuscript build or validation failed"
+            echo "- Run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- Head SHA: ${GITHUB_SHA}"
+            echo "- Status: OPEN pending root-cause diagnosis; manuscript build is not complete."
+          } >> PHASE83_ERROR_LOG.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add PHASE83_ERROR_LOG.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Log Phase 83 manuscript build failure'
+            git pull --rebase origin phase-83-final-manuscript-closeout
+            git push origin HEAD:phase-83-final-manuscript-closeout
+          fi
+      - name: Persist manuscript and figures
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add figures/ results/phase83_final_manuscript/ PHASE83_STATUS.md README.md RESEARCH_LOG.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Publish Phase 83 manuscript charts and supplementary data'
+          git pull --rebase origin phase-83-final-manuscript-closeout
+          git push origin HEAD:phase-83-final-manuscript-closeout
