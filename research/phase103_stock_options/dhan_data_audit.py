@@ -266,7 +266,7 @@ def main():
         "probe_limit":a.max_probes,
         "requested_relative_strikes":strikes,
         "endpoint":ENDPOINT,"instrument_master_sha256":None,"instrument_master_bytes":None,
-        "underlying_map":{},"probes":[],"surface_audit":[],"raw_rows_persisted":False,
+        "underlying_map":{},"probes":[],"surface_audit":[],"probe_abort_reason":None,"raw_rows_persisted":False,
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
         "known_limits":["Rolling strikes can change actual strike over time.",
           "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
@@ -287,6 +287,7 @@ def main():
             result["status"]="BLOCKED_NO_DHAN_ACCESS_TOKEN"
         else:
             surface_blocks = []
+            abort_probes = False
             for sym in SYMBOLS:
                 m=result["underlying_map"].get(sym,{})
                 for side in ["CALL","PUT"]:
@@ -298,7 +299,11 @@ def main():
                                 "requested_relative_strike":relative_strike,"status":"BLOCKED_UNDERLYING_ID"})
                             continue
                         code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date)
-                        result["probes"].append(summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date))
+                        probe_summary = summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date)
+                        result["probes"].append(probe_summary)
+                        if code != 200 or probe_summary.get("rows",0) == 0 or not probe_summary.get("array_lengths_consistent",False):
+                            result["probe_abort_reason"] = "stopped after the first HTTP error, empty requested-side payload, or inconsistent arrays"
+                            abort_probes = True
                         # Raw timestamps and actual strikes exist only in memory to audit the cross-offset panel.
                         side_key = "ce" if side == "CALL" else "pe"
                         if obj and isinstance(obj.get("data"), dict) and isinstance(obj["data"].get(side_key), dict):
@@ -307,10 +312,12 @@ def main():
                                 surface_blocks.append({"symbol":sym,"option_type":side,
                                     "relative_strike":relative_strike,
                                     "timestamps":data_block["timestamp"],"strikes":data_block["strike"]})
+                        if abort_probes:
+                            break
                         time.sleep(1.1)
-                    if len(result["probes"]) >= a.max_probes:
+                    if abort_probes or len(result["probes"]) >= a.max_probes:
                         break
-                if len(result["probes"]) >= a.max_probes:
+                if abort_probes or len(result["probes"]) >= a.max_probes:
                     break
             result["surface_audit"]=summarize_surface(surface_blocks, strikes)
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
@@ -318,7 +325,9 @@ def main():
             auth_count=sum(v.get("status") in ["AUTH_401","AUTH_403"] for v in result["probes"])
             outside_count=sum(int(v.get("outside_requested_date_window_rows",0) or 0) for v in result["probes"])
             result["rows_outside_requested_date_window_total"]=outside_count
-            if auth_count or error_codes.intersection({"806","807","808","809","810","DH-901","DH-902"}):
+            if result.get("probe_abort_reason"):
+                result["status"]="PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE"
+            elif auth_count or error_codes.intersection({"806","807","808","809","810","DH-901","DH-902"}):
                 result["status"]="BLOCKED_AUTHENTICATION_OR_DATA_API_ENTITLEMENT"
             elif error_codes.intersection({"814","DH-905"}):
                 result["status"]="REQUEST_SCHEMA_OR_PARAMETER_ERROR"
@@ -370,7 +379,7 @@ def main():
         lines.append("| {} | {} | {} |".format(sym,"yes" if m.get("security_id") else "no",m.get("status")))
     lines += ["","## Limitations",""]+["- "+x for x in result["known_limits"]]
     (out/"DHAN_DATA_API_AUDIT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
-    print(json.dumps({"phase":"103.1","status":result["status"],"window":result["window"],
+    print(json.dumps({"phase":"103.1","status":result["status"],"probe_abort_reason":result.get("probe_abort_reason"),"window":result["window"],
       "underlying_ids_resolved":sum(1 for x in result.get("underlying_map",{}).values() if x.get("security_id")),
       "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"relative_strikes":strikes,
       "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),
