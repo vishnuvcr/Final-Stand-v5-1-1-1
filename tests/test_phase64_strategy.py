@@ -75,3 +75,19 @@ def test_bootstrap_skips_underpowered_sample():
     out = p64.moving_block_bootstrap(series)
     assert out["status"] == "SKIPPED_LT20_TRADES"
     assert out["p_two_sided"] is None
+
+
+def test_strike_selection_uses_trigger_minute_availability_only():
+    trigger = pd.Timestamp("2024-05-06 10:00", tz=TZ)
+    entry = trigger + pd.Timedelta(minutes=1)
+    # 90 CE is nearer ITM for spot=95, but is only present on the next minute.
+    # 80 CE is the nearest ITM contract actually present at trigger time.
+    future_only = pd.DataFrame({
+        "timestamp": [entry], "close": [8.0]
+    }).set_index("timestamp", drop=False)
+    observed = pd.DataFrame({
+        "timestamp": [trigger, entry], "close": [12.0, 11.0]
+    }).set_index("timestamp", drop=False)
+    chain_map = {("CE", 90.0): future_only, ("CE", 80.0): observed}
+    assert p64.select_itm_strike(chain_map, "CE", 95.0, trigger) == 80.0
+    assert p64.select_itm_strike(chain_map, "PE", 95.0, trigger) is None
