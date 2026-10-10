@@ -50,3 +50,12 @@ No Phase 56 execution errors recorded at initialization.
 - Accepted outputs: 480-row parent reconciliation, 11 threshold counts matching Phase 54, 18,960 cost-scenario rows, and all monotonic cost invariants PASS.
 - Scientific impact of prior failed runs: no result was accepted from them; the failures occurred before P&L output. No strategy conclusion was changed by the repair.
 - Status: RESOLVED; Phase 56 closed as non-executable price-reference sensitivity.
+
+
+## F56-DATA-001 — Phase 56 input ledger provenance mismatch — RESOLVED
+
+- Observation: the first accepted sensitivity run [38019146547](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019146547) used a branch-local 480-row ledger whose only differences from the Phase 55 canonical ledger were the 100 human-readable exclusion-reason strings. All price/leg fields were identical, but the input SHA differed.
+- Correction: synchronized the exact Phase 55 canonical ledger (blob SHA `06f9b0d39652923bae052dd82f2c779ada111da3`) into the Phase 56 branch and reran the full matrix.
+- Verification: [run 38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348) passed with canonical input SHA-256 `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`; all metrics and invariants reproduced exactly.
+- Scientific impact: no P&L metrics changed; the earlier run remains archived but is superseded for provenance. The canonical-input run is the accepted final evidence.
+- Status: RESOLVED.
