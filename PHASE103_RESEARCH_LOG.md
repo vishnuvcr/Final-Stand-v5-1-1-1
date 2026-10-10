@@ -96,3 +96,11 @@ The workflow failed before a machine-readable result was written. No source/data
 - API probes returning rows: 0/10.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+
+## 2026-10-11 — Bound API latency diagnosis to one probe
+
+- Run [38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181), which used `expiryCode: 1` on a 30-day window and up to ten stock/side probes, remained in the API request step and was cancelled when a smaller bounded workflow was committed. It did not persist a report and contributes no data evidence.
+- Updated the client to support a strict `--max-probes` cap. The new default smoke-test request is one HDFCBANK CALL probe for 2026-08-03 only, with a 60-second per-request timeout, while keeping the upper bound of 30 days per API call. The workflow records the probe limit.
+- This is a scope adjustment for debuggability/finite execution; it does not alter the chosen stock basket or any strategy rules.
