@@ -1,3 +1,16 @@
+# Resume checkpoint — 2026-10-10 12:27 IST
+
+The latest completed research run remains Phase 66; no new strategy is promoted.
+
+- **Phase 65 verification reconciled:** workflow [38027791757](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38027791757) completed all diagnostic, validation and publication steps. Its stale error-log statement has been corrected on the Phase 65 branch. Of 30 frozen CCI breakout rows, 15 lacked a strictly ITM strike on the trigger minute, 12 lacked an eligible next-minute entry, and 3 lacked the exact next-minute option bar. No P&L was computed.
+- **Phase 66 remains terminal for this CCI reconstruction:** verification run [38028425558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558) passed, but both frozen candidates produced zero completed trades. Profitability metrics are not estimable; ₹0 aggregate fields are empty-sample placeholders.
+- **Next gate:** Phase 62 still requires exact authorized target-date/contract coverage for 2026-07-28 and 2026-08-04 before the frozen Phase 51 replay can resume. The public sample does not cover those dates; no paid data pack has been purchased. Do not rerun repetitive source searches, shorten the OOS window, loosen frozen rules, or use the holdout.
+- **Research decision:** continue only when exact target data and its permitted access/retention rights are verified, or when a genuinely new, authorized source/sample becomes available. No strategy is approved for live trading.
+
+Relevant records: [Phase 65 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_STATUS.md) · [Phase 65 aggregate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/results/phase65_cci_data_coverage_audit/aggregate_report.md) · [Phase 66 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md) · [Phase 62 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-62-optionsdata-sample-validation/PHASE62_STATUS.md).
+
+---
+
 # Current research status — 2026-10-10 (Phase 61 source restart audit)
 
 **Decision: NO-GO for new empirical factor-conditioned strategy testing until source rights and exact target samples are verified.** Phase 61 is a bounded delta audit after the Phase 60 evidence gate; it does not reopen P&L testing.
