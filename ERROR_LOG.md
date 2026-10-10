@@ -185,3 +185,10 @@ Phase-specific errors and corrections are recorded in [PHASE102_ERROR_LOG.md](ht
 - First live attempt [38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054) resolved the five underlying IDs but received HTTP 400 / `DH-905` / `expiryCode is required` on all ten probes because the request specified `expiryCode: 0`. This was a request-parameter rejection, not evidence of missing options history.
 - Official docs are inconsistent at this point: the [expired-options sample](https://dhanhq.co/docs/v2/expired-options-data/) uses code 1, while the [annexure](https://dhanhq.co/docs/v2/annexure/) labels code 0 Current/Near Expiry. A bounded retry uses code 1 (Next Expiry) and records only allow-listed error messages with secret redaction.
 - Retry [38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181) is in progress at this checkpoint. No raw payloads or access-token values are recorded. Detailed history is on [Phase 103 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_ERROR_LOG.md).
+
+
+## Phase 103 — Dhan data source checkpoint (2026-10-11)
+
+- Confirmed successful Dhan API access for a bounded one-day screen in [run 38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338): 10/10 CALL/PUT probes across the five chosen stocks returned 385 rows, array lengths consistent and zero timestamps outside 2026-08-03 IST after date-boundary adaptation.
+- Remaining limitation is fixed-strike reconstruction: Dhan returns rolling relative-strike series and no historical bid/ask/depth. The first 70-request offset expansion did not produce an accepted summary. The default expansion has been reduced to seven HDFCBANK CALL offsets and aborts on the first invalid/empty response.
+- No raw data are published pending confirmation of Dhan retention/republication permissions. No strategy P&L or profitability conclusion is claimed. Detailed errors and all superseded runs remain documented on the isolated Phase-103 branch.
