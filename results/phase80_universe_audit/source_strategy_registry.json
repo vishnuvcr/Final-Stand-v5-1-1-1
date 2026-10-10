@@ -15,7 +15,7 @@
       "temporal inference"
     ]
   },
-  "new_test_axis": "paired intraday versus overnight window for same structure/date and exact contracts",
+  "new_test_axis": "paired intraday versus overnight window for same structure/date and exact contracts; common ATM anchor at 09:19",
   "temporal_splits": {
     "development_end": "2023-12-31",
     "validation_end": "2025-12-31",
