@@ -25,3 +25,16 @@ Static review caught a copied metadata literal: the Phase 91 engine emitted `"ph
 - Added `.github/workflows/phase91-pr-runner.yml` to the Phase 90 parent branch as an automated pull-request fallback. Its execution is also not confirmed; no run ID or result files were surfaced by repository status checks at the time of this log.
 
 Append the automated runtime summary here after a confirmed workflow run. Keep failures explicit even if the workflow process itself exits successfully.
+
+<!-- PHASE91_RUNTIME_START -->
+## Runtime summary — 38049302830
+- Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero
+- Options valid chunks: 54/54
+- VIX valid chunks: 5/5
+- Instrument master: UNIQUE_MATCH; candidate count=1
+- Paired rows: 18473
+- OOS rows/sessions: 3633/60
+- Issues:
+- No API/network/schema failures.
+- No token, raw response, row-level price, or hidden reasoning is logged.
+<!-- PHASE91_RUNTIME_END -->

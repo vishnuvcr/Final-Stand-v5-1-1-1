@@ -31,3 +31,14 @@ User replied “Ok proceed” to continue the planned research following Phase 9
 - The Phase 91 workflow contains `workflow_dispatch`, but availability of the UI's manual Run button is not confirmed because GitHub documents that a workflow must be present on the default branch for that button to be displayed. No workflow was claimed to have run.
 
 Append the confirmed Actions run, actual data coverage and primary result when available. This is an auditable activity log, not a record of private reasoning.
+
+<!-- PHASE91_RUNTIME_START -->
+## Automated execution record — 38049302830
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830
+- Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero
+- VIX ID resolved dynamically: True
+- Options valid chunks=54/54; VIX valid chunks=5/5
+- OOS rows/sessions=3633/60
+- Primary result: M1 MAE − M2 MAE = 0.0001 bps (paired session-cluster bootstrap 95% CI -0.0111 to 0.0103; bootstrap positive share 0.5240; 5000 resamples).
+- Raw market responses were not printed, committed, or uploaded as artifacts; 2026 was not requested.
+<!-- PHASE91_RUNTIME_END -->
