@@ -43,7 +43,7 @@
       "symbol": "RELIANCE",
       "company": "Reliance Industries Ltd.",
       "sector": "Oil, Gas & Consumable Fuels",
-      "nifty50_weight_pct": 8.20,
+      "nifty50_weight_pct": 8.2,
       "weight_snapshot_date": "2026-02-27",
       "snapshot_rank": 3,
       "selection_rationale": "Third-highest weight in the cited official snapshot; NSE stock-derivatives page exposes stock-option calls/puts and contract information.",
@@ -85,6 +85,54 @@
     "historical strategy backtests",
     "profitability ranking",
     "Paytm Money contract-note reconciliation",
-    "independent stock-options holdout test"
-  ]
+    "independent stock-options holdout test",
+    "Dhan API historical data acquisition beyond the bounded probe",
+    "full common-window option liquidity/coverage audit"
+  ],
+  "data_source_protocol": {
+    "primary_source": "DhanHQ Data API expired stock-options rolling history",
+    "docs_url": "https://dhanhq.co/docs/v2/expired-options-data/",
+    "endpoint": "POST https://api.dhan.co/v2/charts/rollingoption",
+    "instrument_master_url": "https://images.dhan.co/api-data/api-scrip-master.csv",
+    "secret_reference_names": [
+      "DHAN_ACCESS_TOKEN",
+      "DHAN_API_ACCESS_TOKEN",
+      "DHAN_TOKEN",
+      "DHAN_DATA_API_TOKEN"
+    ],
+    "token_handling": "Access token is injected at runtime from GitHub Actions secrets; never log or commit it.",
+    "first_probe": {
+      "from_date_inclusive": "2026-08-02",
+      "to_date_exclusive": "2026-09-01",
+      "maximum_days_per_request": 30,
+      "frequency_minutes": 1,
+      "strike": "ATM",
+      "expiry_flag": "MONTH",
+      "expiry_code": 0,
+      "option_types": [
+        "CALL",
+        "PUT"
+      ],
+      "probes_expected": 10
+    },
+    "fields": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "iv",
+      "volume",
+      "strike",
+      "oi",
+      "spot",
+      "timestamp"
+    ],
+    "known_constraints": [
+      "Relative strike path can change actual strike through time",
+      "No historical bid/ask/depth documented by this endpoint",
+      "Raw retention/republication rights not yet verified",
+      "Raw payloads are not committed or uploaded; derived aggregate audit only"
+    ],
+    "next_gate": "Verify actual Actions API run; then audit coverage and fixed-contract reconstructability before strategy P&L."
+  }
 }
