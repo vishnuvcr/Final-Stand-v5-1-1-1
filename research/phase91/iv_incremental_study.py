@@ -408,7 +408,8 @@ Strategy promotion: **NONE**.
 - [Error log](PHASE91_ERROR_LOG.md)
 - [Auditable chat/decision log](PHASE91_CHAT_LOG.md)
 - [Engine](research/phase91/iv_incremental_study.py)
-- [Workflow](.github/workflows/phase91-iv-incremental-prediction.yml)
+- [Phase branch workflow](.github/workflows/phase91-iv-temporal-replication-2023.yml)
+- [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
 - [Detailed results](results/phase91/PHASE91_RESULTS.md)
 - [Summary JSON](results/phase91/summary.json)
 - [Coverage ledger](results/phase91/coverage.csv)
@@ -468,7 +469,8 @@ Complete OOS rows/sessions: {summary.get("oos_n",0)}/{summary.get("oos_sessions"
 - [Model metrics](results/phase91/model_metrics.csv)
 - [VIX-regime metrics](results/phase91/vix_regime_metrics.csv)
 - [Analysis engine](research/phase91/iv_incremental_study.py)
-- [Workflow](.github/workflows/phase91-iv-incremental-prediction.yml)
+- [Phase branch workflow](.github/workflows/phase91-iv-temporal-replication-2023.yml)
+- [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
 
 **Interpretation boundary:** predictive gain is not strategy P&L. Historical exact-contract bid/ask/depth, Paytm Money cost-adjusted fills, or live orders were not tested. No strategy has been promoted.
 <!-- PHASE91_END -->"""
