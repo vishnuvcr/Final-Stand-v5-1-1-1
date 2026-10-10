@@ -1,0 +1,164 @@
+name: Phase 98 — Opening-Range Debit Spread
+
+on:
+  push:
+    branches:
+      - phase-98-nifty-opening-range-debit-spread
+    paths:
+      - research/phase98_opening_range_spread.py
+      - tests/test_phase98_opening_range_spread.py
+      - .github/workflows/phase98-opening-range-spread.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase98-opening-range-debit-spread
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-98-nifty-opening-range-debit-spread
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore Hugging Face dataset cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase98-hf-0f4800e43e6f96cec0794369d78eb4d3c4211ef5-${{ runner.os }}
+
+      - name: Install research dependencies
+        run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub pytest tabulate
+
+      - name: Run frozen regression tests
+        id: regression_tests
+        run: pytest -q tests/test_phase98_opening_range_spread.py
+
+      - name: Run source-pinned strategy replay
+        id: backtest
+        if: steps.regression_tests.outcome == 'success'
+        continue-on-error: true
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_HUB_DISABLE_TELEMETRY: '1'
+          HF_HUB_DISABLE_PROGRESS_BARS: '1'
+        run: python research/phase98_opening_range_spread.py
+
+      - name: Audit accepted outputs
+        id: audit
+        if: always() && steps.regression_tests.outcome == 'success' && steps.backtest.outcome == 'success'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out = Path('results/phase98_opening_range_spread')
+          required = ['summary.csv','coverage_audit.csv','trade_ledger.csv','daily_returns.csv','monthly_stability.csv','inference.json','decision.json','source_manifest.json','validation_report.json','report.md']
+          missing = [x for x in required if not (out/x).exists() or (out/x).stat().st_size == 0]
+          if missing:
+              raise SystemExit('Missing/empty Phase 98 output files: ' + ', '.join(missing))
+          vr=json.loads((out/'validation_report.json').read_text())
+          decision=json.loads((out/'decision.json').read_text())
+          if vr.get('status') != 'PASS': raise SystemExit('validation_report status is not PASS')
+          if vr.get('checks',{}).get('protected_holdout_loaded') is not False: raise SystemExit('holdout protection check failed')
+          if vr.get('checks',{}).get('all_loaded_expiry_content_at_or_before_2025_12_31') is False: raise SystemExit('post-2025 expiry content detected')
+          if decision.get('phase98_live_or_paper_promotion') is not False: raise SystemExit('forbidden strategy promotion flag')
+          print('Phase 98 output reconciliation passed; economic decision:', decision.get('primary_economic_status'))
+          PY
+
+      - name: Persist result, status and error audit trail
+        if: always()
+        env:
+          TEST_OUTCOME: ${{ steps.regression_tests.outcome }}
+          REPLAY_OUTCOME: ${{ steps.backtest.outcome }}
+          AUDIT_OUTCOME: ${{ steps.audit.outcome }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          repo = 'vishnuvcr/Final-Stand-v5-1-1-1'
+          out = Path('results/phase98_opening_range_spread')
+          vrp = out/'validation_report.json'
+          dp = out/'decision.json'
+          status = 'FAILED_BEFORE_NUMERICAL_RUN'
+          why = ''
+          if vrp.exists():
+              vr = json.loads(vrp.read_text())
+              status = vr.get('status','UNKNOWN')
+              why = vr.get('error','')
+          decision = json.loads(dp.read_text()) if dp.exists() else {}
+          econ = decision.get('primary_economic_status','NOT_EVALUATED')
+          test_outcome = os.getenv('TEST_OUTCOME','unknown')
+          replay_outcome = os.getenv('REPLAY_OUTCOME','skipped')
+          audit_outcome = os.getenv('AUDIT_OUTCOME','skipped')
+          run_url = os.getenv('RUN_URL','')
+          detail = (f'Run {os.getenv("RUN_ID","")} — tests={test_outcome}; replay={replay_outcome}; audit={audit_outcome}; '
+                    f'runner_status={status}; economics={econ}; URL={run_url}')
+          p=Path('PHASE98_STATUS.md')
+          p.write_text('# Phase 98 Status — NIFTY Opening-Range Debit Spread\n\n'
+              f'**Latest execution:** {status}  \n**Economic status:** {econ}  \n**Tests / replay / audit:** {test_outcome} / {replay_outcome} / {audit_outcome}  \n'
+              f'**Latest run:** [{os.getenv("RUN_ID","")}]({run_url})\n\n'
+              '## Decision\n\n'
+              + (f'Arm A validation net: ₹{decision.get("arm_a_validation_base_net_pnl",float("nan")):,.2f}; severe stress: ₹{decision.get("arm_a_validation_stress_net_pnl",float("nan")):,.2f}.\n\n' if decision else 'No accepted numerical outcome.\n\n')
+              + 'No live or paper promotion is allowed from Phase 98. Protected 2026 holdout remains unopened.\n\n'
+              '## Links\n- [Plan](PHASE98_RESEARCH_PLAN.md)\n- [Preregistration](PHASE98_PRE_REGISTRATION.md)\n- [Runner](research/phase98_opening_range_spread.py)\n- [Tests](tests/test_phase98_opening_range_spread.py)\n- [Workflow](.github/workflows/phase98-opening-range-spread.yml)\n- [Results](results/phase98_opening_range_spread/report.md)\n- [Error log](PHASE98_ERROR_LOG.md)\n- [Research log](PHASE98_RESEARCH_LOG.md)\n- [Visible chat log](PHASE98_CHAT_LOG.md)\n')
+          with Path('PHASE98_RESEARCH_LOG.md').open('a') as f:
+              f.write('\n\n## ' + detail + '\n- Result status: ' + status + '. Economic status: ' + econ + '.\n- Protected Phase 83 2026 holdout loaded: NO. No strategy is promoted.\n')
+          with Path('PHASE98_CHAT_LOG.md').open('a') as f:
+              f.write('\n\n## Latest visible execution\n- ' + detail + '\n- No private reasoning is stored; status and reproducible execution facts only.\n')
+          failure = test_outcome != 'success' or replay_outcome != 'success' or audit_outcome != 'success' or status != 'PASS'
+          if failure:
+              with Path('PHASE98_ERROR_LOG.md').open('a') as f:
+                  f.write('\n\n## Automated execution issue — ' + detail + '\n- Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.\n- Runner detail: ' + (why or 'See workflow logs and validation_report.json.') + '\n')
+              with Path('ERROR_LOG.md').open('a') as f:
+                  f.write('\n\n## Phase 98 execution issue\n- ' + detail + '\n- Classified as non-evidence until the output and coverage gates pass.\n')
+          with Path('RESEARCH_LOG.md').open('a') as f:
+              f.write('\n\n## Phase 98 automated checkpoint\n- ' + detail + '\n- This was a trade-level, source-pinned replay. OHLC fill prices are proxies; no live strategy promotion.\n')
+          with Path('README.md').open('a') as f:
+              f.write('\n\n## Phase 98 — NIFTY opening-range debit spread\n\n'
+                  f'- Latest status: **{status}**; economic status: **{econ}**.\n'
+                  f'- Latest run: [{os.getenv("RUN_ID","")}]({run_url}).\n'
+                  '- Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).\n'
+                  '- Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).\n'
+                  '- Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add PHASE98_STATUS.md PHASE98_ERROR_LOG.md PHASE98_RESEARCH_LOG.md PHASE98_CHAT_LOG.md README.md ERROR_LOG.md RESEARCH_LOG.md results/phase98_opening_range_spread
+          git diff --cached --quiet && exit 0
+          git commit -m 'phase98: publish replay status and research audit trail'
+          git fetch origin phase-98-nifty-opening-range-debit-spread
+          git rebase origin/phase-98-nifty-opening-range-debit-spread
+          git push origin HEAD:phase-98-nifty-opening-range-debit-spread
+
+      - name: Enforce test, replay and audit outcomes after publishing logs
+        if: always()
+        run: |
+          test '${{ steps.regression_tests.outcome }}' = 'success'
+          test '${{ steps.backtest.outcome }}' = 'success'
+          test '${{ steps.audit.outcome }}' = 'success'
+
+      - name: Upload derived aggregate artifacts only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase98-derived-results-${{ github.run_id }}
+          if-no-files-found: warn
+          path: |
+            results/phase98_opening_range_spread/report.md
+            results/phase98_opening_range_spread/*.csv
+            results/phase98_opening_range_spread/*.json
+            results/phase98_opening_range_spread/*.jsonl
