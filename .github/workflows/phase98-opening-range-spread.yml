@@ -40,6 +40,11 @@ jobs:
           path: ~/.cache/huggingface/hub
           key: phase98-hf-0f4800e43e6f96cec0794369d78eb4d3c4211ef5-${{ runner.os }}
 
+      - name: Clear stale result artifacts from earlier runs
+        run: |
+          rm -rf results/phase98_opening_range_spread
+          mkdir -p results/phase98_opening_range_spread
+
       - name: Install research dependencies
         run: python -m pip install --no-input numpy pandas pyarrow huggingface_hub pytest tabulate
 
