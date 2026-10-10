@@ -141,8 +141,8 @@ jobs:
           ATTEMPTS=0
           if [ -f "$COUNTER" ]; then ATTEMPTS="$(jq -r '.attempts // 0' "$COUNTER")"; fi
           ATTEMPTS="$((ATTEMPTS + 1))"
-          printf '{"attempts":%s,"last_failed_run_id":"%s","last_failed_commit":"%s"}\\n' "$ATTEMPTS" "$GITHUB_RUN_ID" "$GITHUB_SHA" > "$COUNTER"
-          printf '\\n\\n## Automated run failure — %s\\n- Workflow run: %s\\n- Commit: %s\\n- Attempt: %s/3 automatic attempts\\n- Job conclusion: failure; inspect the linked Actions logs for the failed step. No numerical output from this run is accepted unless all research report and audit gates completed.\\n- Automatic attempts stop at 3; a subsequent manually forced attempt needs concrete error correction and must preserve previous entries.\\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_RUN_ID" "$GITHUB_SHA" "$ATTEMPTS" >> PHASE64_ERROR_LOG.md
+          printf '{"attempts":%s,"last_failed_run_id":"%s","last_failed_commit":"%s"}\n' "$ATTEMPTS" "$GITHUB_RUN_ID" "$GITHUB_SHA" > "$COUNTER"
+          printf '\n\n## Automated run failure — %s\n- Workflow run: %s\n- Commit: %s\n- Attempt: %s/3 automatic attempts\n- Job conclusion: failure; inspect the linked Actions logs for the failed step. No numerical output from this run is accepted unless all research report and audit gates completed.\n- Automatic attempts stop at 3; a subsequent manually forced attempt needs concrete error correction and must preserve previous entries.\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_RUN_ID" "$GITHUB_SHA" "$ATTEMPTS" >> PHASE64_ERROR_LOG.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add PHASE64_ERROR_LOG.md "$COUNTER"
