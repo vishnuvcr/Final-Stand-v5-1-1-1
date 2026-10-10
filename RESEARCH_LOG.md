@@ -176,3 +176,11 @@ Phase 51-1 stopped fail-closed on data availability before any fresh OOS strateg
 - Dhan date semantics were measured rather than assumed: distinct start/end request returned end-date rows despite documentation saying non-inclusive; same-date request returned just that day. The code compensates by mapping the target half-open window `[start,end)` to provider `fromDate=start`, `toDate=end-1 day`, then checks all IST dates.
 - Seven-offset strike continuity code is being validated separately. The initial 70-probe request is not accepted because it did not complete an aggregate run; a seven-call HDFCBANK CALL offset diagnostic is now the default. This is data-source engineering, not strategy testing.
 - Phase 103 status/details: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options.
+
+
+## 2026-10-11 — First relative-strike continuity diagnostic
+
+- The Dhan ATM source-access run [38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338) passed 13 tests and 10/10 probes across the five stocks and CALL/PUT sides on one IST session.
+- First HDFCBANK CALL offset audit [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649) queried seven offsets. Counts were 385 for ATM through ATM-2 and 384 for ATM-3, all rows in-window. Six actual strikes had full 385-timestamp coverage, 8 actual strikes were observed overall, and duplicate timestamp/strike keys were 0. Full grid still fails strict alignment because 384/385 timestamps were common to all seven offset series.
+- The next step expands only after the client stops early on invalid/empty payloads; no imputation, P&L or profitability inference is permitted from this diagnostic.
+- Raw response rows remain unpublished pending Dhan storage/retention rights review.

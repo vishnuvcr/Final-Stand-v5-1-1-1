@@ -192,3 +192,8 @@ Phase-specific errors and corrections are recorded in [PHASE102_ERROR_LOG.md](ht
 - Confirmed successful Dhan API access for a bounded one-day screen in [run 38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338): 10/10 CALL/PUT probes across the five chosen stocks returned 385 rows, array lengths consistent and zero timestamps outside 2026-08-03 IST after date-boundary adaptation.
 - Remaining limitation is fixed-strike reconstruction: Dhan returns rolling relative-strike series and no historical bid/ask/depth. The first 70-request offset expansion did not produce an accepted summary. The default expansion has been reduced to seven HDFCBANK CALL offsets and aborts on the first invalid/empty response.
 - No raw data are published pending confirmation of Dhan retention/republication permissions. No strategy P&L or profitability conclusion is claimed. Detailed errors and all superseded runs remain documented on the isolated Phase-103 branch.
+
+
+## Phase 103 — Relative-strike continuity limitation (2026-10-11)
+
+Dhan API access is verified for one common session across the initial five-stock basket, but fixed-contract reconstruction remains a separate gate. The first HDFCBANK CALL seven-offset panel produced 385 rows for six offsets and 384 for ATM-3. Six actual strikes covered the complete 385-timestamp union; strict all-offset alignment failed because one offset missed one timestamp. Do not impute missing bars or convert relative ATM labels directly into trade P&L. Further stock-side coverage and execution-quality/rights audits are required. Full details are in the [Phase 103 branch error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_ERROR_LOG.md).
