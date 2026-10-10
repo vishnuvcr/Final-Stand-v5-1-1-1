@@ -33,3 +33,11 @@
 - Root-cause hypothesis: `cache: pip` was enabled without a dependency manifest or `cache-dependency-path`, so setup-python could not resolve a cache key. This is consistent with the failed setup step; full log text was not available in the connector response.
 - Correction: removed pip caching from the workflow rather than adding a fake manifest. Dependency installation remains explicit in the next step.
 - Prevention: keep dependency caching disabled until a tracked requirements/pyproject file is introduced; never mark the numerical audit complete based on a setup-only run.
+
+
+## E67-006 — Derived-output publication failed after successful audit
+- Status: publication retry fix committed; verification pending.
+- Evidence: [run 38033032907](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033032907) passed setup, dependency installation, tests, bounded numerical audit, and output-file validation. The final `Commit derived audit and status` step failed; no artifacts or generated outputs were published.
+- Exact git error text was not exposed by the available run metadata. A concurrent update to shared status/README files is a plausible non-fast-forward cause, but not confirmed.
+- Correction: workflow now runs `git pull --rebase origin "$GITHUB_REF_NAME"` before push, so concurrent branch commits should be reconciled instead of losing generated results.
+- Do not report the diagnostic's numerical findings until output files are committed and reviewed.
