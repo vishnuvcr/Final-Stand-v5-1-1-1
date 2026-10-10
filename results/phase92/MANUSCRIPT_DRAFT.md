@@ -15,7 +15,7 @@ Option-implied volatility, option open interest (OI), and put–call relationshi
 Four preregistered studies were completed using Dhan’s rolling-ATM NIFTY options endpoint and historical India VIX candles. Phase 89 analysed feature associations on the 2025 sample with session-clustered standard errors and Holm correction for a four-test family. Phase 90 compared frozen spot-only, spot-plus-VIX, and spot-plus-VIX-plus-IV models on a distinct 2024 sample. Phase 91 replicated the IV model comparison using 2023 data. Phase 92 evaluated a fixed 2022 feature block comprising a rolling-ATM synthetic-forward proxy gap, (K+C-P) relative to spot, and CALL/PUT OI imbalance. In Phases 90–92, models were fit on January–June, July–September was report-only validation, and October–December was confirmatory out-of-sample (OOS). The primary comparisons used paired trading-session-cluster bootstrap intervals, 5,000 resamples, seed 90210.
 
 ### Results
-In Phase 89, mean ATM CALL/PUT IV was positively associated with absolute next-15-minute NIFTY spot return (standardized-feature coefficient 0.602 basis points per standard deviation; 95% clustered CI 0.225 to 0.980; Holm-adjusted (p=0.00706)). The other three preregistered feature tests were not significant after Holm correction. In Phase 90, adding IV after spot features and India VIX reduced OOS mean absolute error (MAE) by 0.0330385 basis points (95% bootstrap CI 0.0001393 to 0.0561543), a very small effect. In Phase 91, the same comparison on the independent 2023 period produced only 0.0001111 bps improvement (95% CI −0.0110700 to 0.0102532), so the 2024 result did not replicate. In Phase 92, the combined synthetic-forward/OI feature block worsened MAE relative to the spot-plus-VIX-plus-IV baseline by 0.1708363 bps (95% CI −0.2298769 to −0.1152015). Phase 92 data, VIX, and sample gates passed.
+In Phase 89, mean ATM CALL/PUT IV was positively associated with absolute next-15-minute NIFTY spot return (standardized-feature coefficient 0.602 basis points per standard deviation; 95% clustered CI 0.225 to 0.980; Holm-adjusted p=0.00706). The other three preregistered feature tests were not significant after Holm correction. In Phase 90, adding IV after spot features and India VIX reduced OOS mean absolute error (MAE) by 0.0330385 basis points (95% bootstrap CI 0.0001393 to 0.0561543), a very small effect. In Phase 91, the same comparison on the independent 2023 period produced only 0.0001111 bps improvement (95% CI −0.0110700 to 0.0102532), so the 2024 result did not replicate. In Phase 92, the combined synthetic-forward/OI feature block worsened MAE relative to the spot-plus-VIX-plus-IV baseline by 0.1708363 bps (95% CI −0.2298769 to −0.1152015). Phase 92 data, VIX, and sample gates passed.
 
 ### Conclusions
 The studies do not establish a reliable, temporally replicable incremental predictor edge from rolling-ATM IV, nor did the 2022 synthetic-forward/OI block improve the registered spot-magnitude forecast. None of the phases tests option-strategy profit-and-loss, direction, causal mechanism, actual futures basis, executable fills, bid/ask/depth, or cost-adjusted returns. The rolling-ATM predictor line is closed at Phase 92’s preregistered stopping boundary. No strategy is recommended for live trading.
@@ -124,9 +124,9 @@ The frozen models were:
 - **M2 — spot + VIX + IV:** M1 plus mean ATM CALL/PUT IV.
 
 The target was the absolute forward fifteen-minute NIFTY spot return in basis points:
-[
-Y_t=left|left(S_{t+15}/S_t-1ight)	imes10{,}000ight|.
-]
+
+`Y_t = |(S_(t+15) / S_t - 1) × 10,000|`.
+
 Forward targets were retained only where a matching observation existed exactly fifteen minutes later in the same session with no interval gap. Features and model parameters were standardized/estimated on DEV only; negative predictions were clipped to zero. Validation was a reporting split and did not influence tuning or feature choice.
 
 Splits per year: DEV January–June; validation July–September; OOS October–December. Phase 90’s single primary statistic was MAE(M1)−MAE(M2). Phase 91 used the same statistic on 2023’s distinct annual sample. Positive values mean adding IV improved MAE.
@@ -141,14 +141,15 @@ Phase 92 compared:
 - **M4:** M3 + the prior completed bar’s CE/PE OI imbalance.
 
 The proxy was:
-[
-F^{proxy}_t=K_t+C_t-P_t,qquad
-g_t=10{,}000rac{F^{proxy}_t-S_t}{S_t}.
-]
+
+`F_proxy,t = K_t + C_t − P_t`
+
+`g_t = 10,000 × (F_proxy,t − S_t) / S_t`.
+
 OI imbalance was:
-[
-OIratio_t=rac{OI_{CE,t}-OI_{PE,t}}{OI_{CE,t}+OI_{PE,t}},
-]
+
+`OIratio_t = (OI_CE,t − OI_PE,t) / (OI_CE,t + OI_PE,t)`,
+
 defined only for a positive denominator.
 
 To reduce look-ahead risk, option close-derived synthetic proxy, IV and OI features were lagged one complete five-minute row. VIX close was also conservatively lagged one row. CALL and PUT strikes had to agree at the paired timestamp. All models were fitted on DEV only and scored on exactly the same complete rows. There was no imputation.
@@ -310,6 +311,8 @@ The raw market payloads were not committed or published. Phase-specific Actions 
 - **Target sign:** all Phase 90–92 primary targets are absolute return magnitudes. A positive primary MAE difference means the augmented model has lower MAE; for Phase 92 the sign convention is explicitly MAE(M2)−MAE(M4), so a positive value would favour added synthetic/OI features.
 
 ## Appendix C. Literature referenced
+
+## References
 
 1. Poon, S.-H., & Granger, C. W. J. (2003). Forecasting volatility in financial markets: A review. *Journal of Economic Literature*, 41(2), 478–539. [https://doi.org/10.1257/002205103765762743](https://doi.org/10.1257/002205103765762743)
 2. Christensen, B. J., & Prabhala, N. R. (1998). The relation between implied and realized volatility. *Journal of Financial Economics*, 50(2), 125–150. [https://doi.org/10.1016/S0304-405X(98)00034-8](https://doi.org/10.1016/S0304-405X(98)00034-8)
