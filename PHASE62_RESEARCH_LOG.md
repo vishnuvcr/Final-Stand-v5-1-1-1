@@ -15,3 +15,10 @@
 - Added GitHub Actions workflow with automatic branch-push execution and a manual dispatch option.
 - Artifact policy is aggregate-only; raw files and temporary signed URLs are not committed or uploaded.
 - Runtime result is pending independent verification. No P&L, purchase, holdout use or strategy promotion.
+
+
+## 2026-10-10 — Live coverage catalog delta
+- Public live coverage page currently lists NIFTY 1-minute options from January 2023 through October 2026, so the two Phase 51 target dates lie within the advertised overall span. This is a series-level date range only; the rendered public page does not independently expose the exact per-date/per-expiry file manifest for 2026-07-28 and 2026-08-04.
+- Source: https://optionsdata.shop/coverage (reviewed 2026-10-10). The vendor's dataset page lists the 1-minute full-chain pack at ₹7,249 and approximately 1.5 GB for options. No purchase authorized or made.
+- The free sample is an actual 2026-09-15–17 sample and its public download redirects to a short-lived signed object URL. Direct execution in this environment was unavailable due network DNS resolution failure; this is an environment limitation, not evidence that the vendor file is corrupt. The GitHub Actions validator is intended to execute from a network-enabled runner; its run output must be inspected before claiming a pass.
+- Decision: retain `BLOCKED_EXACT_TARGET_SAMPLE_REQUIRED`. Exact target contracts, all required minute keys, source OI semantics, and permitted retention/derived-publication terms have not been independently validated against the target files. No P&L or holdout use.
