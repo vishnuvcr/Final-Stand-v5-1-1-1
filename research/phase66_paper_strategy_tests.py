@@ -503,6 +503,7 @@ def main():
             "coverage95": bool(v["entry_or_exit_coverage"] is not None and np.isfinite(v["entry_or_exit_coverage"]) and v["entry_or_exit_coverage"] >= 0.95),
             "positive_all_registered_cost_cases": economic, "statistical_gate": bool(statistical),
             "promotion_eligible": False, "reason": "Phase 66 is research-only; >=20 trades/coverage/cost/statistical gates are necessary but not sufficient"})
+    # Keep the emitted metadata aligned to Phase 66; this runner was derived from Phase 64.
     (OUT / "decision.json").write_text(json.dumps({"phase":66,"decision":"RESEARCH_ONLY_NO_PROMOTION",
         "candidate_decisions":decision,"source_data_license":"CC-BY-NC-4.0",
         "limitations":["monthly expiry uses last option-file expiry of each calendar month as a proxy",
