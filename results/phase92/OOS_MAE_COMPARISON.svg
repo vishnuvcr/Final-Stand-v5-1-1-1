@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="570" viewBox="0 0 1000 570" role="img" aria-labelledby="title desc">
+<title id="title">Phase 92 out-of-sample MAE comparison</title>
+<desc id="desc">Horizontal bars compare mean absolute error for spot plus VIX, spot plus VIX plus ATM implied volatility, a synthetic-forward proxy extension, and an OI imbalance extension. A lower MAE is better.</desc>
+<rect width="1000" height="570" fill="#ffffff"/>
+<text x="54" y="44" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#1f2937">Phase 92 — Q4 2022 OOS MAE</text>
+<text x="54" y="73" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#4b5563">Target: absolute next-15-minute NIFTY spot return magnitude · lower is better</text>
+<text x="54" y="105" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#4b5563">MAE (basis points)</text>
+<g stroke="#e5e7eb" stroke-width="1">
+<line x1="350" y1="132" x2="350" y2="428"/>
+<line x1="480" y1="132" x2="480" y2="428"/>
+<line x1="610" y1="132" x2="610" y2="428"/>
+<line x1="740" y1="132" x2="740" y2="428"/>
+<line x1="870" y1="132" x2="870" y2="428"/>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#6b7280" text-anchor="middle">
+<text x="350" y="451">0</text><text x="480" y="451">1.5</text><text x="610" y="451">3.0</text><text x="740" y="451">4.5</text><text x="870" y="451">6.0</text>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#374151" text-anchor="end">
+<text x="332" y="177">M1 · Spot + VIX</text>
+<text x="332" y="247">M2 · + ATM IV</text>
+<text x="332" y="317">M3 · + synthetic proxy</text>
+<text x="332" y="387">M4 · + OI imbalance</text>
+</g>
+<g>
+<rect x="350" y="151" width="415.89" height="35" rx="4" fill="#64748b"/>
+<rect x="350" y="221" width="417.87" height="35" rx="4" fill="#64748b"/>
+<rect x="350" y="291" width="422.86" height="35" rx="4" fill="#d97706"/>
+<rect x="350" y="361" width="432.66" height="35" rx="4" fill="#b91c1c"/>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#111827">
+<text x="777" y="173">4.7987</text>
+<text x="779" y="243">4.8214</text>
+<text x="784" y="313">4.8791</text>
+<text x="794" y="383">4.9922</text>
+</g>
+<line x1="767.87" y1="134" x2="767.87" y2="415" stroke="#111827" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.75"/>
+<text x="54" y="485" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#1f2937">Primary comparison: M2 vs M4</text>
+<text x="54" y="511" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#374151">M2 − M4 = −0.1708 bps; 95% session-cluster bootstrap CI −0.2299 to −0.1152.</text>
+<text x="54" y="535" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#374151">The interval is entirely below zero: the combined synthetic-forward/OI block worsened MAE on this sample.</text>
+<text x="54" y="555" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6b7280">Source: Phase 92 aggregate results. Predictor study only; not strategy P&amp;L or actual traded FUTIDX basis.</text>
+</svg>
