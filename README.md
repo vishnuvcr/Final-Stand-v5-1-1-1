@@ -8,6 +8,7 @@
 - [Phase 92 error log](PHASE92_ERROR_LOG.md)
 - [Phase 92 auditable chat log](PHASE92_CHAT_LOG.md)
 - [Detailed results](results/phase92/PHASE92_RESULTS.md)
+- [Cross-phase factor synthesis and stop decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
 - [Cross-feature model metrics](results/phase92/model_metrics.csv)
 - [Coverage ledger](results/phase92/coverage.csv)
 - [Summary JSON](results/phase92/summary.json)
