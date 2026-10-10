@@ -116,7 +116,7 @@ def _load_yahoo(cache_file):
     return raw, returns
 
 def _first_weekday(period, weekday):
-    day = pd.Timestamp(period.start_time.date())
+    day = pd.Timestamp(period.start_time.date(), tz=TZ)
     return day + pd.Timedelta(days=(weekday-day.weekday()) % 7)
 
 def _day_bars(index, date):
@@ -283,7 +283,7 @@ def build_u02_frame(p66,api,token,monthly,index,daily,manifest):
     opt=pd.DataFrame(rows).drop_duplicates("date",keep="last").set_index("date").sort_index()
     base=["ret1","ret5","ret20","ma5_gap","ma20_gap","ma50_gap","ema12_26_gap","rsi14","rv20","intraday_range"]
     frame=daily[base].join(opt.drop(columns=["source_month"],errors="ignore"),how="inner")
-    frame["next_date"]=frame.index.to_series().shift(-1)
+    frame["next_date"]=daily.index.to_series().shift(-1).reindex(frame.index)
     frame["next_close"]=daily.close.shift(-1).reindex(frame.index)
     frame["spot_close"]=daily.close.reindex(frame.index)
     frame["next_return"]=frame.next_close/frame.spot_close-1
