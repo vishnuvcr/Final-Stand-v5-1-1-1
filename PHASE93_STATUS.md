@@ -19,6 +19,10 @@ This is a bounded review of the 14 uploaded PDFs. It does not reopen the closed 
 
 The uploaded literature motivates diverse hypotheses, but it does not by itself resolve the project’s principal execution-data gap. Daily index forecast metrics, option strategy descriptions, and unreplicated author-reported backtests do not establish that any existing Final Stand strategy is profitable after exact-contract execution and Paytm Money costs.
 
+## Cross-phase reconciliation
+
+The Shaha CCI source in upload U14 is the same paper already examined in [Phase 66](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md). That fixed OHLC-based adaptation produced zero completed trades and zero entry/exit coverage. Profitability was not estimable, and the original 2008–2018 source period was unavailable in the selected dataset. The correct next step is not to rerun the same rules; it is to wait for materially better authorized source coverage or proceed only with another already-registered, data-sufficient hypothesis.
+
 ## Deliverables
 
 - [Plan](PHASE93_RESEARCH_PLAN.md)
