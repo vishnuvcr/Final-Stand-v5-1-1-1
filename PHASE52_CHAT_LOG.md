@@ -225,3 +225,11 @@ User requested that issues be resolved. Investigation identified a material v0.1
 - Phase 54 consumed the byte-identical corrected ledger and passed [run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101): coverage by 2, 3, 4, 5, 6, 8, 10, 12, 15, 20 and 1000% OHLC range thresholds was 1, 1, 8, 24, 55, 91, 150, 227, 298, 345 and 380 rows. Fixed prior-OI blockers=100 at every threshold; each threshold reconciled to 480.
 - Interpretation: coverage-only diagnostic. Candle range is not a bid/ask spread; no profitability, fill, exit or strategy superiority conclusion. No holdout or promotion.
 - To satisfy Phase 55's stricter every-selected-leg audit, the strategy resolver and runner were changed to continue after OI failures, retain all legs and record NOT_TESTED/pass/fail states where supported; the regression suite adds a multi-leg OI-failure case. Frozen source/grid/costs/splits/thresholds stay unchanged. Full rerun is ongoing in [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521).
+
+
+## 2026-10-10 — Continuation update: leg audit, OI diagnosis and cost-aware sensitivity
+
+- Phase 55 and Phase 54 passed their bounded data-integrity and eligibility gates; Phase 56 passed its preregistered cost-aware OHLC price-reference sensitivity on the canonical Phase 55 input (run 38019323348).
+- Supporting source audit found 60 unique contract-time keys with one exact row and OI=0, covering 220 blocked leg references. The fixed OI gate remains in force.
+- Five configuration-threshold pairs at the 1000% diagnostic range threshold are quote-validation leads only. No quote/depth data, holdout, statistical significance or live strategy promotion is claimed.
+- Continue with independent replay reproduction and then the original Phase52 factor-selector/data coverage plan.
