@@ -1,5 +1,7 @@
 # Phase 92 Results — synthetic-forward proxy and CALL/PUT OI imbalance
 
+**Full research package:** [manuscript draft](MANUSCRIPT_DRAFT.md) · [supplementary materials](SUPPLEMENTARY_MATERIALS.md) · [cross-phase synthesis / stop decision](CROSS_PHASE_FACTOR_SYNTHESIS.md)
+
 Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106  
 Status: **NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample**  
 Sample: calendar 2022 only. Phase 90/91 cached payloads are not reused. The protected Phase 83 2026 holdout was not requested or loaded.
