@@ -76,7 +76,7 @@ jobs:
           if report and status=="success":
               summary=(f"- Run: [{run_id}]({url}); workflow status=success.\n"
                        f"- Decision: {report['status']}. Phase52 executed rows={report['cross_phase_evidence']['phase52_baseline']['executed_rows']}/480.\n"
-                       f"- Phase59 accepted exact OI sources={report['source_audit']['accepted_free_license_clear_exact_prior_minute_oi_sources']}; quote/depth sources={report['source_audit']['accepted_free_license_clear_exact_quote_depth_sources']}.\n"
+                       f"- Phase59 accepted exact OI sources={report['source_audit']['authorized_exact_prior_minute_oi_sources']}; quote/depth sources={report['source_audit']['authorized_exact_quote_depth_sources']}.\n"
                        "- No new data downloaded, no holdout used, no strategy promoted. Empirical strategy testing remains blocked pending the documented restart requirements.\n")
           else:
               summary=f"- Run: [{run_id}]({url}); workflow status={status}; report missing or unaccepted. No conclusion accepted.\n"
