@@ -21,3 +21,8 @@ No execution defects observed yet.
 ## E96-010 — Second HIGH-regime coverage failure (2026-10-10)
 - The 5-trade minimum still found no eligible HIGH candidate. A split-filtered coverage audit found HIGH-regime DEV rows have 6 trades but matching validation rows only 3 trades for the available defined-risk candidates.
 - Resolution: registered a minimum of 3 trades per split for all three regimes. HIGH-regime findings are explicitly low-powered and descriptive; no promotion allowed.
+
+## E96-011 — Regime-selection result failed (2026-10-10)
+- Successful computation run [38054856414](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054856414) selected LOW=`strap`, NORMAL=`strip`, HIGH=`short_iron_condor` by development net50. Validation net50 values were −₹187,009.45, −₹113,665.57 and −₹2,760.10; aggregate −₹303,435.13.
+- Decision: method fails; no strategy promoted. HIGH has only 3 validation trades after documented feasibility amendments and is not inferentially reliable.
+- Limitation retained: source net50 is not evidence of complete Paytm Money all-in execution costs; no trade-overlap/capital-allocation ledger exists to support portfolio claims.
