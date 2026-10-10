@@ -1,0 +1,50 @@
+{
+  "phase": 96,
+  "status": "PASS",
+  "source_path": "results/phase45_ready_made/strategy_vix_summary.csv",
+  "source_blob_sha": "4208da2e1189a68af697e11d03dd7d4ac937ddf7",
+  "regimes": [
+    "LOW",
+    "NORMAL",
+    "HIGH"
+  ],
+  "minimum_trades_per_split": 3,
+  "selection_rule": "per regime: defined_risk=True; DEV and VAL trades >=3; maximize DEV net50; alphabetical tie-break",
+  "primary_endpoint": "sum of selected LOW/NORMAL/HIGH validation net50 cells",
+  "selected_regimes": [
+    {
+      "regime": "LOW",
+      "strategy": "strap",
+      "dev_net50": 131358.41,
+      "val_net50": -187009.45,
+      "val_trades": 49,
+      "val_max_dd": 295870.22,
+      "eligible_candidates": 23
+    },
+    {
+      "regime": "NORMAL",
+      "strategy": "strip",
+      "dev_net50": 62823.99,
+      "val_net50": -113665.57,
+      "val_trades": 49,
+      "val_max_dd": 164903.92,
+      "eligible_candidates": 23
+    },
+    {
+      "regime": "HIGH",
+      "strategy": "short_iron_condor",
+      "dev_net50": 9519.01,
+      "val_net50": -2760.1,
+      "val_trades": 3,
+      "val_max_dd": 1838.51,
+      "eligible_candidates": 23
+    }
+  ],
+  "aggregate_validation_net50_inr": -303435.13,
+  "primary_endpoint_positive": false,
+  "holdout_rows_retained_or_used": false,
+  "phase83_2026_holdout_accessed": false,
+  "new_market_data_or_strategy_replay": false,
+  "strategy_promoted": false,
+  "interpretation": "PASS means the frozen computation ran; positive aggregate is not proof of deployable portfolio performance because state-cell trade overlap and capital allocation are unavailable."
+}
