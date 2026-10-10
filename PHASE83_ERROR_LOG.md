@@ -17,7 +17,9 @@ Date: 2026-10-10
 - Status: CONTROL.
 - External-paper results are cited as reported by the source or as abstract-level leads. No paper's headline accuracy, Sharpe or P&L is copied into the project's empirical-results ledger.
 
-## E83-005 — Manuscript build or validation failed
-- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38045979044
-- Head SHA: d710cb564f4bcfbc20398989637c31d719d3b38b
-- Status: OPEN pending root-cause diagnosis; manuscript build is not complete.
+## E83-005 — Manuscript builder schema mismatch
+- Status: RESOLVED.
+- Failed run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38045979044.
+- Root cause: the builder required a column named profit_factor, while the frozen Phase 81 ledger correctly uses profit_factor_1tick.
+- Correction: updated the schema guard to the source's actual column name; rerun 38046031945 passed figure build, validation, artifact upload, status/README update and persistence.
+- Impact: no Phase 81/82 numerical results changed; the first attempt stopped before publishing figures or supplementary output.
