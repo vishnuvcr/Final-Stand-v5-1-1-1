@@ -1,3 +1,16 @@
+<!-- PHASE101_AUDIT_START -->
+# Phase 101 — audit correction and revalidation
+
+**Status: REVALIDATION REQUIRED.** The extra adverse-impact stress calculation was corrected to include the same execution-price convention and date-effective charges as the baseline, plus the additional ₹50 round-trip cost. Previous values in that sensitivity column are superseded until the push-triggered workflow passes. No strategy is promoted; 2026 options remain excluded.
+
+- [Phase 101 report](results/phase101_pdf_strategy_tests/PHASE101_REPORT.md)
+- [Phase 101 status](PHASE101_STATUS.md) · [research log](PHASE101_RESEARCH_LOG.md) · [error log](PHASE101_ERROR_LOG.md)
+- [workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase101-full-pdf-strategy-replication.yml)
+- [audit-corrected cost model](research/phase101/paper_strategy_replay.py)
+
+Drawdown remains under audit as a peak-to-trough account metric; do not assume it is erroneous solely because it exceeds initial capital. No 2026 option data were loaded.
+<!-- PHASE101_AUDIT_END -->
+
 <!-- PHASE94_START -->
 # Final research checkpoint — Phase 100 complete
 
