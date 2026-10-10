@@ -1,3 +1,9 @@
+## Phase 67 — latest completed diagnostic (2026-10-10)
+
+**Decision: insufficient evidence for rule-faithful replay; no strategy promotion.** [Actions run 38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) passed end-to-end. Among 30 frozen DEV/VAL trigger rows, 8 had an exact trigger-minute observation, 5 an exact next-minute observation, and 8 had ±2-minute context. Context bars are not fills; ITM/side/expiry mapping and execution-grade quote/depth remain unproven. No P&L or profitability inference is justified.
+
+- [Plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_STATUS.md) · [Summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/results/phase67_contract_coverage/summary.json) · [Report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/results/phase67_contract_coverage/report.md) · [Event diagnostics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/results/phase67_contract_coverage/event_diagnostics.csv) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_ERROR_LOG.md)
+
 # Resume checkpoint — 2026-10-10 (Phase 67 diagnostic underway)
 
 Phase 66 remains the latest completed numerical strategy test: [verification run 38028425558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558) passed, but the frozen CCI_BASE and CCI_EMA_FILTER candidates produced zero completed trades. Profitability statistics are not estimable; no strategy is promoted.
