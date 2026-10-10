@@ -7,6 +7,8 @@ from pathlib import Path
 MASTER = "https://images.dhan.co/api-data/api-scrip-master.csv"
 ENDPOINT = "https://api.dhan.co/v2/charts/rollingoption"
 SYMBOLS = ["HDFCBANK", "ICICIBANK", "RELIANCE", "SBIN", "INFY"]
+# The provider currently rejects code 0 as missing; use the documented sample value 1 (next expiry).
+EXPIRY_CODE = 1
 FIELDS = ["open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp"]
 
 def get_bytes(url, timeout=30):
@@ -78,7 +80,7 @@ def safe_error_details(raw, token):
 
 def query(token, security_id, option_type, start, end):
     body = {"exchangeSegment":"NSE_FNO","interval":"1","securityId":str(security_id),
-            "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":0,"strike":"ATM",
+            "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":EXPIRY_CODE,"strike":"ATM",
             "drvOptionType":option_type,
             "requiredData":["open","high","low","close","iv","volume","strike","oi","spot"],
             "fromDate":start,"toDate":end}
