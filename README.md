@@ -1,3 +1,13 @@
+# Resume checkpoint — 2026-10-10 (Phase 73 source suitability decision)
+
+Phase 73 [workflow run 38042070177](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38042070177) recorded 16/24 responses; all eight `expiryCode=0` probes returned HTTP 400. Codes 1/2 returned rows, but exact expiry dates are not established by these aggregate responses. The `strike` arrays contained only 7 distinct absolute strikes on 2026-07-28 and 5 on 2026-08-04 over the multi-session response. Because Dhan's API is explicitly rolling ATM-relative, its absolute strike can change through time.
+
+**Decision: NO-GO for using this endpoint alone to compute frozen fixed-contract position P&L.** Clean timestamps and OHLC arrays do not fix contract continuity. Do not use these rolling series as if they were a single held option contract. The source may still support carefully scoped rolling-relative factor analysis, subject to data-use rights. The next research step should test exact historical contract mapping against an authorized source or a fixed-contract dataset; no paid pack has been purchased.
+
+- [Phase 73 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_ERROR_LOG.md) · [Aggregate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/results/phase73_expiry_strike_mapping/report.md)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 73 expiry-code comparison)
 
 Phase 72 audit passed [run 38041988143](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041988143). All eight probes had unique timestamps, aligned required arrays and no >1-minute gaps within the regular session. 2026-07-28 had 375 session bars. 2026-08-04 had 375 regular-session bars plus 10 off-session rows through 15:39 IST; those are excluded.
