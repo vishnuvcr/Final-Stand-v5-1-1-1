@@ -6,13 +6,18 @@ on:
       from_date:
         description: "Start date inclusive (YYYY-MM-DD; maximum 30-day window)"
         required: true
-        default: "2026-08-02"
+        default: "2026-08-03"
         type: string
       to_date:
         description: "End date exclusive (YYYY-MM-DD)"
         required: true
-        default: "2026-09-01"
+        default: "2026-08-04"
         type: string
+      max_probes:
+        description: "Maximum underlying/side API probes (1–10); start with 1 for smoke test"
+        required: true
+        default: 1
+        type: number
   push:
     branches:
       - phase-103-nifty50-stock-options
@@ -49,7 +54,7 @@ jobs:
       - name: Unit-test audit code
         run: python -m unittest discover -s tests/phase103 -p "test_*.py" -v
       - name: Query Dhan instrument master and bounded expired-options data
-        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE"
+        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE" --max-probes "$PHASE103_MAX_PROBES"
       - name: Publish status and error/limitation log
         if: always()
         run: |
