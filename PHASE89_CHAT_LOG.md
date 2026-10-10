@@ -22,11 +22,11 @@ User asked: “Rerun the research with this data now!”
 Pending the automatically triggered Phase 89 GitHub Actions run.
 
 <!-- PHASE89_RUNTIME_START -->
-## Automated execution record — 38047664790
-- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047664790
-- Study status: COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations
-- Valid API windows/sides: 28/28.
-- Paired rows after validation: 18604; confirmatory OOS complete rows: 4224 across 62 sessions.
+## Automated execution record — 38047775690
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047775690
+- Study status: COMPLETE WITH DATA-COVERAGE CAVEAT — OOS sample gate passed on available aligned records
+- Valid API windows/sides: 25/26.
+- Paired rows after validation: 17144; confirmatory OOS complete rows: 2622 across 57 sessions.
 - Main results and complete aggregate tables are in [PHASE89_RESULTS.md](results/phase89/PHASE89_RESULTS.md) and [primary_tests.csv](results/phase89/primary_tests.csv).
 - Raw payloads and row-level prices were not printed, committed, or uploaded as artifacts. The 2026 Phase 83 holdout was not requested or loaded.
 <!-- PHASE89_RUNTIME_END -->

@@ -1,7 +1,7 @@
 <!-- PHASE89_START -->
 # Resume checkpoint — Phase 89 rolling-options feature study
 
-**Status: COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations.** Automated run [38047664790](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047664790) requested 2025-only Dhan rolling ATM-relative CALL/PUT data and tested the four preregistered IV/OI associations. The protected Phase 83 2026 holdout was not requested or loaded.
+**Status: COMPLETE WITH DATA-COVERAGE CAVEAT — OOS sample gate passed on available aligned records.** Automated run [38047775690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047775690) requested 2025-only Dhan rolling ATM-relative CALL/PUT data and tested the four preregistered IV/OI associations. The protected Phase 83 2026 holdout was not requested or loaded.
 
 - [Phase 89 research plan](PHASE89_RESEARCH_PLAN.md)
 - [Phase 89 status](PHASE89_STATUS.md)

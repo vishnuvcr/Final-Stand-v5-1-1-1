@@ -1,8 +1,8 @@
 # Phase 89 Status
 
 Date: 2026-10-10  
-Status: **COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations**  
-Latest workflow run: [38047664790](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047664790)  
+Status: **COMPLETE WITH DATA-COVERAGE CAVEAT — OOS sample gate passed on available aligned records**  
+Latest workflow run: [38047775690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047775690)  
 Decision: No options strategy is promoted by Phase 89.
 
 ## Registered evidence boundary
@@ -18,9 +18,9 @@ Decision: No options strategy is promoted by Phase 89.
 - [Summary JSON](results/phase89/summary.json)
 
 ## Results
-- Valid API windows/sides: 28/28.
-- Paired rows: 18604; paired sessions: 249.
-- Confirmatory OOS sample: 4224 complete rows over 62 sessions.
+- Valid API windows/sides: 25/26.
+- Paired rows: 17144; paired sessions: 230.
+- Confirmatory OOS sample: 2622 complete rows over 57 sessions.
 - OOS inference gate: **PASS**.
 - Confirmatory inference allowed: **YES for the registered four-test association family only**.
 - This is a feature-association study, not strategy P&L or execution simulation. The 2026 Phase 83 holdout remains unopened.
