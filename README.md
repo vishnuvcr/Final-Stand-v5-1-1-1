@@ -1102,7 +1102,7 @@ These counts are eligibility sensitivity only. OHLC high-low/open is not a quote
 Continue Phase 52's factor-conditioned strategy research only after resolving the upstream data-coverage limitations and the source-license/executable-quote constraints. The 480-row BASELINE pilot is not a factor-selector experiment, has only one baseline replay pass, and cannot support strategy ranking. The finite grid size (9,379,584 configurations) remains queue size, not tested count. Do not promote a strategy or use the 2026 holdout until a predeclared, adequately covered, cost-aware replay and statistical validation pass.
 
 
-## Phase 56 — Exact prior-minute OI source diagnosis (CLOSED / PASS)
+## Phase 56 supporting audit — Exact prior-minute OI source diagnosis (CLOSED / PASS)
 
 [Run 38018825640](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018825640) passed the regression tests and audited all exact contract-time keys behind the 100 Phase 52 prior-OI-blocked rows. Of 220 blocked leg references, there are 60 unique expiry/timestamp/type/strike keys across the 2025-03-13, 2025-07-31 and 2025-12-30 partitions. All 60 keys have exactly one exact prior-minute source row, and all 60 source rows explicitly report numeric OI=0. No key was missing or duplicated. The partition hashes matched the pinned Phase 52 source audit.
 
@@ -1114,6 +1114,29 @@ This resolves the immediate data diagnosis: the exclusions are caused by source-
 - [Exact contract-time audit CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/results/phase56/prior_oi_coverage/contract_oi_audit.csv)
 - [Machine-readable report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-prior-oi-coverage-diagnosis/results/phase56/prior_oi_coverage/report.json)
 
-## Next gate after Phase 56
+## Phase 56 — Cost-aware OHLC price-reference P&L sensitivity (CLOSED / NON-EXECUTABLE)
+
+The previously failing, preregistered Phase 56 analysis was repaired and accepted in [run 38019146547](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019146547). The validator defect was that it rejected the canonical underscored OI reason; normalization and regression tests now pass. The bounded matrix reconciled 480 rows, 40 configurations, 24 event identities, all 11 thresholds and all 18,960 cost scenarios (₹10/₹20 brokerage × six adverse-slippage cases). The 100 hard prior-OI blocks remained ineligible at every threshold.
+
+| OHLC range threshold | Eligible configuration-event rows | Grid sum at ₹10/order + ₹0.05 slip | Grid sum at ₹20/order + ₹0.50 slip |
+|---:|---:|---:|---:|
+| 2% | 1 | -₹166.19 | -₹214.80 |
+| 4% | 8 | +₹13,115.04 | +₹12,312.13 |
+| 5% | 24 | -₹1,864.05 | -₹4,231.65 |
+| 10% | 150 | +₹7,426.04 | -₹10,386.81 |
+| 15% | 298 | +₹45,114.40 | +₹7,183.14 |
+| 20% | 345 | +₹40,144.70 | -₹3,138.02 |
+| 1000% diagnostic | 380 | +₹55,926.12 | +₹7,902.95 |
+
+**Important:** grid sums pool overlapping configurations on the same events; they are not portfolio returns. The apparent positives are highly threshold-sensitive. Only five configuration-threshold pairs passed the preregistered severe-cost screen, all at the 1000% diagnostic threshold; that threshold effectively removes the OHLC range gate and is not a recommended setting. The five are leads for independent quote validation only. No significance, generalization or live-trading claim is made; OHLC range is not spread, and OHLC-open fills are not executable quote evidence.
+
+- [Phase 56 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_RESEARCH_PLAN.md)
+- [Phase 56 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_STATUS.md)
+- [Phase 56 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/PHASE56_ERROR_LOG.md)
+- [P&L sensitivity report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/results/phase56/ohlc_pnl_sensitivity/report.md)
+- [Threshold/cost summary CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/results/phase56/ohlc_pnl_sensitivity/threshold_summary.csv)
+- [Severe-cost robustness screen](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-56-ohlc-pnl-sensitivity/results/phase56/ohlc_pnl_sensitivity/robustness_screen.csv)
+
+## Next gate after Phase 56 price-reference sensitivity
 
 Phase 52 remains open but the current BASELINE pilot has only one replay pass and does not test factor-selector efficacy. The next valid work is to improve source-backed candidate/event coverage or obtain independent, legally usable executable quote data; the Phase 56 result is not a reason to weaken OI eligibility. Any subsequent strategy test must retain Paytm Money brokerage/statutory costs and adverse slippage, chronological splits, multiple-testing controls and an untouched holdout.
