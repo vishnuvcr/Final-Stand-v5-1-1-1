@@ -34,4 +34,5 @@ jobs:
           git config user.email 41898282+vishnuvcr@users.noreply.github.com
           git add results/phase100 PHASE100_STATUS.md PHASE100_ERROR_LOG.md PHASE100_RESEARCH_LOG.md
           git diff --cached --quiet || git commit -m "Phase 100: publish cross-paper manuscript and synthesis"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
           git push
