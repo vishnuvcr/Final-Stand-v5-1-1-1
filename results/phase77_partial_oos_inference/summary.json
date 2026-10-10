@@ -1,0 +1,274 @@
+{
+  "phase": 77,
+  "decision": "AUDIT_PASS_DESCRIPTIVE_ONLY",
+  "window": [
+    "2026-04-21",
+    "2026-07-21"
+  ],
+  "missing_expiries_excluded": [
+    "2026-07-28",
+    "2026-08-04"
+  ],
+  "source": "Frozen Phase 51-3 trade CSVs and summaries; no new price downloads",
+  "bootstrap": {
+    "unit": "expiry cluster",
+    "replicates": 10000,
+    "seed": 771026,
+    "interval": "95% percentile",
+    "interpretation": "descriptive only; not a confirmatory p-value or posterior probability"
+  },
+  "errors": [],
+  "strategies": {
+    "tt02": {
+      "trade_count": 13,
+      "expiry_cluster_count": 13,
+      "first_entry_date": "2026-04-21 09:20:00+05:30",
+      "last_entry_date": "2026-07-08 09:20:00+05:30",
+      "published_summary_net": -1341.120832479497,
+      "ledger_net_sum": -1341.120832479497,
+      "ledger_summary_abs_difference": 0.0,
+      "cases": {
+        "net": {
+          "ledger_total_net": -1341.120832479497,
+          "mean_per_trade": -103.16314095996131,
+          "median_per_trade": -1530.709273896499,
+          "win_rate": 0.38461538461538464,
+          "max_cumulative_trade_pnl_drawdown": 27015.524571593996,
+          "bootstrap_total_net_ci95_percentile": [
+            -49820.607937006615,
+            -2275.4202535805034,
+            50277.84030903126
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -3832.3544566928167,
+            -175.0323271985003,
+            3867.5261776177886
+          ],
+          "bootstrap_fraction_total_net_positive": 0.4662
+        },
+        "net50": {
+          "ledger_total_net": -2936.3062487192483,
+          "mean_per_trade": -225.86971143994217,
+          "median_per_trade": -1621.688910844749,
+          "win_rate": 0.38461538461538464,
+          "max_cumulative_trade_pnl_drawdown": 28104.97866020025,
+          "bootstrap_total_net_ci95_percentile": [
+            -50182.88631067901,
+            -3576.8423666149974,
+            48324.10862576742
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -3860.222023898385,
+            -275.14172050884594,
+            3717.2391250590317
+          ],
+          "bootstrap_fraction_total_net_positive": 0.447
+        },
+        "net20": {
+          "ledger_total_net": -3701.120832479496,
+          "mean_per_trade": -284.7016024984228,
+          "median_per_trade": -1672.3092738964992,
+          "win_rate": 0.38461538461538464,
+          "max_cumulative_trade_pnl_drawdown": 28667.402440133497,
+          "bootstrap_total_net_ci95_percentile": [
+            -51833.96712747185,
+            -4268.597718118994,
+            48369.05441836846
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -3987.228240574758,
+            -328.353670624538,
+            3720.696493720651
+          ],
+          "bootstrap_fraction_total_net_positive": 0.4307
+        },
+        "net20_50": {
+          "ledger_total_net": -6476.306248719249,
+          "mean_per_trade": -498.17740374763457,
+          "median_per_trade": -1834.088910844749,
+          "win_rate": 0.38461538461538464,
+          "max_cumulative_trade_pnl_drawdown": 30759.97866020025,
+          "bootstrap_total_net_ci95_percentile": [
+            -54658.332494380746,
+            -7281.3197760966195,
+            44982.20094082375
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -4204.487114952365,
+            -560.1015212382015,
+            3460.1693031402883
+          ],
+          "bootstrap_fraction_total_net_positive": 0.3911
+        }
+      }
+    },
+    "tt04": {
+      "trade_count": 62,
+      "expiry_cluster_count": 13,
+      "first_entry_date": "2026-04-21 10:00:00+05:30",
+      "last_entry_date": "2026-07-20 10:00:00+05:30",
+      "published_summary_net": 13271.506311950925,
+      "ledger_net_sum": 13271.506311950925,
+      "ledger_summary_abs_difference": 0.0,
+      "cases": {
+        "net": {
+          "ledger_total_net": 13271.506311950925,
+          "mean_per_trade": 214.0565534185633,
+          "median_per_trade": 884.9381232572482,
+          "win_rate": 0.6774193548387096,
+          "max_cumulative_trade_pnl_drawdown": 12024.807348516006,
+          "bootstrap_total_net_ci95_percentile": [
+            -32608.022898167415,
+            14031.54732494693,
+            56647.68872216935
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -538.3341774322078,
+            225.49187364417952,
+            892.6807133711363
+          ],
+          "bootstrap_fraction_total_net_positive": 0.7215
+        },
+        "net50": {
+          "ledger_total_net": 10287.259467926428,
+          "mean_per_trade": 165.92353980526497,
+          "median_per_trade": 830.9696848858732,
+          "win_rate": 0.6774193548387096,
+          "max_cumulative_trade_pnl_drawdown": 12196.961022774005,
+          "bootstrap_total_net_ci95_percentile": [
+            -35360.43778985424,
+            10707.457729597192,
+            53961.998483697695
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -582.7597964281681,
+            172.8023396239705,
+            857.3329921082551
+          ],
+          "bootstrap_fraction_total_net_positive": 0.6778
+        },
+        "net20": {
+          "ledger_total_net": 10345.106311950924,
+          "mean_per_trade": 166.8565534185633,
+          "median_per_trade": 837.7381232572482,
+          "win_rate": 0.6774193548387096,
+          "max_cumulative_trade_pnl_drawdown": 12213.607348516009,
+          "bootstrap_total_net_ci95_percentile": [
+            -35149.194153575605,
+            11081.365680662186,
+            52026.18454796125
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -582.5503530962833,
+            178.94335902237705,
+            821.8683277775457
+          ],
+          "bootstrap_fraction_total_net_positive": 0.6843
+        },
+        "net20_50": {
+          "ledger_total_net": 5897.6594679264235,
+          "mean_per_trade": 95.1235398052649,
+          "median_per_trade": 760.1696848858733,
+          "win_rate": 0.6774193548387096,
+          "max_cumulative_trade_pnl_drawdown": 12480.161022774006,
+          "bootstrap_total_net_ci95_percentile": [
+            -40351.10038075633,
+            6051.099861754298,
+            47881.69815143587
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -663.6581055323103,
+            98.1889140945035,
+            759.942835770106
+          ],
+          "bootstrap_fraction_total_net_positive": 0.6049
+        }
+      }
+    },
+    "tt05": {
+      "trade_count": 62,
+      "expiry_cluster_count": 14,
+      "first_entry_date": "2026-04-21 09:30:00+05:30",
+      "last_entry_date": "2026-07-21 09:30:00+05:30",
+      "published_summary_net": 17098.146574629933,
+      "ledger_net_sum": 17098.14657462993,
+      "ledger_summary_abs_difference": 3.637978807091713e-12,
+      "cases": {
+        "net": {
+          "ledger_total_net": 17098.14657462993,
+          "mean_per_trade": 275.7765576553214,
+          "median_per_trade": 1056.8186203442444,
+          "win_rate": 0.6612903225806451,
+          "max_cumulative_trade_pnl_drawdown": 12217.187121043007,
+          "bootstrap_total_net_ci95_percentile": [
+            -6665.592439724379,
+            16826.141806544954,
+            40532.117196562445
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -108.78652067507389,
+            272.8331223347625,
+            653.3239590911763
+          ],
+          "bootstrap_fraction_total_net_positive": 0.9158
+        },
+        "net50": {
+          "ledger_total_net": 14239.719861944934,
+          "mean_per_trade": 229.67290099911185,
+          "median_per_trade": 996.3952228437491,
+          "win_rate": 0.6612903225806451,
+          "max_cumulative_trade_pnl_drawdown": 12475.780681564509,
+          "bootstrap_total_net_ci95_percentile": [
+            -9350.948239817319,
+            14076.907804229812,
+            37840.59873276829
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -150.67187555098852,
+            227.74957195588001,
+            607.8313165058181
+          ],
+          "bootstrap_fraction_total_net_positive": 0.8807
+        },
+        "net20": {
+          "ledger_total_net": 14171.746574629931,
+          "mean_per_trade": 228.57655765532147,
+          "median_per_trade": 1009.6186203442446,
+          "win_rate": 0.6612903225806451,
+          "max_cumulative_trade_pnl_drawdown": 12500.387121043008,
+          "bootstrap_total_net_ci95_percentile": [
+            -8907.482836134946,
+            13884.583175105185,
+            37957.743785345745
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -144.60806508109786,
+            225.2210448752561,
+            610.2672855626632
+          ],
+          "bootstrap_fraction_total_net_positive": 0.8788
+        },
+        "net20_50": {
+          "ledger_total_net": 9850.119861944935,
+          "mean_per_trade": 158.87290099911186,
+          "median_per_trade": 925.5952228437491,
+          "win_rate": 0.6612903225806451,
+          "max_cumulative_trade_pnl_drawdown": 13426.19301511229,
+          "bootstrap_total_net_ci95_percentile": [
+            -13498.397288194004,
+            9545.60048022242,
+            33420.71957552662
+          ],
+          "bootstrap_mean_trade_net_ci95_percentile": [
+            -218.2910484042608,
+            154.9271098270939,
+            534.5967464270982
+          ],
+          "bootstrap_fraction_total_net_positive": 0.7877
+        }
+      }
+    }
+  },
+  "promotion": "NONE",
+  "caveat": "Only 14 expiry dates exist in the source interval. The two missing later expiries are excluded. The short sample and strategy selection mean bootstrap outputs cannot establish a persistent edge."
+}
