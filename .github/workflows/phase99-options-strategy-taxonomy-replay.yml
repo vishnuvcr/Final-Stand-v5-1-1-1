@@ -1,0 +1,32 @@
+name: Phase 99 Options Strategy Taxonomy Replay
+on:
+  push:
+    branches: [phase-99-options-strategy-taxonomy-replay]
+    paths:
+      - 'research/phase99/**'
+      - 'PHASE99_*.md'
+      - '.github/workflows/phase99-options-strategy-taxonomy-replay.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test payoff formulas
+        run: python -m pip install pytest && pytest -q research/phase99/test_payoff_replay.py
+      - name: Generate payoff examples and source status
+        run: python research/phase99/payoff_replay.py
+      - name: Publish result artifacts
+        if: always()
+        run: |
+          mkdir -p results/phase99
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/phase99 PHASE99_STATUS.md PHASE99_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 99: publish options payoff taxonomy"
+          git push
