@@ -35,3 +35,5 @@
 - Failed attempt: run [38028015865](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028015865), commit `9eabb1c8d321db08ad624cdc5617fff61b749434`.
 - Successful numerical run: [38028140800](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028140800), commit `99695fd038052d9c6826e05f3ba67280f12e3311`.
 - Successful run completion marker confirms 2026 holdout option files downloaded = 0.
+
+- Final verification rerun: [38028425558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558) passed after the metadata/reporting corrections; numerical outcome remained unchanged.
