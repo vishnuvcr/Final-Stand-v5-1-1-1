@@ -7,7 +7,7 @@ import pandas as pd
 
 from research.phase98_opening_range_spread import (
     TZ, opening_range_signal, select_vertical, vix_filter_state,
-    run_scenario, apply_slippage, holm
+    run_scenario, slip, holm
 )
 
 def test_first_strict_opening_range_breakout_is_selected():
@@ -72,7 +72,7 @@ def test_next_minute_exit_and_all_in_costs_are_applied():
     assert out["net"] < out["gross_after_slippage_before_fees"]
 
 def test_adverse_slippage_and_holm_are_monotone():
-    assert apply_slippage(10.0, "buy", 2) == 10.10
-    assert apply_slippage(10.0, "sell", 2) == 9.90
+    assert slip(10.0, "buy", 2) == 10.10
+    assert slip(10.0, "sell", 2) == 9.90
     adjusted = holm([0.01, 0.03, 0.20])
     assert adjusted[0] <= adjusted[1] <= adjusted[2]
