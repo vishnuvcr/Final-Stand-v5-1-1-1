@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             phase95-nifty-daily-v1-${{ runner.os }}-
       - name: Install bounded dependencies
-        run: pip install pandas numpy pytest tabulate
+        run: pip install pandas numpy pytest tabulate yfinance
       - name: Test replay controls
         run: pytest -q research/phase96/test_backtest.py
       - name: Run fixed signal-level replay
