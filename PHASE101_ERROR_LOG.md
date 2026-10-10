@@ -40,3 +40,10 @@ Append entries; never overwrite earlier failures.
 - Commit: 73faaf0acb43c2f621d184d2c30469101ccd5aef
 - Numerical outputs from the failed run are not accepted. See `results/phase101_pdf_strategy_tests/phase101_runtime_error.json` when produced and inspect the Actions log.
 - Correct the root cause without weakening frozen strategy rules or opening 2026 data.
+
+
+## Automated failure — 2026-10-10T18:32:46Z
+- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076142986
+- Commit: 4f2ce8dec6de777eb28ede874a34d028adade632
+- Numerical outputs from the failed run are not accepted. See `results/phase101_pdf_strategy_tests/phase101_runtime_error.json` when produced and inspect the Actions log.
+- Correct the root cause without weakening frozen strategy rules or opening 2026 data.
