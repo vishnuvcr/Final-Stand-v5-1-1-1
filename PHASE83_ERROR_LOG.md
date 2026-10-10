@@ -16,3 +16,8 @@ Date: 2026-10-10
 ## E83-004 — Literature findings are not project results
 - Status: CONTROL.
 - External-paper results are cited as reported by the source or as abstract-level leads. No paper's headline accuracy, Sharpe or P&L is copied into the project's empirical-results ledger.
+
+## E83-005 — Manuscript build or validation failed
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38045979044
+- Head SHA: d710cb564f4bcfbc20398989637c31d719d3b38b
+- Status: OPEN pending root-cause diagnosis; manuscript build is not complete.
