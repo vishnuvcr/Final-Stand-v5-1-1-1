@@ -106,3 +106,15 @@ Runs [38088253613](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/run
 ## Dhan expiry-code parameter correction
 
 The first API request reached Dhan but all 10 probes returned HTTP 400 `DH-905: expiryCode is required` because the provider apparently rejected the value 0 as missing. The script and machine-readable manifest now use `expiryCode: 1` (Next Expiry, matching the official sample request) for a bounded retry. Awaiting the retry result. This change affects data acquisition only; there is still no accepted data sample or strategy test.
+
+<!-- DHAN_API_RUN_38088597286_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38088597286, attempt 1 — 2026-10-10T21:42:20.727955+00:00
+
+- **Result:** REQUEST_SCHEMA_OR_PARAMETER_ERROR.
+- Window: 2026-08-02 inclusive to 2026-09-01 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 0/10.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

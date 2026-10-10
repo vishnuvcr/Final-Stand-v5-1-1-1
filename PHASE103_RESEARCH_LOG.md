@@ -76,3 +76,13 @@ The workflow failed before a machine-readable result was written. No source/data
 - Completed API attempt [38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054) passed unit tests, resolved 5/5 underlying IDs from the Dhan instrument master (master hash `2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173`), and completed all ten calls. All ten requests received HTTP 400, error code `DH-905`, safe error message `expiryCode is required`, and 0 rows.
 - Diagnosis: request used numeric 0; the provider treated it as missing. Docs show 0 as Current/Near Expiry in the annexure but provide a request sample with 1 (Next Expiry). Registered a bounded test using `expiryCode: 1`, changed the code/manifest together, and added a test to freeze that parameter.
 - First API attempt remains a failed request-schema run, not evidence of absent historical options data. No raw option payloads were committed and no strategy P&L calculated.
+
+<!-- DHAN_API_RUN_38088597286_ATTEMPT_1 -->
+## Dhan Data API audit — run 38088597286, attempt 1 — 2026-10-10T21:42:20.727955+00:00
+
+- **Result:** REQUEST_SCHEMA_OR_PARAMETER_ERROR.
+- Window: 2026-08-02 inclusive to 2026-09-01 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 0/10.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
