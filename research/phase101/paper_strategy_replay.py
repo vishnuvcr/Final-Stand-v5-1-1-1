@@ -176,8 +176,16 @@ def _trade_costs(p66, entry_ts, exit_ts, entry_raw, exit_raw, qty_lot):
     fee20 = fee10 + 10.0*len(orders)
     stress10 = float(p66.charges(orders, qty_lot, 1.5))
     stress20 = stress10 + 15.0*len(orders)
-    # Paper-specific stress: 0.25% adverse entry/exit impact plus ₹50 per round trip.
-    paper_net = (max(0.0, float(exit_raw)*0.9975)-float(entry_raw)*1.0025)*qty_lot-50.0
+    # Additional adverse-impact sensitivity: impact the raw fill prices first,
+    # then apply the same execution-price convention and date-effective charges.
+    # The extra ₹50 is an additional round-trip cost, on top of baseline fees.
+    impacted_entry_raw = float(entry_raw) * 1.0025
+    impacted_exit_raw = max(0.0, float(exit_raw) * 0.9975)
+    impacted_buy = float(p66.exec_px(impacted_entry_raw, "buy"))
+    impacted_sell = float(p66.exec_px(impacted_exit_raw, "sell"))
+    impacted_orders = [(entry_ts, "buy", impacted_buy), (exit_ts, "sell", impacted_sell)]
+    impacted_charges = float(p66.charges(impacted_orders, qty_lot, 1.0))
+    paper_net = (impacted_sell - impacted_buy) * qty_lot - impacted_charges - 50.0
     return {"entry_exec": buy, "exit_exec": sell, "gross_net_of_tick_slippage": gross,
             "charges_10_per_order": fee10, "net_10_per_order": gross-fee10,
             "net_20_per_order": gross-fee20, "net_10_per_order_fee_stress_50pct": gross-stress10,
