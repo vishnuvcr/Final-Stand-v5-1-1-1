@@ -1187,3 +1187,15 @@ The canonical Phase 52 baseline pilot still has only **1 of 480** configuration-
 - [Phase 56 P&L sensitivity report and cost matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-56-ohlc-pnl-sensitivity/results/phase56/ohlc_pnl_sensitivity)
 - [Phase 57 independent replay plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-57-cost-aware-range-sensitivity-replay)
 - [Phase 58 source registry and feasibility report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-58-quote-source-feasibility-audit)
+
+
+## Phase 59 — Public option-data coverage audit (ACTIVE / metadata-only)
+
+This bounded branch expands Phase 58's source search. It uses public metadata and published access terms only; no raw data is downloaded, no credentials are used and no paid license is accepted.
+
+- [Plan](PHASE59_RESEARCH_PLAN.md) · [Status](PHASE59_STATUS.md) · [Error log](PHASE59_ERROR_LOG.md)
+- [Frozen source registry](research/phase59/source_registry.json) · [Validator](research/phase59/source_coverage_audit.py)
+- New public candidates: [rissin NSE options dataset](https://huggingface.co/datasets/rissin/nse-options-intraday) and [artist-23 NIFTY options dataset](https://huggingface.co/datasets/artist-23/nifty-options-data).
+- Licensed follow-ups: [OptionsData.shop historical chain guide](https://www.optionsdata.shop/guides/nse-option-chain-historical-data-csv-parquet), [TickBytes](https://github.com/QuantDev-stack/TickBytes) and [OptionVault](https://github.com/QuantDev-stack/OptionVault).
+
+Preliminary metadata review finds no source already proven to satisfy exact-contract prior-minute OI, bid/ask/depth and permitted automated use at the frozen timestamps. The reproducible registry validator and tests will determine the final gate.
