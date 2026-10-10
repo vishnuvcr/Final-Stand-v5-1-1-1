@@ -1,0 +1,143 @@
+name: Phase 82 — Expiry-cluster inference
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase-82-expiry-cluster-inference]
+    paths:
+      - 'research/phase82_expiry_cluster_inference.py'
+      - '.github/workflows/phase82-expiry-cluster-inference.yml'
+permissions:
+  contents: write
+concurrency:
+  group: phase82-expiry-cluster-inference
+  cancel-in-progress: false
+jobs:
+  inference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: phase-82-expiry-cluster-inference
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install inference dependencies
+        run: python -m pip install --no-input numpy pandas scipy
+      - name: Run frozen expiry-cluster inference (DEV/VAL only)
+        run: |
+          set -euo pipefail
+          python research/phase82_expiry_cluster_inference.py 2>&1 | tee phase82_run.log
+      - name: Validate inference outputs and holdout isolation
+        run: |
+          set -euo pipefail
+          test -s results/phase82_expiry_cluster_inference/summary.json
+          test -s results/phase82_expiry_cluster_inference/cluster_inference.csv
+          test -s results/phase82_expiry_cluster_inference/candidate_gate.csv
+          test -s results/phase82_expiry_cluster_inference/report.md
+          python - <<'PY'
+          import json
+          import pandas as pd
+          from pathlib import Path
+          s=json.loads(Path('results/phase82_expiry_cluster_inference/summary.json').read_text())
+          r=pd.read_csv('results/phase82_expiry_cluster_inference/cluster_inference.csv')
+          c=pd.read_csv('results/phase82_expiry_cluster_inference/candidate_gate.csv')
+          assert s['coverage']['tests'] == 20, s['coverage']
+          assert len(r) == 20, len(r)
+          assert set(r['split']) == {'development','validation'}
+          assert len(c) == 18, len(c)
+          assert not s['input']['2026_holdout_loaded_or_scored']
+          assert not s['input']['raw_market_data_loaded']
+          print('Validated 20 primary tests, 18 candidate-window gates, and sealed holdout.')
+          PY
+      - name: Upload inference artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase82-expiry-cluster-inference
+          path: |
+            results/phase82_expiry_cluster_inference/
+            phase82_run.log
+          if-no-files-found: error
+      - name: Update status, research log and README checkpoint
+        if: success()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('results/phase82_expiry_cluster_inference/summary.json').read_text())
+          report=Path('results/phase82_expiry_cluster_inference/report.md').read_text()
+          status=(
+            '# Phase 82 Status\nDate: 2026-10-10\n'
+            f"Status: {s['decision'].replace('_',' ')} — INFERENCE COMPLETE; NO STRATEGY PROMOTED.\n\n"
+            f"- [x] Inference completed on {s['coverage']['paired_rows']:,} paired rows across {s['coverage']['unique_expiry_clusters_overall']} expiries.\n"
+            f"- [x] Ran {s['coverage']['tests']} primary tests; Holm correction spans all 20 hypotheses.\n"
+            f"- [x] 10,000 expiry-cluster bootstrap replicates per test; two-tick stress separately reported.\n"
+            f"- [x] Defined-risk horizon candidates passing absolute-net gate: {s['candidate_gate']['passing_variants']}.\n"
+            "- [x] 2026 holdout not loaded; only derived Phase 81 DEV/VAL CSVs used.\n"
+            "- [ ] Complete Phase 83 manuscript, figures/tables/appendices and terminal decision.\n"
+          )
+          Path('PHASE82_STATUS.md').write_text(status)
+          with open('RESEARCH_LOG.md','a',encoding='utf-8') as f:
+            f.write(
+              '\n\n## 2026-10-10 — Phase 82 expiry-cluster inference\n'
+              f"- Decision: {s['decision']}; paired rows: {s['coverage']['paired_rows']}; tests: {s['coverage']['tests']}.\n"
+              f"- Defined-risk variant-window gates passing: {s['candidate_gate']['passing_variants']}; 2026 holdout remains sealed.\n"
+              '- Holm family includes all 20 one-tick primary tests; inferential outputs are persisted under results/phase82_expiry_cluster_inference/.\n'
+            )
+          readme=Path('README.md')
+          prior=readme.read_text(encoding='utf-8')
+          marker='# Resume checkpoint — 2026-10-10 (Phase 82 expiry-cluster inference)'
+          checkpoint=(
+            marker+'\n\n'
+            f"**Phase 82 decision: {s['decision']}**. The inference used {s['coverage']['paired_rows']:,} paired observations, 20 primary tests with Holm correction and 10,000 expiry-cluster bootstrap replicates per test. Defined-risk variant-window gates passing: {s['candidate_gate']['passing_variants']}. The 2026 holdout remained sealed and no strategy was promoted.\n\n"
+            '- [Phase 82 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/PHASE82_RESEARCH_PLAN.md)\n'
+            '- [Phase 82 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/PHASE82_STATUS.md)\n'
+            '- [Phase 82 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/PHASE82_ERROR_LOG.md)\n'
+            '- [Phase 82 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/results/phase82_expiry_cluster_inference/report.md)\n'
+            '- [Phase 82 inference table](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-82-expiry-cluster-inference/results/phase82_expiry_cluster_inference/cluster_inference.csv)\n'
+            '- [Phase 82 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions)\n\n---\n\n'
+          )
+          if marker in prior:
+            prior=prior[prior.index(marker):]
+            prior=prior[prior.index('---')+3:].lstrip() if '---' in prior else prior
+          readme.write_text(checkpoint+prior,encoding='utf-8')
+          PY
+      - name: Log workflow failure
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo
+            echo "## E82-006 — Workflow failure"
+            echo "- Run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            echo "- Head SHA: ${GITHUB_SHA}"
+            echo "- Status: OPEN pending root-cause diagnosis; no positive result claim is permitted."
+          } >> PHASE82_ERROR_LOG.md
+          python - <<'PY'
+          from pathlib import Path
+          Path('PHASE82_STATUS.md').write_text(
+            '# Phase 82 Status\nDate: 2026-10-10\nStatus: BLOCKED — WORKFLOW FAILURE REQUIRES DIAGNOSIS.\n\n'
+            '- [ ] Diagnose the logged workflow failure before accepting numerical results.\n'
+            '- The 2026 holdout remains sealed; no strategy is promoted.\n'
+          )
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add PHASE82_ERROR_LOG.md PHASE82_STATUS.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Log Phase 82 workflow failure'
+            git pull --rebase origin phase-82-expiry-cluster-inference
+            git push origin HEAD:phase-82-expiry-cluster-inference
+          fi
+      - name: Persist aggregate inference outputs
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/phase82_expiry_cluster_inference/ PHASE82_STATUS.md README.md RESEARCH_LOG.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record Phase 82 expiry-cluster inference results'
+          git pull --rebase origin phase-82-expiry-cluster-inference
+          git push origin HEAD:phase-82-expiry-cluster-inference
