@@ -245,3 +245,13 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Each offset returned HTTP 200; row counts: ATM 385, ATM+1 385, ATM+2 385, ATM+3 385, ATM-1 385, ATM-2 385, ATM-3 384. All returned rows belonged to 2026-08-03 IST and arrays were consistent. Offset strike series each changed 8 times intraday, confirming that relative labels are not persistent contract identities.
 - The timestamp/actual-strike union contained 385 timestamps and 8 unique actual strikes, with 6 strikes present on every timestamp and zero duplicate timestamp/strike keys. The strict all-offset surface still fails since only 384 timestamps are common to all seven offsets; the one missing ATM-3 row was not imputed.
 - The oversized 70-probe run [38089794291](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089794291) was cancelled while the API step was running after a new bounded configuration arrived; it is not accepted as data evidence. Workflow default was reduced to seven HDFCBANK CALL offsets.
+
+<!-- DHAN_API_RUN_38090070197_ATTEMPT_1 -->
+## Dhan Data API audit — run 38090070197, attempt 1 — 2026-10-10T22:05:28.989814+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 7/7.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

@@ -284,3 +284,15 @@ Runs [38089656281](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/run
 Run [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649): tests and 7/7 API calls passed. HDFCBANK CALL offsets all returned HTTP 200 for 2026-08-03; 6 offsets returned 385 rows, ATM-3 returned 384. No out-of-window rows or duplicate timestamp/actual-strike keys were found. Six actual strikes covered all 385 timestamps. However, the strict full-offset alignment gate is FAIL because only 384 timestamps were common to all seven offsets. This is a partial fixed-strike coverage finding, not a complete data-integrity PASS and not profitability evidence.
 
 Next: run the same offsets across all five stocks and both CALL/PUT sides, record each fixed-strike's exact coverage, and keep any missing rows missing. No strategy P&L until option contract identity, multi-date coverage and realistic execution assumptions pass.
+
+<!-- DHAN_API_RUN_38090070197_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38090070197, attempt 1 — 2026-10-10T22:05:28.989814+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 7/7.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

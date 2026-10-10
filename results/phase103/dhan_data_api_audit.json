@@ -1,7 +1,7 @@
 {
   "phase": "103.1",
-  "run_id": "38089913649",
-  "generated_at_utc": "2026-10-10T22:02:50.961957+00:00",
+  "run_id": "38090070197",
+  "generated_at_utc": "2026-10-10T22:05:08.388464+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
     "to_exclusive": "2026-08-04",
@@ -361,6 +361,7 @@
       "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
     }
   ],
+  "probe_abort_reason": null,
   "raw_rows_persisted": false,
   "raw_data_policy": "Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
   "known_limits": [
