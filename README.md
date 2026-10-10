@@ -1380,3 +1380,10 @@ No paper profitability claim is considered reproduced until a successful run pro
 - [Opportunity/coverage audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/opportunity_audit.csv)
 - [Pinned source manifest](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/source_manifest.json)
 - [Successful workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558)
+
+
+## Resume checkpoint — 2026-10-10 12:51 IST
+
+Phase 67 remains the latest completed diagnostic. Its verified workflow [38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) found 8/30 exact trigger-minute observations and 5/30 exact next-minute observations. This does not establish eligible contract mapping or executable fills. The bounded phase's stopping rule is met; no strategy is promoted.
+
+The next step is gated on an authorized exact target-date/contract sample. Phase 62's public sample does not cover the missing 2026-07-28 and 2026-08-04 sessions; its full-chain pack is paid and no purchase has been made. No new authorized sample or source lead was available at resume. To avoid repeating the same failed evidence path, no new empirical replay or P&L calculation was started. The holdout remains untouched. See the [Phase 67 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_STATUS.md), [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_ERROR_LOG.md), and [continuation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_CHAT_LOG.md).
