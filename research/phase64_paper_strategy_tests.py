@@ -490,7 +490,7 @@ def main():
             "net_20_per_order_rupees", "net_20_order_50pct_stress_rupees"])
         statistical = inf.get("status") == "COMPUTED" and inf.get("ci_low", -1) > 0 and inf.get("p_holm_2_candidates", 1) < 0.05
         decision.append({"variant": variant, "completed_trades": v["completed_trades"],
-            "coverage": v["entry_or_exit_coverage"], "min20_trades": v["completed_trades"] >= 20,
+            "coverage": float(v["entry_or_exit_coverage"]) if np.isfinite(v["entry_or_exit_coverage"]) else None, "min20_trades": v["completed_trades"] >= 20,
             "coverage95": bool(v["entry_or_exit_coverage"] is not None and np.isfinite(v["entry_or_exit_coverage"]) and v["entry_or_exit_coverage"] >= 0.95),
             "positive_all_registered_cost_cases": economic, "statistical_gate": bool(statistical),
             "promotion_eligible": False, "reason": "Phase 64 is research-only; >=20 trades/coverage/cost/statistical gates are necessary but not sufficient"})
