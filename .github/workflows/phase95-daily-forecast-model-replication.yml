@@ -43,6 +43,8 @@ jobs:
         run: python -m pytest -q research/phase95/test_daily_forecast_replication.py
       - name: Run fixed chronological replication
         run: python research/phase95/daily_forecast_replication.py
+      - name: Reconcile primary close endpoint, paper claims and README
+        run: python research/phase95/reconcile_phase95_report.py
       - name: Upload aggregate report
         uses: actions/upload-artifact@v4
         with:
