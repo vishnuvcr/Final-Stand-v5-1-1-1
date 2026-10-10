@@ -94,3 +94,11 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Status:** REQUEST_SCHEMA_OR_PARAMETER_ERROR; rows returned by 0/10 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054
+
+
+### E103-008 — Dhan treats expiryCode 0 as missing
+**Type:** API request/official-documentation discrepancy.  
+**Affected run:** [38088524054](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088524054).  
+**Symptom:** all 10 probes returned HTTP 400, `DH-905`, safe error message `expiryCode is required`; zero rows. Instrument master mapping succeeded for all five symbols and Actions secret was injected (masked).  
+**Source discrepancy:** official [Expired Options Data](https://dhanhq.co/docs/v2/expired-options-data/) request example uses `expiryCode: 1`; official [annexure](https://dhanhq.co/docs/v2/annexure/) lists 0 as Current/Near Expiry and 1 as Next Expiry.  
+**Correction:** changed the bounded probe to `expiryCode: 1` as the documented request example/Next Expiry, updated the machine-readable protocol and added a unit test. The next run will determine whether the request is accepted. This failure is not a data-coverage or profitability finding.
