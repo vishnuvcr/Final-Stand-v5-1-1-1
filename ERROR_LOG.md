@@ -2294,3 +2294,12 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 ## Phase 98 execution issue
 - Run 38059179785 — tests=success; replay=cancelled; audit=skipped; runner_status=REPLAY_NOT_SUCCESSFUL; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38059179785
 - Classified as non-evidence until the output and coverage gates pass.
+
+
+## Phase 98 — stale output provenance correction
+- Interrupted runs 38057921675, 38058351337, and 38058461330 inherited stale committed PASS/status files. They are not performance evidence. The Phase 98 workflow now clears result outputs before each run and gates published status on current test/replay/audit outcomes.
+
+
+## Phase 98 execution issue
+- Run 38059327298 — tests=success; replay=cancelled; audit=skipped; runner_status=REPLAY_NOT_SUCCESSFUL; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38059327298
+- Classified as non-evidence until the output and coverage gates pass.
