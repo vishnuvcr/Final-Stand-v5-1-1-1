@@ -1,19 +1,18 @@
 <!-- PHASE94_START -->
-# Current checkpoint — Phase 94 paper-method replication program
+# Current checkpoint — Phase 96 moving-average / seasonality replication
 
-**Status: REGISTERED — the corpus has now been converted from a literature-only audit into a paper-by-paper empirical reproduction plan.** This phase creates the method register and finite execution sequence; it does not claim that the forecast models or trading strategies have already been backtested. No strategy is promoted. The Phase 83 2026 holdout remains sealed.
+**Status: IMPLEMENTATION CREATED; fixed replay pending Actions validation.** Phase 95 remains a common-data model-family screen, not exact replication of every PDF. Phase 96 adds a separate, preregistered signal-level test of SMA/EMA variants. No strategy is promoted; the Phase 83 2026 holdout remains sealed.
 
-- [Phase 94 research plan](PHASE94_RESEARCH_PLAN.md)
-- [Phase 94 status](PHASE94_STATUS.md)
-- [Machine-readable paper/method register](results/phase94/PAPER_METHOD_REGISTER.csv)
-- [Narrative method register, with exact/partial/data-blocked distinctions](results/phase94/PAPER_METHOD_REGISTER.md)
-- [Research log](PHASE94_RESEARCH_LOG.md) · [Error/limitation log](PHASE94_ERROR_LOG.md) · [Auditable chat/decision log](PHASE94_CHAT_LOG.md)
-- [Automatic and manual registry validator](.github/workflows/phase94-literature-replication-registry.yml)
-- Next finite stages: [Phase 95 forecast models](PHASE94_RESEARCH_PLAN.md#finite-execution-phases-separate-branches), Phase 96 moving averages/seasonality, Phase 97 ML option signal, Phase 98 CCI source-data gate, Phase 99 source-described option payoff strategies, and Phase 100 unified synthesis/manuscript.
+- [Phase 96 research plan](PHASE96_RESEARCH_PLAN.md)
+- [Phase 96 status](PHASE96_STATUS.md)
+- [Research log](PHASE96_RESEARCH_LOG.md) · [Error/limitation log](PHASE96_ERROR_LOG.md) · [Auditable decision/chat log](PHASE96_CHAT_LOG.md)
+- [Deterministic replay engine](research/phase96/backtest.py) · [Unit tests](research/phase96/test_backtest.py)
+- [Automatic and manual workflow](.github/workflows/phase96-moving-average-seasonality-replication.yml)
+- [Finite execution plan and all 14-paper register](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-94-paper-method-replication-program/PHASE94_RESEARCH_PLAN.md) · [Method register CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-94-paper-method-replication-program/results/phase94/PAPER_METHOD_REGISTER.csv)
 
-**Reproduction standard:** source-defined metrics will be recreated separately from standardized naïve-baseline comparisons with strict chronological splits, leakage checks, uncertainty intervals and correction for multiple comparisons. Reported “95%/99% accuracy” is a source claim until independently verified and is not equivalent to directional skill or options profit. Options P&L requires eligible exact-contract data and includes Paytm Money fees, statutory levies, spread, slippage and stressed costs.
+**Interpretation guardrail:** SMA/EMA parameter sets are operationalized sensitivities where paper details are not uniquely specified. NIFTY spot is not directly investable, and a generic turnover deduction is not a verified historical Paytm Money schedule. This phase does not infer options profitability from index returns. Exact-contract options P&L requires source-verified contract quotes/fills, brokerage, statutory levies, spread, slippage and stress tests.
 
-Previously completed evidence remains linked: [Phase 92 predictor stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md) · [Phase 93 14-paper audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-93-uploaded-literature-audit/results/phase93/UPLOADED_LITERATURE_AUDIT.md) · [Phase 66 CCI data-coverage outcome](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/results/phase66_paper_strategy_tests/PHASE66_REPORT.md).
+**Phase 95 interim finding:** the initial common-data close-target screen showed no statistically established MAE improvement over persistence among 75 model/window rows; final reconciled paper claim status is pending its active Actions run [38072245422](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072245422). Do not call the source papers disproven: source-specific modalities and splits were not all reproduced.
 <!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
