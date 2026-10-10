@@ -1,0 +1,13 @@
+{
+  "computation_status": "PASS",
+  "primary_economic_status": "NO_PROMOTION",
+  "arm_a_h1_pass": false,
+  "arm_b_h2_pass": false,
+  "arm_a_validation_base_net_pnl": 0.0,
+  "arm_a_validation_stress_net_pnl": 0.0,
+  "arm_b_validation_base_net_pnl": 0.0,
+  "arm_b_validation_stress_net_pnl": 0.0,
+  "phase98_live_or_paper_promotion": false,
+  "holdout_loaded": false,
+  "warning": "OHLC bar-open fills with fixed slippage are modeled references, not historical bid/ask/depth or live-fill proof."
+}

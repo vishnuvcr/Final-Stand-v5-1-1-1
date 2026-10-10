@@ -1,0 +1,5 @@
+arm,split,completed_trades,base_net_pnl,stress_net_pnl,mean_net_per_trade,median_net_per_trade,win_rate,profit_factor,max_drawdown_trade_order,worst_trade,expected_shortfall_95,stress_completed_trades
+arm_a,development,0,0.0,0.0,,,,,,,,0
+arm_a,validation,0,0.0,0.0,,,,,,,,0
+arm_b,development,0,0.0,0.0,,,,,,,,0
+arm_b,validation,0,0.0,0.0,,,,,,,,0
