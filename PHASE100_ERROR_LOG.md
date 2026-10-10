@@ -12,3 +12,5 @@
 - None recorded at phase start. All synthesis/workflow failures must be logged with corrective actions and rerun outcome.
 
 - 2026-10-10: Phase 100 run 38073229401 passed tests and manuscript validation. The synthesis is marked provisional because Phase 95 run 38072806206 has not yet completed its corrected paper-claim reconciliation; no unsupported final paper claim is accepted.
+
+- 2026-10-10, run 38073272780: manuscript generation and validation passed, but artifact commit push was rejected because another Phase 100 workflow had updated the branch concurrently. Added a `git pull --rebase` before pushing artifacts. Generated manuscript contents from that attempt were valid; latest successful publication must be confirmed after the concurrency fix.
