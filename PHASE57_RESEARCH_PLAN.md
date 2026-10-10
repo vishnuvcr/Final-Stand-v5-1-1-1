@@ -39,3 +39,10 @@ Phase 54 established coverage sensitivity only and deliberately did not recalcul
 
 ## Status
 Plan frozen before replay. Phase 57 is exploratory modeled-P&L sensitivity only; it is not the final strategy selection or execution validation.
+ 
+
+## Plan amendment PA-57-001 — bounded endpoint replication (2026-10-10)
+
+The full 11-threshold cost matrix has already been completed and accepted in Phase 56. Phase 57 is retained as an independent source-replay reproduction check, not a second full matrix. To avoid needlessly repeating the same 11-threshold workload, it now replays only two endpoints: 2% (frozen baseline) and 1000% (diagnostic near-removal). This checks the baseline result and upper-bound modeled P&L against the source-driven resolver and fee kernel. All 40 configurations, 24 events, strict OI gate, exact entry/exit rules, brokerage and slippage cases remain unchanged.
+
+**Acceptance:** 960 configuration-event rows total (480 per endpoint), no replay exceptions, exactly six cost rows per replay pass, 2% baseline pass count=1, 1000% count reconciled against Phase 56, source hashes match pinned provenance, no holdout, no strategy ranking/promotion. Phase 56 remains the canonical 11-threshold result.
