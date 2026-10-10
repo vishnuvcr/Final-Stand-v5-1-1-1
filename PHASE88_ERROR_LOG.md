@@ -10,3 +10,5 @@ Date: 2026-10-10
 | E88-004 | GUARDRAIL | Raw option prices/account details should not be committed or logged. | Log only status, row count, field presence and alignment. |
 
 Do not log credentials, raw payloads, hidden reasoning, or personal account data.
+
+| E88-003 | RESOLVED / PASS | Final Actions run 38047180848: both CALL and PUT returned HTTP 200 for 2026-07-28 (150 candles each) and 2026-08-04 (154 each); requested arrays aligned in all four series. | Coverage probe passed for these rolling ATM-relative series only; no claim of exact-contract or executable quote coverage. |
