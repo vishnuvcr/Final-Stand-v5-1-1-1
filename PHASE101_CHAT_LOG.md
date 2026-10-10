@@ -48,3 +48,8 @@ This file records user requests, research decisions, execution status, and corre
 
 
 - **Automated result:** run 38080659162; status reconciled at 2026-10-10T19:43:00Z; no strategy promotion.
+
+
+## Corrected run 38080659162 — 2026-10-10T19:43:01Z
+- Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 7; U02 costed trades 164; no 2026 option data; no strategy promoted.
+- U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.

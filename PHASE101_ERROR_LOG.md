@@ -90,3 +90,8 @@ Append entries; never overwrite earlier failures.
 
 
 - **E101-007 — Drawdown summary lacked peak/trough context and an equity reconciliation assertion.** Added maximum peak, date, peak/trough at maximum drawdown, drawdown percentage of peak, and a reconciliation error/pass field. The numerical outputs remain unaccepted until the automated rerun regenerates them and the reconciliation check passes for each model.
+
+
+## Corrected replay result — 2026-10-10T19:43:01Z
+- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080659162
+- Previous U05 look-ahead and U02 repeated-capital figures are superseded. The corrected workflow completed output validation; review the report and per-opportunity/coverage ledgers before interpreting performance.
