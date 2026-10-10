@@ -12,3 +12,10 @@
 
 ## Results
 Pending automated workflow result.
+
+
+## Implementation checkpoint
+- Added `scripts/phase68_hf_target_date_audit.py` and `.github/workflows/phase68-hf-target-date-byte-audit.yml`.
+- Workflow is configured for branch pushes and manual dispatch; it uses the repository HF_TOKEN secret without printing it and publishes aggregate-only outputs.
+- Timestamp handling was corrected to localize naive source timestamps as Asia/Kolkata. This correction was committed before accepting results.
+- **Runtime result pending independent verification.** No data-coverage pass or strategy promotion is claimed yet.
