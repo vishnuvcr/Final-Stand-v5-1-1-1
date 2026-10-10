@@ -449,3 +449,13 @@ First run failed closed on code-fingerprint drift and exposed escaped workflow e
 - **Scientific conclusion unchanged:** only 1/480 row passed the frozen 2% gate. This does not establish profitability. No factor selector is validated and no strategy is promoted.
 - **Next bounded engineering task:** Phase 55 now closes the remaining full-leg-audit gap for the 100 resolver-level OI blocks. It keeps the grid, source revision, 2% baseline, costs, splits and holdout unchanged. Current Phase 55 rerun: [37993167521](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993167521); full row/leg validation remains pending.
 - Ledger blob SHA: `dc0d600be6bd96da6e016623f6b5f4ffaef9a644`; pinned source revision `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`.
+
+
+## Cross-phase continuation checkpoint — 2026-10-10
+
+- Phase 55 selected-leg serialization audit passed 480/480 rows; [run 37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572).
+- Phase 54 eligibility sensitivity completed from the canonical Phase 55 ledger; [run 38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487). The 11 thresholds admit 1, 1, 8, 24, 55, 91, 150, 227, 298, 345 and 380 rows, but this is not spread or P&L evidence.
+- Supporting source diagnosis found one exact prior-minute row with source-recorded OI=0 for all 60 unique contract-time keys referenced by 220 blocked leg records across 100 configuration-event rows; [run 38018825640](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018825640). The OI>=100 rule remains unchanged.
+- Phase 56 cost-aware OHLC price-reference sensitivity completed on the canonical Phase 55 ledger; [run 38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348). It emitted 18,960 modeled scenario rows; five configuration-threshold pairs pass the severe-cost screen only at the 1000% diagnostic threshold. These are quote-validation leads only, not strategy winners.
+- The core Phase 52 factor-conditioned strategy research remains OPEN. BASELINE pilot has one eligible row at the frozen 2% proxy, the legacy factor-router validation was negative, and free independent historical bid/ask/depth remains a source blocker. No factor selector, configuration, or strategy is promoted; holdout remains untouched.
+- Next gate: complete the independent Phase 57 replay reproduction, reconcile it to the accepted Phase 56 matrix for common cost cases, then return to source-backed factor-selector evaluation or stop if quote/data coverage remains insufficient.
