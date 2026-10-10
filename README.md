@@ -1,3 +1,13 @@
+<!-- PHASE92_CHILD_START -->
+# Downstream checkpoint — Phase 92 (2022 synthetic-forward proxy + OI)
+
+**Result: the added feature block worsened fixed OOS spot-magnitude prediction.** Latest run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106), 3,660 OOS rows / 61 sessions, 54/54 option windows and 5/5 VIX windows valid. M2−M4 MAE = −0.1708363 bps; session-cluster 95% CI −0.2298769 to −0.1152015. No strategy is promoted.
+
+- [Phase 92 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/PHASE92_RESULTS.md)
+- [Cross-phase synthesis / stop decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
+- [Phase 92 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md)
+<!-- PHASE92_CHILD_END -->
+
 <!-- PHASE91_START -->
 # Resume checkpoint — Phase 91 IV incremental-prediction study
 
