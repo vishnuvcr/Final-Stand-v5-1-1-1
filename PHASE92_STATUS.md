@@ -12,6 +12,7 @@ Strategy promotion: **NONE**.
 - [Phase branch workflow](.github/workflows/phase92-synthetic-forward-oi-2022.yml)
 - [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml)
 - [Detailed results](results/phase92/PHASE92_RESULTS.md)
+- [Cross-phase factor synthesis and stopping decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
 - [Summary JSON](results/phase92/summary.json)
 - [Coverage ledger](results/phase92/coverage.csv)
 - [Model metrics](results/phase92/model_metrics.csv)
@@ -31,4 +32,6 @@ Complete OOS rows/sessions: 3,660/61. DEV and validation complete rows: 7,357/3,
 | M3 plus synthetic-forward proxy | 4.8791 | 6.6208 | 0.0665 |
 | M4 plus OI imbalance | 4.9922 | 6.6615 | 0.0550 |
 
-The primary M2 MAE − M4 MAE was **−0.1708363 bps**, paired session-cluster bootstrap 95% CI **−0.2298769 to −0.1152015** (5,000 resamples, seed 90210). The CI is entirely below zero: the combined synthetic-forward/OI features worsen OOS magnitude prediction on this sample. No strategy was tested or promoted. [Cross-feature results](results/phase92/PHASE92_RESULTS.md) · [Coverage ledger](results/phase92/coverage.csv) · [Error log](PHASE92_ERROR_LOG.md).
+The primary M2 MAE − M4 MAE was **−0.1708363 bps**, paired session-cluster bootstrap 95% CI **−0.2298769 to −0.1152015** (5,000 resamples, seed 90210). The CI is entirely below zero: the combined synthetic-forward/OI features worsen OOS magnitude prediction on this sample. No strategy was tested or promoted.
+
+**Terminal Phase 92 decision:** close this fixed-sample factor-prediction screen at its registered stopping boundary. Do not search extra years or tune features for a positive outcome. Reopen only for a materially new preregistered hypothesis or authorized execution-grade exact-contract data. See the [cross-phase synthesis](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md). [Cross-feature results](results/phase92/PHASE92_RESULTS.md) · [Coverage ledger](results/phase92/coverage.csv) · [Error log](PHASE92_ERROR_LOG.md).
