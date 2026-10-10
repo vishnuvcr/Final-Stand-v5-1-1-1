@@ -10,3 +10,6 @@ This file records user requests, research decisions, execution status, and corre
 - **Status at log time:** branch and research plan created; runner/workflow and empirical results pending.
 
 - **Execution update:** first automated run 38074995935 failed before market-data loading due to Parquet engine import. The failure was logged; PyArrow has now been pinned and an explicit preflight added. This run is rejected as a strategy result, and no profitability conclusion is inferred from it.
+
+
+- **Automated result:** run 38075221554; status reconciled at 2026-10-10T18:23:56Z; no strategy promotion.

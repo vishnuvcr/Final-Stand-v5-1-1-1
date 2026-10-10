@@ -1,0 +1,21 @@
+{
+  "phase": 101,
+  "overall_status": "COMPLETED_WITH_EXPLICIT_LIMITATIONS",
+  "paper_rows": 14,
+  "expected_paper_rows": 14,
+  "u05_opportunity_rows": 56,
+  "u05_trade_rows": 7,
+  "u02_metric_rows": 3,
+  "u02_predictions": 1330,
+  "u02_trade_rows": 896,
+  "holdout_2026_option_files_downloaded": 0,
+  "latest_underlying_timestamp": "2025-12-31 15:59:00+05:30",
+  "max_selected_expiry": "2025-12-30",
+  "zero_trade_metric_policy": "NOT_ESTIMABLE_ZERO_TRADES",
+  "strategy_promoted": false,
+  "limitations": [
+    "U02 and U05 are proxy tests, not exact original-period replications",
+    "U06 external modalities remain blocked",
+    "U07 payoff algebra and prior Phase 95/96/66 outcomes are carried forward"
+  ]
+}

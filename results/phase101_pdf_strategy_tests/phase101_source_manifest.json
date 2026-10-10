@@ -1,0 +1,1006 @@
+{
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "revision": "3eacf762d401efd9a08e804592fa7882b354c4a2",
+  "license": "CC-BY-NC-4.0; aggregate derived results only",
+  "date_window": {
+    "start": "2021-05-27",
+    "end": "2025-12-31"
+  },
+  "holdout_2026_option_files_downloaded": 0,
+  "option_source_files_used": [
+    {
+      "path": "options/NIFTY/2021-06-24.parquet",
+      "sha256": "5ffc3d44b1fc24fb4f583403226e9dc9ce4f6226b1cb8ee40e960f55aded8f98",
+      "bytes": 3936263
+    },
+    {
+      "path": "options/NIFTY/2021-07-29.parquet",
+      "sha256": "b331a76157547b36df3f08385d5108149146037417d70c7464608734a2b6fe12",
+      "bytes": 2924041
+    },
+    {
+      "path": "options/NIFTY/2021-08-26.parquet",
+      "sha256": "bb3ea843801623160a1ec3e9c68535b0f9b052a28d1d151e7e9691b6f19711d7",
+      "bytes": 3145921
+    },
+    {
+      "path": "options/NIFTY/2021-09-30.parquet",
+      "sha256": "5722bb71e7666cfe3b2ce2ed329434ad950bed0734f3fb83ae7cdeb6b4bac7e3",
+      "bytes": 4578014
+    },
+    {
+      "path": "options/NIFTY/2021-10-28.parquet",
+      "sha256": "454b3ee097f4f19d2985f24420bf70a676c4fb6ea33081dbc4fddf051a0e41c8",
+      "bytes": 4513540
+    },
+    {
+      "path": "options/NIFTY/2021-11-25.parquet",
+      "sha256": "1770c7b625e89af13799c97ca44288288f41fc403de2ee41adc8b9d7a87c75f2",
+      "bytes": 3769165
+    },
+    {
+      "path": "options/NIFTY/2021-12-30.parquet",
+      "sha256": "e87ac8d2ebf61e74c69b10a2995ae9381f08bf9300c0622170fbc15120e780ff",
+      "bytes": 4480859
+    },
+    {
+      "path": "options/NIFTY/2022-01-27.parquet",
+      "sha256": "b39d962fdd1ea34256b62be7872dab24cdf0f254e14063026e7df6b63892b6ec",
+      "bytes": 4526163
+    },
+    {
+      "path": "options/NIFTY/2022-02-24.parquet",
+      "sha256": "8fe0be76d038fa46766fac9bf7095f846c6f32676d3af6bb1057e0a4f85898f0",
+      "bytes": 5275074
+    },
+    {
+      "path": "options/NIFTY/2022-03-31.parquet",
+      "sha256": "9b860009f07e45fb9e130460ad7ce68dfe59673f13b2ae1ec4101d69223764ce",
+      "bytes": 5304807
+    },
+    {
+      "path": "options/NIFTY/2022-04-28.parquet",
+      "sha256": "3bfa75d3373426d8423fa84165b1ef5e925e1ba30525f45a1e2d3b74d3b2b092",
+      "bytes": 4638151
+    },
+    {
+      "path": "options/NIFTY/2022-05-26.parquet",
+      "sha256": "00870606a45f391ae1d2a01c11c5a20056e01e271eab362ceab1e8dc1b6ff79c",
+      "bytes": 5047545
+    },
+    {
+      "path": "options/NIFTY/2022-06-30.parquet",
+      "sha256": "854b7413b38729fe790a3be7b9e542046511c20fbc69550e503bc01ae36a6f17",
+      "bytes": 4991958
+    },
+    {
+      "path": "options/NIFTY/2022-07-28.parquet",
+      "sha256": "df6e1008eb0670d62a9fb946fcab5e008833a44f0f9874ce0529aacc633e40ba",
+      "bytes": 4204712
+    },
+    {
+      "path": "options/NIFTY/2022-08-25.parquet",
+      "sha256": "ae1626f6044aa88caed612d0e1fc7cfe22467e6292f01f596b628f874e60d865",
+      "bytes": 4127370
+    },
+    {
+      "path": "options/NIFTY/2022-09-29.parquet",
+      "sha256": "f3d8219ecf55c3b980628b4318407b8fce39fb61ff0fc38f43d300e6fb354edd",
+      "bytes": 5001619
+    },
+    {
+      "path": "options/NIFTY/2022-11-24.parquet",
+      "sha256": "ef57923ee8c1039534f77eddcac71246d490fc2e5fbe4c63cec7418bcade0f67",
+      "bytes": 3566794
+    },
+    {
+      "path": "options/NIFTY/2022-12-29.parquet",
+      "sha256": "0010b22d12ac4e0d3aad4cc37e0a3e5a6ce29df99c6d5387a0309da4a0b0f1f8",
+      "bytes": 4470298
+    },
+    {
+      "path": "options/NIFTY/2023-01-25.parquet",
+      "sha256": "78aa885290e9db3f3cdf3fbd6fda8e2bb0df42ae533f9413ceda2410129c61c2",
+      "bytes": 3453758
+    },
+    {
+      "path": "options/NIFTY/2023-02-23.parquet",
+      "sha256": "5ac84071ed49d9128a19afcb28c0ff2947a5dc309d55b74cb35a1ccee209570e",
+      "bytes": 3718752
+    },
+    {
+      "path": "options/NIFTY/2023-03-29.parquet",
+      "sha256": "8245143f782f285e009ac6fa673be3e5c7432d48be68b41a840819d165cbab74",
+      "bytes": 3851632
+    },
+    {
+      "path": "options/NIFTY/2023-04-27.parquet",
+      "sha256": "abf577311e5f6b3d8f5f2d5b55956bac7b7491666e91bc4dedfa9af253b8c0ca",
+      "bytes": 3536748
+    },
+    {
+      "path": "options/NIFTY/2023-05-25.parquet",
+      "sha256": "162752d9d3e0fa0ca7c44553d95139632f42897121584c6d0cdb4bcc9dea6e9d",
+      "bytes": 3712382
+    },
+    {
+      "path": "options/NIFTY/2023-06-28.parquet",
+      "sha256": "fddbe04a3816e616d57513225b8723a5d8335858579bef5a6e1f880a834a1310",
+      "bytes": 3527778
+    },
+    {
+      "path": "options/NIFTY/2023-07-27.parquet",
+      "sha256": "4d8defcf30495cd5a6d609db8da8f13e6eaa0146209aa598c8d641099a33bb54",
+      "bytes": 4235922
+    },
+    {
+      "path": "options/NIFTY/2023-08-31.parquet",
+      "sha256": "de181cbf66a2d31c5e2f04d63f6f50f5391db44001816128fefc204e6b241dc2",
+      "bytes": 3598347
+    },
+    {
+      "path": "options/NIFTY/2023-09-28.parquet",
+      "sha256": "8278f840b3e17d0e9673abf46aefdeedc5a44cf2fcf39bf76c2900013d972609",
+      "bytes": 3690901
+    },
+    {
+      "path": "options/NIFTY/2023-10-26.parquet",
+      "sha256": "aa7d24acf273a2e15734b37ce564af9cec8033b4729803016a1cc57a73eb6999",
+      "bytes": 3614523
+    },
+    {
+      "path": "options/NIFTY/2023-11-30.parquet",
+      "sha256": "156117f1cfa35aac8b41cc4eea48feda19c04dd155c444c38359938c2025e563",
+      "bytes": 2514868
+    },
+    {
+      "path": "options/NIFTY/2023-12-28.parquet",
+      "sha256": "afc826198ed386459f5f38ad5daa984b6a55093ffdf4d16e1c40489159fd87fd",
+      "bytes": 4700893
+    },
+    {
+      "path": "options/NIFTY/2024-01-25.parquet",
+      "sha256": "df1728a4851b8062832c39b978c1505cd3c393ff48865e7f47ea1f447f2f5b14",
+      "bytes": 4475729
+    },
+    {
+      "path": "options/NIFTY/2024-02-29.parquet",
+      "sha256": "010cd5225720597c60662960884573797487bf0f55a14c03396449fd58ddfce2",
+      "bytes": 4010853
+    },
+    {
+      "path": "options/NIFTY/2024-03-28.parquet",
+      "sha256": "b994b2986c412331cb8d5b2449dd7c46eb7425b2449bc8e0b463893bff150f13",
+      "bytes": 3621864
+    },
+    {
+      "path": "options/NIFTY/2024-04-25.parquet",
+      "sha256": "54319b55cfafde10a28fa173b71571c1ce9329ace6aba8fcd9e377cb3f5074ca",
+      "bytes": 3368976
+    },
+    {
+      "path": "options/NIFTY/2024-06-27.parquet",
+      "sha256": "24a6777c967e09846c9ac9213c032f2ea9806ad95a81336f1e1b01e3d6ba69af",
+      "bytes": 4369680
+    },
+    {
+      "path": "options/NIFTY/2024-07-25.parquet",
+      "sha256": "c575abd45eb68630266e85dbb2bea9b836703f71278b6b29dc33705179179c79",
+      "bytes": 4717190
+    },
+    {
+      "path": "options/NIFTY/2024-08-29.parquet",
+      "sha256": "8a9a3d61aa61927f6e20d8059b1393df935a0b2080ca3876564958487aac2fb5",
+      "bytes": 4329836
+    },
+    {
+      "path": "options/NIFTY/2024-09-26.parquet",
+      "sha256": "2d20eb09a49d631769d6d04b39a87c008d460427e650014a3398ec554d82de15",
+      "bytes": 4760982
+    },
+    {
+      "path": "options/NIFTY/2024-11-28.parquet",
+      "sha256": "88debeb979f592d2f6abbdf78e13abe21b64ac99c7c6fa600f5785e8d1ab10db",
+      "bytes": 4605136
+    },
+    {
+      "path": "options/NIFTY/2024-12-26.parquet",
+      "sha256": "a0c2b0ebafb355ecca4d487b8d7f4bd55aa46459381924f5fd49c68a175a5e31",
+      "bytes": 5028816
+    },
+    {
+      "path": "options/NIFTY/2025-01-30.parquet",
+      "sha256": "094d0c1b9a1c579941e63c48ae108d8fc58d3e9ddabbff6ba961fc404038648e",
+      "bytes": 5745391
+    },
+    {
+      "path": "options/NIFTY/2025-02-27.parquet",
+      "sha256": "c07f8faef62ea99f745c266be6809e8eeeeddd48eb8d699bdd029a31d1a32000",
+      "bytes": 4110178
+    },
+    {
+      "path": "options/NIFTY/2025-03-27.parquet",
+      "sha256": "da087a54ebeb6c0ce24698f45b7651a15ecb71d6c1cbceba4459eacd9f6b5bb6",
+      "bytes": 4866023
+    },
+    {
+      "path": "options/NIFTY/2025-04-30.parquet",
+      "sha256": "dccb602c79f1b9406c1e2396234c7bc98d463ddc9a92bbc012bcf48513cb7c54",
+      "bytes": 4047312
+    },
+    {
+      "path": "options/NIFTY/2025-06-26.parquet",
+      "sha256": "fd4096039cec13d31eb39dbe5f78b5b9fcc0871cd19abb462352b2626ab25504",
+      "bytes": 5608001
+    },
+    {
+      "path": "options/NIFTY/2025-07-31.parquet",
+      "sha256": "64572ceb2a40e1cb45b7b688e6041e724ae034521ed82cfbd05d6b1a1c24941f",
+      "bytes": 3811657
+    },
+    {
+      "path": "options/NIFTY/2025-08-28.parquet",
+      "sha256": "a81852ce965e91b6f70eaf2e0cb4aec3cd6f4966a92a09542f672db44c2bfb54",
+      "bytes": 3209434
+    },
+    {
+      "path": "options/NIFTY/2025-09-30.parquet",
+      "sha256": "01acf65bc274a05b5b49a71d69b00639cda32b1b3bcc665d95366ad9538dec0b",
+      "bytes": 3406038
+    },
+    {
+      "path": "options/NIFTY/2025-12-30.parquet",
+      "sha256": "5ed78461988ce2d90d56aa54afa032a72c7889cbfed73d8f7d8b2239ff580541",
+      "bytes": 2746622
+    },
+    {
+      "path": "options/NIFTY/2021-05-27.parquet",
+      "sha256": "46aef7e94628ea3c180e4deb4998a19fab2d1082fce0529cc5ba6bca7313e26e",
+      "bytes": 3624537
+    },
+    {
+      "path": "options/NIFTY/2021-06-24.parquet",
+      "sha256": "5ffc3d44b1fc24fb4f583403226e9dc9ce4f6226b1cb8ee40e960f55aded8f98",
+      "bytes": 3936263
+    },
+    {
+      "path": "options/NIFTY/2021-07-29.parquet",
+      "sha256": "b331a76157547b36df3f08385d5108149146037417d70c7464608734a2b6fe12",
+      "bytes": 2924041
+    },
+    {
+      "path": "options/NIFTY/2021-08-26.parquet",
+      "sha256": "bb3ea843801623160a1ec3e9c68535b0f9b052a28d1d151e7e9691b6f19711d7",
+      "bytes": 3145921
+    },
+    {
+      "path": "options/NIFTY/2021-09-30.parquet",
+      "sha256": "5722bb71e7666cfe3b2ce2ed329434ad950bed0734f3fb83ae7cdeb6b4bac7e3",
+      "bytes": 4578014
+    },
+    {
+      "path": "options/NIFTY/2021-10-28.parquet",
+      "sha256": "454b3ee097f4f19d2985f24420bf70a676c4fb6ea33081dbc4fddf051a0e41c8",
+      "bytes": 4513540
+    },
+    {
+      "path": "options/NIFTY/2021-11-25.parquet",
+      "sha256": "1770c7b625e89af13799c97ca44288288f41fc403de2ee41adc8b9d7a87c75f2",
+      "bytes": 3769165
+    },
+    {
+      "path": "options/NIFTY/2021-12-30.parquet",
+      "sha256": "e87ac8d2ebf61e74c69b10a2995ae9381f08bf9300c0622170fbc15120e780ff",
+      "bytes": 4480859
+    },
+    {
+      "path": "options/NIFTY/2022-01-27.parquet",
+      "sha256": "b39d962fdd1ea34256b62be7872dab24cdf0f254e14063026e7df6b63892b6ec",
+      "bytes": 4526163
+    },
+    {
+      "path": "options/NIFTY/2022-02-24.parquet",
+      "sha256": "8fe0be76d038fa46766fac9bf7095f846c6f32676d3af6bb1057e0a4f85898f0",
+      "bytes": 5275074
+    },
+    {
+      "path": "options/NIFTY/2022-03-31.parquet",
+      "sha256": "9b860009f07e45fb9e130460ad7ce68dfe59673f13b2ae1ec4101d69223764ce",
+      "bytes": 5304807
+    },
+    {
+      "path": "options/NIFTY/2022-04-28.parquet",
+      "sha256": "3bfa75d3373426d8423fa84165b1ef5e925e1ba30525f45a1e2d3b74d3b2b092",
+      "bytes": 4638151
+    },
+    {
+      "path": "options/NIFTY/2022-05-26.parquet",
+      "sha256": "00870606a45f391ae1d2a01c11c5a20056e01e271eab362ceab1e8dc1b6ff79c",
+      "bytes": 5047545
+    },
+    {
+      "path": "options/NIFTY/2022-06-30.parquet",
+      "sha256": "854b7413b38729fe790a3be7b9e542046511c20fbc69550e503bc01ae36a6f17",
+      "bytes": 4991958
+    },
+    {
+      "path": "options/NIFTY/2022-07-28.parquet",
+      "sha256": "df6e1008eb0670d62a9fb946fcab5e008833a44f0f9874ce0529aacc633e40ba",
+      "bytes": 4204712
+    },
+    {
+      "path": "options/NIFTY/2022-08-25.parquet",
+      "sha256": "ae1626f6044aa88caed612d0e1fc7cfe22467e6292f01f596b628f874e60d865",
+      "bytes": 4127370
+    },
+    {
+      "path": "options/NIFTY/2022-09-29.parquet",
+      "sha256": "f3d8219ecf55c3b980628b4318407b8fce39fb61ff0fc38f43d300e6fb354edd",
+      "bytes": 5001619
+    },
+    {
+      "path": "options/NIFTY/2022-10-27.parquet",
+      "sha256": "741924fa39521f0bb2e12be92a5e61d65de08b2f426e9e55b765a1ed7f2af2d7",
+      "bytes": 3354290
+    },
+    {
+      "path": "options/NIFTY/2022-11-24.parquet",
+      "sha256": "ef57923ee8c1039534f77eddcac71246d490fc2e5fbe4c63cec7418bcade0f67",
+      "bytes": 3566794
+    },
+    {
+      "path": "options/NIFTY/2022-12-29.parquet",
+      "sha256": "0010b22d12ac4e0d3aad4cc37e0a3e5a6ce29df99c6d5387a0309da4a0b0f1f8",
+      "bytes": 4470298
+    },
+    {
+      "path": "options/NIFTY/2023-01-25.parquet",
+      "sha256": "78aa885290e9db3f3cdf3fbd6fda8e2bb0df42ae533f9413ceda2410129c61c2",
+      "bytes": 3453758
+    },
+    {
+      "path": "options/NIFTY/2023-02-23.parquet",
+      "sha256": "5ac84071ed49d9128a19afcb28c0ff2947a5dc309d55b74cb35a1ccee209570e",
+      "bytes": 3718752
+    },
+    {
+      "path": "options/NIFTY/2023-03-29.parquet",
+      "sha256": "8245143f782f285e009ac6fa673be3e5c7432d48be68b41a840819d165cbab74",
+      "bytes": 3851632
+    },
+    {
+      "path": "options/NIFTY/2023-04-27.parquet",
+      "sha256": "abf577311e5f6b3d8f5f2d5b55956bac7b7491666e91bc4dedfa9af253b8c0ca",
+      "bytes": 3536748
+    },
+    {
+      "path": "options/NIFTY/2023-05-25.parquet",
+      "sha256": "162752d9d3e0fa0ca7c44553d95139632f42897121584c6d0cdb4bcc9dea6e9d",
+      "bytes": 3712382
+    },
+    {
+      "path": "options/NIFTY/2023-06-28.parquet",
+      "sha256": "fddbe04a3816e616d57513225b8723a5d8335858579bef5a6e1f880a834a1310",
+      "bytes": 3527778
+    },
+    {
+      "path": "options/NIFTY/2023-07-27.parquet",
+      "sha256": "4d8defcf30495cd5a6d609db8da8f13e6eaa0146209aa598c8d641099a33bb54",
+      "bytes": 4235922
+    },
+    {
+      "path": "options/NIFTY/2023-08-31.parquet",
+      "sha256": "de181cbf66a2d31c5e2f04d63f6f50f5391db44001816128fefc204e6b241dc2",
+      "bytes": 3598347
+    },
+    {
+      "path": "options/NIFTY/2023-09-28.parquet",
+      "sha256": "8278f840b3e17d0e9673abf46aefdeedc5a44cf2fcf39bf76c2900013d972609",
+      "bytes": 3690901
+    },
+    {
+      "path": "options/NIFTY/2023-10-26.parquet",
+      "sha256": "aa7d24acf273a2e15734b37ce564af9cec8033b4729803016a1cc57a73eb6999",
+      "bytes": 3614523
+    },
+    {
+      "path": "options/NIFTY/2023-11-30.parquet",
+      "sha256": "156117f1cfa35aac8b41cc4eea48feda19c04dd155c444c38359938c2025e563",
+      "bytes": 2514868
+    },
+    {
+      "path": "options/NIFTY/2023-12-28.parquet",
+      "sha256": "afc826198ed386459f5f38ad5daa984b6a55093ffdf4d16e1c40489159fd87fd",
+      "bytes": 4700893
+    },
+    {
+      "path": "options/NIFTY/2024-01-25.parquet",
+      "sha256": "df1728a4851b8062832c39b978c1505cd3c393ff48865e7f47ea1f447f2f5b14",
+      "bytes": 4475729
+    },
+    {
+      "path": "options/NIFTY/2024-02-29.parquet",
+      "sha256": "010cd5225720597c60662960884573797487bf0f55a14c03396449fd58ddfce2",
+      "bytes": 4010853
+    },
+    {
+      "path": "options/NIFTY/2024-03-28.parquet",
+      "sha256": "b994b2986c412331cb8d5b2449dd7c46eb7425b2449bc8e0b463893bff150f13",
+      "bytes": 3621864
+    },
+    {
+      "path": "options/NIFTY/2024-04-25.parquet",
+      "sha256": "54319b55cfafde10a28fa173b71571c1ce9329ace6aba8fcd9e377cb3f5074ca",
+      "bytes": 3368976
+    },
+    {
+      "path": "options/NIFTY/2024-05-30.parquet",
+      "sha256": "7aa0b68ff53f2384cf8940036faa3243cf48733477bc4406eb18e94973283cb3",
+      "bytes": 3366274
+    },
+    {
+      "path": "options/NIFTY/2024-06-27.parquet",
+      "sha256": "24a6777c967e09846c9ac9213c032f2ea9806ad95a81336f1e1b01e3d6ba69af",
+      "bytes": 4369680
+    },
+    {
+      "path": "options/NIFTY/2024-07-25.parquet",
+      "sha256": "c575abd45eb68630266e85dbb2bea9b836703f71278b6b29dc33705179179c79",
+      "bytes": 4717190
+    },
+    {
+      "path": "options/NIFTY/2024-08-29.parquet",
+      "sha256": "8a9a3d61aa61927f6e20d8059b1393df935a0b2080ca3876564958487aac2fb5",
+      "bytes": 4329836
+    },
+    {
+      "path": "options/NIFTY/2024-09-26.parquet",
+      "sha256": "2d20eb09a49d631769d6d04b39a87c008d460427e650014a3398ec554d82de15",
+      "bytes": 4760982
+    },
+    {
+      "path": "options/NIFTY/2024-10-31.parquet",
+      "sha256": "fb2a3db71b91372134e0d7c56b6ad611973e7ce7b89df8ecc187daa87bacad51",
+      "bytes": 4452462
+    },
+    {
+      "path": "options/NIFTY/2024-11-28.parquet",
+      "sha256": "88debeb979f592d2f6abbdf78e13abe21b64ac99c7c6fa600f5785e8d1ab10db",
+      "bytes": 4605136
+    },
+    {
+      "path": "options/NIFTY/2024-12-26.parquet",
+      "sha256": "a0c2b0ebafb355ecca4d487b8d7f4bd55aa46459381924f5fd49c68a175a5e31",
+      "bytes": 5028816
+    },
+    {
+      "path": "options/NIFTY/2025-01-30.parquet",
+      "sha256": "094d0c1b9a1c579941e63c48ae108d8fc58d3e9ddabbff6ba961fc404038648e",
+      "bytes": 5745391
+    },
+    {
+      "path": "options/NIFTY/2025-02-27.parquet",
+      "sha256": "c07f8faef62ea99f745c266be6809e8eeeeddd48eb8d699bdd029a31d1a32000",
+      "bytes": 4110178
+    },
+    {
+      "path": "options/NIFTY/2025-03-27.parquet",
+      "sha256": "da087a54ebeb6c0ce24698f45b7651a15ecb71d6c1cbceba4459eacd9f6b5bb6",
+      "bytes": 4866023
+    },
+    {
+      "path": "options/NIFTY/2025-04-30.parquet",
+      "sha256": "dccb602c79f1b9406c1e2396234c7bc98d463ddc9a92bbc012bcf48513cb7c54",
+      "bytes": 4047312
+    },
+    {
+      "path": "options/NIFTY/2025-05-29.parquet",
+      "sha256": "61610c8cbf8fe744c6c7a7c7420282abae6acf75f921f93e42a1867c9cc19917",
+      "bytes": 5695383
+    },
+    {
+      "path": "options/NIFTY/2025-06-26.parquet",
+      "sha256": "fd4096039cec13d31eb39dbe5f78b5b9fcc0871cd19abb462352b2626ab25504",
+      "bytes": 5608001
+    },
+    {
+      "path": "options/NIFTY/2025-07-31.parquet",
+      "sha256": "64572ceb2a40e1cb45b7b688e6041e724ae034521ed82cfbd05d6b1a1c24941f",
+      "bytes": 3811657
+    },
+    {
+      "path": "options/NIFTY/2025-08-28.parquet",
+      "sha256": "a81852ce965e91b6f70eaf2e0cb4aec3cd6f4966a92a09542f672db44c2bfb54",
+      "bytes": 3209434
+    },
+    {
+      "path": "options/NIFTY/2025-09-30.parquet",
+      "sha256": "01acf65bc274a05b5b49a71d69b00639cda32b1b3bcc665d95366ad9538dec0b",
+      "bytes": 3406038
+    },
+    {
+      "path": "options/NIFTY/2025-10-28.parquet",
+      "sha256": "55f0106982debfece9d677129ae65deab2e78da05708085a4dcf00b490ad439e",
+      "bytes": 2556627
+    },
+    {
+      "path": "options/NIFTY/2025-11-25.parquet",
+      "sha256": "61549c47dfd818b57bcb286da25b7bbf3521b68465fe8be9f708792f7847eb32",
+      "bytes": 3052423
+    },
+    {
+      "path": "options/NIFTY/2025-12-30.parquet",
+      "sha256": "5ed78461988ce2d90d56aa54afa032a72c7889cbfed73d8f7d8b2239ff580541",
+      "bytes": 2746622
+    },
+    {
+      "path": "options/NIFTY/2024-01-25.parquet",
+      "sha256": "df1728a4851b8062832c39b978c1505cd3c393ff48865e7f47ea1f447f2f5b14",
+      "bytes": 4475729
+    },
+    {
+      "path": "options/NIFTY/2024-02-29.parquet",
+      "sha256": "010cd5225720597c60662960884573797487bf0f55a14c03396449fd58ddfce2",
+      "bytes": 4010853
+    },
+    {
+      "path": "options/NIFTY/2024-03-28.parquet",
+      "sha256": "b994b2986c412331cb8d5b2449dd7c46eb7425b2449bc8e0b463893bff150f13",
+      "bytes": 3621864
+    },
+    {
+      "path": "options/NIFTY/2024-04-25.parquet",
+      "sha256": "54319b55cfafde10a28fa173b71571c1ce9329ace6aba8fcd9e377cb3f5074ca",
+      "bytes": 3368976
+    },
+    {
+      "path": "options/NIFTY/2024-05-30.parquet",
+      "sha256": "7aa0b68ff53f2384cf8940036faa3243cf48733477bc4406eb18e94973283cb3",
+      "bytes": 3366274
+    },
+    {
+      "path": "options/NIFTY/2024-06-27.parquet",
+      "sha256": "24a6777c967e09846c9ac9213c032f2ea9806ad95a81336f1e1b01e3d6ba69af",
+      "bytes": 4369680
+    },
+    {
+      "path": "options/NIFTY/2024-07-25.parquet",
+      "sha256": "c575abd45eb68630266e85dbb2bea9b836703f71278b6b29dc33705179179c79",
+      "bytes": 4717190
+    },
+    {
+      "path": "options/NIFTY/2024-08-29.parquet",
+      "sha256": "8a9a3d61aa61927f6e20d8059b1393df935a0b2080ca3876564958487aac2fb5",
+      "bytes": 4329836
+    },
+    {
+      "path": "options/NIFTY/2024-09-26.parquet",
+      "sha256": "2d20eb09a49d631769d6d04b39a87c008d460427e650014a3398ec554d82de15",
+      "bytes": 4760982
+    },
+    {
+      "path": "options/NIFTY/2024-10-31.parquet",
+      "sha256": "fb2a3db71b91372134e0d7c56b6ad611973e7ce7b89df8ecc187daa87bacad51",
+      "bytes": 4452462
+    },
+    {
+      "path": "options/NIFTY/2024-11-28.parquet",
+      "sha256": "88debeb979f592d2f6abbdf78e13abe21b64ac99c7c6fa600f5785e8d1ab10db",
+      "bytes": 4605136
+    },
+    {
+      "path": "options/NIFTY/2024-12-26.parquet",
+      "sha256": "a0c2b0ebafb355ecca4d487b8d7f4bd55aa46459381924f5fd49c68a175a5e31",
+      "bytes": 5028816
+    },
+    {
+      "path": "options/NIFTY/2025-01-30.parquet",
+      "sha256": "094d0c1b9a1c579941e63c48ae108d8fc58d3e9ddabbff6ba961fc404038648e",
+      "bytes": 5745391
+    },
+    {
+      "path": "options/NIFTY/2025-02-27.parquet",
+      "sha256": "c07f8faef62ea99f745c266be6809e8eeeeddd48eb8d699bdd029a31d1a32000",
+      "bytes": 4110178
+    },
+    {
+      "path": "options/NIFTY/2025-03-27.parquet",
+      "sha256": "da087a54ebeb6c0ce24698f45b7651a15ecb71d6c1cbceba4459eacd9f6b5bb6",
+      "bytes": 4866023
+    },
+    {
+      "path": "options/NIFTY/2025-04-30.parquet",
+      "sha256": "dccb602c79f1b9406c1e2396234c7bc98d463ddc9a92bbc012bcf48513cb7c54",
+      "bytes": 4047312
+    },
+    {
+      "path": "options/NIFTY/2025-05-29.parquet",
+      "sha256": "61610c8cbf8fe744c6c7a7c7420282abae6acf75f921f93e42a1867c9cc19917",
+      "bytes": 5695383
+    },
+    {
+      "path": "options/NIFTY/2025-06-26.parquet",
+      "sha256": "fd4096039cec13d31eb39dbe5f78b5b9fcc0871cd19abb462352b2626ab25504",
+      "bytes": 5608001
+    },
+    {
+      "path": "options/NIFTY/2025-07-31.parquet",
+      "sha256": "64572ceb2a40e1cb45b7b688e6041e724ae034521ed82cfbd05d6b1a1c24941f",
+      "bytes": 3811657
+    },
+    {
+      "path": "options/NIFTY/2025-08-28.parquet",
+      "sha256": "a81852ce965e91b6f70eaf2e0cb4aec3cd6f4966a92a09542f672db44c2bfb54",
+      "bytes": 3209434
+    },
+    {
+      "path": "options/NIFTY/2025-09-30.parquet",
+      "sha256": "01acf65bc274a05b5b49a71d69b00639cda32b1b3bcc665d95366ad9538dec0b",
+      "bytes": 3406038
+    },
+    {
+      "path": "options/NIFTY/2025-10-28.parquet",
+      "sha256": "55f0106982debfece9d677129ae65deab2e78da05708085a4dcf00b490ad439e",
+      "bytes": 2556627
+    },
+    {
+      "path": "options/NIFTY/2025-11-25.parquet",
+      "sha256": "61549c47dfd818b57bcb286da25b7bbf3521b68465fe8be9f708792f7847eb32",
+      "bytes": 3052423
+    },
+    {
+      "path": "options/NIFTY/2025-12-30.parquet",
+      "sha256": "5ed78461988ce2d90d56aa54afa032a72c7889cbfed73d8f7d8b2239ff580541",
+      "bytes": 2746622
+    }
+  ],
+  "monthly_expiry_file_count": 56,
+  "eligible_expiry_file_count": 239,
+  "monthly_expiry_files": [
+    {
+      "month": "2021-05",
+      "expiry": "2021-05-27",
+      "file": "options/NIFTY/2021-05-27.parquet"
+    },
+    {
+      "month": "2021-06",
+      "expiry": "2021-06-24",
+      "file": "options/NIFTY/2021-06-24.parquet"
+    },
+    {
+      "month": "2021-07",
+      "expiry": "2021-07-29",
+      "file": "options/NIFTY/2021-07-29.parquet"
+    },
+    {
+      "month": "2021-08",
+      "expiry": "2021-08-26",
+      "file": "options/NIFTY/2021-08-26.parquet"
+    },
+    {
+      "month": "2021-09",
+      "expiry": "2021-09-30",
+      "file": "options/NIFTY/2021-09-30.parquet"
+    },
+    {
+      "month": "2021-10",
+      "expiry": "2021-10-28",
+      "file": "options/NIFTY/2021-10-28.parquet"
+    },
+    {
+      "month": "2021-11",
+      "expiry": "2021-11-25",
+      "file": "options/NIFTY/2021-11-25.parquet"
+    },
+    {
+      "month": "2021-12",
+      "expiry": "2021-12-30",
+      "file": "options/NIFTY/2021-12-30.parquet"
+    },
+    {
+      "month": "2022-01",
+      "expiry": "2022-01-27",
+      "file": "options/NIFTY/2022-01-27.parquet"
+    },
+    {
+      "month": "2022-02",
+      "expiry": "2022-02-24",
+      "file": "options/NIFTY/2022-02-24.parquet"
+    },
+    {
+      "month": "2022-03",
+      "expiry": "2022-03-31",
+      "file": "options/NIFTY/2022-03-31.parquet"
+    },
+    {
+      "month": "2022-04",
+      "expiry": "2022-04-28",
+      "file": "options/NIFTY/2022-04-28.parquet"
+    },
+    {
+      "month": "2022-05",
+      "expiry": "2022-05-26",
+      "file": "options/NIFTY/2022-05-26.parquet"
+    },
+    {
+      "month": "2022-06",
+      "expiry": "2022-06-30",
+      "file": "options/NIFTY/2022-06-30.parquet"
+    },
+    {
+      "month": "2022-07",
+      "expiry": "2022-07-28",
+      "file": "options/NIFTY/2022-07-28.parquet"
+    },
+    {
+      "month": "2022-08",
+      "expiry": "2022-08-25",
+      "file": "options/NIFTY/2022-08-25.parquet"
+    },
+    {
+      "month": "2022-09",
+      "expiry": "2022-09-29",
+      "file": "options/NIFTY/2022-09-29.parquet"
+    },
+    {
+      "month": "2022-10",
+      "expiry": "2022-10-27",
+      "file": "options/NIFTY/2022-10-27.parquet"
+    },
+    {
+      "month": "2022-11",
+      "expiry": "2022-11-24",
+      "file": "options/NIFTY/2022-11-24.parquet"
+    },
+    {
+      "month": "2022-12",
+      "expiry": "2022-12-29",
+      "file": "options/NIFTY/2022-12-29.parquet"
+    },
+    {
+      "month": "2023-01",
+      "expiry": "2023-01-25",
+      "file": "options/NIFTY/2023-01-25.parquet"
+    },
+    {
+      "month": "2023-02",
+      "expiry": "2023-02-23",
+      "file": "options/NIFTY/2023-02-23.parquet"
+    },
+    {
+      "month": "2023-03",
+      "expiry": "2023-03-29",
+      "file": "options/NIFTY/2023-03-29.parquet"
+    },
+    {
+      "month": "2023-04",
+      "expiry": "2023-04-27",
+      "file": "options/NIFTY/2023-04-27.parquet"
+    },
+    {
+      "month": "2023-05",
+      "expiry": "2023-05-25",
+      "file": "options/NIFTY/2023-05-25.parquet"
+    },
+    {
+      "month": "2023-06",
+      "expiry": "2023-06-28",
+      "file": "options/NIFTY/2023-06-28.parquet"
+    },
+    {
+      "month": "2023-07",
+      "expiry": "2023-07-27",
+      "file": "options/NIFTY/2023-07-27.parquet"
+    },
+    {
+      "month": "2023-08",
+      "expiry": "2023-08-31",
+      "file": "options/NIFTY/2023-08-31.parquet"
+    },
+    {
+      "month": "2023-09",
+      "expiry": "2023-09-28",
+      "file": "options/NIFTY/2023-09-28.parquet"
+    },
+    {
+      "month": "2023-10",
+      "expiry": "2023-10-26",
+      "file": "options/NIFTY/2023-10-26.parquet"
+    },
+    {
+      "month": "2023-11",
+      "expiry": "2023-11-30",
+      "file": "options/NIFTY/2023-11-30.parquet"
+    },
+    {
+      "month": "2023-12",
+      "expiry": "2023-12-28",
+      "file": "options/NIFTY/2023-12-28.parquet"
+    },
+    {
+      "month": "2024-01",
+      "expiry": "2024-01-25",
+      "file": "options/NIFTY/2024-01-25.parquet"
+    },
+    {
+      "month": "2024-02",
+      "expiry": "2024-02-29",
+      "file": "options/NIFTY/2024-02-29.parquet"
+    },
+    {
+      "month": "2024-03",
+      "expiry": "2024-03-28",
+      "file": "options/NIFTY/2024-03-28.parquet"
+    },
+    {
+      "month": "2024-04",
+      "expiry": "2024-04-25",
+      "file": "options/NIFTY/2024-04-25.parquet"
+    },
+    {
+      "month": "2024-05",
+      "expiry": "2024-05-30",
+      "file": "options/NIFTY/2024-05-30.parquet"
+    },
+    {
+      "month": "2024-06",
+      "expiry": "2024-06-27",
+      "file": "options/NIFTY/2024-06-27.parquet"
+    },
+    {
+      "month": "2024-07",
+      "expiry": "2024-07-25",
+      "file": "options/NIFTY/2024-07-25.parquet"
+    },
+    {
+      "month": "2024-08",
+      "expiry": "2024-08-29",
+      "file": "options/NIFTY/2024-08-29.parquet"
+    },
+    {
+      "month": "2024-09",
+      "expiry": "2024-09-26",
+      "file": "options/NIFTY/2024-09-26.parquet"
+    },
+    {
+      "month": "2024-10",
+      "expiry": "2024-10-31",
+      "file": "options/NIFTY/2024-10-31.parquet"
+    },
+    {
+      "month": "2024-11",
+      "expiry": "2024-11-28",
+      "file": "options/NIFTY/2024-11-28.parquet"
+    },
+    {
+      "month": "2024-12",
+      "expiry": "2024-12-26",
+      "file": "options/NIFTY/2024-12-26.parquet"
+    },
+    {
+      "month": "2025-01",
+      "expiry": "2025-01-30",
+      "file": "options/NIFTY/2025-01-30.parquet"
+    },
+    {
+      "month": "2025-02",
+      "expiry": "2025-02-27",
+      "file": "options/NIFTY/2025-02-27.parquet"
+    },
+    {
+      "month": "2025-03",
+      "expiry": "2025-03-27",
+      "file": "options/NIFTY/2025-03-27.parquet"
+    },
+    {
+      "month": "2025-04",
+      "expiry": "2025-04-30",
+      "file": "options/NIFTY/2025-04-30.parquet"
+    },
+    {
+      "month": "2025-05",
+      "expiry": "2025-05-29",
+      "file": "options/NIFTY/2025-05-29.parquet"
+    },
+    {
+      "month": "2025-06",
+      "expiry": "2025-06-26",
+      "file": "options/NIFTY/2025-06-26.parquet"
+    },
+    {
+      "month": "2025-07",
+      "expiry": "2025-07-31",
+      "file": "options/NIFTY/2025-07-31.parquet"
+    },
+    {
+      "month": "2025-08",
+      "expiry": "2025-08-28",
+      "file": "options/NIFTY/2025-08-28.parquet"
+    },
+    {
+      "month": "2025-09",
+      "expiry": "2025-09-30",
+      "file": "options/NIFTY/2025-09-30.parquet"
+    },
+    {
+      "month": "2025-10",
+      "expiry": "2025-10-28",
+      "file": "options/NIFTY/2025-10-28.parquet"
+    },
+    {
+      "month": "2025-11",
+      "expiry": "2025-11-25",
+      "file": "options/NIFTY/2025-11-25.parquet"
+    },
+    {
+      "month": "2025-12",
+      "expiry": "2025-12-30",
+      "file": "options/NIFTY/2025-12-30.parquet"
+    }
+  ],
+  "underlying_file": {
+    "path": "index/NIFTY.parquet",
+    "sha256": "cf084ae28f3fe2d270c8cd0cdf4c1278790d4e9752529149972b9a72a6b52a49",
+    "bytes": 8243696
+  },
+  "underlying_rows": 436424,
+  "underlying_sessions": 1142,
+  "underlying_last_timestamp_used": "2025-12-31 15:59:00+05:30",
+  "maximum_option_expiry_selected": "2025-12-30",
+  "yahoo_daily_rows": 2708,
+  "yahoo_daily_start": "2015-01-02",
+  "yahoo_daily_end": "2025-12-31",
+  "unique_option_files_read": 56,
+  "u05_trade_count": 7,
+  "u02_prediction_count": 1330,
+  "u02_trade_count": 896,
+  "model_status_counts": {
+    "COMPLETED": 3
+  },
+  "model_info": {
+    "eligible_features": [
+      "ret1",
+      "ret5",
+      "ret20",
+      "ma5_gap",
+      "ma20_gap",
+      "ma50_gap",
+      "ema12_26_gap",
+      "rsi14",
+      "rv20",
+      "intraday_range",
+      "days_to_expiry",
+      "ce_premium_spot",
+      "ce_log_volume",
+      "ce_log_oi",
+      "pe_premium_spot",
+      "pe_log_volume",
+      "pe_log_oi",
+      "atm_straddle_spot"
+    ],
+    "all_candidate_features": [
+      "ret1",
+      "ret5",
+      "ret20",
+      "ma5_gap",
+      "ma20_gap",
+      "ma50_gap",
+      "ema12_26_gap",
+      "rsi14",
+      "rv20",
+      "intraday_range",
+      "days_to_expiry",
+      "ce_premium_spot",
+      "ce_log_volume",
+      "ce_log_oi",
+      "pe_premium_spot",
+      "pe_log_volume",
+      "pe_log_oi",
+      "atm_straddle_spot"
+    ],
+    "training_rows": 362,
+    "validation_rows": 449,
+    "training_positive_rate": 0.1132596685082873,
+    "validation_positive_rate": 0.0801781737193764
+  }
+}

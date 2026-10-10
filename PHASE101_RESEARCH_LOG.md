@@ -13,3 +13,12 @@
 - Workflow run [38074995935](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38074995935) passed dependency installation and all deterministic tests but failed before loading market data because pandas could not import the installed PyArrow 26.0.0 Parquet engine.
 - Rejected the run as a research result; it produced no accepted U02/U05 performance figures.
 - Pinned PyArrow 18.1.0 and added an explicit import check. Awaiting the rerun before interpreting strategy metrics.
+
+
+## Runtime checkpoint — 2026-10-10T18:23:56Z
+
+- Automated workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38075221554
+- Validation report: COMPLETED_WITH_EXPLICIT_LIMITATIONS; 14-paper matrix present; 2026 option holdout not downloaded; no strategy promoted.
+- U05 completed trades: 7; sample status: COMPUTED; audit status counts: {'EXCLUDED_FIRST_WEDNESDAY_NOT_SESSION': 5, 'BLOCKED_NO_EXACT_ENTRY_SNAPSHOT': 35, 'BLOCKED_NO_THURSDAY_INDEX_BAR': 1, 'COMPLETED': 7, 'BLOCKED_NO_EXACT_NEXT_MINUTE_EXIT': 5, 'BLOCKED_NO_PENULTIMATE_EXIT_BAR': 1, 'EXCLUDED_FIRST_THURSDAY_NOT_SESSION': 2}.
+- U02 predictions: 1330; completed trades: 896; model statuses: [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
+- Result files are aggregate/derived only. A model/data blocker is not a negative efficacy finding.

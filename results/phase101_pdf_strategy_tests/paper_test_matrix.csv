@@ -1,0 +1,15 @@
+paper_id,paper_or_method,phase101_status,evidence_and_limitation
+U01,Bansal multi-regressor stock-price forecasts,PARTIAL,Phase 95 common-data screen; original universe/protocol not matched.
+U02,Sherasiya RF/XGBoost/LSTM NIFTY options signals,PROXY_TESTED,Phase 101 fixed chronological proxy; exact IV/Greeks and source configuration may be absent.
+U03,Bumrah/Budhani ANN with USD/INR and FII inputs,PARTIAL,Phase 95 price-only screen; FX/FII inputs not matched.
+U04,Sain/Singh multi-window NIFTY forecast,PARTIAL,Phase 95 common-data screen; exact source protocol not matched.
+U05,Atheetha monthly trend/seasonality options rule,PROXY_TESTED,Phase 101 modern-sample proxy; dimensionally ambiguous expected-price formula operationalized.
+U06,Naik/Inamdar sentiment/news plus LSTM,DATA_BLOCKED_SOURCE_MODALITIES,"Point-in-time news/sentiment, FII/DII, VIX/PCR/Greeks not fully sourced as a joined feature panel."
+U07,Chatterjee options payoff structures,PARTIAL_ANALYTICAL,Phase 99 checked 13 expiry-payoff structures over nine illustrative spot values; no historical entry strategy.
+U08,Fathali/Kodia/Ben Said NIFTY forecast,PARTIAL,Phase 95 common-data screen; source-period and data split not fully matched.
+U09,Kallimath deep-learning model family,PARTIAL,Phase 95 common-data screen; source-specific dataset/settings not matched.
+U10,NIFTY moving-average paper,PARTIAL,Phase 96 descriptive SMA/EMA screen; not inferentially confirmed and not options P&L.
+U11,NIFTY RNN/LSTM/CNN comparison,PARTIAL,"Phase 95 common-data screen, not exact source replication."
+U12,MLP/backprop OHLC forecast,PARTIAL,Phase 95 common-data screen; exact OHLC label construction not matched.
+U13,LSTM backward feature elimination/RSI,PARTIAL,Phase 95 price-only screen; exact source feature-elimination protocol not matched.
+U14,Shaha CCI NIFTY options rule,DATA_BLOCKED_ZERO_COMPLETED_TRADES,Phase 66 zero completed trades; Phases 67-68 found insufficient exact timing/contract coverage.

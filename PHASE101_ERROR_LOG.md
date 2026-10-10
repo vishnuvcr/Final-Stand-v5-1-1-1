@@ -16,3 +16,7 @@ Append entries; never overwrite earlier failures.
 - Check results/phase101_pdf_strategy_tests/phase101_runtime_error.json if present, then fix root cause without relaxing frozen strategy rules.
 
 - **E101-002 — Parquet engine runtime import failed.** Workflow run [38074995935](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38074995935) installed a PyArrow 26.0.0 wheel successfully, but pandas could not load it during the first Parquet read. This occurred before any U02/U05 backtest and no numerical strategy result was accepted. Corrective action: pin PyArrow to 18.1.0 (compatible with the registered NumPy 1.26 range) and add an explicit pyarrow.parquet import gate before data acquisition. Root-cause verification remains pending the next workflow.
+
+
+## Run reconciliation — 2026-10-10T18:23:56Z
+- Workflow 38075221554 completed aggregate validation. No runner exception was raised; inspect report and model status CSV for explicit data/model blockers.
