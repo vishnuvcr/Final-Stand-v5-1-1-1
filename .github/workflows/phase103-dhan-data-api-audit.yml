@@ -16,7 +16,7 @@ on:
       max_probes:
         description: "Maximum symbol/side/relative-strike API probes (1–70)"
         required: true
-        default: 70
+        default: 7
         type: number
       strikes:
         description: "Dhan relative strikes for fixed-contract continuity audit"
@@ -47,7 +47,7 @@ jobs:
       DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_API_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_DATA_API_TOKEN }}
       PHASE103_FROM_DATE: ${{ inputs.from_date || '2026-08-03' }}
       PHASE103_TO_DATE: ${{ inputs.to_date || '2026-08-04' }}
-      PHASE103_MAX_PROBES: ${{ inputs.max_probes || 70 }}
+      PHASE103_MAX_PROBES: ${{ inputs.max_probes || 7 }}
       PHASE103_STRIKES: ${{ inputs.strikes || 'ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3' }}
     steps:
       - name: Checkout isolated Phase 103 branch
