@@ -1,0 +1,40 @@
+name: Phase 96 Moving Average and Seasonality Replication
+on:
+  push:
+    branches: [phase-96-moving-average-seasonality-replication]
+    paths:
+      - 'research/phase96/**'
+      - 'PHASE96_*.md'
+      - '.github/workflows/phase96-moving-average-seasonality-replication.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install bounded dependencies
+        run: pip install pandas numpy pytest tabulate
+      - name: Test replay controls
+        run: pytest -q research/phase96/test_backtest.py
+      - name: Run fixed signal-level replay
+        id: replay
+        continue-on-error: true
+        run: python research/phase96/backtest.py
+      - name: Record runtime failure if replay failed
+        if: steps.replay.outcome == 'failure'
+        run: |
+          printf '\n- Runtime failure: fixed replay step failed in GitHub Actions; inspect run logs. No empirical conclusion accepted.\n' >> PHASE96_ERROR_LOG.md
+          printf '\n- Fixed replay failed; workflow recorded failure and will not claim results.\n' >> PHASE96_STATUS.md
+      - name: Commit aggregate outputs and logs
+        if: always()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/phase96 PHASE96_STATUS.md PHASE96_ERROR_LOG.md
+          git diff --cached --quiet || git commit -m "Phase 96: publish fixed replay outputs and status"
+          git push
