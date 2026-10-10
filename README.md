@@ -1,3 +1,19 @@
+# Resume checkpoint — 2026-10-10 (Phase 80 expanded strategy search)
+
+**The earlier no-go is a no-go for promotion, not evidence that all strategy combinations were tested.** Phase 80 confirms the repo already evaluated 20 new ready-made structures plus 22 reused Phase-43 families, along with VIX-regime, feature/ensemble, symbolic, ratio-geometry, entry-filter, and exit-rule research. It does not cover every possible structure × horizon × regime combination.
+
+The next bounded experiment freezes a new axis: paired intraday (09:20–15:20) versus overnight (15:20–next eligible session 09:20) exposure using the same structure families, exact contracts, no forward fill, explicit volume gates, adverse slippage and Paytm Money charges. This is not a direct replication of Bhat et al. (2024), which studies delta-hedged returns. Candidate ranking is development/validation only; 2026 remains sealed for subsequent frozen confirmation.
+
+- [Phase 80 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_RESEARCH_PLAN.md)
+- [Phase 80 source/strategy matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_SOURCE_STRATEGY_MATRIX.md)
+- [Phase 80 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_STATUS.md)
+- [Phase 80 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/results/phase80_universe_audit/report.md)
+- [Phase 80 registry workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38043832691)
+
+Data leads with unclear/conditional licenses are metadata-only; no additional raw data were downloaded and no data was purchased. No strategy is approved for live trading.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 79 final evidence gate)
 
 **Final evidence decision: NO-GO for strategy promotion.** Phase 79 synthesized prior audits without new downloads or purchases. Fixed-contract identity/coverage for the two missing expiries remains unresolved; source rights and retention are not fully verified for a replacement complete sample; OHLC-only fills cannot prove executable outcomes; and TT-04/TT-05 positive partial-window results conflict with negative historical HOLD results. TT-02 is negative in the available partial sample. No strategy is approved for live trading. This is an evidence-sufficiency conclusion, not proof that every possible strategy is unprofitable.
