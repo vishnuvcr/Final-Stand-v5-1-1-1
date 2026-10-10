@@ -16,3 +16,5 @@ This file records user requests, research decisions, execution status, and corre
 
 
 - **Audit correction:** the first completed run revealed an entry-before-signal month in U05 and a repeated-capital allocation assumption in U02. I invalidated that numerical result set, corrected the date logic and account sizing, and added explicit tests/uncertainty calculation. Awaiting the corrected workflow run before reporting results.
+
+- Automated run 38076023537 failed at runtime; failure logged.

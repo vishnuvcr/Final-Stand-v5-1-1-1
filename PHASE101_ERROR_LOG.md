@@ -33,3 +33,10 @@ Append entries; never overwrite earlier failures.
 - Commit: 8094b67f45f85e670ef972e5cfb467378852f042
 - Job failed before the output contract was validated. Numerical outputs from this run are not accepted.
 - Check results/phase101_pdf_strategy_tests/phase101_runtime_error.json if present, then fix root cause without relaxing frozen strategy rules.
+
+
+## Automated failure — 2026-10-10T18:31:15Z
+- Workflow run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38076023537
+- Commit: 73faaf0acb43c2f621d184d2c30469101ccd5aef
+- Numerical outputs from the failed run are not accepted. See `results/phase101_pdf_strategy_tests/phase101_runtime_error.json` when produced and inspect the Actions log.
+- Correct the root cause without weakening frozen strategy rules or opening 2026 data.
