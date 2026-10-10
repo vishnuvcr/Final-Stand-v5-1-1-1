@@ -118,3 +118,15 @@ The first API request reached Dhan but all 10 probes returned HTTP 400 `DH-905: 
 - API probes returning rows: 0/10.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+<!-- DHAN_API_RUN_38088846052_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38088846052, attempt 1 — 2026-10-10T21:45:46.027177+00:00
+
+- **Result:** REQUEST_SCHEMA_OR_PARAMETER_ERROR.
+- Window: 2026-08-02 inclusive to 2026-09-01 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 0/10.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
