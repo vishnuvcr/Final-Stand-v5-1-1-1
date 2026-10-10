@@ -1,6 +1,6 @@
 # Phase 67 Status — Contract/Minute Coverage Diagnostic
 
-**State: AUTOMATION REPAIR IN PROGRESS; audit did not start.** No strategy promotion.
+**State: NUMERICAL AUDIT PASSED; OUTPUT PUBLICATION REPAIR IN PROGRESS.** No strategy promotion.
 
 - Branch: `phase-67-contract-coverage-diagnostic`
 - Parent: Phase 66 final verification, run [38028425558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558).
@@ -9,8 +9,8 @@
 - No raw data will be committed; no 2026 files or holdout will be used.
 - Added the previously missing `PHASE67_CHAT_LOG.md`, which the workflow's commit step explicitly stages.
 - Added tests for missing exact-minute observations and UTC-to-IST date-boundary handling; commit [7f8629135b211eb9de4d29aa93bec001160b4770](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/7f8629135b211eb9de4d29aa93bec001160b4770).
-- Workflow run [38032877348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38032877348) failed at `actions/setup-python@v5`; dependency installation, tests, and the numerical audit were skipped. No aggregate output was published.
-- Root-cause repair: remove `cache: pip`, which was configured without a dependency manifest/cache-dependency-path. The next push should rerun the workflow; numerical results remain unverified until outputs are inspected.
+- Run [38033032907](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033032907) passed setup, dependency installation, regression tests, the bounded numerical audit, and output-file validation. The final publication step failed; no generated outputs are present in the branch.
+- The setup failure was fixed by removing `cache: pip`. The publication step now rebases against the branch before pushing to reconcile concurrent documentation commits. The audit computation passed, but numerical findings are not yet available for independent review.
 - Workflow: [Phase 67 contract coverage diagnostic](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/.github/workflows/phase67-contract-coverage-diagnostic.yml).
 - Plan: [PHASE67_RESEARCH_PLAN.md](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-67-contract-coverage-diagnostic/PHASE67_RESEARCH_PLAN.md).
 
@@ -18,5 +18,6 @@
 - [x] Inspect pinned input manifest and frozen DEV/VAL opportunity audit
 - [x] Repair missing workflow-staged chat log
 - [x] Add tests for exact-minute and timezone-boundary semantics
-- [ ] Verify repaired workflow setup, tests, numerical audit and output publication
+- [x] Verify repaired workflow setup, tests, numerical audit and output-file validation
+- [ ] Publish outputs and independently review numerical findings
 - [ ] Reconcile final evidence-based decision
