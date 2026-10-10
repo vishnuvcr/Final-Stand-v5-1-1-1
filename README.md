@@ -1,25 +1,26 @@
 <!-- CURRENT_RESEARCH_CHECKPOINT_START -->
-# Final Stand v5 1-1-1 — Current Research Checkpoint (2026-10-10)
+# Final Stand v5 1-1-1 — Final Research Checkpoint (2026-10-10)
 
-## Phase 100 — manuscript generated; Phase 95 reconciliation is the final dependency
+## Phase 100 complete — final manuscript and evidence ledger published
 
-**The Phase 100 synthesis workflow passed** [run 38073229401](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073229401). It generated a structured manuscript, supplements, 14-paper status ledger, phase summary and SVG figure. Automated QA passed 15 required sections and all 14 paper rows. The manuscript is provisional until the corrected Phase 95 claim-reconciliation run finishes.
+**Final serialized Actions run passed:** [38073414619](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073414619). The synthesis covers the fixed 14-paper corpus; automated QA passed 14 paper rows, 15 required manuscript sections, and zero missing headings. Phase 95's corrected paper-claim reconciliation is included.
 
-- [Phase 100 manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/MANUSCRIPT.md)
+- [Full manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/MANUSCRIPT.md)
 - [Supplementary materials](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/SUPPLEMENTARY_MATERIALS.md)
 - [Validation report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/VALIDATION_REPORT.md)
-- [Paper status ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/paper_status.csv) · [machine-readable phase summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/phase_summary.json)
-- [Phase 100 plan/status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-100-cross-paper-reproducibility-synthesis)
+- [14-paper status ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/paper_status.csv)
+- [Phase 95 claim ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/phase95_paper_claim_status.csv)
+- [Phase summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/phase_summary.json)
+- [Phase 96 return figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-100-cross-paper-reproducibility-synthesis/results/phase100/phase96_total_return.svg)
+- [Phase 100 plan/status/logs](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-100-cross-paper-reproducibility-synthesis)
 
-## Evidence snapshot
+## Final scientific conclusion
 
-- **Phase 95:** 132/132 valid model rows, zero model execution failures. Its reconciliation step previously failed because the data manifest had a literal backslash-n suffix; parser fix is committed and the fresh run remains in progress.
-- **Phase 96:** corrected SMA/EMA screen passed on 1,486 sessions. Buy-and-hold returned 114.7%; variants returned 52.5%–100.9% with lower drawdowns under a generic 0.05% turnover sensitivity deduction. This is a descriptive NIFTY index screen, not options P&L.
-- **Phase 97:** exact-contract ML options gate completed; 13/13 required controls blocked, zero models trained, no P&L.
-- **Phase 98:** corrected CCI evidence gate passed; no new eligible exact-contract source established. No duplicate zero-coverage replay.
-- **Phase 99:** payoff arithmetic tests passed for 13 structures; historical options profitability remains data-blocked. U07 put-butterfly label/legs conflict is recorded.
+**No strategy is promoted.** Phase 95 found no statistically established positive close-forecast MAE gain over persistence: 0/75 bootstrap intervals were entirely above zero, and 0/75 positive gains passed the Holm-adjusted significance gate. Phase 96's SMA/EMA screen is descriptive, not options P&L. Phase 97's ML options and Phase 98's CCI replication remain data-blocked. Phase 99 checked payoff algebra for 13 structures but did not establish historical profitability.
 
-**Scientific conclusion:** no strategy is promoted. The available evidence does not establish a reproducible profitable options strategy; data blockers do not prove that source methods are unprofitable. The Phase 83 2026 holdout remains sealed. Any options P&L must include verified Paytm Money brokerage, statutory levies, bid/ask spread, slippage, latency and cost stress. Phase 100 is the finite synthesis stop boundary.
+This is **insufficient validated evidence for a profitable options strategy**, not proof that every source method is false or unprofitable. The Phase 83 2026 holdout remains sealed. Future options P&L must use exact-contract data and include verified Paytm Money brokerage, statutory levies, spread, slippage, latency and stress.
+
+**Finite Phase 100 stop reached.** Further research requires a new bounded plan.
 <!-- CURRENT_RESEARCH_CHECKPOINT_END -->
 
 
