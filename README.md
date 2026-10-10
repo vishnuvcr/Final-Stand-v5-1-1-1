@@ -1,3 +1,20 @@
+# Resume checkpoint — 2026-10-10 (Phase 84 completed)
+
+**Phase 84 is complete and automated validation passed** in [GitHub Actions run 38046389765](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38046389765). This synthesis does not authorize a new strategy. It keeps the Phase 83 terminal no-go separate from the canonical Phase 38 control, partial Phase 51-3 TT-04/TT-05 diagnostics, and under-covered Phase 52/66 tests. Cross-study raw P&L is not used to declare a winner.
+
+- [Phase 84 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_RESEARCH_PLAN.md)
+- [Phase 84 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_STATUS.md)
+- [Phase 84 evidence matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/results/phase84_evidence_reconciliation/evidence_matrix.csv)
+- [Phase 84 decision report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/results/phase84_evidence_reconciliation/decision_report.md)
+- [Phase 84 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_ERROR_LOG.md)
+- [Phase 84 chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-84-cross-phase-evidence-reconciliation/PHASE84_CHAT_LOG.md)
+- [Draft PR #34](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/34)
+
+**Next gate:** only open a new numerical study after documented data-use rights, exact fixed-contract coverage, and—if executable profitability is claimed—historical bid/ask and size/depth are verified. Include Paytm Money costs, slippage and latency in its preregistration. Do not reopen the sealed Phase 83 holdout or repeat rejected source probes.
+
+---
+
+
 # Resume checkpoint — 2026-10-10 (Phase 83 final manuscript)
 
 **Final conclusion for Phases 80–83: NO-GO for new-strategy promotion.** Phase 81 produced 11,163 matched observations; Phase 82 ran 20 expiry-clustered primary tests with Holm correction and found no adjusted-significant test. Zero of 18 defined-risk structure–horizon candidates passed the positive-net gate across DEV/VAL at one-/two-tick costs. The 2026 holdout was not opened. This closes the registered experiment; it does not prove every possible option strategy is unprofitable or adjudicate unrelated canonical strategies.
