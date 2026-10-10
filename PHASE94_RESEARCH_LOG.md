@@ -21,3 +21,8 @@
 - Cause: two cross-paper rows had unquoted commas/omitted fields, causing malformed rows; validator surfaced a `NoneType.strip` error instead of a clearer schema message.
 - Correction: normalized the two rows to the 11-column schema, RFC-4180-escaped the entire CSV, and strengthened validator to detect malformed row widths and report blank cells safely.
 - Status: corrected; awaiting fresh validator run.
+
+## E94-011 — status text validation false positive
+- The CSV fix exposed an independent brittle wording assertion in the validator. The phase status clearly recorded no promotion, but the validator required literal `no strategy` wording.
+- Replaced the literal phrase check with a semantic check for `Strategy promotion: NONE` (case-insensitive).
+- Fresh GitHub Actions validation is pending.
