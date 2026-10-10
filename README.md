@@ -1,3 +1,26 @@
+# Resume checkpoint — 2026-10-10 (Phase 81 corrected paired horizon sweep)
+
+**Search-completeness answer:** no, every conceivable strategy combination has not been tested. Existing work covers a broad but finite structure/regime/selector/exit search. Phase 80 expands the literature inventory and Phase 81 tests one under-covered axis: matched intraday versus overnight holding windows for the same option-structure templates.
+
+**Phase 81 corrected result: 238 expiry files, 22,326 trade-window rows, 11,163 matched comparisons; no strategy promoted.** Nine defined-risk multi-leg variants were negative in aggregate in both DEV and VAL at both the registered one-tick and two-tick friction levels. The unbounded short ATM straddle showed positive aggregate intraday P&L but negative overnight P&L; it is diagnostic-only and the OHLC-open model does not establish executable fills. Across the ten registered structures, the paired overnight-minus-intraday mean was negative in DEV and VAL; Phase 82 will run expiry-clustered inference and Holm adjustment before any holdout decision.
+
+Data integrity after correction: 122,310 identical duplicate rows collapsed; zero conflicting duplicate keys, zero expiry/file-name mismatches, zero invalid identity rows, zero file errors. Only 182 incomplete cases were excluded. Data revision 0f4800e43e6f96cec0794369d78eb4d3c4211ef5 was pinned. No 2026 holdout rows were loaded, scored or ranked.
+
+- [Phase 80 expanded research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_RESEARCH_PLAN.md)
+- [Phase 80 source/strategy matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_SOURCE_STRATEGY_MATRIX.md)
+- [Phase 80 deep literature review, including uploaded papers](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_LITERATURE_REVIEW.md)
+- [Phase 81 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/PHASE81_RESEARCH_PLAN.md)
+- [Phase 81 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/PHASE81_STATUS.md)
+- [Phase 81 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/PHASE81_ERROR_LOG.md)
+- [Phase 81 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/results/phase81_intraday_overnight/report.md)
+- [Phase 81 performance summary by split/variant/window](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/results/phase81_intraday_overnight/summary_by_split_variant_window.csv)
+- [Phase 81 paired differences](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-81-intraday-overnight-structure-sweep/results/phase81_intraday_overnight/paired_window_differences.csv)
+- [Phase 81 successful workflow run 38044579698](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38044579698)
+
+External datasets with unclear or conditional licenses remain metadata-only. Paytm Money charges and one-/two-tick adverse slippage are modeled; historical bid/ask/depth are unavailable. No strategy is approved for live trading.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 80 expanded strategy search)
 
 **The earlier no-go is a no-go for promotion, not evidence that all strategy combinations were tested.** Phase 80 confirms the repo already evaluated 20 new ready-made structures plus 22 reused Phase-43 families, along with VIX-regime, feature/ensemble, symbolic, ratio-geometry, entry-filter, and exit-rule research. It does not cover every possible structure × horizon × regime combination.
