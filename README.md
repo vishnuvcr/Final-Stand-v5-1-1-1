@@ -1,3 +1,13 @@
+# Resume checkpoint — 2026-10-10 (Phase 73 expiry-code comparison)
+
+Phase 72 audit passed [run 38041988143](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041988143). All eight probes had unique timestamps, aligned required arrays and no >1-minute gaps within the regular session. 2026-07-28 had 375 session bars. 2026-08-04 had 375 regular-session bars plus 10 off-session rows through 15:39 IST; those are excluded.
+
+The material remaining blocker is contract mapping. Official DhanHQ docs define expiryCode 0=current/near expiry, 1=next expiry, 2=far expiry ([annexure](https://dhanhq.co/docs/v2/annexure/)). Phase 71 used code 1 only, so its data cannot be assumed to match the intended expiry. Phase 73 compares codes 0/1/2 and audits rolling strike metadata across the same two dates. No replay or promotion until exact expiry and absolute strike requirements are verified.
+
+- [Phase 73 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/PHASE73_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-73-dhan-expiry-strike-mapping/.github/workflows/phase73-dhan-expiry-strike-mapping.yml)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 72 audit result)
 
 Phase 72 [workflow run 38041988143](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041988143) passed its aggregate-only audit. Across all eight probes, timestamps were unique, required arrays aligned, no >1-minute gaps were found within the regular session, and OHLC values passed basic validity checks. On 2026-07-28 each probe had 375 regular-session minute bars. On 2026-08-04 each had 375 regular-session bars plus 10 off-session rows extending to 15:39 IST; those extra rows must be excluded.
