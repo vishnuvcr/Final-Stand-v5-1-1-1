@@ -1,6 +1,6 @@
 # Phase 89 Results — rolling-options feature study
 
-Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047563119  
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047664790  
 Status: **COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations**  
 Data period requested: 2025-01-01 through 2026-01-01 exclusive. Protected 2026 Phase 83 holdout not requested or loaded.
 

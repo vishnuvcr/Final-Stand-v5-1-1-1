@@ -15,7 +15,7 @@ Rule: log API/network/schema/data-quality and analysis-gate issues. Never log cr
 No run outcome recorded yet.
 
 <!-- PHASE89_RUNTIME_START -->
-## Runtime summary — 38047563119
+## Runtime summary — 38047664790
 - Status: COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations
 - API requests passing schema/alignment: 28/28
 - Paired rows after timestamp and spot consistency checks: 18604

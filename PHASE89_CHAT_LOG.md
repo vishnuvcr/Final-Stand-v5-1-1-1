@@ -22,8 +22,8 @@ User asked: “Rerun the research with this data now!”
 Pending the automatically triggered Phase 89 GitHub Actions run.
 
 <!-- PHASE89_RUNTIME_START -->
-## Automated execution record — 38047563119
-- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047563119
+## Automated execution record — 38047664790
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047664790
 - Study status: COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations
 - Valid API windows/sides: 28/28.
 - Paired rows after validation: 18604; confirmatory OOS complete rows: 4224 across 62 sessions.

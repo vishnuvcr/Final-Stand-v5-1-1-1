@@ -2,7 +2,7 @@
 
 Date: 2026-10-10  
 Status: **COMPLETE — OOS sample gate passed; interpret only the four Holm-controlled feature associations**  
-Latest workflow run: [38047563119](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047563119)  
+Latest workflow run: [38047664790](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047664790)  
 Decision: No options strategy is promoted by Phase 89.
 
 ## Registered evidence boundary
