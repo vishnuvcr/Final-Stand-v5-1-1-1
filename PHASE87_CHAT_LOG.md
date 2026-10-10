@@ -23,3 +23,11 @@ Continue the Final Stand research using the newly verified Dhan API access.
 - Historical bid/ask/depth, exact-contract mapping and data-use rights remain independent gates.
 
 Only auditable requests, decisions, actions and outcomes are recorded; no hidden reasoning is copied.
+
+## Verified outcome — 2026-10-10
+- Final workflow run [38047113250](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047113250) completed successfully.
+- Dhan rolling-options endpoint returned HTTP 200 and 150 five-minute candles for the bounded 2026-07-28 NIFTY monthly ATM call probe.
+- Arrays for OHLC, IV, volume, strike, OI, spot and timestamps were present; requested array lengths aligned.
+- No raw option prices or raw response payload were printed or persisted.
+- Phase 87 closes as a one-series data-shape PASS. It does not prove full coverage or historical executable bid/ask/depth; no backtest or live order was attempted.
+- Next finite step is a coverage audit on registered missing dates; Phase 83 holdout remains sealed.
