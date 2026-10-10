@@ -45,3 +45,10 @@
 ## Corrected run 38076280351 — 2026-10-10T18:37:18Z
 - Validation: COMPLETED_WITH_EXPLICIT_LIMITATIONS; U05 completed trades 10; U02 costed trades 164; no 2026 option data; no strategy promoted.
 - U05 timing corrected to enforce entry strictly after the Wednesday forecast. U02 now carries sequential account equity per model.
+
+
+## 2026-10-10 — Source-faithful U05 calendar correction
+
+- The first no-look-ahead fix moved the strategy entry to a second Thursday in months where first Thursday preceded the first Wednesday. Although it eliminated temporal leakage, it altered the paper's actual entry rule.
+- Replaced that workaround: preserve the PDF's first-Thursday rule and exclude each such month with `EXCLUDED_ENTRY_PRECEDES_FORECAST`. No second-Thursday trade is fabricated.
+- Added regression tests for July 2021 (exclude) and June 2024 (chronologically eligible). The prior corrected-run U05 P&L is superseded pending the new replay.
