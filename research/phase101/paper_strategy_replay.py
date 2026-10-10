@@ -148,6 +148,14 @@ def _first_weekday(period, weekday):
     day = pd.Timestamp(period.start_time.date(), tz=TZ)
     return day + pd.Timedelta(days=(weekday-day.weekday()) % 7)
 
+def _u05_entry_dates(period):
+    """Forecast on the first calendar Wednesday; enter only on a later Thursday."""
+    wed = _first_weekday(period, 2).normalize()
+    thu = _first_weekday(period, 3).normalize()
+    while thu <= wed:
+        thu += pd.Timedelta(days=7)
+    return wed, thu
+
 def _day_bars(index, date):
     return index.loc[index.timestamp.dt.normalize().eq(pd.Timestamp(date).normalize())].sort_values("timestamp")
 
@@ -183,10 +191,7 @@ def _audit_row(base, status, reason):
 def run_u05(p66, api, token, monthly, index, daily, month_returns, manifest):
     trades, audit = [], []
     for m, (expiry, filename) in sorted(monthly.items()):
-        period = pd.Period(m, "M"); wed = _first_weekday(period,2).normalize(); thu = _first_weekday(period,3).normalize()
-        # Do not permit look-ahead: the first Thursday must strictly follow the Wednesday forecast.
-        while thu <= wed:
-            thu += pd.Timedelta(days=7)
+        period = pd.Period(m, "M"); wed, thu = _u05_entry_dates(period)
         base = {"paper_id":"U05","month":m,"expiry":str(expiry.date()),"source_file":filename,
                 "wednesday_date":str(wed.date()),"thursday_date":str(thu.date())}
         periods = [str(pd.Period(year=period.year-k, month=period.month, freq="M")) for k in (1,2,3)]
