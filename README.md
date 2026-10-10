@@ -1,3 +1,17 @@
+# Resume checkpoint — 2026-10-10 (Phase 85 source qualification)
+
+**Phase 85 finding: NO-GO for a new execution-quality replay using currently verified free sources.** Official NSE public daily reports are useful for EOD context, while richer historical data products are described as subscription-based. Public GitHub projects advertise relevant quote/depth fields but current public documentation does not establish complete target-date coverage and raw-data rights. No dataset was acquired, no paid data purchased, and no strategy test run.
+
+- [Phase 85 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-85-execution-data-source-qualification/PHASE85_RESEARCH_PLAN.md)
+- [Phase 85 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-85-execution-data-source-qualification/PHASE85_STATUS.md)
+- [Phase 85 source audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-85-execution-data-source-qualification/results/phase85_execution_data_qualification/source_audit.md)
+- [Phase 85 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-85-execution-data-source-qualification/PHASE85_ERROR_LOG.md)
+- [Phase 85 decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-85-execution-data-source-qualification/PHASE85_CHAT_LOG.md)
+
+**Next gate:** exact license/access terms, fixed-contract coverage for missing dates, and historical bid/ask plus quantities/depth must be demonstrated before any numerical replay. Paytm Money costs, slippage and latency must be frozen before execution claims. The Phase 83 holdout remains sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 84 completed)
 
 **Phase 84 is complete and automated validation passed** in [GitHub Actions run 38046389765](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38046389765). This synthesis does not authorize a new strategy. It keeps the Phase 83 terminal no-go separate from the canonical Phase 38 control, partial Phase 51-3 TT-04/TT-05 diagnostics, and under-covered Phase 52/66 tests. Cross-study raw P&L is not used to declare a winner.
