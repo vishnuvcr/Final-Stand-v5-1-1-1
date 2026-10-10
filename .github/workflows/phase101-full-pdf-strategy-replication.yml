@@ -66,6 +66,13 @@ jobs:
           key: phase101-yahoo-${{ runner.os }}-nifty-daily-2015-2025-v1
       - name: Install bounded dependencies
         run: python -m pip install --disable-pip-version-check -r requirements-phase101.txt
+      - name: Verify Parquet engine before data acquisition
+        run: |
+          python - <<'PY'
+          import numpy, pandas, pyarrow
+          import pyarrow.parquet
+          print({"numpy": numpy.__version__, "pandas": pandas.__version__, "pyarrow": pyarrow.__version__})
+          PY
       - name: Static syntax and deterministic unit tests
         run: |
           python -m py_compile research/phase101/paper_strategy_replay.py
