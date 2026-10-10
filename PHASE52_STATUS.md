@@ -459,3 +459,12 @@ First run failed closed on code-fingerprint drift and exposed escaped workflow e
 - Phase 56 cost-aware OHLC price-reference sensitivity completed on the canonical Phase 55 ledger; [run 38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348). It emitted 18,960 modeled scenario rows; five configuration-threshold pairs pass the severe-cost screen only at the 1000% diagnostic threshold. These are quote-validation leads only, not strategy winners.
 - The core Phase 52 factor-conditioned strategy research remains OPEN. BASELINE pilot has one eligible row at the frozen 2% proxy, the legacy factor-router validation was negative, and free independent historical bid/ask/depth remains a source blocker. No factor selector, configuration, or strategy is promoted; holdout remains untouched.
 - Next gate: complete the independent Phase 57 replay reproduction, reconcile it to the accepted Phase 56 matrix for common cost cases, then return to source-backed factor-selector evaluation or stop if quote/data coverage remains insufficient.
+
+## Cross-phase checkpoint — 2026-10-10, source gate closed
+
+- Phase 55 full selected-leg audit: PASS, 480/480 rows, [run 37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572).
+- Phase 54 sensitivity rerun against the synced canonical Phase 55 ledger: PASS, [run 38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487). Input SHA-256 `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`; all 480 rows reconcile at all 11 thresholds.
+- Phase 56/57 cost-aware OHLC-reference sensitivity and independent reproduction are complete; this validates model reproducibility only, not executable fills or profitability.
+- Phase 60 evidence sufficiency and Phase 61 new-source restart audit both returned NO-GO. Five new leads reviewed; zero accepted for sample validation. No further empirical factor-conditioned testing is authorized until documented data-use rights and an exact target-date/contract sample are available.
+- **Current decision:** Phase 52 remains scientifically OPEN but empirically BLOCKED at the data-source gate. The 2% baseline has one eligible/executed row out of 480; no factor selector or strategy is promoted; holdout untouched.
+- **Next permitted action:** only resume source validation when written authorization or a genuinely new source with documented rights and exact sample/schema evidence is supplied. Do not repeat the same metadata-only source search or loosen the frozen OI/range gates.
