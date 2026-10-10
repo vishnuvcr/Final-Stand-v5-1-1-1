@@ -1,0 +1,47 @@
+name: Phase 94 Paper Method Registry Validation
+
+on:
+  push:
+    branches: [phase-94-paper-method-replication-program]
+    paths:
+      - 'PHASE94_*.md'
+      - 'results/phase94/**'
+      - '.github/workflows/phase94-literature-replication-registry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate registry and plan
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          csv_path = Path("results/phase94/PAPER_METHOD_REGISTER.csv")
+          md_path = Path("results/phase94/PAPER_METHOD_REGISTER.md")
+          plan_path = Path("PHASE94_RESEARCH_PLAN.md")
+          status_path = Path("PHASE94_STATUS.md")
+          required = {"registry_id","paper_id","source_short","title_target","method_id","method_name","inputs_or_rule","planned_phase","replication_type","prior_evidence","status"}
+          with csv_path.open(newline="", encoding="utf-8") as f:
+              reader = csv.DictReader(f)
+              rows = list(reader)
+              assert required.issubset(reader.fieldnames or []), "missing CSV columns"
+          assert len(rows) >= 45, f"expected broad register, got {len(rows)} rows"
+          ids = [r["registry_id"] for r in rows]
+          assert len(ids) == len(set(ids)), "duplicate registry_id"
+          assert {f"U{i:02}" for i in range(1,15)}.issubset({r["paper_id"] for r in rows}), "some paper IDs missing"
+          assert all(all(r.get(k, "").strip() for k in required) for r in rows), "blank required cell"
+          assert md_path.exists() and plan_path.exists() and status_path.exists()
+          plan = plan_path.read_text(encoding="utf-8")
+          assert all(f"phase-{n}-" in plan for n in range(95,101)), "downstream phase missing from plan"
+          assert "no strategy" in status_path.read_text(encoding="utf-8").lower()
+          print(f"PASS: {len(rows)} registry rows across {len({r['paper_id'] for r in rows})} papers; required columns and downstream phases present.")
+          PY
