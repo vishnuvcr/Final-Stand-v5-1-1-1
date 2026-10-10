@@ -1163,3 +1163,27 @@ No purchase was made and no terms-violating scraping was performed. The source g
 - [Source registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/research/phase58/sources.json)
 - [Machine-readable source report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/results/phase58/quote_source_feasibility/report.json)
 
+# Current research checkpoint — 2026-10-10 (Phase 55–58)
+
+## Accepted evidence and current gate
+
+- **Phase 55 — leg-audit repair CLOSED.** [Run 37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572) passed tests, pinned-source replay and 480/480 expected leg-count/unique-ID checks. Frozen status counts remain 379 OHLC range-proxy exclusions, 100 prior-OI blocks and one baseline pass.
+- **Phase 54 — OHLC-reference eligibility sensitivity CLOSED.** [Run 37992502101](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37992502101) reconciled all 480 rows at 11 preregistered thresholds. Eligible-row counts were 1, 1, 8, 24, 55, 91, 150, 227, 298, 345 and 380 as thresholds rise from 2% to 1000%. The OHLC high-low/open metric is a candle-range proxy, not a quoted spread.
+- **Phase 56 — modeled cost-aware price-reference sensitivity CLOSED.** [Run 38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348) produced 18,960 modeled scenario rows across the thresholds, brokerage comparators and adverse-slippage stresses. Five configuration-threshold pairs passed the severe-cost screen, all at the 1000% diagnostic near-removal threshold. These are quote-validation leads only, not strategy winners or portfolio returns.
+- **Phase 58 — quote/depth source feasibility CLOSED / NO-GO.** [Run 38020086225](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38020086225) audited six source candidates; none is verified for permitted automated full-history bid/ask/depth at the frozen 09:45/13:00 entries and exact 15:15 exits. TickBytes and OptionVault remain licensed follow-up candidates; no purchase or terms-violating scraping occurred.
+- **Phase 57 — independent source-driven endpoint reproduction ACTIVE.** [Current run 38019819831](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831) is reproducing the frozen 2% baseline and 1000% diagnostic endpoints against the pinned source, exact entry/exit bars and cost kernel. The regression tests passed; the source-driven replay is not yet complete, so no result from this run is accepted until outputs, counts, six cost rows per pass and persistence are validated.
+
+## Scientific decision
+
+The canonical Phase 52 baseline pilot still has only **1 of 480** configuration-event rows passing the frozen 2% proxy, and it has not tested factor-selector efficacy. At 1000% the diagnostic threshold nearly removes the range gate and is not a recommended setting. The 100 prior-OI-blocked rows remain ineligible under the unchanged OI ≥ 100 rule. The source data declares CC BY-NC 4.0; modeled OHLC-open fills plus fixed adverse slippage are not executable quote evidence.
+
+**No strategy or factor selector is promoted.** No holdout was used. A profitability or live-feasibility claim requires adequate contract/time coverage and authorized executable quote/depth data, after which costs, slippage, chronology and multiple-testing controls must still be audited.
+
+## Phase links
+
+- [Phase 52 plan/status/error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-52-factor-conditioned-strategy-discovery)
+- [Phase 54 report and CSV outputs](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity)
+- [Phase 55 leg-audit status and outputs](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-55-leg-audit-payload-repair)
+- [Phase 56 P&L sensitivity report and cost matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-56-ohlc-pnl-sensitivity/results/phase56/ohlc_pnl_sensitivity)
+- [Phase 57 independent replay plan/status/results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-57-cost-aware-range-sensitivity-replay)
+- [Phase 58 source registry and feasibility report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-58-quote-source-feasibility-audit)
