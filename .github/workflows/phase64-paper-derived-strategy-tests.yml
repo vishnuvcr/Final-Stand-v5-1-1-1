@@ -38,13 +38,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check finite-run completion marker
+      - name: Check finite-run completion marker and retry budget
         id: gate
         shell: bash
         run: |
-          if [ -f results/phase64_paper_strategy_tests/phase64_completion_marker.json ] && [ "${{ inputs.force_rerun }}" != "true" ]; then
+          OUT="results/phase64_paper_strategy_tests"
+          COUNTER="$OUT/phase64_attempt_counter.json"
+          FORCE="${{ inputs.force_rerun }}"
+          ATTEMPTS=0
+          if [ -f "$COUNTER" ]; then ATTEMPTS="$(jq -r '.attempts // 0' "$COUNTER")"; fi
+          if [ -f "$OUT/phase64_completion_marker.json" ] && [ "$FORCE" != "true" ]; then
             echo "should_run=false" >> "$GITHUB_OUTPUT"
             echo "Phase 64 already completed; finite stopping rule prevents repeat execution."
+          elif [ "$ATTEMPTS" -ge 3 ] && [ "$FORCE" != "true" ]; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Three automatic attempts have already failed. Automatic retries stopped; inspect the error log before manually forcing a new attempt."
           else
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           fi
@@ -128,11 +136,17 @@ jobs:
         if: failure() && steps.gate.outputs.should_run == 'true'
         shell: bash
         run: |
-          printf '\n\n## Automated run failure — %s\n- Workflow run: %s\n- Commit: %s\n- Job conclusion: failure; inspect the linked Actions logs for the failed step. No numerical output from this run is accepted unless the report and audit gates completed.\n- Next action: repair the concrete failing gate and rerun under a new attempt; preserve this entry.\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_RUN_ID" "$GITHUB_SHA" >> PHASE64_ERROR_LOG.md
+          mkdir -p results/phase64_paper_strategy_tests
+          COUNTER="results/phase64_paper_strategy_tests/phase64_attempt_counter.json"
+          ATTEMPTS=0
+          if [ -f "$COUNTER" ]; then ATTEMPTS="$(jq -r '.attempts // 0' "$COUNTER")"; fi
+          ATTEMPTS="$((ATTEMPTS + 1))"
+          printf '{"attempts":%s,"last_failed_run_id":"%s","last_failed_commit":"%s"}\\n' "$ATTEMPTS" "$GITHUB_RUN_ID" "$GITHUB_SHA" > "$COUNTER"
+          printf '\\n\\n## Automated run failure — %s\\n- Workflow run: %s\\n- Commit: %s\\n- Attempt: %s/3 automatic attempts\\n- Job conclusion: failure; inspect the linked Actions logs for the failed step. No numerical output from this run is accepted unless all research report and audit gates completed.\\n- Automatic attempts stop at 3; a subsequent manually forced attempt needs concrete error correction and must preserve previous entries.\\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_RUN_ID" "$GITHUB_SHA" "$ATTEMPTS" >> PHASE64_ERROR_LOG.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE64_ERROR_LOG.md
-          git commit -m "phase 64: log failed automated research run" || true
+          git add PHASE64_ERROR_LOG.md "$COUNTER"
+          git commit -m "phase 64: log failed automated run and increment retry budget" || true
           git push || true
 
       - name: Upload aggregate-only results
