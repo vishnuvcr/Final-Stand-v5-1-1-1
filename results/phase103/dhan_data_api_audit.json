@@ -1,0 +1,160 @@
+{
+  "phase": "103.1",
+  "run_id": "38088386046",
+  "generated_at_utc": "2026-10-10T21:38:23.356881+00:00",
+  "window": {
+    "from_inclusive": "2026-08-02",
+    "to_exclusive": "2026-09-01",
+    "span_days": 30
+  },
+  "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
+  "instrument_master_sha256": "2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173",
+  "instrument_master_bytes": 26116616,
+  "underlying_map": {
+    "HDFCBANK": {
+      "security_id": "1333",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "ICICIBANK": {
+      "security_id": "4963",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "RELIANCE": {
+      "security_id": "2885",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "SBIN": {
+      "security_id": "3045",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "INFY": {
+      "security_id": "1594",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    }
+  },
+  "probes": [
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "PUT",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "PUT",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "PUT",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "CALL",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "http_status": 400,
+      "status": "HTTP_OR_NETWORK_ERROR",
+      "rows": 0,
+      "array_lengths_consistent": false,
+      "nonempty_fields": {},
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null
+    }
+  ],
+  "raw_rows_persisted": false,
+  "raw_data_policy": "Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
+  "known_limits": [
+    "Rolling strikes can change actual strike over time.",
+    "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
+    "A single 30-day probe does not establish full-history completeness or independent test sufficiency."
+  ],
+  "status": "NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
+}

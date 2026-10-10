@@ -65,3 +65,15 @@ Run 38088262635 failed before a machine-readable result was written; inspect its
  
 ## Failed preflight runs — resolved code defect, Dhan still untested
 Runs [38088253613](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088253613) and [38088262635](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635) stopped at the unit-test step because a source-rights validator assertion was too literal. The validator is corrected and additional response-summary tests were committed to trigger a clean retry. **Neither run queried Dhan; no data access conclusion can be drawn from them.**
+
+<!-- DHAN_API_RUN_38088386046 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38088386046 — 2026-10-10T21:38:40.601895+00:00
+
+- **Result:** NO_DATA_RETURNED_OR_SCHEMA_MISMATCH.
+- Window: 2026-08-02 inclusive to 2026-09-01 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 0/10.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

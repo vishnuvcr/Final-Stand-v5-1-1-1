@@ -73,3 +73,10 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Type:** workflow logging defect.  
 **Finding:** the default-branch bridge's first fallback used incorrect `printf` arguments, so two failed preflight runs created extra entries containing literal placeholder labels. The duplicated entries are not separate underlying data errors.  
 **Correction:** the bridge formatter was corrected in commit [52565b4](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/commit/52565b4f6f7e2e89af916f768addfc232e02af22); historical entries are preserved for auditability. Subsequent fallback entries should be checked for the one-marker-per-run invariant.
+
+<!-- DHAN_API_RUN_38088386046 -->
+### E103-DHAN-38088386046 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** NO_DATA_RETURNED_OR_SCHEMA_MISMATCH; rows returned by 0/10 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088386046

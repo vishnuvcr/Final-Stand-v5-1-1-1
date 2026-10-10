@@ -39,3 +39,13 @@ The workflow failed before a machine-readable result was written. No source/data
 - Reviewed job logs for runs 38088253613 and 38088262635. The repository secret was present but masked; the Python test step failed before the Dhan HTTP request, so no authentication or historical-coverage result was produced.
 - Root cause: source-rights registration test had false-negative string matching. Corrected to substring-match the registered metrics and added tests for empty side blocks and output-summary safety.
 - Preserved both failed runs and the fallback-logging defect in E103-006/E103-007; fixed bridge printf handling in commit 52565b4. Next evidence must come from a new run that reaches the Dhan request step.
+
+<!-- DHAN_API_RUN_38088386046 -->
+## Dhan Data API audit — run 38088386046 — 2026-10-10T21:38:40.601895+00:00
+
+- **Result:** NO_DATA_RETURNED_OR_SCHEMA_MISMATCH.
+- Window: 2026-08-02 inclusive to 2026-09-01 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 0/10.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
