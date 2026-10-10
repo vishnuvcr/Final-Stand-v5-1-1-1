@@ -80,3 +80,10 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Status:** NO_DATA_RETURNED_OR_SCHEMA_MISMATCH; rows returned by 0/10 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088386046
+
+<!-- DHAN_API_RUN_38088499642_ATTEMPT_1 -->
+### E103-DHAN-38088499642 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** REQUEST_SCHEMA_OR_PARAMETER_ERROR; rows returned by 0/10 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088499642

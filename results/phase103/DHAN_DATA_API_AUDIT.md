@@ -1,23 +1,23 @@
 # Phase 103.1 — Dhan Data API smoke test
 
-**Status:** NO_DATA_RETURNED_OR_SCHEMA_MISMATCH
+**Status:** REQUEST_SCHEMA_OR_PARAMETER_ERROR
 **Window:** 2026-08-02 inclusive to 2026-09-01 exclusive (30 days)
-**Run:** 38088262635
+**Run:** 38088499642
 
 This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.
 
 | Symbol | Side | HTTP | Status | Rows | Arrays consistent | First UTC | Last UTC |
 |---|---|---:|---|---:|---|---|---|
-| HDFCBANK | CALL | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| HDFCBANK | PUT | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| ICICIBANK | CALL | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| ICICIBANK | PUT | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| RELIANCE | CALL | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| RELIANCE | PUT | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| SBIN | CALL | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| SBIN | PUT | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| INFY | CALL | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
-| INFY | PUT | 400 | HTTP_OR_NETWORK_ERROR | 0 | False |  |  |
+| HDFCBANK | CALL | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| HDFCBANK | PUT | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| ICICIBANK | CALL | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| ICICIBANK | PUT | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| RELIANCE | CALL | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| RELIANCE | PUT | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| SBIN | CALL | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| SBIN | PUT | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| INFY | CALL | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
+| INFY | PUT | 400 | HTTP_400_BAD_REQUEST | DH-905 | expiryCode is required | 0 | False |  |  |
 
 ## Underlying ID mapping
 

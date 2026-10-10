@@ -1,7 +1,7 @@
 {
   "phase": "103.1",
-  "run_id": "38088262635",
-  "generated_at_utc": "2026-10-10T21:38:51.827461+00:00",
+  "run_id": "38088499642",
+  "generated_at_utc": "2026-10-10T21:40:19.337975+00:00",
   "window": {
     "from_inclusive": "2026-08-02",
     "to_exclusive": "2026-09-01",
@@ -42,111 +42,131 @@
       "symbol": "HDFCBANK",
       "requested_option_type": "CALL",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "HDFCBANK",
       "requested_option_type": "PUT",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "ICICIBANK",
       "requested_option_type": "CALL",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "ICICIBANK",
       "requested_option_type": "PUT",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "RELIANCE",
       "requested_option_type": "CALL",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "RELIANCE",
       "requested_option_type": "PUT",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "SBIN",
       "requested_option_type": "CALL",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "SBIN",
       "requested_option_type": "PUT",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "INFY",
       "requested_option_type": "CALL",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     },
     {
       "symbol": "INFY",
       "requested_option_type": "PUT",
       "http_status": 400,
-      "status": "HTTP_OR_NETWORK_ERROR",
+      "status": "HTTP_400_BAD_REQUEST",
       "rows": 0,
       "array_lengths_consistent": false,
       "nonempty_fields": {},
       "first_timestamp_utc": null,
-      "last_timestamp_utc": null
+      "last_timestamp_utc": null,
+      "api_error_code": "DH-905",
+      "api_error_message": "expiryCode is required"
     }
   ],
   "raw_rows_persisted": false,
@@ -156,5 +176,5 @@
     "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
     "A single 30-day probe does not establish full-history completeness or independent test sufficiency."
   ],
-  "status": "NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
+  "status": "REQUEST_SCHEMA_OR_PARAMETER_ERROR"
 }
