@@ -1,0 +1,72 @@
+name: Phase 90 — IV incremental prediction beyond India VIX
+
+on:
+  push:
+    branches:
+      - phase-90-iv-incremental-prediction
+    paths:
+      - ".github/workflows/phase90-iv-incremental-prediction.yml"
+      - "research/phase90/**"
+      - "PHASE90_RESEARCH_PLAN.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase90-iv-incremental-prediction
+  cancel-in-progress: true
+
+jobs:
+  incremental-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out registered phase branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned analysis dependencies
+        run: python -m pip install --disable-pip-version-check "numpy==2.2.6" "pandas==2.2.3"
+
+      - name: Restore or initialize Phase 90 private data cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/phase90/raw
+          key: phase90-dhan-rolling-2024-v1
+
+      - name: Acquire and analyze frozen 2024 study
+        id: study
+        continue-on-error: true
+        env:
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: python research/phase90/iv_incremental_study.py
+
+      - name: Publish aggregate outputs and phase logs
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE90_STATUS.md PHASE90_ERROR_LOG.md PHASE90_CHAT_LOG.md README.md
+          git add -f results/phase90/coverage.csv results/phase90/model_metrics.csv results/phase90/vix_regime_metrics.csv results/phase90/summary.json results/phase90/PHASE90_RESULTS.md 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Phase 90: publish IV incremental prediction results"
+            git push origin "HEAD:${{ github.ref_name }}"
+          else
+            echo "No aggregate result or log changes to commit."
+          fi
+
+      - name: Mark engine/operational failure after publication
+        if: steps.study.outcome == 'failure'
+        run: |
+          echo "Phase 90 analysis engine failed; inspect the committed status and sanitized error log."
+          exit 1

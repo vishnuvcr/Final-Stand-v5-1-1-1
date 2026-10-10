@@ -1,0 +1,7 @@
+split,model,features,n,sessions,mae_bps,rmse_bps,r2
+VALIDATION,M0_spot_only,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos,3825,64,4.6408302341613865,7.820973736742286,0.11286002866992662
+CONFIRMATORY_OOS,M0_spot_only,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos,3604,60,6.033825324701457,9.221140991815991,0.051810028818419895
+VALIDATION,M1_spot_plus_VIX,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15,3825,64,4.595337993169297,7.796796448733033,0.11833645316547003
+VALIDATION,M2_spot_VIX_plus_IV,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean,3825,64,4.588797215044837,7.768026125978294,0.12483115773723208
+CONFIRMATORY_OOS,M1_spot_plus_VIX,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15,3604,60,5.995293597013471,9.212635551980236,0.05355841404497774
+CONFIRMATORY_OOS,M2_spot_VIX_plus_IV,rv15_bps;rv60_bps;ret15_bps;ret60_bps;time_sin;time_cos;vix_level;vix_change15;iv_mean,3604,60,5.96225507683453,9.192031706920455,0.05778706927867361

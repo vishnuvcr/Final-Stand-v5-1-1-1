@@ -1,0 +1,56 @@
+{
+  "oos_n": 3604,
+  "oos_sessions": 60,
+  "sample_gate_pass": true,
+  "vix_gate_pass": true,
+  "paired_rows": 18554,
+  "paired_sessions": 248,
+  "dev_rows_with_iv": 7359,
+  "validation_rows_with_iv": 3825,
+  "oos_rows_with_iv": 3604,
+  "oos_sessions_with_iv": 60,
+  "phase": 90,
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674",
+  "status": "PASS \u2014 small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence",
+  "requested_period": [
+    "2024-01-01",
+    "2024-12-31_exclusive"
+  ],
+  "holdout_2026_requested": false,
+  "instrument_master": {
+    "status": "UNIQUE_MATCH",
+    "candidate_count": 1,
+    "security_id_resolved": true,
+    "candidate_ids": [
+      "21"
+    ],
+    "instrument": "INDEX",
+    "segment": "I"
+  },
+  "quality": {
+    "call_duplicate_rows_removed": 1731,
+    "put_duplicate_rows_removed": 1730,
+    "call_rows": 18572,
+    "put_rows": 18575,
+    "paired_timestamps_before_checks": 18557,
+    "spot_mismatch_excluded": 0,
+    "strike_mismatch_excluded": 3,
+    "paired_rows_after_checks": 18554,
+    "paired_sessions": 248,
+    "vix_row_coverage": 0.9964428155653767,
+    "oos_vix_coverage": 0.9973492379058979
+  },
+  "options_chunks_valid": 54,
+  "options_chunks_total": 54,
+  "vix_chunks_valid": 5,
+  "vix_chunks_total": 5,
+  "primary": {
+    "delta_mae_bps": 0.033038520178941155,
+    "ci95_low": 0.00013934580417876056,
+    "ci95_high": 0.0561542527285903,
+    "positive_share": 0.975,
+    "replicates": 5000,
+    "seed": 90210
+  },
+  "issue_count": 0
+}
