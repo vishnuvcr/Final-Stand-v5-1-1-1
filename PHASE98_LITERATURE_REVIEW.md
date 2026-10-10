@@ -94,6 +94,14 @@ Source: Patnaik, T. C., & Thomas, S. (2004). *Profitability of Trading Strategie
 
 Source: Chakrabarti, P., & Kumar, K. K. (2020). *High-Frequency Return-Implied Volatility Relationship: Empirical Evidence from Nifty and India VIX*. Journal of the Developing Areas, 54(3), 53–68. https://ideas.repec.org/a/jda/journl/vol.54year2020issue3pp53-68.html
 
+### 8. Data-source provenance and coverage limitations
+
+The upstream *India Index & Options — 1-minute OHLC* dataset identifies its files as one-minute OHLCV(+OI) bars for NIFTY and other Indian index spot/option chains. Its dataset card cautions that option coverage is partial, with illiquid or far-out strikes often sparse or absent, and presents the data as educational/as-is rather than an exchange-certified quote record. This matches the main Phase 98 operational risk: a signal can exist while one or both selected option legs or exit opens are absent. The Phase 98 code therefore uses exact timestamp-and-strike matches, does not impute gaps, records exclusions, pins a source revision, and requires coverage and source-read gates.
+
+Source: Hugging Face dataset card and source revision tree: https://huggingface.co/datasets/thetrademarkk/india-index-options-1m/tree/0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+
+The dataset schema uses timezone-aware IST timestamps and exposes an `open_interest` field in its documented schema; this is why the runner must match Parquet's actual Arrow timestamp type and normalize the OI alias only when present. Neither OHLCV nor OI guarantees that a two-leg order could have filled at the modeled bar opens.
+
 ## 5. Research design consequences
 
 These sources support the following fixed safeguards, all consistent with the Phase 98 preregistration:
@@ -116,6 +124,7 @@ These sources support the following fixed safeguards, all consistent with the Ph
 | NSE India VIX page/white paper | Official methodology | VIX is expected volatility, not direction | Does not validate this particular 75th-percentile filter |
 | Harvey et al. (2016) | Peer-reviewed multiple-testing methodology | Ordinary p-values are weak after broad searches | Broad asset-pricing factor context, not a direct ORB test |
 | Bailey et al. (2017) | Backtest-overfitting methodology | Selection across many variants inflates winner's apparent reliability | Phase 98 fixes one variant and does not estimate full PBO |
+| Hugging Face index/options data card | Dataset documentation | Establishes schema and warns about partial option coverage | Public educational dataset, not official exchange quote tape |
 | Aggarwal & Gupta (2009) | Indian NIFTY index-option efficiency | Costs affect ability to exploit option pricing relationships | Daily data from 2006–2009; not directional ORB |
 | Vipul (2009) | Indian NIFTY option box-spread microstructure | Timestamp precision and short-lived mispricing matter | Arbitrage relation, not ORB strategy |
 | Chakrabarti & Kumar (2020) | NIFTY/India VIX five-minute evidence | Return–volatility relation is asymmetric; VIX is not a simple direction forecast | Does not test this specific filter |
