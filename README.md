@@ -1,3 +1,18 @@
+# Resume checkpoint — 2026-10-10 (Phase 86 Dhan connectivity PASS)
+
+**Phase 86 connectivity passed.** GitHub Actions run [38047007060](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047007060) confirmed the `DHAN_ACCESS_TOKEN` secret is present, Dhan profile HTTP 200, token valid, Data API plan active, and a bounded historical-candle request returned HTTP 200 with 149 five-minute index candles for 2026-10-08 to 2026-10-09. The workflow did not print or persist raw profile/market-data responses and did not place orders or run a strategy backtest.
+
+- [Phase 86 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_RESEARCH_PLAN.md)
+- [Phase 86 status and interpretation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_STATUS.md)
+- [Phase 86 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_ERROR_LOG.md)
+- [Phase 86 auditable chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/PHASE86_CHAT_LOG.md)
+- [Phase 86 read-only connectivity workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-86-dhan-api-connectivity-audit/.github/workflows/phase86-dhan-connectivity-audit.yml)
+- [Draft PR #36](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/36)
+
+**Important limitation:** this verifies authenticated API access and basic index OHLC candles only. It does not prove historical option-contract coverage, historical bid/ask/depth, executable fills, or strategy profitability. Phase 87 will qualify options instrument IDs and bounded historical option data before any replay. Paytm Money costs, slippage and latency remain mandatory; Phase 83 holdout stays sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 86 Dhan API audit)
 
 **Phase 86: CONNECTIVITY RESULT PENDING.** A bounded, read-only GitHub Actions workflow now checks `DHAN_ACCESS_TOKEN` against Dhan's profile endpoint and, only if the profile reports an active Data API plan, makes one small five-minute index-candle request. It prints status/boolean/count summaries only; it does not log the token, profile payload, identifiers, or raw candles. No orders or strategy backtests are run.
