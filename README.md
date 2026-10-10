@@ -1325,3 +1325,17 @@ Phase 64's corrected automated test completed, but both CCI candidates had zero 
 - [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-65-cci-data-coverage-audit/PHASE65_ERROR_LOG.md)
 
 A static filename-regex issue was corrected before the data run and documented as F65-001. Do not infer successful execution from code commits; only aggregate outputs and a passing workflow run can close the phase. No strategy is promoted.
+
+
+## Phase 66 — OHLC-based paper replication (opened 2026-10-10)
+
+**Status: plan and runner scaffold committed; numerical run not yet verified.** At the user's direction, Phase 66 proceeds using minute OHLC bars to reconstruct the CCI NIFTY options paper. This is an OHLC-reference backtest, not an exact reproduction of the original 2008–2018 dataset or quote-level execution. The frozen candidate rules are inherited from Phase 64; missing bars must not be imputed and 2026 holdout remains excluded.
+
+- [Phase 66 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/PHASE66_RESEARCH_PLAN.md)
+- [Phase 66 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/PHASE66_STATUS.md)
+- [Research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/PHASE66_RESEARCH_LOG.md)
+- [Error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/PHASE66_ERROR_LOG.md)
+- [OHLC runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/research/phase66_paper_strategy_tests.py)
+- [Automated workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-66-ohcl-paper-replication/.github/workflows/phase66-paper-derived-strategy-tests.yml)
+
+No paper profitability claim is considered reproduced until a successful run produces validated aggregate outputs. The existing Phase 64 zero-trade result remains non-evidence about strategy expectancy.
