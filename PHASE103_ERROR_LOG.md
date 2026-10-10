@@ -172,3 +172,9 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281
 ### E103-013 — Fixed-contract reconstruction not implied by the ATM API pass
 **Type:** remaining validity gate, not an error.  
 The 10/10 ATM pass validates access and array shape but does not show that an ATM relative-strike line is a fixed listed contract. Phase 103.1B will audit seven offsets for each stock and option side, aggregate actual-strike/timestamp coverage in memory, and keep raw rows out of outputs. No P&L may be calculated from one rolling-offset series treated as a fixed contract.
+
+
+### E103-014 — Strike-surface implementation refactor broke test-call signatures
+**Affected runs:** [38089656281](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281), [38089669894](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089669894).  
+**Finding:** the summarizer gained a `requested_relative_strike` positional parameter, but unit tests still passed the HTTP code in that position. The API step was skipped. The initial duplicate-key fixture also failed to create a true same-timestamp duplicate.  
+**Correction:** update all test calls with explicit `ATM`, test allowed relative strikes and surface alignment, and use a genuinely overlapping (timestamp,actual strike) fixture. The API must not run until tests pass.

@@ -222,3 +222,8 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - All required array lengths were consistent, timestamps were 09:15–15:39 IST, every row mapped to 2026-08-03, and zero rows were outside the half-open target window after the inclusive-toDate adapter.
 - Raw payloads were not retained in repository/artifacts; only derived counts/timestamp metadata were published.
 - Next bounded gate: seven relative-strike offsets per side and stock over the same one-day target window, to check fixed-strike reconstructability before strategy P&L.
+
+
+## 2026-10-11 — Strike-surface preflight correction
+- The first two automated tests of the new relative-strike code failed before any API calls. Cause: old unit tests passed HTTP status where the new helper expects a relative-strike label. A synthetic duplicate mapping fixture also did not actually overlap a timestamp/strike key.
+- Both test issues were corrected; the workflow now accepts the seven documented Dhan offsets and has a 70-probe maximum. No data or strategy conclusion is derived from these failed runs.

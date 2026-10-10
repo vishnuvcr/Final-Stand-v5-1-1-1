@@ -261,3 +261,7 @@ Run 38089656281 produced no current-run JSON; prior run output was not accepted.
 **PASS: Dhan API retrieval for all five stocks and both option sides on one common IST session.** Run [38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338) passed 13 tests and all 10 data requests for 2026-08-03. Each probe returned 385 rows, array lengths were consistent, all timestamps fell inside the target day, and zero rows were outside the request window. Raw minute rows were not persisted or uploaded.
 
 This is a one-day source-access/coverage PASS only. No fixed-contract strategy P&L test has begun. Next: seven-offset relative-strike surface audit across all five stocks and CALL/PUT, then assess fixed-contract continuity and common-window coverage.
+
+
+## Strike-surface retry — preflight correction
+Runs [38089656281](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281) and [38089669894](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089669894) failed at unit tests because the new summarizer signature was not reflected in older test calls. No Dhan API calls were made. Updated tests and workflow input schema; next run will use seven relative strikes and 70 probes only after all tests pass.
