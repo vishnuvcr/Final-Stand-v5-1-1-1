@@ -1,0 +1,76 @@
+{
+  "phase": 89,
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047775690",
+  "status": "COMPLETE WITH DATA-COVERAGE CAVEAT \u2014 OOS sample gate passed on available aligned records",
+  "requested_period": [
+    "2025-01-01",
+    "2025-12-31_exclusive"
+  ],
+  "holdout_2026_requested": false,
+  "valid_api_windows": 25,
+  "total_api_windows": 26,
+  "quality": {
+    "call_rows_unique": 17207,
+    "put_rows_unique": 18555,
+    "paired_timestamp_rows_before_spot_check": 17204,
+    "call_put_spot_mismatch_rows_excluded": 25,
+    "call_put_atm_strike_mismatch_rows_excluded": 35,
+    "paired_panel_rows_after_spot_check": 17144,
+    "sessions_with_paired_data": 230
+  },
+  "oos_sessions": 57,
+  "oos_complete_rows": 2622,
+  "oos_inferential_gate": true,
+  "confirmatory_inference_allowed": true,
+  "primary_tests": [
+    {
+      "id": "P1",
+      "feature": "iv_mean",
+      "target": "fwd15_abs_bps",
+      "n": 4049,
+      "sessions": 57,
+      "beta_bps_per_sd": 0.6021402604976229,
+      "ci95_low": 0.2247257708532704,
+      "ci95_high": 0.9795547501419755,
+      "p_value": 0.0017660292736332826,
+      "holm_p": 0.00706411709453313
+    },
+    {
+      "id": "P2",
+      "feature": "iv_skew",
+      "target": "fwd15_bps",
+      "n": 4049,
+      "sessions": 57,
+      "beta_bps_per_sd": -0.2184104403616586,
+      "ci95_low": -0.6524462313515141,
+      "ci95_high": 0.2156253506281969,
+      "p_value": 0.3240005044545189,
+      "holm_p": 0.9720015133635567
+    },
+    {
+      "id": "P3",
+      "feature": "oi_imbalance",
+      "target": "fwd15_bps",
+      "n": 4049,
+      "sessions": 57,
+      "beta_bps_per_sd": -0.11847722104156232,
+      "ci95_low": -0.566981395373748,
+      "ci95_high": 0.3300269532906234,
+      "p_value": 0.6046357417738838,
+      "holm_p": 1.0
+    },
+    {
+      "id": "P4",
+      "feature": "oi_change_15m",
+      "target": "fwd15_bps",
+      "n": 2622,
+      "sessions": 57,
+      "beta_bps_per_sd": -0.0764575716320717,
+      "ci95_low": -0.45611411404221447,
+      "ci95_high": 0.303198970778071,
+      "p_value": 0.6930572078524659,
+      "holm_p": 1.0
+    }
+  ],
+  "api_issue_count": 1
+}
