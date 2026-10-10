@@ -9,7 +9,7 @@ Strategy promotion: **NONE**.
 - [Error log](PHASE91_ERROR_LOG.md)
 - [Auditable chat/decision log](PHASE91_CHAT_LOG.md)
 - [Engine](research/phase91/iv_incremental_study.py)
-- [Phase branch workflow](.github/workflows/phase91-iv-incremental-prediction.yml)
+- [Phase branch workflow](.github/workflows/phase91-iv-temporal-replication-2023.yml)
 - [Default-branch PR runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
 - [Detailed results](results/phase91/PHASE91_RESULTS.md)
 - [Summary JSON](results/phase91/summary.json)
