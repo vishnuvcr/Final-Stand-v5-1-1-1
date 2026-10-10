@@ -86,8 +86,8 @@
     "profitability ranking",
     "Paytm Money contract-note reconciliation",
     "independent stock-options holdout test",
-    "Dhan API historical data acquisition beyond the bounded probe",
-    "full common-window option liquidity/coverage audit"
+    "full common-window option liquidity/coverage audit",
+    "fixed-contract strike-surface continuity audit across seven relative offsets"
   ],
   "data_source_protocol": {
     "primary_source": "DhanHQ Data API expired stock-options rolling history",
@@ -108,14 +108,14 @@
       "target_window_days": 1,
       "maximum_days_per_request": 30,
       "frequency_minutes": 1,
-      "strike": "ATM",
+      "strike": "ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3",
       "expiry_flag": "MONTH",
       "expiry_code": 1,
       "option_types": [
         "CALL",
         "PUT"
       ],
-      "probes_expected": 10
+      "probes_expected": 70
     },
     "fields": [
       "open",
@@ -135,7 +135,7 @@
       "Raw retention/republication rights not yet verified",
       "Raw payloads are not committed or uploaded; derived aggregate audit only"
     ],
-    "next_gate": "Verify actual Actions API run; then audit coverage and fixed-contract reconstructability before strategy P&L.",
+    "next_gate": "Seven-offset fixed-strike continuity on a common one-day sample; no P&L before exact expiry identity, source rights and execution-cost gates pass.",
     "note": "Initial expiryCode=0 was rejected by the API with DH-905 'expiryCode is required' for all 10 probes, despite the annexure describing 0 as current/near expiry. Retry uses expiryCode=1, the sample request value and documented Next Expiry, and will be audited separately.",
     "provider_end_date_semantics": {
       "observed_behavior": "Dhan rolling-options endpoint included toDate rows in a request from 2026-08-03 to 2026-08-04 despite current documentation describing toDate as non-inclusive.",

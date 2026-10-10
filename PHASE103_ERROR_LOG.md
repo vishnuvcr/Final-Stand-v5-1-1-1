@@ -167,3 +167,8 @@ Run [38089220578](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 ### E103-RUN-38089656281 — No fresh audit JSON for this run
 Tests, network requests or audit generation did not produce a machine result whose run_id matches the current Actions run. Any prior JSON is not valid evidence for this run.
 Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281
+
+
+### E103-013 — Fixed-contract reconstruction not implied by the ATM API pass
+**Type:** remaining validity gate, not an error.  
+The 10/10 ATM pass validates access and array shape but does not show that an ATM relative-strike line is a fixed listed contract. Phase 103.1B will audit seven offsets for each stock and option side, aggregate actual-strike/timestamp coverage in memory, and keep raw rows out of outputs. No P&L may be calculated from one rolling-offset series treated as a fixed contract.

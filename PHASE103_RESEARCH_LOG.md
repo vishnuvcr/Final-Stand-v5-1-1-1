@@ -213,3 +213,12 @@ The workflow failed before a machine-readable result was written. No source/data
 <!-- DHAN_NO_RESULT_RUN_38089656281 -->
 ## Dhan audit no result — run 38089656281
 No current-run JSON was produced; previous audit data were not accepted as this run's output.
+
+
+## 2026-10-11 — All-five-stock Dhan smoke test accepted; register surface audit
+
+- Workflow [38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338) completed SUCCESS; 13 unit tests passed.
+- HDFCBANK, ICICIBANK, RELIANCE, SBIN and INFY each returned 385 CALL and 385 PUT minute rows on 2026-08-03 (10/10 probes total).
+- All required array lengths were consistent, timestamps were 09:15–15:39 IST, every row mapped to 2026-08-03, and zero rows were outside the half-open target window after the inclusive-toDate adapter.
+- Raw payloads were not retained in repository/artifacts; only derived counts/timestamp metadata were published.
+- Next bounded gate: seven relative-strike offsets per side and stock over the same one-day target window, to check fixed-strike reconstructability before strategy P&L.

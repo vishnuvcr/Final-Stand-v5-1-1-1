@@ -254,3 +254,10 @@ Run [38089336359](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 <!-- DHAN_NO_RESULT_RUN_38089656281 -->
 ### No fresh Dhan audit result
 Run 38089656281 produced no current-run JSON; prior run output was not accepted.
+
+
+## Latest accepted gate — 2026-10-11
+
+**PASS: Dhan API retrieval for all five stocks and both option sides on one common IST session.** Run [38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338) passed 13 tests and all 10 data requests for 2026-08-03. Each probe returned 385 rows, array lengths were consistent, all timestamps fell inside the target day, and zero rows were outside the request window. Raw minute rows were not persisted or uploaded.
+
+This is a one-day source-access/coverage PASS only. No fixed-contract strategy P&L test has begun. Next: seven-offset relative-strike surface audit across all five stocks and CALL/PUT, then assess fixed-contract continuity and common-window coverage.

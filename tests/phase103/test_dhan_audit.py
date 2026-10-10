@@ -4,9 +4,37 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"research"/"phase103_stock_options"))
-from dhan_data_audit import EXPIRY_CODE, check_window, map_underlyings, provider_to_date, safe_error_details, summarize
+from dhan_data_audit import ALLOWED_STRIKES, EXPIRY_CODE, check_window, map_underlyings, normalize_strike, parse_strikes, provider_to_date, safe_error_details, summarize, summarize_surface
 
 class DhanDataAuditTests(unittest.TestCase):
+    def test_relative_strike_parser_validates_and_preserves_order(self):
+        self.assertEqual(parse_strikes("ATM,ATM+1,ATM-1"),["ATM","ATM+1","ATM-1"])
+        with self.assertRaises(ValueError): parse_strikes("ATM,ATM")
+        with self.assertRaises(ValueError): parse_strikes("ATM+4")
+        self.assertEqual(len(ALLOWED_STRIKES),7)
+        self.assertEqual(normalize_strike(125.0),"125")
+
+    def test_surface_gate_rejects_duplicate_timestamp_strike_keys(self):
+        requested=["ATM","ATM+1","ATM-1"]
+        blocks=[
+          {"symbol":"HDFCBANK","option_type":"CALL","relative_strike":"ATM","timestamps":[1,2],"strikes":[100,101]},
+          {"symbol":"HDFCBANK","option_type":"CALL","relative_strike":"ATM+1","timestamps":[1,2],"strikes":[101,102]},
+          {"symbol":"HDFCBANK","option_type":"CALL","relative_strike":"ATM-1","timestamps":[1,2],"strikes":[99,98]}]
+        result=summarize_surface(blocks,requested)[0]
+        self.assertEqual(result["common_timestamp_count_across_offsets"],2)
+        self.assertEqual(result["duplicate_timestamp_actual_strike_keys_across_offsets"],1)
+        self.assertEqual(result["relative_surface_alignment_gate"],"FAIL")
+
+    def test_surface_gate_passes_aligned_distinct_offsets(self):
+        requested=["ATM","ATM+1","ATM-1"]
+        blocks=[
+          {"symbol":"HDFCBANK","option_type":"CALL","relative_strike":"ATM","timestamps":[1,2],"strikes":[100,101]},
+          {"symbol":"HDFCBANK","option_type":"CALL","relative_strike":"ATM+1","timestamps":[1,2],"strikes":[102,103]},
+          {"symbol":"HDFCBANK","option_type":"CALL","relative_strike":"ATM-1","timestamps":[1,2],"strikes":[98,99]}]
+        result=summarize_surface(blocks,requested)[0]
+        self.assertEqual(result["relative_surface_alignment_gate"],"PASS")
+        self.assertEqual(result["distinct_actual_strikes_in_surface"],6)
+
     def test_next_expiry_value_matches_dhan_request_sample(self):
         self.assertEqual(EXPIRY_CODE, 1)
 
@@ -42,7 +70,7 @@ class DhanDataAuditTests(unittest.TestCase):
         block={"open":[10,11],"high":[11,12],"low":[9,10],"close":[10.5,11.5],
           "iv":[20,21],"volume":[100,120],"strike":[800,800],"oi":[200,220],"spot":[805,806],
           "timestamp":stamps}
-        result=summarize("HDFCBANK","CALL",200,{"status":"success","data":{"ce":block}},
+        result=summarize("HDFCBANK","CALL","ATM",200,{"status":"success","data":{"ce":block}},
                          None,"2026-08-03","2026-08-04")
         self.assertEqual(result["timestamp_counts_by_ist_date"],{"2026-08-03":1,"2026-08-04":1})
         self.assertEqual(result["outside_requested_date_window_rows"],1)
@@ -64,19 +92,19 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertNotIn("tokenSecret",str(result))
 
     def test_auth_error_maps_to_safe_status(self):
-        result=summarize("INFY","PUT",401,None)
+        result=summarize("INFY","PUT","ATM",401,None)
         self.assertEqual(result["status"],"AUTH_401")
         self.assertEqual(result["rows"],0)
 
     def test_requested_side_missing_is_not_reported_as_data(self):
-        result=summarize("SBIN","PUT",200,{"status":"success","data":{"ce":{"close":[10],"timestamp":[1754000000]},"pe":None}})
+        result=summarize("SBIN","PUT","ATM",200,{"status":"success","data":{"ce":{"close":[10],"timestamp":[1754000000]},"pe":None}})
         self.assertEqual(result["rows"],0)
         self.assertNotEqual(result["status"],"DATA_RETURNED")
 
     def test_summary_does_not_contain_api_secret_or_raw_rows(self):
         # The summarizer only accepts one decoded response and emits counts/timestamps.
         block={"close":[9.0,10.0],"timestamp":[1754000000,1754000060]}
-        result=summarize("INFY","CALL",200,{"status":"success","data":{"ce":block}})
+        result=summarize("INFY","CALL","ATM",200,{"status":"success","data":{"ce":block}})
         encoded=__import__("json").dumps(result)
         self.assertNotIn("access-token",encoded.lower())
         self.assertNotIn("9.0",encoded)

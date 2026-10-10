@@ -161,3 +161,13 @@ The first corrected request (`expiryCode: 1`) did not yield an aggregate report 
 ## Date-range correction after empirical boundary diagnostic — 2026-10-11
 
 The official documentation says `toDate` is non-inclusive, but observed Dhan responses include the date specified in `toDate`: the request `fromDate=2026-08-03`, `toDate=2026-08-04` yielded 385 rows on each of 3 and 4 August. A same-date request (`fromDate=toDate=2026-08-03`) returned 385 rows on 3 August only. The acquisition client therefore preserves the research target window as half-open `[fromDate,toDate)` and sets the provider request's end date to `target_end_exclusive - 1 calendar day`. It then audits returned rows against the original target window in Asia/Kolkata and rejects any extra dates. This is evidence-driven handling of observed API behavior, not a change to target dates or strategy rules.
+
+
+## Phase 103.1B — relative-strike surface / fixed-contract continuity (registered 2026-10-11)
+
+The 10/10 ATM source probes passed on 2026-08-03. Before any strategy test, the Dhan rolling relative-strike format must be validated for reconstruction of persistent actual-strike price paths.
+
+- Probe seven supported offsets (`ATM, ATM+1, ATM+2, ATM+3, ATM-1, ATM-2, ATM-3`) for the five frozen names and both CALL/PUT sides on the same one-day sample (70 requests total).
+- Raw timestamp and actual-strike sequences are joined in runner memory only. Publish aggregate counts per offset, actual-strike changes, common timestamps, distinct strikes per timestamp, duplicate (timestamp,strike) keys, and count of actual strikes present at every minute.
+- No raw option rows or strike-time series are committed or uploaded. Any API/schema, timestamp or array-integrity failure blocks data acceptance.
+- A one-day surface pass is not historical quote-depth validation or profitability evidence. Contract expiry identity, effective lot sizes/corporate actions, retention rights, bid/ask or a conservative execution proxy, Paytm Money fees, spread, slippage and latency remain separate required gates.
