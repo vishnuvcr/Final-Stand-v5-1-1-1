@@ -1243,3 +1243,10 @@ Preliminary metadata review finds no source already proven to satisfy exact-cont
 - Phase59 accepted exact OI sources=0; quote/depth sources=0.
 - No new data downloaded, no holdout used, no strategy promoted. Empirical strategy testing remains blocked pending the documented restart requirements.
 - [Plan](PHASE60_RESEARCH_PLAN.md) · [Status](PHASE60_STATUS.md) · [Decision report](results/phase60/evidence_sufficiency/report.md) · [Error log](PHASE60_ERROR_LOG.md)
+
+## Phase 61 — new-source restart audit
+
+- Run: [38023026846](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38023026846); workflow status=success.
+- Decision: NO_GO_NO_NEW_SOURCE_MEETS_RESTART_GATE; candidates=5; accepted=0.
+- No data downloaded, no credentials or purchases, no holdout use, no P&L or strategy promotion.
+- [Plan](PHASE61_RESEARCH_PLAN.md) · [Status](PHASE61_STATUS.md) · [Source registry](research/phase61/source_registry.json) · [Decision report](results/phase61/source_restart_audit/report.md) · [Error log](PHASE61_ERROR_LOG.md)
