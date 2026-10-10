@@ -30,3 +30,8 @@ The initial study run and cached interpretation rerun both completed successfull
 ## E90-008 — downstream replication complete; result does not replicate the small 2024 gain
 
 Phase 91 completed successfully in [Actions run 38049680438](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049680438). The 2023 sample had 3,633 OOS rows across 60 sessions; M1−M2 MAE = +0.0001111 bps, 95% paired session-cluster CI −0.0110700 to +0.0102532. The interval crossed zero, so no incremental gain was established. This is a child-phase scientific result, not a Phase 90 execution error. No strategy P&L was computed or strategy promoted.
+
+
+## E90-009 — Phase 92 cross-phase stopping decision
+
+Phase 92's independent 2022 synthetic-forward/OI predictor study completed successfully in [run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106). The primary result was negative incremental value for the added feature block: M2−M4 MAE −0.1708363 bps, 95% CI −0.2298769 to −0.1152015. The [cross-phase synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md) closes this feature-prediction line at its preregistered stopping condition. No strategy P&L was computed or strategy promoted.
