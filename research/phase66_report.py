@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Phase-64 paper-style report and charts from aggregate strategy outputs."""
+"""Build Phase-66 paper-replication report and charts from aggregate strategy outputs."""
 import json
 from pathlib import Path
 
@@ -63,6 +63,8 @@ def main():
             fmt(row["net_10_order_paper_10pct_slippage_rupees"])]
         lines.append("| " + " | ".join(map(str, cols)) + " |")
     lines += [
+        "",
+        "**EMPTY-SAMPLE WARNING:** all four candidate/split rows have zero completed trades. The 0.00 monetary sum fields in the tables and validation chart are empty-sample placeholders, not realized returns. Win rate, expectancy, profit factor, drawdown and profitability are not estimable. No comparison with the paper’s reported net P&L or win rate is valid from this sample.",
         "",
         "## Descriptive risk and trade statistics",
         "| Variant | Split | Mean net/trade | Median net/trade | Profit factor | Max trade-P&L drawdown | Median holding (minutes) |",
@@ -150,7 +152,7 @@ def main():
     ax.axhline(0, linewidth=0.8)
     ax.set_xticks(x, VARIANTS)
     ax.set_ylabel("Validation net P&L (₹)")
-    ax.set_title("Phase 66 validation net P&L by cost scenario")
+    ax.set_title("Phase 66 — no completed validation trades; P&L not estimable")
     ax.legend()
     fig.tight_layout()
     fig.savefig(OUT / "validation_net_pnl.png", dpi=160)
@@ -166,7 +168,7 @@ def main():
     ax.axhline(0, linewidth=0.8)
     ax.set_xlabel("Completed validation trade")
     ax.set_ylabel("Cumulative net P&L (₹10/order)")
-    ax.set_title("Phase 66 validation trade-order P&L proxy")
+    ax.set_title("Phase 66 — no completed validation trades; equity not estimable")
     ax.legend()
     fig.tight_layout()
     fig.savefig(OUT / "validation_equity.png", dpi=160)
