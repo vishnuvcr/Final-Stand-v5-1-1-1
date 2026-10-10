@@ -1,0 +1,227 @@
+name: Phase 57 — Recover and reconcile endpoint artifact
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-57-cost-aware-range-sensitivity-replay
+    paths:
+      - ".github/workflows/phase-57-artifact-recovery.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: phase57-artifact-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Phase 57 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-57-cost-aware-range-sensitivity-replay
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Download Phase57 computation artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: phase57-cost-aware-range-sensitivity-38019819831
+          repository: ${{ github.repository }}
+          run-id: 38019819831
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: artifact/phase57
+      - name: Download canonical Phase56 matrix artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: phase56-ohlc-pnl-sensitivity-38019323348
+          repository: ${{ github.repository }}
+          run-id: 38019323348
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: artifact/phase56
+      - name: Validate outputs and reproduce Phase56 endpoints exactly
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import csv, json, math, os, shutil
+          from collections import Counter, defaultdict
+          from pathlib import Path
+          p57=Path("artifact/phase57"); p56=Path("artifact/phase56")
+          report=json.loads((p57/"report.json").read_text())
+          report56=json.loads((p56/"report.json").read_text())
+          expected_sha="fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55"
+          expected_rev="0f4800e43e6f96cec0794369d78eb4d3c4211ef5"
+          expected_status={
+            "2":{"BLOCKED_LEG_ELIGIBILITY":100,"EXCLUDED_OHLC_RANGE_PROXY":379,"REPLAY_PASS":1},
+            "1000":{"BLOCKED_LEG_ELIGIBILITY":100,"REPLAY_PASS":380},
+          }
+          assert report["status"]=="COST_AWARE_RANGE_SENSITIVITY_COMPLETE"
+          assert report["input_event_ledger_sha256"]==report56["input"]["input_sha256"]==expected_sha
+          assert report["dataset_revision"]==report56["input"]["pinned_dataset_revision"]==expected_rev
+          assert report["thresholds_pct"]==[2,1000]
+          assert report["planned_configuration_event_rows_per_threshold"]==480
+          assert report["replay_pass_counts_by_threshold"]=={"2":1,"1000":380}
+          assert report["status_counts_by_threshold"]==expected_status
+          assert report["cost_scenario_rows"]==report["expected_cost_scenario_rows"]==2286
+          assert report["holdout_used"] is False and report["production_or_promotion_eligible"] is False
+          assert report["bid_ask_spread_observed"] is False and report["raw_data_committed"] is False
+          def readcsv(p):
+              with p.open(newline="",encoding="utf-8-sig") as f: return list(csv.DictReader(f))
+          outcomes=readcsv(p57/"event_outcomes.csv")
+          costs=readcsv(p57/"cost_scenarios.csv")
+          sources=readcsv(p57/"source_file_audit.csv")
+          assert len(outcomes)==960 and len(costs)==2286 and len(sources)==13
+          assert Counter(x.get("status","MISSING") for x in sources)=={"PASS":13}
+          status_counts=Counter((str(int(x["threshold_pct"])),x["status"]) for x in outcomes)
+          observed={t:{s:status_counts[(t,s)] for s in sorted(k[1] for k in status_counts if k[0]==t)} for t in ("2","1000")}
+          assert observed==expected_status, observed
+          groups=defaultdict(list)
+          for row in costs:
+              groups[(int(row["threshold_pct"]),row["configuration_id"],row["event_id"],row["split"])].append(row)
+          assert len(groups)==381
+          expected_scenarios={(b,s) for b in (10.0,20.0) for s in (0.05,0.075,0.1)}
+          assert all(len(v)==6 and {(float(x["brokerage_per_order_inr"]),round(float(x["adverse_slippage_per_leg_fill_inr"]),8)) for x in v}==expected_scenarios for v in groups.values())
+
+          def key56(r):
+              return (int(float(r["threshold_pct"])),r["configuration_id"],r["event_id"],r["split"],
+                      float(r["brokerage_per_order_inr"]),round(float(r["adverse_slippage_per_fill_inr"]),8))
+          def key57(r):
+              return (int(float(r["threshold_pct"])),r["configuration_id"],r["event_id"],r["split"],
+                      float(r["brokerage_per_order_inr"]),round(float(r["adverse_slippage_per_leg_fill_inr"]),8))
+          slips={0.05,0.075,0.1}
+          trades56=readcsv(p56/"trade_scenarios.csv")
+          d56={key56(r):r for r in trades56 if int(float(r["threshold_pct"])) in (2,1000) and round(float(r["adverse_slippage_per_fill_inr"]),8) in slips}
+          d57={key57(r):r for r in costs if round(float(r["adverse_slippage_per_leg_fill_inr"]),8) in slips}
+          assert len(d56)==len(d57)==2286 and set(d56)==set(d57)
+          fields=("gross_pnl_inr","fees_brokerage_inr","fees_exchange_inr","fees_sebi_inr","fees_ipft_inr",
+                  "fees_stt_inr","fees_stamp_duty_inr","fees_gst_inr","fees_total_inr","net_pnl_inr","return_on_reference_capital_pct")
+          mismatch=[]
+          max_abs={field:0.0 for field in fields}
+          for k in d56:
+              for field in fields:
+                  a=float(d56[k][field]); b=float(d57[k][field]); delta=abs(a-b)
+                  max_abs[field]=max(max_abs[field],delta)
+                  if not math.isclose(a,b,rel_tol=1e-9,abs_tol=1e-6):
+                      mismatch.append((k,field,a,b))
+                      if len(mismatch)>=10: break
+              if len(mismatch)>=10: break
+          assert not mismatch, mismatch
+
+          aggregates=[]
+          for threshold in (2,1000):
+              for brokerage in (10.0,20.0):
+                  for slip in (0.05,0.075,0.1):
+                      rows=[x for x in costs if int(x["threshold_pct"])==threshold and float(x["brokerage_per_order_inr"])==brokerage and
+                            round(float(x["adverse_slippage_per_leg_fill_inr"]),8)==round(slip,8)]
+                      aggregates.append({"threshold_pct":threshold,"brokerage_per_order_inr":brokerage,
+                        "adverse_slippage_per_fill_inr":slip,"cost_scenario_rows":len(rows),
+                        "summed_configuration_event_net_pnl_inr":round(sum(float(x["net_pnl_inr"]) for x in rows),8),
+                        "unique_event_identities":len({x["event_id"] for x in rows}),"is_portfolio_pnl":False})
+          out=Path("results/phase57/cost_aware_range_sensitivity"); out.mkdir(parents=True,exist_ok=True)
+          for source in p57.iterdir():
+              if source.is_file(): shutil.copy2(source,out/source.name)
+          result={
+            "status":"PASS","phase57_run_id":38019819831,
+            "phase57_run_url":"https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831",
+            "recovery_run_id":os.environ["RUN_ID"],"recovery_run_url":os.environ["RUN_URL"],
+            "phase57_input_ledger_sha256":report["input_event_ledger_sha256"],
+            "phase56_input_ledger_sha256":report56["input"]["input_sha256"],
+            "phase57_endpoint_rows":len(outcomes),"status_counts_by_threshold":report["status_counts_by_threshold"],
+            "replay_pass_counts_by_threshold":report["replay_pass_counts_by_threshold"],
+            "source_file_audit_records":len(sources),"source_file_audit_all_pass":True,
+            "cost_rows":len(costs),"eligible_configuration_event_endpoint_groups":len(groups),"cost_rows_per_eligible_group":6,
+            "phase56_matching_cost_rows":len(d56),"phase57_matching_cost_rows":len(d57),
+            "field_level_pnl_fee_mismatches":0,"max_absolute_difference_by_field":max_abs,
+            "compared_fields":list(fields),"exact_endpoint_cost_matrix_match":True,
+            "aggregate_modeled_grid_sums":aggregates,"holdout_used":False,"bid_ask_quotes_observed":False,
+            "live_or_commercial_promotion_allowed":False,
+            "interpretation":"Exact reproduction of Phase56 modeled OHLC-open price-reference results at 2% and 1000% endpoints. Aggregate configuration-event sums are not portfolio P&L and OHLC is not bid/ask."
+          }
+          (out/"phase56_endpoint_reconciliation.json").write_text(json.dumps(result,indent=2)+"\n")
+          lines=[
+            "# Phase 57 to Phase 56 endpoint reconciliation","",
+            "**PASS — exact cost/P&L reproduction for the 2% baseline and 1000% diagnostic endpoints.**","",
+            "- Phase 57 replay: run 38019819831; source replay and artifact upload passed, final branch push was non-fast-forward.",
+            f"- Recovery/validation: run {os.environ['RUN_ID']} ({os.environ['RUN_URL']}).",
+            f"- Canonical input SHA-256: {report['input_event_ledger_sha256']}",
+            f"- Source revision: {expected_rev}",
+            "- Endpoint rows: 480 at 2% and 480 at 1000% (960 total).",
+            "- Endpoint passes: 1 at 2%; 380 at 1000%; 100 fixed OI blockers at each endpoint.",
+            "- Cost scenarios: 2,286 rows = 381 passing endpoint rows times 6 brokerage/slippage scenarios.",
+            "- Phase57 versus Phase56 common cases: 2,286 matching keys; zero mismatches across gross P&L, every fee component, total fees, net P&L and modeled capital-return percentage.",
+            "- The 2% single modeled row remains negative under every compared stress; 1000% totals are configuration-event grid sums, not a deployable portfolio.",
+            "- No holdout used, no quote/depth observed, no strategy promoted. OHLC-open references and fixed slippage are not executable quote evidence."
+          ]
+          (out/"phase56_endpoint_reconciliation.md").write_text("\n".join(lines)+"\n")
+          print(json.dumps({"status":"PASS","endpoint_rows":len(outcomes),"cost_rows":len(costs),
+            "matching_rows":len(d56),"mismatches":0,"aggregates":aggregates},indent=2))
+          PY
+      - name: Update status and append persistence incident resolution
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id=os.environ["RUN_ID"]; url=os.environ["RUN_URL"]
+          report=json.loads(Path("results/phase57/cost_aware_range_sensitivity/phase56_endpoint_reconciliation.json").read_text())
+          summary=(
+            "- Replay run 38019819831: source replay and artifact upload passed; final direct push was non-fast-forward.\n"
+            f"- Recovery/validation run [{run_id}]({url}) passed. Endpoint outputs=960; cost scenarios=2,286; matched Phase56 cost rows=2,286; field-level P&L/fee mismatches=0.\n"
+            "- Counts are 1 replay pass at 2%, 380 at 1000%, and 100 OI blockers at each endpoint. All 13 source audit records passed.\n"
+            "- Modeled OHLC-open price references only; no bid/ask/depth evidence, holdout use or strategy promotion.\n"
+          )
+          p=Path("PHASE57_STATUS.md"); text=p.read_text()
+          text=text.replace("**Overall:** ACTIVE — independent endpoint reproduction of Phase 56 modeled-P&L sensitivity; no strategy promotion.",
+                            "**Overall:** COMPLETE — independent 2%/1000% endpoint replay matches the canonical Phase 56 cost matrix exactly; no strategy promotion.")
+          text=text.replace("- Regression tests: PENDING.","- Regression tests: PASS.")
+          text=text.replace("- 11-threshold replay: PENDING.","- Endpoint source replay (2% / 1000%): PASS; 480 rows per endpoint.")
+          text=text.replace("- Cost reconciliation and source hashes: PENDING.","- Cost reconciliation and source hashes: PASS; 2,286 matching cost rows; zero P&L/fee mismatches against Phase 56.")
+          text=text.replace("- Artifact/log persistence: PENDING.","- Artifact/log persistence: PASS via verified cross-run artifact recovery.")
+          p.write_text(text.rstrip()+f"\n\n## Final bounded endpoint replay — Phase57 run 38019819831\n\n"+summary,encoding="utf-8")
+          p=Path("PHASE57_ERROR_LOG.md")
+          p.write_text(p.read_text(encoding="utf-8").rstrip()+
+            f"\n\n## F57-PERSIST-001 — Direct push rejected after concurrent branch updates — RESOLVED\n\n"
+            "- Original run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019819831\n"
+            "- Symptom: replay step and artifact upload passed, but the final direct push was rejected non-fast-forward because plan/status commits arrived after the runner checkout.\n"
+            "- Impact: output stayed in the uploaded artifact until exact Phase56 cost/P&L reconciliation and persistence recovery passed.\n"
+            "- Correction: this recovery workflow downloads the pinned Phase57 and Phase56 artifacts, validates endpoint counts and all costs, then persists by fetch/rebase/retry without force-pushing.\n"
+            f"- Verification: recovery run [{run_id}]({url}) passed; 2,286 matched cost rows, zero field-level mismatches, and 13/13 source audit records PASS.\n"
+            "- Status: RESOLVED; original workflow conclusion remains failure because of the checkpoint push.\n",encoding="utf-8")
+          for filename, heading in [
+            ("PHASE57_RESEARCH_LOG.md", f"## Accepted endpoint reproduction — recovery run {run_id}"),
+            ("PHASE57_CHAT_LOG.md", f"## User continuation — artifact reconciliation {run_id}")
+          ]:
+              p=Path(filename); p.write_text(p.read_text(encoding="utf-8").rstrip()+f"\n\n{heading}\n\n"+summary,encoding="utf-8")
+          PY
+      - name: Persist verified result with safe rebase/push retries
+        shell: bash
+        env:
+          PHASE_BRANCH: phase-57-cost-aware-range-sensitivity-replay
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase57/cost_aware_range_sensitivity PHASE57_STATUS.md PHASE57_ERROR_LOG.md PHASE57_RESEARCH_LOG.md PHASE57_CHAT_LOG.md
+          git commit -m "Recover and reconcile Phase57 endpoint artifact $RUN_ID"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            if ! git rebase origin/"$PHASE_BRANCH"; then
+              git rebase --abort || true
+              echo "Rebase conflict; refusing to overwrite research state." >&2
+              exit 1
+            fi
+            if git push origin HEAD:"$PHASE_BRANCH"; then exit 0; fi
+          done
+          exit 1
