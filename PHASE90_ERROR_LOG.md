@@ -12,7 +12,7 @@ Date opened: 2026-10-10. Never log credentials, raw response bodies, row-level m
 - E90-007 — Execution gate: no strategy P&L or executable fills can be inferred from rolling ATM-relative OHLC/IV/OI; costs/slippage/latency are required for a later trade replay.
 
 ## Runtime issues
-No run outcome recorded yet.
+The initial study run and cached interpretation rerun both completed successfully. No API/network/schema failures occurred. The measured gain is small; see the effect-size caveat in the results report.
 
 <!-- PHASE90_RUNTIME_START -->
 ## Runtime summary — 38048556674
