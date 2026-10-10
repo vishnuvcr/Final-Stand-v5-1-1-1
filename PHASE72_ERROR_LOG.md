@@ -8,7 +8,7 @@ Date: 2026-10-10
 - Resolution: compute unique/duplicate timestamp counts, regular-session coverage, timestamp bounds, field-array alignment and OHLC validity from fresh bounded requests.
 
 ## B72-002 — expiry/strike semantics not independently confirmed
-- Status: OPEN.
+- Status: OPEN; confirmed scope limitation.
 - Risk: returned bars may not map to the exact expiry/strike required by frozen strategies.
 - Resolution: verify official API semantics and compare actual returned strike/expiry metadata where available; do not assume WEEK/MONTH flags or expiryCode=1 map to the intended contract without evidence.
 
@@ -26,3 +26,9 @@ Date: 2026-10-10
 - Status: RESOLVED.
 - Evidence: initial run [38041953753](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041953753) started after the workflow file commit but before the audit script commit, and failed because the script was not yet present at that commit.
 - Resolution: subsequent run [38041956746](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041956746) executed the script and published aggregate results successfully. The regular-session upper bound was then tightened to exclude 15:30 and later timestamps; a fresh run is triggered by that code correction.
+
+## B72-006 — Expiry code does not prove target expiry
+- Status: OPEN; blocks replay.
+- Evidence: Official DhanHQ Annexure defines expiryCode 0 as current/near expiry, 1 as next expiry, and 2 as far expiry: https://dhanhq.co/docs/v2/annexure/. Phase 71 used expiryCode=1 for all probes.
+- Impact: rows can be valid and well-formed but still refer to a different expiry than a frozen strategy requires. The endpoint response does not itself establish an exact expiry date in the audited fields.
+- Resolution: Phase 73 will compare codes 0/1/2 within the same bounded target dates, audit strike values, and map intended historical expiries independently. No replay until mapped.
