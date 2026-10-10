@@ -1,18 +1,16 @@
 <!-- PHASE94_START -->
-# Current checkpoint — Phase 97 ML options strategy replication
+# Current checkpoint — Phase 98 CCI options paper replication gate
 
-**Status: DATA-BLOCKED by the automated evidence gate.** Phase 97's workflow passed, but the audited artifacts do not contain the point-in-time exact-contract feature/label matrix required to reproduce the paper's Random Forest, XGBoost and LSTM options signals. Zero models were trained; no options P&L was inferred; no strategy is promoted.
+**Status: CCI REPLAY DATA-BLOCKED pending automated evidence reconciliation.** Phase 66 recorded zero completed CCI trades; Phase 85's then-verified free-source audit was no-go for a new execution-quality replay. Phase 87–89 rolling ATM-relative coverage does not establish exact-contract bid/ask/depth for the paper's period. Phase 98 is explicitly checking whether any newer eligible evidence changes that conclusion; it will not repeat the same zero-coverage replay.
 
-- [Phase 97 plan](PHASE97_RESEARCH_PLAN.md) · [status](PHASE97_STATUS.md) · [report](results/phase97/REPORT.md)
-- [Required-field gate](results/phase97/data_gate.csv) · [Paper-method statuses](results/phase97/paper_method_status.csv) · [summary](results/phase97/summary.json)
-- [Research log](PHASE97_RESEARCH_LOG.md) · [error/limitation log](PHASE97_ERROR_LOG.md) · [decision log](PHASE97_CHAT_LOG.md)
-- [Automated/manual workflow](.github/workflows/phase97-ml-options-strategy-replication.yml) · [Actions run 38072759556](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072759556)
+- [Phase 98 plan](PHASE98_RESEARCH_PLAN.md) · [status](PHASE98_STATUS.md) · [evidence gate report](results/phase98/REPORT.md)
+- [Evidence matrix](results/phase98/evidence_gate.csv) · [summary](results/phase98/summary.json)
+- [Research log](PHASE98_RESEARCH_LOG.md) · [error log](PHASE98_ERROR_LOG.md) · [decision log](PHASE98_CHAT_LOG.md)
+- [Automatic/manual workflow](.github/workflows/phase98-cci-options-paper-replication-gate.yml)
+- [Phase 97 ML options gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-97-ml-options-strategy-replication) — workflow passed; 13 required exact-contract/point-in-time controls were blocked, so no model was trained and no P&L inferred.
+- [Phase 96 SMA/EMA signal screen](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-96-moving-average-seasonality-replication) — corrected replay passed; results are operationalized index signal variants, not option P&L or exact paper reproduction.
 
-**Phase 96 signal screen:** the corrected SMA/EMA replay passed in [run 38072697008](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38072697008). Across 1,486 sessions in 2020–2025, buy-and-hold returned 114.7%; the six MA variants returned 52.5%–100.9% under a 0.05% turnover sensitivity deduction and had smaller max drawdowns. SMA(10,50) and EMA(10,50) had higher unadjusted Sharpe estimates, but there are no significance tests and NIFTY spot is not directly investable. This is not options P&L or evidence of a robust trading edge. Phase 96 remains partial because paper-specific seasonality/timing rules need source-fidelity review.
-
-**Phase 95:** the main forecast run completed 132/132 valid rows, but its reconciliation step failed on a manifest serialization defect. The parser fix is committed and a fresh workflow run is pending; no claim ledger from the failed reconciliation is accepted.
-
-The Phase 83 2026 holdout remains sealed. Exact options P&L requires contract-level point-in-time quotes/fills and Paytm Money brokerage, levies, spread, slippage and cost stress.
+**Guardrails:** no invented contracts/fills, no profitability claim without Paytm Money brokerage, statutory levies, spread, slippage and stress, and no access to the sealed 2026 holdout. Phase 100 remains the finite synthesis/manuscript stop boundary.
 <!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
