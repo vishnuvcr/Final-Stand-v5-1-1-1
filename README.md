@@ -1,3 +1,13 @@
+# Resume checkpoint — 2026-10-10 (Phase 72 integrity audit)
+
+Phase 71 authenticated connectivity test [completed successfully](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041733380). The Dhan endpoint returned target-date timestamps for both previously missing sessions, but its aggregate count anomaly remains unresolved: 375 target-date rows per probe on 2026-07-28 and 385 on 2026-08-04, with total response counts 750 and 770. This is not yet accepted as complete contract coverage.
+
+Phase 72 now audits duplicate timestamps, IST session bounds, gaps, required field-array alignment and OHLC consistency using the same eight bounded probes. The workflow writes aggregate diagnostics only; it does not commit raw market data or credentials. No Phase 51 replay or strategy promotion until contract/expiry semantics, strategy strike coverage and permitted data-retention rights are validated.
+
+- [Phase 72 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/.github/workflows/phase72-dhan-data-integrity-audit.yml) · [Script](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/scripts/phase72_dhan_integrity_audit.py)
+
+---
+
 ## Phase 67 — latest completed diagnostic (2026-10-10)
 
 **Decision: insufficient evidence for rule-faithful replay; no strategy promotion.** [Actions run 38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) passed end-to-end. Among 30 frozen DEV/VAL trigger rows, 8 had an exact trigger-minute observation, 5 an exact next-minute observation, and 8 had ±2-minute context. Context bars are not fills; ITM/side/expiry mapping and execution-grade quote/depth remain unproven. No P&L or profitability inference is justified.
