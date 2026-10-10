@@ -11,3 +11,8 @@
 - E96-008: No strategy promotion from Phase 96.
 
 No execution defects observed yet.
+
+
+## E96-009 — HIGH-regime feasibility failure (2026-10-10)
+- First registered run [38054761000](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054761000) failed because no defined-risk HIGH-regime candidate met the 20-DEV/20-VAL trade minimum.
+- Resolution: preregistered a feasibility amendment before examining candidate P&L: minimum 5 trades in both DEV and VAL for every fixed regime. This reduces evidential strength; report exact counts and retain NO PROMOTION.
