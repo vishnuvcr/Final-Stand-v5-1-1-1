@@ -116,3 +116,11 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088262635
 **Status:** REQUEST_SCHEMA_OR_PARAMETER_ERROR; rows returned by 0/10 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088846052
+
+
+
+### E103-009 — Ten-probe/30-day corrected request exceeded the useful bounded runtime window
+**Type:** workflow/runtime limitation; no accepted API response.  
+**Affected run:** [38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181).  
+**Finding:** the request step did not finish before a newer workflow revision cancelled the run; the API did not persist a machine-readable response. The run is not evidence that data are present or absent.  
+**Correction:** introduced a strict maximum-probe option and changed the next smoke test to one symbol/side on one trading session. If it succeeds, expand incrementally and log each verified chunk; if it fails or times out, capture its safe error status and stop to diagnose.
