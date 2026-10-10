@@ -100,7 +100,7 @@
         "1-second and 1-minute bars"
       ],
       "granularity": "public sample includes tick-level quote/depth fields; full daily feed is described as private subscriber delivery",
-      "history_coverage": "Sample file observed for 2026-08-07; no public full-history files for Phase52 target events verified",
+      "history_coverage": "Public sample files are representative 50-row examples; full daily feed is private subscriber delivery. Full target-date/contract coverage for 2022-2025 is unverified.",
       "access": "licensed daily subscription/private drive advertised",
       "automation_eligible": false,
       "full_history_licensed": false,
@@ -120,7 +120,7 @@
         "Level-2 bid/ask prices and quantities"
       ],
       "granularity": "public Level-2 sample contains timestamps and top-5 book; full dataset is described as 300+ GB for licensed users",
-      "history_coverage": "Public sample includes 2026-07-22; no full licensed historical target-date coverage verified",
+      "history_coverage": "Public Level-2 sample includes 2026-07-22; published coverage table says Level-2 starts Jan 2023, so it cannot cover the 2022-12-15 pilot event. Coverage of the remaining exact target contracts/dates is unverified.",
       "access": "public evaluation samples; full dataset requires license/contact",
       "automation_eligible": false,
       "full_history_licensed": false,
