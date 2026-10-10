@@ -1,21 +1,20 @@
 <!-- PHASE91_START -->
 # Resume checkpoint — Phase 91 IV incremental-prediction study
 
-**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830). The independent sample is calendar 2023, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
+**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38049680438](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049680438). The independent sample is calendar 2023, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
 
 - [Phase 91 plan](PHASE91_RESEARCH_PLAN.md)
 - [Phase 91 status](PHASE91_STATUS.md)
 - [Phase 91 error log](PHASE91_ERROR_LOG.md)
 - [Phase 91 auditable chat log](PHASE91_CHAT_LOG.md)
 - [Detailed results](results/phase91/PHASE91_RESULTS.md)
-- [Cross-year synthesis](results/phase91/CROSS_YEAR_SYNTHESIS.md)
 - [Summary JSON](results/phase91/summary.json)
 - [Coverage ledger](results/phase91/coverage.csv)
 - [Model metrics](results/phase91/model_metrics.csv)
 - [VIX-regime metrics](results/phase91/vix_regime_metrics.csv)
 - [Analysis engine](research/phase91/iv_incremental_study.py)
-- [Phase branch workflow](.github/workflows/phase91-iv-incremental-prediction.yml)
-- [Default-branch PR runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
+- [Phase branch workflow](.github/workflows/phase91-iv-temporal-replication-2023.yml)
+- [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml)
 
 **Interpretation boundary:** predictive gain is not strategy P&L. Historical exact-contract bid/ask/depth, Paytm Money cost-adjusted fills, or live orders were not tested. No strategy has been promoted.
 <!-- PHASE91_END -->

@@ -30,7 +30,7 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - No API/network/schema failures. The workflow itself passed, but the primary research hypothesis did not meet its registered acceptance rule. This distinction is deliberate.
 
 <!-- PHASE91_RUNTIME_START -->
-## Runtime summary — 38049302830
+## Runtime summary — 38049680438
 - Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero
 - Options valid chunks: 54/54
 - VIX valid chunks: 5/5

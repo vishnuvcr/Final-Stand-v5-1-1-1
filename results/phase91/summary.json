@@ -10,7 +10,7 @@
   "oos_rows_with_iv": 3633,
   "oos_sessions_with_iv": 60,
   "phase": 91,
-  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830",
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049680438",
   "status": "NO INCREMENTAL GAIN ESTABLISHED \u2014 primary bootstrap interval includes or falls below zero",
   "requested_period": [
     "2023-01-01",
@@ -21,7 +21,6 @@
     "status": "UNIQUE_MATCH",
     "candidate_count": 1,
     "security_id_resolved": true,
-    "http_status": 200,
     "candidate_ids": [
       "21"
     ],
@@ -47,8 +46,8 @@
   "vix_chunks_total": 5,
   "primary": {
     "delta_mae_bps": 0.00011109644635354243,
-    "ci95_low": -0.011070019280587406,
-    "ci95_high": 0.010253182032923623,
+    "ci95_low": -0.011070019280588272,
+    "ci95_high": 0.01025318203292319,
     "positive_share": 0.524,
     "replicates": 5000,
     "seed": 90210
