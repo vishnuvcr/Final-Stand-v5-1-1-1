@@ -1,3 +1,23 @@
+# Resume checkpoint — 2026-10-10 (Phase 72 audit result)
+
+Phase 72 [workflow run 38041988143](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041988143) passed its aggregate-only audit. Across all eight probes, timestamps were unique, required arrays aligned, no >1-minute gaps were found within the regular session, and OHLC values passed basic validity checks. On 2026-07-28 each probe had 375 regular-session minute bars. On 2026-08-04 each had 375 regular-session bars plus 10 off-session rows extending to 15:39 IST; those extra rows must be excluded.
+
+**Important blocker:** Phase 71 used `expiryCode=1`. DhanHQ's official annexure defines 0=current/near expiry, 1=next expiry, and 2=far expiry ([official annexure](https://dhanhq.co/docs/v2/annexure/)). Therefore these clean rows do not prove coverage of the exact contracts needed by frozen strategies. Phase 73 must compare expiry codes and map target expiry/strike semantics before any replay. No P&L or strategy promotion yet.
+
+- [Phase 72 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_ERROR_LOG.md) · [Aggregate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/results/phase72_dhan_integrity_audit/report.md)
+
+---
+
+# Resume checkpoint — 2026-10-10 (Phase 72 integrity audit)
+
+Phase 71 authenticated connectivity test [completed successfully](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041733380). The Dhan endpoint returned target-date timestamps for both previously missing sessions, but its aggregate count anomaly remains unresolved: 375 target-date rows per probe on 2026-07-28 and 385 on 2026-08-04, with total response counts 750 and 770. This is not yet accepted as complete contract coverage.
+
+Phase 72 now audits duplicate timestamps, IST session bounds, gaps, required field-array alignment and OHLC consistency using the same eight bounded probes. The workflow writes aggregate diagnostics only; it does not commit raw market data or credentials. No Phase 51 replay or strategy promotion until contract/expiry semantics, strategy strike coverage and permitted data-retention rights are validated.
+
+- [Phase 72 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_STATUS.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/PHASE72_ERROR_LOG.md) · [Workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/.github/workflows/phase72-dhan-data-integrity-audit.yml) · [Script](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-72-dhan-data-integrity-audit/scripts/phase72_dhan_integrity_audit.py)
+
+---
+
 ## Phase 67 — latest completed diagnostic (2026-10-10)
 
 **Decision: insufficient evidence for rule-faithful replay; no strategy promotion.** [Actions run 38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) passed end-to-end. Among 30 frozen DEV/VAL trigger rows, 8 had an exact trigger-minute observation, 5 an exact next-minute observation, and 8 had ±2-minute context. Context bars are not fills; ITM/side/expiry mapping and execution-grade quote/depth remain unproven. No P&L or profitability inference is justified.
