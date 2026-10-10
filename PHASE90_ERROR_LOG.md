@@ -26,3 +26,7 @@ The initial study run and cached interpretation rerun both completed successfull
 - No API/network/schema failures.
 - No token, raw response, row-level price, or hidden reasoning is logged.
 <!-- PHASE90_RUNTIME_END -->
+
+## E90-008 — downstream replication trigger not verified
+
+The Phase 91 temporal replication was prepared on a separate branch and draft PR. A pull-request runner was added to this branch to allow automated execution of that child phase. At the latest repository check, no Phase 91 Actions run ID or aggregate output files had been surfaced. This is a child-phase execution blocker only; it does not change Phase 90's fixed sample, model result, or strategy decision. No credentials/raw data were logged and no strategy was promoted.
