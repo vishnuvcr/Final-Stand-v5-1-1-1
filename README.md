@@ -1,3 +1,15 @@
+# Resume checkpoint — 2026-10-10 (Phase 78 temporal stability)
+
+Phase 78 compared the frozen historical Phase 50B HOLD summaries with the short Phase 51-3 interval. TT-04 historical HOLD was -₹6,456.29 at base costs and -₹11,148.57 under +50% friction; TT-05 historical HOLD was -₹40,244.68 base and -₹49,605.30 under ₹20/order plus 50% friction. Both were positive in the April–July 2026 partial interval, but that sign disagreement is evidence of temporal instability—not proof of a newly durable edge. TT-04 and TT-05 are not promoted. The two missing expiries remain excluded.
+
+- [Phase 78 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-78-temporal-stability-reconciliation/PHASE78_RESEARCH_PLAN.md)
+- [Phase 78 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-78-temporal-stability-reconciliation/PHASE78_STATUS.md)
+- [Phase 78 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-78-temporal-stability-reconciliation/PHASE78_ERROR_LOG.md)
+- [Phase 78 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-78-temporal-stability-reconciliation/results/phase78_temporal_stability/report.md)
+- [Phase 78 workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38043221791)
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 77 partial-OOS inference)
 
 Phase 77 reconciled the frozen Phase 51-3 ledgers and ran a 10,000-replicate expiry-cluster bootstrap. Ledger counts and totals reconcile. TT-04 is +₹13,271.51 at base costs and +₹5,897.66 under ₹20/order plus 50% friction; TT-05 is +₹17,098.15 base and +₹9,850.12 under the same stress; TT-02 is negative in all four cases. The 95% expiry-cluster bootstrap total-net intervals include zero for TT-04 and TT-05, so these are still descriptive candidates, not promoted strategies. Only the 2026-04-21 to 2026-07-21 partial interval is covered; expiries 2026-07-28 and 2026-08-04 remain excluded.
