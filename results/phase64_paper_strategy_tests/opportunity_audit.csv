@@ -1,0 +1,113 @@
+variant,split,expiry,source_file,qualified_signals,status,signal_dates,breakout_found,trigger_ts,failure_reason
+CCI_BASE,DEV,2021-05-27,options/NIFTY/2021-05-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2021-05-27,options/NIFTY/2021-05-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-06-24,options/NIFTY/2021-06-24.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2021-06-24,options/NIFTY/2021-06-24.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-07-29,options/NIFTY/2021-07-29.parquet,1,missing_exact_next_minute_entry_option_bar,2021-07-08,True,2021-07-09 09:15:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,DEV,2021-07-29,options/NIFTY/2021-07-29.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-08-26,options/NIFTY/2021-08-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2021-08-26,options/NIFTY/2021-08-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-09-30,options/NIFTY/2021-09-30.parquet,1,signal_without_later_breakout,2021-09-13,False,,
+CCI_EMA_FILTER,DEV,2021-09-30,options/NIFTY/2021-09-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-10-28,options/NIFTY/2021-10-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2021-10-28,options/NIFTY/2021-10-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-11-25,options/NIFTY/2021-11-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2021-11-25,options/NIFTY/2021-11-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2021-12-30,options/NIFTY/2021-12-30.parquet,1,entry_next_minute_missing_or_outside_window,2021-12-07,True,2021-12-08 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,DEV,2021-12-30,options/NIFTY/2021-12-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-01-27,options/NIFTY/2022-01-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2022-01-27,options/NIFTY/2022-01-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-02-24,options/NIFTY/2022-02-24.parquet,1,signal_without_later_breakout,2022-02-15,False,,
+CCI_EMA_FILTER,DEV,2022-02-24,options/NIFTY/2022-02-24.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-03-31,options/NIFTY/2022-03-31.parquet,1,entry_next_minute_missing_or_outside_window,2022-03-09,True,2022-03-10 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,DEV,2022-03-31,options/NIFTY/2022-03-31.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-04-28,options/NIFTY/2022-04-28.parquet,1,missing_exact_next_minute_entry_option_bar,2022-04-07,True,2022-04-08 09:54:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,DEV,2022-04-28,options/NIFTY/2022-04-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-05-26,options/NIFTY/2022-05-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2022-05-26,options/NIFTY/2022-05-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-06-30,options/NIFTY/2022-06-30.parquet,1,missing_exact_next_minute_entry_option_bar,2022-06-06,True,2022-06-07 09:15:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,DEV,2022-06-30,options/NIFTY/2022-06-30.parquet,1,missing_exact_next_minute_entry_option_bar,2022-06-06,True,2022-06-07 09:15:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_BASE,DEV,2022-07-28,options/NIFTY/2022-07-28.parquet,1,missing_exact_next_minute_entry_option_bar,2022-07-13,True,2022-07-14 12:03:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,DEV,2022-07-28,options/NIFTY/2022-07-28.parquet,1,missing_exact_next_minute_entry_option_bar,2022-07-13,True,2022-07-14 12:03:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_BASE,DEV,2022-08-25,options/NIFTY/2022-08-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2022-08-25,options/NIFTY/2022-08-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-09-29,options/NIFTY/2022-09-29.parquet,1,signal_without_later_breakout,2022-09-15,False,,
+CCI_EMA_FILTER,DEV,2022-09-29,options/NIFTY/2022-09-29.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-10-27,options/NIFTY/2022-10-27.parquet,1,entry_next_minute_missing_or_outside_window,2022-10-04,True,2022-10-06 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,DEV,2022-10-27,options/NIFTY/2022-10-27.parquet,1,entry_next_minute_missing_or_outside_window,2022-10-04,True,2022-10-06 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_BASE,DEV,2022-11-24,options/NIFTY/2022-11-24.parquet,1,signal_without_later_breakout,2022-11-10,False,,
+CCI_EMA_FILTER,DEV,2022-11-24,options/NIFTY/2022-11-24.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2022-12-29,options/NIFTY/2022-12-29.parquet,1,missing_exact_next_minute_entry_option_bar,2022-12-06,True,2022-12-07 10:55:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,DEV,2022-12-29,options/NIFTY/2022-12-29.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-01-25,options/NIFTY/2023-01-25.parquet,2,signal_without_later_breakout,2023-01-09;2023-01-13,False,,
+CCI_EMA_FILTER,DEV,2023-01-25,options/NIFTY/2023-01-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-02-23,options/NIFTY/2023-02-23.parquet,1,missing_exact_next_minute_entry_option_bar,2023-02-03,True,2023-02-08 10:06:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,DEV,2023-02-23,options/NIFTY/2023-02-23.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-03-29,options/NIFTY/2023-03-29.parquet,1,entry_next_minute_missing_or_outside_window,2023-03-03,True,2023-03-06 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,DEV,2023-03-29,options/NIFTY/2023-03-29.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-04-27,options/NIFTY/2023-04-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2023-04-27,options/NIFTY/2023-04-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-05-25,options/NIFTY/2023-05-25.parquet,1,signal_without_later_breakout,2023-05-12,False,,
+CCI_EMA_FILTER,DEV,2023-05-25,options/NIFTY/2023-05-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-06-28,options/NIFTY/2023-06-28.parquet,3,signal_without_later_breakout,2023-06-06;2023-06-09;2023-06-15,False,,
+CCI_EMA_FILTER,DEV,2023-06-28,options/NIFTY/2023-06-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-07-27,options/NIFTY/2023-07-27.parquet,1,signal_without_later_breakout,2023-07-12,False,,
+CCI_EMA_FILTER,DEV,2023-07-27,options/NIFTY/2023-07-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-08-31,options/NIFTY/2023-08-31.parquet,1,entry_next_minute_missing_or_outside_window,2023-08-04,True,2023-08-07 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,DEV,2023-08-31,options/NIFTY/2023-08-31.parquet,1,entry_next_minute_missing_or_outside_window,2023-08-04,True,2023-08-07 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_BASE,DEV,2023-09-28,options/NIFTY/2023-09-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2023-09-28,options/NIFTY/2023-09-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-10-26,options/NIFTY/2023-10-26.parquet,1,entry_next_minute_missing_or_outside_window,2023-10-05,True,2023-10-06 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,DEV,2023-10-26,options/NIFTY/2023-10-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-11-30,options/NIFTY/2023-11-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,DEV,2023-11-30,options/NIFTY/2023-11-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,DEV,2023-12-28,options/NIFTY/2023-12-28.parquet,1,signal_without_later_breakout,2023-12-13,False,,
+CCI_EMA_FILTER,DEV,2023-12-28,options/NIFTY/2023-12-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-01-25,options/NIFTY/2024-01-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,VAL,2024-01-25,options/NIFTY/2024-01-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-02-29,options/NIFTY/2024-02-29.parquet,1,missing_exact_next_minute_entry_option_bar,2024-02-05,True,2024-02-08 11:09:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2024-02-29,options/NIFTY/2024-02-29.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-03-28,options/NIFTY/2024-03-28.parquet,1,missing_exact_next_minute_entry_option_bar,2024-03-11,True,2024-03-12 10:46:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2024-03-28,options/NIFTY/2024-03-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-04-25,options/NIFTY/2024-04-25.parquet,1,entry_next_minute_missing_or_outside_window,2024-04-12,True,2024-04-15 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,VAL,2024-04-25,options/NIFTY/2024-04-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-05-30,options/NIFTY/2024-05-30.parquet,1,missing_exact_next_minute_entry_option_bar,2024-05-14,True,2024-05-15 09:29:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2024-05-30,options/NIFTY/2024-05-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-06-27,options/NIFTY/2024-06-27.parquet,1,signal_without_later_breakout,2024-06-04,False,,
+CCI_EMA_FILTER,VAL,2024-06-27,options/NIFTY/2024-06-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-07-25,options/NIFTY/2024-07-25.parquet,1,signal_without_later_breakout,2024-07-10,False,,
+CCI_EMA_FILTER,VAL,2024-07-25,options/NIFTY/2024-07-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-08-29,options/NIFTY/2024-08-29.parquet,2,entry_next_minute_missing_or_outside_window,2024-08-07;2024-08-09,True,2024-08-09 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,VAL,2024-08-29,options/NIFTY/2024-08-29.parquet,2,entry_next_minute_missing_or_outside_window,2024-08-07;2024-08-09,True,2024-08-09 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_BASE,VAL,2024-09-26,options/NIFTY/2024-09-26.parquet,1,missing_exact_next_minute_entry_option_bar,2024-09-04,True,2024-09-06 09:37:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2024-09-26,options/NIFTY/2024-09-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-10-31,options/NIFTY/2024-10-31.parquet,1,signal_without_later_breakout,2024-10-09,False,,
+CCI_EMA_FILTER,VAL,2024-10-31,options/NIFTY/2024-10-31.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-11-28,options/NIFTY/2024-11-28.parquet,1,signal_without_later_breakout,2024-11-06,False,,
+CCI_EMA_FILTER,VAL,2024-11-28,options/NIFTY/2024-11-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2024-12-26,options/NIFTY/2024-12-26.parquet,1,entry_next_minute_missing_or_outside_window,2024-12-10,True,2024-12-13 09:07:00+05:30,entry_next_minute_missing_or_outside_window
+CCI_EMA_FILTER,VAL,2024-12-26,options/NIFTY/2024-12-26.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-01-30,options/NIFTY/2025-01-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,VAL,2025-01-30,options/NIFTY/2025-01-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-02-27,options/NIFTY/2025-02-27.parquet,1,missing_exact_next_minute_entry_option_bar,2025-02-10,True,2025-02-11 09:24:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2025-02-27,options/NIFTY/2025-02-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-03-27,options/NIFTY/2025-03-27.parquet,1,missing_exact_next_minute_entry_option_bar,2025-03-06,True,2025-03-07 09:17:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2025-03-27,options/NIFTY/2025-03-27.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-04-30,options/NIFTY/2025-04-30.parquet,1,missing_exact_next_minute_entry_option_bar,2025-04-08,True,2025-04-11 09:24:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2025-04-30,options/NIFTY/2025-04-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-05-29,options/NIFTY/2025-05-29.parquet,1,signal_without_later_breakout,2025-05-14,False,,
+CCI_EMA_FILTER,VAL,2025-05-29,options/NIFTY/2025-05-29.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-06-26,options/NIFTY/2025-06-26.parquet,2,missing_exact_next_minute_entry_option_bar,2025-06-05;2025-06-12,True,2025-06-13 09:00:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2025-06-26,options/NIFTY/2025-06-26.parquet,1,signal_without_later_breakout,2025-06-05,False,,
+CCI_BASE,VAL,2025-07-31,options/NIFTY/2025-07-31.parquet,1,missing_exact_next_minute_entry_option_bar,2025-07-04,True,2025-07-07 09:00:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2025-07-31,options/NIFTY/2025-07-31.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-08-28,options/NIFTY/2025-08-28.parquet,2,missing_exact_next_minute_entry_option_bar,2025-08-05;2025-08-11,True,2025-08-12 09:00:00+05:30,missing_exact_next_minute_entry_option_bar
+CCI_EMA_FILTER,VAL,2025-08-28,options/NIFTY/2025-08-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-09-30,options/NIFTY/2025-09-30.parquet,1,signal_without_later_breakout,2025-09-11,False,,
+CCI_EMA_FILTER,VAL,2025-09-30,options/NIFTY/2025-09-30.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-10-28,options/NIFTY/2025-10-28.parquet,1,signal_without_later_breakout,2025-10-15,False,,
+CCI_EMA_FILTER,VAL,2025-10-28,options/NIFTY/2025-10-28.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-11-25,options/NIFTY/2025-11-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_EMA_FILTER,VAL,2025-11-25,options/NIFTY/2025-11-25.parquet,0,no_qualified_cci_signal,,False,,
+CCI_BASE,VAL,2025-12-30,options/NIFTY/2025-12-30.parquet,1,signal_without_later_breakout,2025-12-12,False,,
+CCI_EMA_FILTER,VAL,2025-12-30,options/NIFTY/2025-12-30.parquet,1,signal_without_later_breakout,2025-12-12,False,,
