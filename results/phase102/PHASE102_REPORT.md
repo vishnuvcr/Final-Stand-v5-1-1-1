@@ -83,7 +83,7 @@ The final GitHub Actions run finished with 14/14 invariant checks passing and bo
 ## 8. Reproducibility and links
 
 - [Phase 50B TT-03 evidence](../phase50b/tt03_dynamic_n_replay/summary.json)
-- [Phase 38 control status](../../../PHASE38_STATUS.md)
+- [Phase 38 control status](../../PHASE38_STATUS.md)
 - [Phase 51-3 partial-window report](../phase51/available_oos/PHASE51_3_AVAILABLE_OOS_REPORT.md)
 - [Phase 77 cluster inference](../phase77_partial_oos_inference/report.md)
 - [Phase 78 temporal stability](../phase78_temporal_stability/report.md)
