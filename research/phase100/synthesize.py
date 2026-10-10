@@ -97,7 +97,7 @@ Phase 95's primary endpoint is next-session close MAE improvement versus persist
 
 ## 5. Results
 ### 5.1 Forecasting
-Phase 95's fixed run produced 132/132 valid rows and zero model execution failures. The initial primary endpoint showed no closing-price model/window row with a statistically established positive MAE gain under the bootstrap/Holm gate. A manifest serialization defect affected the automated paper-claim reconciliation; a parser correction is under rerun, so per-paper statuses remain provisional until that run succeeds. Common-data results do not disprove source papers whose data/features/splits/metrics were not matched.
+Phase 95's fixed run produced 132/132 valid rows and zero model execution failures. The initial primary endpoint showed no closing-price model/window row with a statistically established positive MAE gain under the bootstrap/Holm gate. {reconcile_note} Common-data results do not disprove source papers whose data/features/splits/metrics were not matched.
 
 ### 5.2 Moving averages
 Across 1,486 sessions, buy-and-hold total return was approximately 114.7%; SMA(5,20) 52.5%, SMA(10,50) 100.9%, SMA(20,100) 80.6%, EMA(5,20) 69.3%, EMA(10,50) 91.2%, EMA(20,100) 90.4%. Maximum drawdowns were smaller for the MA variants; SMA(10,50) and EMA(10,50) had unadjusted Sharpe estimates around 1.10 and 1.01 versus 0.81 for buy-and-hold. These are descriptive index-proxy values, not inferentially confirmed or executable option returns.
