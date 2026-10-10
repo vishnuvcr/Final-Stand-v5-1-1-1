@@ -1,0 +1,85 @@
+name: Phase 87 Dhan expired-options data qualification
+on:
+  push:
+    branches:
+      - phase-87-expired-options-data-qualification
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  expired-options-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe one bounded historical rolling-options window
+        env:
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.error, urllib.request
+          token = os.environ.get("DHAN_ACCESS_TOKEN", "").strip()
+          summary = []
+          def report(line):
+              print(line)
+              summary.append(line)
+          if not token:
+              report("TOKEN_CONFIGURED=false")
+              report("RESULT=BLOCKED_SECRET_MISSING")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+                  f.write("# Phase 87 expired-options probe\n\n" + "\n".join("- " + x for x in summary) + "\n")
+              sys.exit(1)
+          report("TOKEN_CONFIGURED=true")
+          body = json.dumps({
+              "exchangeSegment": "NSE_FNO",
+              "interval": "5",
+              "securityId": 13,
+              "instrument": "OPTIDX",
+              "expiryFlag": "MONTH",
+              "expiryCode": 1,
+              "strike": "ATM",
+              "drvOptionType": "CALL",
+              "requiredData": ["open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot"],
+              "fromDate": "2026-07-28",
+              "toDate": "2026-07-29"
+          }).encode("utf-8")
+          request = urllib.request.Request(
+              "https://api.dhan.co/v2/charts/rollingoption",
+              data=body,
+              headers={"access-token": token, "Accept": "application/json", "Content-Type": "application/json"},
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  status = response.status
+                  payload = json.loads(response.read().decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              status, payload = exc.code, {}
+          except Exception as exc:
+              report("PROBE=NETWORK_OR_PARSE_ERROR")
+              report("ERROR_CLASS=" + type(exc).__name__)
+              report("RESULT=INCONCLUSIVE")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+                  f.write("# Phase 87 expired-options probe\n\n" + "\n".join("- " + x for x in summary) + "\n")
+              sys.exit(1)
+          report("HTTP_STATUS=" + str(status))
+          data = payload.get("data", {}) if isinstance(payload, dict) else {}
+          ce = data.get("ce") if isinstance(data, dict) else None
+          pe = data.get("pe") if isinstance(data, dict) else None
+          # Dhan documents CE/PE blocks for rolling options. Never print raw prices or payload.
+          selected = ce if isinstance(ce, dict) else (pe if isinstance(pe, dict) else {})
+          timestamps = selected.get("timestamp", []) if isinstance(selected.get("timestamp", []), list) else []
+          count = len(timestamps)
+          report("RESPONSE_HAS_OPTION_BLOCK=" + ("true" if bool(selected) else "false"))
+          report("OPTION_CANDLE_COUNT=" + str(count))
+          for key in ("open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp"):
+              value = selected.get(key) if isinstance(selected, dict) else None
+              report("FIELD_" + key.upper() + "_ARRAY=" + ("true" if isinstance(value, list) else "false"))
+          if status == 200 and count > 0 and all(isinstance(selected.get(k), list) for k in ("open", "high", "low", "close", "timestamp")):
+              report("RESULT=EXPIRED_OPTIONS_OHLC_PROBE_PASSED")
+          elif status == 200:
+              report("RESULT=ENDPOINT_REACHED_BUT_HISTORICAL_OPTIONS_DATA_NOT_CONFIRMED")
+          else:
+              report("RESULT=EXPIRED_OPTIONS_PROBE_FAILED_OR_UNSUPPORTED")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("# Phase 87 expired-options probe\n\n" + "\n".join("- " + x for x in summary) + "\n")
+          PY
