@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+<title id="title">Incremental ATM IV prediction effect across 2024 and 2023</title>
+<desc id="desc">Horizontal confidence intervals for improvement in mean absolute error after adding IV to a spot plus India VIX baseline. Positive values represent improvement. The 2024 interval is slightly above zero and the 2023 interval crosses zero.</desc>
+<rect width="1000" height="520" fill="#fff"/>
+<text x="54" y="44" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#1f2937">Incremental ATM IV effect across years</text>
+<text x="54" y="73" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#4b5563">Improvement = MAE(spot + VIX) − MAE(spot + VIX + IV); positive favours IV</text>
+<text x="54" y="108" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#4b5563">MAE improvement (bps)</text>
+<g stroke="#e5e7eb" stroke-width="1">
+<line x1="170" y1="130" x2="170" y2="366"/><line x1="302" y1="130" x2="302" y2="366"/>
+<line x1="434" y1="130" x2="434" y2="366"/><line x1="566" y1="130" x2="566" y2="366"/>
+<line x1="698" y1="130" x2="698" y2="366"/><line x1="830" y1="130" x2="830" y2="366"/>
+</g>
+<line x1="302" y1="127" x2="302" y2="372" stroke="#111827" stroke-width="2" stroke-dasharray="5 5"/>
+<g font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#6b7280" text-anchor="middle">
+<text x="170" y="393">−0.015</text><text x="302" y="393">0</text><text x="434" y="393">0.015</text><text x="566" y="393">0.030</text><text x="698" y="393">0.045</text><text x="830" y="393">0.060</text>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#374151" text-anchor="end">
+<text x="146" y="205">2024 (Phase 90)</text><text x="146" y="307">2023 (Phase 91)</text>
+</g>
+<line x1="303.2" y1="199" x2="795.4" y2="199" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/>
+<line x1="303.2" y1="187" x2="303.2" y2="211" stroke="#0f766e" stroke-width="3"/>
+<line x1="795.4" y1="187" x2="795.4" y2="211" stroke="#0f766e" stroke-width="3"/>
+<circle cx="592.7" cy="199" r="8" fill="#0f766e" stroke="#fff" stroke-width="2"/>
+<line x1="204.7" y1="301" x2="392.1" y2="301" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
+<line x1="204.7" y1="289" x2="204.7" y2="313" stroke="#b45309" stroke-width="3"/>
+<line x1="392.1" y1="289" x2="392.1" y2="313" stroke="#b45309" stroke-width="3"/>
+<circle cx="303.0" cy="301" r="8" fill="#b45309" stroke="#fff" stroke-width="2"/>
+<text x="54" y="433" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#1f2937">2024</text>
+<text x="110" y="433" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#374151">+0.0330385 bps; 95% CI +0.0001393 to +0.0561543</text>
+<text x="54" y="459" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#1f2937">2023</text>
+<text x="110" y="459" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#374151">+0.0001111 bps; 95% CI −0.0110700 to +0.0102532</text>
+<text x="54" y="491" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6b7280">Paired session-cluster bootstrap; 5,000 resamples, seed 90210 in each phase. Positive effect is not P&amp;L.</text>
+</svg>
