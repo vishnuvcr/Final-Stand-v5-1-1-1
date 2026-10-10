@@ -1,3 +1,24 @@
+# Resume checkpoint — 2026-10-10 (Phase 88 coverage PASS; execution-data gate still closed)
+
+**All four Dhan rolling-options probes passed** in [Actions run 38047180848](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047180848):
+- 2026-07-28 CALL: 150 five-minute candles; required arrays aligned.
+- 2026-07-28 PUT: 150 candles; required arrays aligned.
+- 2026-08-04 CALL: 154 candles; required arrays aligned.
+- 2026-08-04 PUT: 154 candles; required arrays aligned.
+
+Total: 608 rolling ATM-relative candles across the four series. OHLC, IV, volume, strike, OI, spot and timestamp arrays were checked; raw prices and payloads were not printed or persisted.
+
+- [Phase 88 research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_RESEARCH_PLAN.md)
+- [Phase 88 status and interpretation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_STATUS.md)
+- [Phase 88 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_ERROR_LOG.md)
+- [Phase 88 auditable chat/decision log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/PHASE88_CHAT_LOG.md)
+- [Phase 88 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-88-dhan-options-gap-coverage-audit/.github/workflows/phase88-dhan-options-gap-coverage.yml)
+- [Draft PR #38](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/38)
+
+**Research decision:** Dhan can supply rolling ATM-relative historical option fields for these dates, which is useful for feature/context research. This is not exact-contract execution data and contains no historical bid/ask/depth in the tested response. No strategy backtest or promotion is authorized from this result. Paytm Money charges, slippage and latency remain mandatory; Phase 83 holdout remains sealed.
+
+---
+
 # Resume checkpoint — 2026-10-10 (Phase 88 Dhan options gap coverage)
 
 **Phase 88: bounded coverage audit running.** Following Phase 86 connectivity PASS and Phase 87 expired-options data-shape PASS, this phase checks four rolling ATM-relative series: CALL and PUT for 2026-07-28 and 2026-08-04. Only HTTP status, candle count, field presence and array alignment are logged.
