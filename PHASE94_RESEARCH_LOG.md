@@ -15,3 +15,9 @@
 - Preserve each author's performance claims as claims until regenerated from data/code.
 - Do not use the sealed Phase 83 2026 holdout.
 - Use partial replication only when source period/feature/data is unavailable, clearly separating it from exact replication.
+
+## E94-010 — registry CSV rows were not all column-aligned
+- Detected from GitHub Actions run 38070702058 on 2026-10-10.
+- Cause: two cross-paper rows had unquoted commas/omitted fields, causing malformed rows; validator surfaced a `NoneType.strip` error instead of a clearer schema message.
+- Correction: normalized the two rows to the 11-column schema, RFC-4180-escaped the entire CSV, and strengthened validator to detect malformed row widths and report blank cells safely.
+- Status: corrected; awaiting fresh validator run.
