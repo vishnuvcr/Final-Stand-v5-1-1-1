@@ -1240,3 +1240,23 @@ The source-driven Phase 57 replay passed its computational step and uploaded art
 - [Phase 57 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_STATUS.md)
 - [Phase 57 endpoint reconciliation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/results/phase57/cost_aware_range_sensitivity/phase56_endpoint_reconciliation.md)
 - [Phase 57 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-57-cost-aware-range-sensitivity-replay/PHASE57_ERROR_LOG.md)
+
+---
+
+# Latest continuation checkpoint — 2026-10-10 (Phase 52/54/55/60/61 reconciled)
+
+**Current decision: empirical factor-conditioned strategy testing remains BLOCKED at the data-source evidence gate.** The engineering/data-integrity issues are resolved; accepted historical evidence is still insufficient to claim a profitable or executable strategy.
+
+- **Phase 52 replay:** frozen 40 configurations × 24 development/validation events = 480 rows; 379 OHLC-range exclusions, 100 required-leg prior-OI blockers, 1 baseline pass. Full selected-leg serialization is audited by [Phase 55 run 37993968572](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/37993968572).
+- **Phase 54:** canonical Phase 55 ledger reprocessed successfully in [run 38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487). All 480 rows reconcile at each preregistered threshold. Eligible coverage at 2/3/4/5/6/8/10/12/15/20/1000% = 1/1/8/24/55/91/150/227/298/345/380. This is coverage sensitivity only; OHLC range is not bid/ask spread.
+- **Phase 56/57:** finite OHLC-reference cost sensitivity and independent reproduction completed. This demonstrates internal reproducibility of the same reference-price model, not executable fill quality or strategy profitability.
+- **Phase 60/61 restart gate:** [Phase 60 decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021675579) and [Phase 61 source delta audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38023026846) both returned NO-GO. Five new leads were reviewed; zero met the documented source-rights and exact-sample gate.
+- **Scientific conclusion:** one row passes the frozen 2% baseline; no factor selector or strategy is promoted, no holdout was used, and no live-trading recommendation is made.
+- **Next permitted step:** validate a provider-authorized exact target-date/contract sample after written data-use rights are documented, or assess a genuinely new source with clear rights. Do not repeat the same source search, download data without authorization, or relax the OI/range rules.
+
+## Phase links
+
+- [Phase 52 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_STATUS.md) · [Research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_RESEARCH_LOG.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-52-factor-conditioned-strategy-discovery/PHASE52_ERROR_LOG.md)
+- [Phase 54 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/results/phase54/ohlc_reference_sensitivity/report.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-54-ohcl-reference-sensitivity/PHASE54_STATUS.md)
+- [Phase 55 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_STATUS.md) · [Plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-55-leg-audit-payload-repair/PHASE55_RESEARCH_PLAN.md)
+- [Phase 60 evidence gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-60-evidence-sufficiency-gate/PHASE60_STATUS.md) · [Phase 61 source restart audit](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-61-new-source-restart-audit/PHASE61_STATUS.md)
