@@ -1,0 +1,86 @@
+name: Phase 103 — Dhan Data API Bridge
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date inclusive (YYYY-MM-DD; maximum 30-day request)"
+        required: true
+        default: "2026-08-02"
+        type: string
+      to_date:
+        description: "End date exclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-01"
+        type: string
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/phase103-dhan-data-api-bridge.yml"
+
+concurrency:
+  group: phase103-dhan-data-api-audit
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  api-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_API_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_DATA_API_TOKEN }}
+      PHASE103_FROM_DATE: ${{ inputs.from_date || '2026-08-02' }}
+      PHASE103_TO_DATE: ${{ inputs.to_date || '2026-09-01' }}
+    steps:
+      - name: Check out the isolated Phase 103 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-103-nifty50-stock-options
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run Phase 103 tests
+        run: python -m unittest discover -s tests/phase103 -p "test_*.py" -v
+      - name: Query Dhan instrument master and bounded expired-options data
+        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE"
+      - name: Record data status and limitations
+        if: always()
+        run: |
+          if [ -f results/phase103/dhan_data_api_audit.json ]; then
+            python research/phase103_stock_options/record_dhan_audit_status.py
+          else
+            marker="DHAN_API_RUN_${GITHUB_RUN_ID}"
+            if ! grep -q "$marker" PHASE103_ERROR_LOG.md; then
+              printf "\n\n<!-- %s -->\n### E103-DHAN-${GITHUB_RUN_ID} — No audit output produced\nA workflow step failed before a valid audit JSON was written. No data-success claim is made. Inspect the earliest failed step before retrying.\nRun: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\n" "$marker" "GITHUB_RUN_ID" "GITHUB_REPOSITORY" "GITHUB_RUN_ID" >> PHASE103_ERROR_LOG.md
+              printf "\n\n<!-- %s -->\n### Dhan audit did not produce output\nRun ${GITHUB_RUN_ID} failed before a machine-readable result was written; inspect its Actions log. No API success or strategy result is claimed.\n" "$marker" >> PHASE103_STATUS.md
+              printf "\n\n<!-- %s -->\n## Dhan API audit did not produce output — run ${GITHUB_RUN_ID}\nThe workflow failed before a machine-readable result was written. No source/data success is claimed.\n" "$marker" >> PHASE103_RESEARCH_LOG.md
+            fi
+          fi
+      - name: Upload aggregate audit only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase103-dhan-data-api-audit
+          path: |
+            results/phase103/dhan_data_api_audit.json
+            results/phase103/DHAN_DATA_API_AUDIT.md
+          if-no-files-found: warn
+      - name: Commit results and logs to Phase 103 branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -f results/phase103/dhan_data_api_audit.json ]; then
+            git add results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md PHASE103_STATUS.md PHASE103_RESEARCH_LOG.md PHASE103_ERROR_LOG.md
+          else
+            git add PHASE103_STATUS.md PHASE103_RESEARCH_LOG.md PHASE103_ERROR_LOG.md
+          fi
+          if git diff --cached --quiet; then
+            echo "No audit/status changes to commit."
+          else
+            git commit -m "Phase 103: record Dhan API audit checkpoint"
+            git push origin HEAD:phase-103-nifty50-stock-options
+          fi
