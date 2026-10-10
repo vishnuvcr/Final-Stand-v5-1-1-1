@@ -1,9 +1,9 @@
 # Phase 66 Status — OHLC-Based Paper Replication
 
-**State: COMPLETE — numerical workflow passed; outcome is NO-GO / INSUFFICIENT EVIDENCE. No strategy promotion.**
+**State: COMPLETE — final verification rerun passed; outcome is NO-GO / INSUFFICIENT EVIDENCE. No strategy promotion.**
 
 - Branch: `phase-66-ohcl-paper-replication`
-- Successful workflow: [run 38028140800](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028140800).
+- Successful workflow: [final verification run 38028425558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38028425558).
 - Source paper: Shaha (2019), CCI-based NIFTY monthly long-option rule. This is an independent modern-sample rule test, not a direct replication of the original October 2008–September 2018 period.
 - Dataset: `thetrademarkk/india-index-options-1m`, pinned revision `3eacf762d401efd9a08e804592fa7882b354c4a2`, CC-BY-NC-4.0; no raw market data published.
 - Data evaluated: 56 monthly-expiry proxy files, 436,424 underlying minute rows; latest underlying timestamp used 2025-12-31 15:59 IST. Zero 2026 option files were downloaded.
