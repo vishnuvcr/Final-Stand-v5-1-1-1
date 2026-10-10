@@ -86,3 +86,18 @@ Primary ΔMAE=MAE(M2)-MAE(M4)=−0.1708363 bps; 95% CI −0.2298769 to −0.1152
 - **Rolling-ATM synthetic-forward proxy:** (K+C-P) built from rolling ATM bar closes. It is not validated as the actual traded FUTIDX price and cannot be interpreted as an executable arbitrage residual.
 - **OOS:** fixed confirmatory evaluation window, not used for fitting/tuning.
 - **Strategy evidence:** requires exact contract identity, realistic order/fill assumptions, costs and independent P&L validation. None of Phases 89–92 establishes it.
+
+## Supplement S5. Audit of the 14 user-uploaded research PDFs
+
+The supporting bibliography was expanded using a bounded audit of all 14 uploaded PDFs. The paper-by-paper extraction, classifications, author-reported findings, and limitations are documented in [Uploaded Literature Evidence Audit](../phase93/UPLOADED_LITERATURE_AUDIT.md).
+
+| Evidence group | Sources | Main contribution to synthesis | Boundary |
+|---|---|---|---|
+| Daily NIFTY/index price forecasting | Bumrah & Budhani (2023); Sain & Singh (2026); Harish et al. (2023); Fathali et al. (2022); Kumar & Sharma (2016); Jafar et al. (2023); Kallimath et al. (2025); Bansal et al. (2022) | Daily price targets, deep/linear baseline comparisons, FII/USD features, feature selection and forecast evaluation | Not intraday option-strategy P&L; accuracy/RMSE metrics are not directly comparable to the phase 89–92 absolute 15-minute-return target |
+| Context-rich forecasting | Naik & Inamdar (2024) | Candidate contexts: news sentiment, FII/DII, India VIX and put-call ratio | Context presence in a model does not prove incremental contribution or tradability |
+| Moving-average evidence | Mahajan et al. (2025) | Example where index/EMA correlation is high but crossover outperformance versus passive investing is not statistically established in the authors' conclusion | Index-level test; not options execution |
+| Options-strategy evidence | Atheetha et al. (2019); Shaha (SSRN); Sherasiya (2025) | Holding-period/timing risk, CCI momentum strategy, Greeks/IV/ML feature hypotheses | Reported returns are author claims and were not reproduced here; execution details and all project-standard costs are not established |
+| Conceptual strategy reference | Chatterjee et al. (2022) | Background strategy/payoff taxonomy | Not an empirical executable backtest |
+
+No estimates in Phases 89–92 were recomputed or changed by this audit. The full references list contains these sources as references 16–29.
+
