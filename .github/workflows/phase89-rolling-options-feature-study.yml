@@ -39,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .cache/phase89/raw
-          key: phase89-dhan-rolling-2025-v1
+          key: phase89-dhan-rolling-2025-v2-no-2026-boundary
 
       - name: Acquire and analyze registered 2025 sample
         id: study
