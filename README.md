@@ -1143,3 +1143,23 @@ Phase 52 remains open but the current BASELINE pilot has only one replay pass an
 
 
 **Provenance correction:** the final accepted Phase 56 report is from canonical-input run [38019323348](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019323348), which uses the exact Phase 55 ledger blob `06f9b0d39652923bae052dd82f2c779ada111da3` and SHA-256 `fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55`. The earlier accepted run's only ledger differences were the 100 exclusion-reason strings; it is superseded for input provenance, and the computed metrics reproduced exactly.
+
+
+## Phase 58 — Historical quote/depth source feasibility (CLOSED / NO-GO)
+
+[Run 38019987421](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38019987421) passed the source-registry tests. Six candidates were reviewed: NSE, StockMojo, NiftyTrader, TickBytes, OptionVault and the existing Hugging Face 1-minute dataset. **Zero sources are verified for full historical bid/ask/depth at the frozen 09:45/13:00 entries and exact 15:15 exit with permitted automation.**
+
+- **StockMojo:** advertises minute-level historical OI, premium, IV and Greeks, but its published terms prohibit bots, scraping, programmatic access and systematic data collection. It cannot be used by the automated GitHub research workflow.
+- **NiftyTrader:** documents bid/ask at close, free single-day CSVs and premium bulk downloads; its listed premium intraday snapshots (09:30, 11:30, 13:30, 15:00) do not match the frozen timestamps.
+- **TickBytes and OptionVault:** public samples show quote/depth fields, but the full historical datasets are licensed/private and target-date coverage and reuse/storage terms are unverified. They are the best licensed follow-up candidates, not accepted data sources.
+- **NSE:** live bid/ask is not a verified historical intraday quote archive, and the site terms restrict copying/aggregation.
+- **Current Hugging Face dataset:** usable for research-only OHLC/OI, but lacks bid/ask/depth and declares CC BY-NC 4.0.
+
+No purchase was made and no terms-violating scraping was performed. The source gate remains closed; the next valid step is explicit authorization for a licensed sample with exact target-date/contract coverage and research/storage rights, or discovery of a newly verified free source.
+
+- [Phase 58 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/PHASE58_RESEARCH_PLAN.md)
+- [Phase 58 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/PHASE58_STATUS.md)
+- [Phase 58 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/PHASE58_ERROR_LOG.md)
+- [Source registry](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/research/phase58/sources.json)
+- [Machine-readable source report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-58-quote-source-feasibility-audit/results/phase58/quote_source_feasibility/report.json)
+
