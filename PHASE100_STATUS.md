@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-10  
 **Branch:** `phase-100-cross-paper-reproducibility-synthesis`  
-**Status:** MANUSCRIPT GENERATED AND VALIDATED; FINAL PHASE 95 RECONCILIATION PENDING  
+**Status:** COMPLETE — FINAL MANUSCRIPT AND SUPPLEMENTS VALIDATED  
 **Strategy promotion:** NONE
 
 ## Required phase evidence
@@ -17,8 +17,11 @@
 - Automated completeness check passed: 14 paper rows, 15 required manuscript sections, no missing headings.
 - No strategy promoted; no 2026 holdout accessed.
 
-## Final dependency
-Phase 95's corrected paper-claim reconciliation is still running. Once it completes, refresh the Phase 100 evidence checkout and rerun synthesis so the manuscript does not freeze stale or provisional source statuses.
+## Terminal decision
+- Phase 95 reconciliation is complete; 12-row source-claim ledger included in the synthesis supplement.
+- Manuscript validation passed: 14 paper-status rows, 15 required sections, zero missing headings.
+- Final conclusion: no strategy promoted; exact-contract options P&L remains data-blocked.
+- Phase 100 is the registered finite stop. Further experiments require a new research plan.
 
 ## Stop rule
 No strategy is promoted on the basis of a prediction screen or analytical payoff diagram. Exact options P&L requires point-in-time exact contracts, quotes/fills, verified Paytm Money costs, spread/slippage and stress tests. The 2026 holdout stays sealed.
