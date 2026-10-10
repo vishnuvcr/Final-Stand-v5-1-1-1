@@ -133,7 +133,7 @@ def get_option_row(snapshots, ts, typ, strike, expected_expiry):
     snap=snapshots.get(ts)
     if snap is None:
         raise ValueError("missing_exact_timestamp")
-    key=(typ, float(strike))
+    key=(typ, float(strike), expected_expiry.isoformat())
     row=snap.get(key, "__MISSING__")
     if row == "__MISSING__":
         raise ValueError("missing_exact_contract_bar")
@@ -209,6 +209,7 @@ def main():
 
     vix=load_vix()
     trades=[]; exclusions=[]; file_errors=[]; files_loaded=0
+    quality_counters=Counter()
     expected_dates=len(eligible_dates)
     for expiry, days in sorted(by_expiry.items()):
         filename=expiries[expiry]
@@ -234,18 +235,37 @@ def main():
                 for d in days:
                     exclusions.append({"date":d.isoformat(),"expiry":expiry.isoformat(),"variant":"ALL","reason":"no_option_rows_at_required_times","split":split_for(d)})
                 continue
+            # The strike/side key must include explicit expiry identity.
+            expected_expiry=expiry.isoformat()
+            mismatch_mask=df["expiry_date"] != expected_expiry
+            quality_counters["rows_with_expiry_not_matching_file_name"] += int(mismatch_mask.sum())
+            df=df[~mismatch_mask].copy()
+            if df.empty:
+                for d in days:
+                    exclusions.append({"date":d.isoformat(),"expiry":expiry.isoformat(),"variant":"ALL","reason":"no_expected_expiry_rows_at_required_times","split":split_for(d)})
+                continue
             snapshots={}
             for ts,group in df.groupby("timestamp",sort=False):
                 snap={}
-                for row in group.itertuples(index=False):
-                    key=(str(row.option_type),float(row.strike)) if np.isfinite(row.strike) else None
-                    if key is None: continue
-                    if key in snap:
-                        snap[key]=None
+                for (typ,strike,exp),contract_rows in group.groupby(["option_type","strike","expiry_date"],dropna=False,sort=False):
+                    if pd.isna(strike) or pd.isna(typ) or pd.isna(exp):
+                        quality_counters["rows_with_invalid_identity_fields"] += int(len(contract_rows))
+                        continue
+                    key=(str(typ),float(strike),str(exp))
+                    value_rows=contract_rows[["open","volume"]].drop_duplicates()
+                    if len(contract_rows)>1:
+                        if len(value_rows)==1:
+                            quality_counters["identical_duplicate_rows_collapsed"] += int(len(contract_rows)-1)
+                            chosen=contract_rows.iloc[0]
+                        else:
+                            quality_counters["conflicting_duplicate_contract_minute_keys"] += 1
+                            snap[key]=None
+                            continue
                     else:
-                        snap[key]={"open":float(row.open) if pd.notna(row.open) else np.nan,
-                                   "volume":float(row.volume) if pd.notna(row.volume) else np.nan,
-                                   "expiry_date":str(row.expiry_date) if pd.notna(row.expiry_date) else ""}
+                        chosen=contract_rows.iloc[0]
+                    snap[key]={"open":float(chosen["open"]) if pd.notna(chosen["open"]) else np.nan,
+                               "volume":float(chosen["volume"]) if pd.notna(chosen["volume"]) else np.nan,
+                               "expiry_date":str(chosen["expiry_date"])}
                 snapshots[ts]=snap
             files_loaded += 1
         except Exception as exc:
@@ -351,6 +371,11 @@ def main():
                   "complete_paired_session_variant_count":int(len(pair_df))},
       "temporal_policy":{"development_through":DEV_END.isoformat(),"validation_through":VAL_END.isoformat(),"holdout_2026":"not downloaded/read for this sweep and not ranked"},
       "exclusions":{"records":int(len(excl_df)),"reason_counts":dict(counts),"file_errors":int(len(errors_df))},
+      "data_quality":{"rows_with_expiry_not_matching_file_name":int(quality_counters["rows_with_expiry_not_matching_file_name"]),
+        "rows_with_invalid_identity_fields":int(quality_counters["rows_with_invalid_identity_fields"]),
+        "identical_duplicate_rows_collapsed":int(quality_counters["identical_duplicate_rows_collapsed"]),
+        "conflicting_duplicate_contract_minute_keys":int(quality_counters["conflicting_duplicate_contract_minute_keys"]),
+        "note":"Only duplicates identical on open and volume for the same timestamp/expiry/side/strike are collapsed; conflicting duplicates remain excluded."},
       "cost_model":{"paytm_money_brokerage_per_executed_order_inr":BROKERAGE,"one_tick_inr":TICK,"stress_ticks_per_fill":2,
         "fee_schedule":"frozen Phase-45 historical model: STT 0.0625% before 2024-10-01 and 0.10% after; historical exchange/IPFT/SEBI, stamp duty and 18% GST; no expiry exercise assumed"},
       "limitations":["No bid/ask/depth; candle-open fills plus adverse tick are not executable quote evidence.",
