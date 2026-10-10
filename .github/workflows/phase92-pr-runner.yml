@@ -6,7 +6,6 @@ on:
       - phase-91-iv-temporal-replication-2023
     types:
       - opened
-      - synchronize
       - reopened
     paths:
       - "PHASE92_RESEARCH_PLAN.md"
