@@ -45,3 +45,8 @@ Because source candle timestamps are candle-start time and close-derived feature
 ## Terminal cross-phase conclusion
 
 Created [CROSS_PHASE_FACTOR_SYNTHESIS.md](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md) comparing Phase 89 (2025 feature associations), Phase 90 (small positive 2024 IV incremental gain), Phase 91 (2023 IV replication did not establish gain), and Phase 92 (2022 synthetic-forward/OI feature block worsened magnitude prediction). The specific rolling-ATM IV/synthetic-proxy/OI predictor line is closed at the registered one-sample replication stop. No additional year search, OOS tuning, or strategy promotion is warranted absent a materially new preregistered hypothesis or authorized exact-contract execution data.
+
+
+## Manuscript / supplement package
+
+Created [MANUSCRIPT_DRAFT.md](results/phase92/MANUSCRIPT_DRAFT.md), a structured research manuscript covering Phases 89–92 with abstract, literature review, questions/objectives, methods, statistics, results tables, discussion, strengths/limitations, conclusion, future directions, appendices and references. Added [SUPPLEMENTARY_MATERIALS.md](results/phase92/SUPPLEMENTARY_MATERIALS.md), [IV_INCREMENTAL_EFFECTS.svg](results/phase92/IV_INCREMENTAL_EFFECTS.svg), and [OOS_MAE_COMPARISON.svg](results/phase92/OOS_MAE_COMPARISON.svg). These use aggregate published results only; raw option/VIX payloads are not included.
