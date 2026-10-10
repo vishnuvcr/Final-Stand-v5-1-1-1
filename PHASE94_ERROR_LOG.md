@@ -32,3 +32,10 @@
 - **Severity:** Medium
 - **Issue:** Empty trade-summary totals must not be interpreted as observed ₹0 returns, and zero completed trades must not be interpreted as evidence of negative expectancy.
 - **Correction:** Preserve Phase 66's NOT ESTIMABLE determination and require valid-trade count/coverage before computing profitability metrics.
+
+## E94-010 — registry CSV alignment validation failed
+- Run: [38070702058](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38070702058)
+- Failure: validator raised `AttributeError: 'NoneType' object has no attribute 'strip'` on an incomplete CSV row rather than emitting a row-width validation error.
+- Root cause: two cross-paper register rows had only 10 columns instead of the required 11.
+- Correction: fixed both rows and rewrote the CSV with proper comma/quote escaping; validator now checks row width first and safely reports missing cells.
+- Status: correction committed; fresh workflow validation pending.
