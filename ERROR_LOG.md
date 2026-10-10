@@ -2256,3 +2256,8 @@ Tradetron's finished runs use brokerage_per_order=₹0 in their cost profile and
 - Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258
 - Automated software tests and workflow artifact audit passed, but the report showed zero loaded option expiry contents and 1,126 identical PyArrow timestamp-filter exceptions (timestamp[ns, tz=+05:30] compared with timestamp[s, tz=Asia/Kolkata]). No trades were generated; economic results are NOT ESTIMABLE.
 - The workflow's prior technical PASS label was over-permissive and is superseded as evidence acceptance. Source parsing/regression tests and the audit gate are being corrected; strategy rules and costs are unchanged. Full details are in Phase 98 branch error log.
+
+
+## Phase 98 execution issue
+- Run 38057921675 — tests=success; replay=cancelled; audit=skipped; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057921675
+- Classified as non-evidence until the output and coverage gates pass.

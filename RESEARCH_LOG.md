@@ -990,3 +990,8 @@ Phase 28 tested S1=short OTM-(n+1) and S2=short OTM-(n+2) deltas independently. 
 - First replay [38057561258](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258) completed technically but could not read option chain rows: 1,126 filter exceptions, 0 expiry files loaded, 0 trades.
 - Root cause is the Parquet timestamp timezone representation mismatch (+05:30 schema versus Asia/Kolkata filter bounds). No trading performance can be inferred. The prior run's software PASS is not evidence acceptance.
 - Corrective engineering is confined to schema/filter handling, test coverage, and evidence gates; the preregistered strategy/cost/split rules are unchanged. Phase-specific log: PHASE98_ERROR_LOG.md.
+
+
+## Phase 98 automated checkpoint
+- Run 38057921675 — tests=success; replay=cancelled; audit=skipped; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057921675
+- This was a trade-level, source-pinned replay. OHLC fill prices are proxies; no live strategy promotion.

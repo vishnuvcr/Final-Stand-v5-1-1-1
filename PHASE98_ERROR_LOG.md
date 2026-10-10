@@ -62,3 +62,8 @@ New errors, invalid outputs, workflow failures and fixes are appended below with
 - The published technical status PASS is too permissive because the workflow did not reject source-load exceptions. It is corrected to a source/data blocker for this run.
 - Resolution: construct PyArrow filter scalars using the exact timestamp type from the Parquet schema, map open_interest to the internal OI field only when present, add regression tests for timezone-typed filtering/schema aliases, and make source-read exceptions fail the result audit. Strategy rules, split dates, thresholds, and cost scenarios remain unchanged.
 - No 2026 data/holdout was loaded; no strategy or parameter was promoted.
+
+
+## Automated execution issue — Run 38057921675 — tests=success; replay=cancelled; audit=skipped; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057921675
+- Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.
+- Runner detail: See workflow logs and validation_report.json.

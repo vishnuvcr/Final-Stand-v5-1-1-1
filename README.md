@@ -1432,3 +1432,12 @@ A dormant performance-only TT-04 fallback has been prepared to reduce repeated t
 - This source-pipeline defect invalidates the earlier workflow's technical PASS as evidence acceptance. Correct the filter/schema mapping and make source-load errors fail the audit before any result is considered.
 - [Phase 98 plan](PHASE98_RESEARCH_PLAN.md) · [preregistration](PHASE98_PRE_REGISTRATION.md) · [current status](PHASE98_STATUS.md) · [error log](PHASE98_ERROR_LOG.md) · [results](results/phase98_opening_range_spread/report.md).
 - No strategy promotion. Phase 83's 2026 holdout remains protected.
+
+
+## Phase 98 — NIFTY opening-range debit spread
+
+- Latest status: **PASS**; economic status: **NO_PROMOTION**.
+- Latest run: [38057921675](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057921675).
+- Plan: [PHASE98_RESEARCH_PLAN.md](PHASE98_RESEARCH_PLAN.md) · [Preregistration](PHASE98_PRE_REGISTRATION.md) · [Status](PHASE98_STATUS.md) · [Error log](PHASE98_ERROR_LOG.md) · [Research log](PHASE98_RESEARCH_LOG.md).
+- Outputs: [report](results/phase98_opening_range_spread/report.md) · [summary](results/phase98_opening_range_spread/summary.csv) · [coverage audit](results/phase98_opening_range_spread/coverage_audit.csv) · [inference](results/phase98_opening_range_spread/inference.json).
+- Protected 2026 holdout was not loaded. A successful workflow does not itself establish profitability or executable fills.
