@@ -6,3 +6,9 @@
 - Decision: preserve existing DEV/VAL/HOLD split; no tests, tuning, or data access on 2026 holdout in this phase.
 - Decision: include ₹10/order, ₹20/order, +50% fee/charge stress and a separate ±10% adverse option-price slippage sensitivity. No raw data/credentials will be stored in repo.
 - This is a user-visible decision log. Hidden chain-of-thought is not recorded.
+
+
+## 2026-10-10 — Automated run and self-correction
+- Run 38026911131 passed dependency installation, syntax check and then-current unit tests; its numerical step was cancelled after a manual source review caught a point-in-time contract-selection issue.
+- The selector was corrected to use only option contracts observed at the breakout minute. A regression test was added so a strike first appearing on the next minute cannot be selected.
+- The cancelled run is not accepted as evidence. Continue with the corrected code and keep the frozen candidate rules, date split, costs and holdout protection unchanged.
