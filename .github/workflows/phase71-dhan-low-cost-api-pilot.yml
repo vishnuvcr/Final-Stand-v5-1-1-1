@@ -1,0 +1,36 @@
+name: Phase 71 — DhanHQ low-cost historical options pilot
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase-71-dhan-low-cost-api-pilot
+    paths:
+      - "scripts/phase71_dhan_pilot.py"
+      - ".github/workflows/phase71-dhan-low-cost-api-pilot.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  bounded-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run bounded target-date probe
+        run: python3 scripts/phase71_dhan_pilot.py
+      - name: Publish aggregate report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase71_dhan_pilot/summary.json results/phase71_dhan_pilot/report.md
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+          else
+            git commit -m "Record Phase 71 DhanHQ pilot outcome"
+            git push
+          fi
