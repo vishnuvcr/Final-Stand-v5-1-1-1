@@ -1,6 +1,6 @@
 """Synthesize accepted Phase 95-99 evidence into a finite manuscript."""
 from pathlib import Path
-import csv,json,html,datetime
+import csv,json,html,datetime,shutil
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/"results/phase100"
 P95=ROOT/"evidence/phase95/results/phase95"
@@ -23,7 +23,7 @@ def main():
  ci=[r for r in close if fnum(r.get("bootstrap_ci_low"))>0]
  sig=[r for r in close if fnum(r.get("mae_improvement_vs_persistence"))>0 and fnum(r.get("bootstrap_ci_low"))>0 and fnum(r.get("holm_p_value"))<.05]
  p96=[r for r in readcsv(ROOT/"results/phase96/metrics.csv") if r.get("strategy")!="buy_hold"]
- p97=readjson(ROOT/"results/phase97/summary.json");p98=readjson(ROOT/"results/phase98/summary.json");p99=readjson(ROOT/"results/phase99/summary.json")
+ p97=readjson(ROOT/"results/phase97/summary.json");p98=readjson(ROOT/"results/phase98/summary.json");p99=readjson(ROOT/"results/phase99/summary.json")\n claim_rows=readcsv(p95/"paper_claim_status.csv")\n reconcile_note=("The latest Phase 95 paper-claim reconciliation completed; the ledger is included in this supplement." if claim_rows else "Phase 95 paper-claim reconciliation has not completed; source-specific statuses remain provisional.")\n if claim_rows: shutil.copy2(p95/"paper_claim_status.csv",OUT/"phase95_paper_claim_status.csv")
  paper_rows=[
  ("U01","Bansal et al. — multi-regressor stock-price forecasts","PARTIAL","Common NIFTY model-family screen; source universe/protocol not fully matched."),
  ("U02","Sherasiya — RF/XGBoost/LSTM options signals","DATA_BLOCKED","No point-in-time exact-contract training/label matrix; no option P&L."),
@@ -42,7 +42,7 @@ def main():
  ]
  with (OUT/"paper_status.csv").open("w",newline="",encoding="utf-8") as f:
   w=csv.writer(f);w.writerow(["paper_id","paper_or_method","final_status","evidence_and_limitation"]);w.writerows(paper_rows)
- summary={"synthesis_date":datetime.datetime.now(datetime.timezone.utc).isoformat(),"phase95":{"metrics_rows":len(metrics),"close_rows":len(close),"positive_mae_gain_rows":len(gains),"ci_above_zero_rows":len(ci),"holm_significant_positive_gain_rows":len(sig)},"phase96":{"ma_variants":len(p96),"result_status":"signal_screen_only_partial"},"phase97":p97,"phase98":p98,"phase99":p99,"paper_count":len(paper_rows),"strategy_promoted":False,"holdout_2026_accessed":False}
+ summary={"synthesis_date":datetime.datetime.now(datetime.timezone.utc).isoformat(),"phase95":{"metrics_rows":len(metrics),"close_rows":len(close),"positive_mae_gain_rows":len(gains),"ci_above_zero_rows":len(ci),"holm_significant_positive_gain_rows":len(sig)},"phase96":{"ma_variants":len(p96),"result_status":"signal_screen_only_partial"},"phase97":p97,"phase98":p98,"phase99":p99,"phase95_claim_ledger_rows":len(claim_rows),"phase95_reconciliation_complete":bool(claim_rows),"paper_count":len(paper_rows),"strategy_promoted":False,"holdout_2026_accessed":False}
  (OUT/"phase_summary.json").write_text(json.dumps(summary,indent=2),encoding="utf-8")
  bars=[]
  for r in p96:
@@ -158,7 +158,7 @@ __PAPER_TABLE__
 - paper_status.csv: machine-readable paper statuses.
 - phase_summary.json: machine-readable phase-level outcome summary.
 - phase96_total_return.svg: descriptive Phase 96 return comparison.
-- Phase 95 model metrics, data manifest, modality status, coverage and reconciliation ledger when published.
+- Phase 95 model metrics, data manifest, modality status, coverage and phase95_paper_claim_status.csv.
 - Phase 96 daily replay and metrics; Phase 97 data gate; Phase 98 evidence gate; Phase 99 payoff grid and source ambiguity ledger.
 """
  manuscript=manuscript.replace("__PAPER_TABLE__",table)
