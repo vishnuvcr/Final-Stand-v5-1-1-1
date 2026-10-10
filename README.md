@@ -1,15 +1,20 @@
 <!-- PHASE94_START -->
-# Current checkpoint — Phase 100 cross-paper reproducibility synthesis
+# Final research checkpoint — Phase 100 complete
 
-**Status: manuscript generated and validated; final Phase 95 paper-claim reconciliation is pending.** Phase 100 workflow [38073229401](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073229401) passed and produced a structured manuscript, supplementary materials, 14-paper status ledger, machine-readable summary and SVG figure. Automated QA passed 15 required sections and all 14 paper rows.
+**Status: COMPLETE — manuscript and supplements validated.** Final serialized Actions run [38073414619](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073414619) passed. The Phase 95 paper-claim reconciliation is included; the synthesis covers all 14 uploaded papers.
 
-- [Manuscript](results/phase100/MANUSCRIPT.md) · [supplements](results/phase100/SUPPLEMENTARY_MATERIALS.md) · [validation report](results/phase100/VALIDATION_REPORT.md)
-- [Paper status ledger](results/phase100/paper_status.csv) · [phase summary](results/phase100/phase_summary.json) · [Phase 96 figure](results/phase100/phase96_total_return.svg)
-- [Phase 100 plan/status](PHASE100_RESEARCH_PLAN.md) · [research log](PHASE100_RESEARCH_LOG.md) · [error log](PHASE100_ERROR_LOG.md) · [decision log](PHASE100_CHAT_LOG.md)
+- [Full manuscript](results/phase100/MANUSCRIPT.md) · [supplementary materials](results/phase100/SUPPLEMENTARY_MATERIALS.md) · [validation report](results/phase100/VALIDATION_REPORT.md)
+- [14-paper status ledger](results/phase100/paper_status.csv) · [Phase 95 claim ledger](results/phase100/phase95_paper_claim_status.csv) · [phase summary](results/phase100/phase_summary.json)
+- [Phase 96 return comparison figure](results/phase100/phase96_total_return.svg)
+- [Phase 100 plan](PHASE100_RESEARCH_PLAN.md) · [status](PHASE100_STATUS.md) · [research log](PHASE100_RESEARCH_LOG.md) · [error log](PHASE100_ERROR_LOG.md) · [decision log](PHASE100_CHAT_LOG.md)
 
-**Current scientific conclusion:** no strategy is promoted. The Phase 96 SMA/EMA index screen is descriptive only; Phase 97 ML options and Phase 98 CCI are data-blocked; Phase 99 validates payoff algebra but not historical profitability. Exact-contract options P&L remains unavailable under the accepted evidence.
+## Final conclusion
 
-**One final dependency remains:** Phase 95's corrected reconciliation workflow is still running. The synthesis must be refreshed after that run publishes the claim ledger; until then, paper-specific statuses remain provisional. Phase 83's 2026 holdout remains sealed.
+No strategy is promoted. Phase 95 did not establish statistically reliable close-forecast improvement over persistence (0/75 intervals entirely above zero; 0/75 Holm-significant positive gains). Phase 96's SMA/EMA screen is descriptive and not options P&L. Phase 97 ML options and Phase 98 CCI remain data-blocked. Phase 99 checked payoff algebra for 13 structures but did not establish historical profitability.
+
+This is **insufficient validated evidence for a profitable options strategy**, not proof that every paper's method is false or unprofitable. The 2026 holdout remains sealed. Paytm Money charges, statutory levies, spread, slippage, latency and stress must be included before any future options profitability claim.
+
+**Finite stop reached:** Phase 100 completed the registered synthesis. Further work requires a new, bounded research plan.
 <!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
