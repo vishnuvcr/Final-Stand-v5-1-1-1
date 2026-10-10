@@ -1,12 +1,9 @@
-name: Phase 92 — automated PR runner for synthetic-forward/OI study
+name: Phase 92 — automated synthetic-forward/OI predictor study
 
 on:
-  pull_request:
+  push:
     branches:
-      - phase-91-iv-temporal-replication-2023
-    types:
-      - opened
-      - reopened
+      - phase-92-synthetic-forward-oi-study-2022
     paths:
       - "PHASE92_RESEARCH_PLAN.md"
       - "research/phase92/**"
@@ -17,20 +14,20 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase92-pr-runner-${{ github.event.pull_request.number || github.ref }}
+  group: phase92-study-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   predictor-study:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'phase-92-synthetic-forward-oi-study-2022')
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Check out Phase 92 study branch
+      - name: Check out the frozen Phase 92 study branch
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
-          ref: ${{ github.event.pull_request.head.ref || 'phase-92-synthetic-forward-oi-study-2022' }}
+          repository: ${{ github.repository }}
+          ref: phase-92-synthetic-forward-oi-study-2022
           persist-credentials: true
 
       - name: Set up Python
@@ -53,7 +50,7 @@ jobs:
         env:
           DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_REF_NAME: ${{ github.event.pull_request.head.ref || 'phase-92-synthetic-forward-oi-study-2022' }}
+          GITHUB_REF_NAME: phase-92-synthetic-forward-oi-study-2022
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: python research/phase92/synthetic_forward_oi_study.py
 
@@ -61,12 +58,12 @@ jobs:
         if: always()
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+actions-bot@users.noreply.github.com"
           git add PHASE92_STATUS.md PHASE92_ERROR_LOG.md PHASE92_CHAT_LOG.md README.md
           git add -f results/phase92/coverage.csv results/phase92/model_metrics.csv results/phase92/vix_regime_metrics.csv results/phase92/summary.json results/phase92/PHASE92_RESULTS.md 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "Phase 92: publish synthetic-forward/OI predictor results"
-            git push origin "HEAD:${{ github.event.pull_request.head.ref || 'phase-92-synthetic-forward-oi-study-2022' }}"
+            git push origin "HEAD:phase-92-synthetic-forward-oi-study-2022"
           else
             echo "No aggregate result or log changes to commit."
           fi
@@ -74,5 +71,5 @@ jobs:
       - name: Mark engine/operational failure after publication
         if: steps.study.outcome == 'failure'
         run: |
-          echo "Phase 92 engine failed; inspect the committed status and sanitized error log."
+          echo "Phase 92 engine failed; inspect committed status and sanitized error log."
           exit 1
