@@ -14,3 +14,6 @@
 - 2026-10-10: Phase 100 run 38073229401 passed tests and manuscript validation. The synthesis is marked provisional because Phase 95 run 38072806206 has not yet completed its corrected paper-claim reconciliation; no unsupported final paper claim is accepted.
 
 - 2026-10-10, run 38073272780: manuscript generation and validation passed, but artifact commit push was rejected because another Phase 100 workflow had updated the branch concurrently. Added a `git pull --rebase` before pushing artifacts. Generated manuscript contents from that attempt were valid; latest successful publication must be confirmed after the concurrency fix.
+
+- 2026-10-10, run 38073338648: manuscript generator failed on literal escaped newlines introduced while adding dynamic Phase 95 claim-ledger status. Corrected the source block to use real Python line breaks; run 38073348870 then passed generation/publication.
+- 2026-10-10, run 38073359082: synthesis and validation passed but artifact publication rebase conflicted in phase_summary.json because multiple runs wrote generated outputs concurrently. Added workflow concurrency serialization and removed documentation-only files from push triggers so status/error logging does not launch competing synthesis jobs. A serialized rerun must confirm final publication.
