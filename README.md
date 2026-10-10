@@ -16,6 +16,8 @@
 - [Workflow](.github/workflows/phase90-iv-incremental-prediction.yml)
 
 **Interpretation boundary:** predictive gain is not strategy P&L. Historical exact-contract bid/ask/depth, Paytm Money cost-adjusted fills, or live orders were not tested. No strategy has been promoted.
+
+**Next phase:** [Phase 91 2023 temporal replication plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_STATUS.md) · [draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41). Phase 91 is preregistered but its run is not yet verified; no replication result is claimed.
 <!-- PHASE90_END -->
 
 <!-- PHASE89_START -->
