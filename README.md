@@ -1,3 +1,11 @@
+# Resume checkpoint — 2026-10-10 (Phase 71 DhanHQ pilot)
+
+**Phase 71 bounded live probe passed, but data-integrity validation is still required.** [Actions run 38041733380](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38041733380) returned timestamp rows on both missing Phase 51 sessions for all eight ATM-relative probe combinations. The initial aggregate report found 375 target-date timestamps per combination on 2026-07-28 and 385 on 2026-08-04; total response counts were 750 and 770. The double counts and 10-minute excess are unresolved, so this is connectivity evidence only—not accepted completeness or P&L evidence. Phase 72 will validate timestamp bounds, duplicates, regular-session coverage, field alignment and expiry semantics. Because this repository is public and retention rights have not been confirmed, raw market rows will not be committed.
+
+- [Phase 71 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-71-dhan-low-cost-api-pilot/PHASE71_RESEARCH_PLAN.md) · [Status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-71-dhan-low-cost-api-pilot/PHASE71_STATUS.md) · [Aggregate report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-71-dhan-low-cost-api-pilot/results/phase71_dhan_pilot/report.md) · [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-71-dhan-low-cost-api-pilot/PHASE71_ERROR_LOG.md) · [Phase 72 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-72-dhan-data-integrity-audit)
+
+---
+
 ## Phase 67 — latest completed diagnostic (2026-10-10)
 
 **Decision: insufficient evidence for rule-faithful replay; no strategy promotion.** [Actions run 38033174754](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38033174754) passed end-to-end. Among 30 frozen DEV/VAL trigger rows, 8 had an exact trigger-minute observation, 5 an exact next-minute observation, and 8 had ±2-minute context. Context bars are not fills; ITM/side/expiry mapping and execution-grade quote/depth remain unproven. No P&L or profitability inference is justified.
