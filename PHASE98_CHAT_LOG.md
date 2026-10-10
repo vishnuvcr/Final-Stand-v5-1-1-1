@@ -36,3 +36,11 @@ User: “Resume I want you to be optimistic and grill down to find a strategy!�
 ## Latest visible execution
 - Run 38057561258 — tests=success; replay=success; audit=success; runner_status=PASS; economics=NO_PROMOTION; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258
 - No private reasoning is stored; status and reproducible execution facts only.
+
+
+## First market-data replay — technical blocker, no economic evidence
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057561258
+- Tests and workflow audit completed, but the final report contained zero option expiry files loaded, zero trades and 1,126 source-load exceptions.
+- The recorded root cause is an Arrow timestamp filter timezone mismatch (+05:30 schema versus Asia/Kolkata filter bound). The schema exposes open_interest, not oi; this alias also needs explicit handling.
+- This is not evidence that the strategy wins or loses. The report's technical PASS label is being corrected to blocked until the chain reads pass.
+- Rule/parameter/cost changes: none. The 2026 holdout remains sealed.
