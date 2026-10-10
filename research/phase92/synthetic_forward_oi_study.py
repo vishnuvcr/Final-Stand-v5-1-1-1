@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Phase 92: test lagged synthetic-forward proxy and CALL/PUT OI predictors beyond spot, VIX and IV."""
+"""Phase 92: test lagged synthetic-forward proxy and CALL/PUT OI predictors beyond spot, VIX and IV.
+
+All fitted models use the same complete-case rows; no data are imputed."""
 from __future__ import annotations
 import csv, io, json, math, os, sys, time, urllib.error, urllib.request
 from datetime import date, timedelta
