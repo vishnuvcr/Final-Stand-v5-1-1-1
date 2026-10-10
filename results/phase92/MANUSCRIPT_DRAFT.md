@@ -100,9 +100,9 @@ India VIX security identity was resolved dynamically from the instrument master 
 
 ### 4.2 Coverage and quality filters
 
-Across the studies, the pipeline checked requested response-array alignment, timestamp deduplication and date bounds, exact CALL/PUT timestamp pairing, spot consistency and strike matching. Phase 89 had one CALL window timeout (25/26 valid windows) and additional spot/strike exclusions; Phase 90 had 54/54 option and 5/5 VIX windows; Phase 91 had 54/54 and 5/5; and Phase 92 finished with 54/54 options and 5/5 VIX windows after recording the 2022-12-31 to 2023-01-01 interval as an aligned zero-row interval containing no weekday trading session. No rows were imputed.
+Across the studies, the pipeline checked requested response-array alignment, timestamp deduplication and date bounds, exact CALL/PUT timestamp pairing, spot consistency and strike matching. Phase 89 had one CALL window timeout (25/26 valid windows) and additional spot/strike exclusions; the feature-test OOS N ranged from 2,622 to 4,049 across 57 sessions because the stable-strike OI-change feature required more restricted complete cases. Phase 90 had 54/54 option and 5/5 VIX windows; Phase 91 had 54/54 and 5/5; and Phase 92 finished with 54/54 options and 5/5 VIX windows after recording the 2022-12-31 to 2023-01-01 interval as an aligned zero-row interval containing no weekday trading session. No rows were imputed.
 
-Phase-specific aggregate ledgers record excluded mismatches and source-window statuses. Raw API responses/row-level data were retained in Actions cache for the relevant phase and were not committed or published as raw files.
+Phase-specific aggregate ledgers record excluded mismatches and source-window statuses. Raw API responses/row-level data were retained in Actions cache for the relevant phase and were not committed or published as raw files. A fuller per-phase table and reproducibility appendix is provided in [Supplementary Materials](SUPPLEMENTARY_MATERIALS.md).
 
 ## 5. Methodology
 
@@ -198,6 +198,8 @@ Primary result: MAE(M1)−MAE(M2) = +0.0330385 bps; paired session-bootstrap 95%
 
 Primary result: MAE(M1)−MAE(M2) = +0.0001111 bps; 95% CI −0.0110700 to +0.0102532. The 2023 increment was effectively zero and the interval spanned both harm and benefit. The registered rule did not establish incremental IV predictive value. This is a non-replication of the small 2024 result, not proof that no possible IV feature is useful in any target or market.
 
+**Figure 1.** Incremental ATM IV effect on OOS MAE in 2024 and 2023. Positive effects favour adding IV; confidence intervals are paired session-cluster bootstrap intervals.
+
 ![Incremental IV effect across fixed years](IV_INCREMENTAL_EFFECTS.svg)
 
 ### 6.4 Phase 92 synthetic-forward/OI result (2022)
@@ -213,6 +215,8 @@ Primary result: MAE(M1)−MAE(M2) = +0.0001111 bps; 95% CI −0.0110700 to +0.01
 Coverage gates: 54/54 option windows valid; 5/5 VIX windows valid. Paired CALL/PUT rows: 18,579 across 248 sessions, zero spot mismatches, one mismatched strike excluded. Complete OOS sample: 3,660 rows / 61 sessions; OOS VIX coverage 98.63%; DEV and validation sample gates passed.
 
 Primary MAE(M2)−MAE(M4) = −0.1708363 bps, with 95% paired session-cluster bootstrap CI −0.2298769 to −0.1152015 and 0/5,000 positive bootstrap estimates. Because the entire interval lies below zero, the added feature block worsened the registered loss function on this sample. M3 already worsened MAE versus M2 by approximately 0.0577 bps; M4’s MAE was worse by approximately 0.1708 bps. No P&L calculation was conducted.
+
+**Figure 2.** Phase 92 OOS MAE for the five nested model families; lower is better.
 
 ![Phase 92 OOS MAE comparison](OOS_MAE_COMPARISON.svg)
 
@@ -284,7 +288,7 @@ The raw market payloads were not committed or published. Phase-specific Actions 
 - **Phase 89:** [results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-89-rolling-options-feature-study/results/phase89/PHASE89_RESULTS.md) · [run 38047775690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047775690)
 - **Phase 90:** [results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/PHASE90_RESULTS.md) · [run 38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674)
 - **Phase 91:** [results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/PHASE91_RESULTS.md) · [run 38050932108](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050932108)
-- **Phase 92:** [results](PHASE92_RESULTS.md) · [summary JSON](summary.json) · [coverage CSV](coverage.csv) · [model metrics CSV](model_metrics.csv) · [cross-phase synthesis](CROSS_PHASE_FACTOR_SYNTHESIS.md) · [run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106)
+- **Phase 92:** [results](PHASE92_RESULTS.md) · [summary JSON](summary.json) · [coverage CSV](coverage.csv) · [model metrics CSV](model_metrics.csv) · [cross-phase synthesis](CROSS_PHASE_FACTOR_SYNTHESIS.md) · [supplementary materials](SUPPLEMENTARY_MATERIALS.md) · [run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106)
 - [Main README checkpoint](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/README.md)
 
 ## Appendix A. Preregistered models and primary endpoints
