@@ -3,10 +3,10 @@
 **COMPUTED — coverage sensitivity only. No P&L or executable liquidity claim.**
 
 - Input rows: 480
-- Input SHA-256: 47904fac8b5fedc5fdca81af6cd555886f27ecec444d68403e4d2a5ccdb5621f
+- Input SHA-256: fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55
 - Baseline statuses: {"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}
-- Complete per-leg payload rows: 380
-- Incomplete per-leg payload rows: 100
+- Complete per-leg payload rows: 480
+- Incomplete per-leg payload rows: 0
 - Explicit hard prior-OI blockers with sufficient evidence to reject the full strategy: 100
 - Range-excluded rows with complete leg payload: 379
 

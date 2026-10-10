@@ -1,12 +1,12 @@
 {
   "phase": "54",
   "status": "OHLC_REFERENCE_SENSITIVITY_COMPUTED_COVERAGE_ONLY",
-  "created_at_utc": "2026-10-09T21:17:18.592579+00:00",
+  "created_at_utc": "2026-10-10T02:54:10.476785+00:00",
   "input": {
     "path": "results/phase52/historical_pilot/event_replay.csv",
     "row_count": 480,
     "source_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
-    "input_sha256": "47904fac8b5fedc5fdca81af6cd555886f27ecec444d68403e4d2a5ccdb5621f",
+    "input_sha256": "fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55",
     "parent_grid": "phase52-grid-v1.3",
     "parent_pilot": "phase52-historical-base-pilot-v0.2.1-audit-provenance"
   },
@@ -43,8 +43,8 @@
     "EXCLUDED_OHLC_RANGE_PROXY::COMPLETE_LEG_PAYLOAD": 379,
     "REPLAY_PASS::COMPLETE_LEG_PAYLOAD": 1
   },
-  "complete_leg_payload_rows": 380,
-  "incomplete_leg_payload_rows": 100,
+  "complete_leg_payload_rows": 480,
+  "incomplete_leg_payload_rows": 0,
   "empty_leg_payload_rows": 0,
   "partial_leg_payload_rows": 0,
   "known_hard_oi_block_rows": 100,

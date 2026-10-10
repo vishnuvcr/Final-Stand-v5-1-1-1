@@ -66,3 +66,11 @@
 - Across thresholds, fixed OI/leg rejections remained 100, entry-data rejections remained 0, and only range rejections changed. Counts were monotonic as preregistered.
 - Interpretation: relaxing the OHLC range gate mechanically admits more rows. The OHLC high-low/open measure is not bid/ask spread. No P&L, fills, realized exits, slippage, brokerage or transaction-cost performance was measured in this phase.
 - Phase 54 is closed per plan. The broader Phase 52 research remains open; quote/depth evidence and adequate executed sample are still required before any profitability claim. No holdout used, no strategy ranked/promoted, no live trading recommendation.
+
+## Run checkpoint 38018639487
+
+- Run: [38018639487](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38018639487); workflow job status=success.
+- Input rows=480; input SHA-256=fbae8f080a685b2bafcc1248995b9342fea4c598110916e42296bee1af57dd55; baseline statuses={"BLOCKED_LEG_ELIGIBILITY": 100, "EXCLUDED_OHLC_RANGE_PROXY": 379, "REPLAY_PASS": 1}.
+- Complete leg payload rows=480; incomplete=0; explicit hard prior-OI blockers=100; range-excluded rows with complete legs=379.
+- Sensitivity decision=OHLC_REFERENCE_SENSITIVITY_COMPUTED_COVERAGE_ONLY; threshold results: 2%: 1/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=379); 3%: 1/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=379); 4%: 8/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=372); 5%: 24/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=356); 6%: 55/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=325); 8%: 91/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=289); 10%: 150/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=230); 12%: 227/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=153); 15%: 298/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=82); 20%: 345/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=35); 1000%: 380/480 eligible (OI/leg reject=100, entry-data reject=0, range reject=0)
+- Candle range is not a bid/ask spread. No P&L, fills, exits or commercial/live strategy promotion inferred; holdout untouched.
