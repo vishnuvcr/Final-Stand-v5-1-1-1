@@ -10,3 +10,5 @@ Date: 2026-10-10
 | E86-004 | PENDING | The new workflow must execute in GitHub Actions before any connectivity claim is made. | Verify run status and update log from actual output; no claim of success before evidence. |
 
 Do not log credentials, raw profile responses, client identifiers, raw market-data responses, or hidden chain-of-thought. Record only auditable actions, outcomes and errors.
+
+| E86-005 | RESOLVED / PASS | Actions run 38047007060: profile HTTP 200, token valid, Data API plan active, historical endpoint HTTP 200, 149 five-minute index candles returned for the bounded request. | Connectivity gate passed. This does not resolve the historical option bid/ask/depth evidence gap. |
