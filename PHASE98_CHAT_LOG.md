@@ -20,3 +20,9 @@ User: “Resume I want you to be optimistic and grill down to find a strategy!�
 - Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38057309811
 - Regression tests did not collect because the test process could not import the repository's research directory; the market-data replay was skipped.
 - The workflow's error-persistence stage also failed on a missing output directory. Both defects were recorded, and fixes were committed before accepting any empirical output.
+
+
+## Second/third attempts — still pre-replay
+- Run 38057371871 exposed an unused test import using the wrong cost-function name; market replay was skipped.
+- Run 38057380129 repeated the import issue and had an audit-publisher rebase conflict while concurrent repository log writes were underway.
+- No market-data or P&L evidence was generated. Both faults are in the error log and are corrected before the next replay.
