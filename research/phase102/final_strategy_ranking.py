@@ -132,7 +132,7 @@ def build_validation(root: Path) -> dict[str, Any]:
     factor_text = (root / "results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md").read_text(encoding="utf-8")
     check(
         "Phase 92 predictor results not labelled strategy profitability",
-        "No options strategy is promoted" in factor_text and "not strategy P&L" in factor_text,
+        "No options strategy is promoted" in factor_text and "not a direction classifier" in factor_text and "strategy P&L" in factor_text,
         "feature/forecast evidence kept separate from executable strategy outcome",
     )
 
