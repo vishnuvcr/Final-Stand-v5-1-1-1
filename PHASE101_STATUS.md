@@ -99,3 +99,9 @@ The first corrected run prevented look-ahead by shifting some entries to the sec
 - The push-triggered workflow must pass before the new sensitivity figures are accepted.
 - Drawdown review remains open: inspect equity peak/trough and trade chronology; do not assume a drawdown above initial capital is automatically an accounting error.
 - Strategy promotion: NONE. 2026 options holdout remains excluded.
+
+
+## Additional accounting controls — 2026-10-11
+
+- U02 output now includes equity reconciliation `ending equity - (initial equity + sum of net trade P&L)`, a pass/fail flag, peak equity/date, peak and trough at maximum drawdown, trough date, and drawdown as a percentage of the relevant peak.
+- The run must regenerate summary/ledger files before the audit is closed. The earlier run's large drawdown values are not yet certified as correct or incorrect.
