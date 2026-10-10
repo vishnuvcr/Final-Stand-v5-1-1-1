@@ -146,6 +146,10 @@ def list_expiries():
             if e.date()<=VAL_END:out.append(e)
     return sorted(set(out))
 
+def arrow_filter_bounds(lo,hi,ts_type):
+    """Build timezone/unit-exact timestamp scalars for a source Parquet schema."""
+    return pa.scalar(lo.to_pydatetime(),type=ts_type), pa.scalar(hi.to_pydatetime(),type=ts_type)
+
 def load_chain_day(expiry,d):
     name=f"options/NIFTY/{expiry.date().isoformat()}.parquet"
     p=hf_hub_download(repo_id=HF_REPO,filename=name,repo_type="dataset",revision=HF_REVISION,token=os.getenv("HF_TOKEN") or None)
@@ -156,8 +160,7 @@ def load_chain_day(expiry,d):
     lo=pd.Timestamp(datetime.combine(d,time(9,15)),tz=TZ);hi=pd.Timestamp(datetime.combine(d,time(15,16)),tz=TZ)
     ts_type=pf.schema_arrow.field("timestamp").type
     # Match Arrow scalar type exactly, including unit and timezone, for predicate pushdown.
-    a=pa.scalar(lo.to_pydatetime(),type=ts_type)
-    b=pa.scalar(hi.to_pydatetime(),type=ts_type)
+    a,b=arrow_filter_bounds(lo,hi,ts_type)
     tab=pq.read_table(p,columns=cols,filters=[("timestamp",">=",a),("timestamp","<=",b)])
     x=tab.to_pandas()
     if x.empty:return prep_options(x)
