@@ -1,0 +1,59 @@
+name: Phase 93 — uploaded literature audit
+
+on:
+  push:
+    branches:
+      - phase-93-uploaded-literature-audit
+    paths:
+      - "PHASE93_RESEARCH_PLAN.md"
+      - "results/phase93/UPLOADED_LITERATURE_AUDIT.md"
+      - "results/phase92/MANUSCRIPT_DRAFT.md"
+      - "results/phase92/SUPPLEMENTARY_MATERIALS.md"
+      - "research/phase93/**"
+      - ".github/workflows/phase93-uploaded-literature-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase93-uploaded-literature-audit
+  cancel-in-progress: false
+
+jobs:
+  literature-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out Phase 93
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate 14 source mappings, citations and research boundaries
+        id: validate
+        run: python research/phase93/validate_literature_audit.py
+
+      - name: Publish validation report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+actions-bot@users.noreply.github.com"
+          git add results/phase93/validation_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Phase 93: publish uploaded-literature audit validation"
+            git push origin "HEAD:${{ github.ref_name }}"
+          else
+            echo "No validation report changes to publish."
+          fi
+
+      - name: Mark audit failure after publishing diagnostics
+        if: steps.validate.outcome == 'failure'
+        run: |
+          echo "Phase 93 audit validation failed; inspect validation_report.json."
+          exit 1
