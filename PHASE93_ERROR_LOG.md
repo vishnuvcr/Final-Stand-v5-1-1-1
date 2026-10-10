@@ -35,3 +35,10 @@ No code or empirical market-data errors are registered at initialization. Docume
 - Updated the publication step to refresh to the latest branch and regenerate the report before a bounded retry (three attempts). Updated the final failure marker so it runs after diagnostic publication.
 - Final run [38053142927](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38053142927) completed successfully: validator PASS, 14 audit sections, 14 filename mappings, references 1–29, zero errors. The published JSON confirms the 2026 holdout was not accessed and no strategy was promoted.
 - This was an automation publication race, not a source-data, model, or statistical issue. No research result changed.
+
+## E93-010 — prior CCI rule test identified; prevent redundant replay (2026-10-10)
+
+- Cross-phase review showed that uploaded paper U14 (Shaha's CCI NIFTY-options paper) is the same source already targeted by Phase 66.
+- Phase 66's fixed OHLC-based test of CCI_BASE and the CCI+EMA adaptation produced zero completed trades and zero trigger/entry/exit coverage on the available 2021–2025 sample; profitability was not estimable. It is not a successful numerical replication of the paper's 2008–2018 result.
+- Added explicit cross-links to Phase 66 in the U14 source audit and the manuscript; updated the Phase 93 branch README from a stale pending state to the actual successful bibliography validator status.
+- No model or market-data tests were rerun; the accepted Phase 93 audit and Phase 92 results were not altered. Do not repeat the same CCI rule test without materially new authorized source coverage.
