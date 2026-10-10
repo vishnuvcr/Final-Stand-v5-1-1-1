@@ -1,14 +1,16 @@
 # Phase 60 status — evidence sufficiency and decision gate
 
-**Overall:** ACTIVE — bounded synthesis / no new empirical test.
+**Overall:** COMPLETE — evidence-sufficiency decision is NO-GO for further empirical strategy testing until the restart checklist is met.
 
 - **Branch:** `phase-60-evidence-sufficiency-gate`
 - **Parent:** Phase 59 public option-data coverage audit.
 - **Purpose:** decide whether accepted Phase 52–59 evidence supports further factor-conditioned profitability testing.
 - **Frozen:** event universe, strategy grid, prior-OI rule, 2% OHLC baseline, cost assumptions, splits and holdout.
 - **No data downloads, scraping, purchases, credentials or license acceptance.**
-- **Current decision pending automated consistency checks.**
+- **Final decision:** NO-GO; accepted evidence is insufficient for a defensible factor-conditioned profitability comparison.
 - **Strategy promotion:** none.
+- **Automated gate:** regression tests, decision report validation, artifact upload and checkpoint persistence passed in [run 38021675579](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38021675579).
+- **Research may reopen only when:** a source passes license/access and exact target-date contract/timestamp validation; otherwise stop this empirical path.
 
 ## Automated checkpoint 38021585340
 
