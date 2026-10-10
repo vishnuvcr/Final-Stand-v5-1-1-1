@@ -6,6 +6,7 @@ The next bounded experiment freezes a new axis: paired intraday (09:20–15:20) 
 
 - [Phase 80 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_RESEARCH_PLAN.md)
 - [Phase 80 source/strategy matrix](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_SOURCE_STRATEGY_MATRIX.md)
+- [Phase 80 literature review — uploaded papers and public research](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_LITERATURE_REVIEW.md)
 - [Phase 80 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/PHASE80_STATUS.md)
 - [Phase 80 report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-80-expanded-universe-and-literature-audit/results/phase80_universe_audit/report.md)
 - [Phase 80 registry workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38043832691)
