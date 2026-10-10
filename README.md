@@ -1,16 +1,19 @@
 <!-- PHASE94_START -->
-# Current checkpoint — Phase 98 CCI options paper replication gate
+# Current checkpoint — Phase 99 options strategy taxonomy replay
 
-**Status: CCI REPLAY DATA-BLOCKED pending automated evidence reconciliation.** Phase 66 recorded zero completed CCI trades; Phase 85's then-verified free-source audit was no-go for a new execution-quality replay. Phase 87–89 rolling ATM-relative coverage does not establish exact-contract bid/ask/depth for the paper's period. Phase 98 is explicitly checking whether any newer eligible evidence changes that conclusion; it will not repeat the same zero-coverage replay.
+**Status: analytical payoff formulas passed; historical market P&L remains DATA-BLOCKED.** Phase 99 tests 13 source-described or explicitly operationalized option structures across nine illustrative expiry prices. Premiums/strikes in the generic examples are arithmetic test inputs, not historical NIFTY quotes.
 
-- [Phase 98 plan](PHASE98_RESEARCH_PLAN.md) · [status](PHASE98_STATUS.md) · [evidence gate report](results/phase98/REPORT.md)
-- [Evidence matrix](results/phase98/evidence_gate.csv) · [summary](results/phase98/summary.json)
-- [Research log](PHASE98_RESEARCH_LOG.md) · [error log](PHASE98_ERROR_LOG.md) · [decision log](PHASE98_CHAT_LOG.md)
-- [Automatic/manual workflow](.github/workflows/phase98-cci-options-paper-replication-gate.yml)
-- [Phase 97 ML options gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-97-ml-options-strategy-replication) — workflow passed; 13 required exact-contract/point-in-time controls were blocked, so no model was trained and no P&L inferred.
-- [Phase 96 SMA/EMA signal screen](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-96-moving-average-seasonality-replication) — corrected replay passed; results are operationalized index signal variants, not option P&L or exact paper reproduction.
+- [Phase 99 plan](PHASE99_RESEARCH_PLAN.md) · [status](PHASE99_STATUS.md) · [report](results/phase99/REPORT.md)
+- [Illustrative payoff grid](results/phase99/illustrative_payoffs.csv) · [source method statuses](results/phase99/source_method_status.csv) · [summary](results/phase99/summary.json)
+- [Research log](PHASE99_RESEARCH_LOG.md) · [error log](PHASE99_ERROR_LOG.md) · [decision log](PHASE99_CHAT_LOG.md)
+- [Workflow](.github/workflows/phase99-options-strategy-taxonomy-replay.yml) · [successful run 38073059250](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38073059250)
 
-**Guardrails:** no invented contracts/fills, no profitability claim without Paytm Money brokerage, statutory levies, spread, slippage and stress, and no access to the sealed 2026 holdout. Phase 100 remains the finite synthesis/manuscript stop boundary.
+**Source finding:** U07's “Short Butterfly” put section describes long 1 lower-strike put, short 2 middle-strike puts, and long 1 higher-strike put—legs that produce a long-butterfly payoff. The mismatch is preserved as a source ambiguity. U05's first-Thursday/T+3/20%-target/30%-stop procedure cannot be replayed as a historical options strategy without exact-contract prices, liquidity and early-exit fills.
+
+- [Phase 98 CCI gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-98-cci-options-paper-replication-gate): DATA-BLOCKED; no new eligible source established.
+- [Phase 97 ML options gate](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-97-ml-options-strategy-replication): 13 required controls blocked; no model trained.
+- [Phase 96 SMA/EMA screen](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-96-moving-average-seasonality-replication): operationalized index screen passed; source-specific seasonality/timing remains partial.
+- Phase 100 is the final cross-paper synthesis and manuscript phase; no strategy has been promoted and the 2026 holdout remains sealed.
 <!-- PHASE94_END -->
 
 <!-- PHASE92_START -->
