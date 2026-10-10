@@ -1,0 +1,89 @@
+name: Phase 57 — Cost-aware OHLC range sensitivity
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/phase57/**"
+      - "PHASE57_*.md"
+      - "research/phase52/historical_pilot_runner.py"
+      - "research/phase52/replay_kernel.py"
+      - "results/phase52/historical_pilot/event_replay.csv"
+      - ".github/workflows/phase-57-cost-aware-range-sensitivity.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase-57-cost-aware-range-sensitivity
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout phase branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-57-cost-aware-range-sensitivity-replay
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Restore pinned Hugging Face cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase57-hf-${{ hashFiles('research/phase52/first_historical_pilot.json', 'results/phase52/historical_pilot/source_file_audit.csv') }}
+          restore-keys: |
+            phase57-hf-
+      - name: Install pinned replay dependencies
+        run: python -m pip install --disable-pip-version-check pandas numpy pyarrow huggingface_hub matplotlib
+      - name: Regression tests
+        run: |
+          cd research/phase57
+          python -m unittest -v test_cost_aware_range_sensitivity.py
+      - name: Run frozen 11-threshold cost-aware replay
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python research/phase57/cost_aware_range_sensitivity.py
+      - name: Upload sensitivity artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase57-cost-aware-range-sensitivity-${{ github.run_id }}
+          path: |
+            results/phase57/cost_aware_range_sensitivity/**
+          if-no-files-found: warn
+      - name: Persist results and phase checkpoint
+        if: always()
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run_id=os.environ["RUN_ID"]
+          run_url=os.environ["RUN_URL"]
+          status=os.environ["JOB_STATUS"]
+          p=Path("results/phase57/cost_aware_range_sensitivity/report.json")
+          report=json.loads(p.read_text()) if p.exists() else {"status":"NO_REPORT","error":"replay did not produce report"}
+          line=(f"\n## Run {run_id}\n\n- Run: [{run_id}]({run_url}); job status={status}; report={report.get('status','NO_REPORT')}.\n"
+                f"- Replay passes by threshold={json.dumps(report.get('replay_pass_counts_by_threshold',{}),sort_keys=True)}.\n"
+                f"- Cost rows={report.get('cost_scenario_rows','n/a')}; holdout used={report.get('holdout_used','n/a')}; promotion eligible={report.get('production_or_promotion_eligible','n/a')}.\n"
+                "- Modeled P&L only; OHLC range is not spread and aggregate configuration-event P&L is not portfolio P&L.\n")
+          for name in ["PHASE57_STATUS.md","PHASE57_RESEARCH_LOG.md","PHASE57_CHAT_LOG.md"]:
+              with Path(name).open("a") as f: f.write(line)
+          if status != "success" or report.get("status") != "COST_AWARE_RANGE_SENSITIVITY_COMPLETE":
+              with Path("PHASE57_ERROR_LOG.md").open("a") as f:
+                  f.write(f"\n## F57-RUN-{run_id} — replay failed or incomplete\n\n- Run: {run_url}\n- Job status={status}; report status={report.get('status','NO_REPORT')}; error={report.get('error','not available')}\n- No strategy conclusion accepted.\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE57_STATUS.md PHASE57_RESEARCH_LOG.md PHASE57_CHAT_LOG.md PHASE57_ERROR_LOG.md results/phase57/cost_aware_range_sensitivity
+          git diff --cached --quiet || git commit -m "Record Phase57 cost-aware sensitivity checkpoint"
+          git push origin HEAD:phase-57-cost-aware-range-sensitivity-replay
