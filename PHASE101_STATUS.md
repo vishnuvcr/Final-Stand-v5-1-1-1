@@ -1,8 +1,8 @@
 # Phase 101 Status — Full PDF Strategy Replication Gap-Fill
 
-**State:** REVALIDATION RUN REQUIRED — stress-cost audit correction committed; prior stress output superseded  
+**State:** REPLAY PASSED; ACCOUNTING RECONCILED — no strategy promoted  
 **Branch:** `phase-101-full-pdf-strategy-replication`  
-**Updated:** 2026-10-10  
+**Updated:** 2026-10-11  
 **Strategy promotion:** NONE  
 **Holdout:** 2026 remains excluded
 
@@ -134,3 +134,12 @@ The first corrected run prevented look-ahead by shifting some entries to the sec
 - U02: 1330 predictions; 164 costed trades; model statuses [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
 - Account sizing: sequential per-model ₹1 lakh starting equity, 95% premium deployment limit, 5% fee reserve.
 - Bootstrap: circular moving-block 95% mean net-trade CI only when n>=20.
+
+
+## Latest verified run — 2026-10-11
+
+- [GitHub Actions run 38080831113](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38080831113) completed successfully; syntax/unit tests, historical replay, output contract and publication all passed.
+- U02 equity reconciliation passes for LSTM5, RF and XGBoost (absolute difference below ₹0.01). Peak/trough and percentage-of-peak drawdown are now published in `u02_strategy_summary.csv`.
+- All three U02 accounts ended down approximately 99.99%; drawdown approached 100% from elevated compounded equity peaks. This is a severe risk outcome, not a bookkeeping discrepancy.
+- Corrected additional-impact stress totals are negative for all three models. Bootstrap confidence intervals cross zero. No strategy promoted; 2026 holdout remains excluded.
+- The U05 result remains only a modern-sample proxy with seven completed trades; do not infer robust expectancy.
