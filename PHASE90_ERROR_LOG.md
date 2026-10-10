@@ -29,4 +29,4 @@ The initial study run and cached interpretation rerun both completed successfull
 
 ## E90-008 — downstream replication complete; result does not replicate the small 2024 gain
 
-Phase 91 completed successfully in [Actions run 38049302830](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049302830). The 2023 sample had 3,633 OOS rows across 60 sessions; M1−M2 MAE = +0.0001111 bps, 95% paired session-cluster CI −0.0110700 to +0.0102532. The interval crossed zero, so no incremental gain was established. This is a child-phase scientific result, not a Phase 90 execution error. No strategy P&L was computed or strategy promoted.
+Phase 91 completed successfully in [Actions run 38049680438](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049680438). The 2023 sample had 3,633 OOS rows across 60 sessions; M1−M2 MAE = +0.0001111 bps, 95% paired session-cluster CI −0.0110700 to +0.0102532. The interval crossed zero, so no incremental gain was established. This is a child-phase scientific result, not a Phase 90 execution error. No strategy P&L was computed or strategy promoted.
