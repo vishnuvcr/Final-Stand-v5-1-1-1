@@ -1,0 +1,9 @@
+evidence_item,observed_state,status,consequence
+Phase 66 CCI replay,zero completed trades,EXISTING_BLOCKER,No estimable trade-level profitability; identical rerun prohibited.
+Phase 85 source audit,no-go on then-verified free sources for execution-quality replay,EXISTING_BLOCKER,No qualified new exact-contract source is established by the registered evidence.
+Phase 87 probe,150 rolling ATM-relative five-minute candles on one date,LIMITED_COVERAGE_ONLY,Field shape does not establish fixed-contract historical execution.
+Phase 88 audit,608 rolling ATM-relative candles across four series,LIMITED_COVERAGE_ONLY,No broad fixed-contract bid/ask/depth coverage proved.
+Phase 89 study,2025 rolling ATM-relative feature coverage,LIMITED_COVERAGE_ONLY,Feature association sample is not the paper's source-period CCI trade ledger.
+Original-period exact contract mapping,not present in audited evidence summary,BLOCKED,Cannot reconstruct source-faithful option entries/exits.
+Historical bid/ask/depth or validated fills,not established by audited evidence,BLOCKED,Cannot estimate executable option P&L and slippage.
+Paytm Money full historical cost model,not verified across paper period,BLOCKED,No definitive net P&L claim.

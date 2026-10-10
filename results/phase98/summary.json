@@ -1,0 +1,8 @@
+{
+  "status": "DATA_BLOCKED_NO_NEW_ELIGIBLE_SOURCE",
+  "new_replay_run": false,
+  "reason": "No newly qualified source data",
+  "option_pnl_computed": false,
+  "holdout_2026_accessed": false,
+  "evidence_rows": 8
+}
