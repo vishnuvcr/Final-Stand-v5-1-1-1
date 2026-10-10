@@ -198,3 +198,13 @@ The workflow failed before a machine-readable result was written. No source/data
 - Run [38089336359](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089336359) failed before any API call because a test referenced `provider_to_date` without importing it.
 - Its status step read the repository's previous audit JSON and repeated its PASS state despite the current run never making an API request. This was an output-isolation bug and has been logged as E103-012.
 - Fixes: import the helper, remove checked-in audit outputs from the runner workspace before each run, verify the machine JSON run ID before writing status, and add explicit run-specific no-output entries on failure. The next run will perform ten stock/side probes only after all tests pass.
+
+<!-- DHAN_API_RUN_38089393338_ATTEMPT_1 -->
+## Dhan Data API audit — run 38089393338, attempt 1 — 2026-10-10T21:55:03.773246+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 10/10.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

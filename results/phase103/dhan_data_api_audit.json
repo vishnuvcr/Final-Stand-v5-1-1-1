@@ -1,14 +1,18 @@
 {
   "phase": "103.1",
-  "run_id": "38089220578",
-  "generated_at_utc": "2026-10-10T21:51:35.348889+00:00",
+  "run_id": "38089393338",
+  "generated_at_utc": "2026-10-10T21:54:31.912220+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
-    "to_exclusive": "2026-08-03",
-    "span_days": 0,
-    "request_mode": "same_date_endpoint_semantics_diagnostic"
+    "to_exclusive": "2026-08-04",
+    "span_days": 1,
+    "request_mode": "half_open_target_window_with_inclusive_provider_toDate_adjustment"
   },
-  "probe_limit": 1,
+  "provider_request_window": {
+    "fromDate": "2026-08-03",
+    "toDate_inclusive": "2026-08-03"
+  },
+  "probe_limit": 10,
   "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
   "instrument_master_sha256": "2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173",
   "instrument_master_bytes": 26116616,
@@ -67,6 +71,258 @@
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "PUT",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "PUT",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "PUT",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "CALL",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null
     }
   ],
   "raw_rows_persisted": false,
@@ -75,7 +331,7 @@
     "Rolling strikes can change actual strike over time.",
     "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
     "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
-    "Returned timestamps are audited in Asia/Kolkata against the documented half-open request window; out-of-window rows block accepting the sample."
+    "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."
   ],
   "status": "PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES",
   "rows_outside_requested_date_window_total": 0
