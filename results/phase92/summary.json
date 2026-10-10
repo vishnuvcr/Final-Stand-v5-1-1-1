@@ -10,7 +10,7 @@
   "oos_complete_rows": 3660,
   "training_gate_pass": true,
   "phase": 92,
-  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106",
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051802080",
   "status": "NEGATIVE INCREMENTAL VALUE \u2014 synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample",
   "requested_period": [
     "2022-01-01",
@@ -21,6 +21,7 @@
     "status": "UNIQUE_MATCH",
     "candidate_count": 1,
     "security_id_resolved": true,
+    "http_status": 200,
     "candidate_ids": [
       "21"
     ],
@@ -48,8 +49,8 @@
   "vix_chunks_valid": 5,
   "vix_chunks_total": 5,
   "primary": {
-    "delta_mae_bps": -0.17083628058508094,
-    "ci95_low": -0.2298768554185347,
+    "delta_mae_bps": -0.17083628058508182,
+    "ci95_low": -0.22987685541853298,
     "ci95_high": -0.11520151413086274,
     "positive_share": 0.0,
     "replicates": 5000,

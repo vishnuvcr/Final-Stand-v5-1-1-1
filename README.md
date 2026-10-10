@@ -1,18 +1,13 @@
 <!-- PHASE92_START -->
 # Resume checkpoint — Phase 92 synthetic-forward proxy and OI study
 
-**Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample.** Automated run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106). This fixed 2022 sample tests whether lagged rolling-ATM synthetic-forward gap and CALL/PUT OI imbalance improve next-15-minute absolute NIFTY spot-move prediction beyond spot, India VIX and IV. The protected 2026 holdout was not requested or loaded.
+**Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample.** Automated run [38051802080](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051802080). This fixed 2022 sample tests whether lagged rolling-ATM synthetic-forward gap and CALL/PUT OI imbalance improve next-15-minute absolute NIFTY spot-move prediction beyond spot, India VIX and IV. The protected 2026 holdout was not requested or loaded.
 
 - [Phase 92 plan](PHASE92_RESEARCH_PLAN.md)
 - [Phase 92 status](PHASE92_STATUS.md)
 - [Phase 92 error log](PHASE92_ERROR_LOG.md)
 - [Phase 92 auditable chat log](PHASE92_CHAT_LOG.md)
 - [Detailed results](results/phase92/PHASE92_RESULTS.md)
-- [Research manuscript draft](results/phase92/MANUSCRIPT_DRAFT.md)
-- [Supplementary materials](results/phase92/SUPPLEMENTARY_MATERIALS.md)
-- [IV incremental effects figure](results/phase92/IV_INCREMENTAL_EFFECTS.svg)
-- [OOS MAE comparison figure](results/phase92/OOS_MAE_COMPARISON.svg)
-- [Cross-phase factor synthesis and stop decision](results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md)
 - [Cross-feature model metrics](results/phase92/model_metrics.csv)
 - [Coverage ledger](results/phase92/coverage.csv)
 - [Summary JSON](results/phase92/summary.json)

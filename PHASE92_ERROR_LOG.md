@@ -37,7 +37,7 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 - No API/network/schema failures in the accepted run. This is a spot-move predictor result, not exact futures-basis, executable-fill, or strategy P&L evidence. No strategy promoted; Phase 83 2026 holdout untouched.
 
 <!-- PHASE92_RUNTIME_START -->
-## Runtime summary — 38050805106
+## Runtime summary — 38051802080
 - Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample
 - Options valid chunks: 54/54
 - VIX valid chunks: 5/5
