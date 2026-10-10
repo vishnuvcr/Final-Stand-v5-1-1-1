@@ -1,3 +1,16 @@
+# Resume checkpoint — 2026-10-10 (Phase 77 partial-OOS inference)
+
+Phase 77 reconciled the frozen Phase 51-3 ledgers and ran a 10,000-replicate expiry-cluster bootstrap. Ledger counts and totals reconcile. TT-04 is +₹13,271.51 at base costs and +₹5,897.66 under ₹20/order plus 50% friction; TT-05 is +₹17,098.15 base and +₹9,850.12 under the same stress; TT-02 is negative in all four cases. The 95% expiry-cluster bootstrap total-net intervals include zero for TT-04 and TT-05, so these are still descriptive candidates, not promoted strategies. Only the 2026-04-21 to 2026-07-21 partial interval is covered; expiries 2026-07-28 and 2026-08-04 remain excluded.
+
+- [Phase 77 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-77-partial-oos-inference-audit/PHASE77_RESEARCH_PLAN.md)
+- [Phase 77 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-77-partial-oos-inference-audit/PHASE77_STATUS.md)
+- [Phase 77 error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-77-partial-oos-inference-audit/PHASE77_ERROR_LOG.md)
+- [Phase 77 inference script](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-77-partial-oos-inference-audit/scripts/phase77_partial_oos_inference.py)
+- [Phase 77 workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-77-partial-oos-inference-audit/.github/workflows/phase77-partial-oos-inference.yml)
+- [Phase 77 workflow run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38043011951)
+
+---
+
 ## Phase 51-2 — Available-data partial OOS — CLOSED / NO ELIGIBLE CAMPAIGNS
 
 Phase 51-2 is closed as a **calendar/opportunity audit**, not as an economic strategy pass/fail. The frozen Phase-51-1 option source contains 14 observed expiries from **2026-04-21 through 2026-07-21**, all Tuesdays. The frozen TT-03 rule requires entry exactly three calendar days before expiry, so every scheduled entry date falls on Saturday. Both frozen TT-03 BASE (300/350/400) and OTM350 (350/400/450) therefore have **0 eligible campaigns** and no valid P&L sample.
