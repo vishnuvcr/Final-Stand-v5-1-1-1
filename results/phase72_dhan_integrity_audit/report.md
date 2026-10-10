@@ -2,7 +2,7 @@
 
 Decision: **AUDIT_RECORDED_REVIEW_REQUIRED**
 
-Checked UTC: 2026-10-10T09:36:03.250548+00:00
+Checked UTC: 2026-10-10T09:36:36.306926+00:00
 
 | Date | Flag | Side | Timestamps | Target date | Regular session | Duplicates | Gaps >1m | OHLC valid/invalid | Alignment |
 |---|---|---|---:|---:|---:|---:|---:|---:|---|
@@ -10,10 +10,10 @@ Checked UTC: 2026-10-10T09:36:03.250548+00:00
 | 2026-07-28 | WEEK | PUT | 750 | 375 | 375 | 0 | 0 | 750/0 | True |
 | 2026-07-28 | MONTH | CALL | 750 | 375 | 375 | 0 | 0 | 750/0 | True |
 | 2026-07-28 | MONTH | PUT | 750 | 375 | 375 | 0 | 0 | 750/0 | True |
-| 2026-08-04 | WEEK | CALL | 770 | 385 | 376 | 0 | 0 | 770/0 | True |
-| 2026-08-04 | WEEK | PUT | 770 | 385 | 376 | 0 | 0 | 770/0 | True |
-| 2026-08-04 | MONTH | CALL | 770 | 385 | 376 | 0 | 0 | 770/0 | True |
-| 2026-08-04 | MONTH | PUT | 770 | 385 | 376 | 0 | 0 | 770/0 | True |
+| 2026-08-04 | WEEK | CALL | 770 | 385 | 375 | 0 | 0 | 770/0 | True |
+| 2026-08-04 | WEEK | PUT | 770 | 385 | 375 | 0 | 0 | 770/0 | True |
+| 2026-08-04 | MONTH | CALL | 770 | 385 | 375 | 0 | 0 | 770/0 | True |
+| 2026-08-04 | MONTH | PUT | 770 | 385 | 375 | 0 | 0 | 770/0 | True |
 
 ## Interpretation
 
