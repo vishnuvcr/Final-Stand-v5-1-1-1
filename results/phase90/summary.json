@@ -10,8 +10,8 @@
   "oos_rows_with_iv": 3604,
   "oos_sessions_with_iv": 60,
   "phase": 90,
-  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498",
-  "status": "PASS \u2014 IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX",
+  "run_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674",
+  "status": "PASS \u2014 small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence",
   "requested_period": [
     "2024-01-01",
     "2024-12-31_exclusive"
@@ -21,7 +21,6 @@
     "status": "UNIQUE_MATCH",
     "candidate_count": 1,
     "security_id_resolved": true,
-    "http_status": 200,
     "candidate_ids": [
       "21"
     ],

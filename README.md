@@ -1,7 +1,7 @@
 <!-- PHASE90_START -->
 # Resume checkpoint — Phase 90 IV incremental-prediction study
 
-**Status: PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX.** Automated run [38048410498](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498). The independent sample is calendar 2024, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
+**Status: PASS — small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence.** Automated run [38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674). The independent sample is calendar 2024, testing whether ATM IV improves prediction of the next-15-minute absolute NIFTY spot move beyond lagged spot movement and India VIX. The protected 2026 holdout was not requested or loaded.
 
 - [Phase 90 plan](PHASE90_RESEARCH_PLAN.md)
 - [Phase 90 status](PHASE90_STATUS.md)

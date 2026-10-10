@@ -24,9 +24,9 @@ User replied “Ok proceed” after Phase 89 recommended testing whether ATM IV 
 Pending automated GitHub Actions run.
 
 <!-- PHASE90_RUNTIME_START -->
-## Automated execution record — 38048410498
-- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498
-- Status: PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX
+## Automated execution record — 38048556674
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674
+- Status: PASS — small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence
 - VIX ID resolved dynamically: True
 - Options valid chunks=54/54; VIX valid chunks=5/5
 - OOS rows/sessions=3604/60

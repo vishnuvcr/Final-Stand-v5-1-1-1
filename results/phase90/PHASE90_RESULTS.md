@@ -1,7 +1,7 @@
 # Phase 90 Results — incremental IV prediction beyond spot and India VIX
 
-Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498  
-Status: **PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX**  
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674  
+Status: **PASS — small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence**  
 Sample: calendar 2024 only. Protected Phase 83 2026 holdout was not requested or loaded.
 
 ## Coverage and data-quality summary
@@ -30,6 +30,9 @@ All model scaling and coefficients are fit on DEV only. Validation cannot tune t
 
 ## Preregistered primary endpoint
 M1 MAE − M2 MAE = 0.0330 bps (paired session-cluster bootstrap 95% CI 0.0001 to 0.0562; bootstrap positive share 0.9750; 5000 resamples).
+
+## Effect size and caution
+The OOS MAE falls from 5.9953 to 5.9623 bps, a 0.5511% relative reduction; RMSE falls by 0.0206 bps and R² moves from 0.0536 to 0.0578. The lower confidence limit (0.0001 bps) is very close to zero, so the gain is small and should be independently replicated before strategy use.
 
 Decision rule: only claim incremental predictive value if the sample and VIX gates pass and the 95% bootstrap interval for M1 MAE − M2 MAE is wholly above zero. Otherwise the registered test does not establish a gain; that is not proof IV has no information.
 

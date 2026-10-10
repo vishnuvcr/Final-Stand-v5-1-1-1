@@ -1,8 +1,8 @@
 # Phase 90 Status
 
 Date: 2026-10-10  
-Status: **PASS — IV improves out-of-sample magnitude prediction beyond lagged spot features and India VIX**  
-Latest workflow run: [38048410498](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048410498)  
+Status: **PASS — small incremental OOS IV magnitude-prediction gain beyond spot features and India VIX; not strategy evidence**  
+Latest workflow run: [38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674)  
 Strategy promotion: **NONE**.
 
 - [Research plan](PHASE90_RESEARCH_PLAN.md)
