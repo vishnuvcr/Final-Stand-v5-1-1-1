@@ -1,3 +1,17 @@
+<!-- PHASE95_CHECKPOINT_START -->
+## Phase 95 — Frozen-Universe Strategy Selection Test
+
+**Status: COMPLETE — primary endpoint failed; NO PROMOTION.** The DEV-selected candidate `call_backspread` returned **−₹24,261.74** in validation under the source's 50%-friction scenario, despite +₹27,393.35 on development. The selected candidate had 101 validation trades and source max drawdown ₹112,975.51.
+
+- [Research plan](PHASE95_RESEARCH_PLAN.md) · [status](PHASE95_STATUS.md) · [error log](PHASE95_ERROR_LOG.md) · [visible chat/decision log](PHASE95_CHAT_LOG.md)
+- [Results report](results/phase95/selection_test_report.md) · [machine report](results/phase95/validation_report.json) · [candidate rows](results/phase95/selection_results.csv) · [test script](research/phase95/run_selection_test.py) · [workflow with manual run](.github/workflows/phase95-selection-test.yml)
+- Frozen universe: 23 eligible defined-risk candidates after requiring at least 50 DEV trades and both DEV/VAL rows. Only 3/23 had positive validation net50; this count is descriptive and not used for post-hoc selection.
+- Latest successful run: [38054487643](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38054487643). The workflow verifies the source blob SHA and runs the frozen DEV-to-VAL rule.
+- This is retrospective analysis of a previously explored summary table, not blinded independent validation. No HOLD rows were used, Phase 83's protected 2026 holdout was not accessed, and no market-data download or strategy replay was run.
+- No strategy is promoted. The source's 50%-friction scenario does not certify full Paytm Money all-in costs or executable fills. [Draft PR #45](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/45) remains for review.
+
+<!-- PHASE95_CHECKPOINT_END -->
+
 <!-- PHASE94_CHECKPOINT_START -->
 ## Phase 94 — Final Strategy Evidence Audit and Promotion Gate
 
