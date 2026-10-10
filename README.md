@@ -1,47 +1,36 @@
 <!-- CURRENT_RESEARCH_CHECKPOINT_START -->
 # Final Stand v5 1-1-1 — Current Research Checkpoint (2026-10-10)
 
-## Latest completed predictive study: Phase 91 temporal replication
+## Latest completed predictor screen: Phase 92 (2022)
 
-**Result: NO INCREMENTAL IV GAIN ESTABLISHED in the preregistered 2023 replication.** Data-quality and sample gates passed, but the measured MAE improvement was effectively zero and its confidence interval crossed zero. This does not prove IV contains no information; it means the registered replication did not establish reliable incremental prediction. No options strategy was promoted.
+**Result: NEGATIVE incremental predictive value for the combined rolling synthetic-forward proxy + CALL/PUT OI block.** The fixed 2022 study's sample, training and VIX gates passed; the full data/coverage audit passed after correctly classifying the final weekend-only interval as an expected empty window.
 
-- Sample: calendar 2023 only; DEV Jan–Jun, validation Jul–Sep (report-only), confirmatory OOS Oct–Dec.
-- Coverage: 54/54 options chunks and 5/5 India VIX chunks passed; unique VIX instrument-master match.
-- Paired CALL/PUT rows: 18,473 across 246 sessions, with zero spot mismatches and zero strike mismatches.
-- Confirmatory OOS: 3,633 observations across 60 sessions; VIX coverage 99.978% in OOS.
-- Primary endpoint: M1 MAE − M2 MAE = **+0.0001111 bps**; paired session-cluster bootstrap 95% CI **−0.0110700 to +0.0102532 bps**, 5,000 resamples; bootstrap-positive share 52.4%.
-- OOS MAE: M1 spot+VIX = 3.9156 bps; M2 spot+VIX+IV = 3.9155 bps. Relative MAE reduction is ~0.0028%, with confidence interval crossing zero.
+- Valid coverage: 54/54 option windows and 5/5 India VIX windows.
+- Validated paired CALL/PUT rows: 18,579 over 248 sessions; zero spot mismatches, one strike mismatch excluded.
+- Confirmatory OOS: 3,660 observations across 61 sessions.
+- Baseline M2 (spot + VIX + IV) MAE: **4.8214 bps**.
+- M3 adding the synthetic-forward proxy gap MAE: **4.8791 bps**.
+- M4 adding OI imbalance as well MAE: **4.9922 bps**.
+- Primary M2−M4 MAE difference: **−0.1708363 bps**, paired session-cluster bootstrap 95% CI **−0.2298769 to −0.1152015** (5,000 resamples, seed 90210). The entire interval is below zero; adding the feature block worsened out-of-sample spot-move magnitude prediction in this fixed sample.
 
-[Phase 91 results report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/PHASE91_RESULTS.md) · [cross-year synthesis / stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/CROSS_YEAR_SYNTHESIS.md) · [summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/summary.json) · [coverage ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/coverage.csv) · [model metrics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/model_metrics.csv) · [Actions run 38049680438](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38049680438)
+[Phase 92 detailed results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/PHASE92_RESULTS.md) · [cross-phase factor synthesis / stopping decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md) · [summary JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/summary.json) · [coverage ledger](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/coverage.csv) · [model metrics](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/model_metrics.csv) · [Actions run 38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106)
 
-- [Phase 91 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/PHASE91_CHAT_LOG.md) · [engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/research/phase91/iv_incremental_study.py)
-- [Phase 91 draft PR #41](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/41) remains unmerged. [Default-branch automated/manual runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase91-pr-runner.yml).
+- [Phase 92 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_ERROR_LOG.md) · [auditable chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_CHAT_LOG.md)
+- [Draft PR #42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42) remains open/draft/unmerged. [Default-branch automatic push runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml).
 
-## Preceding study: Phase 90 (2024)
+## Preceding IV evidence: Phases 89–91
 
-Phase 90 had found a small positive incremental OOS prediction result: M1–M2 MAE difference +0.0330 bps, 95% CI +0.0001 to +0.0562 bps over 3,604 OOS observations / 60 sessions. The 2023 temporal replication did not reproduce it. Taken together, the evidence does **not** justify using rolling ATM IV as an incremental predictor within a trading rule without a new preregistered research question and further independent evidence.
+- **Phase 89, 2025 association study:** mean ATM IV association with next-15-minute absolute spot movement survived Holm correction, but association alone was not evidence of incremental model utility or profitability.
+- **Phase 90, 2024 incremental test:** M1−M2 MAE improvement +0.0330 bps, 95% CI +0.0001 to +0.0562 over 3,604 OOS rows / 60 sessions—a very small positive result.
+- **Phase 91, independent 2023 replication:** +0.0001111 bps improvement, 95% CI −0.0110700 to +0.0102532; no incremental gain established.
 
-[Phase 90 results](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/results/phase90/PHASE90_RESULTS.md) · [Phase 90 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-90-iv-incremental-prediction/PHASE90_STATUS.md) · [Actions run 38048556674](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38048556674)
+Taken together, the fixed studies do not establish a reliable temporally replicable ATM-IV prediction edge. See the [Phase 91 cross-year synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-91-iv-temporal-replication-2023/results/phase91/CROSS_YEAR_SYNTHESIS.md) and the [Phase 92 cross-phase synthesis](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/results/phase92/CROSS_PHASE_FACTOR_SYNTHESIS.md).
 
-## Strategy and data-quality gate
+## Terminal decision for this predictor line
 
-**No strategy is approved for live deployment.** These studies model near-term spot-move magnitude; they do not establish direction, causality, exact listed-contract premium fills, historic bid/ask/depth, or cost-adjusted options P&L. Any later strategy replay requires authorized exact-contract data and Paytm Money brokerage, statutory charges, spread, slippage, latency and stress costs. The protected Phase 83 2026 holdout remains sealed.
+The preregistered rolling-ATM IV / synthetic-proxy / OI predictor screen is closed at Phase 92's stop boundary. Do not search additional years or tune the features to obtain a positive result. Reopen only for a materially new, preregistered hypothesis or authorized execution-grade data that can identify exact listed contracts and historical executable quotes.
 
-The rolling-IV incremental-prediction line is now closed at its planned one-replication stop: one positive 2024 sample and one non-replicating 2023 sample. Reopen it only with a materially new hypothesis or improved execution-grade data, not by searching years until a positive result appears. Broader historical strategy replay remains source/coverage-gated; no fabricated fills, shortened OOS window or unverified source is accepted as executable evidence.
-
-
-
-## Current phase: Phase 92 synthetic-forward proxy + OI predictor study
-
-**Status: PREREGISTERED; GitHub Actions run is pending.** The finite 2022 study asks whether a lagged rolling-ATM synthetic-forward proxy gap and CALL/PUT OI imbalance add predictive value beyond spot features, India VIX and IV. It is explicitly **not** an actual futures-price/arbitrage test or a strategy P&L test.
-
-- [Phase 92 plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_RESEARCH_PLAN.md)
-- [Phase 92 status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_STATUS.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_ERROR_LOG.md) · [auditable log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/PHASE92_CHAT_LOG.md)
-- [Analysis engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/research/phase92/synthetic_forward_oi_study.py) · [workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-92-synthetic-forward-oi-study-2022/.github/workflows/phase92-synthetic-forward-oi-2022.yml)
-- [Draft PR #42](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/pull/42) · [Actions run 38050610192](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192)
-- [Default-branch runner + manual dispatch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/main/.github/workflows/phase92-pr-runner.yml)
-
-All predictors derived from the rolling option/VIX candles are lagged one full five-minute row to guard against candle-start timestamps. Direct historical FUTIDX basis, Greeks, bid/ask/depth and cost-adjusted option execution remain outside this phase because the available rolling endpoint does not establish those inputs. Phase 60/61 source gates are not reopened; no strategy is promoted.
+**No options strategy is approved or promoted for live trading.** These are studies of absolute next-15-minute *spot-return magnitude*, not direction, options P&L, futures basis, or executable fills. Phase 92's (K+C-P) value is an ATM-relative proxy—not an actual traded FUTIDX price or arbitrage signal. Phase 60/61 source gates for exact-contract OI/quotes remain closed; do not repeat rejected metadata-only searches. A future strategy replay must include Paytm Money brokerage, statutory charges, spread, adverse slippage, latency and cost stress. The protected Phase 83 2026 holdout remains sealed.
 
 <!-- CURRENT_RESEARCH_CHECKPOINT_END -->
 
