@@ -19,7 +19,7 @@ User asked: “Rerun the research with this data now!”
 6. Keep raw response payloads in the repository-scoped Actions cache only and publish aggregate results / audit data.
 
 ## Execution
-Pending the automatically triggered Phase 89 GitHub Actions run.
+The corrected, bounded Phase 89 workflow completed successfully in run [38047775690](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38047775690). The first statistically completed run was treated as provisional and superseded after a boundary/strike-roll audit. The final run uses requests strictly bounded to 2025 and stable-strike OI changes.
 
 <!-- PHASE89_RUNTIME_START -->
 ## Automated execution record — 38047775690
