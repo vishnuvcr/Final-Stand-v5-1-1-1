@@ -1,11 +1,11 @@
 # Phase 92 Results — synthetic-forward proxy and CALL/PUT OI imbalance
 
-Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192  
-Status: **NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero**  
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106  
+Status: **NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample**  
 Sample: calendar 2022 only. Phase 90/91 cached payloads are not reused. The protected Phase 83 2026 holdout was not requested or loaded.
 
 ## Coverage and data-quality summary
-- Options chunks valid: 52/54.
+- Options chunks valid: 54/54.
 - India VIX chunks valid: 5/5.
 - Instrument-master resolution: UNIQUE_MATCH; unique eligible India VIX IDs=1.
 - Paired option rows after spot/strike validation: 18579 across 248 sessions.
@@ -45,7 +45,7 @@ M2 MAE − M4 MAE = -0.1708 bps (paired session-cluster bootstrap 95% CI -0.2299
 ## Effect size
 OOS MAE changes from 4.8214 to 4.9922 bps, a -3.5433% relative reduction. RMSE changes by -0.0612 bps; R² moves from 0.0723 to 0.0550. The confidence interval, not the point estimate alone, governs the registered conclusion.
 
-Decision rule: claim added predictive value only if all data/sample gates pass and the entire 95% paired session-cluster bootstrap interval for M2 MAE − M4 MAE is above zero. An interval crossing zero does not establish a gain, and does not prove the features contain no information.
+Decision rule: claim added predictive value only if all data/sample gates pass and the entire 95% paired session-cluster bootstrap interval for M2 MAE − M4 MAE is above zero. If the entire interval is below zero, the feature block degraded prediction in this fixed sample; if it includes zero, no gain is established. Neither outcome is strategy P&L evidence and neither proves the features contain no information.
 
 ## Descriptive VIX regimes
 VIX tertiles are determined on DEV data. The following are descriptive only and must not be used to select features or strategies:
@@ -53,8 +53,7 @@ VIX tertiles are determined on DEV data. The following are descriptive only and 
 - MID_VIX: rows=244, sessions=6, M2 baseline MAE=6.9513, M4 full-feature MAE=6.9142, delta=0.0371 bps.
 
 ## API/data issues
-- Options 2022-12-31–2023-01-01 CALL: schema or array-alignment gate failed.
-- Options 2022-12-31–2023-01-01 PUT: schema or array-alignment gate failed.
+- No API/network/schema failures.
 
 ## Interpretation limits
 This is a predictor study of absolute next-15-minute spot-return magnitude, not a direction classifier, strategy P&L study, or executable futures/option strategy. The synthetic-forward proxy is calculated from rolling ATM CALL/PUT bar closes; it is **not** a traded NIFTY futures price or an arbitrage signal. The endpoint does not provide exact listed-contract bid/ask/depth, transaction latency, or executable fills. No direct historical FUTIDX basis is claimed, no strategy P&L is computed, and no strategy is promoted. Any later rule-level replay requires authorized exact-contract data and Paytm Money brokerage, statutory levies, spread, adverse slippage, latency and stress costs.

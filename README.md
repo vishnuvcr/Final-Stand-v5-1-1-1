@@ -1,7 +1,7 @@
 <!-- PHASE92_START -->
 # Resume checkpoint — Phase 92 synthetic-forward proxy and OI study
 
-**Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero.** Automated run [38050610192](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192). This fixed 2022 sample tests whether lagged rolling-ATM synthetic-forward gap and CALL/PUT OI imbalance improve next-15-minute absolute NIFTY spot-move prediction beyond spot, India VIX and IV. The protected 2026 holdout was not requested or loaded.
+**Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample.** Automated run [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106). This fixed 2022 sample tests whether lagged rolling-ATM synthetic-forward gap and CALL/PUT OI imbalance improve next-15-minute absolute NIFTY spot-move prediction beyond spot, India VIX and IV. The protected 2026 holdout was not requested or loaded.
 
 - [Phase 92 plan](PHASE92_RESEARCH_PLAN.md)
 - [Phase 92 status](PHASE92_STATUS.md)

@@ -23,16 +23,15 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 No run has been verified yet. Append the sanitized runtime result after the workflow completes. A successful Actions job does not itself imply the predictive-gain hypothesis passed.
 
 <!-- PHASE92_RUNTIME_START -->
-## Runtime summary — 38050610192
-- Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero
-- Options valid chunks: 52/54
+## Runtime summary — 38050805106
+- Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample
+- Options valid chunks: 54/54
 - VIX valid chunks: 5/5
 - Instrument master: UNIQUE_MATCH; candidate count=1
 - Paired rows: 18579; spot mismatches=0; strike mismatches=1
 - OOS rows/sessions: 3660/61
 - Primary result: M2 MAE − M4 MAE = -0.1708 bps (paired session-cluster bootstrap 95% CI -0.2299 to -0.1152; bootstrap positive share 0.0000; 5000 resamples; seed 90210).
 - Issues:
-- Options 2022-12-31–2023-01-01 CALL: schema or array-alignment gate failed.
-- Options 2022-12-31–2023-01-01 PUT: schema or array-alignment gate failed.
+- No API/network/schema failures.
 - No token, raw response, row-level price, or hidden reasoning is logged.
 <!-- PHASE92_RUNTIME_END -->

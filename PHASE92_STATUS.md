@@ -1,8 +1,8 @@
 # Phase 92 Status
 
 Date: 2026-10-10  
-Status: **NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero**  
-Latest workflow run: [38050610192](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192)  
+Status: **NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample**  
+Latest workflow run: [38050805106](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106)  
 Strategy promotion: **NONE**.
 
 - [Research plan](PHASE92_RESEARCH_PLAN.md)

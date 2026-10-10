@@ -22,11 +22,11 @@ Because source candle timestamps are candle-start time and close-derived feature
 Phase 92 branch and preregistration files are being added. The next record must report the actual Actions run and result. Raw option prices and market payloads are not to be committed or uploaded.
 
 <!-- PHASE92_RUNTIME_START -->
-## Automated execution record — 38050610192
-- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050610192
-- Status: NO INCREMENTAL GAIN ESTABLISHED — primary bootstrap interval includes or falls below zero
+## Automated execution record — 38050805106
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38050805106
+- Status: NEGATIVE INCREMENTAL VALUE — synthetic-forward/OI feature block worsens OOS magnitude prediction in this sample
 - VIX ID resolved dynamically: True
-- Options valid chunks=52/54; VIX valid chunks=5/5
+- Options valid chunks=54/54; VIX valid chunks=5/5
 - OOS rows/sessions=3660/61
 - Primary result: M2 MAE − M4 MAE = -0.1708 bps (paired session-cluster bootstrap 95% CI -0.2299 to -0.1152; bootstrap positive share 0.0000; 5000 resamples; seed 90210).
 - Option-derived close/IV/OI features were lagged one full five-minute row; no raw market responses were printed, committed, or uploaded as artifacts.
