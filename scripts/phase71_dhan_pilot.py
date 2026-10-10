@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Bounded DhanHQ expired-options availability probe; never writes raw market rows."""
+# Re-run the bounded pilot after repository Actions secret configuration.
 import datetime as dt
 import json
 import os
