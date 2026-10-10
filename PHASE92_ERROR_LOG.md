@@ -51,3 +51,10 @@ Opened: 2026-10-10. Never log credentials, raw response bodies, row-level market
 <!-- PHASE92_RUNTIME_END -->
 
 - E92-014 — Documentation reconciliation: the main README initially linked the accepted analysis run but did not label the later successful cache-backed verification run separately. The README now labels accepted analysis run 38050805106 and verification run 38051908021. No sample, model, endpoint, or analytical result changed.
+
+## E92-014 — manuscript equation rendering audit (2026-10-10)
+
+- During the final manuscript QC, the target-return equation contained control characters where LaTeX backslashes had been interpreted during authoring; the abstract also had a malformed parenthetical around the Holm-adjusted p-value, and the references list lacked a section heading.
+- Corrected the three displayed equations to unambiguous inline mathematical notation, corrected the p-value sentence, and added the References heading in `results/phase92/MANUSCRIPT_DRAFT.md`.
+- Rechecked the manuscript text for the known malformed `left|left` and `rac{` patterns; zero remaining occurrences. This was a documentation-only correction; no data, model, endpoint, statistical result, or promotion decision changed.
+- Workflow run [38051908021](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38051908021) completed successfully before this documentation correction.
