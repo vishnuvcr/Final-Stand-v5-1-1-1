@@ -8,3 +8,5 @@ This file records user requests, research decisions, execution status, and corre
 - **Decision:** Open Phase 101 as a separate, finite gap-fill branch because the accepted Phase 100 synthesis stopped with U02 and U05 incomplete. Carry forward prior verified forecast, moving-average, CCI and payoff-algebra evidence; do not relabel common-data/proxy tests as exact replication.
 - **Execution rule:** Run the pinned 2021–2025 public options source where usable; include only aggregate derived outputs; keep 2026 option data sealed; log both positive and negative outcomes and any blocker.
 - **Status at log time:** branch and research plan created; runner/workflow and empirical results pending.
+
+- **Execution update:** first automated run 38074995935 failed before market-data loading due to Parquet engine import. The failure was logged; PyArrow has now been pinned and an explicit preflight added. This run is rejected as a strategy result, and no profitability conclusion is inferred from it.
