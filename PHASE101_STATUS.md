@@ -1,6 +1,6 @@
 # Phase 101 Status — Full PDF Strategy Replication Gap-Fill
 
-**State:** CORRECTED PROXY RUN VALIDATED — final paper-by-paper audit recorded below  
+**State:** REVALIDATION RUN REQUIRED — stress-cost audit correction committed; prior stress output superseded  
 **Branch:** `phase-101-full-pdf-strategy-replication`  
 **Updated:** 2026-10-10  
 **Strategy promotion:** NONE  
@@ -90,3 +90,12 @@ The first corrected run prevented look-ahead by shifting some entries to the sec
 - U02: 1330 predictions; 164 costed trades; model statuses [{'model': 'RF', 'status': 'COMPLETED'}, {'model': 'XGBOOST', 'status': 'COMPLETED'}, {'model': 'LSTM5', 'status': 'COMPLETED'}].
 - Account sizing: sequential per-model ₹1 lakh starting equity, 95% premium deployment limit, 5% fee reserve.
 - Bootstrap: circular moving-block 95% mean net-trade CI only when n>=20.
+
+
+## Audit checkpoint — 2026-10-11
+
+- Corrected the extra 0.25%-per-side impact sensitivity to use the same execution-price helper and date-effective fee model as the baseline, plus ₹50 round-trip cost.
+- Code commit: `c75b43da2592b02c520b2500b9f63e5d72a7b12d`.
+- The push-triggered workflow must pass before the new sensitivity figures are accepted.
+- Drawdown review remains open: inspect equity peak/trough and trade chronology; do not assume a drawdown above initial capital is automatically an accounting error.
+- Strategy promotion: NONE. 2026 options holdout remains excluded.
