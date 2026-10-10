@@ -1,0 +1,143 @@
+{
+  "phase": 58,
+  "as_of": "2026-10-10",
+  "required_timestamps_ist": {
+    "entries": [
+      "09:45",
+      "13:00"
+    ],
+    "exit": "15:15"
+  },
+  "required_fields": [
+    "timestamp",
+    "expiry",
+    "strike",
+    "option_type",
+    "bid_price",
+    "ask_price",
+    "bid_quantity",
+    "ask_quantity"
+  ],
+  "sources": [
+    {
+      "id": "nse_option_chain",
+      "name": "NSE live option chain and derivatives archive",
+      "url": "https://www.nseindia.com/option-chain",
+      "evidence_url": "https://www.nseindia.com/all-reports-derivatives",
+      "data_fields": [
+        "current best bid/ask and quantities",
+        "OI",
+        "volume",
+        "IV",
+        "LTP"
+      ],
+      "granularity": "live current chain; public derivatives archive provides daily contract-wise OHLC/volume/OI/underlying",
+      "history_coverage": "No verified free historical intraday bid/ask/depth at exact required timestamps",
+      "access": "public website; site terms restrict copying/aggregation",
+      "automation_eligible": false,
+      "full_history_licensed": false,
+      "decision": "NOT_ACCEPTED_FOR_AUTOMATED_HISTORICAL_QUOTES",
+      "limitations": "Live chain does not supply a verified exact historical series; do not scrape or aggregate data contrary to site terms."
+    },
+    {
+      "id": "stockmojo_timeseries",
+      "name": "StockMojo Timeseries Option Chain",
+      "url": "https://stockmojo.in/timeseries-option-chain",
+      "evidence_url": "https://stockmojo.in/terms-and-conditions",
+      "data_fields": [
+        "minute-level option premium/price",
+        "OI",
+        "volume",
+        "IV",
+        "Greeks"
+      ],
+      "granularity": "advertises minute-by-minute historical chain; quote/depth fields not documented",
+      "history_coverage": "Advertises multiple years, but no target-contract bulk file verified",
+      "access": "free manual browser UI",
+      "automation_eligible": false,
+      "full_history_licensed": false,
+      "decision": "MANUAL_FEATURE_RESEARCH_ONLY_NOT_AUTOMATABLE",
+      "limitations": "Published terms prohibit bots, scraping, automated access and systematic collection/storage; do not use in GitHub Actions. Bid/ask/depth not documented."
+    },
+    {
+      "id": "niftytrader_history",
+      "name": "NiftyTrader historical option chain",
+      "url": "https://www.niftytrader.in/nse-option-historical-data",
+      "evidence_url": "https://www.niftytrader.in/nse-option-historical-data",
+      "data_fields": [
+        "OI",
+        "change in OI",
+        "volume",
+        "LTP",
+        "IV",
+        "best bid/ask at close"
+      ],
+      "granularity": "default end-of-day snapshot; page advertises premium intraday snapshots at 09:30, 11:30, 13:30 and 15:00",
+      "history_coverage": "Free single-day CSV download; bulk download is premium; exact target-date bulk access unverified",
+      "access": "manual web/download; no documented automation API verified",
+      "automation_eligible": false,
+      "full_history_licensed": false,
+      "decision": "INSUFFICIENT_FOR_FROZEN_ENTRY_EXIT_TIMES",
+      "limitations": "Documented intraday snapshots do not align with 09:45/13:00 entries or exact 15:15 exit; EOD bid/ask alone cannot validate intraday fills."
+    },
+    {
+      "id": "tickbytes",
+      "name": "QuantDev-stack TickBytes",
+      "url": "https://github.com/QuantDev-stack/TickBytes",
+      "evidence_url": "https://github.com/QuantDev-stack/TickBytes/blob/main/README.md",
+      "data_fields": [
+        "tick trades",
+        "top-5 bid/ask prices and quantities",
+        "OI",
+        "IV",
+        "Greeks",
+        "1-second and 1-minute bars"
+      ],
+      "granularity": "public sample includes tick-level quote/depth fields; full daily feed is described as private subscriber delivery",
+      "history_coverage": "Sample file observed for 2026-08-07; no public full-history files for Phase52 target events verified",
+      "access": "licensed daily subscription/private drive advertised",
+      "automation_eligible": false,
+      "full_history_licensed": false,
+      "decision": "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY",
+      "limitations": "Repository MIT license applies to software; it does not establish redistribution rights for the private market-data feed. Need licensed sample for exact 2022-2025 target dates and automated access terms."
+    },
+    {
+      "id": "optionvault",
+      "name": "QuantDev-stack OptionVault",
+      "url": "https://github.com/QuantDev-stack/OptionVault",
+      "evidence_url": "https://github.com/QuantDev-stack/OptionVault/blob/main/README.md",
+      "data_fields": [
+        "1-minute OHLCV/OI/Greeks",
+        "tick data",
+        "Level-2 bid/ask prices and quantities"
+      ],
+      "granularity": "public Level-2 sample contains timestamps and top-5 book; full dataset is described as 300+ GB for licensed users",
+      "history_coverage": "Public sample includes 2026-07-22; no full licensed historical target-date coverage verified",
+      "access": "public evaluation samples; full dataset requires license/contact",
+      "automation_eligible": false,
+      "full_history_licensed": false,
+      "decision": "PROMISING_LICENSED_CANDIDATE_SAMPLE_ONLY",
+      "limitations": "MIT code license and sample presence do not grant rights to the complete market-data dataset. Need exact target-date/contract coverage, data delivery method and reuse/storage license."
+    },
+    {
+      "id": "huggingface_1m_ohlcv",
+      "name": "thetrademarkk/india-index-options-1m",
+      "url": "https://huggingface.co/datasets/thetrademarkk/india-index-options-1m",
+      "evidence_url": "https://huggingface.co/datasets/thetrademarkk/india-index-options-1m",
+      "data_fields": [
+        "1-minute OHLCV",
+        "OI"
+      ],
+      "granularity": "1-minute bars",
+      "history_coverage": "Pinned revision used by Phase52 pilot; exact source files available for 13 expiry partitions",
+      "access": "public dataset; declared CC BY-NC 4.0",
+      "automation_eligible": true,
+      "full_history_licensed": false,
+      "decision": "RESEARCH_ONLY_NO_QUOTE_DEPTH",
+      "limitations": "No bid/ask/depth fields; non-commercial license; suitable for research feature/price-reference analysis only, not executable quote validation."
+    }
+  ],
+  "decision": "NO_GO_FREE_AUTOMATABLE_HISTORICAL_BID_ASK_DEPTH_AT_FROZEN_TIMESTAMPS",
+  "purchase_made": false,
+  "scraping_against_terms": false
+}
