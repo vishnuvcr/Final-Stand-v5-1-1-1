@@ -12,7 +12,7 @@ Using the frozen Phase 45 summary CSV, we filtered to `state=ALL`, `defined_risk
 | Measure | Result |
 |---|---:|
 | Frozen source strategy labels | 42 |
-| Eligible defined-risk candidates after minimum-DEV-trade filter | 22 |
+| Eligible defined-risk candidates after minimum-DEV-trade filter | 23 |
 | Selected by development net50 | `call_backspread` |
 | DEV trades | 133 |
 | DEV net50 | +₹27,393.35 |
@@ -20,10 +20,10 @@ Using the frozen Phase 45 summary CSV, we filtered to `state=ALL`, `defined_risk
 | VAL base net | −₹19,536.99 |
 | VAL net50 (primary endpoint) | **−₹24,261.74** |
 | VAL max drawdown (source metric) | ₹112,975.51 |
-| Eligible candidates with positive VAL net50 | 3 / 22 |
-| Eligible candidates with zero/negative VAL net50 | 19 / 22 |
+| Eligible candidates with positive VAL net50 | 3 / 23 |
+| Eligible candidates with zero/negative VAL net50 | 20 / 23 |
 
-**Primary hypothesis not supported.** The development-selected defined-risk strategy's stressed validation P&L is negative. The source reports a large drawdown relative to its point-estimate performance. Three positive validation cells among 22 candidates do not establish a robust strategy, especially given broad prior candidate exploration.
+**Primary hypothesis not supported.** The development-selected defined-risk strategy's stressed validation P&L is negative. The source reports a large drawdown relative to its point-estimate performance. Three positive validation cells among 23 candidates do not establish a robust strategy, especially given broad prior candidate exploration.
 
 The three candidates with positive VAL net50 were `bear_call_spread` (+₹29,639.11), `bear_put_spread` (+₹13,416.09), and `put_broken_wing_butterfly` (+₹2,700.51). These are descriptive results only; they were not selected by the preregistered development rule and must not be promoted by selecting winners after looking at validation.
 
