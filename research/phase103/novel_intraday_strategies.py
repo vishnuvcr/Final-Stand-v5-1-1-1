@@ -404,7 +404,7 @@ def run_discovery(root=ROOT,token=None):
     ranges={}
     for d,bars in groups.items():
         hi,lo=session_range(bars,"09:15","10:00");ranges[pd.Timestamp(d)]=hi-lo if np.isfinite(hi) and np.isfinite(lo) else float("nan")
-    session_days=sorted(d for d in groups if VAL_START<=d<=VAL_END)
+    session_days=sorted(d for d in groups if DEV_START<=d<=VAL_END)
     eligible=[];excluded=[];expmap={}
     for d in session_days:
         e=expiry_for_session(d,expiry_dates)
