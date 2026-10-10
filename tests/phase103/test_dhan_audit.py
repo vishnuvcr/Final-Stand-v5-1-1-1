@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"research"/"phase103_stock_options"))
-from dhan_data_audit import check_window, map_underlyings, summarize
+from dhan_data_audit import check_window, map_underlyings, safe_error_details, summarize
 
 class DhanDataAuditTests(unittest.TestCase):
     def test_window_maximum_is_30_days(self):
@@ -33,6 +33,13 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertEqual(result["rows"],2)
         self.assertTrue(result["array_lengths_consistent"])
         self.assertEqual(result["status"],"DATA_RETURNED")
+
+    def test_http_error_parser_allowlists_message_and_redacts_token(self):
+        raw=b'{"errorCode":"DH-905","message":"Invalid request tokenSecret"}'
+        result=safe_error_details(raw,"tokenSecret")
+        self.assertEqual(result["api_error_code"],"DH-905")
+        self.assertIn("[REDACTED]",result["api_error_message"])
+        self.assertNotIn("tokenSecret",str(result))
 
     def test_auth_error_maps_to_safe_status(self):
         result=summarize("INFY","PUT",401,None)
