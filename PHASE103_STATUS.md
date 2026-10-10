@@ -265,3 +265,15 @@ This is a one-day source-access/coverage PASS only. No fixed-contract strategy P
 
 ## Strike-surface retry — preflight correction
 Runs [38089656281](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089656281) and [38089669894](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089669894) failed at unit tests because the new summarizer signature was not reflected in older test calls. No Dhan API calls were made. Updated tests and workflow input schema; next run will use seven relative strikes and 70 probes only after all tests pass.
+
+<!-- DHAN_API_RUN_38089913649_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38089913649, attempt 1 — 2026-10-10T22:03:09.668123+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 7/7.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

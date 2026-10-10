@@ -227,3 +227,13 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 ## 2026-10-11 — Strike-surface preflight correction
 - The first two automated tests of the new relative-strike code failed before any API calls. Cause: old unit tests passed HTTP status where the new helper expects a relative-strike label. A synthetic duplicate mapping fixture also did not actually overlap a timestamp/strike key.
 - Both test issues were corrected; the workflow now accepts the seven documented Dhan offsets and has a 70-probe maximum. No data or strategy conclusion is derived from these failed runs.
+
+<!-- DHAN_API_RUN_38089913649_ATTEMPT_1 -->
+## Dhan Data API audit — run 38089913649, attempt 1 — 2026-10-10T22:03:09.668123+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 7/7.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

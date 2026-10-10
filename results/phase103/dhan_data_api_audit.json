@@ -1,0 +1,374 @@
+{
+  "phase": "103.1",
+  "run_id": "38089913649",
+  "generated_at_utc": "2026-10-10T22:02:50.961957+00:00",
+  "window": {
+    "from_inclusive": "2026-08-03",
+    "to_exclusive": "2026-08-04",
+    "span_days": 1,
+    "request_mode": "half_open_target_window_with_inclusive_provider_toDate_adjustment"
+  },
+  "provider_request_window": {
+    "fromDate": "2026-08-03",
+    "toDate_inclusive": "2026-08-03"
+  },
+  "probe_limit": 7,
+  "requested_relative_strikes": [
+    "ATM",
+    "ATM+1",
+    "ATM+2",
+    "ATM+3",
+    "ATM-1",
+    "ATM-2",
+    "ATM-3"
+  ],
+  "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
+  "instrument_master_sha256": "2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173",
+  "instrument_master_bytes": 26116616,
+  "underlying_map": {
+    "HDFCBANK": {
+      "security_id": "1333",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "ICICIBANK": {
+      "security_id": "4963",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "RELIANCE": {
+      "security_id": "2885",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "SBIN": {
+      "security_id": "3045",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "INFY": {
+      "security_id": "1594",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    }
+  },
+  "probes": [
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "750",
+      "last_actual_strike": "750"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "760",
+      "last_actual_strike": "760"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "770",
+      "last_actual_strike": "770"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "780",
+      "last_actual_strike": "780"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "740",
+      "last_actual_strike": "740"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "730",
+      "last_actual_strike": "730"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 384,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 384,
+        "high": 384,
+        "low": 384,
+        "close": 384,
+        "iv": 384,
+        "volume": 384,
+        "strike": 384,
+        "oi": 384,
+        "spot": 384,
+        "timestamp": 384
+      },
+      "first_timestamp_utc": "2026-08-03T03:46:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 384
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 2,
+      "actual_strike_changes": 8,
+      "first_actual_strike": "720",
+      "last_actual_strike": "720"
+    }
+  ],
+  "surface_audit": [
+    {
+      "symbol": "HDFCBANK",
+      "option_type": "CALL",
+      "requested_relative_strikes": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "offset_series_returned": 7,
+      "common_timestamp_count_across_offsets": 384,
+      "union_timestamp_count": 385,
+      "minimum_distinct_actual_strikes_per_timestamp": 6,
+      "maximum_distinct_actual_strikes_per_timestamp": 7,
+      "distinct_actual_strikes_in_surface": 8,
+      "actual_strikes_observed_at_every_union_timestamp": 6,
+      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "per_offset": {
+        "ATM": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "750",
+          "last_actual_strike": "750"
+        },
+        "ATM+1": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "760",
+          "last_actual_strike": "760"
+        },
+        "ATM+2": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "770",
+          "last_actual_strike": "770"
+        },
+        "ATM+3": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "780",
+          "last_actual_strike": "780"
+        },
+        "ATM-1": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "740",
+          "last_actual_strike": "740"
+        },
+        "ATM-2": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "730",
+          "last_actual_strike": "730"
+        },
+        "ATM-3": {
+          "timestamp_count": 384,
+          "distinct_actual_strikes": 2,
+          "actual_strike_changes": 8,
+          "first_actual_strike": "720",
+          "last_actual_strike": "720"
+        }
+      },
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
+    }
+  ],
+  "raw_rows_persisted": false,
+  "raw_data_policy": "Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
+  "known_limits": [
+    "Rolling strikes can change actual strike over time.",
+    "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
+    "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
+    "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."
+  ],
+  "status": "PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES",
+  "rows_outside_requested_date_window_total": 0
+}
