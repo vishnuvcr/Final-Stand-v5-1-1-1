@@ -134,14 +134,19 @@ def summarize(symbol, option_type, code, obj, safe_error=None):
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument("--from-date",default=os.getenv("PHASE103_FROM_DATE","2026-08-02"))
-    p.add_argument("--to-date",default=os.getenv("PHASE103_TO_DATE","2026-09-01"),help="exclusive")
+    p.add_argument("--from-date",default=os.getenv("PHASE103_FROM_DATE","2026-08-03"))
+    p.add_argument("--to-date",default=os.getenv("PHASE103_TO_DATE","2026-08-04"),help="exclusive")
+    p.add_argument("--max-probes",type=int,default=int(os.getenv("PHASE103_MAX_PROBES","1")),
+                   help="maximum number of symbol/side API probes for this bounded run")
     p.add_argument("--out-dir",default="results/phase103")
     a=p.parse_args(); days=check_window(a.from_date,a.to_date)
+    if not 1 <= a.max_probes <= len(SYMBOLS) * 2:
+        p.error("--max-probes must be from 1 through 10")
     out=Path(a.out_dir); out.mkdir(parents=True,exist_ok=True)
     result={"phase":"103.1","run_id":os.getenv("GITHUB_RUN_ID","local"),
         "generated_at_utc":datetime.now(timezone.utc).isoformat(),
         "window":{"from_inclusive":a.from_date,"to_exclusive":a.to_date,"span_days":days},
+        "probe_limit":a.max_probes,
         "endpoint":ENDPOINT,"instrument_master_sha256":None,"instrument_master_bytes":None,
         "underlying_map":{},"probes":[],"raw_rows_persisted":False,
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
@@ -165,12 +170,16 @@ def main():
             for sym in SYMBOLS:
                 m=result["underlying_map"].get(sym,{})
                 for side in ["CALL","PUT"]:
+                    if len(result["probes"]) >= a.max_probes:
+                        break
                     if not m.get("security_id"):
                         result["probes"].append({"symbol":sym,"requested_option_type":side,"status":"BLOCKED_UNDERLYING_ID"})
                         continue
                     code,obj,safe_error=query(token,m["security_id"],side,a.from_date,a.to_date)
                     result["probes"].append(summarize(sym,side,code,obj,safe_error))
                     time.sleep(1.1)
+                if len(result["probes"]) >= a.max_probes:
+                    break
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
             error_codes={str(v.get("api_error_code","")).upper() for v in result["probes"] if v.get("api_error_code")}
             auth_count=sum(v.get("status") in ["AUTH_401","AUTH_403"] for v in result["probes"])
@@ -178,12 +187,13 @@ def main():
                 result["status"]="BLOCKED_AUTHENTICATION_OR_DATA_API_ENTITLEMENT"
             elif error_codes.intersection({"814","DH-905"}):
                 result["status"]="REQUEST_SCHEMA_OR_PARAMETER_ERROR"
-            elif len(result["probes"])==10 and rows_count==10: result["status"]="PASS_API_DATA_RETURNED_FOR_ALL_10_PROBES"
+            elif len(result["probes"])==a.max_probes and rows_count==a.max_probes: result["status"]="PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES"
             elif rows_count: result["status"]="PARTIAL_DATA_RETURNED"
             else: result["status"]="NO_DATA_RETURNED_OR_SCHEMA_MISMATCH"
     (out/"dhan_data_api_audit.json").write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
     lines=["# Phase 103.1 — Dhan Data API smoke test","",f"**Status:** {result['status']}",
       f"**Window:** {a.from_date} inclusive to {a.to_date} exclusive ({days} days)",
+      f"**Probe limit:** {a.max_probes}",
       f"**Run:** {result['run_id']}","",
       "This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.",
       "","| Symbol | Side | HTTP | Status | Rows | Arrays consistent | First UTC | Last UTC |",
