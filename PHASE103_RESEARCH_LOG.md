@@ -104,3 +104,13 @@ The workflow failed before a machine-readable result was written. No source/data
 - Run [38088625181](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088625181), which used `expiryCode: 1` on a 30-day window and up to ten stock/side probes, remained in the API request step and was cancelled when a smaller bounded workflow was committed. It did not persist a report and contributes no data evidence.
 - Updated the client to support a strict `--max-probes` cap. The new default smoke-test request is one HDFCBANK CALL probe for 2026-08-03 only, with a 60-second per-request timeout, while keeping the upper bound of 30 days per API call. The workflow records the probe limit.
 - This is a scope adjustment for debuggability/finite execution; it does not alter the chosen stock basket or any strategy rules.
+
+<!-- DHAN_API_RUN_38088975571_ATTEMPT_1 -->
+## Dhan Data API audit — run 38088975571, attempt 1 — 2026-10-10T21:47:54.152267+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

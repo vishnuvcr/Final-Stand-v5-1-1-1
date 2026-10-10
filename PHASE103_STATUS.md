@@ -135,3 +135,15 @@ The first API request reached Dhan but all 10 probes returned HTTP 400 `DH-905: 
 
 ## Current bounded retry — run 38088846052
 The earlier 30-day/10-probe request was cancelled before it produced a derived report; it is not accepted as a failed market-data observation. The active launch [run 38088846052](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38088846052) reduces the initial diagnostic to one session and one HDFCBANK CALL request using `expiryCode: 1`. The next gate is a safe aggregate response; no strategy backtest is running.
+
+<!-- DHAN_API_RUN_38088975571_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38088975571, attempt 1 — 2026-10-10T21:47:54.152267+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 1/1.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
