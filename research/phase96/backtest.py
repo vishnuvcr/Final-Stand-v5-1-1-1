@@ -13,11 +13,11 @@ def load_prices(path: Path = DATA) -> pd.DataFrame:
     if not path.exists():
         import yfinance as yf
         path.parent.mkdir(parents=True, exist_ok=True)
-        downloaded = yf.download("^NSEI", start="2004-01-01", end="2026-01-01", auto_adjust=False, progress=False, threads=False)
+        downloaded = yf.download("^NSEI", start="2004-01-01", end="2026-01-01", auto_adjust=False, progress=False, threads=False, multi_level_index=False)
         if downloaded.empty:
             raise RuntimeError("Yahoo Finance returned no NIFTY daily data")
         downloaded.to_csv(path)
-    df = pd.read_csv(path, header=[0,1] if pd.read_csv(path, nrows=0).shape[1] > 3 else 0)
+    df = pd.read_csv(path)
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = [str(c[0]) for c in df.columns]
     date_col = next((c for c in df.columns if str(c).lower() in {"date", "datetime"}), None)
