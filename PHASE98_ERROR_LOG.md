@@ -82,3 +82,13 @@ New errors, invalid outputs, workflow failures and fixes are appended below with
 ## Automated execution issue — Run 38058519330 — tests=success; replay=cancelled; audit=skipped; runner_status=FAILED_BEFORE_NUMERICAL_RUN; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058519330
 - Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.
 - Runner detail: See workflow logs and validation_report.json.
+
+
+## E98-011 — Stale output provenance in interrupted workflow attempts (2026-10-10)
+- Runs 38057921675, 38058351337, and 38058461330 were interrupted before a successful replay/audit. Their publisher read previously committed result files and emitted stale runner_status=PASS / NO_PROMOTION labels. Those runs are not economic evidence; any zero P&L values in their status entries are not measurements.
+- Correction: clear derived result files at the start of every run and derive published status from the current run test/replay/audit outcomes. Cancelled/failed replay now publishes REPLAY_NOT_SUCCESSFUL and NOT_EVALUATED. The README keeps a single current Phase 98 status block.
+
+
+## Automated execution issue — Run 38058592320 — tests=success; replay=cancelled; audit=skipped; runner_status=REPLAY_NOT_SUCCESSFUL; economics=NOT_EVALUATED; URL=https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38058592320
+- Failure is logged as infrastructure/data/validation status, not as strategy-performance evidence.
+- Runner detail: See workflow logs and validation_report.json.
