@@ -231,7 +231,7 @@ def main():
       "observed_calendar_rows":len(calendar_rows),
       "observed_calendar_min_date":calendar_rows[0]["date"] if calendar_rows else "",
       "observed_calendar_max_date":calendar_rows[-1]["date"] if calendar_rows else "",
-      "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>0 and x["invalid_OHLC_rows"]==0 for x in merged_metrics) else "PARTIAL_OR_FAILED",
+      "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>0 and x["invalid_OHLC_rows"]==0 and x["missing_OHLC_rows"]==0 and x["duplicate_date_rows_across_chunks"]==0 and x["unparseable_date_rows"]==0 for x in merged_metrics) else "PARTIAL_OR_FAILED",
       "note":"Official index/VIX input feasibility only; not strategy evaluation. Series rows are stored in Actions cache. Do not substitute unverified public-HF VIX labels.",
     }
     OUT.mkdir(parents=True,exist_ok=True)
