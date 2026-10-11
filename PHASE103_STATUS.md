@@ -355,3 +355,15 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - Configured a bounded seven-calendar-day window (2026-08-03 inclusive to 2026-08-10 exclusive), respecting Dhan's documented 30-day limit and covering several sessions.
 - Added a safe response-envelope summary of keys, status class, side type, and field shapes; raw market values and credentials remain excluded.
 - This remains a data availability/continuity test, not strategy P&L. Exact contract/expiry identity and data rights must be established before performance inference.
+
+<!-- DHAN_API_RUN_38115153795_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38115153795, attempt 1 — 2026-10-11T05:35:27.705114+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-10 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 28/28.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

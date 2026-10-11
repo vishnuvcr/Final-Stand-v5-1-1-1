@@ -1,18 +1,24 @@
 {
   "phase": "103.1",
-  "run_id": "38113895829",
-  "generated_at_utc": "2026-10-11T05:21:20.601331+00:00",
+  "run_id": "38115153795",
+  "generated_at_utc": "2026-10-11T05:33:20.454120+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
-    "to_exclusive": "2026-08-04",
-    "span_days": 1,
+    "to_exclusive": "2026-08-10",
+    "span_days": 7,
     "request_mode": "half_open_target_window_with_inclusive_provider_toDate_adjustment"
   },
   "provider_request_window": {
     "fromDate": "2026-08-03",
-    "toDate_inclusive": "2026-08-03"
+    "toDate_inclusive": "2026-08-09"
   },
-  "probe_limit": 70,
+  "probe_limit": 28,
+  "requested_panels": [
+    "ICICIBANK:CALL",
+    "RELIANCE:CALL",
+    "RELIANCE:PUT",
+    "SBIN:CALL"
+  ],
   "requested_relative_strikes": [
     "ATM",
     "ATM+1",
@@ -54,499 +60,109 @@
   },
   "probes": [
     {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "750",
-      "last_actual_strike": "750"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "760",
-      "last_actual_strike": "760"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "770",
-      "last_actual_strike": "770"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "780",
-      "last_actual_strike": "780"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "740",
-      "last_actual_strike": "740"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "730",
-      "last_actual_strike": "730"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 384,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 384,
-        "high": 384,
-        "low": 384,
-        "close": 384,
-        "iv": 384,
-        "volume": 384,
-        "strike": 384,
-        "oi": 384,
-        "spot": 384,
-        "timestamp": 384
-      },
-      "first_timestamp_utc": "2026-08-03T03:46:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 384
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "720",
-      "last_actual_strike": "720"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "750",
-      "last_actual_strike": "750"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "760",
-      "last_actual_strike": "760"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "770",
-      "last_actual_strike": "770"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 384,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 384,
-        "high": 384,
-        "low": 384,
-        "close": 384,
-        "iv": 384,
-        "volume": 384,
-        "strike": 384,
-        "oi": 384,
-        "spot": 384,
-        "timestamp": 384
-      },
-      "first_timestamp_utc": "2026-08-03T03:46:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 384
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "780",
-      "last_actual_strike": "780"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "740",
-      "last_actual_strike": "740"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "730",
-      "last_actual_strike": "730"
-    },
-    {
-      "symbol": "HDFCBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "720",
-      "last_actual_strike": "720"
-    },
-    {
       "symbol": "ICICIBANK",
       "requested_option_type": "CALL",
       "requested_relative_strike": "ATM",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
       "first_actual_strike": "1440",
-      "last_actual_strike": "1460"
+      "last_actual_strike": "1420"
     },
     {
       "symbol": "ICICIBANK",
@@ -554,32 +170,104 @@
       "requested_relative_strike": "ATM+1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
       "first_actual_strike": "1450",
-      "last_actual_strike": "1470"
+      "last_actual_strike": "1430"
     },
     {
       "symbol": "ICICIBANK",
@@ -587,395 +275,524 @@
       "requested_relative_strike": "ATM+2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
       "first_actual_strike": "1460",
-      "last_actual_strike": "1480"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1470",
-      "last_actual_strike": "1490"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1430",
-      "last_actual_strike": "1450"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1420",
       "last_actual_strike": "1440"
     },
     {
       "symbol": "ICICIBANK",
       "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1410",
-      "last_actual_strike": "1430"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1440",
-      "last_actual_strike": "1460"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1450",
-      "last_actual_strike": "1470"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 379,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 379,
-        "high": 379,
-        "low": 379,
-        "close": 379,
-        "iv": 379,
-        "volume": 379,
-        "strike": 379,
-        "oi": 379,
-        "spot": 379,
-        "timestamp": 379
-      },
-      "first_timestamp_utc": "2026-08-03T03:51:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 379
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1460",
-      "last_actual_strike": "1480"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
       "requested_relative_strike": "ATM+3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 378,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 378,
-        "high": 378,
-        "low": 378,
-        "close": 378,
-        "iv": 378,
-        "volume": 378,
-        "strike": 378,
-        "oi": 378,
-        "spot": 378,
-        "timestamp": 378
-      },
-      "first_timestamp_utc": "2026-08-03T03:52:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 378
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1470",
-      "last_actual_strike": "1490"
-    },
-    {
-      "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1430",
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1470",
       "last_actual_strike": "1450"
     },
     {
       "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-2",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
-      "first_actual_strike": "1420",
-      "last_actual_strike": "1440"
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1430",
+      "last_actual_strike": "1410"
     },
     {
       "symbol": "ICICIBANK",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-3",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 41,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1420",
+      "last_actual_strike": "1400"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1920,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1920,
+        "high": 1920,
+        "low": 1920,
+        "close": 1920,
+        "iv": 1920,
+        "volume": 1920,
+        "strike": 1920,
+        "oi": 1920,
+        "spot": 1920,
+        "timestamp": 1920
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 383,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 382
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1920
+          },
+          "high": {
+            "type": "list",
+            "length": 1920
+          },
+          "low": {
+            "type": "list",
+            "length": 1920
+          },
+          "close": {
+            "type": "list",
+            "length": 1920
+          },
+          "iv": {
+            "type": "list",
+            "length": 1920
+          },
+          "volume": {
+            "type": "list",
+            "length": 1920
+          },
+          "strike": {
+            "type": "list",
+            "length": 1920
+          },
+          "oi": {
+            "type": "list",
+            "length": 1920
+          },
+          "spot": {
+            "type": "list",
+            "length": 1920
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1920
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 111,
       "first_actual_strike": "1410",
-      "last_actual_strike": "1430"
+      "last_actual_strike": "1390"
     },
     {
       "symbol": "RELIANCE",
@@ -983,32 +800,104 @@
       "requested_relative_strike": "ATM",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1310",
-      "last_actual_strike": "1320"
+      "last_actual_strike": "1330"
     },
     {
       "symbol": "RELIANCE",
@@ -1016,32 +905,104 @@
       "requested_relative_strike": "ATM+1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1320",
-      "last_actual_strike": "1330"
+      "last_actual_strike": "1340"
     },
     {
       "symbol": "RELIANCE",
@@ -1049,32 +1010,104 @@
       "requested_relative_strike": "ATM+2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1330",
-      "last_actual_strike": "1340"
+      "last_actual_strike": "1350"
     },
     {
       "symbol": "RELIANCE",
@@ -1082,32 +1115,104 @@
       "requested_relative_strike": "ATM+3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1340",
-      "last_actual_strike": "1350"
+      "last_actual_strike": "1360"
     },
     {
       "symbol": "RELIANCE",
@@ -1115,32 +1220,104 @@
       "requested_relative_strike": "ATM-1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1300",
-      "last_actual_strike": "1310"
+      "last_actual_strike": "1320"
     },
     {
       "symbol": "RELIANCE",
@@ -1148,32 +1325,104 @@
       "requested_relative_strike": "ATM-2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1923,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1923,
+        "high": 1923,
+        "low": 1923,
+        "close": 1923,
+        "iv": 1923,
+        "volume": 1923,
+        "strike": 1923,
+        "oi": 1923,
+        "spot": 1923,
+        "timestamp": 1923
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 383,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1923
+          },
+          "high": {
+            "type": "list",
+            "length": 1923
+          },
+          "low": {
+            "type": "list",
+            "length": 1923
+          },
+          "close": {
+            "type": "list",
+            "length": 1923
+          },
+          "iv": {
+            "type": "list",
+            "length": 1923
+          },
+          "volume": {
+            "type": "list",
+            "length": 1923
+          },
+          "strike": {
+            "type": "list",
+            "length": 1923
+          },
+          "oi": {
+            "type": "list",
+            "length": 1923
+          },
+          "spot": {
+            "type": "list",
+            "length": 1923
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1923
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1290",
-      "last_actual_strike": "1300"
+      "last_actual_strike": "1310"
     },
     {
       "symbol": "RELIANCE",
@@ -1181,32 +1430,104 @@
       "requested_relative_strike": "ATM-3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1280",
-      "last_actual_strike": "1290"
+      "last_actual_strike": "1300"
     },
     {
       "symbol": "RELIANCE",
@@ -1214,32 +1535,104 @@
       "requested_relative_strike": "ATM",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1310",
-      "last_actual_strike": "1320"
+      "last_actual_strike": "1330"
     },
     {
       "symbol": "RELIANCE",
@@ -1247,32 +1640,104 @@
       "requested_relative_strike": "ATM+1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1320",
-      "last_actual_strike": "1330"
+      "last_actual_strike": "1340"
     },
     {
       "symbol": "RELIANCE",
@@ -1280,32 +1745,104 @@
       "requested_relative_strike": "ATM+2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1923,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1923,
+        "high": 1923,
+        "low": 1923,
+        "close": 1923,
+        "iv": 1923,
+        "volume": 1923,
+        "strike": 1923,
+        "oi": 1923,
+        "spot": 1923,
+        "timestamp": 1923
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 384,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1923
+          },
+          "high": {
+            "type": "list",
+            "length": 1923
+          },
+          "low": {
+            "type": "list",
+            "length": 1923
+          },
+          "close": {
+            "type": "list",
+            "length": 1923
+          },
+          "iv": {
+            "type": "list",
+            "length": 1923
+          },
+          "volume": {
+            "type": "list",
+            "length": 1923
+          },
+          "strike": {
+            "type": "list",
+            "length": 1923
+          },
+          "oi": {
+            "type": "list",
+            "length": 1923
+          },
+          "spot": {
+            "type": "list",
+            "length": 1923
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1923
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1330",
-      "last_actual_strike": "1340"
+      "last_actual_strike": "1350"
     },
     {
       "symbol": "RELIANCE",
@@ -1313,32 +1850,104 @@
       "requested_relative_strike": "ATM+3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1924,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1924,
+        "high": 1924,
+        "low": 1924,
+        "close": 1924,
+        "iv": 1924,
+        "volume": 1924,
+        "strike": 1924,
+        "oi": 1924,
+        "spot": 1924,
+        "timestamp": 1924
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1924
+          },
+          "high": {
+            "type": "list",
+            "length": 1924
+          },
+          "low": {
+            "type": "list",
+            "length": 1924
+          },
+          "close": {
+            "type": "list",
+            "length": 1924
+          },
+          "iv": {
+            "type": "list",
+            "length": 1924
+          },
+          "volume": {
+            "type": "list",
+            "length": 1924
+          },
+          "strike": {
+            "type": "list",
+            "length": 1924
+          },
+          "oi": {
+            "type": "list",
+            "length": 1924
+          },
+          "spot": {
+            "type": "list",
+            "length": 1924
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1924
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1340",
-      "last_actual_strike": "1350"
+      "last_actual_strike": "1360"
     },
     {
       "symbol": "RELIANCE",
@@ -1346,32 +1955,104 @@
       "requested_relative_strike": "ATM-1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1300",
-      "last_actual_strike": "1310"
+      "last_actual_strike": "1320"
     },
     {
       "symbol": "RELIANCE",
@@ -1379,32 +2060,104 @@
       "requested_relative_strike": "ATM-2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1922,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1922,
+        "high": 1922,
+        "low": 1922,
+        "close": 1922,
+        "iv": 1922,
+        "volume": 1922,
+        "strike": 1922,
+        "oi": 1922,
+        "spot": 1922,
+        "timestamp": 1922
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 383,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1922
+          },
+          "high": {
+            "type": "list",
+            "length": 1922
+          },
+          "low": {
+            "type": "list",
+            "length": 1922
+          },
+          "close": {
+            "type": "list",
+            "length": 1922
+          },
+          "iv": {
+            "type": "list",
+            "length": 1922
+          },
+          "volume": {
+            "type": "list",
+            "length": 1922
+          },
+          "strike": {
+            "type": "list",
+            "length": 1922
+          },
+          "oi": {
+            "type": "list",
+            "length": 1922
+          },
+          "spot": {
+            "type": "list",
+            "length": 1922
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1922
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1290",
-      "last_actual_strike": "1300"
+      "last_actual_strike": "1310"
     },
     {
       "symbol": "RELIANCE",
@@ -1412,32 +2165,104 @@
       "requested_relative_strike": "ATM-3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 2,
-      "actual_strike_changes": 1,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
       "first_actual_strike": "1280",
-      "last_actual_strike": "1290"
+      "last_actual_strike": "1300"
     },
     {
       "symbol": "SBIN",
@@ -1445,32 +2270,104 @@
       "requested_relative_strike": "ATM",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1040",
-      "last_actual_strike": "1040"
+      "last_actual_strike": "1100"
     },
     {
       "symbol": "SBIN",
@@ -1478,32 +2375,104 @@
       "requested_relative_strike": "ATM+1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1050",
-      "last_actual_strike": "1050"
+      "last_actual_strike": "1110"
     },
     {
       "symbol": "SBIN",
@@ -1511,32 +2480,104 @@
       "requested_relative_strike": "ATM+2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1060",
-      "last_actual_strike": "1060"
+      "last_actual_strike": "1120"
     },
     {
       "symbol": "SBIN",
@@ -1544,32 +2585,104 @@
       "requested_relative_strike": "ATM+3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1925,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1070",
-      "last_actual_strike": "1070"
+      "last_actual_strike": "1130"
     },
     {
       "symbol": "SBIN",
@@ -1577,32 +2690,104 @@
       "requested_relative_strike": "ATM-1",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1924,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1924,
+        "high": 1924,
+        "low": 1924,
+        "close": 1924,
+        "iv": 1924,
+        "volume": 1924,
+        "strike": 1924,
+        "oi": 1924,
+        "spot": 1924,
+        "timestamp": 1924
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1924
+          },
+          "high": {
+            "type": "list",
+            "length": 1924
+          },
+          "low": {
+            "type": "list",
+            "length": 1924
+          },
+          "close": {
+            "type": "list",
+            "length": 1924
+          },
+          "iv": {
+            "type": "list",
+            "length": 1924
+          },
+          "volume": {
+            "type": "list",
+            "length": 1924
+          },
+          "strike": {
+            "type": "list",
+            "length": 1924
+          },
+          "oi": {
+            "type": "list",
+            "length": 1924
+          },
+          "spot": {
+            "type": "list",
+            "length": 1924
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1924
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1030",
-      "last_actual_strike": "1030"
+      "last_actual_strike": "1090"
     },
     {
       "symbol": "SBIN",
@@ -1610,32 +2795,104 @@
       "requested_relative_strike": "ATM-2",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1924,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1924,
+        "high": 1924,
+        "low": 1924,
+        "close": 1924,
+        "iv": 1924,
+        "volume": 1924,
+        "strike": 1924,
+        "oi": 1924,
+        "spot": 1924,
+        "timestamp": 1924
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 384,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1924
+          },
+          "high": {
+            "type": "list",
+            "length": 1924
+          },
+          "low": {
+            "type": "list",
+            "length": 1924
+          },
+          "close": {
+            "type": "list",
+            "length": 1924
+          },
+          "iv": {
+            "type": "list",
+            "length": 1924
+          },
+          "volume": {
+            "type": "list",
+            "length": 1924
+          },
+          "strike": {
+            "type": "list",
+            "length": 1924
+          },
+          "oi": {
+            "type": "list",
+            "length": 1924
+          },
+          "spot": {
+            "type": "list",
+            "length": 1924
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1924
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1020",
-      "last_actual_strike": "1020"
+      "last_actual_strike": "1080"
     },
     {
       "symbol": "SBIN",
@@ -1643,873 +2900,108 @@
       "requested_relative_strike": "ATM-3",
       "http_status": 200,
       "status": "DATA_RETURNED",
-      "rows": 385,
+      "rows": 1922,
       "array_lengths_consistent": true,
       "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
+        "open": 1922,
+        "high": 1922,
+        "low": 1922,
+        "close": 1922,
+        "iv": 1922,
+        "volume": 1922,
+        "strike": 1922,
+        "oi": 1922,
+        "spot": 1922,
+        "timestamp": 1922
       },
       "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
       "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
+        "2026-08-03": 385,
+        "2026-08-04": 384,
+        "2026-08-05": 383,
+        "2026-08-06": 385,
+        "2026-08-07": 385
       },
       "outside_requested_date_window_rows": 0,
       "api_error_code": null,
       "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1922
+          },
+          "high": {
+            "type": "list",
+            "length": 1922
+          },
+          "low": {
+            "type": "list",
+            "length": 1922
+          },
+          "close": {
+            "type": "list",
+            "length": 1922
+          },
+          "iv": {
+            "type": "list",
+            "length": 1922
+          },
+          "volume": {
+            "type": "list",
+            "length": 1922
+          },
+          "strike": {
+            "type": "list",
+            "length": 1922
+          },
+          "oi": {
+            "type": "list",
+            "length": 1922
+          },
+          "spot": {
+            "type": "list",
+            "length": 1922
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1922
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
       "first_actual_strike": "1010",
-      "last_actual_strike": "1010"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
-      "first_actual_strike": "1040",
-      "last_actual_strike": "1040"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
-      "first_actual_strike": "1050",
-      "last_actual_strike": "1050"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 383,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 383,
-        "high": 383,
-        "low": 383,
-        "close": 383,
-        "iv": 383,
-        "volume": 383,
-        "strike": 383,
-        "oi": 383,
-        "spot": 383,
-        "timestamp": 383
-      },
-      "first_timestamp_utc": "2026-08-03T03:47:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 383
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 17,
-      "first_actual_strike": "1050",
-      "last_actual_strike": "1060"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 382,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 382,
-        "high": 382,
-        "low": 382,
-        "close": 382,
-        "iv": 382,
-        "volume": 382,
-        "strike": 382,
-        "oi": 382,
-        "spot": 382,
-        "timestamp": 382
-      },
-      "first_timestamp_utc": "2026-08-03T03:48:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 382
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 17,
-      "first_actual_strike": "1060",
       "last_actual_strike": "1070"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
-      "first_actual_strike": "1030",
-      "last_actual_strike": "1030"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
-      "first_actual_strike": "1020",
-      "last_actual_strike": "1020"
-    },
-    {
-      "symbol": "SBIN",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 3,
-      "actual_strike_changes": 18,
-      "first_actual_strike": "1010",
-      "last_actual_strike": "1010"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1160",
-      "last_actual_strike": "1180"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1175",
-      "last_actual_strike": "1200"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 216,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 216,
-        "high": 216,
-        "low": 216,
-        "close": 216,
-        "iv": 216,
-        "volume": 216,
-        "strike": 216,
-        "oi": 216,
-        "spot": 216,
-        "timestamp": 216
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 216
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 8,
-      "first_actual_strike": "1180",
-      "last_actual_strike": "1220"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM+3",
-      "http_status": 200,
-      "status": "UNKNOWN",
-      "rows": 0,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 0,
-        "high": 0,
-        "low": 0,
-        "close": 0,
-        "iv": 0,
-        "volume": 0,
-        "strike": 0,
-        "oi": 0,
-        "spot": 0,
-        "timestamp": 0
-      },
-      "first_timestamp_utc": null,
-      "last_timestamp_utc": null,
-      "timestamp_counts_by_ist_date": {},
-      "outside_requested_date_window_rows": null,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 0,
-      "actual_strike_changes": 0,
-      "first_actual_strike": null,
-      "last_actual_strike": null
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1155",
-      "last_actual_strike": "1175"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1140",
-      "last_actual_strike": "1160"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "CALL",
-      "requested_relative_strike": "ATM-3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1120",
-      "last_actual_strike": "1155"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1160",
-      "last_actual_strike": "1180"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1175",
-      "last_actual_strike": "1200"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 215,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 215,
-        "high": 215,
-        "low": 215,
-        "close": 215,
-        "iv": 215,
-        "volume": 215,
-        "strike": 215,
-        "oi": 215,
-        "spot": 215,
-        "timestamp": 215
-      },
-      "first_timestamp_utc": "2026-08-03T03:46:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 215
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 7,
-      "first_actual_strike": "1175",
-      "last_actual_strike": "1220"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM+3",
-      "http_status": 200,
-      "status": "UNKNOWN",
-      "rows": 0,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 0,
-        "high": 0,
-        "low": 0,
-        "close": 0,
-        "iv": 0,
-        "volume": 0,
-        "strike": 0,
-        "oi": 0,
-        "spot": 0,
-        "timestamp": 0
-      },
-      "first_timestamp_utc": null,
-      "last_timestamp_utc": null,
-      "timestamp_counts_by_ist_date": {},
-      "outside_requested_date_window_rows": null,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 0,
-      "actual_strike_changes": 0,
-      "first_actual_strike": null,
-      "last_actual_strike": null
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-1",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1155",
-      "last_actual_strike": "1175"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-2",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1140",
-      "last_actual_strike": "1160"
-    },
-    {
-      "symbol": "INFY",
-      "requested_option_type": "PUT",
-      "requested_relative_strike": "ATM-3",
-      "http_status": 200,
-      "status": "DATA_RETURNED",
-      "rows": 385,
-      "array_lengths_consistent": true,
-      "nonempty_fields": {
-        "open": 385,
-        "high": 385,
-        "low": 385,
-        "close": 385,
-        "iv": 385,
-        "volume": 385,
-        "strike": 385,
-        "oi": 385,
-        "spot": 385,
-        "timestamp": 385
-      },
-      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
-      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
-      "timestamp_counts_by_ist_date": {
-        "2026-08-03": 385
-      },
-      "outside_requested_date_window_rows": 0,
-      "api_error_code": null,
-      "api_error_message": null,
-      "distinct_actual_strikes": 4,
-      "actual_strike_changes": 26,
-      "first_actual_strike": "1120",
-      "last_actual_strike": "1155"
     }
   ],
   "surface_audit": [
     {
-      "symbol": "HDFCBANK",
-      "option_type": "CALL",
-      "requested_relative_strikes": [
-        "ATM",
-        "ATM+1",
-        "ATM+2",
-        "ATM+3",
-        "ATM-1",
-        "ATM-2",
-        "ATM-3"
-      ],
-      "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 384,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 6,
-      "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 8,
-      "actual_strikes_observed_at_every_union_timestamp": 6,
-      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
-      "per_offset": {
-        "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "750",
-          "last_actual_strike": "750"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "760",
-          "last_actual_strike": "760"
-        },
-        "ATM+2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "770",
-          "last_actual_strike": "770"
-        },
-        "ATM+3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "780",
-          "last_actual_strike": "780"
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "740",
-          "last_actual_strike": "740"
-        },
-        "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "730",
-          "last_actual_strike": "730"
-        },
-        "ATM-3": {
-          "timestamp_count": 384,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "720",
-          "last_actual_strike": "720"
-        }
-      },
-      "relative_surface_alignment_gate": "FAIL",
-      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
-    },
-    {
-      "symbol": "HDFCBANK",
-      "option_type": "PUT",
-      "requested_relative_strikes": [
-        "ATM",
-        "ATM+1",
-        "ATM+2",
-        "ATM+3",
-        "ATM-1",
-        "ATM-2",
-        "ATM-3"
-      ],
-      "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 384,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 6,
-      "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 8,
-      "actual_strikes_observed_at_every_union_timestamp": 5,
-      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
-      "per_offset": {
-        "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "750",
-          "last_actual_strike": "750"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "760",
-          "last_actual_strike": "760"
-        },
-        "ATM+2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "770",
-          "last_actual_strike": "770"
-        },
-        "ATM+3": {
-          "timestamp_count": 384,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "780",
-          "last_actual_strike": "780"
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "740",
-          "last_actual_strike": "740"
-        },
-        "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "730",
-          "last_actual_strike": "730"
-        },
-        "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "720",
-          "last_actual_strike": "720"
-        }
-      },
-      "relative_surface_alignment_gate": "FAIL",
-      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
-    },
-    {
       "symbol": "ICICIBANK",
       "option_type": "CALL",
       "requested_relative_strikes": [
@@ -2522,284 +3014,62 @@
         "ATM-3"
       ],
       "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 385,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 7,
+      "common_timestamp_count_across_offsets": 1920,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 6,
       "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 9,
-      "actual_strikes_observed_at_every_union_timestamp": 5,
+      "distinct_actual_strikes_in_surface": 11,
+      "actual_strikes_observed_at_every_union_timestamp": 3,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
       "per_offset": {
         "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
           "first_actual_strike": "1440",
-          "last_actual_strike": "1460"
+          "last_actual_strike": "1420"
         },
         "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
           "first_actual_strike": "1450",
-          "last_actual_strike": "1470"
+          "last_actual_strike": "1430"
         },
         "ATM+2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
           "first_actual_strike": "1460",
-          "last_actual_strike": "1480"
-        },
-        "ATM+3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1470",
-          "last_actual_strike": "1490"
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1430",
-          "last_actual_strike": "1450"
-        },
-        "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1420",
           "last_actual_strike": "1440"
         },
-        "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1410",
-          "last_actual_strike": "1430"
-        }
-      },
-      "relative_surface_alignment_gate": "PASS",
-      "interpretation": "Seven offset tapes align in time and expose distinct actual strikes at each timestamp; fixed-strike paths may be reconstructed from their in-memory union, subject to expiry identity and rights."
-    },
-    {
-      "symbol": "ICICIBANK",
-      "option_type": "PUT",
-      "requested_relative_strikes": [
-        "ATM",
-        "ATM+1",
-        "ATM+2",
-        "ATM+3",
-        "ATM-1",
-        "ATM-2",
-        "ATM-3"
-      ],
-      "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 378,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 5,
-      "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 9,
-      "actual_strikes_observed_at_every_union_timestamp": 3,
-      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
-      "per_offset": {
-        "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1440",
-          "last_actual_strike": "1460"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1450",
-          "last_actual_strike": "1470"
-        },
-        "ATM+2": {
-          "timestamp_count": 379,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1460",
-          "last_actual_strike": "1480"
-        },
         "ATM+3": {
-          "timestamp_count": 378,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
           "first_actual_strike": "1470",
-          "last_actual_strike": "1490"
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
-          "first_actual_strike": "1430",
           "last_actual_strike": "1450"
         },
+        "ATM-1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1430",
+          "last_actual_strike": "1410"
+        },
         "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
           "first_actual_strike": "1420",
-          "last_actual_strike": "1440"
+          "last_actual_strike": "1400"
         },
         "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 41,
+          "timestamp_count": 1920,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 111,
           "first_actual_strike": "1410",
-          "last_actual_strike": "1430"
-        }
-      },
-      "relative_surface_alignment_gate": "FAIL",
-      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
-    },
-    {
-      "symbol": "INFY",
-      "option_type": "CALL",
-      "requested_relative_strikes": [
-        "ATM",
-        "ATM+1",
-        "ATM+2",
-        "ATM+3",
-        "ATM-1",
-        "ATM-2",
-        "ATM-3"
-      ],
-      "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 0,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 5,
-      "maximum_distinct_actual_strikes_per_timestamp": 6,
-      "distinct_actual_strikes_in_surface": 9,
-      "actual_strikes_observed_at_every_union_timestamp": 3,
-      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
-      "per_offset": {
-        "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1160",
-          "last_actual_strike": "1180"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1175",
-          "last_actual_strike": "1200"
-        },
-        "ATM+2": {
-          "timestamp_count": 216,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 8,
-          "first_actual_strike": "1180",
-          "last_actual_strike": "1220"
-        },
-        "ATM+3": {
-          "timestamp_count": 0,
-          "distinct_actual_strikes": 0,
-          "actual_strike_changes": 0,
-          "first_actual_strike": null,
-          "last_actual_strike": null
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1155",
-          "last_actual_strike": "1175"
-        },
-        "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1140",
-          "last_actual_strike": "1160"
-        },
-        "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1120",
-          "last_actual_strike": "1155"
-        }
-      },
-      "relative_surface_alignment_gate": "FAIL",
-      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
-    },
-    {
-      "symbol": "INFY",
-      "option_type": "PUT",
-      "requested_relative_strikes": [
-        "ATM",
-        "ATM+1",
-        "ATM+2",
-        "ATM+3",
-        "ATM-1",
-        "ATM-2",
-        "ATM-3"
-      ],
-      "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 0,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 5,
-      "maximum_distinct_actual_strikes_per_timestamp": 6,
-      "distinct_actual_strikes_in_surface": 9,
-      "actual_strikes_observed_at_every_union_timestamp": 3,
-      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
-      "per_offset": {
-        "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1160",
-          "last_actual_strike": "1180"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1175",
-          "last_actual_strike": "1200"
-        },
-        "ATM+2": {
-          "timestamp_count": 215,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 7,
-          "first_actual_strike": "1175",
-          "last_actual_strike": "1220"
-        },
-        "ATM+3": {
-          "timestamp_count": 0,
-          "distinct_actual_strikes": 0,
-          "actual_strike_changes": 0,
-          "first_actual_strike": null,
-          "last_actual_strike": null
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1155",
-          "last_actual_strike": "1175"
-        },
-        "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1140",
-          "last_actual_strike": "1160"
-        },
-        "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 4,
-          "actual_strike_changes": 26,
-          "first_actual_strike": "1120",
-          "last_actual_strike": "1155"
+          "last_actual_strike": "1390"
         }
       },
       "relative_surface_alignment_gate": "FAIL",
@@ -2818,66 +3088,66 @@
         "ATM-3"
       ],
       "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 385,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 7,
+      "common_timestamp_count_across_offsets": 1923,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 6,
       "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 8,
-      "actual_strikes_observed_at_every_union_timestamp": 6,
+      "distinct_actual_strikes_in_surface": 14,
+      "actual_strikes_observed_at_every_union_timestamp": 0,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
       "per_offset": {
         "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1310",
-          "last_actual_strike": "1320"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
-          "first_actual_strike": "1320",
           "last_actual_strike": "1330"
         },
-        "ATM+2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
-          "first_actual_strike": "1330",
+        "ATM+1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1320",
           "last_actual_strike": "1340"
         },
-        "ATM+3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
-          "first_actual_strike": "1340",
+        "ATM+2": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1330",
           "last_actual_strike": "1350"
         },
+        "ATM+3": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1340",
+          "last_actual_strike": "1360"
+        },
         "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1300",
-          "last_actual_strike": "1310"
+          "last_actual_strike": "1320"
         },
         "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1923,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1290",
-          "last_actual_strike": "1300"
+          "last_actual_strike": "1310"
         },
         "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1280",
-          "last_actual_strike": "1290"
+          "last_actual_strike": "1300"
         }
       },
-      "relative_surface_alignment_gate": "PASS",
-      "interpretation": "Seven offset tapes align in time and expose distinct actual strikes at each timestamp; fixed-strike paths may be reconstructed from their in-memory union, subject to expiry identity and rights."
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
     },
     {
       "symbol": "RELIANCE",
@@ -2892,66 +3162,66 @@
         "ATM-3"
       ],
       "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 385,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 7,
+      "common_timestamp_count_across_offsets": 1922,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 4,
       "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 8,
-      "actual_strikes_observed_at_every_union_timestamp": 6,
+      "distinct_actual_strikes_in_surface": 14,
+      "actual_strikes_observed_at_every_union_timestamp": 0,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
       "per_offset": {
         "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1310",
-          "last_actual_strike": "1320"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
-          "first_actual_strike": "1320",
           "last_actual_strike": "1330"
         },
-        "ATM+2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
-          "first_actual_strike": "1330",
+        "ATM+1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1320",
           "last_actual_strike": "1340"
         },
-        "ATM+3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
-          "first_actual_strike": "1340",
+        "ATM+2": {
+          "timestamp_count": 1923,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1330",
           "last_actual_strike": "1350"
         },
+        "ATM+3": {
+          "timestamp_count": 1924,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1340",
+          "last_actual_strike": "1360"
+        },
         "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1300",
-          "last_actual_strike": "1310"
+          "last_actual_strike": "1320"
         },
         "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1922,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1290",
-          "last_actual_strike": "1300"
+          "last_actual_strike": "1310"
         },
         "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 2,
-          "actual_strike_changes": 1,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
           "first_actual_strike": "1280",
-          "last_actual_strike": "1290"
+          "last_actual_strike": "1300"
         }
       },
-      "relative_surface_alignment_gate": "PASS",
-      "interpretation": "Seven offset tapes align in time and expose distinct actual strikes at each timestamp; fixed-strike paths may be reconstructed from their in-memory union, subject to expiry identity and rights."
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
     },
     {
       "symbol": "SBIN",
@@ -2966,136 +3236,62 @@
         "ATM-3"
       ],
       "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 385,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 7,
+      "common_timestamp_count_across_offsets": 1921,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 5,
       "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 9,
-      "actual_strikes_observed_at_every_union_timestamp": 5,
+      "distinct_actual_strikes_in_surface": 16,
+      "actual_strikes_observed_at_every_union_timestamp": 0,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
       "per_offset": {
         "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1040",
-          "last_actual_strike": "1040"
+          "last_actual_strike": "1100"
         },
         "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1050",
-          "last_actual_strike": "1050"
+          "last_actual_strike": "1110"
         },
         "ATM+2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1060",
-          "last_actual_strike": "1060"
+          "last_actual_strike": "1120"
         },
         "ATM+3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1070",
-          "last_actual_strike": "1070"
+          "last_actual_strike": "1130"
         },
         "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1924,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1030",
-          "last_actual_strike": "1030"
+          "last_actual_strike": "1090"
         },
         "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1924,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1020",
-          "last_actual_strike": "1020"
+          "last_actual_strike": "1080"
         },
         "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
+          "timestamp_count": 1922,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
           "first_actual_strike": "1010",
-          "last_actual_strike": "1010"
-        }
-      },
-      "relative_surface_alignment_gate": "PASS",
-      "interpretation": "Seven offset tapes align in time and expose distinct actual strikes at each timestamp; fixed-strike paths may be reconstructed from their in-memory union, subject to expiry identity and rights."
-    },
-    {
-      "symbol": "SBIN",
-      "option_type": "PUT",
-      "requested_relative_strikes": [
-        "ATM",
-        "ATM+1",
-        "ATM+2",
-        "ATM+3",
-        "ATM-1",
-        "ATM-2",
-        "ATM-3"
-      ],
-      "offset_series_returned": 7,
-      "common_timestamp_count_across_offsets": 382,
-      "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 5,
-      "maximum_distinct_actual_strikes_per_timestamp": 7,
-      "distinct_actual_strikes_in_surface": 9,
-      "actual_strikes_observed_at_every_union_timestamp": 4,
-      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
-      "per_offset": {
-        "ATM": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
-          "first_actual_strike": "1040",
-          "last_actual_strike": "1040"
-        },
-        "ATM+1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
-          "first_actual_strike": "1050",
-          "last_actual_strike": "1050"
-        },
-        "ATM+2": {
-          "timestamp_count": 383,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 17,
-          "first_actual_strike": "1050",
-          "last_actual_strike": "1060"
-        },
-        "ATM+3": {
-          "timestamp_count": 382,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 17,
-          "first_actual_strike": "1060",
           "last_actual_strike": "1070"
-        },
-        "ATM-1": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
-          "first_actual_strike": "1030",
-          "last_actual_strike": "1030"
-        },
-        "ATM-2": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
-          "first_actual_strike": "1020",
-          "last_actual_strike": "1020"
-        },
-        "ATM-3": {
-          "timestamp_count": 385,
-          "distinct_actual_strikes": 3,
-          "actual_strike_changes": 18,
-          "first_actual_strike": "1010",
-          "last_actual_strike": "1010"
         }
       },
       "relative_surface_alignment_gate": "FAIL",
@@ -3111,6 +3307,6 @@
     "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
     "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."
   ],
-  "status": "PARTIAL_DATA_RETURNED",
+  "status": "PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES",
   "rows_outside_requested_date_window_total": 0
 }
