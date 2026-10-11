@@ -14,3 +14,10 @@ This log records visible user instructions and research decisions only; it does 
 - Run [38129389678](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129389678) succeeded: 22 archive dates, 18,082 rows, 100% identity/OHLC completeness, no duplicate daily keys/date mismatches/source-schema errors, 12,160 positive-volume and 5,922 zero-volume rows (zero missing-volume rows). No raw rows were published.
 - The cost model includes public, date-effective fee components and brokerage sensitivity, but the user's exact brokerage cohort is unverified. EOD bars cannot validate executable fills or historical spread/depth.
 - Final decision: contract-identified daily data are usable for coverage/descriptive research; strategy P&L is NOT RUN under the registered stop rule; no strategy promoted. Manuscript and aggregate figure published in Phase 104 branch.
+
+
+## 2026-10-11 — Final locked workflow verified
+
+- Final workflow run [38129926977](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129926977) completed successfully after adding a regression test that keeps the phase terminal state from being reset by a data audit rerun.
+- The final aggregate JSON reports 18,082 rows, 100% identity and OHLC completeness, zero duplicate daily contract keys/date mismatches/source errors, and no raw rows in the repository or artifact.
+- Final decision remains: daily contract identity feasibility PASS, executable after-cost strategy gate NO-GO, no strategy P&L or profitability inference.
