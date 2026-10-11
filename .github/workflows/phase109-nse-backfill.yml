@@ -29,7 +29,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase109-nse-backfill-${{ github.ref }}
+  group: phase109-writer-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
