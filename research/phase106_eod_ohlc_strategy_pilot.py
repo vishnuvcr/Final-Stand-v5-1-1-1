@@ -454,7 +454,7 @@ def run(args):
         (out / "summary.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
         (out / "decision.json").write_text(json.dumps(decision, indent=2) + "\n", encoding="utf-8")
         (out / "summary.csv").write_text("strategy,brokerage_per_order,slippage_per_unit_per_side,fee_multiplier,trade_count,net_pnl_rupees\n", encoding="utf-8")
-        (out / "PHASE105_REPORT.md").write_text(make_report(result), encoding="utf-8")
+        (out / "PHASE106_REPORT.md").write_text(make_report(result), encoding="utf-8")
         return result
 
     rows_by_day_symbol = defaultdict(list)
@@ -606,7 +606,7 @@ def run(args):
     (out / "summary.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     (out / "decision.json").write_text(json.dumps(decision, indent=2) + "\n", encoding="utf-8")
     write_chart(scenario_results, out)
-    (out / "PHASE105_REPORT.md").write_text(make_report(result), encoding="utf-8")
+    (out / "PHASE106_REPORT.md").write_text(make_report(result), encoding="utf-8")
     return result
 
 
