@@ -1,0 +1,114 @@
+name: Phase 104 — NSE EOD Stock-Options Data Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date inclusive (YYYY-MM-DD, window max 30 calendar days)"
+        required: true
+        default: "2026-08-03"
+        type: string
+      to_date:
+        description: "End date exclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-02"
+        type: string
+  push:
+    branches:
+      - phase-104-eod-stock-options
+    paths:
+      - "research/phase104_eod_stock_options/nse_eod_audit.py"
+      - "research/phase104_eod_stock_options/record_phase104_status.py"
+      - "tests/phase104/**"
+      - ".github/workflows/phase104-eod-stock-options-audit.yml"
+
+concurrency:
+  group: phase104-nse-eod-data-audit
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  eod-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PHASE104_FROM_DATE: ${{ inputs.from_date || '2026-08-03' }}
+      PHASE104_TO_DATE: ${{ inputs.to_date || '2026-09-02' }}
+    steps:
+      - name: Checkout isolated Phase 104 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-104-eod-stock-options
+
+      - name: Preserve prior verified aggregate and clear stale run output
+        run: |
+          mkdir -p /tmp/phase104-prior
+          for f in results/phase104/nse_eod_data_audit.json results/phase104/NSE_EOD_DATA_AUDIT.md; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/phase104-prior/$(basename "$f")"; fi
+          done
+          rm -f results/phase104/nse_eod_data_audit.json results/phase104/NSE_EOD_DATA_AUDIT.md
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Unit-test audit and contract-identity checks
+        run: python -m unittest discover -s tests/phase104 -p "test_*.py" -v
+
+      - name: Query bounded official NSE daily UDiFF archives
+        run: python research/phase104_eod_stock_options/nse_eod_audit.py --from-date "$PHASE104_FROM_DATE" --to-date "$PHASE104_TO_DATE"
+
+      - name: Publish status and research/error checkpoints
+        if: always()
+        run: python research/phase104_eod_stock_options/record_phase104_status.py
+
+      - name: Upload aggregate audit only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase104-nse-eod-data-audit
+          path: |
+            results/phase104/nse_eod_data_audit.json
+            results/phase104/NSE_EOD_DATA_AUDIT.md
+          if-no-files-found: warn
+
+      - name: Commit aggregate audit and checkpoint logs
+        if: always() && github.ref == 'refs/heads/phase-104-eod-stock-options'
+        run: |
+          if [ ! -f results/phase104/nse_eod_data_audit.json ] || ! python -c 'import json,os,sys; d=json.load(open("results/phase104/nse_eod_data_audit.json")); sys.exit(0 if str(d.get("run_id"))==os.environ.get("GITHUB_RUN_ID") else 1)'; then
+            mkdir -p results/phase104
+            cp /tmp/phase104-prior/nse_eod_data_audit.json results/phase104/ 2>/dev/null || true
+            cp /tmp/phase104-prior/NSE_EOD_DATA_AUDIT.md results/phase104/ 2>/dev/null || true
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase104/nse_eod_data_audit.json results/phase104/NSE_EOD_DATA_AUDIT.md PHASE104_STATUS.md PHASE104_RESEARCH_LOG.md PHASE104_ERROR_LOG.md
+          if git diff --cached --quiet; then
+            echo "No result changes to commit."
+          else
+            git commit -m "Phase 104: record NSE EOD stock-options audit"
+            if ! git push origin HEAD:phase-104-eod-stock-options; then
+              echo "Result push raced with another branch update; reconciling without force-push."
+              mkdir -p /tmp/phase104-current
+              cp results/phase104/nse_eod_data_audit.json /tmp/phase104-current/ 2>/dev/null || true
+              cp results/phase104/NSE_EOD_DATA_AUDIT.md /tmp/phase104-current/ 2>/dev/null || true
+              git fetch origin phase-104-eod-stock-options
+              git reset --hard FETCH_HEAD
+              if [ -f /tmp/phase104-current/nse_eod_data_audit.json ] && python -c 'import json,os,sys; d=json.load(open("/tmp/phase104-current/nse_eod_data_audit.json")); sys.exit(0 if str(d.get("run_id"))==os.environ.get("GITHUB_RUN_ID") else 1)'; then
+                cp /tmp/phase104-current/nse_eod_data_audit.json results/phase104/
+                cp /tmp/phase104-current/NSE_EOD_DATA_AUDIT.md results/phase104/ 2>/dev/null || true
+                python research/phase104_eod_stock_options/record_phase104_status.py
+                git add results/phase104/nse_eod_data_audit.json results/phase104/NSE_EOD_DATA_AUDIT.md PHASE104_STATUS.md PHASE104_RESEARCH_LOG.md PHASE104_ERROR_LOG.md
+                if ! git diff --cached --quiet; then
+                  git commit -m "Phase 104: reconcile NSE EOD audit after branch update"
+                  git push origin HEAD:phase-104-eod-stock-options
+                fi
+              else
+                echo "No fresh result matched this run; refusing to publish stale audit."
+                exit 1
+              fi
+            fi
+          fi
