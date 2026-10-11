@@ -321,3 +321,6 @@ Next: run the same offsets across all five stocks and both CALL/PUT sides, recor
 - [ ] No strategy P&L until the expanded surface audit, multiple-session continuity, source rights and execution-cost gates pass.
 
 **Current gate:** remediation committed; the rerun is pending verification. A successful HTTP request with no requested-side rows is a missing-coverage observation, not a pass. Previous failed/partial results remain in the record and are not overwritten.
+
+
+**Integrity refinement:** the abort condition now exempts only the explicit `SUCCESS_EMPTY_FOR_REQUESTED_SIDE` status. Any other inconsistent arrays, including zero-timestamp/mismatched non-empty arrays, remain an integrity failure. The accepted audit JSON still belongs to run 38090149633; no post-fix run result has yet been verified.
