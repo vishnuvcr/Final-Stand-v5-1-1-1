@@ -228,7 +228,7 @@ def build(out_dir: Path):
     # Structural near-neighbours are retained rather than incorrectly collapsed:
     # each differs in exactly one of core/confirmation/regime and represents a separately specified rule.
     keys = {(f["core_id"], f["confirmation_id"], f["regime_id"]) for f in families}
-    if len(keys) != 1000:
+    if len(keys) != len(CORES) * len(CONFIRMS) * len(REGIMES):
         raise RuntimeError("Architecture uniqueness gate failed.")
     near_neighbor_pairs = len(CORES) * 5 * 10 * 2  # same core+confirmation; same core+regime
     total_cost_rows = total_configurations * len(COST_CASES)
