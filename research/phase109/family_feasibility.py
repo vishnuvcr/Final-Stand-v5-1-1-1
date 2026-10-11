@@ -132,11 +132,22 @@ def main():
       "basis":(future_ok and option_ok,"EOD spot/futures basis candidate; exact timestamp alignment and dated costs remain"),
       "expiry_calendar":(option_ok,"Option/futures expiry field present; holiday/roll rules remain"),
       "volatility":(bool(nifty.get("unique_date_count",0)),"Realized volatility may be calculated from audited close history"),
+      "volatility_lookback":(True,"Registered parameter axis; not an external data dependency"),
+      "signal_lookback_sessions":(True,"Registered parameter axis; not an external data dependency"),
+      "signal_threshold":(True,"Registered parameter axis; not an external data dependency"),
+      "move_or_signal_threshold_pct":(True,"Registered parameter axis; not an external data dependency"),
+      "strike_target":(True,"Registered option-selection parameter axis"),
+      "holding_exit":(True,"Registered exit-horizon parameter axis"),
+      "risk_profile":(True,"Registered exit/risk parameter axis"),
+      "oi_confirmation_method":(True,"Registered OI configuration axis; source data checked separately"),
     }
     # Header aliases allow the generator's different field names without silently
     # treating an unknown input as available.
     aliases={
       "underlying_open":"underlying_ohlc","underlying_high":"underlying_ohlc","underlying_low":"underlying_ohlc",
+      "prior_close":"underlying_ohlc","volatility_lookback_sessions":"volatility_lookback",
+      "lookback_sessions":"signal_lookback_sessions","move_threshold_pct":"move_or_signal_threshold_pct",
+      "cross_index_or_global_return":"index_context",
       "nifty_close":"index_context","banknifty_close":"index_context",
       "futures_close":"future_price","future_expiry":"future_contract_identity",
       "synthetic_future":"synthetic_future","basis":"basis",
