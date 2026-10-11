@@ -245,6 +245,25 @@ class ExpiryCrosscheckTests(unittest.TestCase):
         self.assertFalse(result["raw_rows_persisted"])
         self.assertEqual(result["matched_expiry_counts"], {"2026-09-29": 9})
 
+    def test_expiry_code_parser_accepts_only_documented_values(self):
+        from dhan_data_audit import parse_expiry_code
+        self.assertEqual(parse_expiry_code("0"), 0)
+        self.assertEqual(parse_expiry_code("1"), 1)
+        self.assertEqual(parse_expiry_code("2"), 2)
+        with self.assertRaises(Exception):
+            parse_expiry_code("3")
+
+    def test_expiry_code_zero_matches_near_expiry_when_eod_ohlc_identifies_it(self):
+        from expiry_crosscheck import audit_expiry_identity
+        payload = self._nse_zip_for_date("2026-08-03")
+        def fetch_bytes(url, timeout=30):
+            self.assertIn("BhavCopy_NSE_FO_0_0_0_", url)
+            return payload
+        result = audit_expiry_identity(self._profiles((10.0,12.0,8.0,11.0)), fetch_bytes, expiry_code=0)
+        self.assertEqual(result["status"], "PASS_EOD_RECONCILED_EXPIRY_CODE_0", result)
+        self.assertEqual(result["expiry_code_matches"], 9)
+        self.assertEqual(result["matched_expiry_rank_counts"], {"1": 9})
+
     def test_expiry_crosscheck_blocks_when_minute_ohlc_does_not_match_eod(self):
         result = self._run((99.0,100.0,98.0,99.0))
         self.assertEqual(result["status"], "BLOCKED_EOD_EXPIRY_RECONCILIATION_INSUFFICIENT", result)
