@@ -335,3 +335,12 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Published `results/phase103/FIXED_CONTRACT_SOURCE_RIGHTS_SCREEN.md` (commit `2ded367ef883bb955bb6cc6ece4a0540f929068c`).
 - Finding: NSE Data & Analytics is a plausible official inquiry route for contract-level historical records, but no public evidence verifies required fields, commercial terms, automated use, caching/retention, or publication rights. Public option-chain terms are not accepted as permission for bulk automated historical reconstruction.
 - Decision unchanged: do not calculate P&L from rolling ATM-relative series or invent fills. No strategy promotion. The next bounded dependency is entitlement confirmation and an authorized small sample; if unavailable, close this empirical attempt as data NO-GO.
+
+
+## 2026-10-11 — Corrected fixed-strike coverage diagnostic
+
+- Re-read the Phase 103 plan, status, logs, prior audit and code before making this change.
+- Found the previous gate over-relied on cross-offset timestamp equality. With rolling ATM-relative offsets, a missing row in one offset does not by itself prove an actual strike has no observation at that timestamp in the union of the returned offsets.
+- Updated `dhan_data_audit.py` to report per-actual-strike minute counts, union coverage percentage, UTC boundaries and per-IST-date counts. Raw price/OI/volume arrays remain ephemeral; only aggregate strike coverage is published.
+- Added a regression test for unequal offset timestamps with measurable exact-strike coverage. Commits: `3848124afe46635a7bbc761bab268c8f2186313b`, `1e1a94e0b8d9b13028cbe4c23c0551813135b04c`, `c5ac2361c62af1f6995e22570c4442d933983742`.
+- This diagnostic correction does not relax contract/expiry identity, data-use rights, historical bid/ask/depth or execution-cost gates. A fresh Actions run is required before accepting the result.
