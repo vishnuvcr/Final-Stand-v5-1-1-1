@@ -60,8 +60,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: phase-103-nifty50-stock-options
-      - name: Remove stale prior-run audit outputs from the workspace
-        run: rm -f results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md
+      - name: Preserve prior verified audit and remove stale outputs from this run
+        run: |
+          mkdir -p /tmp/phase103-prior
+          for f in results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md; do
+            if [ -f "$f" ]; then cp "$f" "/tmp/phase103-prior/$(basename "$f")"; fi
+          done
+          rm -f results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -95,6 +100,12 @@ jobs:
       - name: Commit derived audit, status and logs
         if: always() && github.ref == 'refs/heads/phase-103-nifty50-stock-options'
         run: |
+          # Keep the last verified aggregate report if this run failed before creating fresh, run-matched output.
+          if [ ! -f results/phase103/dhan_data_api_audit.json ] || ! python -c 'import json,os,sys; d=json.load(open("results/phase103/dhan_data_api_audit.json")); sys.exit(0 if str(d.get("run_id"))==os.environ.get("GITHUB_RUN_ID") else 1)'; then
+            mkdir -p results/phase103
+            cp /tmp/phase103-prior/dhan_data_api_audit.json results/phase103/ 2>/dev/null || true
+            cp /tmp/phase103-prior/DHAN_DATA_API_AUDIT.md results/phase103/ 2>/dev/null || true
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md PHASE103_STATUS.md PHASE103_RESEARCH_LOG.md PHASE103_ERROR_LOG.md
