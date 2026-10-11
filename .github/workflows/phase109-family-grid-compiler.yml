@@ -137,14 +137,20 @@ jobs:
           err_marker = "## 2026-10-12 — Grid compilation and source probe"
           errors = []
           hf_no_results = sum(1 for row in audits if row.get("source") == "Hugging Face dataset discovery" and row.get("status") == "NO_RESULTS")
+          hf_card_reviews = [row for row in audits if row.get("source") == "Hugging Face dataset card inspection" and row.get("status") in {"METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED", "METADATA_DISCOVERED_LICENSE_MISSING"}]
           for row in audits:
               s = row.get("status", "")
               if row.get("source") == "Hugging Face dataset discovery" and s == "NO_RESULTS":
                   continue
+              if row.get("source") == "Hugging Face dataset card inspection" and s in {"METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED", "METADATA_DISCOVERED_LICENSE_MISSING"}:
+                  continue
               if s not in {"AUTH_AND_SCHEMA_PROBE_OK", "METADATA_DISCOVERED"}:
                   errors.append(f"- Source probe status for {row.get('source')} {row.get('query', '')}: **{s or 'UNKNOWN'}**. {row.get('note', '')}")
           if hf_no_results:
-              errors.append(f"- Hugging Face Hub returned no matches for {hf_no_results} of the five initial discovery terms. This is a search-coverage limitation, not an API outage; broaden the search and inspect known candidates.")
+              errors.append(f"- Hugging Face Hub returned no matches for {hf_no_results} of {len(source.get('terms', {})) if isinstance(source.get('terms'), dict) else 'the'} discovery terms. This is a search-coverage limitation, not an API outage; broaden the search and inspect known candidates.")
+          if hf_card_reviews:
+              card_list = "; ".join(f"{row.get('dataset_id')} (license={row.get('license', 'NOT_DECLARED')})" for row in hf_card_reviews)
+              errors.append(f"- Hugging Face candidates requiring rights/schema/data-provenance review before use: {card_list}. These are source limitations, not a technical workflow failure; the registry remains blocked until audit.")
           errors.extend([
               "- This step enumerated the hypothesis/configuration space but evaluated no strategy returns; count totals must never be reported as backtests.",
               "- Dhan endpoint data, if returned, were limited to a small access/schema probe. Full-window coverage, historical contract identity, source rights and fill realism remain unverified.",
