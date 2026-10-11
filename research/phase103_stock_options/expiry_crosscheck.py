@@ -10,7 +10,7 @@ NSE_URL = "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_{da
 IST = ZoneInfo("Asia/Kolkata")
 EXPECTED_SESSION_MINUTES = 385
 PRICE_TOLERANCE = 0.051
-NSE_REQUIRED = {"TckrSymb", "XpryDt", "StrkPric", "OptnTp", "OpnPric", "HghPric", "LwPric", "ClsPric", "TtlTradgVol", "OpnIntrst"}
+NSE_REQUIRED = {"FinInstrmTp", "TckrSymb", "XpryDt", "StrkPric", "OptnTp", "OpnPric", "HghPric", "LwPric", "ClsPric", "TtlTradgVol", "OpnIntrst"}
 
 
 def _float(value):
