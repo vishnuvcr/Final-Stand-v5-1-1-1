@@ -1,0 +1,87 @@
+name: Phase 105 — EOD OHLC Options Strategy Pilot
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date inclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-08-03"
+        type: string
+      to_date:
+        description: "End date exclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-02"
+        type: string
+  push:
+    branches:
+      - phase-105-eod-ohlc-strategy-pilot
+    paths:
+      - "PHASE105_RESEARCH_PLAN.md"
+      - "research/phase105_eod_ohlc_strategy_pilot.py"
+      - "research/phase105_record_status.py"
+      - "tests/phase105/**"
+      - ".github/workflows/phase105-eod-ohlc-strategy-pilot.yml"
+
+concurrency:
+  group: phase105-eod-ohlc-strategy-pilot
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  eod-ohlc-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PHASE105_FROM_DATE: ${{ inputs.from_date || '2026-08-03' }}
+      PHASE105_TO_DATE: ${{ inputs.to_date || '2026-09-02' }}
+    steps:
+      - name: Checkout the isolated Phase 105 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-105-eod-ohlc-strategy-pilot
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Test selectors, chronology primitives and cost accounting
+        id: tests
+        run: python -m unittest discover -s tests/phase105 -p "test_*.py" -v
+
+      - name: Run frozen EOD OHLC strategy pilot
+        id: pilot
+        if: steps.tests.outcome == 'success'
+        run: |
+          python research/phase105_eod_ohlc_strategy_pilot.py \
+            --from-date "$PHASE105_FROM_DATE" \
+            --to-date "$PHASE105_TO_DATE"
+
+      - name: Record phase status and errors in job log
+        if: always()
+        env:
+          PHASE105_TEST_OUTCOME: ${{ steps.tests.outcome }}
+          PHASE105_PILOT_OUTCOME: ${{ steps.pilot.outcome }}
+        run: |
+          echo "TEST_OUTCOME=$PHASE105_TEST_OUTCOME"
+          echo "PILOT_OUTCOME=$PHASE105_PILOT_OUTCOME"
+          if [ -f results/phase105/summary.json ]; then
+            python -c 'import json; d=json.load(open("results/phase105/summary.json")); print(json.dumps({"source_gate":d["decision"]["source_gate"],"strategy_replay":d["decision"]["strategy_replay"],"promotion":d["decision"]["promotion"]},sort_keys=True))'
+          fi
+
+      - name: Upload aggregate-only Phase 105 artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase105-eod-ohlc-strategy-pilot
+          path: |
+            results/phase105/**
+            PHASE105_STATUS.md
+            PHASE105_RESEARCH_LOG.md
+            PHASE105_ERROR_LOG.md
+            PHASE105_CHAT_LOG.md
+          if-no-files-found: warn
+          retention-days: 90
