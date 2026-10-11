@@ -18,6 +18,7 @@ on:
       - phase-104-eod-stock-options
     paths:
       - "research/phase104_eod_stock_options/nse_eod_audit.py"
+      - "research/phase104_eod_stock_options/cost_model.py"
       - "research/phase104_eod_stock_options/record_phase104_status.py"
       - "tests/phase104/**"
       - ".github/workflows/phase104-eod-stock-options-audit.yml"
