@@ -317,3 +317,12 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — Multi-session audit result (run 38115153795)
+
+- Workflow completed successfully and unit tests passed.
+- API rows returned: 28/28 relative-strike probes across ICICIBANK CALL, RELIANCE CALL/PUT and SBIN CALL for five sessions, 2026-08-03 to 2026-08-07 IST. No out-of-window rows were reported.
+- Strict timestamp alignment failed on every surface: ICICIBANK CALL common/union 1920/1925; RELIANCE CALL 1923/1925; RELIANCE PUT 1922/1925; SBIN CALL 1921/1925.
+- Actual strikes changed 77–113 times per offset over the window. This endpoint is rolling ATM-relative history, not evidence of a fixed listed contract's tape.
+- Decision: do not run strategy P&L from this aggregate. Next phase is contract-identity/coverage diagnosis and a search for a rights-compliant fixed-contract historical source. If unavailable, close with a data NO-GO rather than fabricate fills.
