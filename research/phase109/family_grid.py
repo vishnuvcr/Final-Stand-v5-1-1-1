@@ -94,9 +94,14 @@ STRIKE_TARGETS = ["ATM", "ITM_0.5pct", "OTM_0.5pct"]
 HOLDING_EXITS = ["same_session_close", "2_session_close"]
 RISK_PROFILES = [
     "NO_STOP_NO_TARGET",
+    "STOP_10PCT_PREMIUM",
     "STOP_20PCT_PREMIUM",
+    "STOP_30PCT_PREMIUM",
+    "TARGET_10PCT_PREMIUM",
     "TARGET_20PCT_PREMIUM",
+    "TARGET_30PCT_PREMIUM",
     "STOP_20PCT_TARGET_20PCT_PREMIUM",
+    "STOP_20PCT_TARGET_30PCT_PREMIUM",
 ]
 OI_CONFIRMATION_METHODS = ["off", "total_near_ATM_OI_increase", "same_side_OI_increase"]
 BROKERAGE_RUPEES_PER_ORDER = [10, 15, 20]
@@ -163,22 +168,26 @@ def family_registry():
     return out
 
 
-def axes_for_family(f):
-    required = set(json.loads(f["required_inputs_json"]))
-    return {
-        "signal_lookback_sessions": LOOKBACKS,
-        "move_or_signal_threshold_pct": MOVE_THRESHOLDS_PCT,
-        "volatility_lookback_sessions": VOL_LOOKBACKS,
-        "regime_definition": REGIME_DEFINITIONS if f["regime_id"] != "NONE" else ["NA"],
+def axes_for_family(family):
+    """Return only axes that affect this family; no duplicate rows for irrelevant knobs."""
+    def norm(value):
+        return str(value or "").strip().upper().replace("-", "_").replace(" ", "_")
+    regime=norm(family.get("regime_id",family.get("regime","")))
+    confirmation=norm(family.get("confirmation_id",family.get("confirmation","")))
+    axes={
+        "lookback_sessions": LOOKBACKS,
+        "move_threshold_pct": MOVE_THRESHOLDS_PCT,
         "strike_target": STRIKE_TARGETS,
         "holding_exit": HOLDING_EXITS,
         "risk_profile": RISK_PROFILES,
-        "oi_confirmation_method": OI_CONFIRMATION_METHODS if (
-            "open_interest" in required or "option_chain_oi" in required or "OPTIONS_FLOW" == f["confirmation_id"]
-        ) else ["NA"],
     }
-
-
+    if regime in {"REALIZED_VOL_LOW_HIGH","REALIZED_VOL","TREND_RANGE"}:
+        axes["vol_lookback_sessions"]=VOL_LOOKBACKS
+    if regime in {"REALIZED_VOL_LOW_HIGH","REALIZED_VOL"}:
+        axes["regime_definition"]=REGIME_DEFINITIONS
+    if "OPTIONS_FLOW" in confirmation:
+        axes["oi_confirmation_method"]=OI_CONFIRMATION_METHODS
+    return axes
 def product_size(axes):
     n = 1
     for vals in axes.values():
