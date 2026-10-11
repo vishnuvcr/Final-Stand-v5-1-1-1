@@ -13,7 +13,7 @@ are per-configuration/per-cost summary statistics, not raw quote data.
 """
 from __future__ import annotations
 
-import argparse, csv, gzip, hashlib, importlib.util, inspect, io, json, math, os, sys, time, zipfile
+import argparse, csv, gzip, hashlib, importlib.util, inspect, io, json, math, os, re, sys, time, zipfile
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 from itertools import product
@@ -610,8 +610,10 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes):
     risk=canonical(axes.get("risk_profile","NO_STOP_NO_TARGET"))
     exit_price=None; exit_reason="PLANNED_CLOSE"
     if risk!="NO_STOP_NO_TARGET":
-        stop_pct=0.20 if "STOP_20PCT" in risk else None
-        target_pct=0.20 if "TARGET_20PCT" in risk else None
+        stop_match=re.search(r"STOP_(\\d+)PCT",risk)
+        target_match=re.search(r"TARGET_(\\d+)PCT",risk)
+        stop_pct=float(stop_match.group(1))/100.0 if stop_match else None
+        target_pct=float(target_match.group(1))/100.0 if target_match else None
         for j in range(entry_idx,exit_idx+1):
             day=dates[j]
             bar=data["contracts"].get(day,{}).get(contract)
