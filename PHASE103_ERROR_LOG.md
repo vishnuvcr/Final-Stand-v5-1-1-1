@@ -201,3 +201,6 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Cause:** the loop treated every zero-row requested-side payload as a fatal acquisition error. This prevented the remaining stock/side offsets from being audited and obscured the distinction between missing coverage and transport/schema failure.  
 **Correction:** successful response envelopes with no requested-side block are explicitly labelled `SUCCESS_EMPTY_FOR_REQUESTED_SIDE` and retained as zero-row coverage observations; the scan continues. HTTP errors and malformed non-empty arrays remain fatal. Added a unit test, removed a duplicated `--strikes` CLI argument, and raised the workflow's automatic default to the full 70-probe panel.  
 **Verification:** pending the post-fix Actions run. Until verified, no expanded-surface PASS or strategy inference is accepted.
+
+
+**E103-017 verification addendum:** the continuation exception is restricted to the explicit successful-empty-side status. Inconsistent array payloads otherwise remain fatal, including zero-timestamp mismatches. This is a code-level correction only; no post-fix Actions result has yet been verified, so the audit remains pending and run 38090149633 remains rejected as incomplete.
