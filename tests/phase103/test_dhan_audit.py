@@ -25,6 +25,20 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertEqual(result["duplicate_timestamp_actual_strike_keys_across_offsets"],1)
         self.assertEqual(result["relative_surface_alignment_gate"],"FAIL")
 
+    def test_exact_strike_coverage_is_reported_even_when_offset_timestamps_differ(self):
+        requested=["ATM","ATM+1","ATM-1"]
+        blocks=[
+          {"symbol":"SBIN","option_type":"CALL","relative_strike":"ATM","timestamps":[100,160,220],"strikes":[100,100,110]},
+          {"symbol":"SBIN","option_type":"CALL","relative_strike":"ATM+1","timestamps":[100,160],"strikes":[110,120]},
+          {"symbol":"SBIN","option_type":"CALL","relative_strike":"ATM-1","timestamps":[100,220],"strikes":[90,100]}]
+        result=summarize_surface(blocks,requested)[0]
+        self.assertEqual(result["relative_surface_alignment_gate"],"FAIL")
+        self.assertEqual(result["exact_strike_diagnostic"],"PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS")
+        coverage={row["actual_strike"]:row for row in result["actual_strike_coverage"]}
+        self.assertEqual(coverage["100"]["observed_minutes"],3)
+        self.assertEqual(coverage["110"]["observed_minutes"],2)
+        self.assertEqual(coverage["100"]["union_timestamp_coverage_pct"],100.0)
+
     def test_surface_gate_passes_aligned_distinct_offsets(self):
         requested=["ATM","ATM+1","ATM-1"]
         blocks=[
