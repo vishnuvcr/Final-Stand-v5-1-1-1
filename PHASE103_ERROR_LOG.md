@@ -238,3 +238,11 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Evidence:** 28/28 selected relative-strike probes returned rows over five sessions, but all four stock/side surfaces failed strict common-timestamp alignment: ICICIBANK CALL 1920/1925, RELIANCE CALL 1923/1925, RELIANCE PUT 1922/1925, SBIN CALL 1921/1925 (common/union). Actual strikes changed 77–113 times per offset.
 **Interpretation:** successful API retrieval does not establish fixed-contract time series or valid strategy P&L. The source's rolling ATM-relative strikes and missing minute rows remain material constraints.
 **Next action:** investigate whether the provider supplies immutable contract identifiers/expiry-strike mapping and obtain a fixed-contract, rights-compliant dataset before any backtest. No strategy promotion.
+
+
+### E103-022 — No currently verified fixed-contract source with acceptable rights
+**Type:** source/entitlement/execution-evidence limitation (not a code defect).  
+**Review:** 2026-10-11; see [bounded source and rights screen](results/phase103/FIXED_CONTRACT_SOURCE_RIGHTS_SCREEN.md).  
+**Evidence:** Dhan's rolling relative-strike surface fails multi-session alignment; the endpoint used does not establish historical bid/ask/depth. NSE Data & Analytics advertises historical data vending, but the public information reviewed does not confirm the required minute-level contract-specific fields, price, automated research rights, retention/caching rights, or publication rights. The public NSE option-chain page carries restrictions against aggregation/copying.  
+**Handling:** no data purchased or scraped; no raw rows or credentials published; no strategy P&L generated.  
+**Next action:** use an authorized existing dataset or obtain vendor confirmation and validate a small permitted sample. If neither is available within this bounded branch, record data NO-GO and stop numerical strategy testing.
