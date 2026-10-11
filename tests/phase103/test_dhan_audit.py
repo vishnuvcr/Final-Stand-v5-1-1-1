@@ -127,6 +127,7 @@ class DhanDataAuditTests(unittest.TestCase):
     def test_requested_side_missing_is_not_reported_as_data(self):
         result=summarize("SBIN","PUT","ATM",200,{"status":"success","data":{"ce":{"close":[10],"timestamp":[1754000000]},"pe":None}})
         self.assertEqual(result["rows"],0)
+        self.assertEqual(result["status"],"SUCCESS_EMPTY_FOR_REQUESTED_SIDE")
         self.assertNotEqual(result["status"],"DATA_RETURNED")
 
     def test_summary_does_not_contain_api_secret_or_raw_rows(self):
@@ -139,3 +140,11 @@ class DhanDataAuditTests(unittest.TestCase):
 
 if __name__=="__main__":
     unittest.main()
+
+
+class EmptySideContinuationTests(unittest.TestCase):
+    def test_success_response_without_requested_side_is_explicit_empty_coverage(self):
+        result=summarize("INFY","CALL","ATM+3",200,{"status":"success","data":{"ce":None,"pe":{"close":[1],"timestamp":[1754000000]}}})
+        self.assertEqual(result["status"],"SUCCESS_EMPTY_FOR_REQUESTED_SIDE")
+        self.assertEqual(result["rows"],0)
+        self.assertFalse(result["array_lengths_consistent"])
