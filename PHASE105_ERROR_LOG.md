@@ -12,7 +12,7 @@
 ## E105-001 — Reversal candidate not robust to registered stress
 
 **Type:** inference limitation / strategy-promotion blocker; not a runtime error.  
-**Evidence:** workflow [38131616138](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38131616138) and \`results/phase105/summary.csv\` passed source and accounting gates. REVERSAL_ATM netted +₹15,018.02 at ₹20/order, ₹0.25 assumed adverse slippage per side and 1.0× model fees, but its 95% session-cluster bootstrap interval for mean daily P&L crossed zero (-₹2,682.37 to +₹3,957.35) and its median trade was -₹798.60. Under the registered ₹0.50 per-unit slippage and 1.5× fee stress, net P&L was -₹11,709.36.
+**Evidence:** workflow [38131616138](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38131616138) and `results/phase105/summary.csv` passed source and accounting gates. REVERSAL_ATM netted +₹15,018.02 at ₹20/order, ₹0.25 assumed adverse slippage per side and 1.0× model fees, but its 95% session-cluster bootstrap interval for mean daily P&L crossed zero (-₹2,682.37 to +₹3,957.35) and its median trade was -₹798.60. Under the registered ₹0.50 per-unit slippage and 1.5× fee stress, net P&L was -₹11,709.36.
 **Handling:** no strategy promoted; no tuning to rescue it. Need a longer independent sample and a defensible execution model in a separately registered phase.
 
 ## E105-002 — EOD bar prices do not identify execution quality
