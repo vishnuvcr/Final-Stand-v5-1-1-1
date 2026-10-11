@@ -73,6 +73,12 @@ jobs:
           set -euo pipefail
           python -m py_compile research/phase109/dataset_feasibility.py
           python research/phase109/dataset_feasibility.py
+
+      - name: Evaluate data-field feasibility for every registered strategy family
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/family_feasibility.py
+          python research/phase109/family_feasibility.py
           # Do not print credentials, request headers, or authenticated response payloads.
           python - <<'PY'
           import json
@@ -99,6 +105,8 @@ jobs:
           nse_summary_line = f"Official NSE legacy/UDiFF boundary + recent session probes: {nse_pass_count}/{len(nse_report['probes'])} passed; overall={nse_report['overall_status']}."
           source_matrix = list(csv.DictReader(Path("results/phase109/source_feasibility_matrix.csv").open(encoding="utf-8")))
           source_matrix_line = f"Source feasibility inventory: {len(source_matrix)} registered source classes; see matrix/report for source gates and blocked datasets."
+          family_gate = json.loads(Path("results/phase109/family_data_feasibility_summary.json").read_text(encoding="utf-8"))
+          family_gate_line = f"Family input feasibility: {family_gate['registered_families']:,} families; {family_gate['families_with_missing_inputs']:,} blocked on unavailable inputs, {family_gate['families_with_proxy_or_execution_gates']:,} with proxy/execution gates, {family_gate['families_with_inputs_present']:,} with fields present but final gates pending. This is not a backtest."
           now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
           source_lines = "\n".join(
               f"- {row.get('source')} {row.get('query', '')}: **{row.get('status')}**; "
@@ -120,6 +128,7 @@ jobs:
           - [x] Run initial Dhan/Hugging Face source-access, discovery and dataset-card checks.
           - [x] Probe official NSE legacy/UDiFF schema boundary and a recent official session: {nse_summary_line}
           - [x] Compile provenance-aware source feasibility inventory: {source_matrix_line}
+          - [x] Build family-by-family data-field eligibility gates: {family_gate_line}
 
           ## Still pending
           - [ ] 109.3 Validate licensed historical datasets, point-in-time fields, longer chronologically split development/validation/untouched test windows and contract identity.
@@ -133,6 +142,7 @@ jobs:
           - [Grid compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md)
           - [Official NSE archive source-feasibility report](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) and [machine-readable audit](results/phase109/nse_archive_source_feasibility.json)
           - [Source feasibility decision report](results/phase109/SOURCE_FEASIBILITY_REPORT.md) and [source matrix CSV](results/phase109/source_feasibility_matrix.csv)
+          - [Family data-feasibility report](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md) and [machine-readable family gate](results/phase109/family_data_feasibility.csv)
           - [Family registry](results/phase109/strategy_families.csv)
           - [Per-family configuration manifest](results/phase109/family_configuration_space.csv)
           - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
@@ -153,6 +163,7 @@ jobs:
           {source_lines}
           - {nse_summary_line}
           - {source_matrix_line}
+          - {family_gate_line}
           - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
           """
           if marker in old_log:
@@ -223,7 +234,7 @@ jobs:
 
           - [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid)
           - [Status](PHASE109_STATUS.md) · [research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
-          - [Registry](results/phase109/strategy_families.csv) · [configuration space](results/phase109/family_configuration_space.csv) · [shard manifest](results/phase109/cost_row_shard_manifest.csv) · [source audit](results/phase109/source_access_audit.csv) · [compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md) · [official NSE archive feasibility](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) · [source feasibility matrix](results/phase109/SOURCE_FEASIBILITY_REPORT.md)
+          - [Registry](results/phase109/strategy_families.csv) · [configuration space](results/phase109/family_configuration_space.csv) · [shard manifest](results/phase109/cost_row_shard_manifest.csv) · [source audit](results/phase109/source_access_audit.csv) · [compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md) · [official NSE archive feasibility](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) · [source feasibility matrix](results/phase109/SOURCE_FEASIBILITY_REPORT.md) · [family data feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md)
 
           Source-access checks do not prove dataset completeness or tradeability. Chronological splits, exact option contracts, transaction costs, slippage, multiple-testing correction and untouched OOS validation remain mandatory.
           <!-- PHASE109_GRID_STATUS_END -->"""
@@ -246,6 +257,7 @@ jobs:
           git add results/phase109/strategy_families.csv results/phase109/family_configuration_space.csv results/phase109/cost_scenarios.csv results/phase109/cost_row_shard_manifest.csv results/phase109/phase109_grid_summary.json results/phase109/PHASE109_GRID_COMPILER_REPORT.md results/phase109/PHASE109_SELF_TEST.txt results/phase109/source_access_audit.csv results/phase109/huggingface_dataset_candidates.json results/phase109/source_access_summary.json
           git add results/phase109/nse_archive_source_feasibility.json results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md
           git add results/phase109/source_feasibility_matrix.csv results/phase109/SOURCE_FEASIBILITY_REPORT.md
+          git add results/phase109/family_data_feasibility.csv results/phase109/family_data_feasibility_summary.json results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md
           if git diff --cached --quiet; then
             echo "No repository updates to commit."
           else
@@ -285,4 +297,7 @@ jobs:
             results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md
             results/phase109/source_feasibility_matrix.csv
             results/phase109/SOURCE_FEASIBILITY_REPORT.md
+            results/phase109/family_data_feasibility.csv
+            results/phase109/family_data_feasibility_summary.json
+            results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md
           if-no-files-found: error
