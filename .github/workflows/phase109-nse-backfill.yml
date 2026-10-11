@@ -209,7 +209,20 @@ jobs:
             echo "No public aggregate changes."
           else
             git commit -m "Phase 109: publish official NSE archive coverage audit"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            for attempt in 1 2 3; do
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                exit 0
+              fi
+              echo "Push rejected (attempt ${attempt}); fetch/rebase before retry."
+              git fetch origin "${GITHUB_REF_NAME}"
+              if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+                git rebase --abort || true
+                echo "Rebase conflict remains; fail explicitly for audited rerun."
+                exit 1
+              fi
+            done
+            echo "Could not push after three audited attempts."
+            exit 1
           fi
 
       - name: Upload public aggregates and report only
