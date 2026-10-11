@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-11  
 **Branch:** `phase-103-nifty50-stock-options`  
-**State:** PHASE 103.1 DATA ACCESS PASS; EXACT-STRIKE COVERAGE DIAGNOSTIC VERIFIED; FIXED-CONTRACT / RIGHTS / EXECUTION GATES NO-GO; STRATEGY P&L NOT RUN  
+**State:** Dhan API access PASS; fixed-contract identity / EOD price reconciliation FAIL; code-0 selector rejected; user-confirmed subscription for research access; strategy P&L NOT RUN  
 **Strategy promotion:** NONE  
 **Previous research:** frozen; no previous-phase data or conclusions changed.
 
@@ -17,6 +17,7 @@
 - [x] Phase 103.1A: first-session Dhan screen completed; 68/70 offset probes returned rows, with four of ten stock/side alignment gates passing.
 - [x] Phase 103.1B: 28/28 API probes returned rows across five sessions for ICICIBANK CALL, RELIANCE CALL/PUT, SBIN CALL.
 - [x] Phase 103.1C: corrected rolling-offset diagnostic and verified exact-strike coverage; per-row expiry/immutable contract identity remains unavailable, so strategy P&L remains blocked.
+- [x] Phase 103.1D: independent NSE daily OHLC cross-check and one-shot code-0 selector calibration completed; no selector validated, so no strategy P&L.
 - [ ] Phase 103.2: canonical contract/data and execution-cost audit — not entered; stopped by Phase 103.1 data NO-GO.
 - [ ] Phase 103.3: preregister candidate rules and baselines — not entered; no strategy tuning on invalid/incomplete data.
 - [ ] Phase 103.4: chronological development and validation — not entered under stop rule.
@@ -36,11 +37,11 @@ The exact reason, weight snapshot and public contract discovery links are in `re
 
 ## Current finding
 
-The first-session historical data screen is complete. Four stock/side panels passed relative-surface alignment on 2026-08-03: ICICIBANK CALL, RELIANCE CALL, RELIANCE PUT and SBIN CALL. The bounded multi-session experiment returned rows for all 28 offsets across five sessions, but all four surfaces failed strict timestamp-alignment checks (common timestamps: ICICIBANK CALL 1,920/1,925; RELIANCE CALL 1,923/1,925; RELIANCE PUT 1,922/1,925; SBIN CALL 1,921/1,925). API access success is not a fixed-contract pass: actual strikes changed repeatedly (77–113 changes per offset) because the endpoint returns rolling relative strikes. Strategy P&L is still blocked. HDFCBANK CALL/PUT, ICICIBANK PUT, SBIN PUT and both INFY sides are excluded from this run because their first-session alignment/coverage gate failed. No stock-options strategy has been backtested, ranked or promoted yet.
+The initial and multi-session screens passed acquisition but failed fixed-contract evidence. The final code-1 run [38127450209](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127450209) returned 28/28 probes and downloaded all 5 NSE daily archives. Of 88 complete-session exact-strike profiles, 88 had symbol/side/strike candidates, but only 3 matched all four OHLC fields uniquely; all 3 were expiry 2026-08-25 and none matched expected rank 2. Field-level comparison: open matched 88/88 candidate sets, high 48/88, low 58/88, close 7/88; 13 profiles matched one OHLC field, 40 matched two, 32 matched three and 3 matched all four. The single code-0 calibration [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683) was rejected at the first request with HTTP 400 / DH-905 / “expiryCode is required”. Subscription/research authorization is user-confirmed. No strategy P&L, profitability inference, ranking or promotion is justified.
 
 ## Next action and stopping rule
 
-Run the bounded multi-session audit on the four eligible stock/side panels. Strategy P&L remains blocked until exact fixed-contract/expiry identity, source rights, and realistic Paytm Money brokerage/tax/spread/slippage inputs are documented. If those gates cannot be passed, produce a source-specific NO-GO rather than fabricate fills.
+**Next step: terminal data-quality hold.** No additional selector codes, stock baskets, dates or offsets will be searched in Phase 103. Reopen only if Dhan confirms an exact historical contract/expiry mechanism or an authorized contract-specific alternative clears full-session identity, quote quality and coverage gates. Strategy P&L remains closed. Any reopened test must include date-effective Paytm Money brokerage/taxes, spread, slippage, latency, partial/missed fills and adverse-cost sensitivity.
 
 
 ## Dhan API integration — 2026-10-11
@@ -498,3 +499,11 @@ Run 38127433566 produced no current-run JSON; prior run output was not accepted.
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## Terminal Phase 103.1D outcome — 2026-10-11
+
+- User confirmed subscription and rights; Dhan access is accepted for research.
+- Canonical code-1 full-panel run [38127450209](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127450209): tests passed; 28/28 probes returned rows; NSE archives 5/5. Eligible full-session exact-strike profiles = 88; exact 4-field OHLC matches = 3; all 3 matched expiry 2026-08-25 and listed-expiry rank 1; expected code-1/rank-2 matches = 0; unmatched = 85; ambiguous = 0; conflicting duplicate keys = 0. Candidate field agreements: open 88, high 48, low 58, close 7. Profiles by matched OHLC field count: 0=0, 1=13, 2=40, 3=32, 4=3. Support volume agreement 0/3; OI 2/3.
+- One-shot code-0 selector attempt [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683): HTTP 400, DH-905 “expiryCode is required” on first probe; 0/1 probes returned rows. No identity comparison possible.
+- Final decision: DATA/IDENTITY NO-GO FOR STRATEGY P&L; no strategy tested, ranked or promoted. Phase calibration closed under the hard stop. Raw rows were not committed or uploaded.
