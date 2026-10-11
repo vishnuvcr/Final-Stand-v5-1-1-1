@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-11  
 **Branch:** `phase-103-nifty50-stock-options`  
-**State:** PHASE REGISTERED; STOCK UNIVERSE SELECTED; DATA/ACTION RESEARCH NOT YET RUN  
+**State:** PHASE 103.1 IN PROGRESS; API ACCESS SMOKE TEST PASSED; EXPANDED SURFACE AUDIT PENDING POST-FIX VERIFICATION  
 **Strategy promotion:** NONE  
 **Previous research:** frozen; no previous-phase data or conclusions changed.
 
@@ -14,7 +14,7 @@
 - [x] Select and source five initial stocks: HDFCBANK, ICICIBANK, RELIANCE, SBIN, INFY.
 - [x] Record that this is an initial research basket, not a proven top-five option-volume ranking.
 - [ ] Run registration workflow and verify its automated checks.
-- [ ] Phase 103.1: common-window options data access/licence/coverage/liquidity audit.
+- [ ] Phase 103.1: common-window options data access/licence/coverage/liquidity audit (single-session Dhan API smoke test passed; expanded 70-probe surface rerun not yet verified).
 - [ ] Phase 103.2: canonical contract/data and execution-cost audit.
 - [ ] Phase 103.3: preregister candidate rules and baselines.
 - [ ] Phase 103.4: chronological development and validation.
@@ -329,3 +329,8 @@ Next: run the same offsets across all five stocks and both CALL/PUT sides, recor
 ## 2026-10-11 — Regression test entrypoint correction
 
 The empty-side continuation regression class was located after the `unittest.main()` guard, so direct execution of the test file would not discover that class. Moved the guard to the end of the file in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`. This test-file push should trigger the branch audit workflow. **No post-fix run result is verified yet; the data gate remains pending.**
+
+
+## 2026-10-11 — Latest continuation checkpoint
+
+The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE`) and is not accepted as post-fix evidence. The regression test entrypoint was corrected in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`; the status and error logs now record that correction. The available GitHub integration returned no commit status checks, and no workflow-dispatch action is exposed in this session, so a fresh run could not be directly triggered or verified here. Next step is to inspect the Actions page for the push-triggered run, verify unit tests and the complete probe panel, then proceed only if multi-session contract continuity and execution-cost gates pass. No strategy P&L or promotion.
