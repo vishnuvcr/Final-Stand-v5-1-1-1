@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-11T19:50:26.154844+00:00",
+  "generated_utc": "2026-10-11T19:51:35.107099+00:00",
   "overall_status": "PASS",
   "probes": [
     {
@@ -62,7 +62,7 @@
       "unique_daily_contract_keys": 6228,
       "url": "https://archives.nseindia.com/content/historical/DERIVATIVES/2024/JUL/fo05JUL2024bhav.csv.zip",
       "zero_volume_rows": 4191,
-      "zip_sha256": "6affb0ee084f4ec7499b14a886787be4dccd644263a015444958d47aa17b5989"
+      "zip_sha256": "a6ba5c9f48555b4adb21c199bb2f9cd100eb2ebf05fc25b1a91feea71020474b"
     },
     {
       "archive_bytes": 1170530,
