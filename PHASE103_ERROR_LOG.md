@@ -192,3 +192,12 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Status:** PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE; rows returned by 59/60 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38090149633
+
+
+### E103-017 — Empty requested-side payload aborted the full surface scan
+**Type:** acquisition-control defect / data-coverage limitation.  
+**Affected run:** [38090149633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38090149633).  
+**Symptom:** 59 of 60 requested relative-strike probes returned before the scan aborted at INFY CALL ATM+3. The requested-side payload was empty/missing despite the HTTP response not necessarily being an HTTP error.  
+**Cause:** the loop treated every zero-row requested-side payload as a fatal acquisition error. This prevented the remaining stock/side offsets from being audited and obscured the distinction between missing coverage and transport/schema failure.  
+**Correction:** successful response envelopes with no requested-side block are explicitly labelled `SUCCESS_EMPTY_FOR_REQUESTED_SIDE` and retained as zero-row coverage observations; the scan continues. HTTP errors and malformed non-empty arrays remain fatal. Added a unit test, removed a duplicated `--strikes` CLI argument, and raised the workflow's automatic default to the full 70-probe panel.  
+**Verification:** pending the post-fix Actions run. Until verified, no expanded-surface PASS or strategy inference is accepted.
