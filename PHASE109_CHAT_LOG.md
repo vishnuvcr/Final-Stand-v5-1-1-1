@@ -5,3 +5,8 @@ User: “Ok proceed. Make sure that you test every strategy (at least 1000) Nd e
 User clarification: “Not just 1000 configurations! At least 1000 strategy families!”
 
 Assistant action summary: corrected the plan to require at least 1,000 meaningfully distinct strategy families, at least 1,000 unique configurations per family, every registered variable combination and all declared cost cases. Target scale is at least 1,000,000 family-configuration pairs and up to 24,000,000 cost-adjusted rows. This is a registered target only; no such execution is claimed completed. Hidden internal reasoning is not stored; this log captures visible requests and action summaries.
+
+## 2026-10-12 — Dhan and Hugging Face access requested
+User: “I have added dhan access token and hf token. Utilise them alongwith other free sources if needed”
+Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 325,124,800 registered configuration tuples with 7,802,995,200 cost-adjusted rows across 3,902 shards. These are manifest counts, not observed trading tests.
+
