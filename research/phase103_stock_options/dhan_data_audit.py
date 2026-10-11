@@ -308,7 +308,8 @@ def main():
                         # An empty requested-side payload is a coverage observation, not a reason
                         # to abandon the entire frozen universe. Continue so later stocks/sides
                         # are still audited. Abort only on HTTP failure or malformed non-empty data.
-                        if code != 200 or (probe_summary.get("rows",0) > 0 and not probe_summary.get("array_lengths_consistent",False)):
+                        if code != 200 or (not probe_summary.get("array_lengths_consistent",False)
+                                           and probe_summary.get("status") != "SUCCESS_EMPTY_FOR_REQUESTED_SIDE"):
                             result["probe_abort_reason"] = "stopped after the first HTTP error or inconsistent non-empty arrays"
                             abort_probes = True
                         # Raw timestamps and actual strikes exist only in memory to audit the cross-offset panel.
