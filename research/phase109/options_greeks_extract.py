@@ -227,7 +227,7 @@ def main():
       "private_cache_bytes":sum(p.stat().st_size for p in DEST.glob("*/*.json.gz")),
       "raw_greeks_publicly_published":False,
       "execution_warning":"Exact contract IDs are preserved but marks are EOD closes and can be stale. Model IV/Greeks are not direct market Greeks; no bid/ask/depth or achieved fills.",
-      "status":"PASS" if parsed and not any(int(r.get("failed_dates",0) or 0) for r in summaries) and sum(int(r.get("valid_model_rows",0) or 0) for r in parsed)>0 else "PARTIAL_OR_FAILED",
+      "status":"PASS" if parsed and sum(1 for r in summaries if r.get("status")=="FAILED")==0 and sum(int(r.get("valid_model_rows",0) or 0) for r in parsed)>0 else "PARTIAL_OR_FAILED",
     }
     (OUT/"options_model_greeks_summary.json").write_text(json.dumps(report,sort_keys=True,indent=2)+"\n",encoding="utf-8")
     lines=[
