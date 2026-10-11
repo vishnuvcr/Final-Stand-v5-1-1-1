@@ -1,7 +1,7 @@
 # Phase 105 Status — EOD OHLC Strategy Pilot
 
 **Updated:** 2026-10-11  
-**Branch:** \`phase-105-eod-ohlc-strategy-pilot\`  
+**Branch:** `phase-105-eod-ohlc-strategy-pilot`  
 **Latest workflow:** [38131616138 — success](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38131616138)  
 **State:** COMPLETE — EXPLORATORY OHLC PROXY PILOT; NO STRATEGY PROMOTED  
 **Unit tests:** 8/8 passed  
