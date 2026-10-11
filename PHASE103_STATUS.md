@@ -17,12 +17,12 @@
 - [x] Phase 103.1A: first-session Dhan screen completed; 68/70 offset probes returned rows, with four of ten stock/side alignment gates passing.
 - [x] Phase 103.1B: 28/28 API probes returned rows across five sessions for ICICIBANK CALL, RELIANCE CALL/PUT, SBIN CALL.
 - [x] Phase 103.1C: corrected rolling-offset diagnostic and verified exact-strike coverage; per-row expiry/immutable contract identity remains unavailable, so strategy P&L remains blocked.
-- [ ] Phase 103.2: canonical contract/data and execution-cost audit.
-- [ ] Phase 103.3: preregister candidate rules and baselines.
-- [ ] Phase 103.4: chronological development and validation.
-- [ ] Phase 103.5: frozen independent test with date-effective costs.
-- [ ] Phase 103.6: sealed stock-options holdout and evidence gate.
-- [ ] Phase 103.7: final manuscript and bounded closeout.
+- [ ] Phase 103.2: canonical contract/data and execution-cost audit — not entered; stopped by Phase 103.1 data NO-GO.
+- [ ] Phase 103.3: preregister candidate rules and baselines — not entered; no strategy tuning on invalid/incomplete data.
+- [ ] Phase 103.4: chronological development and validation — not entered under stop rule.
+- [ ] Phase 103.5: frozen independent test with date-effective costs — not entered; no executable quotes/cost base.
+- [ ] Phase 103.6: sealed stock-options holdout and evidence gate — not opened; no qualifying sample.
+- [x] Phase 103.7: final data-feasibility manuscript and bounded closeout completed with data NO-GO; no strategy promoted.
 
 ## Selected stocks
 
@@ -431,3 +431,12 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## Terminal Phase 103 decision — 2026-10-11
+
+**Phase 103.1 source/data result: NO-GO for intraday strategy P&L with the currently verified source set.** Run [38125302970](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38125302970) passed 21 unit tests, retrieved rows for 28/28 probes, reported zero out-of-window rows, explicitly emitted `contract_identity_status=BLOCKED_EXPIRY_NOT_RETURNED`, uploaded its aggregate artifact and successfully published the run-matched files via safe reconciliation. The API/data access result is not a strategy-performance result.
+
+The exact-strike union has no duplicate timestamp/strike keys, but per-row expiry/immutable contract identity is absent. A source review found no verified free source that combines the registered individual stock-option intraday history, executable quote evidence/validated proxy, and authorized caching/retention/derived-publication rights. No P&L or statistical strategy analysis was run. Phases 103.2–103.6 remain deliberately unentered under the preregistered stop rule. The bounded closeout manuscript is [PHASE103_FINAL_MANUSCRIPT.md](results/phase103/PHASE103_FINAL_MANUSCRIPT.md); the coverage plot is [actual_strike_coverage.svg](results/phase103/figures/actual_strike_coverage.svg).
+
+**Reopen condition:** a new authorized sample, with documented contract expiry/identity and rights, must pass timestamp/coverage and price-quality checks. Any later numerical analysis must include verified date-effective Paytm Money charges, spread, slippage, latency and adverse-cost sensitivity. New procurement or an EOD-only scope is a separate, bounded protocol—not a reason to silently continue this intraday attempt.
