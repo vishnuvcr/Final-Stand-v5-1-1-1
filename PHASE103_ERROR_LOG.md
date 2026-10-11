@@ -230,3 +230,11 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Evidence:** INFY CALL and PUT ATM+3 were HTTP 200 with zero rows but reported UNKNOWN in the prior summary; this does not prove a data entitlement error.
 **Correction:** future probes store schema-only response envelope keys/status class/side type/array shapes, not raw response contents. INFY remains excluded from this eligible-panel run.
 **Verification:** automated tests and the next audit must pass; the metadata change itself does not repair missing coverage.
+
+
+### E103-021 — Multi-session API access passed but surface alignment failed
+**Type:** timestamp coverage / contract continuity limitation.
+**Run:** [38115153795](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38115153795).
+**Evidence:** 28/28 selected relative-strike probes returned rows over five sessions, but all four stock/side surfaces failed strict common-timestamp alignment: ICICIBANK CALL 1920/1925, RELIANCE CALL 1923/1925, RELIANCE PUT 1922/1925, SBIN CALL 1921/1925 (common/union). Actual strikes changed 77–113 times per offset.
+**Interpretation:** successful API retrieval does not establish fixed-contract time series or valid strategy P&L. The source's rolling ATM-relative strikes and missing minute rows remain material constraints.
+**Next action:** investigate whether the provider supplies immutable contract identifiers/expiry-strike mapping and obtain a fixed-contract, rights-compliant dataset before any backtest. No strategy promotion.
