@@ -86,18 +86,18 @@ REGIMES = [
     ("EXPIRY_EVENT", "Condition on known expiry/corporate-event window without future information.", ["expiry_calendar", "event_calendar", "timestamp"], "point_in_time_event_state"),
 ]
 
-LOOKBACKS = [1, 2, 3, 4, 5, 7, 10]
-MOVE_THRESHOLDS_PCT = [0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0]
-VOL_LOOKBACKS = [3, 5, 7, 10, 15]
-REGIME_DEFINITIONS = ["rolling_median", "lower_upper_terciles_middle_no_trade", "preregistered_fixed_quantiles"]
-STRIKE_TARGETS = ["ATM", "ITM_0.5pct", "OTM_0.5pct", "ITM_1.0pct", "OTM_1.0pct"]
-HOLDING_EXITS = ["same_session_close", "2_session_close", "3_session_close", "expiry_aware_close"]
-RISK_PROFILES = (
-    ["NO_STOP_NO_TARGET"]
-    + [f"STOP_{x}PCT_PREMIUM" for x in (10, 20, 30)]
-    + [f"TARGET_{x}PCT_PREMIUM" for x in (10, 20, 30)]
-    + [f"STOP_{s}PCT_TARGET_{t}PCT_PREMIUM" for s in (10, 20, 30) for t in (10, 20, 30)]
-)
+LOOKBACKS = [1, 3, 5, 10, 20]
+MOVE_THRESHOLDS_PCT = [0.25, 0.5, 1.0, 2.0]
+VOL_LOOKBACKS = [3, 5, 10]
+REGIME_DEFINITIONS = ["rolling_median", "lower_upper_terciles_middle_no_trade"]
+STRIKE_TARGETS = ["ATM", "ITM_0.5pct", "OTM_0.5pct"]
+HOLDING_EXITS = ["same_session_close", "2_session_close"]
+RISK_PROFILES = [
+    "NO_STOP_NO_TARGET",
+    "STOP_20PCT_PREMIUM",
+    "TARGET_20PCT_PREMIUM",
+    "STOP_20PCT_TARGET_20PCT_PREMIUM",
+]
 OI_CONFIRMATION_METHODS = ["off", "total_near_ATM_OI_increase", "same_side_OI_increase"]
 BROKERAGE_RUPEES_PER_ORDER = [10, 15, 20]
 SLIPPAGE_RUPEES_PER_UNIT_PER_SIDE = [0.0, 0.05, 0.25, 0.50]
