@@ -368,3 +368,13 @@ The fresh run passed 20 unit tests and completed all 28 selected Dhan probes wit
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — Exact-strike diagnostic verified; fixed-contract gate remains blocked
+
+- Verified run [38124954633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38124954633): 28/28 Dhan probes returned rows for the four registered panels; zero out-of-window timestamps; result successfully committed after safe reconciliation of a non-fast-forward push.
+- Verified run [38125302970](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38125302970): 21 tests passed, the fresh 28-probe audit returned rows with zero out-of-window rows, and the explicit `BLOCKED_EXPIRY_NOT_RETURNED` result was published. Its initial result push raced with an independently committed source-screen/manuscript update; the fetch/reset/retry path published successfully without force-push.
+- Five-session exact-strike union: each of four panels had 1,925 union timestamps and zero duplicate timestamp/actual-strike keys. ICICIBANK CALL had three strikes observed at all 1,925 union timestamps; best RELIANCE CALL and PUT strikes each covered 1,907/1,925 (99.065%); best SBIN CALL strike covered 1,812/1,925 (94.130%). These are not expiry-verified contract time series.
+- Expanded source screen compared NSE EOD contract-wise data, jugaad-data F&O bhavcopy, HF index-only datasets, a commercial OptionVault lead, and official NSE historical order/trade products. No verified free source was found that combines this registered stock-option universe, intraday executable-price evidence, returned expiry/contract identity and permitted automated-use/retention rights.
+- Published the aggregate coverage figure and the final data-feasibility manuscript: `results/phase103/figures/actual_strike_coverage.svg` and `results/phase103/PHASE103_FINAL_MANUSCRIPT.md`.
+- Decision: the registered Phase 103.1 stop rule applies. Intraday stock-options empirical path = DATA NO-GO until a licensed/authorized exact-contract sample passes identity, price-quality, coverage and rights gates. No strategy P&L was run; no strategy is promoted. Do not substitute index options or daily EOD data without a separately preregistered scope change.
