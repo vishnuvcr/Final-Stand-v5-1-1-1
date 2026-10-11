@@ -21,6 +21,19 @@ def append_once(path, marker, text):
         path.write_text(current.rstrip() + "\n\n" + marker + "\n" + text.rstrip() + "\n", encoding="utf-8")
 
 
+def apply_audit_state(current, audit_status):
+    """Update interim state for an open phase; never overwrite an explicit terminal closeout."""
+    import re
+    if re.search(r"^\*\*State:\*\* COMPLETE —", current, flags=re.MULTILINE):
+        return current
+    state = (
+        "PHASE 104.1 EOD CONTRACT IDENTITY PASS; EXECUTION/COST GATES PENDING"
+        if audit_status == "PASS_EOD_CONTRACT_IDENTITY"
+        else "PHASE 104.1 EOD AUDIT COMPLETED; DATA/IDENTITY QUALITY GATE NOT PASSED"
+    )
+    return re.sub(r"\*\*State:\*\* [^\n]+", f"**State:** {state}", current, count=1)
+
+
 def main():
     marker = f"<!-- PHASE104_RUN_{RUN}_ATTEMPT_{ATTEMPT} -->"
     now = datetime.now(timezone.utc).isoformat()
@@ -48,9 +61,7 @@ def main():
         append_once(STATUS, marker, block)
         append_once(RESEARCH, marker, block)
         current = STATUS.read_text(encoding="utf-8")
-        state = "PHASE 104.1 EOD CONTRACT IDENTITY PASS; EXECUTION/COST GATES PENDING" if data.get("status") == "PASS_EOD_CONTRACT_IDENTITY" else "PHASE 104.1 EOD AUDIT COMPLETED; DATA/IDENTITY QUALITY GATE NOT PASSED"
-        import re
-        current = re.sub(r"\*\*State:\*\* [^\n]+", f"**State:** {state}", current, count=1)
+        current = apply_audit_state(current, data.get("status"))
         STATUS.write_text(current, encoding="utf-8")
         return
     block = f"""### E104-RUN-{RUN} — no fresh, run-matched EOD audit — {now}
