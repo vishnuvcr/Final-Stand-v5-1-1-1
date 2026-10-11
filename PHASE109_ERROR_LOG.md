@@ -17,3 +17,9 @@
 - The exhaustive Cartesian grid is large and must be resumed by deterministic shards. Any failed/skipped shard or cost case must remain explicitly logged.
 - Resolved workflow error: actions/setup-python pip caching failed because this repository has no requirements.txt or pyproject.toml; removed the pip-cache assumption.
 - Resolved compiler error: the architecture gate assumed 1,000 families although 41 core rules × 5 confirmation structures × 5 regime gates creates 1,025; changed the gate to compare against registered Cartesian cardinality.
+
+
+## 2026-10-12 — Grid architecture and evaluator gate
+- Corrected unused-axis duplication before the next results run. Prior compact manifest counts are historical only and must not be reused as current denominators.
+- Evaluator API and data assumptions are not yet validated by a completed automated run. The new source-coverage run must complete, the grid compiler must regenerate counts, and the canonical cost-model adapter regression test must pass before any net P&L row is considered completed.
+- EOD option OPEN/CLOSE/HIGH/LOW are price proxies, not exchange quotes or proven fills. STOP/TARGET overlap uses conservative stop-first resolution; selection window excludes the held-out period. No promotion is allowed from preliminary results.
