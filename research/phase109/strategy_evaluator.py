@@ -1,0 +1,793 @@
+#!/usr/bin/env python3
+"""Deterministic, resumable EOD options grid evaluator for Phase 109.
+
+This runner is deliberately strict:
+* only exact-contract option prices from the official NSE daily archives are fills;
+* only P&L dates supported by the canonical dated transaction cost model are eligible;
+* zero-volume, missing, unmatched, expired and invalid-price contracts are excluded;
+* unsupported signal architectures and unverified feature sources are BLOCKED, not proxied;
+* EOD high/low stop-target ambiguity is resolved stop-first and recorded as a proxy;
+* each registered config is evaluated once for its gross trade tape, then all 24 cost cases.
+Full raw history and per-contract trades remain private in Actions cache. Public shard rows
+are per-configuration/per-cost summary statistics, not raw quote data.
+"""
+from __future__ import annotations
+
+import argparse, csv, gzip, hashlib, importlib.util, inspect, io, json, math, os, sys, time, zipfile
+from collections import Counter, defaultdict
+from datetime import date, datetime, timedelta, timezone
+from itertools import product
+from pathlib import Path
+from statistics import median
+
+ROOT=Path(".")
+OUT=Path("results/phase109")
+CACHE=Path("data/cache/phase109")
+OPTION_CACHE=CACHE/"nse_eod"
+CONTEXT_CACHE=CACHE/"niftyindices_history"
+MODEL_GREEKS_CACHE=CACHE/"options_model_greeks"
+FUTURES_CACHE=CACHE/"futures_eod"
+FIRST_COST_DATE=date(2024,10,1)
+ENGINE_VERSION="phase109-eod-engine-v1"
+SUPPORTED_CORE_METHODS={
+ "ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM",
+ "EMA_CROSS","EMA_CROSSOVER","EMA_SLOPE","EMA_TREND",
+ "RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION","RSI_REBOUND",
+ "BOLLINGER_REVERSION","BOLLINGER_MEAN_REVERSION","EMA_DEVIATION_FADE",
+ "RELATIVE_STRENGTH","RELATIVE_STRENGTH_ROTATION",
+}
+SUPPORTED_CONFIRMS={"NONE","OPTIONS_FLOW","CROSS_ASSET","CROSS_INDEX"}
+SUPPORTED_REGIMES={"NONE","REALIZED_VOL_LOW_HIGH","REALIZED_VOL","TREND_RANGE","INDIA_VIX"}
+INDEX_SYMBOLS={"NIFTY","BANKNIFTY"}
+COST_MODEL_PATH=ROOT/"research/phase104_eod_stock_options/cost_model.py"
+
+
+def canonical(value):
+    return str(value or "").strip().upper().replace("-","_").replace(" ","_").replace("/","_")
+
+
+def read_csv(path):
+    p=Path(path)
+    if not p.exists(): return []
+    with p.open(newline="",encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))
+
+
+def read_json(path,default=None):
+    p=Path(path)
+    if not p.exists(): return default if default is not None else {}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def parse_date(value):
+    s=str(value or "").strip()
+    for fmt in ("%Y-%m-%d","%d-%b-%Y","%d-%B-%Y","%d/%m/%Y","%d%m%Y","%Y%m%d","%d %b %Y"):
+        try: return datetime.strptime(s[:10] if fmt=="%Y-%m-%d" else s,fmt).date()
+        except ValueError: pass
+    return None
+
+
+def number(value):
+    try:
+        v=float(str(value).strip())
+        return v if math.isfinite(v) else None
+    except (ValueError,TypeError,OverflowError): return None
+
+
+def value(row,*names):
+    for name in names:
+        if row.get(name) not in (None,""): return row[name]
+    return ""
+
+
+def json_field(row,*names,default=None):
+    raw=value(row,*names)
+    if isinstance(raw,(dict,list)): return raw
+    try: return json.loads(raw) if raw else (default if default is not None else {})
+    except Exception: return default if default is not None else {}
+
+
+def load_cost_model():
+    if not COST_MODEL_PATH.exists():
+        raise RuntimeError("Canonical Phase 104 cost model is missing; no net performance may be scored.")
+    spec=importlib.util.spec_from_file_location("phase104_cost_model",COST_MODEL_PATH)
+    module=importlib.util.module_from_spec(spec)
+    assert spec and spec.loader
+    spec.loader.exec_module(module)
+    return module
+
+
+def find_cost_function(module):
+    preferred=("round_trip_cost","calculate_round_trip_cost","compute_round_trip_cost","estimate_round_trip_cost","calculate_trade_cost")
+    for name in preferred:
+        fn=getattr(module,name,None)
+        if callable(fn): return name,fn
+    candidates=[(n,v) for n,v in vars(module).items() if callable(v) and not n.startswith("_") and "cost" in n.lower()]
+    if len(candidates)==1: return candidates[0]
+    return None,None
+
+
+def call_cost_model(module,trade_date,buy_price,sell_price,quantity,brokerage_per_order,fee_multiplier):
+    """Adapt by parameter names to the canonical model; fail closed if its API is unknown."""
+    name,fn=find_cost_function(module)
+    if fn is None:
+        raise RuntimeError("Canonical cost model has no uniquely identifiable round-trip cost callable; evaluator fails closed.")
+    try:
+        sig=inspect.signature(fn)
+        params=sig.parameters
+        kwargs={}
+        aliases={
+          "trade_date":trade_date.isoformat(),"date":trade_date.isoformat(),"session_date":trade_date.isoformat(),
+          "entry_date":trade_date.isoformat(),"buy_date":trade_date.isoformat(),
+          "entry_price":buy_price,"buy_price":buy_price,"buy_premium":buy_price,"entry_premium":buy_price,
+          "exit_price":sell_price,"sell_price":sell_price,"sell_premium":sell_price,"exit_premium":sell_price,
+          "quantity":quantity,"qty":quantity,"lot_size":quantity,"contracts":quantity,"units":quantity,
+          "brokerage_per_order":brokerage_per_order,"brokerage_per_trade":brokerage_per_order,
+          "brokerage":brokerage_per_order,"fee_multiplier":fee_multiplier,"fees_multiplier":fee_multiplier,
+          "option_type":"OPTION","instrument":"OPTIDX","side":"ROUND_TRIP",
+        }
+        unknown_required=[]
+        for p in params.values():
+            if p.kind in (inspect.Parameter.VAR_POSITIONAL,inspect.Parameter.VAR_KEYWORD): continue
+            if p.name in aliases: kwargs[p.name]=aliases[p.name]
+            elif p.default is inspect.Parameter.empty:
+                unknown_required.append(p.name)
+        if unknown_required:
+            raise RuntimeError("Unmapped required canonical cost-model parameters: "+",".join(unknown_required))
+        result=fn(**kwargs)
+    except TypeError as exc:
+        raise RuntimeError(f"Canonical cost model call failed for {name}: {exc}") from exc
+    if isinstance(result,(int,float)):
+        return max(0.0,float(result)),{"total_cost":float(result),"model_callable":name,"breakdown":"numeric_return"}
+    if isinstance(result,dict):
+        flat={canonical(k).lower():v for k,v in result.items()}
+        candidates=("total_cost","total_fees","total_reported_fees","round_trip_cost","total_charges","grand_total")
+        found=None
+        for k in candidates:
+            if k in flat:
+                found=number(flat[k])
+                if found is not None: break
+        if found is None:
+            numeric_parts=[number(v) for v in result.values() if isinstance(v,(int,float))]
+            if len(numeric_parts)==1: found=numeric_parts[0]
+        if found is None:
+            raise RuntimeError("Canonical cost model result lacks a recognized numeric total; keys="+",".join(map(str,result.keys())))
+        return max(0.0,found),{"total_cost":found,"model_callable":name,"breakdown":json.dumps(result,sort_keys=True,default=str)}
+    raise RuntimeError(f"Canonical cost model returned unsupported result type: {type(result).__name__}")
+
+
+def normalize_family(row):
+    family_id=value(row,"family_id","family_key","id")
+    core=canonical(value(row,"core_id","core","signal_core","core_name"))
+    confirm=canonical(value(row,"confirmation_id","confirmation","confirm_id"))
+    regime=canonical(value(row,"regime_id","regime","regime_gate"))
+    desc=value(row,"family_name","name","label",default=family_id)
+    required=json_field(row,"required_inputs_json","required_inputs",default=[])
+    if not isinstance(required,list): required=[]
+    return {"family_id":family_id,"family_name":desc,"core":core,"confirmation":confirm,"regime":regime,"required_inputs":required,"raw":row}
+
+
+def core_method(core):
+    if core in SUPPORTED_CORE_METHODS: return core
+    # IDs and description labels sometimes differ, so map only unmistakable rule labels.
+    if "EMA" in core and "CROSS" in core: return "EMA_CROSS"
+    if "EMA" in core and "SLOPE" in core: return "EMA_SLOPE"
+    if "RSI" in core and ("REBOUND" in core or "REVERS" in core): return "RSI_REBOUND"
+    if "BOLLINGER" in core or "BOLLINGER_BAND" in core: return "BOLLINGER_REVERSION"
+    if "ZSCORE" in core or "Z_SCORE" in core: return "RETURN_ZSCORE_FADE"
+    if "RELATIVE_STRENGTH" in core: return "RELATIVE_STRENGTH"
+    if "MOMENTUM" in core and "GLOBAL" not in core: return "ROC_MOMENTUM"
+    if "DEVIATION" in core and "EMA" in core: return "EMA_DEVIATION_FADE"
+    return None
+
+
+def read_archive(path,expected_date):
+    with zipfile.ZipFile(path) as z:
+        members=[n for n in z.namelist() if n.lower().endswith(".csv")]
+        if len(members)!=1: raise ValueError("ARCHIVE_CSV_MEMBER_COUNT_"+str(len(members)))
+        raw=z.read(members[0])
+    reader=csv.DictReader(io.StringIO(raw.decode("utf-8-sig")))
+    fields=reader.fieldnames or []
+    udiff=any(k in fields for k in ("FinInstrmTp","TckrSymb","OptnTp"))
+    aliases={
+      "instrument":("FinInstrmTp",) if udiff else ("INSTRUMENT",),
+      "symbol":("TckrSymb",) if udiff else ("SYMBOL",),
+      "date":("BizDt","TradDt") if udiff else ("TIMESTAMP",),
+      "expiry":("FininstrmActlXpryDt","XpryDt") if udiff else ("EXPIRY_DT",),
+      "strike":("StrkPric",) if udiff else ("STRIKE_PR",),
+      "side":("OptnTp",) if udiff else ("OPTION_TYP",),
+      "open":("OpnPric",) if udiff else ("OPEN",),
+      "high":("HghPric",) if udiff else ("HIGH",),
+      "low":("LwPric",) if udiff else ("LOW",),
+      "close":("ClsPric",) if udiff else ("CLOSE",),
+      "volume":("TtlTradgVol",) if udiff else ("CONTRACTS",),
+      "oi":("OpnIntrst",) if udiff else ("OPEN_INT",),
+      "lot":("NewBrdLotQty",) if udiff else ("BOARD_LOT",),
+      "spot":("UndrlygPric",) if udiff else (),
+    }
+    result=[]
+    for row in reader:
+        sym=str(value(row,*aliases["symbol"])).strip().upper()
+        inst=str(value(row,*aliases["instrument"])).strip().upper()
+        if sym not in INDEX_SYMBOLS: continue
+        if inst not in {"OPTIDX","FUTIDX"}: continue
+        record={"date":expected_date.isoformat(),"symbol":sym,"instrument":inst,
+          "expiry":parse_date(value(row,*aliases["expiry"])),"strike":number(value(row,*aliases["strike"])),
+          "side":str(value(row,*aliases["side"])).strip().upper(),
+          "open":number(value(row,*aliases["open"])),"high":number(value(row,*aliases["high"])),
+          "low":number(value(row,*aliases["low"])),"close":number(value(row,*aliases["close"])),
+          "volume":number(value(row,*aliases["volume"])),"oi":number(value(row,*aliases["oi"])),
+          "lot":number(value(row,*aliases["lot"])),"spot":number(value(row,*aliases["spot"])) if aliases["spot"] else None}
+        if inst=="OPTIDX" and record["side"] in {"CE","PE"} and record["strike"] and record["expiry"]:
+            result.append(record)
+    return result
+
+
+def read_vix_cache():
+    out={}
+    if not CONTEXT_CACHE.exists(): return out
+    for p in CONTEXT_CACHE.glob("*.json"):
+        try:
+            obj=json.loads(p.read_text(encoding="utf-8"))
+            if obj.get("kind")!="INDIA_VIX": continue
+            for row in obj.get("rows",[]):
+                d=parse_date(row.get("date"))
+                close=number(row.get("close"))
+                if d and close and close>0: out[d]=close
+        except Exception: continue
+    return out
+
+
+def read_index_closes():
+    out=defaultdict(dict)
+    if not CONTEXT_CACHE.exists(): return out
+    for p in CONTEXT_CACHE.glob("*.json"):
+        try:
+            obj=json.loads(p.read_text(encoding="utf-8"))
+            name=canonical(obj.get("index_name",""))
+            if name not in {"NIFTY_50","NIFTY_BANK"}: continue
+            sym="NIFTY" if name=="NIFTY_50" else "BANKNIFTY"
+            for row in obj.get("rows",[]):
+                d=parse_date(row.get("HistoricalDate") or row.get("date"))
+                close=number(row.get("CLOSE") or row.get("close"))
+                if d and close and close>0: out[sym][d]=close
+        except Exception: continue
+    return out
+
+
+def ema(values,period,end):
+    if period<1 or end<period-1: return None
+    alpha=2/(period+1)
+    current=values[end-period+1]
+    for x in values[end-period+2:end+1]:
+        current=alpha*x+(1-alpha)*current
+    return current
+
+
+def rsi(values,end,period):
+    if end<period: return None
+    ups=downs=0.0
+    for i in range(end-period+1,end+1):
+        delta=values[i]-values[i-1]
+        if delta>0: ups+=delta
+        elif delta<0: downs-=delta
+    if ups+downs<=0: return 50.0
+    if downs==0: return 100.0
+    rs=(ups/period)/(downs/period)
+    return 100.0-100.0/(1.0+rs)
+
+
+def mean_sd(values):
+    if not values: return None,None
+    m=sum(values)/len(values)
+    v=sum((x-m)**2 for x in values)/len(values)
+    return m,math.sqrt(max(0,v))
+
+
+def compute_signal(method,values,idx,lookback,threshold,params=None):
+    params=params or {}
+    if idx<max(lookback,3): return 0
+    now=values[idx]
+    past=values[idx-lookback]
+    if not now or not past or past<=0: return 0
+    change_pct=(now/past-1.0)*100.0
+    thr=float(threshold)
+    if method in {"ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM","EMA_SLOPE","EMA_TREND"}:
+        if change_pct>=thr: return 1
+        if change_pct<=-thr: return -1
+        return 0
+    if method in {"EMA_CROSS","EMA_CROSSOVER"}:
+        fast=max(2,lookback//2)
+        fastval=ema(values,fast,idx); slowval=ema(values,lookback,idx)
+        if fastval is None or slowval is None or slowval<=0: return 0
+        spread=(fastval/slowval-1)*100
+        if spread>=thr/2: return 1
+        if spread<=-thr/2: return -1
+        return 0
+    if method in {"RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION"}:
+        window=[values[j]/values[j-1]-1 for j in range(max(1,idx-lookback+1),idx+1) if values[j-1]>0]
+        m,sd=mean_sd(window)
+        if sd is None or sd<=1e-10:return 0
+        z=(values[idx]/values[idx-1]-1-m)/sd
+        if z>=thr:return -1
+        if z<=-thr:return 1
+        return 0
+    if method in {"RSI_REBOUND"}:
+        x=rsi(values,idx,lookback)
+        if x is None:return 0
+        if x<=max(5,30-thr*5): return 1
+        if x>=min(95,70+thr*5): return -1
+        return 0
+    if method in {"BOLLINGER_REVERSION"}:
+        w=values[idx-lookback+1:idx+1]
+        m,sd=mean_sd(w)
+        if sd is None or sd<=0:return 0
+        z=(now-m)/sd
+        if z<=-max(0.75,thr):return 1
+        if z>=max(0.75,thr):return -1
+        return 0
+    if method in {"EMA_DEVIATION_FADE"}:
+        e=ema(values,lookback,idx)
+        if e is None or e<=0:return 0
+        deviation=(now/e-1)*100
+        if deviation<=-thr:return 1
+        if deviation>=thr:return -1
+        return 0
+    if method in {"RELATIVE_STRENGTH","RELATIVE_STRENGTH_ROTATION"}:
+        other=params.get("other_values",[])
+        if idx>=len(other) or len(other)<=lookback:return 0
+        op=other[idx-lookback]
+        if not op or op<=0:return 0
+        other_change=(other[idx]/op-1)*100
+        rel=change_pct-other_change
+        if rel>=thr:return 1
+        if rel<=-thr:return -1
+    return 0
+
+
+def realized_vol(values,end,period):
+    if end<period:return None
+    rets=[]
+    for j in range(end-period+1,end+1):
+        if values[j-1]>0 and values[j]>0: rets.append(math.log(values[j]/values[j-1]))
+    if len(rets)<max(2,period//2):return None
+    m,sd=mean_sd(rets)
+    return sd*math.sqrt(252) if sd is not None else None
+
+
+def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_idx,axes,symbol,chain_features):
+    lookback=int(axes.get("lookback_sessions",axes.get("signal_lookback_sessions",axes.get("lookback",5))))
+    threshold=float(axes.get("move_threshold_pct",axes.get("move_or_signal_threshold_pct",axes.get("threshold_pct",0.5))))
+    vol_lb=int(axes.get("vol_lookback_sessions",axes.get("volatility_lookback_sessions",5)))
+    method_params={"other_values":other_values}
+    side=compute_signal(method,values,idx,lookback,threshold,method_params)
+    if side==0:return 0,"NO_SIGNAL"
+    # All confirmations use only information known by the close of the signal day.
+    if confirm in {"CROSS_ASSET","CROSS_INDEX"}:
+        if other_values is None or idx<lookback+1:return 0,"CONFIRMATION_HISTORY_MISSING"
+        previous_move=(other_values[idx-1]/other_values[idx-lookback-1]-1)*100
+        if previous_move*side<=0:return 0,"CROSS_INDEX_CONFIRMATION_FAIL"
+    elif confirm=="OPTIONS_FLOW":
+        feat=chain_features.get((symbol,idx),{})
+        side_oi_delta=feat.get("ce_oi_delta",0) if side>0 else feat.get("pe_oi_delta",0)
+        side_volume=feat.get("ce_volume",0) if side>0 else feat.get("pe_volume",0)
+        if side_oi_delta<=0 or side_volume<=0:return 0,"OPTIONS_FLOW_CONFIRMATION_FAIL"
+    elif confirm not in {"NONE",""}:
+        return 0,"CONFIRMATION_NOT_IMPLEMENTED"
+    if regime in {"REALIZED_VOL_LOW_HIGH","REALIZED_VOL"}:
+        vol=realized_vol(values,idx,vol_lb)
+        past=[realized_vol(values,j,vol_lb) for j in range(max(vol_lb+1,idx-60),idx)]
+        past=[v for v in past if v is not None]
+        if vol is None or not past:return 0,"REALIZED_VOL_HISTORY_MISSING"
+        definition=canonical(axes.get("regime_definition","ROLLING_MEDIAN"))
+        if definition in {"ROLLING_MEDIAN","MEDIAN"}:
+            bound=sorted(past)[len(past)//2]
+        else:
+            ordered=sorted(past); bound=ordered[max(0,int(0.67*len(ordered))-1)]
+        # Admit both vol states; side follows underlying signal, but the regime is recorded.
+        high=vol>=bound
+        if not high and not vol>0:return 0,"REALIZED_VOL_ZERO"
+    elif regime=="TREND_RANGE":
+        move=abs(values[idx]/values[idx-lookback]-1)*100 if values[idx-lookback]>0 else 0
+        is_trend=move>=threshold
+        if not is_trend:return 0,"RANGE_REGIME_FILTER"
+    elif regime=="INDIA_VIX":
+        if idx>=len(vix_values) or vix_values[idx] is None:return 0,"INDIA_VIX_MISSING"
+        # The high/low regime threshold is the historical expanding median, using no future values.
+        past_vix=[v for v in vix_values[:idx] if v is not None]
+        if not past_vix:return 0,"INDIA_VIX_HISTORY_MISSING"
+        bound=sorted(past_vix)[len(past_vix)//2]
+        # Low VIX admits mean-reversion cores; high VIX admits trend/momentum cores.
+        if ("REVERSION" in method or "FADE" in method or method=="RSI_REBOUND" or method=="BOLLINGER_REVERSION") and vix_values[idx]>bound:
+            return 0,"VIX_REGIME_FILTER"
+        if ("MOMENTUM" in method or "EMA" in method or method=="RELATIVE_STRENGTH") and vix_values[idx]<bound:
+            return 0,"VIX_REGIME_FILTER"
+    elif regime not in {"NONE",""}:
+        return 0,"REGIME_NOT_IMPLEMENTED"
+    return side,"SIGNAL"
+
+
+def load_market():
+    if not OPTION_CACHE.exists():
+        raise RuntimeError("Private NSE data cache is missing; run the official NSE acquisition workflow first.")
+    contracts=defaultdict(dict)
+    closes=defaultdict(dict)
+    option_dates=set()
+    archive_errors=[]
+    archive_paths=sorted(OPTION_CACHE.glob("*/*.zip"))
+    if not archive_paths: raise RuntimeError("No cached official NSE daily archives were restored.")
+    for p in archive_paths:
+        d=parse_date(p.stem)
+        if d is None: continue
+        try:
+            rows=read_archive(p,d)
+        except Exception as exc:
+            archive_errors.append({"date":d.isoformat(),"error":type(exc).__name__+":"+str(exc)[:160]})
+            continue
+        option_dates.add(d)
+        per_symbol_spot=defaultdict(list)
+        daymap=contracts[d]
+        for r in rows:
+            symbol=r["symbol"]
+            if r["spot"] and r["spot"]>0:per_symbol_spot[symbol].append(r["spot"])
+            if r["instrument"]!="OPTIDX":continue
+            k=(symbol,r["expiry"],r["strike"],r["side"])
+            if k in daymap:
+                archive_errors.append({"date":d.isoformat(),"error":"DUPLICATE_KEY:"+repr(k)})
+                continue
+            daymap[k]=r
+        for sym,vals in per_symbol_spot.items():
+            closes[sym][d]=median(vals)
+    index_closes=read_index_closes()
+    for sym,by_day in index_closes.items():
+        # Use official index close when present; underlying from option archive remains available as a fallback.
+        for d,price in by_day.items():
+            closes[sym][d]=price
+    # All rows are indexed by the official archive/session dates; index-context gap reconciliation is separate.
+    dates=sorted(set(closes["NIFTY"]) | set(closes["BANKNIFTY"]) | option_dates)
+    if not dates: raise RuntimeError("No usable official option/index dates.")
+    vix=read_vix_cache()
+    vix_series=[vix.get(d) for d in dates]
+    data={
+      "contracts":contracts,"closes":closes,"dates":dates,"vix":vix_series,"vix_by_date":vix,
+      "option_dates":option_dates,"archive_errors":archive_errors,
+      "raw_archive_count":len(archive_paths),
+    }
+    return data
+
+
+def aggregate_chain_features(data,symbol,dates):
+    out={}
+    previous=None
+    for idx,d in enumerate(dates):
+        rows=[r for (sym,exp,k,side),r in data["contracts"].get(d,{}).items() if sym==symbol]
+        spot=data["closes"][symbol].get(d)
+        if not spot: continue
+        ce_oi=sum(max(0,r["oi"] or 0) for r in rows if r["side"]=="CE" and r["strike"] and abs(r["strike"]/spot-1)<=0.03)
+        pe_oi=sum(max(0,r["oi"] or 0) for r in rows if r["side"]=="PE" and r["strike"] and abs(r["strike"]/spot-1)<=0.03)
+        ce_vol=sum(max(0,r["volume"] or 0) for r in rows if r["side"]=="CE" and r["strike"] and abs(r["strike"]/spot-1)<=0.03)
+        pe_vol=sum(max(0,r["volume"] or 0) for r in rows if r["side"]=="PE" and r["strike"] and abs(r["strike"]/spot-1)<=0.03)
+        previous=previous or (ce_oi,pe_oi,ce_vol,pe_vol)
+        out[(symbol,idx)]={
+           "ce_oi":ce_oi,"pe_oi":pe_oi,"ce_volume":ce_vol,"pe_volume":pe_vol,
+           "ce_oi_delta":ce_oi-previous[0],"pe_oi_delta":pe_oi-previous[1],
+        }
+        previous=(ce_oi,pe_oi,ce_vol,pe_vol)
+    return out
+
+
+def load_cost_cases():
+    rows=read_csv(OUT/"cost_scenarios.csv")
+    if len(rows)!=24:
+        raise RuntimeError(f"Expected 24 registered cost cases; found {len(rows)}.")
+    result=[]
+    for row in rows:
+        result.append({
+          "cost_case_id":value(row,"cost_case_id","scenario_id","cost_id"),
+          "brokerage_per_order":number(value(row,"brokerage_per_order","brokerage_rupees_per_order")) or 20.0,
+          "slippage_per_unit_per_side":number(value(row,"slippage_per_unit_per_side","slippage_rupees_per_unit_per_side")) or 0.0,
+          "fee_multiplier":number(value(row,"fee_multiplier","statutory_fee_multiplier")) or 1.0,
+          "raw":row,
+        })
+    return result
+
+
+def load_tasks(max_configs=0):
+    family_rows=read_csv(OUT/"strategy_families.csv")
+    space_rows=read_csv(OUT/"family_configuration_space.csv")
+    gate_rows=read_csv(OUT/"family_data_feasibility.csv")
+    gates={value(r,"family_id","family_key","id"):r for r in gate_rows}
+    spaces={value(r,"family_id","family_key","id"):r for r in space_rows}
+    tasks=[]; blocked=Counter(); family_status=Counter()
+    for rawfam in family_rows:
+        fam=normalize_family(rawfam)
+        core_method_name=core_method(fam["core"])
+        if not core_method_name:
+            blocked["CORE_IMPLEMENTATION_NOT_REGISTERED"]+=1
+            family_status[fam["family_id"]]="BLOCKED_CORE_NOT_IMPLEMENTED"
+            continue
+        if fam["confirmation"] not in SUPPORTED_CONFIRMS:
+            blocked["CONFIRMATION_NOT_IMPLEMENTED"]+=1
+            family_status[fam["family_id"]]="BLOCKED_CONFIRMATION_NOT_IMPLEMENTED"
+            continue
+        if fam["regime"] not in SUPPORTED_REGIMES:
+            blocked["REGIME_NOT_IMPLEMENTED"]+=1
+            family_status[fam["family_id"]]="BLOCKED_REGIME_NOT_IMPLEMENTED"
+            continue
+        gate=gates.get(fam["family_id"],{})
+        if value(gate,"source_feasibility_status")=="BLOCKED_MISSING_INPUTS":
+            blocked["SOURCE_INPUTS_MISSING"]+=1
+            family_status[fam["family_id"]]="BLOCKED_SOURCE_INPUTS"
+            continue
+        space=spaces.get(fam["family_id"],{})
+        axes=json_field(space,"axes_json",default={})
+        if not axes:
+            blocked["CONFIGURATION_MANIFEST_MISSING"]+=1
+            family_status[fam["family_id"]]="BLOCKED_CONFIGURATION_MANIFEST"
+            continue
+        axis_names=list(axes)
+        axis_values=[axes[k] for k in axis_names]
+        count=1
+        for values in axis_values:count*=len(values)
+        family_status[fam["family_id"]]="ELIGIBLE_FOR_EOD_DIAGNOSTIC"
+        for cfg_rank,combo in enumerate(product(*axis_values)):
+            cfg=dict(zip(axis_names,combo))
+            task_id=fam["family_id"]+"-"+str(cfg_rank).zfill(7)
+            tasks.append({"task_id":task_id,"family":fam,"core_method":core_method_name,"axes":cfg,
+                          "family_config_rank":cfg_rank,"registered_configurations":count})
+        family_status[fam["family_id"]]=family_status[fam["family_id"]]
+    tasks.sort(key=lambda x:(x["family"]["family_id"],x["family_config_rank"]))
+    if max_configs>0: tasks=tasks[:max_configs]
+    return tasks,blocked,family_status
+
+
+def choose_contract(data,signal_date,entry_date,exit_date,symbol,side,strike_target):
+    chain=data["contracts"].get(signal_date,{})
+    spot=data["closes"][symbol].get(signal_date)
+    if not spot:return None,"SIGNAL_SPOT_MISSING"
+    d=0.005 if "0.5" in canonical(strike_target) else (0.0 if "ATM" in canonical(strike_target) else 0.01)
+    target_name=canonical(strike_target)
+    if target_name=="ATM":target=spot
+    elif "ITM" in target_name: target=spot*(1-d if side=="CE" else 1+d)
+    elif "OTM" in target_name: target=spot*(1+d if side=="CE" else 1-d)
+    else:target=spot
+    eligible=[]
+    for (sym,expiry,strike,opt_side),r in chain.items():
+        if sym!=symbol or opt_side!=side or expiry is None or strike is None:continue
+        if expiry < exit_date+timedelta(days=2): continue
+        # At signal close, choose a contract listed and traded on that day.
+        if not r["volume"] or r["volume"]<=0 or not r["close"] or r["close"]<=0:continue
+        eligible.append((expiry,abs(strike-target),-float(r["volume"] or 0),r))
+    if not eligible:return None,"NO_SIGNAL_DATE_CONTRACT"
+    eligible.sort(key=lambda z:(z[0],z[1],z[2]))
+    r=eligible[0][3]
+    return (symbol,r["expiry"],r["strike"],side),"OK"
+
+
+def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes):
+    signal_date=dates[signal_idx]
+    # The cost schedule begins 1 October 2024. Earlier rows are features/warm-up only.
+    entry_idx=signal_idx+1
+    holding=canonical(axes.get("holding_exit",axes.get("holding_horizon","SAME_SESSION_CLOSE")))
+    hold_sessions=2 if ("2_SESSION" in holding or "2_DAY" in holding) else 1
+    exit_idx=entry_idx+hold_sessions-1
+    if entry_idx>=len(dates) or exit_idx>=len(dates): return None,"END_OF_SAMPLE"
+    entry_date=dates[entry_idx]; exit_date=dates[exit_idx]
+    if entry_date<FIRST_COST_DATE:return None,"COST_SCHEDULE_NOT_VERIFIED"
+    # Cannot jump across a date where the option archive failed. Requires each selected session to be present.
+    if entry_date not in data["option_dates"] or exit_date not in data["option_dates"]:return None,"OPTION_ARCHIVE_SESSION_MISSING"
+    target=canonical(axes.get("strike_target","ATM"))
+    contract,reason=choose_contract(data,signal_date,entry_date,exit_date,symbol,side,target)
+    if contract is None:return None,reason
+    entry_row=data["contracts"].get(entry_date,{}).get(contract)
+    exit_row=data["contracts"].get(exit_date,{}).get(contract)
+    if not entry_row or not exit_row:return None,"EXACT_CONTRACT_NOT_PRESENT_ON_ENTRY_OR_EXIT"
+    if not entry_row["volume"] or entry_row["volume"]<=0 or not exit_row["volume"] or exit_row["volume"]<=0:
+        return None,"ZERO_VOLUME_ENTRY_OR_EXIT"
+    entry=entry_row["open"]
+    if entry is None or entry<=0:return None,"INVALID_ENTRY_OPEN"
+    qty=entry_row["lot"]
+    if qty is None or qty<=0:return None,"HISTORICAL_LOT_SIZE_MISSING"
+    risk=canonical(axes.get("risk_profile","NO_STOP_NO_TARGET"))
+    exit_price=None; exit_reason="PLANNED_CLOSE"
+    if risk!="NO_STOP_NO_TARGET":
+        stop_pct=0.20 if "STOP_20PCT" in risk else None
+        target_pct=0.20 if "TARGET_20PCT" in risk else None
+        for j in range(entry_idx,exit_idx+1):
+            day=dates[j]
+            bar=data["contracts"].get(day,{}).get(contract)
+            if not bar or not bar["volume"] or bar["volume"]<=0:continue
+            op,hi,lo,cl=bar["open"],bar["high"],bar["low"],bar["close"]
+            stop=entry*(1-stop_pct) if stop_pct else None
+            take=entry*(1+target_pct) if target_pct else None
+            touched_stop=stop is not None and lo is not None and lo<=stop
+            touched_take=take is not None and hi is not None and hi>=take
+            # Daily OHLC cannot show barrier ordering: if both were touched, conservatively stop first.
+            if touched_stop:
+                exit_price=min(op,stop) if op is not None and op>0 else stop
+                exit_reason="STOP_OR_STOP_FIRST_AMBIGUITY"
+                break
+            if touched_take:
+                exit_price=max(op,take) if op is not None and op>0 else take
+                exit_reason="TARGET"
+                break
+            if j==exit_idx:exit_price=cl
+    else:
+        exit_price=exit_row["close"]
+    if exit_price is None or not math.isfinite(exit_price) or exit_price<=0:return None,"INVALID_EXIT_MARK"
+    gross=(exit_price-entry)*qty
+    return {
+      "signal_date":signal_date.isoformat(),"entry_date":entry_date.isoformat(),"exit_date":exit_date.isoformat(),
+      "symbol":symbol,"expiry":contract[1].isoformat(),"strike":contract[2],"side":side,
+      "entry_price_proxy":entry,"exit_price_proxy":exit_price,"lot_size":qty,
+      "gross_pnl":gross,"exit_reason":exit_reason,"holding_sessions":hold_sessions,
+      "execution_model":"signal-at-prior-close, next-session daily OPEN, exit at daily CLOSE or conservative stop/target using daily H/L; positive EOD volume required",
+      "fill_model_warning":"Daily OHLC does not prove a quote, queue position, spread or actual fill; model is diagnostic only.",
+    },"TRADE"
+
+
+def compute_metrics(trades,cost_case,cost_model):
+    net=[]; gross=[]; fees=[]; slip=[]; rows=[]
+    for t in trades:
+        entry_date=date.fromisoformat(t["entry_date"])
+        fee,breakdown=call_cost_model(cost_model,entry_date,t["entry_price_proxy"],t["exit_price_proxy"],
+             t["lot_size"],cost_case["brokerage_per_order"],cost_case["fee_multiplier"])
+        slippage=2*cost_case["slippage_per_unit_per_side"]*t["lot_size"]
+        netpnl=t["gross_pnl"]-fee-slippage
+        net.append(netpnl);gross.append(t["gross_pnl"]);fees.append(fee);slip.append(slippage)
+        rows.append((t,netpnl,fee,slippage,breakdown))
+    equity=peak=0.0; maxdd=0.0
+    for p in net:
+        equity+=p;peak=max(peak,equity);maxdd=max(maxdd,peak-equity)
+    n=len(net); wins=sum(x>0 for x in net); loss=sum(x<0 for x in net)
+    return {
+      "trades":n,"wins":wins,"losses":loss,"win_rate":wins/n if n else None,
+      "gross_pnl":sum(gross),"net_pnl":sum(net),"statutory_and_brokerage_cost":sum(fees),
+      "slippage_cost":sum(slip),"average_net_pnl_per_trade":sum(net)/n if n else None,
+      "net_return_pct_on_premium_capital":100*sum(net)/sum(t["entry_price_proxy"]*t["lot_size"] for t in trades) if n else None,
+      "max_drawdown_rupees":maxdd,"profit_factor":sum(x for x in net if x>0)/abs(sum(x for x in net if x<0)) if any(x<0 for x in net) else None,
+      "nonpositive_trades":sum(x<=0 for x in net),
+      "trade_rows":rows,
+    }
+
+
+def main():
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--start-config",type=int,default=0,help="Position in the sorted, source-feasible, implemented configuration list")
+    ap.add_argument("--max-configs",type=int,default=5000)
+    ap.add_argument("--shard-id",default="")
+    args=ap.parse_args()
+    OUT.mkdir(parents=True,exist_ok=True)
+    data=load_market()
+    cost_model=load_cost_model()
+    cost_fn_name,_=find_cost_function(cost_model)
+    if not cost_fn_name: raise RuntimeError("Cost model API unresolved. No results emitted.")
+    # Full registry is enumerated; unsupported/source-blocked families are explicitly accounted.
+    all_tasks,blocked,family_status=load_tasks(max_configs=0)
+    total_tasks=len(all_tasks)
+    start=max(0,args.start_config); end=min(total_tasks,start+max(1,args.max_configs))
+    tasks=all_tasks[start:end]
+    cost_cases=load_cost_cases()
+    results=[]; config_counts=Counter(); family_counts=Counter(); skip_counts=Counter()
+    for n,task in enumerate(tasks,1):
+        fam=task["family"]; method=task["core_method"]; axes=task["axes"]
+        # Daily source series and market context.
+        symbol="NIFTY" if "BANK" not in fam["core"] and "BANK" not in fam["family_name"].upper() else "BANKNIFTY"
+        if symbol not in data["closes"] or not data["closes"][symbol]:
+            skip_counts["UNDERLYING_SERIES_MISSING"]+=1;continue
+        dates=data["dates"]; series=[data["closes"][symbol].get(d) for d in dates]
+        other_symbol="BANKNIFTY" if symbol=="NIFTY" else "NIFTY"
+        other=[data["closes"][other_symbol].get(d) for d in dates]
+        # Fill only short gaps for feature warm-up; never fill a trade date / contract price.
+        for arr in (series,other):
+            last=None
+            for i,x in enumerate(arr):
+                if x is not None and x>0:last=x
+                elif last is not None:arr[i]=last
+        chain_features=aggregate_chain_features(data,symbol,dates)
+        signals=[]; no_signal=Counter()
+        for idx,d in enumerate(dates):
+            if d<FIRST_COST_DATE-timedelta(days=45):continue
+            other_values=other
+            vix_series=data["vix"]
+            side,reason=make_signal(method,fam["confirmation"],fam["regime"],series,other_values,
+                         vix_series,idx,idx+1,axes,symbol,chain_features)
+            if side:signals.append((idx,side))
+            else:no_signal[reason]+=1
+        trades=[]; reject_reasons=Counter()
+        date_to_idx={d:i for i,d in enumerate(dates)}
+        for signal_idx,side in signals:
+            trade,reason=simulate_trade(data,dates,date_to_idx,symbol,signal_idx,side,axes)
+            if trade is None:reject_reasons[reason]+=1
+            else:trades.append(trade)
+        config_counts["attempted"]+=1
+        family_counts[fam["family_id"]]+=1
+        base={
+          "engine_version":ENGINE_VERSION,"task_id":task["task_id"],"config_rank_global":start+n-1,
+          "family_id":fam["family_id"],"family_name":fam["family_name"],"core_id":fam["core"],
+          "confirmation_id":fam["confirmation"],"regime_id":fam["regime"],
+          "core_method_implementation":method,
+          "configuration_json":json.dumps(axes,sort_keys=True,separators=(",",":")),
+          "signals":len(signals),"trades":len(trades),"signal_rejections_json":json.dumps(no_signal,sort_keys=True,separators=(",",":")),
+          "trade_exclusions_json":json.dumps(reject_reasons,sort_keys=True,separators=(",",":")),
+          "date_min":min((t["entry_date"] for t in trades),default=""),
+          "date_max":max((t["exit_date"] for t in trades),default=""),
+          "archive_date_count":len(data["option_dates"]),"raw_archives_loaded":data["raw_archive_count"],
+          "duplicate_or_archive_parse_errors":len(data["archive_errors"]),
+          "cost_model_callable":cost_fn_name,
+          "execution_model":"prior-close signal, next-session open premium, same-session or second-session close; daily high/low barriers are stop-first",
+          "promotion_status":"DIAGNOSTIC_ONLY_MULTIPLE_TESTING_AND_OOS_GATE_NOT_PASSED",
+        }
+        for cost in cost_cases:
+            metric=compute_metrics(trades,cost,cost_model)
+            row=dict(base)
+            row.update({"cost_case_id":cost["cost_case_id"],"brokerage_per_order":cost["brokerage_per_order"],
+              "slippage_per_unit_per_side":cost["slippage_per_unit_per_side"],"fee_multiplier":cost["fee_multiplier"]})
+            for k,v in metric.items():
+                if k!="trade_rows":row[k]=v
+            results.append(row)
+        if n%100==0:
+            print(json.dumps({"chunk_start":start,"processed_configs":n,"chunk_size":len(tasks),
+                              "cost_rows":len(results),"global_config_cursor":start+n},sort_keys=True),flush=True)
+    # Output only per-config, per-cost summary metrics: individual trade tapes/raw option records stay private.
+    shard=args.shard_id or f"{start:09d}-{end:09d}"
+    path=OUT/"evaluation_shards"/("phase109_eval_"+shard+".csv.gz")
+    path.parent.mkdir(parents=True,exist_ok=True)
+    fields=sorted({k for r in results for k in r})
+    with gzip.open(path,"wt",encoding="utf-8",newline="") as fh:
+        writer=csv.DictWriter(fh,fieldnames=fields,extrasaction="ignore");writer.writeheader();writer.writerows(results)
+    summary={
+      "engine_version":ENGINE_VERSION,"generated_utc":datetime.now(timezone.utc).isoformat(),
+      "global_config_start":start,"global_config_end_exclusive":end,"total_supported_source_feasible_configs":total_tasks,
+      "configs_requested":len(tasks),"configs_attempted":config_counts["attempted"],
+      "cost_rows_generated":len(results),"cost_cases_per_config":len(cost_cases),
+      "skipped_reasons":dict(sorted(skip_counts.items())),"blocked_families_reasons":dict(sorted(blocked.items())),
+      "archive_parse_or_duplicate_warnings":len(data["archive_errors"]),
+      "archive_count_loaded":data["raw_archive_count"],"unique_option_archive_dates":len(data["option_dates"]),
+      "cost_model_callable":cost_fn_name,"first_cost_eligible_date":FIRST_COST_DATE.isoformat(),
+      "cost_model_guard":"Net P&L starts only on entries >=2024-10-01; earlier prices are signal warm-up only.",
+      "raw_trade_tapes_publicly_published":False,
+      "result_path":str(path),"result_sha256":hashlib.sha256(path.read_bytes()).hexdigest(),
+      "status":"PARTIAL_SHARD_COMPLETE" if end<total_tasks else ("COMPLETE_GRID_ATTEMPTED" if config_counts["attempted"]==len(tasks) else "COMPLETE_GRID_WITH_SKIPS"),
+      "no_promotion":"All reported results are diagnostic until holdout, multiple testing, coverage, costs and execution evidence pass.",
+    }
+    progress_path=OUT/"evaluation_progress.json"
+    previous=read_json(progress_path,{})
+    completed=previous.get("completed_config_ranges",[])
+    shard_record={"start":start,"end_exclusive":end,"configs_requested":len(tasks),"configs_attempted":config_counts["attempted"],
+                  "cost_rows":len(results),"result_path":str(path),"result_sha256":summary["result_sha256"],
+                  "status":summary["status"]}
+    if not any(x.get("start")==start and x.get("end_exclusive")==end for x in completed):
+        completed.append(shard_record)
+    completed.sort(key=lambda x:x["start"])
+    summary["completed_ranges_total"]=len(completed)
+    summary["completed_configs_all_ranges"]=sum(int(x.get("configs_attempted",0)) for x in completed)
+    summary["completed_cost_rows_all_ranges"]=sum(int(x.get("cost_rows",0)) for x in completed)
+    summary["remaining_supported_configs"]=max(0,total_tasks-max((x.get("end_exclusive",0) for x in completed),default=0))
+    checkpoint={"engine_version":ENGINE_VERSION,"updated_utc":summary["generated_utc"],
+      "total_supported_source_feasible_configs":total_tasks,"completed_config_ranges":completed,
+      "next_config_cursor":max((x.get("end_exclusive",0) for x in completed),default=0),
+      "configs_attempted_total":summary["completed_configs_all_ranges"],
+      "cost_rows_generated_total":summary["completed_cost_rows_all_ranges"],
+      "remaining_supported_configs":summary["remaining_supported_configs"],
+      "latest_shard":shard_record}
+    (OUT/"evaluation_shard_summary.json").write_text(json.dumps(summary,sort_keys=True,indent=2)+"\n",encoding="utf-8")
+    progress_path.write_text(json.dumps(checkpoint,sort_keys=True,indent=2)+"\n",encoding="utf-8")
+    lines=[
+      "# Phase 109 evaluation shard report","",
+      "Status: **"+summary["status"]+"**","",
+      f"- Config cursor range: [{start:,}, {end:,}); registry eligible-config denominator: {total_tasks:,}.",
+      f"- Configs attempted in this shard: {config_counts['attempted']:,}; cost-adjusted rows generated: {len(results):,}; expected cost cases/config: 24.",
+      f"- Completed shard ranges currently recorded: {len(completed):,}; cumulative attempted configs: {summary['completed_configs_all_ranges']:,}; cumulative cost rows: {summary['completed_cost_rows_all_ranges']:,}; remaining eligible configs: {summary['remaining_supported_configs']:,}.",
+      f"- Archive dates loaded: {len(data['option_dates']):,}; source files loaded: {data['raw_archive_count']:,}; archive parse/duplicate warnings: {len(data['archive_errors']):,}.",
+      f"- Cost model: `{cost_fn_name}`; P&L trade entries before {FIRST_COST_DATE.isoformat()} are blocked.",
+      "- All net results remain diagnostic, use EOD OHLC execution proxies, and are exposed to selection/multiple-testing bias. No strategy is promoted.",
+      "- Public outputs contain per-configuration/per-cost summary metrics only; raw options rows and trade tapes remain private.",
+      "- Cost-row summary: `evaluation_shards/"+path.name+"`; machine-readable shard summary: `evaluation_shard_summary.json`; resumable ledger: `evaluation_progress.json`.",
+    ]
+    (OUT/"PHASE109_EVALUATION_SHARD_REPORT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
+    print(json.dumps({k:summary[k] for k in ("status","global_config_start","global_config_end_exclusive","total_supported_source_feasible_configs",
+      "configs_attempted","cost_rows_generated","remaining_supported_configs","result_sha256")},sort_keys=True))
+
+
+if __name__=="__main__":main()
