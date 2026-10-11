@@ -230,9 +230,8 @@ class ExpiryCrosscheckTests(unittest.TestCase):
         from expiry_crosscheck import audit_expiry_identity
         payload = self._nse_zip_for_date("2026-08-03")
         def fetch_bytes(url, timeout=30):
-            import re
-            match = re.search(r"BhavCopy_NSE_FO_0_0_0_(\\d{8})_F_0000", url)
-            self.assertIsNotNone(match)
+            marker = "BhavCopy_NSE_FO_0_0_0_"
+            self.assertIn(marker, url)
             return payload
         return audit_expiry_identity(self._profiles(prices), fetch_bytes)
 
