@@ -12,6 +12,7 @@ import nse_backfill
 import niftyindices_history
 import dhan_rolling_options
 import futures_eod_extract
+import options_greeks_extract
 import tempfile
 
 
@@ -117,6 +118,23 @@ class TestDhanRollingOptions(unittest.TestCase):
         self.assertEqual(result["invalid_ohlc_rows"],0)
         self.assertEqual(result["invalid_or_missing_iv_rows"],0)
         self.assertEqual(result["invalid_or_missing_volume_rows"],0)
+
+class TestModelGreeks(unittest.TestCase):
+    def test_black_scholes_implied_volatility_round_trip(self):
+        premium=options_greeks_extract.bs_price(25000,25000,30/365,0.065,0.2,"CE")
+        iv,status=options_greeks_extract.implied_vol(premium,25000,25000,30/365,0.065,"CE")
+        self.assertEqual(status,"OK")
+        self.assertAlmostEqual(iv,0.2,places=5)
+        metrics=options_greeks_extract.greeks(25000,25000,30/365,0.065,iv,"CE")
+        self.assertTrue(all(abs(v)<1e6 for v in metrics.values()))
+        self.assertGreater(metrics["delta"],0)
+        self.assertGreater(metrics["gamma"],0)
+
+    def test_contract_price_below_model_bound_is_not_forced_to_iv(self):
+        iv,status=options_greeks_extract.implied_vol(1,25000,20000,5/365,0.065,"CE")
+        self.assertIsNone(iv)
+        self.assertEqual(status,"PREMIUM_BELOW_MODEL_LOWER_BOUND")
+
 
 class TestIndexFuturesExtractor(unittest.TestCase):
     def test_extract_udiff_futures_and_ignore_options(self):
