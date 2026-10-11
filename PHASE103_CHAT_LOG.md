@@ -42,3 +42,11 @@ This log records user-visible conversation events and research decisions. It doe
 - Code-1 full-panel run [38126663036](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126663036): 28/28 API probes returned rows; 5/5 official NSE daily files downloaded; 88 full-session profiles; only 3 unique four-field OHLC matches (all expiry 2026-08-25); 0 expected rank-2 matches; 85 unmatched. No raw rows persisted.
 - One code-0 near/current selector calibration [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683) returned HTTP 400 / DH-905 / “expiryCode is required” on the first ICICIBANK CALL ATM request. The run stopped with 0 data probes returned; no identity comparison could be made.
 - Terminal action for this bounded calibration: stop searching expiry selectors. No strategy P&L or strategy promotion; require provider-confirmed contract identity or an authorized alternative historical contract dataset. Raw data remain ephemeral/public aggregates only.
+
+
+## Final user-visible outcome recorded — 2026-10-11
+
+- The assistant informed the user that the one-shot near-expiry request was rejected with HTTP 400 / DH-905 (“expiryCode is required”) before any bars were returned.
+- The final workflow-locked code-1 run is [38127809994](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127809994): 25 tests passed; 28/28 Dhan probes returned rows; 5/5 official NSE daily files downloaded. Identity reconciliation remained 3/88 unique full-session OHLC matches, all expiry 2026-08-25/rank 1; zero expected rank-2 matches; 85 unmatched.
+- Final user-visible decision: Phase 103 concludes **NO-GO for stock-options strategy P&L on the available sample**. This is a contract-identity/price-quality limitation, not a claim that stock-options strategies are unprofitable and not a denial of the user's Dhan subscription. No strategy was backtested, ranked or promoted.
+- Repository state now includes the final manuscript, fixed-contract source screen, frozen plan/stop rule, status, research log, error log, machine audit and main README hyperlinks. Raw market rows and secrets were not committed or uploaded.
