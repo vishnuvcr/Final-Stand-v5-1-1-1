@@ -10,6 +10,7 @@ on:
       - ".github/workflows/phase109-family-grid-compiler.yml"
 
 permissions:
+  actions: write
   contents: write
 
 concurrency:
@@ -301,3 +302,33 @@ jobs:
             results/phase109/family_data_feasibility_summary.json
             results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md
           if-no-files-found: error
+
+      - name: Dispatch Phase 109 resumable evaluation after successful registry and data gates
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          grid=Path("results/phase109/phase109_grid_summary.json")
+          gate=Path("results/phase109/family_data_feasibility_summary.json")
+          if not grid.exists() or not gate.exists():
+              raise SystemExit("Required compiler or family-feasibility summary is missing; do not launch evaluation.")
+          g=json.loads(grid.read_text()); f=json.loads(gate.read_text())
+          print("registered_families=",f.get("registered_families",0))
+          print("families_with_inputs_present=",f.get("families_with_inputs_present",0))
+          PY
+          payload=$(python - <<'PY'
+          import json
+          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
+          PY
+          )
+          curl --silent --show-error --fail -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-evaluate-grid.yml/dispatches" \
+            -d "$payload"
+          echo "Started bounded Phase 109 grid evaluation; the evaluator stops at its eligible-config denominator."
