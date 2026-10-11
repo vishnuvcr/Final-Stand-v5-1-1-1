@@ -378,3 +378,8 @@ The fresh run passed 20 unit tests and completed all 28 selected Dhan probes wit
 - Expanded source screen compared NSE EOD contract-wise data, jugaad-data F&O bhavcopy, HF index-only datasets, a commercial OptionVault lead, and official NSE historical order/trade products. No verified free source was found that combines this registered stock-option universe, intraday executable-price evidence, returned expiry/contract identity and permitted automated-use/retention rights.
 - Published the aggregate coverage figure and the final data-feasibility manuscript: `results/phase103/figures/actual_strike_coverage.svg` and `results/phase103/PHASE103_FINAL_MANUSCRIPT.md`.
 - Decision: the registered Phase 103.1 stop rule applies. Intraday stock-options empirical path = DATA NO-GO until a licensed/authorized exact-contract sample passes identity, price-quality, coverage and rights gates. No strategy P&L was run; no strategy is promoted. Do not substitute index options or daily EOD data without a separately preregistered scope change.
+
+
+<!-- DHAN_NO_RESULT_RUN_38126410692 -->
+## Dhan audit no result — run 38126410692
+No current-run JSON was produced; previous audit data were not accepted as this run's output.

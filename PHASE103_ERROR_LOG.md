@@ -270,3 +270,9 @@ Run [38124954633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 **Type:** blocking data-model limitation, not an API retrieval defect.
 **Evidence:** fresh aggregate run 38125302970 includes `contract_identity_status=BLOCKED_EXPIRY_NOT_RETURNED`; the response fields audited by the client contain timestamp and actual strike but not per-row expiry date or immutable listed-option contract ID. `expiryFlag=MONTH` and `expiryCode=1` are request selectors and are not accepted as returned contract identity. The actual-strike union has zero duplicate keys, but this cannot establish one fixed listed contract across sessions.
 **Decision:** no strategy P&L or fills from these rows. Seek an authorized contract-specific sample with documented identity and permitted storage/use rights. If unavailable within the registered bounded phase, conclude data NO-GO. See [source/rights screen](results/phase103/FIXED_CONTRACT_SOURCE_RIGHTS_SCREEN.md) and [final manuscript](results/phase103/PHASE103_FINAL_MANUSCRIPT.md).
+
+
+<!-- DHAN_NO_RESULT_RUN_38126410692 -->
+### E103-RUN-38126410692 — No fresh audit JSON for this run
+Tests, network requests or audit generation did not produce a machine result whose run_id matches the current Actions run. Any prior JSON is not valid evidence for this run.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126410692

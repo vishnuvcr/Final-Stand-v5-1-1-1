@@ -440,3 +440,8 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 The exact-strike union has no duplicate timestamp/strike keys, but per-row expiry/immutable contract identity is absent. A source review found no verified free source that combines the registered individual stock-option intraday history, executable quote evidence/validated proxy, and authorized caching/retention/derived-publication rights. No P&L or statistical strategy analysis was run. Phases 103.2–103.6 remain deliberately unentered under the preregistered stop rule. The bounded closeout manuscript is [PHASE103_FINAL_MANUSCRIPT.md](results/phase103/PHASE103_FINAL_MANUSCRIPT.md); the coverage plot is [actual_strike_coverage.svg](results/phase103/figures/actual_strike_coverage.svg).
 
 **Reopen condition:** a new authorized sample, with documented contract expiry/identity and rights, must pass timestamp/coverage and price-quality checks. Any later numerical analysis must include verified date-effective Paytm Money charges, spread, slippage, latency and adverse-cost sensitivity. New procurement or an EOD-only scope is a separate, bounded protocol—not a reason to silently continue this intraday attempt.
+
+
+<!-- DHAN_NO_RESULT_RUN_38126410692 -->
+### No fresh Dhan audit result
+Run 38126410692 produced no current-run JSON; prior run output was not accepted.
