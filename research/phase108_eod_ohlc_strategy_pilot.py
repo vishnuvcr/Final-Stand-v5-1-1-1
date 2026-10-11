@@ -318,7 +318,7 @@ def write_chart(stats, out_dir):
     left, right, top, bottom = 90, 40, 70, 90
     plot_w, plot_h = width - left - right, height - top - bottom
     slips = list(SLIPPAGE_LEVELS)
-    strategy_colors = {"MOMENTUM_ATM": "#2864dc", "REVERSAL_ATM": "#d85b31", "MOMENTUM_OI_CONFIRM": "#26865b", "LARGE_MOVE_MOMENTUM": "#8e44ad", "SMALL_MOVE_REVERSAL": "#16a085", "LARGE_MOVE_REVERSAL": "#c0392b"}
+    strategy_colors = {"MOMENTUM_ATM": "#2864dc", "REVERSAL_ATM": "#d85b31", "MOMENTUM_OI_CONFIRM": "#26865b", "LARGE_MOVE_MOMENTUM": "#8e44ad", "SMALL_MOVE_REVERSAL": "#16a085", "LARGE_MOVE_REVERSAL": "#c0392b", "LOW_VOL_MOMENTUM": "#7f8c8d", "HIGH_VOL_MOMENTUM": "#2980b9", "LOW_VOL_REVERSAL": "#d35400", "HIGH_VOL_REVERSAL": "#9b59b6"}
     base_values = [
         row["net_pnl_rupees"] for row in stats
         if row["brokerage_per_order"] == 20.0 and row["fee_multiplier"] == 1.0
