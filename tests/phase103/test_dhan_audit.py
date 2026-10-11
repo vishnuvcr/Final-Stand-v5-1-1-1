@@ -186,5 +186,71 @@ class EmptySideContinuationTests(unittest.TestCase):
         self.assertFalse(result["array_lengths_consistent"])
 
 
+class ExpiryCrosscheckTests(unittest.TestCase):
+    def _nse_zip_for_date(self, day):
+        import csv, io, zipfile
+        symbols = [("SBIN", "CE", "1040"), ("RELIANCE", "CE", "1300"), ("ICICIBANK", "CE", "1430")]
+        fields = ["FinInstrmTp","TckrSymb","XpryDt","FininstrmActlXpryDt","StrkPric","OptnTp",
+                  "OpnPric","HghPric","LwPric","ClsPric","TtlTradgVol","OpnIntrst"]
+        out = io.StringIO()
+        writer = csv.DictWriter(out, fieldnames=fields)
+        writer.writeheader()
+        for symbol, side, strike in symbols:
+            for expiry, prices in [
+                ("25-Aug-2026", (10.0, 12.0, 8.0, 11.0)),
+                ("29-Sep-2026", (20.0, 21.0, 19.0, 20.0)),
+                ("27-Oct-2026", (30.0, 33.0, 29.0, 32.0)),
+            ]:
+                writer.writerow({
+                    "FinInstrmTp":"STO","TckrSymb":symbol,"XpryDt":expiry,"FininstrmActlXpryDt":expiry,
+                    "StrkPric":strike,"OptnTp":side,"OpnPric":prices[0],"HghPric":prices[1],
+                    "LwPric":prices[2],"ClsPric":prices[3],"TtlTradgVol":385,"OpnIntrst":1000
+                })
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("sample.csv", out.getvalue())
+        return buffer.getvalue()
+
+    def _profiles(self, prices=(20.0, 21.0, 19.0, 20.0)):
+        import datetime
+        blocks = []
+        for day in ["2026-08-03", "2026-08-04", "2026-08-05"]:
+            base = datetime.datetime.fromisoformat(day + "T03:45:00+00:00")
+            for symbol, side, strike in [("SBIN","CALL",1040),("RELIANCE","CALL",1300),("ICICIBANK","CALL",1430)]:
+                timestamps = [int((base + datetime.timedelta(minutes=i)).timestamp()) for i in range(385)]
+                opn, high, low, close = prices
+                blocks.append({"symbol":symbol,"option_type":side,"relative_strike":"ATM",
+                    "timestamps":timestamps,"strikes":[strike]*385,
+                    "bars":{"timestamp":timestamps,"strike":[strike]*385,"open":[opn]*385,
+                            "high":[high]*385,"low":[low]*385,"close":[close]*385,
+                            "volume":[1]*385,"oi":[1000]*385}})
+        return blocks
+
+    def _run(self, prices=(20.0,21.0,19.0,20.0)):
+        from expiry_crosscheck import audit_expiry_identity
+        payload = self._nse_zip_for_date("2026-08-03")
+        def fetch_bytes(url, timeout=30):
+            import re
+            match = re.search(r"BhavCopy_NSE_FO_0_0_0_(\\d{8})_F_0000", url)
+            self.assertIsNotNone(match)
+            return payload
+        return audit_expiry_identity(self._profiles(prices), fetch_bytes)
+
+    def test_expiry_crosscheck_matches_exact_contract_and_second_future_expiry(self):
+        result = self._run()
+        self.assertEqual(result["status"], "PASS_EOD_RECONCILED_EXPIRY_CODE_1")
+        self.assertEqual(result["eligible_full_session_profiles"], 9)
+        self.assertEqual(result["unique_exact_contract_matches"], 9)
+        self.assertEqual(result["expiry_code_matches"], 9)
+        self.assertEqual(result["expiry_selector_mismatches"], 0)
+        self.assertFalse(result["raw_rows_persisted"])
+        self.assertEqual(result["matched_expiry_counts"], {"2026-09-29": 9})
+
+    def test_expiry_crosscheck_blocks_when_minute_ohlc_does_not_match_eod(self):
+        result = self._run((99.0,100.0,98.0,99.0))
+        self.assertEqual(result["status"], "BLOCKED_EOD_EXPIRY_RECONCILIATION_INSUFFICIENT")
+        self.assertEqual(result["unique_exact_contract_matches"], 0)
+        self.assertEqual(result["unmatched_profile_count"], 9)
+
 if __name__=="__main__":
     unittest.main()
