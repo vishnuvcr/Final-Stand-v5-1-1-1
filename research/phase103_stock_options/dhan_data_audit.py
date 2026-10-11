@@ -484,6 +484,22 @@ def main():
               minutes=row.get("observed_minutes",0), coverage=row.get("union_timestamp_coverage_pct",0),
               first=row.get("first_timestamp_utc") or "", last=row.get("last_timestamp_utc") or "",
               dates=json.dumps(row.get("ist_date_minutes",{}),sort_keys=True)))
+    exp = result.get("expiry_identity_audit", {})
+    lines += ["","## Independent expiry identity cross-check","",
+      f"**Result:** {exp.get('status','NOT_RUN')}",
+      f"**NSE trade dates downloaded:** {exp.get('trade_dates_downloaded',0)}/{exp.get('trade_dates_requested',0)}",
+      f"**Eligible full-session exact-strike profiles:** {exp.get('eligible_full_session_profiles',0)}",
+      f"**Unique exact OHLC matches:** {exp.get('unique_exact_contract_matches',0)}",
+      f"**Matches to expected expiryCode=1 selection:** {exp.get('expiry_code_matches',0)}",
+      f"**Selector mismatches / ambiguous / unmatched:** {exp.get('expiry_selector_mismatches',0)} / {exp.get('ambiguous_profile_count',0)} / {exp.get('unmatched_profile_count',0)}",
+      f"**Supporting volume/OI agreement counts:** {exp.get('supporting_volume_matches',0)} / {exp.get('supporting_oi_matches',0)}",
+      f"**Aggregate matched expiry counts:** {json.dumps(exp.get('matched_expiry_counts',{}),sort_keys=True)}",
+      f"**Duplicate keys deduplicated / conflicting duplicate keys:** {exp.get('duplicate_timestamp_strike_rows_deduplicated',0)} / {exp.get('conflicting_duplicate_key_count',0)}",
+      f"**Raw row persistence:** {exp.get('raw_rows_persisted',False)}",
+      "Only aggregate counts and expiry dates are published; raw minute bars and NSE row-level data remain ephemeral.",
+      ""]
+    for err in exp.get("safe_source_errors", []):
+        lines.append(f"- NSE EOD source error for {err.get('date')}: {err.get('error_type')}")
     lines += ["","## Underlying ID mapping","","| Symbol | ID resolved | Status |","|---|---|---|"]
     for sym,m in result.get("underlying_map",{}).items():
         lines.append("| {} | {} | {} |".format(sym,"yes" if m.get("security_id") else "no",m.get("status")))
