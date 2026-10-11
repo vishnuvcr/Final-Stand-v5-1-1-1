@@ -254,3 +254,10 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Correction:** add a deduplicated timestamp/actual-strike union and report per-strike coverage counts, coverage percentage, UTC boundaries and IST-date counts. Add a regression test for non-identical offset timestamps.  
 **Commits:** `3848124afe46635a7bbc761bab268c8f2186313b`, `1e1a94e0b8d9b13028cbe4c23c0551813135b04c`, `c5ac2361c62af1f6995e22570c4442d933983742`.  
 **Verification:** pending automated Actions run. Expiry identity, source rights, executable quotes and transaction-cost gates remain required.
+
+
+### E103-024 — Audit passed but generated-result push raced with newer branch commits
+**Affected run:** [38115661084](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38115661084).
+**Verified evidence:** all 20 unit tests passed; all 28 Dhan probes returned rows for the four selected panels over 2026-08-03 to 2026-08-10 (exclusive); zero out-of-window rows. The artifact uploaded successfully.
+**Failure:** the final workflow commit was rejected as non-fast-forward because the remote branch had advanced. Therefore the fresh machine JSON/report from this run are in the Actions artifact, not yet persisted to the branch; the checked-in report still reflects run 38115153795. Do not confuse those versions.
+**Correction/next action:** reconcile generated audit outputs with the current branch before publishing, and make the workflow robust to concurrent branch updates (fetch/rebase or retry the result commit safely). Do not force-push. Exact-strike diagnostic acceptance must wait until the fresh artifact is reconciled and inspected.
