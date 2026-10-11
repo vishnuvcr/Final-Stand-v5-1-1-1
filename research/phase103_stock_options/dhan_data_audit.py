@@ -459,6 +459,16 @@ def main():
           complete=v.get("actual_strikes_observed_at_every_union_timestamp",0),
           dupes=v.get("duplicate_timestamp_actual_strike_keys_across_offsets",0),
           gate=v.get("relative_surface_alignment_gate","NOT_ESTIMABLE")))
+    lines += ["","### Exact actual-strike coverage (diagnostic only)","","This is the deduplicated union of timestamp/actual-strike observations across rolling offsets. It does not establish expiry identity or executable quotes.","",
+      "| Symbol | Side | Actual strike | Observed minutes | Union coverage % | First UTC | Last UTC | IST-date counts |",
+      "|---|---|---:|---:|---:|---|---|---|"]
+    for panel in result.get("surface_audit",[]):
+        for row in panel.get("actual_strike_coverage",[]):
+            lines.append("| {symbol} | {side} | {strike} | {minutes} | {coverage} | {first} | {last} | {dates} |".format(
+              symbol=panel.get("symbol",""), side=panel.get("option_type",""), strike=row.get("actual_strike",""),
+              minutes=row.get("observed_minutes",0), coverage=row.get("union_timestamp_coverage_pct",0),
+              first=row.get("first_timestamp_utc") or "", last=row.get("last_timestamp_utc") or "",
+              dates=json.dumps(row.get("ist_date_minutes",{}),sort_keys=True)))
     lines += ["","## Underlying ID mapping","","| Symbol | ID resolved | Status |","|---|---|---|"]
     for sym,m in result.get("underlying_map",{}).items():
         lines.append("| {} | {} | {} |".format(sym,"yes" if m.get("security_id") else "no",m.get("status")))
