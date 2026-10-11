@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"research"/"phase103_stock_options"))
-from dhan_data_audit import ALLOWED_STRIKES, EXPIRY_CODE, check_window, map_underlyings, normalize_strike, parse_strikes, provider_to_date, safe_error_details, summarize, summarize_surface
+from dhan_data_audit import ALLOWED_STRIKES, DEFAULT_PANELS, EXPIRY_CODE, check_window, map_underlyings, normalize_strike, parse_panels, parse_strikes, provider_to_date, safe_error_details, summarize, summarize_surface
 
 class DhanDataAuditTests(unittest.TestCase):
     def test_relative_strike_parser_validates_and_preserves_order(self):
@@ -62,6 +62,27 @@ class DhanDataAuditTests(unittest.TestCase):
         result=summarize_surface(blocks,requested)[0]
         self.assertEqual(result["relative_surface_alignment_gate"],"PASS")
         self.assertEqual(result["distinct_actual_strikes_in_surface"],6)
+
+    def test_selected_panels_are_validated_and_preserve_order(self):
+        self.assertEqual(parse_panels("RELIANCE:CALL,RELIANCE:PUT"),
+                         [("RELIANCE","CALL"),("RELIANCE","PUT")])
+        self.assertEqual(len(DEFAULT_PANELS),4)
+        with self.assertRaises(ValueError):
+            parse_panels("INFY:CALL,INFY:CALL")
+        with self.assertRaises(ValueError):
+            parse_panels("NIFTY:CALL")
+        with self.assertRaises(ValueError):
+            parse_panels("RELIANCE:CE")
+
+    def test_unrecognized_empty_response_is_classified_with_shape_only(self):
+        obj={"data":{"ce":None,"pe":{"close":[1,2],"timestamp":[123,456]}}}
+        result=summarize("INFY","CALL","ATM+3",200,obj)
+        self.assertEqual(result["status"],"REQUESTED_SIDE_PAYLOAD_MISSING")
+        envelope=result["response_envelope"]
+        self.assertEqual(envelope["requested_side_type"],"null")
+        self.assertTrue(envelope["requested_side_key_present"])
+        self.assertEqual(envelope["field_shapes"],{})
+        self.assertNotIn("123",str(envelope))
 
     def test_next_expiry_value_matches_dhan_request_sample(self):
         self.assertEqual(EXPIRY_CODE, 1)

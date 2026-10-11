@@ -10,6 +10,8 @@ ENDPOINT = "https://api.dhan.co/v2/charts/rollingoption"
 SYMBOLS = ["HDFCBANK", "ICICIBANK", "RELIANCE", "SBIN", "INFY"]
 DEFAULT_STRIKES = ["ATM", "ATM+1", "ATM+2", "ATM+3", "ATM-1", "ATM-2", "ATM-3"]
 ALLOWED_STRIKES = set(DEFAULT_STRIKES)
+# Panels that passed the first-session alignment screen; failed panels remain excluded until their gaps are resolved.
+DEFAULT_PANELS = [("ICICIBANK", "CALL"), ("RELIANCE", "CALL"), ("RELIANCE", "PUT"), ("SBIN", "CALL")]
 # The provider currently rejects code 0 as missing; use the documented sample value 1 (next expiry).
 EXPIRY_CODE = 1
 FIELDS = ["open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp"]
@@ -40,6 +42,57 @@ def parse_strikes(raw):
     if invalid:
         raise ValueError("Unsupported relative strike(s): " + ", ".join(invalid))
     return values
+
+def parse_panels(raw):
+    """Parse a bounded list of registered SYMBOL:CALL/PUT panels."""
+    panels=[]
+    for item in raw.split(","):
+        token=item.strip().upper()
+        if not token:
+            continue
+        parts=token.split(":")
+        if len(parts)!=2 or parts[0] not in SYMBOLS or parts[1] not in {"CALL","PUT"}:
+            raise ValueError("Panels must be comma-separated SYMBOL:CALL or SYMBOL:PUT values from the registered universe.")
+        panels.append((parts[0],parts[1]))
+    if not panels:
+        raise ValueError("At least one stock/option-side panel is required.")
+    if len(set(panels)) != len(panels):
+        raise ValueError("Panel list contains duplicates.")
+    return panels
+
+def response_envelope_summary(obj, option_type, token=""):
+    """Capture response shape only; never retain raw values or request credentials."""
+    side_key="ce" if option_type=="CALL" else "pe"
+    data=obj.get("data") if isinstance(obj,dict) else None
+    block=data.get(side_key) if isinstance(data,dict) else None
+    provider_status=obj.get("status") if isinstance(obj,dict) else None
+    if isinstance(provider_status,str):
+        status_text=" ".join(provider_status.split()).casefold()[:80]
+        if token:
+            status_text=status_text.replace(token.casefold(),"[redacted]")
+        if status_text not in {"success","successful","ok","error","failed","failure","pending"}:
+            status_text="other_or_unrecognized"
+    elif provider_status is None:
+        status_text="missing"
+    else:
+        status_text=type(provider_status).__name__
+    shapes={}
+    if isinstance(block,dict):
+        for field in FIELDS:
+            value=block.get(field)
+            shapes[field]={"type":"null" if value is None else type(value).__name__,
+                           "length":len(value) if isinstance(value,list) else None}
+    return {
+        "top_level_keys":sorted(str(k) for k in obj.keys()) if isinstance(obj,dict) else [],
+        "provider_status_class":status_text,
+        "data_type":"null" if data is None else type(data).__name__,
+        "data_keys":sorted(str(k) for k in data.keys()) if isinstance(data,dict) else [],
+        "requested_side_key":side_key,
+        "requested_side_key_present":isinstance(data,dict) and side_key in data,
+        "requested_side_type":"missing" if not isinstance(data,dict) or side_key not in data else ("null" if block is None else type(block).__name__),
+        "requested_side_keys":sorted(str(k) for k in block.keys()) if isinstance(block,dict) else [],
+        "field_shapes":shapes
+    }
 
 def normalize_strike(value):
     if value is None:
@@ -196,10 +249,13 @@ def summarize(symbol, option_type, relative_strike, code, obj, safe_error=None, 
         x["status"]={401:"AUTH_401",403:"AUTH_403",429:"RATE_LIMIT_429",
                      400:"HTTP_400_BAD_REQUEST"}.get(code,"HTTP_OR_NETWORK_ERROR")
         return x
-    block=(obj.get("data") or {}).get(side) if isinstance(obj.get("data"),dict) else None
-    x["status"]=str(obj.get("status","UNKNOWN"))
+    x["response_envelope"]=response_envelope_summary(obj,option_type,os.getenv("DHAN_ACCESS_TOKEN","").strip())
+    data_obj=obj.get("data")
+    block=data_obj.get(side) if isinstance(data_obj,dict) else None
+    provider_status=obj.get("status")
+    provider_status_norm=provider_status.casefold() if isinstance(provider_status,str) else ""
     if not isinstance(block,dict):
-        if str(obj.get("status","")).lower()=="success":
+        if provider_status_norm in {"success","successful","ok"}:
             x["status"]="SUCCESS_EMPTY_FOR_REQUESTED_SIDE"
         else:
             x["status"]="REQUESTED_SIDE_PAYLOAD_MISSING"
@@ -240,13 +296,16 @@ def summarize(symbol, option_type, relative_strike, code, obj, safe_error=None, 
         x["timestamp_counts_by_ist_date"]=by_date
         x["outside_requested_date_window_rows"]=outside if start_day and end_day else None
     if ts and x["nonempty_fields"].get("close",0): x["status"]="DATA_RETURNED"
-    elif str(obj.get("status","")).lower()=="success": x["status"]="SUCCESS_EMPTY_FOR_REQUESTED_SIDE"
+    elif provider_status_norm in {"success","successful","ok"}: x["status"]="SUCCESS_EMPTY_FOR_REQUESTED_SIDE"
+    else: x["status"]="EMPTY_OR_UNRECOGNIZED_RESPONSE_ENVELOPE"
     return x
 
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--from-date",default=os.getenv("PHASE103_FROM_DATE","2026-08-03"))
-    p.add_argument("--to-date",default=os.getenv("PHASE103_TO_DATE","2026-08-04"),help="exclusive")
+    p.add_argument("--to-date",default=os.getenv("PHASE103_TO_DATE","2026-08-10"),help="exclusive")
+    p.add_argument("--panels",default=os.getenv("PHASE103_PANELS",",".join(f"{s}:{o}" for s,o in DEFAULT_PANELS)),
+                   help="comma-separated registered SYMBOL:CALL/PUT panels")
     p.add_argument("--max-probes",type=int,default=int(os.getenv("PHASE103_MAX_PROBES","70")),
                    help="maximum number of symbol/side/strike API probes for this bounded run")
     p.add_argument("--strikes",default=os.getenv("PHASE103_STRIKES",",".join(DEFAULT_STRIKES)),
@@ -256,9 +315,10 @@ def main():
     api_to_date=provider_to_date(a.from_date,a.to_date)
     try:
         strikes=parse_strikes(a.strikes)
+        panels=parse_panels(a.panels)
     except ValueError as exc:
         p.error(str(exc))
-    max_possible=len(SYMBOLS)*2*len(strikes)
+    max_possible=len(panels)*len(strikes)
     if not 1 <= a.max_probes <= max_possible:
         p.error(f"--max-probes must be from 1 through {max_possible} for the selected relative strikes")
     out=Path(a.out_dir); out.mkdir(parents=True,exist_ok=True)
@@ -268,6 +328,7 @@ def main():
                   "request_mode":"half_open_target_window_with_inclusive_provider_toDate_adjustment"},
         "provider_request_window":{"fromDate":a.from_date,"toDate_inclusive":provider_to_date(a.from_date,a.to_date)},
         "probe_limit":a.max_probes,
+        "requested_panels":[f"{sym}:{side}" for sym,side in panels],
         "requested_relative_strikes":strikes,
         "endpoint":ENDPOINT,"instrument_master_sha256":None,"instrument_master_bytes":None,
         "underlying_map":{},"probes":[],"surface_audit":[],"probe_abort_reason":None,"raw_rows_persisted":False,
@@ -292,39 +353,34 @@ def main():
         else:
             surface_blocks = []
             abort_probes = False
-            for sym in SYMBOLS:
+            for sym,side in panels:
                 m=result["underlying_map"].get(sym,{})
-                for side in ["CALL","PUT"]:
-                    for relative_strike in strikes:
-                        if len(result["probes"]) >= a.max_probes:
-                            break
-                        if not m.get("security_id"):
-                            result["probes"].append({"symbol":sym,"requested_option_type":side,
-                                "requested_relative_strike":relative_strike,"status":"BLOCKED_UNDERLYING_ID"})
-                            continue
-                        code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date)
-                        probe_summary = summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date)
-                        result["probes"].append(probe_summary)
-                        # An empty requested-side payload is a coverage observation, not a reason
-                        # to abandon the entire frozen universe. Continue so later stocks/sides
-                        # are still audited. Abort only on HTTP failure or malformed non-empty data.
-                        if code != 200 or (not probe_summary.get("array_lengths_consistent",False)
-                                           and probe_summary.get("status") != "SUCCESS_EMPTY_FOR_REQUESTED_SIDE"):
-                            result["probe_abort_reason"] = "stopped after the first HTTP error or inconsistent non-empty arrays"
-                            abort_probes = True
-                        # Raw timestamps and actual strikes exist only in memory to audit the cross-offset panel.
-                        side_key = "ce" if side == "CALL" else "pe"
-                        if obj and isinstance(obj.get("data"), dict) and isinstance(obj["data"].get(side_key), dict):
-                            data_block=obj["data"][side_key]
-                            if isinstance(data_block.get("timestamp"), list) and isinstance(data_block.get("strike"), list):
-                                surface_blocks.append({"symbol":sym,"option_type":side,
-                                    "relative_strike":relative_strike,
-                                    "timestamps":data_block["timestamp"],"strikes":data_block["strike"]})
-                        if abort_probes:
-                            break
-                        time.sleep(1.1)
-                    if abort_probes or len(result["probes"]) >= a.max_probes:
+                for relative_strike in strikes:
+                    if len(result["probes"]) >= a.max_probes:
                         break
+                    if not m.get("security_id"):
+                        result["probes"].append({"symbol":sym,"requested_option_type":side,
+                            "requested_relative_strike":relative_strike,"status":"BLOCKED_UNDERLYING_ID"})
+                        continue
+                    code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date)
+                    probe_summary = summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date)
+                    result["probes"].append(probe_summary)
+                    # Missing/empty requested-side data is an explicit coverage result; continue to other selected offsets.
+                    # HTTP failures and malformed non-empty arrays remain fatal to this bounded panel audit.
+                    if code != 200 or (probe_summary.get("rows",0)>0 and not probe_summary.get("array_lengths_consistent",False)):
+                        result["probe_abort_reason"] = "stopped after the first HTTP error or malformed non-empty arrays"
+                        abort_probes = True
+                    # Raw timestamps and actual strikes exist only in memory to audit the cross-offset panel.
+                    side_key = "ce" if side == "CALL" else "pe"
+                    if obj and isinstance(obj.get("data"), dict) and isinstance(obj["data"].get(side_key), dict):
+                        data_block=obj["data"][side_key]
+                        if isinstance(data_block.get("timestamp"), list) and isinstance(data_block.get("strike"), list):
+                            surface_blocks.append({"symbol":sym,"option_type":side,
+                                "relative_strike":relative_strike,
+                                "timestamps":data_block["timestamp"],"strikes":data_block["strike"]})
+                    if abort_probes:
+                        break
+                    time.sleep(1.1)
                 if abort_probes or len(result["probes"]) >= a.max_probes:
                     break
             result["surface_audit"]=summarize_surface(surface_blocks, strikes)
@@ -350,10 +406,11 @@ def main():
     lines=["# Phase 103.1 — Dhan Data API smoke test","",f"**Status:** {result['status']}",
       f"**Target window (IST):** {a.from_date} inclusive to {a.to_date} exclusive ({days} days)",
       f"**Dhan request dates:** fromDate={a.from_date}; toDate={api_to_date} (empirically inclusive; target end remains exclusive)",
+      f"**Panels:** {', '.join(result['requested_panels'])}",
       f"**Relative strikes:** {', '.join(strikes)}",
       f"**Probe limit:** {a.max_probes}",
       f"**Run:** {result['run_id']}","",
-      "This is a data-feasibility probe, not a strategy test. The token and raw rows are not published.",
+      "This is a multi-session data-feasibility audit, not a strategy P&L test. Panels were selected from the prior one-session alignment screen. The token and raw rows are not published.",
       "","| Symbol | Side | Offset | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | Distinct actual strikes | Strike changes | First strike | Last strike | First UTC | Last UTC | IST-date row counts | Rows outside dates |",
       "|---|---|---|---:|---|---|---|---:|---|---:|---:|---|---|---|---|---|---:|"]
     for v in result.get("probes",[]):
@@ -389,7 +446,7 @@ def main():
     (out/"DHAN_DATA_API_AUDIT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
     print(json.dumps({"phase":"103.1","status":result["status"],"probe_abort_reason":result.get("probe_abort_reason"),"window":result["window"],
       "underlying_ids_resolved":sum(1 for x in result.get("underlying_map",{}).values() if x.get("security_id")),
-      "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"relative_strikes":strikes,
+      "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"panels":result["requested_panels"],"relative_strikes":strikes,
       "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),
       "surface_groups":len(result.get("surface_audit",[])),
       "surface_gates_passed":sum(1 for x in result.get("surface_audit",[]) if x.get("relative_surface_alignment_gate")=="PASS"),

@@ -218,3 +218,15 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Status:** PARTIAL_DATA_RETURNED; rows returned by 68/70 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38113895829
+
+### E103-019 — Fixed-strike audit narrowed to first-session eligible panels
+**Type:** data coverage gate.
+**Evidence:** audit 38113895829 attempt 2 returned rows for 68/70 probes, but only four of ten stock/side surface panels passed its alignment gate.
+**Correction:** next run is restricted to ICICIBANK CALL, RELIANCE CALL, RELIANCE PUT, and SBIN CALL, with the same seven relative strikes over several sessions.
+**Verification:** pending the multi-session result. No strategy P&L or live approval is implied.
+
+### E103-020 — Unrecognized HTTP-200 empty response observability
+**Type:** provider-response observability limitation.
+**Evidence:** INFY CALL and PUT ATM+3 were HTTP 200 with zero rows but reported UNKNOWN in the prior summary; this does not prove a data entitlement error.
+**Correction:** future probes store schema-only response envelope keys/status class/side type/array shapes, not raw response contents. INFY remains excluded from this eligible-panel run.
+**Verification:** automated tests and the next audit must pass; the metadata change itself does not repair missing coverage.

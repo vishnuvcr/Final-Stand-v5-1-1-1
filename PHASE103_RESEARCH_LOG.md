@@ -298,3 +298,12 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - API probes returning rows: 68/70.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+## 2026-10-11 — Available-panel multi-session test initiated
+
+- Re-read the status, plan, logs, current aggregate JSON and workflow.
+- The first-session audit (run 38113895829, attempt 2) had 68/70 data-returning probes but only four passing stock/side surface gates.
+- Restricted the next run to ICICIBANK CALL, RELIANCE CALL, RELIANCE PUT and SBIN CALL, with seven relative-strike offsets each, over 2026-08-03 inclusive through 2026-08-10 exclusive.
+- Added panel allow-list parsing and schema-only response-envelope metadata. No raw prices, volumes, OI, tokens or response-body values are persisted in metadata.
+- This is a multi-session coverage audit; strategy testing remains gated on contract/expiry identity, data-use rights, and an execution-cost model.
+- Automated workflow result pending.
