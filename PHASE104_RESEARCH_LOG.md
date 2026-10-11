@@ -47,3 +47,12 @@
 - Unique daily contract keys: 18082; duplicate keys: 0.
 - Raw rows persisted/uploaded: no. Raw price values and row-level contract records are not written to artifacts.
 - Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
+
+## 2026-10-11 — Final Phase 104.2 execution/cost gate and closeout
+
+- Verified canonical EOD audit [run 38129389678](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129389678) completed successfully. It parsed 22 of 30 daily archives (eight weekend/no-file days), 18,082 selected rows, 100% identity and OHLC completeness, zero daily-key duplicates, zero date mismatches and zero source/schema errors.
+- Symbol row counts: HDFCBANK 3,022; ICICIBANK 4,241; INFY 2,734; RELIANCE 4,303; SBIN 3,782. Of 18,082 observations, 12,160 had positive volume and 5,922 reported volume exactly zero; none had missing volume, OI, underlying or lot-size fields.
+- Extended fee implementation to include a separately itemized, date-effective NSE IPFT contribution alongside NSE transaction charges, SEBI fee, stamp duty, STT, GST assumptions and Paytm Money ₹10/₹15/₹20 per-order sensitivity. The account-specific user brokerage tier and contract-note reconciliation remain unresolved.
+- Daily archive identity PASS does not imply historical execution evidence. No bid/ask/depth or validated conservative fill proxy was available from these daily archives, and raw-data retention/cache rights for public exchange data remain unverified. No raw records were persisted.
+- Under the registered plan, Phase 104.3 strategy P&L is not entered. No trades were simulated; no net expectancy, return, drawdown or profitability claim is made.
+- Published the final manuscript, aggregate row-count SVG and execution/cost gate. Phase 104 is closed as an EOD data-feasibility result: contract-identified daily rows are available; executable after-cost strategy feasibility is not established.
