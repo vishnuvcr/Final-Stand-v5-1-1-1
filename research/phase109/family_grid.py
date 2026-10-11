@@ -3,6 +3,7 @@
 
 This module registers experiments; it does not claim that unrun tuples are tested.
 Credentials are read only from environment variables and are never serialized.
+The first workflow attempt exposed a missing dependency-lockfile cache assumption; that workflow setting has been removed.
 """
 from __future__ import annotations
 
