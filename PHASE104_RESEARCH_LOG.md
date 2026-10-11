@@ -56,3 +56,16 @@
 - Daily archive identity PASS does not imply historical execution evidence. No bid/ask/depth or validated conservative fill proxy was available from these daily archives, and raw-data retention/cache rights for public exchange data remain unverified. No raw records were persisted.
 - Under the registered plan, Phase 104.3 strategy P&L is not entered. No trades were simulated; no net expectancy, return, drawdown or profitability claim is made.
 - Published the final manuscript, aggregate row-count SVG and execution/cost gate. Phase 104 is closed as an EOD data-feasibility result: contract-identified daily rows are available; executable after-cost strategy feasibility is not established.
+
+<!-- PHASE104_RUN_38129818413_ATTEMPT_1 -->
+### Phase 104.1 EOD audit — run 38129818413, attempt 1 — 2026-10-11T09:51:05.044045+00:00
+
+- Result: PASS_EOD_CONTRACT_IDENTITY
+- Target window: 2026-08-03 inclusive to 2026-09-02 exclusive.
+- Official daily archives parsed: 22.
+- Source/schema errors: 0; no-archive dates: 8.
+- Selected five-stock stock-option rows: 18082; parsed rows: 18082.
+- Identity completeness: 100.0%; OHLC completeness: 100.0%.
+- Unique daily contract keys: 18082; duplicate keys: 0.
+- Raw rows persisted/uploaded: no. Raw price values and row-level contract records are not written to artifacts.
+- Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
