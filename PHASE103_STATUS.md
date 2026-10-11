@@ -308,3 +308,16 @@ Next: run the same offsets across all five stocks and both CALL/PUT sides, recor
 - API probes returning rows: 59/60.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — Invalid-strike continuation fix
+
+- [x] Diagnosed the latest expanded run: [38090149633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38090149633) reached the API and returned 59/60 probes before an empty/invalid INFY CALL ATM+3 side payload caused the whole run to stop.
+- [x] Updated the summarizer to distinguish a successful but empty requested-side payload from an HTTP/schema failure.
+- [x] Changed the probe loop so empty-side observations are recorded and the frozen universe continues; HTTP failures and malformed non-empty arrays still stop the run.
+- [x] Added a unit test for the empty-side status.
+- [x] Corrected the workflow's duplicated `--strikes` argument and set the automatic bounded audit default to 70 probes, so the full five-stock × two-side × seven-offset panel is attempted.
+- [ ] Verify the new automated run, exact coverage, and all unit tests before accepting the surface audit.
+- [ ] No strategy P&L until the expanded surface audit, multiple-session continuity, source rights and execution-cost gates pass.
+
+**Current gate:** remediation committed; the rerun is pending verification. A successful HTTP request with no requested-side rows is a missing-coverage observation, not a pass. Previous failed/partial results remain in the record and are not overwritten.
