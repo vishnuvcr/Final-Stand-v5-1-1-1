@@ -1,0 +1,4029 @@
+{
+  "phase": "103.1",
+  "run_id": "38126663036",
+  "generated_at_utc": "2026-10-11T08:58:14.929334+00:00",
+  "window": {
+    "from_inclusive": "2026-08-03",
+    "to_exclusive": "2026-08-10",
+    "span_days": 7,
+    "request_mode": "half_open_target_window_with_inclusive_provider_toDate_adjustment"
+  },
+  "provider_request_window": {
+    "fromDate": "2026-08-03",
+    "toDate_inclusive": "2026-08-09"
+  },
+  "probe_limit": 28,
+  "requested_panels": [
+    "ICICIBANK:CALL",
+    "RELIANCE:CALL",
+    "RELIANCE:PUT",
+    "SBIN:CALL"
+  ],
+  "requested_relative_strikes": [
+    "ATM",
+    "ATM+1",
+    "ATM+2",
+    "ATM+3",
+    "ATM-1",
+    "ATM-2",
+    "ATM-3"
+  ],
+  "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
+  "contract_identity_status": "BLOCKED_EXPIRY_EOD_CROSSCHECK",
+  "expiry_identity_audit": {
+    "status": "PARTIAL_EOD_EXPIRY_RECONCILIATION",
+    "method": "Exact-strike full-session Dhan OHLC aggregated in memory and matched to NSE UDiFF daily stock-option OHLC; expiryCode=1 is checked against the second future listed expiry",
+    "source": "NSE official F&O UDiFF daily bhavcopy archive",
+    "source_url_template": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_{date}_F_0000.csv.zip",
+    "raw_rows_persisted": false,
+    "trade_dates_requested": 5,
+    "trade_dates_downloaded": 5,
+    "eligible_full_session_profiles": 88,
+    "unique_exact_contract_matches": 3,
+    "ambiguous_profile_count": 0,
+    "unmatched_profile_count": 85,
+    "expiry_code_matches": 0,
+    "expiry_selector_mismatches": 3,
+    "supporting_volume_matches": 0,
+    "supporting_oi_matches": 2,
+    "distinct_matched_panels": 2,
+    "duplicate_timestamp_strike_rows_deduplicated": 0,
+    "conflicting_duplicate_key_count": 0,
+    "matched_expiry_counts": {
+      "2026-08-25": 3
+    },
+    "safe_source_errors": []
+  },
+  "instrument_master_sha256": "2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173",
+  "instrument_master_bytes": 26116616,
+  "underlying_map": {
+    "HDFCBANK": {
+      "security_id": "1333",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "ICICIBANK": {
+      "security_id": "4963",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "RELIANCE": {
+      "security_id": "2885",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "SBIN": {
+      "security_id": "3045",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    },
+    "INFY": {
+      "security_id": "1594",
+      "lot_size": "1.0",
+      "status": "MATCHED"
+    }
+  },
+  "probes": [
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1440",
+      "last_actual_strike": "1420"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1450",
+      "last_actual_strike": "1430"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1460",
+      "last_actual_strike": "1440"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1470",
+      "last_actual_strike": "1450"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1430",
+      "last_actual_strike": "1410"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 113,
+      "first_actual_strike": "1420",
+      "last_actual_strike": "1400"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1920,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1920,
+        "high": 1920,
+        "low": 1920,
+        "close": 1920,
+        "iv": 1920,
+        "volume": 1920,
+        "strike": 1920,
+        "oi": 1920,
+        "spot": 1920,
+        "timestamp": 1920
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 383,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 382
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1920
+          },
+          "high": {
+            "type": "list",
+            "length": 1920
+          },
+          "low": {
+            "type": "list",
+            "length": 1920
+          },
+          "close": {
+            "type": "list",
+            "length": 1920
+          },
+          "iv": {
+            "type": "list",
+            "length": 1920
+          },
+          "volume": {
+            "type": "list",
+            "length": 1920
+          },
+          "strike": {
+            "type": "list",
+            "length": 1920
+          },
+          "oi": {
+            "type": "list",
+            "length": 1920
+          },
+          "spot": {
+            "type": "list",
+            "length": 1920
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1920
+          }
+        }
+      },
+      "distinct_actual_strikes": 5,
+      "actual_strike_changes": 111,
+      "first_actual_strike": "1410",
+      "last_actual_strike": "1390"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1310",
+      "last_actual_strike": "1330"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1320",
+      "last_actual_strike": "1340"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1330",
+      "last_actual_strike": "1350"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1340",
+      "last_actual_strike": "1360"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1300",
+      "last_actual_strike": "1320"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1923,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1923,
+        "high": 1923,
+        "low": 1923,
+        "close": 1923,
+        "iv": 1923,
+        "volume": 1923,
+        "strike": 1923,
+        "oi": 1923,
+        "spot": 1923,
+        "timestamp": 1923
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 383,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1923
+          },
+          "high": {
+            "type": "list",
+            "length": 1923
+          },
+          "low": {
+            "type": "list",
+            "length": 1923
+          },
+          "close": {
+            "type": "list",
+            "length": 1923
+          },
+          "iv": {
+            "type": "list",
+            "length": 1923
+          },
+          "volume": {
+            "type": "list",
+            "length": 1923
+          },
+          "strike": {
+            "type": "list",
+            "length": 1923
+          },
+          "oi": {
+            "type": "list",
+            "length": 1923
+          },
+          "spot": {
+            "type": "list",
+            "length": 1923
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1923
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1290",
+      "last_actual_strike": "1310"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1280",
+      "last_actual_strike": "1300"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1310",
+      "last_actual_strike": "1330"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM+1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1320",
+      "last_actual_strike": "1340"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM+2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1923,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1923,
+        "high": 1923,
+        "low": 1923,
+        "close": 1923,
+        "iv": 1923,
+        "volume": 1923,
+        "strike": 1923,
+        "oi": 1923,
+        "spot": 1923,
+        "timestamp": 1923
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 384,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1923
+          },
+          "high": {
+            "type": "list",
+            "length": 1923
+          },
+          "low": {
+            "type": "list",
+            "length": 1923
+          },
+          "close": {
+            "type": "list",
+            "length": 1923
+          },
+          "iv": {
+            "type": "list",
+            "length": 1923
+          },
+          "volume": {
+            "type": "list",
+            "length": 1923
+          },
+          "strike": {
+            "type": "list",
+            "length": 1923
+          },
+          "oi": {
+            "type": "list",
+            "length": 1923
+          },
+          "spot": {
+            "type": "list",
+            "length": 1923
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1923
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1330",
+      "last_actual_strike": "1350"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM+3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1924,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1924,
+        "high": 1924,
+        "low": 1924,
+        "close": 1924,
+        "iv": 1924,
+        "volume": 1924,
+        "strike": 1924,
+        "oi": 1924,
+        "spot": 1924,
+        "timestamp": 1924
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1924
+          },
+          "high": {
+            "type": "list",
+            "length": 1924
+          },
+          "low": {
+            "type": "list",
+            "length": 1924
+          },
+          "close": {
+            "type": "list",
+            "length": 1924
+          },
+          "iv": {
+            "type": "list",
+            "length": 1924
+          },
+          "volume": {
+            "type": "list",
+            "length": 1924
+          },
+          "strike": {
+            "type": "list",
+            "length": 1924
+          },
+          "oi": {
+            "type": "list",
+            "length": 1924
+          },
+          "spot": {
+            "type": "list",
+            "length": 1924
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1924
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1340",
+      "last_actual_strike": "1360"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1300",
+      "last_actual_strike": "1320"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1922,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1922,
+        "high": 1922,
+        "low": 1922,
+        "close": 1922,
+        "iv": 1922,
+        "volume": 1922,
+        "strike": 1922,
+        "oi": 1922,
+        "spot": 1922,
+        "timestamp": 1922
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 383,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1922
+          },
+          "high": {
+            "type": "list",
+            "length": 1922
+          },
+          "low": {
+            "type": "list",
+            "length": 1922
+          },
+          "close": {
+            "type": "list",
+            "length": 1922
+          },
+          "iv": {
+            "type": "list",
+            "length": 1922
+          },
+          "volume": {
+            "type": "list",
+            "length": 1922
+          },
+          "strike": {
+            "type": "list",
+            "length": 1922
+          },
+          "oi": {
+            "type": "list",
+            "length": 1922
+          },
+          "spot": {
+            "type": "list",
+            "length": 1922
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1922
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1290",
+      "last_actual_strike": "1310"
+    },
+    {
+      "symbol": "RELIANCE",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "pe",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 8,
+      "actual_strike_changes": 80,
+      "first_actual_strike": "1280",
+      "last_actual_strike": "1300"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1040",
+      "last_actual_strike": "1100"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1050",
+      "last_actual_strike": "1110"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1060",
+      "last_actual_strike": "1120"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM+3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1925,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1925,
+        "high": 1925,
+        "low": 1925,
+        "close": 1925,
+        "iv": 1925,
+        "volume": 1925,
+        "strike": 1925,
+        "oi": 1925,
+        "spot": 1925,
+        "timestamp": 1925
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1925
+          },
+          "high": {
+            "type": "list",
+            "length": 1925
+          },
+          "low": {
+            "type": "list",
+            "length": 1925
+          },
+          "close": {
+            "type": "list",
+            "length": 1925
+          },
+          "iv": {
+            "type": "list",
+            "length": 1925
+          },
+          "volume": {
+            "type": "list",
+            "length": 1925
+          },
+          "strike": {
+            "type": "list",
+            "length": 1925
+          },
+          "oi": {
+            "type": "list",
+            "length": 1925
+          },
+          "spot": {
+            "type": "list",
+            "length": 1925
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1925
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1070",
+      "last_actual_strike": "1130"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1924,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1924,
+        "high": 1924,
+        "low": 1924,
+        "close": 1924,
+        "iv": 1924,
+        "volume": 1924,
+        "strike": 1924,
+        "oi": 1924,
+        "spot": 1924,
+        "timestamp": 1924
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 385,
+        "2026-08-06": 384,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1924
+          },
+          "high": {
+            "type": "list",
+            "length": 1924
+          },
+          "low": {
+            "type": "list",
+            "length": 1924
+          },
+          "close": {
+            "type": "list",
+            "length": 1924
+          },
+          "iv": {
+            "type": "list",
+            "length": 1924
+          },
+          "volume": {
+            "type": "list",
+            "length": 1924
+          },
+          "strike": {
+            "type": "list",
+            "length": 1924
+          },
+          "oi": {
+            "type": "list",
+            "length": 1924
+          },
+          "spot": {
+            "type": "list",
+            "length": 1924
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1924
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1030",
+      "last_actual_strike": "1090"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1924,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1924,
+        "high": 1924,
+        "low": 1924,
+        "close": 1924,
+        "iv": 1924,
+        "volume": 1924,
+        "strike": 1924,
+        "oi": 1924,
+        "spot": 1924,
+        "timestamp": 1924
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 385,
+        "2026-08-05": 384,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1924
+          },
+          "high": {
+            "type": "list",
+            "length": 1924
+          },
+          "low": {
+            "type": "list",
+            "length": 1924
+          },
+          "close": {
+            "type": "list",
+            "length": 1924
+          },
+          "iv": {
+            "type": "list",
+            "length": 1924
+          },
+          "volume": {
+            "type": "list",
+            "length": 1924
+          },
+          "strike": {
+            "type": "list",
+            "length": 1924
+          },
+          "oi": {
+            "type": "list",
+            "length": 1924
+          },
+          "spot": {
+            "type": "list",
+            "length": 1924
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1924
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1020",
+      "last_actual_strike": "1080"
+    },
+    {
+      "symbol": "SBIN",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 1922,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 1922,
+        "high": 1922,
+        "low": 1922,
+        "close": 1922,
+        "iv": 1922,
+        "volume": 1922,
+        "strike": 1922,
+        "oi": 1922,
+        "spot": 1922,
+        "timestamp": 1922
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-07T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385,
+        "2026-08-04": 384,
+        "2026-08-05": 383,
+        "2026-08-06": 385,
+        "2026-08-07": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "response_envelope": {
+        "top_level_keys": [
+          "data"
+        ],
+        "provider_status_class": "missing",
+        "data_type": "dict",
+        "data_keys": [
+          "ce",
+          "pe"
+        ],
+        "requested_side_key": "ce",
+        "requested_side_key_present": true,
+        "requested_side_type": "dict",
+        "requested_side_keys": [
+          "close",
+          "high",
+          "iv",
+          "low",
+          "oi",
+          "open",
+          "spot",
+          "strike",
+          "timestamp",
+          "volume"
+        ],
+        "field_shapes": {
+          "open": {
+            "type": "list",
+            "length": 1922
+          },
+          "high": {
+            "type": "list",
+            "length": 1922
+          },
+          "low": {
+            "type": "list",
+            "length": 1922
+          },
+          "close": {
+            "type": "list",
+            "length": 1922
+          },
+          "iv": {
+            "type": "list",
+            "length": 1922
+          },
+          "volume": {
+            "type": "list",
+            "length": 1922
+          },
+          "strike": {
+            "type": "list",
+            "length": 1922
+          },
+          "oi": {
+            "type": "list",
+            "length": 1922
+          },
+          "spot": {
+            "type": "list",
+            "length": 1922
+          },
+          "timestamp": {
+            "type": "list",
+            "length": 1922
+          }
+        }
+      },
+      "distinct_actual_strikes": 10,
+      "actual_strike_changes": 77,
+      "first_actual_strike": "1010",
+      "last_actual_strike": "1070"
+    }
+  ],
+  "surface_audit": [
+    {
+      "symbol": "ICICIBANK",
+      "option_type": "CALL",
+      "requested_relative_strikes": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "offset_series_returned": 7,
+      "common_timestamp_count_across_offsets": 1920,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 6,
+      "maximum_distinct_actual_strikes_per_timestamp": 7,
+      "distinct_actual_strikes_in_surface": 11,
+      "actual_strikes_observed_at_every_union_timestamp": 3,
+      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1390",
+          "observed_minutes": 64,
+          "union_timestamp_coverage_pct": 3.325,
+          "ist_date_minutes": {
+            "2026-08-07": 64
+          },
+          "first_timestamp_utc": "2026-08-07T09:01:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1400",
+          "observed_minutes": 265,
+          "union_timestamp_coverage_pct": 13.766,
+          "ist_date_minutes": {
+            "2026-08-04": 55,
+            "2026-08-05": 41,
+            "2026-08-07": 169
+          },
+          "first_timestamp_utc": "2026-08-04T07:51:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1410",
+          "observed_minutes": 833,
+          "union_timestamp_coverage_pct": 43.273,
+          "ist_date_minutes": {
+            "2026-08-07": 280,
+            "2026-08-04": 248,
+            "2026-08-05": 218,
+            "2026-08-03": 87
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1420",
+          "observed_minutes": 1684,
+          "union_timestamp_coverage_pct": 87.481,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 374,
+            "2026-08-07": 382,
+            "2026-08-04": 384,
+            "2026-08-06": 159
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1430",
+          "observed_minutes": 1925,
+          "union_timestamp_coverage_pct": 100.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1440",
+          "observed_minutes": 1925,
+          "union_timestamp_coverage_pct": 100.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1450",
+          "observed_minutes": 1925,
+          "union_timestamp_coverage_pct": 100.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1460",
+          "observed_minutes": 1861,
+          "union_timestamp_coverage_pct": 96.675,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-06": 385,
+            "2026-08-03": 385,
+            "2026-08-07": 321,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:43:00+00:00"
+        },
+        {
+          "actual_strike": "1470",
+          "observed_minutes": 1660,
+          "union_timestamp_coverage_pct": 86.234,
+          "ist_date_minutes": {
+            "2026-08-05": 344,
+            "2026-08-06": 385,
+            "2026-08-03": 385,
+            "2026-08-07": 216,
+            "2026-08-04": 330
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T07:57:00+00:00"
+        },
+        {
+          "actual_strike": "1480",
+          "observed_minutes": 1091,
+          "union_timestamp_coverage_pct": 56.675,
+          "ist_date_minutes": {
+            "2026-08-06": 385,
+            "2026-08-05": 167,
+            "2026-08-03": 298,
+            "2026-08-07": 105,
+            "2026-08-04": 136
+          },
+          "first_timestamp_utc": "2026-08-03T03:56:00+00:00",
+          "last_timestamp_utc": "2026-08-07T05:29:00+00:00"
+        },
+        {
+          "actual_strike": "1490",
+          "observed_minutes": 237,
+          "union_timestamp_coverage_pct": 12.312,
+          "ist_date_minutes": {
+            "2026-08-06": 226,
+            "2026-08-03": 11
+          },
+          "first_timestamp_utc": "2026-08-03T09:59:00+00:00",
+          "last_timestamp_utc": "2026-08-06T10:09:00+00:00"
+        }
+      ],
+      "per_offset": {
+        "ATM": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1440",
+          "last_actual_strike": "1420"
+        },
+        "ATM+1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1450",
+          "last_actual_strike": "1430"
+        },
+        "ATM+2": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1460",
+          "last_actual_strike": "1440"
+        },
+        "ATM+3": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1470",
+          "last_actual_strike": "1450"
+        },
+        "ATM-1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1430",
+          "last_actual_strike": "1410"
+        },
+        "ATM-2": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 113,
+          "first_actual_strike": "1420",
+          "last_actual_strike": "1400"
+        },
+        "ATM-3": {
+          "timestamp_count": 1920,
+          "distinct_actual_strikes": 5,
+          "actual_strike_changes": 111,
+          "first_actual_strike": "1410",
+          "last_actual_strike": "1390"
+        }
+      },
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
+    },
+    {
+      "symbol": "RELIANCE",
+      "option_type": "CALL",
+      "requested_relative_strikes": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "offset_series_returned": 7,
+      "common_timestamp_count_across_offsets": 1923,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 6,
+      "maximum_distinct_actual_strikes_per_timestamp": 7,
+      "distinct_actual_strikes_in_surface": 14,
+      "actual_strikes_observed_at_every_union_timestamp": 0,
+      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1240",
+          "observed_minutes": 37,
+          "union_timestamp_coverage_pct": 1.922,
+          "ist_date_minutes": {
+            "2026-08-05": 37
+          },
+          "first_timestamp_utc": "2026-08-05T08:54:00+00:00",
+          "last_timestamp_utc": "2026-08-05T09:43:00+00:00"
+        },
+        {
+          "actual_strike": "1250",
+          "observed_minutes": 166,
+          "union_timestamp_coverage_pct": 8.623,
+          "ist_date_minutes": {
+            "2026-08-05": 166
+          },
+          "first_timestamp_utc": "2026-08-05T07:07:00+00:00",
+          "last_timestamp_utc": "2026-08-05T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1260",
+          "observed_minutes": 559,
+          "union_timestamp_coverage_pct": 29.039,
+          "ist_date_minutes": {
+            "2026-08-05": 372,
+            "2026-08-04": 183,
+            "2026-08-06": 4
+          },
+          "first_timestamp_utc": "2026-08-04T06:30:00+00:00",
+          "last_timestamp_utc": "2026-08-06T03:48:00+00:00"
+        },
+        {
+          "actual_strike": "1270",
+          "observed_minutes": 809,
+          "union_timestamp_coverage_pct": 42.026,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-04": 323,
+            "2026-08-06": 101
+          },
+          "first_timestamp_utc": "2026-08-04T04:09:00+00:00",
+          "last_timestamp_utc": "2026-08-06T05:25:00+00:00"
+        },
+        {
+          "actual_strike": "1280",
+          "observed_minutes": 1296,
+          "union_timestamp_coverage_pct": 67.325,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 374,
+            "2026-08-06": 152,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T06:53:00+00:00"
+        },
+        {
+          "actual_strike": "1290",
+          "observed_minutes": 1645,
+          "union_timestamp_coverage_pct": 85.455,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-04": 383,
+            "2026-08-07": 107
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T05:49:00+00:00"
+        },
+        {
+          "actual_strike": "1300",
+          "observed_minutes": 1907,
+          "union_timestamp_coverage_pct": 99.065,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 367,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1310",
+          "observed_minutes": 1888,
+          "union_timestamp_coverage_pct": 98.078,
+          "ist_date_minutes": {
+            "2026-08-05": 348,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1320",
+          "observed_minutes": 1759,
+          "union_timestamp_coverage_pct": 91.377,
+          "ist_date_minutes": {
+            "2026-08-05": 219,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1330",
+          "observed_minutes": 1366,
+          "union_timestamp_coverage_pct": 70.961,
+          "ist_date_minutes": {
+            "2026-08-03": 385,
+            "2026-08-06": 381,
+            "2026-08-07": 385,
+            "2026-08-04": 202,
+            "2026-08-05": 13
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1340",
+          "observed_minutes": 1116,
+          "union_timestamp_coverage_pct": 57.974,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 284,
+            "2026-08-03": 385,
+            "2026-08-04": 62
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1350",
+          "observed_minutes": 629,
+          "union_timestamp_coverage_pct": 32.675,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 233,
+            "2026-08-03": 11
+          },
+          "first_timestamp_utc": "2026-08-03T09:59:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1360",
+          "observed_minutes": 278,
+          "union_timestamp_coverage_pct": 14.442,
+          "ist_date_minutes": {
+            "2026-08-07": 278
+          },
+          "first_timestamp_utc": "2026-08-07T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1370",
+          "observed_minutes": 18,
+          "union_timestamp_coverage_pct": 0.935,
+          "ist_date_minutes": {
+            "2026-08-07": 18
+          },
+          "first_timestamp_utc": "2026-08-07T06:06:00+00:00",
+          "last_timestamp_utc": "2026-08-07T06:35:00+00:00"
+        }
+      ],
+      "per_offset": {
+        "ATM": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1310",
+          "last_actual_strike": "1330"
+        },
+        "ATM+1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1320",
+          "last_actual_strike": "1340"
+        },
+        "ATM+2": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1330",
+          "last_actual_strike": "1350"
+        },
+        "ATM+3": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1340",
+          "last_actual_strike": "1360"
+        },
+        "ATM-1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1300",
+          "last_actual_strike": "1320"
+        },
+        "ATM-2": {
+          "timestamp_count": 1923,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1290",
+          "last_actual_strike": "1310"
+        },
+        "ATM-3": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1280",
+          "last_actual_strike": "1300"
+        }
+      },
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
+    },
+    {
+      "symbol": "RELIANCE",
+      "option_type": "PUT",
+      "requested_relative_strikes": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "offset_series_returned": 7,
+      "common_timestamp_count_across_offsets": 1922,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 4,
+      "maximum_distinct_actual_strikes_per_timestamp": 7,
+      "distinct_actual_strikes_in_surface": 14,
+      "actual_strikes_observed_at_every_union_timestamp": 0,
+      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1240",
+          "observed_minutes": 37,
+          "union_timestamp_coverage_pct": 1.922,
+          "ist_date_minutes": {
+            "2026-08-05": 37
+          },
+          "first_timestamp_utc": "2026-08-05T08:54:00+00:00",
+          "last_timestamp_utc": "2026-08-05T09:43:00+00:00"
+        },
+        {
+          "actual_strike": "1250",
+          "observed_minutes": 166,
+          "union_timestamp_coverage_pct": 8.623,
+          "ist_date_minutes": {
+            "2026-08-05": 166
+          },
+          "first_timestamp_utc": "2026-08-05T07:07:00+00:00",
+          "last_timestamp_utc": "2026-08-05T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1260",
+          "observed_minutes": 559,
+          "union_timestamp_coverage_pct": 29.039,
+          "ist_date_minutes": {
+            "2026-08-05": 372,
+            "2026-08-04": 183,
+            "2026-08-06": 4
+          },
+          "first_timestamp_utc": "2026-08-04T06:30:00+00:00",
+          "last_timestamp_utc": "2026-08-06T03:48:00+00:00"
+        },
+        {
+          "actual_strike": "1270",
+          "observed_minutes": 808,
+          "union_timestamp_coverage_pct": 41.974,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-04": 323,
+            "2026-08-06": 100
+          },
+          "first_timestamp_utc": "2026-08-04T04:09:00+00:00",
+          "last_timestamp_utc": "2026-08-06T05:25:00+00:00"
+        },
+        {
+          "actual_strike": "1280",
+          "observed_minutes": 1296,
+          "union_timestamp_coverage_pct": 67.325,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 374,
+            "2026-08-06": 152,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T06:53:00+00:00"
+        },
+        {
+          "actual_strike": "1290",
+          "observed_minutes": 1645,
+          "union_timestamp_coverage_pct": 85.455,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-04": 383,
+            "2026-08-07": 107
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T05:49:00+00:00"
+        },
+        {
+          "actual_strike": "1300",
+          "observed_minutes": 1907,
+          "union_timestamp_coverage_pct": 99.065,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 367,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1310",
+          "observed_minutes": 1887,
+          "union_timestamp_coverage_pct": 98.026,
+          "ist_date_minutes": {
+            "2026-08-05": 348,
+            "2026-08-03": 385,
+            "2026-08-06": 384,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1320",
+          "observed_minutes": 1758,
+          "union_timestamp_coverage_pct": 91.325,
+          "ist_date_minutes": {
+            "2026-08-05": 219,
+            "2026-08-03": 385,
+            "2026-08-06": 384,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1330",
+          "observed_minutes": 1365,
+          "union_timestamp_coverage_pct": 70.909,
+          "ist_date_minutes": {
+            "2026-08-03": 385,
+            "2026-08-06": 381,
+            "2026-08-07": 385,
+            "2026-08-04": 201,
+            "2026-08-05": 13
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1340",
+          "observed_minutes": 1116,
+          "union_timestamp_coverage_pct": 57.974,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 284,
+            "2026-08-03": 385,
+            "2026-08-04": 62
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1350",
+          "observed_minutes": 629,
+          "union_timestamp_coverage_pct": 32.675,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 233,
+            "2026-08-03": 11
+          },
+          "first_timestamp_utc": "2026-08-03T09:59:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1360",
+          "observed_minutes": 278,
+          "union_timestamp_coverage_pct": 14.442,
+          "ist_date_minutes": {
+            "2026-08-07": 278
+          },
+          "first_timestamp_utc": "2026-08-07T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1370",
+          "observed_minutes": 18,
+          "union_timestamp_coverage_pct": 0.935,
+          "ist_date_minutes": {
+            "2026-08-07": 18
+          },
+          "first_timestamp_utc": "2026-08-07T06:06:00+00:00",
+          "last_timestamp_utc": "2026-08-07T06:35:00+00:00"
+        }
+      ],
+      "per_offset": {
+        "ATM": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1310",
+          "last_actual_strike": "1330"
+        },
+        "ATM+1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1320",
+          "last_actual_strike": "1340"
+        },
+        "ATM+2": {
+          "timestamp_count": 1923,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1330",
+          "last_actual_strike": "1350"
+        },
+        "ATM+3": {
+          "timestamp_count": 1924,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1340",
+          "last_actual_strike": "1360"
+        },
+        "ATM-1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1300",
+          "last_actual_strike": "1320"
+        },
+        "ATM-2": {
+          "timestamp_count": 1922,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1290",
+          "last_actual_strike": "1310"
+        },
+        "ATM-3": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 8,
+          "actual_strike_changes": 80,
+          "first_actual_strike": "1280",
+          "last_actual_strike": "1300"
+        }
+      },
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
+    },
+    {
+      "symbol": "SBIN",
+      "option_type": "CALL",
+      "requested_relative_strikes": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "offset_series_returned": 7,
+      "common_timestamp_count_across_offsets": 1921,
+      "union_timestamp_count": 1925,
+      "minimum_distinct_actual_strikes_per_timestamp": 5,
+      "maximum_distinct_actual_strikes_per_timestamp": 7,
+      "distinct_actual_strikes_in_surface": 16,
+      "actual_strikes_observed_at_every_union_timestamp": 0,
+      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1000",
+          "observed_minutes": 180,
+          "union_timestamp_coverage_pct": 9.351,
+          "ist_date_minutes": {
+            "2026-08-04": 146,
+            "2026-08-03": 34
+          },
+          "first_timestamp_utc": "2026-08-03T03:47:00+00:00",
+          "last_timestamp_utc": "2026-08-04T09:57:00+00:00"
+        },
+        {
+          "actual_strike": "1010",
+          "observed_minutes": 701,
+          "union_timestamp_coverage_pct": 36.416,
+          "ist_date_minutes": {
+            "2026-08-04": 384,
+            "2026-08-03": 301,
+            "2026-08-05": 16
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-05T05:01:00+00:00"
+        },
+        {
+          "actual_strike": "1020",
+          "observed_minutes": 1155,
+          "union_timestamp_coverage_pct": 60.0,
+          "ist_date_minutes": {
+            "2026-08-05": 384,
+            "2026-08-04": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 1
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T03:45:00+00:00"
+        },
+        {
+          "actual_strike": "1030",
+          "observed_minutes": 1391,
+          "union_timestamp_coverage_pct": 72.26,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 236,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T07:40:00+00:00"
+        },
+        {
+          "actual_strike": "1040",
+          "observed_minutes": 1406,
+          "union_timestamp_coverage_pct": 73.039,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 251,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T07:56:00+00:00"
+        },
+        {
+          "actual_strike": "1050",
+          "observed_minutes": 1540,
+          "union_timestamp_coverage_pct": 80.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 344,
+            "2026-08-07": 41,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T06:54:00+00:00"
+        },
+        {
+          "actual_strike": "1060",
+          "observed_minutes": 1812,
+          "union_timestamp_coverage_pct": 94.13,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-06": 385,
+            "2026-08-03": 385,
+            "2026-08-07": 272,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:24:00+00:00"
+        },
+        {
+          "actual_strike": "1070",
+          "observed_minutes": 1683,
+          "union_timestamp_coverage_pct": 87.429,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-06": 385,
+            "2026-08-03": 351,
+            "2026-08-07": 323,
+            "2026-08-04": 239
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1080",
+          "observed_minutes": 1186,
+          "union_timestamp_coverage_pct": 61.61,
+          "ist_date_minutes": {
+            "2026-08-06": 385,
+            "2026-08-05": 367,
+            "2026-08-07": 350,
+            "2026-08-03": 84
+          },
+          "first_timestamp_utc": "2026-08-03T04:16:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1090",
+          "observed_minutes": 769,
+          "union_timestamp_coverage_pct": 39.948,
+          "ist_date_minutes": {
+            "2026-08-06": 384,
+            "2026-08-07": 385
+          },
+          "first_timestamp_utc": "2026-08-06T03:46:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1100",
+          "observed_minutes": 534,
+          "union_timestamp_coverage_pct": 27.74,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 149
+          },
+          "first_timestamp_utc": "2026-08-06T07:41:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1110",
+          "observed_minutes": 518,
+          "union_timestamp_coverage_pct": 26.909,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 133
+          },
+          "first_timestamp_utc": "2026-08-06T07:57:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1120",
+          "observed_minutes": 385,
+          "union_timestamp_coverage_pct": 20.0,
+          "ist_date_minutes": {
+            "2026-08-07": 344,
+            "2026-08-06": 41
+          },
+          "first_timestamp_utc": "2026-08-06T09:11:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1130",
+          "observed_minutes": 113,
+          "union_timestamp_coverage_pct": 5.87,
+          "ist_date_minutes": {
+            "2026-08-07": 113
+          },
+          "first_timestamp_utc": "2026-08-07T08:16:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1140",
+          "observed_minutes": 62,
+          "union_timestamp_coverage_pct": 3.221,
+          "ist_date_minutes": {
+            "2026-08-07": 62
+          },
+          "first_timestamp_utc": "2026-08-07T08:16:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:20:00+00:00"
+        },
+        {
+          "actual_strike": "1150",
+          "observed_minutes": 35,
+          "union_timestamp_coverage_pct": 1.818,
+          "ist_date_minutes": {
+            "2026-08-07": 35
+          },
+          "first_timestamp_utc": "2026-08-07T08:20:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:14:00+00:00"
+        }
+      ],
+      "per_offset": {
+        "ATM": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1040",
+          "last_actual_strike": "1100"
+        },
+        "ATM+1": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1050",
+          "last_actual_strike": "1110"
+        },
+        "ATM+2": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1060",
+          "last_actual_strike": "1120"
+        },
+        "ATM+3": {
+          "timestamp_count": 1925,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1070",
+          "last_actual_strike": "1130"
+        },
+        "ATM-1": {
+          "timestamp_count": 1924,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1030",
+          "last_actual_strike": "1090"
+        },
+        "ATM-2": {
+          "timestamp_count": 1924,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1020",
+          "last_actual_strike": "1080"
+        },
+        "ATM-3": {
+          "timestamp_count": 1922,
+          "distinct_actual_strikes": 10,
+          "actual_strike_changes": 77,
+          "first_actual_strike": "1010",
+          "last_actual_strike": "1070"
+        }
+      },
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
+    }
+  ],
+  "probe_abort_reason": null,
+  "raw_rows_persisted": false,
+  "raw_data_policy": "Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
+  "known_limits": [
+    "Rolling strikes can change actual strike over time.",
+    "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
+    "Observed response schema does not return contract expiry date or immutable option contract ID; expiryFlag/expiryCode are request selectors, not an audited returned identity.",
+    "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
+    "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."
+  ],
+  "status": "PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES",
+  "rows_outside_requested_date_window_total": 0
+}

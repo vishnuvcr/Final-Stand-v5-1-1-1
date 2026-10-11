@@ -383,3 +383,13 @@ The fresh run passed 20 unit tests and completed all 28 selected Dhan probes wit
 <!-- DHAN_NO_RESULT_RUN_38126410692 -->
 ## Dhan audit no result — run 38126410692
 No current-run JSON was produced; previous audit data were not accepted as this run's output.
+
+<!-- DHAN_API_RUN_38126663036_ATTEMPT_1 -->
+## Dhan Data API audit — run 38126663036, attempt 1 — 2026-10-11T09:00:28.279529+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-10 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 28/28.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
