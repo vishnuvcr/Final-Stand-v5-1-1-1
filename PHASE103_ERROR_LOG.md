@@ -276,3 +276,10 @@ Run [38124954633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 ### E103-RUN-38126410692 — No fresh audit JSON for this run
 Tests, network requests or audit generation did not produce a machine result whose run_id matches the current Actions run. Any prior JSON is not valid evidence for this run.
 Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126410692
+
+<!-- DHAN_API_RUN_38127361683_ATTEMPT_1 -->
+### E103-DHAN-38127361683 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE; rows returned by 0/1 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683
