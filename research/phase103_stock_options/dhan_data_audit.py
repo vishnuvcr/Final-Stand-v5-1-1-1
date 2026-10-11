@@ -45,6 +45,15 @@ def parse_strikes(raw):
         raise ValueError("Unsupported relative strike(s): " + ", ".join(invalid))
     return values
 
+def parse_expiry_code(value):
+    try:
+        code = int(value)
+    except (TypeError, ValueError):
+        raise argparse.ArgumentTypeError("Expiry code must be 0, 1 or 2.")
+    if code not in (0, 1, 2):
+        raise argparse.ArgumentTypeError("Expiry code must be 0, 1 or 2.")
+    return code
+
 def parse_panels(raw):
     """Parse a bounded list of registered SYMBOL:CALL/PUT panels."""
     panels=[]
@@ -236,9 +245,9 @@ def safe_error_details(raw, token):
     walk(obj)
     return found
 
-def query(token, security_id, option_type, relative_strike, start, end):
+def query(token, security_id, option_type, relative_strike, start, end, expiry_code=EXPIRY_CODE):
     body = {"exchangeSegment":"NSE_FNO","interval":"1","securityId":str(security_id),
-            "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":EXPIRY_CODE,"strike":relative_strike,
+            "instrument":"OPTSTK","expiryFlag":"MONTH","expiryCode":expiry_code,"strike":relative_strike,
             "drvOptionType":option_type,
             "requiredData":["open","high","low","close","iv","volume","strike","oi","spot"],
             "fromDate":start,"toDate":end}
@@ -332,6 +341,9 @@ def main():
                    help="maximum number of symbol/side/strike API probes for this bounded run")
     p.add_argument("--strikes",default=os.getenv("PHASE103_STRIKES",",".join(DEFAULT_STRIKES)),
                    help="comma-separated Dhan relative strikes; allowed offsets are ATM and ATM +/- 1..3")
+    p.add_argument("--expiry-code",type=parse_expiry_code,
+                   default=parse_expiry_code(os.getenv("PHASE103_EXPIRY_CODE",str(EXPIRY_CODE))),
+                   help="Dhan expiry selector: 0 near/current, 1 next, 2 far")
     p.add_argument("--out-dir",default="results/phase103")
     a=p.parse_args(); days=check_window(a.from_date,a.to_date)
     api_to_date=provider_to_date(a.from_date,a.to_date)
@@ -352,7 +364,7 @@ def main():
         "probe_limit":a.max_probes,
         "requested_panels":[f"{sym}:{side}" for sym,side in panels],
         "requested_relative_strikes":strikes,
-        "endpoint":ENDPOINT,"contract_identity_status":CONTRACT_IDENTITY_STATUS,
+        "endpoint":ENDPOINT,"requested_expiry_code":a.expiry_code,"contract_identity_status":CONTRACT_IDENTITY_STATUS,
         "expiry_identity_audit":{"status":"BLOCKED_CROSSCHECK_NOT_RUN","raw_rows_persisted":False},
         "instrument_master_sha256":None,"instrument_master_bytes":None,
         "underlying_map":{},"probes":[],"surface_audit":[],"probe_abort_reason":None,"raw_rows_persisted":False,
@@ -387,7 +399,7 @@ def main():
                         result["probes"].append({"symbol":sym,"requested_option_type":side,
                             "requested_relative_strike":relative_strike,"status":"BLOCKED_UNDERLYING_ID"})
                         continue
-                    code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date)
+                    code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date,a.expiry_code)
                     probe_summary = summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date)
                     result["probes"].append(probe_summary)
                     # Missing/empty requested-side data is an explicit coverage result; continue to other selected offsets.
@@ -411,11 +423,11 @@ def main():
                     break
             result["surface_audit"]=summarize_surface(surface_blocks, strikes)
             # Independent expiry cross-check: raw Dhan/NSE rows remain in memory only.
-            expiry_audit = audit_expiry_identity(surface_blocks, get_bytes)
+            expiry_audit = audit_expiry_identity(surface_blocks, get_bytes, expiry_code=a.expiry_code)
             result["expiry_identity_audit"] = expiry_audit
             result["contract_identity_status"] = (
-                "PASS_EOD_RECONCILED_EXPIRY_CODE_1"
-                if expiry_audit.get("status") == "PASS_EOD_RECONCILED_EXPIRY_CODE_1"
+                "PASS_EOD_RECONCILED_EXPIRY_CODE_" + str(a.expiry_code)
+                if expiry_audit.get("status") == "PASS_EOD_RECONCILED_EXPIRY_CODE_" + str(a.expiry_code)
                 else "BLOCKED_EXPIRY_EOD_CROSSCHECK"
             )
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
@@ -510,6 +522,7 @@ def main():
       "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"panels":result["requested_panels"],"relative_strikes":strikes,
       "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),
       "contract_identity_status":result["contract_identity_status"],
+      "requested_expiry_code":result.get("requested_expiry_code"),
       "expiry_identity_audit_status":result.get("expiry_identity_audit",{}).get("status"),
       "expiry_identity_unique_matches":result.get("expiry_identity_audit",{}).get("unique_exact_contract_matches",0),
       "expiry_identity_code_matches":result.get("expiry_identity_audit",{}).get("expiry_code_matches",0),
