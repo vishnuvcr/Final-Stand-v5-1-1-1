@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-11  
 **Branch:** `phase-103-nifty50-stock-options`  
-**State:** PHASE 103.1B IN PROGRESS; MULTI-SESSION AUDIT LIMITED TO FOUR PREVIOUSLY PASSING STOCK/SIDE PANELS; NO STRATEGY P&L YET  
+**State:** PHASE 103.1B DATA ACCESS PASS; MULTI-SESSION SURFACE ALIGNMENT FAIL; FIXED-CONTRACT/P&L GATE BLOCKED  
 **Strategy promotion:** NONE  
 **Previous research:** frozen; no previous-phase data or conclusions changed.
 
@@ -15,7 +15,8 @@
 - [x] Record that this is an initial research basket, not a proven top-five option-volume ranking.
 - [ ] Run registration workflow and verify its automated checks.
 - [x] Phase 103.1A: first-session Dhan screen completed; 68/70 offset probes returned rows, with four of ten stock/side alignment gates passing.
-- [ ] Phase 103.1B: multi-session audit of ICICIBANK CALL, RELIANCE CALL/PUT, SBIN CALL from 2026-08-03 inclusive to 2026-08-10 exclusive (28 probes maximum).
+- [x] Phase 103.1B: 28/28 API probes returned rows across five sessions for ICICIBANK CALL, RELIANCE CALL/PUT, SBIN CALL.
+- [ ] Phase 103.1C: diagnose strict cross-offset timestamp alignment failures and establish fixed contract/expiry identity; strategy P&L remains blocked.
 - [ ] Phase 103.2: canonical contract/data and execution-cost audit.
 - [ ] Phase 103.3: preregister candidate rules and baselines.
 - [ ] Phase 103.4: chronological development and validation.
@@ -35,7 +36,7 @@ The exact reason, weight snapshot and public contract discovery links are in `re
 
 ## Current finding
 
-The first-session historical data screen is complete. Four stock/side panels passed relative-surface alignment on 2026-08-03: ICICIBANK CALL, RELIANCE CALL, RELIANCE PUT and SBIN CALL. The next bounded experiment extends only those panels across multiple sessions. HDFCBANK CALL/PUT, ICICIBANK PUT, SBIN PUT and both INFY sides are excluded from this run because their first-session alignment/coverage gate failed. No stock-options strategy has been backtested, ranked or promoted yet.
+The first-session historical data screen is complete. Four stock/side panels passed relative-surface alignment on 2026-08-03: ICICIBANK CALL, RELIANCE CALL, RELIANCE PUT and SBIN CALL. The bounded multi-session experiment returned rows for all 28 offsets across five sessions, but all four surfaces failed strict timestamp-alignment checks (common timestamps: ICICIBANK CALL 1,920/1,925; RELIANCE CALL 1,923/1,925; RELIANCE PUT 1,922/1,925; SBIN CALL 1,921/1,925). API access success is not a fixed-contract pass: actual strikes changed repeatedly (77–113 changes per offset) because the endpoint returns rolling relative strikes. Strategy P&L is still blocked. HDFCBANK CALL/PUT, ICICIBANK PUT, SBIN PUT and both INFY sides are excluded from this run because their first-session alignment/coverage gate failed. No stock-options strategy has been backtested, ranked or promoted yet.
 
 ## Next action and stopping rule
 
@@ -367,3 +368,12 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## Multi-session result — run 38115153795
+
+- GitHub Actions job: success; unit tests passed.
+- Dhan data-return status: PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES (28/28 probes, five sessions: 2026-08-03 through 2026-08-07 IST; no rows outside the requested date window).
+- Strict surface alignment: FAIL for all four selected panels. Common/union timestamp counts were ICICIBANK CALL 1920/1925, RELIANCE CALL 1923/1925, RELIANCE PUT 1922/1925, SBIN CALL 1921/1925.
+- Rolling strike identity is not fixed: per-offset actual-strike change counts were substantial (77–113), so relative-strike series cannot be treated as a fixed listed contract tape.
+- Decision: data acquisition is verified; fixed-contract backtest gate remains blocked. No P&L, strategy ranking, or live approval.
