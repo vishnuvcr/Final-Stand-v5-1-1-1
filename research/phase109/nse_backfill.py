@@ -202,6 +202,9 @@ def main():
                 parsed["status"]="CACHE_HIT_VALIDATED"
                 url="cached-official-NSE-archive"
             except Exception:
+                # A corrupt or schema-invalid cache object must be deleted so the
+                # same workflow can recover it without a separate manual retry flag.
+                target.unlink(missing_ok=True)
                 payload=None; parsed=None
         if payload is None and (args.retry_failures or not target.exists()):
             payload,parsed,url=attempt_download(day)
