@@ -77,7 +77,7 @@ Objectives:
 - Check NSE reports/bhavcopies, authorised vendor/public datasets, GitHub, Kaggle and Hugging Face metadata/data where permitted; record exact licenses, terms, hashes, coverage and refresh costs.
 - Compute comparable per-stock option liquidity diagnostics over the same dates. Verify point-in-time symbol/contract mappings and data rights before caching.
 - Required fields depend on proposed strategy: timestamp, symbol, expiry, strike, CE/PE, OHLC or bid/ask, volume, OI, underlying spot, contract multiplier/lot size, corporate actions and exchange calendars.
-- **STOP / NO-GO** if exact contract identity, permitted retention, or adequate sample cannot be established. A source lead or metadata response is not data evidence.
+- **STOP / NO-GO** if exact contract identity, permitted use/retention for the intended workflow, or adequate sample cannot be established. The user later confirmed a Dhan subscription and research authorization; this is accepted for research access, while raw rows remain unpublished because public redistribution terms are not separately audited. A source lead or metadata response is not data evidence.
 
 ### Phase 103.2 — Canonical dataset and execution audit
 - Build immutable source manifest, canonical tables and data-quality ledger; test duplicate keys, timestamp timezone, stale bars, corporate-action adjustments, expiry mapping, missing/zero distinction and contract multipliers.
@@ -142,7 +142,7 @@ Primary authorized acquisition path requested for Phase 103.1: DhanHQ Data API u
 - If successful, Phase 103.1 expands data coverage with rolling 30-day chunks, then audits actual returned rows, timestamp coverage, array-length integrity, missing-versus-zero OI and source/schema changes before candidate rules are developed.
 - Rolling relative strikes may map to different actual strikes over time. Do not treat a single ATM-offset series as a persistent fixed-strike contract. Any later strategy must reconstruct contract identity using actual strike/expiry and must exclude intervals when contract identity cannot be preserved.
 - This expired-options endpoint does not document historical bid/ask/depth. Quote quality, spread and fills cannot be called historically observed from this endpoint alone. Later P&L must either add an authorized historical quote source or transparently use a conservative, explicitly proxy-based execution model with a no-go gate where evidence is insufficient.
-- Raw Dhan payload retention and redistribution rights are not yet verified. The bounded API workflow publishes aggregate audit statistics only; raw response rows stay ephemeral until allowed storage is established. This avoids exposing licensed market data in the public repository.
+- User confirmed a Dhan subscription and authorization for research use. The project accepts this as the research-access assumption; it does not independently determine whether account terms permit public redistribution of raw market data. The bounded API workflow publishes aggregate audit statistics only; raw response rows stay ephemeral and are not committed to this public repository.
 
 Phase 103.1 workflow: .github/workflows/phase103-dhan-data-api-audit.yml. The branch-push run and manual dispatch both perform unit tests, query the instrument master, call Dhan's expired stock-options endpoint, and automatically write the aggregate result/status/error checkpoint back to this branch.
 
@@ -176,3 +176,14 @@ The 10/10 ATM source probes passed on 2026-08-03. Before any strategy test, the 
 ## Phase 103.1B result — HDFCBANK CALL seven-offset panel (2026-10-11)
 
 Run [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649) passed its automated checks and returned valid data for all seven HDFCBANK CALL offsets on 2026-08-03. All requests were HTTP 200; ATM through ATM-2 returned 385 rows; ATM-3 returned 384. Array lengths and target-date checks passed, with zero rows outside the target date. The union contained 385 timestamps and eight observed actual strikes; six actual strikes had observations at every union timestamp; duplicate timestamp/strike keys across offsets were zero. However, strict common-timestamp alignment was 384/385 because ATM-3 lacked one row, so the full-surface gate remains FAIL. Keep the missing bar explicit; do not impute it. Continue by checking the seven-offset grid across remaining stock/side groups and calculate contract coverage by exact strike before candidate P&L.
+
+
+## Phase 103.1D — one-shot expiry selector calibration and terminal gate (completed 2026-10-11)
+
+**Why amended:** the independent code-1 cross-check run [38126663036](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126663036) had 88 full-session exact-strike profiles; only 3 matched all four OHLC fields uniquely, all matched expiry 2026-08-25, zero matched the expected rank-2 expiry, and 85 were unmatched. The sample therefore failed fixed-contract identity / price reconciliation.
+
+**Allowed calibration:** one unchanged-window/panel/offset audit using expiryCode 0, the documented current/near-expiry selector. Completed as run [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683). The very first ICICIBANK CALL / ATM request returned HTTP 400, provider code DH-905, message “expiryCode is required”. The workflow stopped after 1 attempted probe; 0 probes returned rows, and no contract-price comparison was possible. The selector code-zero attempt was therefore rejected by the provider before identity could be evaluated.
+
+**Decision:** the one-shot selector calibration is exhausted. No further selector-code, stock, date or offset fishing is permitted under this phase. Strategy P&L remains blocked until Dhan confirms a usable exact-contract/expiry mechanism or an alternative authorized contract-specific historical source clears the acceptance gate. Historical bid/ask/depth is still not documented by the rolling endpoint. No strategy has been tested/promoted; all later P&L must include date-effective Paytm Money brokerage/statutory charges/taxes, spread, slippage, latency, partial/missed fills and adverse-cost stress.
+
+**Rights note:** user confirmation of Dhan subscription/research authorization is accepted for research access. Raw market data remains ephemeral and is not stored in this public repository; no raw-row permission is inferred from a software licence or public endpoint.
