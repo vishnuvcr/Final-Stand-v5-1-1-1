@@ -116,6 +116,10 @@ def call_cost_model(module,trade_date,buy_price,sell_price,quantity,brokerage_pe
         sig=inspect.signature(fn)
         params=sig.parameters
         kwargs={}
+        brokerage_names={"brokerage_per_order","brokerage_rupees_per_order","brokerage_per_trade","brokerage"}
+        has_var_kwargs=any(p.kind==inspect.Parameter.VAR_KEYWORD for p in params.values())
+        if not has_var_kwargs and not brokerage_names.intersection(params):
+            raise RuntimeError("Canonical dated cost model exposes no configurable brokerage input; refusing to score the ₹10/₹15/₹20 scenarios.")
         aliases={
           "trade_date":trade_date.isoformat(),"date":trade_date.isoformat(),"session_date":trade_date.isoformat(),
           "entry_date":trade_date.isoformat(),"buy_date":trade_date.isoformat(),
@@ -138,7 +142,8 @@ def call_cost_model(module,trade_date,buy_price,sell_price,quantity,brokerage_pe
     except TypeError as exc:
         raise RuntimeError(f"Canonical cost model call failed for {name}: {exc}") from exc
     if isinstance(result,(int,float)):
-        return max(0.0,float(result)),{"total_cost":float(result),"model_callable":name,"breakdown":"numeric_return"}
+        base=max(0.0,float(result))
+        return base*fee_multiplier,{"total_cost":base*fee_multiplier,"unscaled_modeled_cost":base,"fee_multiplier_applied_after_model":fee_multiplier,"model_callable":name,"breakdown":"numeric_return"}
     if isinstance(result,dict):
         flat={canonical(k).lower():v for k,v in result.items()}
         candidates=("total_cost","total_fees","total_reported_fees","round_trip_cost","total_charges","grand_total")
@@ -152,7 +157,7 @@ def call_cost_model(module,trade_date,buy_price,sell_price,quantity,brokerage_pe
             if len(numeric_parts)==1: found=numeric_parts[0]
         if found is None:
             raise RuntimeError("Canonical cost model result lacks a recognized numeric total; keys="+",".join(map(str,result.keys())))
-        return max(0.0,found),{"total_cost":found,"model_callable":name,"breakdown":json.dumps(result,sort_keys=True,default=str)}
+        return max(0.0,found)*fee_multiplier,{"total_cost":max(0.0,found)*fee_multiplier,"unscaled_modeled_cost":found,"fee_multiplier_applied_after_model":fee_multiplier,"model_callable":name,"breakdown":json.dumps(result,sort_keys=True,default=str)}
     raise RuntimeError(f"Canonical cost model returned unsupported result type: {type(result).__name__}")
 
 
@@ -503,13 +508,22 @@ def load_cost_cases():
         raise RuntimeError(f"Expected 24 registered cost cases; found {len(rows)}.")
     result=[]
     for row in rows:
+        brokerage=number(value(row,"brokerage_per_order","brokerage_rupees_per_order"))
+        slippage=number(value(row,"slippage_per_unit_per_side","slippage_rupees_per_unit_per_side"))
+        multiplier=number(value(row,"fee_multiplier","statutory_fee_multiplier"))
+        if brokerage is None or slippage is None or multiplier is None:
+            raise RuntimeError("Cost scenario has missing numeric brokerage, slippage, or fee-multiplier field.")
         result.append({
           "cost_case_id":value(row,"cost_case_id","scenario_id","cost_id"),
-          "brokerage_per_order":number(value(row,"brokerage_per_order","brokerage_rupees_per_order")) or 20.0,
-          "slippage_per_unit_per_side":number(value(row,"slippage_per_unit_per_side","slippage_rupees_per_unit_per_side")) or 0.0,
-          "fee_multiplier":number(value(row,"fee_multiplier","statutory_fee_multiplier")) or 1.0,
+          "brokerage_per_order":brokerage,
+          "slippage_per_unit_per_side":slippage,
+          "fee_multiplier":multiplier,
           "raw":row,
         })
+    actual={(x["brokerage_per_order"],x["slippage_per_unit_per_side"],x["fee_multiplier"]) for x in result}
+    expected={(b,s,m) for b in (10.0,15.0,20.0) for s in (0.0,0.05,0.25,0.5) for m in (1.0,1.5)}
+    if actual!=expected or len(actual)!=24:
+        raise RuntimeError("Registered cost grid does not equal the required 3×4×2 scenario Cartesian product.")
     return result
 
 
