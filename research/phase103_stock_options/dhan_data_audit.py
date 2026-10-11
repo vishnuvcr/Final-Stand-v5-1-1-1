@@ -4,6 +4,7 @@ import argparse, csv, hashlib, io, json, os, time, urllib.error, urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
+from expiry_crosscheck import audit_expiry_identity
 
 MASTER = "https://images.dhan.co/api-data/api-scrip-master.csv"
 ENDPOINT = "https://api.dhan.co/v2/charts/rollingoption"
@@ -352,6 +353,7 @@ def main():
         "requested_panels":[f"{sym}:{side}" for sym,side in panels],
         "requested_relative_strikes":strikes,
         "endpoint":ENDPOINT,"contract_identity_status":CONTRACT_IDENTITY_STATUS,
+        "expiry_identity_audit":{"status":"BLOCKED_CROSSCHECK_NOT_RUN","raw_rows_persisted":False},
         "instrument_master_sha256":None,"instrument_master_bytes":None,
         "underlying_map":{},"probes":[],"surface_audit":[],"probe_abort_reason":None,"raw_rows_persisted":False,
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
@@ -400,13 +402,22 @@ def main():
                         if isinstance(data_block.get("timestamp"), list) and isinstance(data_block.get("strike"), list):
                             surface_blocks.append({"symbol":sym,"option_type":side,
                                 "relative_strike":relative_strike,
-                                "timestamps":data_block["timestamp"],"strikes":data_block["strike"]})
+                                "timestamps":data_block["timestamp"],"strikes":data_block["strike"],
+                                "bars":{field:data_block.get(field,[]) for field in ["timestamp","strike","open","high","low","close","volume","oi"]}})
                     if abort_probes:
                         break
                     time.sleep(1.1)
                 if abort_probes or len(result["probes"]) >= a.max_probes:
                     break
             result["surface_audit"]=summarize_surface(surface_blocks, strikes)
+            # Independent expiry cross-check: raw Dhan/NSE rows remain in memory only.
+            expiry_audit = audit_expiry_identity(surface_blocks, get_bytes)
+            result["expiry_identity_audit"] = expiry_audit
+            result["contract_identity_status"] = (
+                "PASS_EOD_RECONCILED_EXPIRY_CODE_1"
+                if expiry_audit.get("status") == "PASS_EOD_RECONCILED_EXPIRY_CODE_1"
+                else "BLOCKED_EXPIRY_EOD_CROSSCHECK"
+            )
             rows_count=sum(v.get("rows",0)>0 for v in result["probes"])
             error_codes={str(v.get("api_error_code","")).upper() for v in result["probes"] if v.get("api_error_code")}
             auth_count=sum(v.get("status") in ["AUTH_401","AUTH_403"] for v in result["probes"])
@@ -483,6 +494,9 @@ def main():
       "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"panels":result["requested_panels"],"relative_strikes":strikes,
       "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),
       "contract_identity_status":result["contract_identity_status"],
+      "expiry_identity_audit_status":result.get("expiry_identity_audit",{}).get("status"),
+      "expiry_identity_unique_matches":result.get("expiry_identity_audit",{}).get("unique_exact_contract_matches",0),
+      "expiry_identity_code_matches":result.get("expiry_identity_audit",{}).get("expiry_code_matches",0),
       "surface_groups":len(result.get("surface_audit",[])),
       "surface_gates_passed":sum(1 for x in result.get("surface_audit",[]) if x.get("relative_surface_alignment_gate")=="PASS"),
       "rows_outside_requested_date_window_total":result.get("rows_outside_requested_date_window_total",0)},indent=2))
