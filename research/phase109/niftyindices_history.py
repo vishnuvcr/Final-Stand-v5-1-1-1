@@ -64,9 +64,14 @@ def index_request(index_name,start,end):
 
 def parse_d(s):
     v=str(s or "").strip()
-    for fmt in ("%d %b %Y","%d-%b-%Y","%Y-%m-%d"):
-        try: return datetime.strptime(v,fmt).date().isoformat()
-        except ValueError: pass
+    if not v:return None
+    candidates=[v]
+    if len(v)>=10 and v[4:5]=="-" and v[7:8]=="-":candidates.append(v[:10])
+    if "T" in v:candidates.append(v.split("T",1)[0])
+    for candidate in candidates:
+        for fmt in ("%d %b %Y","%d-%b-%Y","%d-%B-%Y","%Y-%m-%d","%d/%m/%Y"):
+            try: return datetime.strptime(candidate,fmt).date().isoformat()
+            except ValueError: pass
     return None
 
 
