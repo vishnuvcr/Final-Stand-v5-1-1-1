@@ -30,3 +30,10 @@
 ## Runtime error status
 
 The verified Actions run passed its automated unit tests, data gate, strategy runner and accounting invariants. No runtime exception was accepted as a research result. Phase 105 closes with evidence/interpretation limitations rather than a code failure.
+ 
+
+## D105-004 — Documentation formatting correction
+
+**Type:** publication-formatting defect, not a data or numerical error.  
+**Evidence:** final documentation QA caught unwanted escape characters before inline-code delimiters in three phase records.  
+**Handling:** corrected those Markdown records and re-fetched the branch versions to confirm the files were updated. Numerical outputs, frozen strategy rules, workflow run results and decision are unchanged.
