@@ -34,3 +34,11 @@ This log records user-visible conversation events and research decisions. It doe
 - Research decision: accept the user's confirmation of their Dhan subscription and authorization for the intended research access; do not continue treating “subscription not established” as a reason to stop acquisition.
 - Data handling remains conservative: raw Dhan minute rows and raw NSE EOD contract rows stay ephemeral in the runner. The repository and GitHub Pages outputs contain only aggregate audit counts, safe diagnostics and expiry-date counts, not raw price rows.
 - Next bounded gate: independently reconcile full-session exact-strike Dhan OHLC against official NSE daily stock-option OHLC to test the expiryCode=1 selection. No strategy P&L until this identity and price-quality test passes; no profitability inference from the cross-check itself.
+
+
+## 2026-10-11 — Bounded selector calibration exhausted
+
+- User instructed: “Ok proceed!” after confirming Dhan subscription and rights.
+- Code-1 full-panel run [38126663036](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126663036): 28/28 API probes returned rows; 5/5 official NSE daily files downloaded; 88 full-session profiles; only 3 unique four-field OHLC matches (all expiry 2026-08-25); 0 expected rank-2 matches; 85 unmatched. No raw rows persisted.
+- One code-0 near/current selector calibration [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683) returned HTTP 400 / DH-905 / “expiryCode is required” on the first ICICIBANK CALL ATM request. The run stopped with 0 data probes returned; no identity comparison could be made.
+- Terminal action for this bounded calibration: stop searching expiry selectors. No strategy P&L or strategy promotion; require provider-confirmed contract identity or an authorized alternative historical contract dataset. Raw data remain ephemeral/public aggregates only.
