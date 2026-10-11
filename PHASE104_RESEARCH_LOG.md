@@ -103,3 +103,9 @@
 - Aggregate audit result is unchanged: 22 official archives, 18,082 rows, 100% identity/OHLC completeness, zero duplicate daily keys, zero date mismatches, no source/schema errors; raw rows were neither committed nor uploaded.
 - Fee model regression tests and data-audit tests passed. The automatic status logger now preserves an explicitly closed phase when subsequent data-only validation runs occur.
 - Phase 104 closeout remains unchanged: contract identity PASS; execution/cost evidence gate NO-GO for strategy P&L; no strategy backtested, ranked or promoted.
+
+## Follow-up source review — 2026-10-11
+
+Official NSE pages identify a subscription route for historical F&O trade and order/trade data, but do not publicly confirm the precise historical bid/ask/depth fields for expired individual stock options or the project's intended cache/derived-publication rights. NSE's data policy says subscriber agreements specify intended use and handling. Global Datafeeds advertises historical options APIs and live L1 bid/ask, but its public terms restrict usage to single-subscriber charting/analysis and require approvals for simulation/virtual trading. Sources and caveats are recorded in results/phase104/SOURCE_SCREEN.md.
+
+Phase 104 remains closed. No further broad download sweep or strategy P&L was started. The next prerequisite is written provider confirmation of contract identity, historical quote/trade granularity, automated research permissions, retention and publication rights. No purchase or provider contact was made.
