@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import nse_backfill
 import niftyindices_history
+import dhan_rolling_options
 
 
 def zipped_csv(headers, rows, filename="sample.csv"):
@@ -88,6 +89,32 @@ class TestNiftyIndicesHistory(unittest.TestCase):
         self.assertEqual(result["row_count"],2)
         self.assertEqual(result["rows_with_missing_OHLC"],1)
         self.assertEqual(result["invalid_OHLC_rows"],0)
+
+class TestDhanRollingOptions(unittest.TestCase):
+    def test_chunk_windows_are_disjoint_and_at_most_30_days_inclusive(self):
+        start=date(2024,10,1); end=date(2025,1,1)
+        windows=list(dhan_rolling_options.chunks(start,end))
+        self.assertEqual(windows[0][0],start)
+        self.assertEqual(windows[-1][1]+dhan_rolling_options.timedelta(days=1),end)
+        for left,right in windows:
+            self.assertLessEqual((right-left).days,29)
+        for first,second in zip(windows,windows[1:]):
+            self.assertEqual(first[1]+dhan_rolling_options.timedelta(days=1),second[0])
+
+    def test_dhan_rolling_series_quality_and_strike_changes(self):
+        rows=[
+          {"timestamp":"2024-10-01 09:15:00","strike":25000,"open":100,"high":105,"low":95,"close":101,"iv":18.2,"volume":25,"oi":1000,"spot":25010},
+          {"timestamp":"2024-10-01 09:20:00","strike":25000,"open":101,"high":108,"low":98,"close":104,"iv":18.4,"volume":30,"oi":1100,"spot":25025},
+          {"timestamp":"2024-10-01 09:25:00","strike":25050,"open":104,"high":109,"low":100,"close":106,"iv":18.1,"volume":35,"oi":1200,"spot":25048},
+        ]
+        result=dhan_rolling_options.audit_rows(rows)
+        self.assertEqual(result["rows"],3)
+        self.assertEqual(result["unique_observed_dates"],1)
+        self.assertEqual(result["positive_unique_strikes"],2)
+        self.assertEqual(result["strike_transition_count"],1)
+        self.assertEqual(result["invalid_ohlc_rows"],0)
+        self.assertEqual(result["invalid_or_missing_iv_rows"],0)
+        self.assertEqual(result["invalid_or_missing_volume_rows"],0)
 
 
 if __name__=="__main__":
