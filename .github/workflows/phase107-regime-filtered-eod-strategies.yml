@@ -1,0 +1,79 @@
+name: Phase 107 — Regime-filtered EOD option candidates
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date inclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-02"
+        type: string
+      to_date:
+        description: "End date exclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-10-02"
+        type: string
+  push:
+    branches:
+      - phase-107-regime-filtered-eod-strategies
+    paths:
+      - "PHASE107_RESEARCH_PLAN.md"
+      - "research/phase107_eod_ohlc_strategy_pilot.py"
+      - "tests/phase107/**"
+      - ".github/workflows/phase107-regime-filtered-eod-strategies.yml"
+
+concurrency:
+  group: phase107-regime-filtered-eod-strategies
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  screen-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PHASE107_FROM_DATE: ${{ inputs.from_date || '2026-09-02' }}
+      PHASE107_TO_DATE: ${{ inputs.to_date || '2026-10-02' }}
+    steps:
+      - name: Checkout Phase 107 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-107-regime-filtered-eod-strategies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Regression and boundary tests
+        id: tests
+        run: python -m unittest discover -s tests/phase107 -p "test_*.py" -v
+      - name: Run fixed six-candidate screen
+        id: pilot
+        if: steps.tests.outcome == 'success'
+        run: |
+          python research/phase107_eod_ohlc_strategy_pilot.py \
+            --from-date "$PHASE107_FROM_DATE" \
+            --to-date "$PHASE107_TO_DATE"
+      - name: Upload aggregate-only outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase107-regime-filtered-eod-strategies
+          path: results/phase107/**
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Publish aggregate results
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase107 PHASE107_STATUS.md PHASE107_RESEARCH_LOG.md PHASE107_ERROR_LOG.md
+          if git diff --cached --quiet; then
+            echo "No aggregate output changes."
+          else
+            git commit -m "Phase 107: publish strategy screening results"
+            git fetch origin phase-107-regime-filtered-eod-strategies
+            git rebase origin/phase-107-regime-filtered-eod-strategies
+            git push origin HEAD:phase-107-regime-filtered-eod-strategies
+          fi
