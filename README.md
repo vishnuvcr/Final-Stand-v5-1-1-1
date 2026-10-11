@@ -1,15 +1,31 @@
 <!-- PHASE107_REGIME_FILTERED_START -->
 # Phase 107 — Regime-filtered EOD option candidates (2026-10-12)
 
-**Status: REGISTERED; automated run pending. No strategy promoted.** This exploratory screen adds three fixed candidates to the Phase 106 baselines: momentum only after an absolute one-session move of at least 0.5%, reversal only below 0.5%, and reversal only at/above 0.5%. The threshold is fixed, not optimized. It reuses the already-inspected Phase 106 window (2026-09-02 inclusive to 2026-10-02 exclusive), so results cannot count as independent confirmation or select a live-trading winner.
+**Status: COMPLETE AS EXPLORATORY SCREEN; NO STRATEGY PROMOTED.** Workflow [38167042024](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38167042024) passed tests, the source gate, the replay, all 144 cost-scenario accounting checks and aggregate publication.
 
-- [Phase 107 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-107-regime-filtered-eod-strategies)
-- [Registered plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_RESEARCH_LOG.md) · [error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_ERROR_LOG.md) · [visible chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_CHAT_LOG.md)
-- [Python runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/research/phase107_eod_ohlc_strategy_pilot.py) · [tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-107-regime-filtered-eod-strategies/tests/phase107) · [manual/automatic workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/.github/workflows/phase107-regime-filtered-eod-strategies.yml)
+## Primary after-cost proxy results
+Window: 2026-09-02 inclusive to 2026-10-02 exclusive. Assumptions: ₹20 brokerage per order, ₹0.25 adverse slippage per option unit per side, 1.0× modeled fees.
 
-The workflow is registered for branch pushes and manual dispatch, and will publish aggregate-only output. Six candidates × 24 cost combinations = 144 planned scenarios. Costs include Paytm Money brokerage sensitivity, modeled statutory fees, and adverse slippage; account-specific contract-note costs and executable fills remain unverified. No promotion is permitted from this reused sample.
+| Candidate | Proxy trades | Net P&L | Return on premium | Max drawdown |
+|---|---:|---:|---:|---:|
+| MOMENTUM_ATM | 95 | -₹57,392.82 | -4.9831% | ₹93,318.30 |
+| REVERSAL_ATM | 95 | -₹51,308.17 | -4.2106% | ₹87,274.01 |
+| MOMENTUM_OI_CONFIRM | 65 | -₹10,630.92 | -1.2363% | ₹51,594.51 |
+| LARGE_MOVE_MOMENTUM | 67 | -₹45,941.08 | -6.0254% | ₹76,429.24 |
+| SMALL_MOVE_REVERSAL | 28 | -₹29,635.78 | -8.4436% | ₹34,237.13 |
+| LARGE_MOVE_REVERSAL | 67 | -₹21,672.39 | -2.4981% | ₹57,030.77 |
+
+All six candidates were negative in the primary case and in strict stress (₹20/order, ₹0.50 adverse slippage per unit per side, 1.5× modeled fees). The small-move reversal descriptive bootstrap interval did not cross zero in this reused sample, but it is not independent confirmation and cannot override multiple-comparison/selection bias. This is an OHLC execution proxy, not verified fills.
+
+## Phase 107 files
+- [Isolated branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-107-regime-filtered-eod-strategies)
+- [Plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_ERROR_LOG.md) · [visible chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_CHAT_LOG.md)
+- [Full report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/results/phase107/PHASE107_REPORT.md) · [144-scenario CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/results/phase107/summary.csv) · [structured summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/results/phase107/summary.json) · [decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/results/phase107/decision.json) · [sensitivity figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/results/phase107/figures/net_pnl_by_slippage.svg)
+
+The sample was already inspected in Phase 106; this phase is exploratory screening only. The 0.5% threshold was fixed before replay and not optimized. Modeled brokerage includes Paytm Money sensitivity, but the user's actual contract note is unverified. No strategy is promoted, and no raw market rows or per-trade prices are published.
 
 <!-- PHASE107_REGIME_FILTERED_END -->
+
 
 <!-- PHASE106_FORWARD_REPLICATION_START -->
 # Phase 106 — Forward EOD Replication (2026-10-11)
