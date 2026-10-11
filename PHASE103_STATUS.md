@@ -398,3 +398,11 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - [ ] Expiry identity, legal data-use rights, historical bid/ask/depth and cost modelling remain separate blockers.
 
 **State:** EXACT-STRIKE COVERAGE DIAGNOSTIC IMPLEMENTED; RUNTIME VERIFICATION PENDING; NO STRATEGY P&L OR PROMOTION.
+
+
+## Latest verified Actions run — 38115661084
+- Unit tests: 20 passed.
+- Dhan retrieval: 28/28 probes returned rows for ICICIBANK CALL, RELIANCE CALL/PUT and SBIN CALL; requested window 2026-08-03 inclusive to 2026-08-10 exclusive; zero out-of-window rows.
+- Artifact upload: succeeded. [Run and artifact](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38115661084).
+- Repository publication: **failed** at final non-fast-forward push due to concurrent branch advancement. Checked-in JSON/report remain from run 38115153795; the new run is not yet the canonical committed audit.
+- Next: reconcile fresh exact-strike coverage from the run artifact and correct safe concurrent result publication. Expiry identity, source rights, execution prices and Paytm Money cost assumptions remain hard gates. No strategy P&L or promotion.
