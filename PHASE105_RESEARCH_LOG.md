@@ -6,7 +6,7 @@
 - Re-read the main README and Phase 104's plan, terminal status, cost gate, error log, chat log and source/audit code before creating this phase.
 - Phase 104 finding preserved: 18,082 selected rows across 22 official NSE archive dates; identity and OHLC completeness passed; no strategy P&L was run in Phase 104.
 - Opened this isolated Phase 105 branch from Phase 104, rather than modifying Phase 104 evidence.
-- Frozen five-stock universe, dates, three candidate rules, prior-information-only selector, next-session-open/same-session-close proxy, brokerage/fee/slippage grid, bootstrap, accounting gates and finite stop rules in \`PHASE105_RESEARCH_PLAN.md\`.
+- Frozen five-stock universe, dates, three candidate rules, prior-information-only selector, next-session-open/same-session-close proxy, brokerage/fee/slippage grid, bootstrap, accounting gates and finite stop rules in `PHASE105_RESEARCH_PLAN.md`.
 
 ## 2026-10-11 — Steps 105.1–105.4: automated pilot complete
 
@@ -18,7 +18,7 @@
 - Strict stress (₹20/order, ₹0.50/unit/side, 1.5× fees): MOMENTUM_ATM -₹144,436.93, REVERSAL_ATM -₹11,709.36, MOMENTUM_OI_CONFIRM -₹102,999.67.
 - Accounting reconciliation passed; scenario trade counts do not vary with costs; all raw market rows and per-trade price records remained unpublished.
 - Final decision: complete only as an exploratory OHLC execution-proxy pilot. No strategy promoted. The sample is one previously inspected month and cannot validate real-world execution or prove profitability.
-- Published report, compact structured summary, 72-row scenario CSV, decision JSON, and aggregate cost-sensitivity SVG in \`results/phase105/\`. The automatic/manual-dispatch workflow is \`.github/workflows/phase105-eod-ohlc-strategy-pilot.yml\`.
+- Published report, compact structured summary, 72-row scenario CSV, decision JSON, and aggregate cost-sensitivity SVG in `results/phase105/`. The automatic/manual-dispatch workflow is `.github/workflows/phase105-eod-ohlc-strategy-pilot.yml`.
 
 ## Future work boundary
 
