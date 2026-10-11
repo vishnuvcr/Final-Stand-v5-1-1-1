@@ -30,5 +30,6 @@
 - Hugging Face dataset card inspection : **METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED**; candidates=; bars=.
 - Hugging Face dataset card inspection : **METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED**; candidates=; bars=.
 - Hugging Face dataset card inspection : **METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED**; candidates=; bars=.
+- Official NSE legacy/UDiFF boundary + recent session probes: 3/3 passed; overall=PASS.
 - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
 

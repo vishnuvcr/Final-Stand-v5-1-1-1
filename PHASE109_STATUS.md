@@ -10,7 +10,8 @@ Promotion: **NONE**
 - [x] 109.1 Register 1,025 rule-architecture combinations from 41 signal cores × 5 confirmation structures × 5 regime gates; exact duplicate fingerprints: 0.
 - [x] 109.2 Compile every applicable Cartesian parameter space and deterministic cost-row shard manifest. Minimum configurations per family: 78,400; total family-configuration pairs: 325,124,800; 24 cost cases create 7,802,995,200 cost-adjusted rows across 3,902 shards.
 - [x] Registry self-test: PASS; contiguous shard coverage reconciled.
-- [x] Run initial Dhan/Hugging Face source-access and discovery checks.
+- [x] Run initial Dhan/Hugging Face source-access, discovery and dataset-card checks.
+- [x] Probe official NSE legacy/UDiFF schema boundary and a recent official session: Official NSE legacy/UDiFF boundary + recent session probes: 3/3 passed; overall=PASS.
 
 ## Still pending
 - [ ] 109.3 Validate licensed historical datasets, point-in-time fields, longer chronologically split development/validation/untouched test windows and contract identity.
@@ -22,6 +23,7 @@ Promotion: **NONE**
 `total_family_configuration_pairs` and `total_cost_adjusted_rows` are manifest counts, **not completed backtests**. No family has been promoted. Families remain blocked/pending wherever historical inputs, source rights, point-in-time availability or execution-quality data have not passed audit.
 
 - [Grid compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md)
+- [Official NSE archive source-feasibility report](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) and [machine-readable audit](results/phase109/nse_archive_source_feasibility.json)
 - [Family registry](results/phase109/strategy_families.csv)
 - [Per-family configuration manifest](results/phase109/family_configuration_space.csv)
 - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
