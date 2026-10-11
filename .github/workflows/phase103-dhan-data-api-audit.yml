@@ -28,15 +28,6 @@ on:
         required: true
         default: "ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3"
         type: string
-      expiry_code:
-        description: "Dhan expiry selector (0 near/current, 1 next, 2 far)"
-        required: true
-        default: "1"
-        type: choice
-        options:
-          - "0"
-          - "1"
-          - "2"
   push:
     branches:
       - phase-103-nifty50-stock-options
@@ -64,7 +55,7 @@ jobs:
       PHASE103_PANELS: ${{ inputs.panels || 'ICICIBANK:CALL,RELIANCE:CALL,RELIANCE:PUT,SBIN:CALL' }}
       PHASE103_MAX_PROBES: ${{ inputs.max_probes || 28 }}
       PHASE103_STRIKES: ${{ inputs.strikes || 'ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3' }}
-      PHASE103_EXPIRY_CODE: ${{ inputs.expiry_code || '1' }}
+      PHASE103_EXPIRY_CODE: "1"
     steps:
       - name: Checkout isolated Phase 103 branch
         uses: actions/checkout@v4
