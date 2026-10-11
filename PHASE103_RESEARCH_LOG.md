@@ -275,3 +275,6 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Corrected the Actions command's duplicated `--strikes` argument and changed its default probe limit from 7 to 70 so automatic runs attempt the full configured panel.
 - The remediation commits are 7114e9601b8dc3a4a25d7a293162fd8ff45ccf44, 4d8e07634257c07a74fc8423c562c676bf06371e, and 8f0e7b345f8869e229f423acda860624a4569ffc.
 - Awaiting the post-fix Actions result. Do not promote partial surface groups or calculate strategy P&L until multi-session fixed-contract coverage and cost/data-rights gates pass.
+
+
+- Follow-up refinement after the initial fix: only the explicit `SUCCESS_EMPTY_FOR_REQUESTED_SIDE` state is non-fatal. All other inconsistent array payloads remain fatal, including malformed responses with zero timestamps. This avoids silently accepting malformed arrays as ordinary missing coverage. Post-fix Actions output remains pending; the old run 38090149633 JSON is not accepted as a rerun.
