@@ -1,51 +1,66 @@
-# Phase 109 — Exhaustive Finite Parameter-Grid Research Plan
+# Phase 109 — Strategy-Family Discovery and Exhaustive Validation Plan
 
-Branch: phase-109-exhaustive-parameter-grid. Parent: Phase 108. Registration only; execution is not complete until audited outputs are committed.
+Branch: phase-109-exhaustive-parameter-grid. Parent: Phase 108. Registration only; no 1,000-family screen has run yet.
 
-## Research question
-Across ten registered strategy families, which parameter configurations survive broad prespecified search after conservative costs, and do any survive a genuinely untouched chronological holdout?
+## Clarification of user's requirement
+The requirement is **at least 1,000 distinct strategy families**, not merely 1,000 parameter configurations. Each family must be a meaningfully different, explicitly specified rule architecture or hypothesis, not a renamed parameter tuple. Parameter tuning happens only after a family is defined. Each family must also receive at least 1,000 unique configurations of its own and every declared variable combination must be enumerated, so this is a minimum of 1,000,000 family-configuration evaluations before cost sensitivities. Full cost grid adds brokerage ₹10/₹15/₹20 per order × slippage ₹0/₹0.05/₹0.25/₹0.50 per unit per side × fee multipliers 1×/1.5× (24 cost cases), implying up to 24,000,000 family-configuration-cost rows. The runner must use chunking, resumable checkpoints and manifest hashes; never imply all rows were tested unless audit counts prove it.
 
-## Mandatory search size
-- Minimum 1,000 unique configurations per strategy family; at least 10,000 unique strategy-configuration pairs overall.
-- Enumerate every registered value for every variable by Cartesian product, not random sampling or post-result hand selection.
-- Save configuration IDs and the full finite search-space manifest before replay. Duplicate tuples prohibited. If a family has fewer than 1,000 distinct valid combinations, expand the preregistered finite grid before running; never pad counts with duplicates.
-- Evaluate every cost configuration for every parameter tuple. Report unique configurations separately from cost-scenario rows.
+## Research questions
+1. Which rule architectures across trend, mean-reversion, volatility, options flow, Greeks, cross-asset, market breadth, regime, event and risk-control families are testable using legally available historical data?
+2. Which families survive costs, multiple-testing corrections, chronological validation and a single untouched OOS evaluation?
+3. Which families are not testable because required historical inputs (e.g., Greeks, intraday quotes, global cross-asset timestamps) are unavailable or rights-restricted?
 
-## Frozen grid dimensions
-1. Signal lookback sessions: 1, 2, 3, 4, 5, 7, 10.
-2. Absolute-return/move threshold: 0%, 0.25%, 0.5%, 0.75%, 1%, 1.5%, 2%.
-3. Volatility lookback: 3, 5, 7, 10, 15 sessions.
-4. Volatility classification: rolling median; lower-/upper-third, with middle bucket no-trade.
-5. Strike target: ATM, 0.5% ITM, 0.5% OTM, 1% ITM, 1% OTM.
-6. Entry delay: next-session open only; no same-bar lookahead.
-7. Holding/exit: same-session close, 2-session close, 3-session close, expiry-aware close only if chronology/data permit.
-8. Stop/target: none; 10%/20%/30% premium stop; 10%/20%/30% premium target; combined pairs only where explicitly represented.
-9. OI confirmation: off, total near-ATM OI increase, same-side OI increase only where valid prior-day comparisons exist.
-10. Costs: brokerage ₹10/₹15/₹20 per order; adverse slippage ₹0/₹0.05/₹0.25/₹0.50 per unit per side; modeled fees 1×/1.5×.
+## Family registry and definition
+Create a versioned strategy-family registry with stable family IDs, unique human-readable hypotheses, exact mathematical rule definitions, input fields, temporal availability, applicable instrument universe, trade direction, exit/position sizing, risk rules, data prerequisites, costs, and exclusion reasons. Require independent tests for duplicate/near-duplicate rules; a family cannot be counted toward 1,000 just because a threshold changes. Register at least 1,000 distinct hypotheses across categories such as:
+- trend/momentum and breakouts;
+- mean-reversion and reversal;
+- realized-volatility/regime and range expansion;
+- option chain OI/volume/put-call structure;
+- Greeks/implied-volatility and skew/term structure where valid historical data exist;
+- spot/futures/basis/synthetic-futures relationships;
+- cross-index, global-market and cross-asset lead/lag;
+- breadth, sector rotation and constituent dispersion;
+- DII/FII flows and positioning;
+- event/corporate-action/news/sentiment where point-in-time data exist;
+- expiry/roll/microstructure and risk-budget/portfolio-construction overlays.
+These are research categories, not evidence that all data are available. Each family gets an explicit feasibility gate. Families requiring unavailable inputs are marked blocked, not approximated silently.
 
-The full Cartesian product may be large. Enumerate in bounded chunks and fail closed if any registered tuple is skipped. Declare strategy-family applicability masks before replay; inapplicable dimensions must be marked NA in the manifest. Ensure at least 1,000 unique valid tuples per family and evaluate all cost configurations for each.
+## Minimum experiment count
+- At least 1,000 unique strategy families, verified by registry IDs and distinct rule fingerprints.
+- At least 1,000 unique valid parameter configurations per family, with full Cartesian enumeration for the frozen finite grid.
+- All registered cost cases applied to every evaluated family/configuration tuple.
+- Minimum 1,000,000 family-configuration pairs, and 24,000,000 cost-adjusted rows if all 24 cost cases apply. Exact counts must be reported by feasible, blocked, attempted, completed and failed status; do not count blocked families as tested.
+- If computation/data volume exceeds workflow limits, split into deterministic shards with persisted manifests and resumable checkpoints; total coverage is complete only when every shard hash/count reconciles.
 
-## Data and validation
-- Use approved public NSE daily UDiFF source unless a separate rights-approved source is registered.
-- Phase 106–108 month is development/debug data only, never an independent holdout.
-- Acquire longer data where available; split chronologically into development, validation and untouched test periods before viewing grid results. Persist source hashes, coverage, missingness and archive manifest. Raw rows remain ephemeral unless redistribution rights are confirmed.
-- If sufficiently long, contract-consistent data cannot be acquired, the grid is a development diagnostic only; explicitly block OOS efficacy conclusions and stop without promotion.
-- Require exact same contract identity, observed target-session data, positive volume, valid OHLC and consistent lot size. OHLC remains a proxy, not executable bid/ask fills.
+## Parameter dimensions (family applicability declared up front)
+- Signal lookback: 1, 2, 3, 4, 5, 7, 10 sessions.
+- Return/move threshold: 0%, 0.25%, 0.5%, 0.75%, 1%, 1.5%, 2%.
+- Volatility lookback: 3, 5, 7, 10, 15 sessions.
+- Regime definition: rolling median; lower-/upper-third with middle no-trade; fixed quantiles only if preregistered.
+- Strike target: ATM, 0.5% ITM, 0.5% OTM, 1% ITM, 1% OTM.
+- Holding/exit: same-session close, 2-session close, 3-session close, expiry-aware close only if data permit.
+- Risk: none, 10%/20%/30% premium stop, 10%/20%/30% target and preregistered combined pairs.
+- OI confirmation: off, total near-ATM OI increase, same-side OI increase where valid.
+- Cost cases: 3 brokerage levels × 4 adverse-slippage levels × 2 modeled fee multipliers.
+Each family explicitly declares applicable dimensions; inapplicable dimensions are NA and are not falsely represented as tested. Any family with fewer than 1,000 valid distinct configurations must expand its grid before evaluation or be marked non-compliant.
+
+## Data, splits and execution
+- Approved public NSE daily UDiFF data are adequate only for daily OHLC proxy families. They do not supply all historical intraday bid/ask, option Greeks, India VIX, global timestamp-aligned feeds, historical news or DII/FII variables.
+- Seek data for all registered categories from official NSE/BSE sources, documented open datasets, Hugging Face/Kaggle/GitHub and published research, subject to license and point-in-time validity. Keep data provenance, revision, hashes and rights status.
+- Phase 106–108 month is development/debug only. Build chronological development, validation and untouched test splits from a longer dataset. If valid source history is unavailable, block affected family and do not fabricate/forward-fill unavailable inputs.
+- Require exact contract identity, observed target prices, positive volume, valid OHLC and consistent lot size. OHLC remains proxy, not verified executable fills.
 
 ## Statistics and anti-overfit
-- Record every configuration, not only winners; publish aggregate metrics and exclusions.
-- Primary outcomes: net P&L after brokerage, modeled statutory charges and adverse slippage; return on premium; drawdown; expectancy; profit factor; trade count and coverage.
-- Use session-cluster bootstrap intervals and a declared multiple-testing procedure (e.g. Holm for confirmatory tests); report total configurations. Naive best-of-grid P-values are not valid inference.
-- Compare development and validation without changing the frozen grid. Touch the final holdout once only after selection is frozen; if unavailable, mark blocked.
-- Include base and strict cost scenarios. Paytm Money charges remain estimates until compared to a real user-provided contract note.
+Publish all families/configurations and failure reasons, not just winners. Outcomes: net P&L after brokerage/fees/slippage, return on premium, drawdown, expectancy, profit factor, trade count, coverage and regime stability. Use session-cluster bootstrap, family-wise/multiple-testing correction (Holm or a justified alternative), and disclose total search size. Do not select on final holdout. Test only once after family and parameter selection freeze.
 
 ## Acceptance gates
-1. Tests prove deterministic grid generation, unique IDs, at least 1,000 unique tuples per family and full Cartesian enumeration.
-2. Evaluated count equals manifest count × declared cost scenarios; no missing combinations.
-3. Source and contract identity gates pass.
-4. Accounting reconciles gross minus slippage minus fees to net within ₹0.10 aggregate tolerance.
-5. Commit results, coverage, skipped-configuration reasons, figures, manifest, logs and README links.
-6. No strategy promotion without untouched chronological OOS, multiple-testing control and conservative costs. A grid run alone cannot justify live deployment.
+1. 1,000 distinct family registry entries and duplicate/near-duplicate audit.
+2. At least 1,000 unique parameter tuples per family and complete Cartesian manifest.
+3. All cost cases evaluated for each eligible tuple; shard counts and hashes reconcile.
+4. Data and contract identity gates pass for any claimed empirical result.
+5. Accounting reconciles gross less adverse execution adjustment and fees to net.
+6. Publish registry, feasibility matrix, all-run manifest, aggregate results, logs, figures, README and final research manuscript.
+7. No strategy promoted without independent OOS, multiple-testing control and credible execution evidence.
 
 ## Bounded phases
-109.0 register grid; 109.1 implement enumerator/manifest/tests; 109.2 data feasibility and chronological split; 109.3 run all configurations and costs; 109.4 statistical/accounting audit; 109.5 publish reports, manifest, aggregates, logs and README. Stop after 109.5 or a documented data/rights gate; do not search endlessly or relax gates to force a winner.
+109.0 register requirement; 109.1 build 1,000-family registry and novelty/feasibility audit; 109.2 deterministic 1,000-configuration-per-family generator and shard manifest; 109.3 source acquisition/chronological splits; 109.4 execute all feasible family/configuration/cost rows; 109.5 statistical/accounting audit; 109.6 publish reports and stop. If resource or data gates prevent completion, report exact tested count and block promotion rather than claim exhaustive completion.
