@@ -1,7 +1,7 @@
 <!-- PHASE103_STOCK_OPTIONS_START -->
 # Phase 103 — NIFTY 50 constituent stock-options research
 
-**Status: Dhan token/API access confirmed; common-session ATM data passed across all five stocks; fixed-contract continuity is being audited.** Prior index-options research/data remain frozen on their original branches. No stock-options strategy backtest or profitability ranking has been performed.
+**Status: Dhan access confirmed; common-session ATM data passed; expanded fixed-contract surface audit is being rerun after an empty-side handling correction.** Prior index-options research/data remain frozen on their original branches. No stock-options strategy backtest or profitability ranking has been performed.
 
 - [Phase 103 isolated branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options)
 - [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_RESEARCH_LOG.md) · [error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_ERROR_LOG.md)
@@ -10,9 +10,9 @@
 
 **Verified ATM data run:** [38089393338](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089393338) passed 13 tests and all 10 probes (five stocks × CALL/PUT) for 2026-08-03 IST. Each probe returned 385 minute rows with consistent arrays and zero out-of-window rows. The token is injected from Actions secrets and never logged; raw minute bars are not published.
 
-**Initial strike-surface result:** [38089913649](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38089913649) returned all seven HDFCBANK CALL offset series. Six offsets had 385 rows and ATM-3 had 384; six actual strikes covered every timestamp, eight actual strikes were seen in total, and there were no duplicate timestamp/strike keys. Strict seven-offset alignment is nevertheless **FAIL** because one timestamp was absent in ATM-3. Missing values remain missing.
+**Expanded strike-surface result:** [38090149633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38090149633) returned 59/60 probes before the first empty/invalid INFY CALL ATM+3 requested-side payload stopped the scan. This was an acquisition-control defect plus a genuine missing-coverage observation; the incomplete run is not a surface PASS. The code now records empty sides as zero-row coverage observations and continues, tests that behavior, removes a duplicated CLI argument, and sets the automated run's default to all 70 probes. Post-fix verification is pending.
 
-Next gate: expand the seven-offset audit across the other stocks and PUT sides, track each exact-strike coverage and do not infer fixed-contract P&L from rolling ATM labels. Historical bid/ask/depth and data retention/republication rights are not yet verified. Paytm Money brokerage, levies, spread, slippage, latency and execution feasibility must be included before candidate strategy testing. No strategy is promoted.
+Next gate: verify the automated 70-probe run and exact-strike coverage across all five stocks and CALL/PUT sides. Historical bid/ask/depth and data retention/republication rights remain unverified. Paytm Money brokerage, levies, spread, slippage, latency and execution feasibility must be included before candidate strategy testing. No strategy is promoted.
 <!-- PHASE103_STOCK_OPTIONS_END -->
 
 <!-- PHASE101_AUDIT_START -->
