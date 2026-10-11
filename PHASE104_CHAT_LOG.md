@@ -28,3 +28,9 @@ This log records visible user instructions and research decisions only; it does 
 - Reviewed official NSE historical order/trade subscription information, real-time feed level descriptions and NSE Data Sharing & Usage Policy; also reviewed Global Datafeeds' published API scope and terms.
 - Conclusion: there is a credible inquiry path for historical F&O order/trade data, but the public pages do not prove historical bid/ask/depth for expired stock options or rights for automated backtesting/caching/publication. Global Datafeeds requires clarification because its public terms restrict simulation/virtual-trading uses without approvals.
 - Phase 104 remains terminal and unchanged: EOD identity pass, executable strategy P&L gate NO-GO, no strategy promoted. No purchase or external contact was made.
+
+## 2026-10-11 — Resume source-eligibility follow-up
+
+- Re-read the registered plan, terminal status, error log, research log and README.
+- Reviewed official NSE historical order/trade subscription information, real-time feed levels and NSE Data Sharing & Usage Policy, plus Global Datafeeds' public API/terms page.
+- Decision: a credible inquiry path exists, but exact historical quote coverage and rights for automated backtesting/cache/publication remain unverified. Phase 104 remains closed, strategy P&L NO-GO, no strategy promoted. No purchase or external contact was made.
