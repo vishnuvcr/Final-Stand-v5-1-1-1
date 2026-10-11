@@ -19,3 +19,9 @@
 - Paytm Money pricing: https://www.paytmmoney.com/stocks/pricing
 
 **Access vs rights:** technical download success is not proof of rights to cache, redistribute or publish raw records. The working policy is aggregate-only outputs until the relevant rights are documented.
+
+## Final Phase 104.1 audit result and Phase 104.2 stop decision — 2026-10-11
+
+Official NSE archives in run [38129389678](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129389678) parsed successfully for 22 trading days in the 30-calendar-day sample. The fixed five-stock set had 18,082 daily stock-option rows, 100% identity and OHLC completeness, zero duplicate daily contract keys, and zero date mismatch/source-schema errors. Zero-volume observations (5,922) were separated from positive-volume (12,160) and missing (0) records. Per-symbol counts are in [NSE_EOD_DATA_AUDIT.md](NSE_EOD_DATA_AUDIT.md), and the figure is [eod_contract_rows_by_symbol.svg](figures/eod_contract_rows_by_symbol.svg).
+
+The official daily archive is accepted for bounded daily contract identity and descriptive coverage, not for executable fills. Raw NSE records are not cached or published because the right to do so was not independently verified. Paytm Money fee arithmetic is available as a source-based, date-effective scenario model, but account-specific brokerage and contract-note reconciliation remain outstanding. Historical bid/ask/depth, queue and fill evidence are missing, so strategy P&L remains NO-GO. See [execution/cost gate](EXECUTION_AND_COST_GATE.md) and [final manuscript](PHASE104_FINAL_MANUSCRIPT.md).
