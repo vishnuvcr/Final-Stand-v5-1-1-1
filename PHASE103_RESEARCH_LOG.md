@@ -344,3 +344,7 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Updated `dhan_data_audit.py` to report per-actual-strike minute counts, union coverage percentage, UTC boundaries and per-IST-date counts. Raw price/OI/volume arrays remain ephemeral; only aggregate strike coverage is published.
 - Added a regression test for unequal offset timestamps with measurable exact-strike coverage. Commits: `3848124afe46635a7bbc761bab268c8f2186313b`, `1e1a94e0b8d9b13028cbe4c23c0551813135b04c`, `c5ac2361c62af1f6995e22570c4442d933983742`.
 - This diagnostic correction does not relax contract/expiry identity, data-use rights, historical bid/ask/depth or execution-cost gates. A fresh Actions run is required before accepting the result.
+
+
+## 2026-10-11 — Run 38115661084 execution result
+The fresh run passed 20 unit tests and completed all 28 selected Dhan probes with rows and zero out-of-window timestamps. It uploaded an aggregate artifact, but the workflow's result commit failed non-fast-forward because the branch advanced concurrently. The checked-in aggregate report/JSON are still from run 38115153795; the newer run must not be represented as committed repository data until reconciled. No strategy P&L was run. Next: inspect the exact-strike diagnostic from the run artifact, reconcile it with current branch state, and fix safe result publication concurrency.
