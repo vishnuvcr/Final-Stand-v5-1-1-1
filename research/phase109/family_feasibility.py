@@ -75,11 +75,11 @@ def main():
     bank=index_summary.get("NIFTY BANK",{})
     vix=index_summary.get("INDIA_VIX",{})
     option_ok=bool(nse_rows and nse_pos and nse_id and nse_prices)
-    index_ok=bool(nifty.get("unique_date_count",0) and bank.get("unique_date_count",0))
-    vix_ok=bool(vix.get("unique_date_count",0) and not vix.get("invalid_OHLC_rows",0))
+    index_ok=bool(index.get("overall_status")=="PASS" and nifty.get("unique_date_count",0) and bank.get("unique_date_count",0))
+    vix_ok=bool(index.get("overall_status")=="PASS" and vix.get("unique_date_count",0) and not vix.get("invalid_OHLC_rows",0) and not vix.get("rows_with_missing_OHLC",0))
     future_ok=bool(get_num(fut,"dates_with_selected_index_futures") and not get_num(fut,"invalid_ohlc_positive_volume_rows"))
     dhan_ok=bool(dhan.get("summary",{}).get("rows",0) and dhan.get("summary",{}).get("invalid_ohlc_rows",0)==0)
-    model_greeks_ok=bool(model_greeks.get("valid_model_greek_rows",0) and model_greeks.get("udiff_dates_parsed",0))
+    model_greeks_ok=bool(model_greeks.get("status")=="PASS" and model_greeks.get("valid_model_greek_rows",0) and model_greeks.get("udiff_dates_parsed",0))
     caps={
       "underlying_close":(option_ok,"Official option archive/underlying observations present; per-symbol coverage still required"),
       "underlying_ohlc":(index_ok,"Official NIFTY 50/NIFTY BANK daily OHLC only; not all underlying indices"),
