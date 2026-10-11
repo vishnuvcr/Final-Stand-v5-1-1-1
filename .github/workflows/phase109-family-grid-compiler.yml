@@ -55,6 +55,12 @@ jobs:
         run: |
           set -euo pipefail
           python research/phase109/family_grid.py --mode source-audit --out results/phase109
+
+      - name: Probe official NSE legacy and UDiFF daily archives
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/nse_archive_probe.py
+          python research/phase109/nse_archive_probe.py
           # Do not print credentials, request headers, or authenticated response payloads.
           python - <<'PY'
           import json
@@ -76,6 +82,9 @@ jobs:
           summary = json.loads(Path("results/phase109/phase109_grid_summary.json").read_text(encoding="utf-8"))
           source = json.loads(Path("results/phase109/source_access_summary.json").read_text(encoding="utf-8"))
           audits = list(csv.DictReader(Path("results/phase109/source_access_audit.csv").open(encoding="utf-8")))
+          nse_report = json.loads(Path("results/phase109/nse_archive_source_feasibility.json").read_text(encoding="utf-8"))
+          nse_pass_count = sum(1 for p in nse_report["probes"] if p.get("status") == "SCHEMA_AND_ROWS_PROBED")
+          nse_summary_line = f"Official NSE legacy/UDiFF boundary + recent session probes: {nse_pass_count}/{len(nse_report['probes'])} passed; overall={nse_report['overall_status']}."
           now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
           source_lines = "\n".join(
               f"- {row.get('source')} {row.get('query', '')}: **{row.get('status')}**; "
@@ -94,7 +103,8 @@ jobs:
           - [x] 109.1 Register {summary['family_count']:,} rule-architecture combinations from 41 signal cores × 5 confirmation structures × 5 regime gates; exact duplicate fingerprints: {summary['exact_duplicate_fingerprints']}.
           - [x] 109.2 Compile every applicable Cartesian parameter space and deterministic cost-row shard manifest. Minimum configurations per family: {summary['configurations_per_family_min']:,}; total family-configuration pairs: {summary['total_family_configuration_pairs']:,}; 24 cost cases create {summary['total_cost_adjusted_rows']:,} cost-adjusted rows across {summary['shard_count']:,} shards.
           - [x] Registry self-test: PASS; contiguous shard coverage reconciled.
-          - [x] Run initial Dhan/Hugging Face source-access and discovery checks.
+          - [x] Run initial Dhan/Hugging Face source-access, discovery and dataset-card checks.
+          - [x] Probe official NSE legacy/UDiFF schema boundary and a recent official session: {nse_summary_line}
 
           ## Still pending
           - [ ] 109.3 Validate licensed historical datasets, point-in-time fields, longer chronologically split development/validation/untouched test windows and contract identity.
@@ -106,6 +116,7 @@ jobs:
           `total_family_configuration_pairs` and `total_cost_adjusted_rows` are manifest counts, **not completed backtests**. No family has been promoted. Families remain blocked/pending wherever historical inputs, source rights, point-in-time availability or execution-quality data have not passed audit.
 
           - [Grid compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md)
+          - [Official NSE archive source-feasibility report](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) and [machine-readable audit](results/phase109/nse_archive_source_feasibility.json)
           - [Family registry](results/phase109/strategy_families.csv)
           - [Per-family configuration manifest](results/phase109/family_configuration_space.csv)
           - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
@@ -124,6 +135,7 @@ jobs:
           - Self-test: PASS. This verifies count, distinct architecture fingerprints, valid per-family Cartesian counts, 24 cost scenarios and contiguous shard ranges only; it does not run the strategies.
           - Source-access findings:
           {source_lines}
+          - {nse_summary_line}
           - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
           """
           if marker in old_log:
@@ -151,6 +163,10 @@ jobs:
           if hf_card_reviews:
               card_list = "; ".join(f"{row.get('dataset_id')} (license={row.get('license', 'NOT_DECLARED')})" for row in hf_card_reviews)
               errors.append(f"- Hugging Face candidates requiring rights/schema/data-provenance review before use: {card_list}. These are source limitations, not a technical workflow failure; the registry remains blocked until audit.")
+          if nse_report.get("overall_status") != "PASS":
+              for p in nse_report.get("probes", []):
+                  if p.get("status") != "SCHEMA_AND_ROWS_PROBED":
+                      errors.append(f"- Official NSE archive probe failed for {p.get('expected_date')}: {p.get('attempts', p.get('status'))}")
           errors.extend([
               "- This step enumerated the hypothesis/configuration space but evaluated no strategy returns; count totals must never be reported as backtests.",
               "- Dhan endpoint data, if returned, were limited to a small access/schema probe. Full-window coverage, historical contract identity, source rights and fill realism remain unverified.",
@@ -190,7 +206,7 @@ jobs:
 
           - [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid)
           - [Status](PHASE109_STATUS.md) · [research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
-          - [Registry](results/phase109/strategy_families.csv) · [configuration space](results/phase109/family_configuration_space.csv) · [shard manifest](results/phase109/cost_row_shard_manifest.csv) · [source audit](results/phase109/source_access_audit.csv) · [compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md)
+          - [Registry](results/phase109/strategy_families.csv) · [configuration space](results/phase109/family_configuration_space.csv) · [shard manifest](results/phase109/cost_row_shard_manifest.csv) · [source audit](results/phase109/source_access_audit.csv) · [compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md) · [official NSE archive feasibility](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md)
 
           Source-access checks do not prove dataset completeness or tradeability. Chronological splits, exact option contracts, transaction costs, slippage, multiple-testing correction and untouched OOS validation remain mandatory.
           <!-- PHASE109_GRID_STATUS_END -->"""
@@ -233,4 +249,6 @@ jobs:
             results/phase109/source_access_audit.csv
             results/phase109/huggingface_dataset_candidates.json
             results/phase109/source_access_summary.json
+            results/phase109/nse_archive_source_feasibility.json
+            results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md
           if-no-files-found: error
