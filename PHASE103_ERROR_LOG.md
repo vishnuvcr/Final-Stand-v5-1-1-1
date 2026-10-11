@@ -204,3 +204,10 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 
 
 **E103-017 verification addendum:** the continuation exception is restricted to the explicit successful-empty-side status. Inconsistent array payloads otherwise remain fatal, including zero-timestamp mismatches. This is a code-level correction only; no post-fix Actions result has yet been verified, so the audit remains pending and run 38090149633 remains rejected as incomplete.
+
+
+### E103-018 — Regression test placed after direct-run test guard
+**Type:** test-harness defect.  
+**Finding:** `EmptySideContinuationTests` was appended after `if __name__ == "__main__": unittest.main()`. Test discovery imports the module and sees the class, but direct execution invokes the runner before the class is defined.  
+**Correction:** moved the main guard to the end of `tests/phase103/test_dhan_audit.py` in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`.  
+**Verification:** awaiting the resulting GitHub Actions run; do not infer a passing test or data audit from the commit alone.
