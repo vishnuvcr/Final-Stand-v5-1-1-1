@@ -388,3 +388,13 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - [ ] Do not run strategy P&L until a licensed sample passes contract identity, timestamp/coverage, quote-quality and rights checks. If no eligible source is accessible, record terminal data NO-GO for this bounded branch.
 
 **State remains:** DATA ACQUISITION PASS; FIXED-CONTRACT / EXECUTION / RIGHTS GATES BLOCKED; NO STRATEGY P&L OR PROMOTION.
+
+
+## 2026-10-11 — Exact-strike coverage diagnostic correction
+
+- [x] Added per-actual-strike observation counts, union coverage percentages, timestamp boundaries and IST-date counts from the deduplicated timestamp/strike union. Identical timestamps across rolling ATM-relative offsets are no longer treated as a prerequisite for measuring a strike's observed coverage.
+- [x] Added a regression test for unequal offset timestamps with measurable exact-strike coverage.
+- [ ] Await the automatic GitHub Actions run triggered by code/test commits; accept the new diagnostic only after tests and a fresh API run pass.
+- [ ] Expiry identity, legal data-use rights, historical bid/ask/depth and cost modelling remain separate blockers.
+
+**State:** EXACT-STRIKE COVERAGE DIAGNOSTIC IMPLEMENTED; RUNTIME VERIFICATION PENDING; NO STRATEGY P&L OR PROMOTION.
