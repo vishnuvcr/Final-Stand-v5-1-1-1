@@ -13,3 +13,7 @@ Assistant action summary: added a deterministic family registry/grid compiler an
 
 ## 2026-10-12 — Grid compute-burden correction
 Assistant action summary: narrowed the number of candidate values per variable after the first registered grid expanded to 7.8 billion cost rows. The revised registry keeps all applicable declared variables and their complete Cartesian product but targets a compact ≥1,000 configurations per family. All 24 declared cost cases remain per eligible configuration. Compiler re-run will establish updated counts/hashes; no strategy rows are claimed tested by this correction.
+
+
+## 2026-10-12 — Applicable-axis correction and evaluator implementation
+Assistant action summary: removed volatility/regime axes from strategy families that do not use them, expanded distinct stop/target rules to nine so each family still has at least 1,080 configurations, and updated evaluation logic to preserve the untouched 2026-04 onward holdout. Implemented source/data-feasibility gates and a resumable evaluation workflow. The corrected manifest counts, automated transaction-cost adapter test, and source acquisition still have to pass before strategy performance can be reported; no promotion was made.
