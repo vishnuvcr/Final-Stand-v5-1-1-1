@@ -190,7 +190,7 @@ def write_csv(path: Path, rows, fields=None):
     path.parent.mkdir(parents=True, exist_ok=True)
     rows = list(rows)
     if fields is None:
-        fields = list(rows[0].keys()) if rows else []
+        fields = sorted({key for row in rows for key in row.keys()}) if rows else []
     with path.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
@@ -479,7 +479,18 @@ def source_audit(out_dir: Path):
         })
 
     hf_token = os.environ.get("HF_TOKEN", "").strip()
-    hf_cache = CACHE / "huggingface_market_dataset_discovery.json"
+    # Versioned cache prevents the previous overly narrow query set from hiding broader discovery.
+    hf_cache = CACHE / "huggingface_market_dataset_discovery_v2.json"
+    known_ids = [
+        "rissin/nse-options-intraday",
+        "thetrademarkk/india-index-options-1m",
+        "tejhq/indian-markets",
+        "AAdevloper/nifty50-market-regime",
+        "average-developer/stocks-INDIAVIX-1D-candles",
+        "vishnun0027/indian-market-historical-ohlcv",
+        "rahulkrraj/indian-stock-market-minute-data",
+        "GenAIDevTOProd/NIFTY-feature-enhanced",
+    ]
     discovery = None
     if hf_cache.exists() and time.time() - hf_cache.stat().st_mtime < 30 * 86400:
         try:
@@ -487,11 +498,14 @@ def source_audit(out_dir: Path):
         except Exception:
             discovery = None
     if discovery is None:
-        terms = ["NIFTY options historical", "India stock market NSE", "India VIX", "NSE derivatives open interest", "India financial news sentiment"]
-        discovery = {"queried_utc": now, "terms": {}, "authentication_used": bool(hf_token)}
+        terms = [
+            "NIFTY", "NSE bhavcopy", "indian markets", "india-index-options-1m",
+            "nse-options-intraday", "India VIX", "DII FII India", "India stock market minute",
+        ]
+        discovery = {"queried_utc": now, "terms": {}, "authentication_used": bool(hf_token), "known_dataset_cards": {}}
+        headers = {"Authorization": "Bearer " + hf_token} if hf_token else {}
         for term in terms:
-            url = "https://huggingface.co/api/datasets?" + urllib.parse.urlencode({"search": term, "limit": 10, "sort": "downloads", "direction": "-1"})
-            headers = {"Authorization": "Bearer " + hf_token} if hf_token else {}
+            url = "https://huggingface.co/api/datasets?" + urllib.parse.urlencode({"search": term, "limit": 20, "sort": "downloads", "direction": "-1"})
             code, raw, response = _http_json(url, headers=headers, timeout=30)
             entries = response if isinstance(response, list) else []
             discovery["terms"][term] = {
@@ -505,6 +519,28 @@ def source_audit(out_dir: Path):
                     "tags": item.get("tags", [])[:30],
                 } for item in entries if isinstance(item, dict)]
             }
+        # Inspect known candidate cards even when search relevance does not surface them.
+        for dataset_id in known_ids:
+            code, raw, card = _http_json("https://huggingface.co/api/datasets/" + dataset_id, headers=headers, timeout=30)
+            if code == 200 and isinstance(card, dict):
+                siblings = card.get("siblings", [])
+                card_data = card.get("cardData", {}) if isinstance(card.get("cardData"), dict) else {}
+                discovery["known_dataset_cards"][dataset_id] = {
+                    "http_status": code,
+                    "id": card.get("id", dataset_id),
+                    "lastModified": card.get("lastModified", ""),
+                    "createdAt": card.get("createdAt", ""),
+                    "downloads": card.get("downloads", 0),
+                    "gated": card.get("gated", False),
+                    "license": card_data.get("license", ""),
+                    "license_unverified": not bool(card_data.get("license")),
+                    "tags": card.get("tags", [])[:40],
+                    "file_count": len(siblings),
+                    "files": [{"path": item.get("rfilename", ""), "size": item.get("size")} for item in siblings[:100] if isinstance(item, dict)],
+                    "total_known_file_bytes": sum(item.get("size", 0) or 0 for item in siblings if isinstance(item, dict)),
+                }
+            else:
+                discovery["known_dataset_cards"][dataset_id] = {"http_status": code, "status": "CARD_LOOKUP_FAILED"}
         hf_cache.write_text(stable_json(discovery), encoding="utf-8")
     for term, result in discovery.get("terms", {}).items():
         ds = result.get("datasets", [])
@@ -518,6 +554,22 @@ def source_audit(out_dir: Path):
             "note": "Discovery only: each candidate still requires data-date, point-in-time, license, schema and leakage review before download/use.",
             "observed_utc": now,
         })
+    for dataset_id, card in discovery.get("known_dataset_cards", {}).items():
+        license_name = card.get("license", "")
+        audit.append({
+            "source": "Hugging Face dataset card inspection",
+            "dataset_id": dataset_id,
+            "status": ("CARD_LOOKUP_FAILED" if card.get("status") == "CARD_LOOKUP_FAILED" else
+                       ("METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED" if license_name else "METADATA_DISCOVERED_LICENSE_MISSING")),
+            "license": license_name or "NOT_DECLARED",
+            "last_modified": card.get("lastModified", ""),
+            "gated": card.get("gated", ""),
+            "file_count": card.get("file_count", ""),
+            "total_known_file_bytes": card.get("total_known_file_bytes", ""),
+            "cache_file": str(hf_cache.relative_to(ROOT)),
+            "note": "Metadata only; license declaration is not legal approval. Inspect card, origin and files before download; do not use unaudited labels/prices.",
+            "observed_utc": now,
+        })
 
     write_csv(out_dir / "source_access_audit.csv", audit)
     (out_dir / "huggingface_dataset_candidates.json").write_text(stable_json(discovery) + "\n", encoding="utf-8")
@@ -528,6 +580,7 @@ def source_audit(out_dir: Path):
         "hf_token_present": bool(hf_token),
         "dhan_cache_present": dhan_cache.exists(),
         "hf_discovery_cache_present": hf_cache.exists(),
+        "hf_dataset_cards_inspected": len(discovery.get("known_dataset_cards", {})),
         "source_statuses": [{k: v for k, v in row.items() if k not in {"note"}} for row in audit],
         "disclaimer": "Token presence is not printed as a value. No authenticated credential is written to files or artifacts."
     }
