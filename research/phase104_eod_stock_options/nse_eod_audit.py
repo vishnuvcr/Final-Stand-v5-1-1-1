@@ -26,6 +26,11 @@ INSTRUMENTS = {"STO", "OPTSTK"}
 
 def parse_date(value):
     value = str(value or "").strip()
+    if len(value) >= 10:
+        try:
+            return date.fromisoformat(value[:10]).isoformat()
+        except ValueError:
+            pass
     for fmt in ("%Y-%m-%d", "%d-%b-%Y", "%d-%B-%Y", "%Y%m%d"):
         try:
             return datetime.strptime(value, fmt).date().isoformat()
