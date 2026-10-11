@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-11  
 **Branch:** `phase-103-nifty50-stock-options`  
-**State:** PHASE 103.1B DATA ACCESS PASS; MULTI-SESSION SURFACE ALIGNMENT FAIL; FIXED-CONTRACT/P&L GATE BLOCKED  
+**State:** PHASE 103.1 DATA ACCESS PASS; EXACT-STRIKE COVERAGE DIAGNOSTIC VERIFIED; FIXED-CONTRACT / RIGHTS / EXECUTION GATES NO-GO; STRATEGY P&L NOT RUN  
 **Strategy promotion:** NONE  
 **Previous research:** frozen; no previous-phase data or conclusions changed.
 
@@ -16,7 +16,7 @@
 - [ ] Run registration workflow and verify its automated checks.
 - [x] Phase 103.1A: first-session Dhan screen completed; 68/70 offset probes returned rows, with four of ten stock/side alignment gates passing.
 - [x] Phase 103.1B: 28/28 API probes returned rows across five sessions for ICICIBANK CALL, RELIANCE CALL/PUT, SBIN CALL.
-- [ ] Phase 103.1C: diagnose strict cross-offset timestamp alignment failures and establish fixed contract/expiry identity; strategy P&L remains blocked.
+- [x] Phase 103.1C: corrected rolling-offset diagnostic and verified exact-strike coverage; per-row expiry/immutable contract identity remains unavailable, so strategy P&L remains blocked.
 - [ ] Phase 103.2: canonical contract/data and execution-cost audit.
 - [ ] Phase 103.3: preregister candidate rules and baselines.
 - [ ] Phase 103.4: chronological development and validation.
@@ -394,18 +394,19 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 
 - [x] Added per-actual-strike observation counts, union coverage percentages, timestamp boundaries and IST-date counts from the deduplicated timestamp/strike union. Identical timestamps across rolling ATM-relative offsets are no longer treated as a prerequisite for measuring a strike's observed coverage.
 - [x] Added a regression test for unequal offset timestamps with measurable exact-strike coverage.
-- [ ] Await the automatic GitHub Actions run triggered by code/test commits; accept the new diagnostic only after tests and a fresh API run pass.
+- [x] Exact-strike diagnostic runtime-verified by run 38124954633; the explicit expiry-identity blocker was separately verified by 21 passing tests and successful workflow run 38125302970.
 - [ ] Expiry identity, legal data-use rights, historical bid/ask/depth and cost modelling remain separate blockers.
 
 **State:** EXACT-STRIKE COVERAGE DIAGNOSTIC IMPLEMENTED; RUNTIME VERIFICATION PENDING; NO STRATEGY P&L OR PROMOTION.
 
 
-## Latest verified Actions run — 38115661084
-- Unit tests: 20 passed.
-- Dhan retrieval: 28/28 probes returned rows for ICICIBANK CALL, RELIANCE CALL/PUT and SBIN CALL; requested window 2026-08-03 inclusive to 2026-08-10 exclusive; zero out-of-window rows.
-- Artifact upload: succeeded. [Run and artifact](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38115661084).
-- Repository publication: **failed** at final non-fast-forward push due to concurrent branch advancement. Checked-in JSON/report remain from run 38115153795; the new run is not yet the canonical committed audit.
-- Next: reconcile fresh exact-strike coverage from the run artifact and correct safe concurrent result publication. Expiry identity, source rights, execution prices and Paytm Money cost assumptions remain hard gates. No strategy P&L or promotion.
+## Latest verified Actions checkpoint — 2026-10-11
+
+- Run [38124954633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38124954633) passed end-to-end, returned 28/28 probes, reported zero out-of-window rows, and published its aggregate audit.
+- The exact-strike union diagnostic found zero duplicate (timestamp, actual-strike) keys in all four panels, but coverage differs by strike. It is **not** a fixed-contract PASS.
+- Script now exposes `contract_identity_status=BLOCKED_EXPIRY_NOT_RETURNED`. Fresh audit run [38125302970](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38125302970) passed 21 unit tests, all 28 probes, the result-artifact upload, and safe non-fast-forward reconciliation/commit publication.
+- Extended [source/rights screen](results/phase103/FIXED_CONTRACT_SOURCE_RIGHTS_SCREEN.md) found no verified free source satisfying exact expiry/contract identity, intraday executable-price evidence, and approved retention/cache rights together.
+- **Decision:** no strategy P&L, no stock-options profitability inference and no promotion. Current intraday stock-options gate is DATA NO-GO under the registered stop rule. Final report: [Phase 103 manuscript](results/phase103/PHASE103_FINAL_MANUSCRIPT.md).
 
 <!-- DHAN_API_RUN_38124954633_ATTEMPT_1 -->
 ### Latest Dhan API data gate
