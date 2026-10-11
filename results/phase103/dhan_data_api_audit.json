@@ -1,7 +1,7 @@
 {
   "phase": "103.1",
-  "run_id": "38126663036",
-  "generated_at_utc": "2026-10-11T08:58:14.929334+00:00",
+  "run_id": "38127207384",
+  "generated_at_utc": "2026-10-11T09:06:54.541842+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
     "to_exclusive": "2026-08-10",
@@ -29,10 +29,11 @@
     "ATM-3"
   ],
   "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
+  "requested_expiry_code": 1,
   "contract_identity_status": "BLOCKED_EXPIRY_EOD_CROSSCHECK",
   "expiry_identity_audit": {
     "status": "PARTIAL_EOD_EXPIRY_RECONCILIATION",
-    "method": "Exact-strike full-session Dhan OHLC aggregated in memory and matched to NSE UDiFF daily stock-option OHLC; expiryCode=1 is checked against the second future listed expiry",
+    "method": "Exact-strike full-session Dhan OHLC aggregated in memory and matched to NSE UDiFF daily stock-option OHLC; expiryCode=1 is checked against active listed-expiry rank 2",
     "source": "NSE official F&O UDiFF daily bhavcopy archive",
     "source_url_template": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_{date}_F_0000.csv.zip",
     "raw_rows_persisted": false,
@@ -51,6 +52,23 @@
     "conflicting_duplicate_key_count": 0,
     "matched_expiry_counts": {
       "2026-08-25": 3
+    },
+    "matched_expiry_rank_counts": {
+      "1": 3
+    },
+    "profiles_with_eod_contract_candidates": 88,
+    "price_field_match_counts": {
+      "open": 88,
+      "high": 48,
+      "low": 58,
+      "close": 7
+    },
+    "price_field_match_histogram": {
+      "0": 0,
+      "1": 13,
+      "2": 40,
+      "3": 32,
+      "4": 3
     },
     "safe_source_errors": []
   },
