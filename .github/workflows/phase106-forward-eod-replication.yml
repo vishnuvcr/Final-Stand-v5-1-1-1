@@ -1,0 +1,65 @@
+name: Phase 106 — Forward EOD Replication
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: "Start date inclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-02"
+        type: string
+      to_date:
+        description: "End date exclusive (YYYY-MM-DD)"
+        required: true
+        default: "2026-10-02"
+        type: string
+  push:
+    branches:
+      - phase-106-forward-eod-replication
+    paths:
+      - "PHASE106_RESEARCH_PLAN.md"
+      - "research/phase106_eod_ohlc_strategy_pilot.py"
+      - "tests/phase106/**"
+      - ".github/workflows/phase106-forward-eod-replication.yml"
+
+concurrency:
+  group: phase106-forward-eod-replication
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  forward-replication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PHASE106_FROM_DATE: ${{ inputs.from_date || '2026-09-02' }}
+      PHASE106_TO_DATE: ${{ inputs.to_date || '2026-10-02' }}
+    steps:
+      - name: Checkout isolated Phase 106 branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-106-forward-eod-replication
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run regression tests
+        id: tests
+        run: python -m unittest discover -s tests/phase106 -p "test_*.py" -v
+      - name: Run frozen forward replication
+        id: pilot
+        if: steps.tests.outcome == 'success'
+        run: |
+          python research/phase106_eod_ohlc_strategy_pilot.py \
+            --from-date "$PHASE106_FROM_DATE" \
+            --to-date "$PHASE106_TO_DATE"
+      - name: Upload aggregate-only outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase106-forward-eod-replication
+          path: results/phase106/**
+          if-no-files-found: warn
+          retention-days: 90
