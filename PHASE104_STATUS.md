@@ -2,7 +2,7 @@
 
 **Updated:** 2026-10-11  
 **Branch:** `phase-104-eod-stock-options`  
-**State:** PHASE 104.1 EOD CONTRACT IDENTITY PASS; EXECUTION/COST GATES PENDING
+**State:** COMPLETE — EOD CONTRACT IDENTITY PASS; EXECUTABLE STRATEGY-P&L GATE NO-GO
 **Strategy promotion:** NONE  
 **Phase 103:** frozen and unchanged; no intraday stock-options strategy P&L was run.
 
@@ -24,7 +24,7 @@
 
 ## Results checkpoint
 
-Canonical audit [run 38129389678](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129389678) completed successfully. For the 30-calendar-day window, 22 official daily archives produced 18,082 rows. Identity and OHLC completeness were both 100%; duplicate daily keys and date mismatches were zero. Archive hashes and aggregate-only results are recorded in `results/phase104/nse_eod_data_audit.json` and `results/phase104/NSE_EOD_DATA_AUDIT.md`.
+Canonical final locked-workflow audit [run 38129926977](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129926977) completed successfully. For the 30-calendar-day window, 22 official daily archives produced 18,082 rows. Identity and OHLC completeness were both 100%; duplicate daily keys and date mismatches were zero. Archive hashes and aggregate-only results are recorded in `results/phase104/nse_eod_data_audit.json` and `results/phase104/NSE_EOD_DATA_AUDIT.md`.
 
 Cost calculation is implementable as a schedule, but the user's account-specific Paytm Money brokerage tier/contract note was not inspected. More importantly, EOD OHLC cannot validate historical executable prices, spread, queue depth, latency, partial fills or market impact. The project does not impute these costs as zero.
 
