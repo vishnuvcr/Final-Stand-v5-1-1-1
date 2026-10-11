@@ -854,6 +854,7 @@ def main():
       f"- Completed shard ranges currently recorded: {len(completed):,}; cumulative attempted configs: {summary['completed_configs_all_ranges']:,}; cumulative cost rows: {summary['completed_cost_rows_all_ranges']:,}; remaining eligible configs: {summary['remaining_supported_configs']:,}.",
       f"- Archive dates loaded: {len(data['option_dates']):,}; source files loaded: {data['raw_archive_count']:,}; archive parse/duplicate warnings: {len(data['archive_errors']):,}.",
       f"- Cost model: `{cost_fn_name}`; P&L trade entries before {FIRST_COST_DATE.isoformat()} are blocked.",
+      "- Sample: "+args.sample+". Selection mode uses development/validation only; holdout mode must load the frozen validation shortlist and scores only 2026-04-01 through 2026-10-08.",
       "- All net results remain diagnostic, use EOD OHLC execution proxies, and are exposed to selection/multiple-testing bias. No strategy is promoted.",
       "- Public outputs contain per-configuration/per-cost summary metrics only; raw options rows and trade tapes remain private.",
       "- Cost-row summary: `evaluation_shards/"+path.name+"`; machine-readable shard summary: `evaluation_shard_summary.json`; resumable ledger: `evaluation_progress.json`.",
