@@ -160,6 +160,33 @@ def main():
                 failures.append({"series":kind,"from":chunk_start.isoformat(),"to":chunk_end.isoformat(),"error":type(e).__name__+":"+str(e)[:220]})
         time.sleep(0.15)
     # Merge output is only a metric; full rows remain cached privately.
+    # Publish only date keys and presence flags so archive misses can be separated
+    # from weekdays that were not exchange sessions without exposing prices.
+    calendar_dates=set()
+    for name, rows in merged.items():
+        datefield="date" if name=="INDIA_VIX" else "HistoricalDate"
+        for r in rows:
+            parsed=parse_d(r.get(datefield))
+            if parsed:
+                calendar_dates.add(parsed)
+    calendar_rows=[]
+    date_maps={}
+    for name, rows in merged.items():
+        datefield="date" if name=="INDIA_VIX" else "HistoricalDate"
+        date_maps[name]={parse_d(r.get(datefield)) for r in rows if parse_d(r.get(datefield))}
+    for ds in sorted(calendar_dates):
+        calendar_rows.append({
+          "date":ds,
+          "india_vix_present":int(ds in date_maps.get("INDIA_VIX",set())),
+          "nifty50_present":int(ds in date_maps.get("NIFTY 50",set())),
+          "nifty_bank_present":int(ds in date_maps.get("NIFTY BANK",set())),
+        })
+    OUT.mkdir(parents=True,exist_ok=True)
+    with (OUT/"niftyindices_session_calendar.csv").open("w",newline="",encoding="utf-8") as fh:
+        import csv
+        w=csv.DictWriter(fh,fieldnames=["date","india_vix_present","nifty50_present","nifty_bank_present"])
+        w.writeheader(); w.writerows(calendar_rows)
+
     merged_metrics=[]
     for name,rows in merged.items():
         # Deduplicate rows by date while reporting, but keep all underlying source chunks in cache.
@@ -201,6 +228,9 @@ def main():
       "chunk_count":len(list(intervals(start,end))),"successful_chunk_series_calls":len(all_summaries),
       "failed_chunk_series_calls":len(failures),"fetch_cache_modes":fetch_modes,
       "chunk_summaries":all_summaries,"merged_series_summary":merged_metrics,"errors":failures,
+      "observed_calendar_rows":len(calendar_rows),
+      "observed_calendar_min_date":calendar_rows[0]["date"] if calendar_rows else "",
+      "observed_calendar_max_date":calendar_rows[-1]["date"] if calendar_rows else "",
       "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>0 and x["invalid_OHLC_rows"]==0 for x in merged_metrics) else "PARTIAL_OR_FAILED",
       "note":"Official index/VIX input feasibility only; not strategy evaluation. Series rows are stored in Actions cache. Do not substitute unverified public-HF VIX labels.",
     }
