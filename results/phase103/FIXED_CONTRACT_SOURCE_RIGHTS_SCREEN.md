@@ -42,3 +42,31 @@ If a suitably licensed sample is not already accessible, close this branch's cur
 ## Reproducibility and limitations
 
 This is a metadata/documentation screen, not a new market-data acquisition run. Web pages were reviewed on 2026-10-11; provider terms and product availability may change. The review does not claim to exhaust every vendor or establish that a paid dataset is economically worthwhile.
+
+
+## Expanded public-source screen and exact-strike result — 2026-10-11
+
+### Dhan exact-strike diagnostic (run 38124954633)
+
+The corrected diagnostic passed for unique timestamp/actual-strike keys in all four panels, with zero duplicate keys and five trading sessions of union timestamps (1,925 per panel). This means the cross-offset union is internally non-duplicated; it **does not** establish a complete fixed-contract history because the API response does not return the actual contract expiry date or an immutable option contract identifier. The request uses `expiryFlag=MONTH`, `expiryCode=1` (“Next Expiry” per Dhan's annexure), but the selector is not an observed per-row expiry key.
+
+| Panel | Distinct actual strikes | Actual strikes observed for all 1,925 union timestamps | Best individual-strike union coverage | Decision |
+|---|---:|---:|---:|---|
+| ICICIBANK CALL | 11 | 3 | Three strikes at 100% (1430, 1440, 1450) | Partial strike coverage; expiry still unverified |
+| RELIANCE CALL | 14 | 0 | 1300 at 99.065% (1,907 minutes) | No strike covers every union timestamp |
+| RELIANCE PUT | 14 | 0 | 1300 at 99.065% (1,907 minutes) | No strike covers every union timestamp |
+| SBIN CALL | 16 | 0 | 1060 at 94.130% (1,812 minutes) | No strike covers every union timestamp |
+
+Even the 100% figures are only five-session timestamp/strike coverage in the offset union. They do not establish historical expiry identity, complete listed-contract OHLC, executability, or data-use rights. The automated workflow passed and committed run [38124954633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38124954633). The code now explicitly sets `contract_identity_status=BLOCKED_EXPIRY_NOT_RETURNED` so consumers cannot misread the exact-strike key diagnostic as a fixed-contract PASS.
+
+### Other data leads reviewed
+
+1. **NSE public historical contract-wise price/volume report.** The page supports symbol, expiry, option type, strike and CSV download, but says only 90 days are accessible through its date filter and supplies daily contract-level OHLC, LTP, settlement, contracts, turnover and OI. This is an EOD lead, not minute-by-minute execution/quote data. It is not accepted for this intraday strategy question or as permission to cache raw data in the public repo. [Source](https://www.nseindia.com/report-detail/fo_eq_security).
+2. **jugaad-data / NSE F&O bhavcopy.** The open-source client documents downloading F&O bhavcopies, including stock options, but its documented option history is daily bhavcopy-level—not historical 1-minute option quotes—and it does not provide historical Greeks or IV. The software licence does not independently grant a data licence or settle NSE data retention/republication rights. [Repository](https://github.com/jugaad-py/jugaad-data).
+3. **Hugging Face index-options datasets.** `rissin/nse-options-intraday` documents NIFTY, BANKNIFTY and SENSEX, with 1-minute data sourced from Upstox and EOD data from NSE bhavcopy, and marks the dataset licence as `other`; it does not provide the registered individual stock-option universe. `thetrademarkk/india-index-options-1m` documents index options only under CC BY-NC 4.0 and does not provide historical bid/ask. Both are excluded from Phase 103 stock-options P&L. [rissin dataset](https://huggingface.co/datasets/rissin/nse-options-intraday) · [TradeMarkk dataset](https://huggingface.co/datasets/thetrademarkk/india-index-options-1m).
+4. **OptionVault (commercial lead, not free access).** The public repository advertises stock-options 1-minute OHLCV/OI/Greeks and level-2/tick datasets, but its README states that the full archive is available to licensed users and that samples are for evaluation; commercial datasets require licensing. A code repository's MIT licence is not proof that market-data payloads are freely licensed. No paid access or sample entitlement was assumed. [Repository](https://github.com/QuantDev-stack/OptionVault).
+5. **NSE Data & Analytics historical order/trade data.** NSE lists F&O historical order and trade data delivered via an online platform, publishes related specification/sample links, and directs enquiries to its market-data group. The public site does not confirm price, date coverage, exact depth/quote fields, or permitted automated retention and derived-publication rights for this use. This remains the strongest official vendor inquiry route, not a currently available free source. [Historical-data subscription details](https://www.nse.in/static/market-data/eod-historical-data-subscription) · [Data vending](https://www.nse.in/static/nse-data-and-analytics/data-information-vending) · [Data-use policy](https://www.nseindia.com/static/market-data/nse-data-policy).
+
+### Bounded conclusion
+
+The expanded search did not find a verified free source with all three required properties for this branch: (a) individual NSE stock-option intraday history with returned/reconstructable exact expiry/strike/CE-PE identity; (b) adequate historical executable quote evidence or a defensible fill proxy; and (c) explicit usable data retention/caching rights. Therefore the present **intraday stock-options empirical gate is NO-GO**. The Dhan API remains a demonstrated aggregate data-feasibility source, not a strategy-testing dataset under the registered hard gates. Do not silently substitute index-options data or daily EOD data for the registered stock-options question. Reopen numerical P&L only after an authorized contract-specific sample passes the gates; otherwise complete the branch as a documented data NO-GO at the registered closeout phase.
