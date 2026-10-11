@@ -13,6 +13,7 @@ import niftyindices_history
 import dhan_rolling_options
 import futures_eod_extract
 import options_greeks_extract
+import strategy_evaluator
 import tempfile
 
 
@@ -118,6 +119,27 @@ class TestDhanRollingOptions(unittest.TestCase):
         self.assertEqual(result["invalid_ohlc_rows"],0)
         self.assertEqual(result["invalid_or_missing_iv_rows"],0)
         self.assertEqual(result["invalid_or_missing_volume_rows"],0)
+
+class TestStrategyEvaluator(unittest.TestCase):
+    def test_momentum_signal_is_lagged_and_thresholded(self):
+        rising=[100.0,100.1,100.2,100.8,101.0,102.0]
+        self.assertEqual(strategy_evaluator.compute_signal("ROC_MOMENTUM",rising,5,3,0.5),1)
+        falling=[102.0,101.9,101.5,101.0,100.5,100.0]
+        self.assertEqual(strategy_evaluator.compute_signal("ROC_MOMENTUM",falling,5,3,0.5),-1)
+        flat=[100.0]*10
+        self.assertEqual(strategy_evaluator.compute_signal("ROC_MOMENTUM",flat,9,3,0.5),0)
+
+    def test_cost_model_adapter_exposes_canonical_fee_calculation(self):
+        model=strategy_evaluator.load_cost_model()
+        name,fn=strategy_evaluator.find_cost_function(model)
+        self.assertIsNotNone(name)
+        self.assertTrue(callable(fn))
+        fee,detail=strategy_evaluator.call_cost_model(
+            model,date(2024,10,1),100.0,105.0,25,20.0,1.0
+        )
+        self.assertGreaterEqual(fee,0.0)
+        self.assertIn("model_callable",detail)
+
 
 class TestModelGreeks(unittest.TestCase):
     def test_black_scholes_implied_volatility_round_trip(self):
