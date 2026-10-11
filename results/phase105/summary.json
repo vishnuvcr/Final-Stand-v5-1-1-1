@@ -1,20 +1,29 @@
 {
   "phase": "105",
-  "run_id": "38131616138",
-  "registered_window": {
+  "workflow_run_id": 38131616138,
+  "workflow_url": "https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38131616138",
+  "generated_at_utc": "2026-10-11T10:21:13Z",
+  "window": {
     "from_inclusive": "2026-08-03",
-    "to_exclusive": "2026-09-02"
+    "to_exclusive": "2026-09-02",
+    "calendar_days": 30
   },
-  "source_gate": "PASS",
-  "strategy_replay": "COMPLETE_ACCOUNTING_CHECKS_PASS",
-  "accounting_check": "PASS",
-  "scenario_rows": 72,
-  "promotion": "NONE",
-  "interpretation": "OHLC_EXECUTION_PROXY_NOT_VERIFIED_FILLS",
+  "source": "NSE official daily UDiFF F&O archive",
+  "symbols": [
+    "HDFCBANK",
+    "ICICIBANK",
+    "INFY",
+    "RELIANCE",
+    "SBIN"
+  ],
+  "raw_rows_persisted": false,
+  "raw_rows_in_artifact": false,
   "source_aggregate": {
     "selected_rows": 18082,
     "parsed_rows": 18082,
+    "identity_complete_rows": 18082,
     "identity_completeness_pct": 100,
+    "ohlc_complete_rows": 18082,
     "ohlc_completeness_pct": 100,
     "positive_volume_rows": 12160,
     "zero_volume_rows": 5922,
@@ -25,7 +34,7 @@
     "duplicate_daily_contract_keys": 0,
     "date_mismatch_rows": 0,
     "invalid_ohlc_positive_volume_rows": 0,
-    "common_sessions_with_all_five_underlyings": 22,
+    "sessions_with_all_five_underlyings": 22,
     "first_research_session": "2026-08-03",
     "last_research_session": "2026-09-01",
     "by_symbol_rows": {
@@ -36,6 +45,41 @@
       "SBIN": 3782
     }
   },
+  "archive_sha256": {
+    "2026-08-03": "4caeaccc0e69507d6746fe263e54bb801dcea6914fa8f65b478e11cb43d7b734",
+    "2026-08-04": "66680e99150aa568e18927d78164dc9caefdb4cbfb92efb081c98188c1c978a9",
+    "2026-08-05": "4b6554d42fb40f33187272cc6f42ccbf86e320c77ccc69cb599ee28eb81ffa25",
+    "2026-08-06": "2525a6549c47e64e305baa6cc42c14685321ffb05f50728dddf55dcacec1daf2",
+    "2026-08-07": "a5ca8f06fd69554ea123134fc823a8a868ccca454d286727c22290dc37daac82",
+    "2026-08-10": "8a97db352122ce75dc7cf4b1d2ffccfb7e15bab3d5e827c04519e9fa11349e05",
+    "2026-08-11": "0c4cff21f0e20e9a1aa0e27894597ff40e287ed3000567880abbc0f6775bc5c1",
+    "2026-08-12": "a93fa82a1b43c48cc646eeaa369aee438ab3cb2ca437d7ebb6f2fbd9603ccf91",
+    "2026-08-13": "00d088350e833543939d7adab1fe9e2632bd9a9c6189d52ee972737395ad0a7b",
+    "2026-08-14": "614807e1050487ad00d1ca825ab04ed0a444c4ba9451e8db095b6254377ea49f",
+    "2026-08-17": "a8ab5f733287bc097c318b8dda9ab00e86500ce5e775fda266e2a5683c3bcaec",
+    "2026-08-18": "ca8b662150517d3c343322e21bc1bf4c4496d65ef160a2331a498562e0bf59ae",
+    "2026-08-19": "d2607f215cc2e3e1e92b97aca97ec59be352ff920ceea1104117077f48464d4d",
+    "2026-08-20": "9c5f793941678f5cf93ad0516c887efad617c466b73c06786f5b0b259b811db6",
+    "2026-08-21": "577c04c20bc7e4550f4a2ebfc849cada332611e94dbb1cdb11e5cff9e1e252f6",
+    "2026-08-24": "922d768844e8cce6a8e820606022b512e4f99f6a40a9df974c658290f31949ff",
+    "2026-08-25": "398f2636d757c8fbdc9182ef2eb2be290afd6e9950cdbad6841e618846463837",
+    "2026-08-26": "254e419b0101eb26f8916314286f57b285d866b5228f9c5f3be2bd0eb90c894d",
+    "2026-08-27": "db31cbb3247a5a9ace5081088f7ea34d96373b7a99e5f8ddbf24d6d3282df2b7",
+    "2026-08-28": "33a1708ceba84a807e2b6e7bcf6b94e385ab0f65658eb99578eda92e735a88b5",
+    "2026-08-31": "1e435806057655142a50ce380d74dca174e26be98bfec625f8ded211e62c78b1",
+    "2026-09-01": "328cfdef6953b86b56c40b28f4b9677e8e4701f5027d00daa6b1d1708b64fa63"
+  },
+  "no_archive_dates": [
+    "2026-08-08",
+    "2026-08-09",
+    "2026-08-15",
+    "2026-08-16",
+    "2026-08-22",
+    "2026-08-23",
+    "2026-08-29",
+    "2026-08-30"
+  ],
+  "archive_fetch_errors": [],
   "coverage": [
     {
       "strategy": "MOMENTUM_ATM",
@@ -80,100 +124,120 @@
       "no_direction_signal": 1
     }
   ],
-  "primary_case": [
+  "scenario_grid": {
+    "candidates": 3,
+    "brokerage_per_order_rupees": [
+      10,
+      15,
+      20
+    ],
+    "slippage_per_unit_per_side_rupees": [
+      0,
+      0.05,
+      0.25,
+      0.5
+    ],
+    "fee_multipliers": [
+      1,
+      1.5
+    ],
+    "scenario_rows": 72
+  },
+  "primary_cost_case": [
     {
       "strategy": "MOMENTUM_ATM",
-      "trade_count": 79,
+      "trades": 79,
       "gross_pnl_rupees": -88395,
       "fees_rupees": 5812.02,
       "slippage_cost_rupees": 23675,
       "net_pnl_rupees": -117882.02,
-      "net_return_on_premium_pct": -12.1585,
+      "return_on_premium_pct": -12.1585,
       "win_rate_pct": 22.785,
-      "average_net_per_trade_rupees": -1492.18,
-      "median_net_per_trade_rupees": -1349.98,
+      "average_net_trade_rupees": -1492.18,
+      "median_net_trade_rupees": -1349.98,
       "profit_factor": 0.30262,
       "max_drawdown_rupees": 123599.29,
-      "bootstrap_mean_daily_pnl": {
-        "n_sessions": 20,
-        "mean_rupees": -5894.101024,
-        "ci95_low_rupees": -9011.001554,
-        "ci95_high_rupees": -2638.13785,
-        "draws": 2000
-      }
+      "mean_daily_net_pnl_ci95_rupees": [
+        -9011.001554,
+        -2638.13785
+      ]
     },
     {
       "strategy": "REVERSAL_ATM",
-      "trade_count": 79,
+      "trades": 79,
       "gross_pnl_rupees": 44850,
       "fees_rupees": 6156.98,
       "slippage_cost_rupees": 23675,
       "net_pnl_rupees": 15018.02,
-      "net_return_on_premium_pct": 1.4912,
+      "return_on_premium_pct": 1.4912,
       "win_rate_pct": 39.241,
-      "average_net_per_trade_rupees": 190.1,
-      "median_net_per_trade_rupees": -798.6,
+      "average_net_trade_rupees": 190.1,
+      "median_net_trade_rupees": -798.6,
       "profit_factor": 1.13651,
       "max_drawdown_rupees": 42223.32,
-      "bootstrap_mean_daily_pnl": {
-        "n_sessions": 20,
-        "mean_rupees": 750.901219,
-        "ci95_low_rupees": -2682.366837,
-        "ci95_high_rupees": 3957.346896,
-        "draws": 2000
-      }
+      "mean_daily_net_pnl_ci95_rupees": [
+        -2682.366837,
+        3957.346896
+      ]
     },
     {
       "strategy": "MOMENTUM_OI_CONFIRM",
-      "trade_count": 55,
+      "trades": 55,
       "gross_pnl_rupees": -63012.5,
       "fees_rupees": 4103.89,
       "slippage_cost_rupees": 16925,
       "net_pnl_rupees": -84041.39,
-      "net_return_on_premium_pct": -11.9918,
+      "return_on_premium_pct": -11.9918,
       "win_rate_pct": 23.636,
-      "average_net_per_trade_rupees": -1528.03,
-      "median_net_per_trade_rupees": -1651.42,
+      "average_net_trade_rupees": -1528.03,
+      "median_net_trade_rupees": -1651.42,
       "profit_factor": 0.3307,
       "max_drawdown_rupees": 85292.63,
-      "bootstrap_mean_daily_pnl": {
-        "n_sessions": 20,
-        "mean_rupees": -4202.069415,
-        "ci95_low_rupees": -6706.592324,
-        "ci95_high_rupees": -1703.85957,
-        "draws": 2000
-      }
+      "mean_daily_net_pnl_ci95_rupees": [
+        -6706.592324,
+        -1703.85957
+      ]
     }
   ],
   "strict_stress_case": [
     {
       "strategy": "MOMENTUM_ATM",
-      "trade_count": 79,
+      "trades": 79,
       "net_pnl_rupees": -144436.93,
-      "net_return_on_premium_pct": -14.7177,
+      "return_on_premium_pct": -14.7177,
       "max_drawdown_rupees": 146753.64
     },
     {
       "strategy": "REVERSAL_ATM",
-      "trade_count": 79,
+      "trades": 79,
       "net_pnl_rupees": -11709.36,
-      "net_return_on_premium_pct": -1.1492,
+      "return_on_premium_pct": -1.1492,
       "max_drawdown_rupees": 52253.81
     },
     {
       "strategy": "MOMENTUM_OI_CONFIRM",
-      "trade_count": 55,
+      "trades": 55,
       "net_pnl_rupees": -102999.67,
-      "net_return_on_premium_pct": -14.5216,
+      "return_on_premium_pct": -14.5216,
       "max_drawdown_rupees": 102999.67
     }
   ],
-  "decision_reasons": [
-    "This is a short, previously inspected OHLC proxy sample; no strategy is promoted irrespective of simulated returns.",
-    "The reversal candidate is positive only under less adverse assumptions; its session-cluster bootstrap interval crosses zero and strict stress becomes negative.",
-    "Daily open/close marks do not verify executable fills, spread, depth, latency, partial fills or market impact.",
-    "Paytm Money account-specific brokerage tier and contract note were not inspected."
-  ],
-  "archive_hashes_policy": "Archive SHA-256 hashes were collected within the run; original raw archive rows and prices were ephemeral and are not published.",
-  "csv_path": "summary.csv"
+  "accounting_checks": {
+    "status": "PASS",
+    "failures": [],
+    "scenario_rows": 72
+  },
+  "decision": {
+    "source_gate": "PASS",
+    "strategy_replay": "COMPLETE_ACCOUNTING_CHECKS_PASS",
+    "promotion": "NONE",
+    "interpretation": "OHLC_EXECUTION_PROXY_NOT_VERIFIED_FILLS"
+  },
+  "scenario_csv": "summary.csv",
+  "limitations": [
+    "OHLC open/close marks are not verified executable fills.",
+    "Slippage values are assumed adverse-price sensitivities, not observed spread/impact.",
+    "Account-specific Paytm Money brokerage cohort/contract note unverified.",
+    "Only one previously inspected month and 20 post-warm-up outcome sessions; no strategy promotion."
+  ]
 }
