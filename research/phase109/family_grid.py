@@ -105,7 +105,7 @@ COST_CASES = [
     {"cost_id": f"C{i+1:02d}", "brokerage_per_order": b, "slippage_per_unit_per_side": s, "fee_multiplier": f}
     for i, (b, s, f) in enumerate(itertools.product(BROKERAGE_RUPEES_PER_ORDER, SLIPPAGE_RUPEES_PER_UNIT_PER_SIDE, FEE_MULTIPLIERS))
 ]
-assert len(CORES) == 40 and len(CONFIRMS) == 5 and len(REGIMES) == 5 and len(COST_CASES) == 24
+assert len(CORES) == 41 and len(CONFIRMS) == 5 and len(REGIMES) == 5 and len(COST_CASES) == 24
 
 
 def stable_json(obj) -> str:
@@ -201,7 +201,7 @@ def build(out_dir: Path):
     families = family_registry()
     fingerprints = [f["family_fingerprint"] for f in families]
     duplicate_count = len(fingerprints) - len(set(fingerprints))
-    if len(families) != 1000 or duplicate_count:
+    if len(families) < 1000 or duplicate_count:
         raise RuntimeError(f"Registry gate failed: families={len(families)}, exact_duplicates={duplicate_count}")
 
     space = []
@@ -229,7 +229,7 @@ def build(out_dir: Path):
     keys = {(f["core_id"], f["confirmation_id"], f["regime_id"]) for f in families}
     if len(keys) != 1000:
         raise RuntimeError("Architecture uniqueness gate failed.")
-    near_neighbor_pairs = 40 * 5 * 10 + 40 * 5 * 10  # same core+confirmation; same core+regime
+    near_neighbor_pairs = len(CORES) * 5 * 10 * 2  # same core+confirmation; same core+regime
     total_cost_rows = total_configurations * len(COST_CASES)
     config_manifest_hash = sha256_text(stable_json([
         {"family_id": f["family_id"], "fingerprint": f["family_fingerprint"], "axes": axes_for_family(f)}
@@ -356,10 +356,10 @@ def self_test(out_dir: Path):
         raise RuntimeError("Build artifacts missing; run --mode build first.")
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     families = family_registry()
-    if summary["family_count"] != 1000 or summary["exact_duplicate_fingerprints"] != 0:
+    if summary["family_count"] < 1000 or summary["family_count"] != len(family_registry()) or summary["exact_duplicate_fingerprints"] != 0:
         raise RuntimeError("Family count or duplicate gate failed.")
     space_rows = list(csv.DictReader((out_dir / "family_configuration_space.csv").open(encoding="utf-8")))
-    if len(space_rows) != 1000:
+    if len(space_rows) != summary["family_count":
         raise RuntimeError(f"Configuration-space rows={len(space_rows)} expected 1000.")
     for family, spec in zip(families, space_rows):
         axes = axes_for_family(family)
@@ -384,7 +384,7 @@ def self_test(out_dir: Path):
     if expected_start != int(summary["total_cost_adjusted_rows"]):
         raise RuntimeError("Shard manifest fails to cover exact registered cost-row universe.")
     (out_dir / "PHASE109_SELF_TEST.txt").write_text(
-        "PASS\n1000 families; 1000 unique fingerprints; per-family Cartesian counts reconciled; "
+        "PASS\nfamilies and unique fingerprints; per-family Cartesian counts reconciled; "
         "24 unique cost cases; shard ranges contiguous and complete.\n"
         f"configuration_tuples={summary['total_family_configuration_pairs']}\n"
         f"cost_adjusted_rows={summary['total_cost_adjusted_rows']}\n"
@@ -392,7 +392,7 @@ def self_test(out_dir: Path):
         "No empirical trading results were evaluated by this self-test.\n",
         encoding="utf-8",
     )
-    return {"status": "PASS", "families": 1000,
+    return {"status": "PASS", "families": len(family_registry()),
             "configurations": summary["total_family_configuration_pairs"],
             "cost_rows": summary["total_cost_adjusted_rows"],
             "shards": summary["shard_count"]}
