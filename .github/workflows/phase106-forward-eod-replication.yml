@@ -1,4 +1,4 @@
-name: Phase 106 — Forward EOD Replication
+name: Phase 106 — Forward EOD Replication (publish aggregates)
 
 on:
   workflow_dispatch:
