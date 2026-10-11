@@ -219,8 +219,8 @@ def build(out_dir: Path):
             "family_fingerprint": f["family_fingerprint"],
             "configuration_count": n,
             "dimension_count": len(axes),
-            "axes_json": stable_json(axes),
-            "configuration_order": "lexicographic Cartesian product in axes_json key order as defined by Python insertion order; mixed-radix rank starts at zero",
+            "axes_json": json.dumps(axes, separators=(",", ":"), ensure_ascii=False),
+            "configuration_order": "Cartesian product in exactly the axis order preserved in axes_json; mixed-radix rank starts at zero",
             "configuration_manifest_status": "REGISTERED_NOT_EVALUATED",
         })
 
