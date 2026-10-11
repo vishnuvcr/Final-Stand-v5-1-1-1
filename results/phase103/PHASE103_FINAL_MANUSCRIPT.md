@@ -1,11 +1,11 @@
 # Phase 103 Final Research Manuscript
 ## Historical data feasibility for intraday strategies in NIFTY 50 constituent stock options
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Research date:** 11 October 2026  
 **Branch:** `phase-103-nifty50-stock-options`  
 **Research type:** preregistered data-source and contract-identity feasibility study  
-**Decision:** **NO-GO for numerical intraday strategy P&L with currently verified free/accessible data**  
+**Decision:** **NO-GO for numerical intraday strategy P&L because contract identity / price reconciliation failed**  
 **Strategy promotion:** None
 
 ---
@@ -16,7 +16,7 @@ This study assessed whether a preregistered initial universe of five NIFTY 50 co
 
 The primary feasibility probe used Dhan's rolling-option endpoint on seven relative-strike offsets for four panels selected by a prior single-day alignment screen: ICICIBANK CALL, RELIANCE CALL, RELIANCE PUT and SBIN CALL. The bounded multi-session window covered five Indian trading sessions, 3–7 August 2026. The accepted run returned rows for all 28 probes and no timestamps outside the requested half-open date window. The corrected in-memory union diagnostic recorded 1,925 timestamps per panel and zero duplicate (timestamp, actual-strike) keys. Best observed per-strike union coverage was 100% for three ICICIBANK call strikes, 99.065% for the best RELIANCE call and put strikes, and 94.130% for the best SBIN call strike.
 
-These results establish that the API returns internally usable aggregate rolling-strike observations over this short window. They do **not** establish a fixed listed option's expiry/immutable contract identity: the returned schema did not contain an audited expiry date or immutable option contract ID, while `expiryFlag`/`expiryCode` are request selectors. The endpoint also does not document historical bid/ask/depth; data-use, retention/caching and publication rights have not been verified. The bounded source review found EOD stock-option records and commercial data leads, but no verified free source meeting all registered intraday contract-identity, execution-evidence and rights requirements. No strategy was backtested, and no profitability, expectancy, drawdown or statistical significance conclusion is available. The preregistered stop rule therefore applies: close the current empirical attempt as a data NO-GO and reopen numerical tests only after an authorized fixed-contract sample clears the gates.
+These results establish technical Dhan API access for aggregate rolling-strike observations over this short window, not a valid fixed-contract price tape. The user explicitly confirmed a Dhan subscription and authorization for this research; that confirmation is accepted as the access/entitlement assumption. Raw minute bars and raw NSE records remain ephemeral and are not put in the public repository or Actions artifacts. The independent NSE daily-contract cross-check found 88 eligible profiles, but only 3 matched all four OHLC fields uniquely; all three identified expiry 25 August 2026, none matched the expected second-expiry rank for expiryCode=1, and 85 were unmatched. A single near/current selector calibration using expiryCode=0 then returned HTTP 400 / DH-905: expiryCode is required on its first probe, so no price comparison was possible. The API does not document historical bid/ask/depth, and no valid strategy P&L, expectancy, drawdown or statistical-significance conclusion can be drawn. The data gate remains NO-GO for P&L until exact contract identity and executable-price evidence can be obtained; the subscription assumption is not the current blocker.
 
 **Keywords:** Indian stock options; data provenance; contract identity; backtesting; market microstructure; transaction costs; execution feasibility; research reproducibility.
 
@@ -34,7 +34,7 @@ NSE's individual-security derivative contract definition identifies an option us
 
 Among the registered initial basket of five large NIFTY 50 constituents, can any rule-based stock-options strategy deliver repeatable positive net expectancy after realistic execution costs and survive chronological validation and independent out-of-sample testing?
 
-**Primary conclusion for this manuscript:** this question remains unanswered empirically because data-validity prerequisites failed. The present NO-GO applies to proceeding with intraday stock-options strategy P&L using the currently verified source set. It is not evidence that all stock-options strategies are unprofitable.
+**Primary conclusion for this manuscript:** the profitability question remains unanswered because source-identification and price-quality prerequisites failed. The NO-GO is not evidence that all stock-options strategies are unprofitable; it means this sample cannot yet support a valid P&L test.
 
 ### 1.3 Secondary questions
 
@@ -84,7 +84,7 @@ Bailey and López de Prado's Deflated Sharpe Ratio paper describes how trying ma
 
 **Commercial archive lead.** [OptionVault](https://github.com/QuantDev-stack/OptionVault) advertises one-minute stock-options OHLCV/OI/Greeks as well as tick/level-2 data, but its public README describes the full archive as available to licensed users and evaluation samples as distinct from commercial access. A repository's MIT software licence does not establish a market-data licence. No access, price or permission was assumed.
 
-**Synthesis.** The reviewed sources demonstrate that stock-option EOD data exist and that richer historical products may be available commercially. They do not provide verified evidence, in the accessible public/free set, of a dataset satisfying all three Phase 103 intraday requirements at once: exact expiry/strike/CE-PE contract identification; adequate executable quote evidence or a defensible and validated fill proxy; and explicit rights for permitted acquisition, automated use, caching/retention and publication of derived results.
+**Synthesis.** The user-confirmed Dhan subscription provides access for this research, but the observed rolling-option endpoint has not passed exact-contract reconciliation and does not document historical bid/ask/depth. The accessible data have therefore not satisfied the two decisive empirical requirements: exact expiry/strike/CE-PE identity and adequate executable-price evidence. Raw rows are not published; only aggregate diagnostics and derived conclusions are.
 
 ---
 
@@ -129,7 +129,7 @@ The exact-strike diagnostic is descriptive, not an expiry/contract identity gate
 
 ### 4.3 Rights and execution gates
 
-The project required documentation of legal data acquisition, automated research, raw caching/retention and derived-publication rights. No such permission was inferred from an open endpoint, public web page, software licence or dataset card. No raw Dhan option rows were placed in the public repository.
+The user confirmed a Dhan subscription and authorization for this research, which is accepted as the access/entitlement basis for this work. Account-specific terms were not independently re-audited here. Raw Dhan minute rows and raw NSE contract records remain ephemeral and are not published; only aggregate diagnostics and derived conclusions are committed. The active blocker is the failed contract-identity / OHLC reconciliation and lack of historical bid/ask/depth, not the existence of an API subscription.
 
 A valid backtest also required either historical executable quote/quantity evidence or a transparently validated conservative price proxy. Dhan's tested endpoint documents OHLC but not historical bid/ask/depth. No actual fill was inferred from the opening, high, low or close of a minute bar. The Paytm Money cost model could not be completed credibly before contract and executable-price data existed.
 
@@ -189,13 +189,13 @@ Each of the four panels had 1,925 union timestamps over the five sampled session
 - **ICICIBANK CALL:** some strike prices appear at each timestamp in the union, but strike continuity is not enough to establish one persistent listed contract when expiry is not audited.
 - **RELIANCE CALL and PUT:** even the best strike misses 18 timestamps from the 1,925-point union in this sample; a strategy would need explicit coverage rules and cannot interpolate or silently fill.
 - **SBIN CALL:** the best strike covers 1,812 of 1,925 union timestamps. This is below a fully continuous minute history and is not an executable quote history.
-- **All four panels:** rolling relative offsets frequently change actual strike. Zero duplicate timestamp/strike keys does not mean a complete price tape or immutable contract identity. No panel passes the full registered contract / execution / rights gate.
+- **All four panels:** rolling relative offsets frequently change actual strike. Zero duplicate timestamp/strike keys does not mean a complete price tape or immutable contract identity. No panel passes the full registered contract-identity / execution-price gate.
 
 ### 5.4 Source screen
 
 | Source lead | What public documentation supports | Why it does not clear this intraday gate |
 |---|---|---|
-| Dhan rolling-option endpoint | Minute OHLC, IV, volume, OI, spot and actual strike; 28/28 probes returned rows | Returned expiry/immutable contract identity not verified; no historical bid/ask/depth; rights unresolved |
+| Dhan rolling-option endpoint | 28/28 code-1 probes returned rows in the audited sample | EOD reconciliation failed: 3/88 unique OHLC matches, all at expiry 2026-08-25; 85 unmatched; historical bid/ask/depth not documented |
 | NSE public contract-wise report | Daily contract prices/settlement, volume/contracts, turnover and OI | EOD only and UI history range limited; cannot establish intraday fills |
 | jugaad-data / F&O bhavcopy | Download path for daily NSE F&O files, including stock options | EOD data; client software licence is not data licence |
 | Public Hugging Face index options | Some intraday index-options datasets available | Wrong research universe; not evidence for constituent stock options; licence/quote limitations |
@@ -243,7 +243,7 @@ The decision is scoped narrowly to the current data-backed *intraday stock-optio
 - Source access was tested through a real bounded workflow, not inferred from documentation alone.
 - The run checked provider date semantics and zero out-of-window rows.
 - The diagnostic was improved to report actual-strike union coverage rather than rely solely on relative-offset timestamp equality.
-- Raw market rows and token values were excluded from public results while rights were uncertain.
+- Raw market rows and token values are excluded from public results; the user-confirmed subscription is accepted for research access, while raw rows remain outside the public artifact policy.
 - Failures and limitations are kept in repository logs; generated outputs are tied to the current run ID.
 - The result-publishing race was corrected with a safe fetch/reset/retry path that does not force-push; run 38124954633 verified the path.
 
@@ -252,7 +252,7 @@ The decision is scoped narrowly to the current data-backed *intraday stock-optio
 - Only five sessions and four selected stock/side panels were queried in the multi-session run; three other initial universe side groups and the other panel candidates did not have equivalent coverage in this audit.
 - The Dhan endpoint's observed schema lacks an audited expiry date and immutable option-contract ID.
 - The returned OHLC and aggregates are not historical best-bid/ask, depth or confirmed executable trade prices.
-- The data-use, retention/cache and derived-publication rights for the returned market data remain undocumented for this project.
+- The user confirmed Dhan subscription and research rights. Account-specific agreement language was not independently audited; it is not treated as the active blocker for this run.
 - No strategy P&L, performance, cost, drawdown or significance result was produced.
 - This manuscript does not claim a systematic exhaustive review of all vendors, paid feeds or financial literature.
 - Provider documentation and terms may change; any later use requires fresh verification and a permitted sample.
@@ -261,14 +261,14 @@ The decision is scoped narrowly to the current data-backed *intraday stock-optio
 
 ## 10. Conclusion
 
-The Phase 103 bounded intraday stock-options attempt is **NO-GO for strategy P&L with the currently verified source set**. The audited Dhan run confirmed 28/28 probes returned rows over five sessions, with no out-of-window rows and no duplicate timestamp/actual-strike keys. It also showed uneven per-strike timestamp coverage. The critical unresolved gates are expiry/immutable contract identity, lawful use and retention rights, and historical executable quote evidence.
+The Phase 103 bounded intraday stock-options attempt is **NO-GO for strategy P&L** on the tested sample. Dhan access and 28/28 code-1 probe acquisition passed, but independent reconciliation produced only 3 exact full-session OHLC matches among 88 eligible profiles, all at expiry 2026-08-25; 85 profiles were unmatched and none agreed with expected rank 2. The one code-0 calibration failed at request validation with DH-905: expiryCode is required. The critical unresolved gates are exact contract identity and historical executable-price evidence; the user-confirmed subscription is accepted for research access.
 
 The research does not demonstrate that stock-options trading strategies are profitable or unprofitable. It demonstrates that the present data evidence is insufficient to test that question honestly. In accordance with the registered stop rule, no backtest has been fabricated and no strategy is promoted.
 
 ## 11. Future research direction
 
 Reopen this empirical question only after one of the following:
-1. An authorized existing dataset is identified with exact historical contract identifiers and written retention/cache/derived-publication rights.
+1. Dhan confirms the expiry selector / historical contract-identity semantics, or an authorized existing dataset is identified with exact historical contract identifiers and adequate coverage for independent replay.
 2. NSE Data & Analytics or another vendor confirms in writing a small sample's dates, interval, contract/expiry/strike/CE-PE fields, bid/ask/quantity/depth availability, price, refresh limits, automated-use rights, retention rights and permitted publication of derived statistics.
 3. The sample passes timestamp, calendar, expiry, corporate-action, lot-size, price-quality, missingness and duplicate-key checks.
 
@@ -321,8 +321,19 @@ If a rights-compliant sample cannot be obtained within the registered bounded sc
 | Unique timestamp/strike keys | No duplicate keys in union | PASS, 0 duplicate keys |
 | Full strike coverage across sampled union | Every actual strike present at every union timestamp | FAIL for 3/4 panels; ICICIBANK only 3 complete strikes |
 | Immutable contract identity and exact expiry | Returned/reconstructed row-level expiry and contract identity | BLOCKED |
-| Legal automated use, caching/retention and derived publication rights | Applicable written terms/entitlement | BLOCKED |
+| Legal automated use, caching/retention and derived publication rights | User confirmation of Dhan subscription for research access; no raw data republished | USER-CONFIRMED; account terms not independently audited |
 | Executable historical prices / quote quality | Historical bid/ask/depth or validated conservative proxy | BLOCKED |
 | Paytm Money charge schedule and execution stress | Effective dated brokerage/statutory charges plus spread/slippage/latency | BLOCKED pending usable trade/quote sample |
 | Chronological strategy P&L, OOS and holdout | Valid underlying fixed-contract sample | NOT RUN under stop rule |
 | Strategy promotion | All registered data, costs, validation and statistical gates | NONE |
+
+
+## Appendix C. Post-acquisition contract-identity calibration (11 October 2026)
+
+After the initial source-feasibility closeout, the user confirmed a Dhan subscription and instructed the research to proceed. Subscription/access is therefore accepted as the working authorization assumption. Raw intraday bars and NSE daily-contract rows remained ephemeral, and only aggregate metadata were published.
+
+**Code 1 audit — [run 38126663036](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126663036).** All 28 Dhan probes returned rows; 5/5 NSE daily files downloaded. Of 88 full-session exact-strike profiles, 3 uniquely matched symbol/side/strike plus open/high/low/close; all 3 matched the 25 August 2026 expiry. Zero matches agreed with the expected second-listed-expiry rank for code 1. Eighty-five profiles were unmatched; there were no ambiguous matches or conflicting duplicate keys; supporting volume agreement was 0/3 and OI agreement 2/3. This does not establish a valid continuous listed-contract tape.
+
+**Code 0 selector calibration — [run 38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683).** The first request for ICICIBANK CALL / ATM returned HTTP 400 with provider error DH-905: expiryCode is required; no data rows or full-session profiles were obtained, and the workflow stopped on that first error. This is not a selector-identity comparison based on prices: the selector was rejected before a cross-check could be made. The single registered calibration is exhausted under the phase stop rule; no other selector codes, dates, stocks or offsets are to be searched within this phase.
+
+**Final Phase 103 empirical decision:** API access has been demonstrated, but the current historical stock-options tape remains **NO-GO for strategy P&L** because contract identity / OHLC reconciliation failed and historical bid/ask/depth are not documented in this endpoint. No strategy P&L, statistical significance, profit ranking or strategy promotion is claimed. Reopen only after Dhan confirms how to request an exact historical contract (including expiry identity) or an authorized contract-specific sample passes the preregistered gates. Any subsequent backtest must include effective-date Paytm Money fees, statutory charges/taxes, spread, conservative slippage, latency, missed/partial fills and adverse-cost stress.
