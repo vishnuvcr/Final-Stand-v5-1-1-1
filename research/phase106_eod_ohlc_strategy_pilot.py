@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded Phase 106 EOD OHLC options proxy pilot; publishes aggregates only."""
+"""Bounded Phase 106 EOD OHLC options proxy pilot; publishes aggregates only. Frozen run."""
 import argparse
 import csv
 import hashlib
