@@ -102,5 +102,25 @@ jobs:
             echo "No result changes to commit."
           else
             git commit -m "Phase 103: record Dhan stock-options data audit"
-            git push origin HEAD:phase-103-nifty50-stock-options
+            if ! git push origin HEAD:phase-103-nifty50-stock-options; then
+              echo "Initial result push raced with a newer branch commit; reconciling without force-push."
+              mkdir -p /tmp/phase103-audit
+              cp results/phase103/dhan_data_api_audit.json /tmp/phase103-audit/ 2>/dev/null || true
+              cp results/phase103/DHAN_DATA_API_AUDIT.md /tmp/phase103-audit/ 2>/dev/null || true
+              git fetch origin phase-103-nifty50-stock-options
+              git reset --hard FETCH_HEAD
+              cp /tmp/phase103-audit/dhan_data_api_audit.json results/phase103/ 2>/dev/null || true
+              cp /tmp/phase103-audit/DHAN_DATA_API_AUDIT.md results/phase103/ 2>/dev/null || true
+              if [ -f results/phase103/dhan_data_api_audit.json ] && python -c 'import json,os,sys; d=json.load(open("results/phase103/dhan_data_api_audit.json")); sys.exit(0 if str(d.get("run_id"))==os.environ.get("GITHUB_RUN_ID") else 1)'; then
+                python research/phase103_stock_options/record_dhan_audit_status.py
+              else
+                echo "No fresh run-matched audit JSON after reconciliation; refusing to publish stale output."
+                exit 1
+              fi
+              git add results/phase103/dhan_data_api_audit.json results/phase103/DHAN_DATA_API_AUDIT.md PHASE103_STATUS.md PHASE103_RESEARCH_LOG.md PHASE103_ERROR_LOG.md
+              if ! git diff --cached --quiet; then
+                git commit -m "Phase 103: reconcile Dhan audit result after branch update"
+                git push origin HEAD:phase-103-nifty50-stock-options
+              fi
+            fi
           fi
