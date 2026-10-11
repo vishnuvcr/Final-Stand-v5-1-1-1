@@ -317,7 +317,7 @@ Generated: {summary['generated_utc']}
 
 ## Interpretation
 
-The registry is formed from 40 distinct core signal architectures, five confirmation architectures and five regime gates. Every family has an explicit input list, rule description, stable architecture fingerprint and a long-call/long-put mapping. Exact duplicate fingerprints are rejected. Near-neighbour architectures are reported and preserved for audit; they are not claimed to be statistically independent.
+The registry is formed from 41 distinct core signal architectures, five confirmation architectures and five regime gates. Every family has an explicit input list, rule description, stable architecture fingerprint and a long-call/long-put mapping. Exact duplicate fingerprints are rejected. Near-neighbour architectures are reported and preserved for audit; they are not claimed to be statistically independent.
 
 The full Cartesian configuration space applies all applicable lookback, signal-threshold, volatility-lookback, regime-definition, strike, exit and risk-profile values. OI method variants apply only where the registered family requires OI/option-flow input. The 24 declared cost cases combine brokerage ₹10/₹15/₹20 per order, adverse slippage ₹0/₹0.05/₹0.25/₹0.50 per option unit per side, and 1×/1.5× modeled fee multipliers.
 
