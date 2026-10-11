@@ -166,7 +166,7 @@ def audit_expiry_identity(surface_blocks, fetch_bytes):
             nse_by_day[day] = parse_nse_bhavcopy(fetch_bytes(url, timeout=30))
             result["trade_dates_downloaded"] += 1
         except Exception as exc:
-            result["safe_source_errors"].append({"date": day, "error_type": type(exc).__name__})
+            result["safe_source_errors"].append({"date": day, "error_type": type(exc).__name__, "safe_message": " ".join(str(exc).split())[:200]})
     if result["safe_source_errors"]:
         result["status"] = "BLOCKED_NSE_EOD_SOURCE_FETCH_OR_SCHEMA_ERROR"
         return result
