@@ -95,3 +95,11 @@
 - Unique daily contract keys: 18082; duplicate keys: 0.
 - Raw rows persisted/uploaded: no. Raw price values and row-level contract records are not written to artifacts.
 - Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
+
+
+## Final locked-workflow verification — run 38129926977 (2026-10-11)
+
+- The final Phase 104 workflow run [38129926977](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129926977) completed successfully after the cost-model/IPFT and terminal-state-logger tests were added.
+- Aggregate audit result is unchanged: 22 official archives, 18,082 rows, 100% identity/OHLC completeness, zero duplicate daily keys, zero date mismatches, no source/schema errors; raw rows were neither committed nor uploaded.
+- Fee model regression tests and data-audit tests passed. The automatic status logger now preserves an explicitly closed phase when subsequent data-only validation runs occur.
+- Phase 104 closeout remains unchanged: contract identity PASS; execution/cost evidence gate NO-GO for strategy P&L; no strategy backtested, ranked or promoted.
