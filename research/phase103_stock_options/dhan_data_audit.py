@@ -141,6 +141,24 @@ def summarize_surface(surface_blocks, requested_strikes):
         unique_counts = [len(x) for x in strike_per_ts.values()]
         duplicates = sum(1 for n in key_counts.values() if n>1)
         complete_strikes = sum(1 for times in all_strikes.values() if union_ts and len(times)==len(union_ts))
+        # Relative offsets can map to different actual strikes as spot moves. Report
+        # coverage for each actual strike separately rather than interpreting cross-offset
+        # timestamp alignment as a fixed-contract continuity test.
+        strike_coverage = []
+        for actual_strike, times in sorted(all_strikes.items(), key=lambda kv: float(kv[0])):
+            by_date = {}
+            for stamp in times:
+                day = datetime.fromtimestamp(stamp, timezone.utc).astimezone(ZoneInfo("Asia/Kolkata")).date().isoformat()
+                by_date[day] = by_date.get(day, 0) + 1
+            strike_coverage.append({
+                "actual_strike": actual_strike,
+                "observed_minutes": len(times),
+                "union_timestamp_coverage_pct": round(100.0 * len(times) / len(union_ts), 3) if union_ts else 0.0,
+                "ist_date_minutes": by_date,
+                "first_timestamp_utc": datetime.fromtimestamp(min(times), timezone.utc).isoformat() if times else None,
+                "last_timestamp_utc": datetime.fromtimestamp(max(times), timezone.utc).isoformat() if times else None
+            })
+        exact_strike_diagnostic = "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS" if bool(union_ts) and duplicates == 0 else "FAIL_DUPLICATE_OR_EMPTY_KEYS"
         passed = (len(by_offset)==len(requested_strikes) and all(x in by_offset and by_offset[x]["timestamp_count"]>0 for x in requested_strikes)
                   and bool(union_ts) and len(common_ts)==len(union_ts)
                   and all(len(strike_per_ts.get(ts,set()))==len(requested_strikes) for ts in union_ts) and duplicates==0)
@@ -153,6 +171,8 @@ def summarize_surface(surface_blocks, requested_strikes):
             "distinct_actual_strikes_in_surface":len(all_strikes),
             "actual_strikes_observed_at_every_union_timestamp":complete_strikes,
             "duplicate_timestamp_actual_strike_keys_across_offsets":duplicates,
+            "exact_strike_diagnostic":exact_strike_diagnostic,
+            "actual_strike_coverage":strike_coverage,
             "per_offset":{k:{kk:vv for kk,vv in v.items() if kk!="records"} for k,v in by_offset.items()},
             "relative_surface_alignment_gate":"PASS" if passed else "FAIL",
             "interpretation":"Seven offset tapes align in time and expose distinct actual strikes at each timestamp; fixed-strike paths may be reconstructed from their in-memory union, subject to expiry identity and rights." if passed else "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."})
