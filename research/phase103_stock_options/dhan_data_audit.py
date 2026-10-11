@@ -14,6 +14,7 @@ ALLOWED_STRIKES = set(DEFAULT_STRIKES)
 DEFAULT_PANELS = [("ICICIBANK", "CALL"), ("RELIANCE", "CALL"), ("RELIANCE", "PUT"), ("SBIN", "CALL")]
 # The provider currently rejects code 0 as missing; use the documented sample value 1 (next expiry).
 EXPIRY_CODE = 1
+CONTRACT_IDENTITY_STATUS = "BLOCKED_EXPIRY_NOT_RETURNED"
 FIELDS = ["open", "high", "low", "close", "iv", "volume", "strike", "oi", "spot", "timestamp"]
 
 def get_bytes(url, timeout=30):
@@ -350,11 +351,13 @@ def main():
         "probe_limit":a.max_probes,
         "requested_panels":[f"{sym}:{side}" for sym,side in panels],
         "requested_relative_strikes":strikes,
-        "endpoint":ENDPOINT,"instrument_master_sha256":None,"instrument_master_bytes":None,
+        "endpoint":ENDPOINT,"contract_identity_status":CONTRACT_IDENTITY_STATUS,
+        "instrument_master_sha256":None,"instrument_master_bytes":None,
         "underlying_map":{},"probes":[],"surface_audit":[],"probe_abort_reason":None,"raw_rows_persisted":False,
         "raw_data_policy":"Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
         "known_limits":["Rolling strikes can change actual strike over time.",
           "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
+          "Observed response schema does not return contract expiry date or immutable option contract ID; expiryFlag/expiryCode are request selectors, not an audited returned identity.",
           "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
           "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."],
         "status":"PENDING"}
@@ -429,7 +432,8 @@ def main():
       f"**Panels:** {', '.join(result['requested_panels'])}",
       f"**Relative strikes:** {', '.join(strikes)}",
       f"**Probe limit:** {a.max_probes}",
-      f"**Run:** {result['run_id']}","",
+      f"**Run:** {result['run_id']}",
+      f"**Exact contract identity:** {result['contract_identity_status']} (request expiry selectors do not supply a returned expiry date or immutable contract ID)", "",
       "This is a multi-session data-feasibility audit, not a strategy P&L test. Panels were selected from the prior one-session alignment screen. The token and raw rows are not published.",
       "","| Symbol | Side | Offset | HTTP | Status | Error code | Safe message | Rows | Arrays consistent | Distinct actual strikes | Strike changes | First strike | Last strike | First UTC | Last UTC | IST-date row counts | Rows outside dates |",
       "|---|---|---|---:|---|---|---|---:|---|---:|---:|---|---|---|---|---|---:|"]
@@ -478,6 +482,7 @@ def main():
       "underlying_ids_resolved":sum(1 for x in result.get("underlying_map",{}).values() if x.get("security_id")),
       "probes":len(result.get("probes",[])),"probe_limit":result["probe_limit"],"panels":result["requested_panels"],"relative_strikes":strikes,
       "probes_with_rows":sum(1 for x in result.get("probes",[]) if x.get("rows",0)>0),
+      "contract_identity_status":result["contract_identity_status"],
       "surface_groups":len(result.get("surface_audit",[])),
       "surface_gates_passed":sum(1 for x in result.get("surface_audit",[]) if x.get("relative_surface_alignment_gate")=="PASS"),
       "rows_outside_requested_date_window_total":result.get("rows_outside_requested_date_window_total",0)},indent=2))
