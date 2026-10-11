@@ -19,7 +19,7 @@ A historical options strategy study requires more than a collection of option pr
 
 The preceding Phase 103 study tested a Dhan rolling-relative-strike endpoint. Its requests returned rows, yet the independent daily OHLC reconciliation was incomplete: only 3 of 88 eligible full-session exact-strike profiles uniquely matched four daily OHLC fields, all on expiry 25 August 2026, and none agreed with the expected listed-expiry rank for selector code 1. The code-0 near/current selector request was rejected by Dhan before returning observations. Phase 103 was closed without strategy P&L. This study was registered separately so the previous sample and conclusions remain frozen and are not silently pooled with EOD records.
 
-The NSE lists daily derivatives reports and individual-security stock-option specifications, including the contract dimensions used to identify a listed option. The EOD/historical-data vending route is separate from an executable quote feed. This investigation tests the daily-archive route only and states the boundary between source-data feasibility and execution feasibility explicitly.
+The NSE lists daily derivatives reports and individual-security stock-option specifications, including the contract dimensions used to identify a listed option. The EOD/historical-data vending route is separate from an executable quote feed. Public source statements are cited to official NSE and Paytm Money webpages below; account-specific rights and fees were not inferred from the public pages. This investigation tests the daily-archive route only and states the boundary between source-data feasibility and execution feasibility explicitly.
 
 ## 2. Research questions
 
@@ -92,7 +92,7 @@ The audit acceptance rule required at least ten parsed trading-day archives, at 
 
 A source-based fee function was added with date-effective components. The current Paytm Money F&O FAQ describes ₹10 per unique executed order, while the firm's brokerage-history page says account cohorts may remain on ₹10/₹15 or use ₹20 for newer customers. Because the user's individual account tier and contract notes were not inspected, the model preserves a ₹10/₹15/₹20 per-executed-order sensitivity rather than claiming a single account-specific tariff.
 
-For the sample after 1 April 2026, the fee model includes the published option-sale STT rate of 0.15%, buy-side equity-option stamp duty of 0.003%, SEBI turnover fee of 0.0001%, GST on brokerage/exchange/SEBI service fees, NSE's transaction charge schedule effective 1 March 2026 (₹3,552 per crore of option-premium turnover per side), and an explicitly separate NSE IPFT contribution rate based on the official circular. Exercise STT is represented separately, although initial candidates are intended to exit before expiry. The account-specific tariff and treatment of any separately billed IPFT/other broker charges should be reconciled to contract notes before actual P&L calculations.
+For the sample after 1 April 2026, the fee model includes the published option-sale STT rate of 0.15%, buy-side equity-option stamp duty of 0.003%, SEBI turnover fee of 0.0001%, GST on brokerage/exchange/SEBI service fees, NSE's transaction charge schedule effective 1 March 2026 (₹3,552 per crore of option-premium turnover per side), and an explicitly separate date-effective NSE IPFT contribution rate based on the official circular. The official circular rounds total member outflow to ₹3,553 per crore for options in its summary table; the model preserves transaction and IPFT components separately so the broker's billed treatment can be reconciled. GST treatment of a separately billed IPFT contribution is not assumed beyond the model's documented service-fee base. Exercise STT is represented separately, although initial candidates are intended to exit before expiry. The account-specific tariff and treatment of any separately billed IPFT/other broker charges should be reconciled to contract notes before actual P&L calculations.
 
 The model deliberately returns **NOT_COMPUTABLE_WITHOUT_EXECUTABLE_FILL_MODEL** for net P&L. It does not synthesize bid/ask spreads, fills, queue position, slippage or latency from daily bars. These costs are not set to zero.
 
@@ -104,7 +104,7 @@ No strategy P&L, return series or trade sample was produced; inferential strateg
 
 ### 6.1 Archive availability and aggregate data quality
 
-The automated audit [run 38129231405](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129231405) passed the unit-test and acquisition/report publication steps. It parsed 22 official daily archives, had zero source/schema errors, and generated an aggregate machine-readable report without publishing raw records.
+The automated audit [run 38129590808](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129590808) passed the updated unit-test and acquisition/report publication steps, including the separately itemized NSE IPFT test. It parsed 22 official daily archives, had zero source/schema errors, and generated an aggregate machine-readable report without publishing raw records.
 
 | Audit metric | Result |
 |---|---:|
