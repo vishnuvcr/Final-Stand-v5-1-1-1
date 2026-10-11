@@ -349,7 +349,8 @@ def realized_vol(values,end,period):
     if end<period:return None
     rets=[]
     for j in range(end-period+1,end+1):
-        if values[j-1]>0 and values[j]>0: rets.append(math.log(values[j]/values[j-1]))
+        if values[j-1] is not None and values[j] is not None and values[j-1]>0 and values[j]>0:
+            rets.append(math.log(values[j]/values[j-1]))
     if len(rets)<max(2,period//2):return None
     m,sd=mean_sd(rets)
     return sd*math.sqrt(252) if sd is not None else None
@@ -388,9 +389,17 @@ def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_i
         high=vol>=bound
         if not high and not vol>0:return 0,"REALIZED_VOL_ZERO"
     elif regime=="TREND_RANGE":
-        move=abs(values[idx]/values[idx-lookback]-1)*100 if values[idx-lookback]>0 else 0
-        is_trend=move>=threshold
-        if not is_trend:return 0,"RANGE_REGIME_FILTER"
+        move=abs(values[idx]/values[idx-lookback]-1)*100 if values[idx-lookback] and values[idx-lookback]>0 else 0
+        trailing=[]
+        for j in range(max(lookback+1,idx-60),idx):
+            if values[j-lookback] and values[j-lookback]>0:
+                trailing.append(abs(values[j]/values[j-lookback]-1)*100)
+        bound=sorted(trailing)[len(trailing)//2] if trailing else None
+        if bound is None:return 0,"TREND_REGIME_HISTORY_MISSING"
+        is_trend=move>=bound
+        trend_method=("MOMENTUM" in method or "EMA" in method or method=="RELATIVE_STRENGTH")
+        reversion_method=("REVERSION" in method or "FADE" in method or method=="RSI_REBOUND" or method=="BOLLINGER_REVERSION")
+        if (trend_method and not is_trend) or (reversion_method and is_trend):return 0,"TREND_RANGE_REGIME_FILTER"
     elif regime=="INDIA_VIX":
         if idx>=len(vix_values) or vix_values[idx] is None:return 0,"INDIA_VIX_MISSING"
         # The high/low regime threshold is the historical expanding median, using no future values.
