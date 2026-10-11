@@ -28,6 +28,15 @@ on:
         required: true
         default: "ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3"
         type: string
+      expiry_code:
+        description: "Dhan expiry selector (0 near/current, 1 next, 2 far)"
+        required: true
+        default: "0"
+        type: choice
+        options:
+          - "0"
+          - "1"
+          - "2"
   push:
     branches:
       - phase-103-nifty50-stock-options
@@ -55,6 +64,7 @@ jobs:
       PHASE103_PANELS: ${{ inputs.panels || 'ICICIBANK:CALL,RELIANCE:CALL,RELIANCE:PUT,SBIN:CALL' }}
       PHASE103_MAX_PROBES: ${{ inputs.max_probes || 28 }}
       PHASE103_STRIKES: ${{ inputs.strikes || 'ATM,ATM+1,ATM+2,ATM+3,ATM-1,ATM-2,ATM-3' }}
+      PHASE103_EXPIRY_CODE: ${{ inputs.expiry_code || '0' }}
     steps:
       - name: Checkout isolated Phase 103 branch
         uses: actions/checkout@v4
@@ -74,7 +84,7 @@ jobs:
       - name: Unit-test audit code
         run: python -m unittest discover -s tests/phase103 -p "test_*.py" -v
       - name: Query Dhan instrument master and bounded expired-options data
-        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE" --max-probes "$PHASE103_MAX_PROBES" --strikes "$PHASE103_STRIKES"
+        run: python research/phase103_stock_options/dhan_data_audit.py --from-date "$PHASE103_FROM_DATE" --to-date "$PHASE103_TO_DATE" --max-probes "$PHASE103_MAX_PROBES" --strikes "$PHASE103_STRIKES" --expiry-code "$PHASE103_EXPIRY_CODE"
       - name: Publish status and error/limitation log
         if: always()
         run: |
