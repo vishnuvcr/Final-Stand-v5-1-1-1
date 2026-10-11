@@ -487,7 +487,23 @@ def run(args):
     trades_by_strategy = {s: [] for s in STRATEGIES}
     for idx in range(2, len(sessions)):
         prior_date, signal_date, entry_date = sessions[idx - 2], sessions[idx - 1], sessions[idx]
+        # Fixed causal realized-volatility proxy: absolute daily underlying returns.
+        # Regime threshold is the median of earlier estimates only, not future sessions.
+        regimes = {}
+        for sym in SYMBOLS:
+            historical_vol = []
+            for j in range(max(1, idx - 6), idx - 1):
+                p0, p1 = underlying.get((sessions[j - 1], sym)), underlying.get((sessions[j], sym))
+                if finite_positive(p0) and finite_positive(p1):
+                    historical_vol.append(abs(p1 / p0 - 1.0))
+            p0, p1 = underlying.get((prior_date, sym)), underlying.get((signal_date, sym))
+            current_vol = abs(p1 / p0 - 1.0) if finite_positive(p0) and finite_positive(p1) else None
+            if current_vol is not None and historical_vol:
+                regimes[sym] = "LOW" if current_vol <= median(historical_vol) else "HIGH"
+            else:
+                regimes[sym] = None
         for symbol in SYMBOLS:
+            regime = regimes.get(symbol)
             prev_underlying = underlying.get((prior_date, symbol))
             signal_underlying = underlying.get((signal_date, symbol))
             if not finite_positive(prev_underlying) or not finite_positive(signal_underlying):
