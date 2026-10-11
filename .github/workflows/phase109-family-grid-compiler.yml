@@ -36,8 +36,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: data/cache/phase109
-          key: ${{ runner.os }}-phase109-dhan-hf-source-cache-v1-${{ github.ref_name }}
+          key: ${{ runner.os }}-phase109-dhan-hf-source-cache-v2-${{ github.ref_name }}-${{ github.run_number }}
           restore-keys: |
+            ${{ runner.os }}-phase109-dhan-hf-source-cache-v2-${{ github.ref_name }}-
             ${{ runner.os }}-phase109-dhan-hf-source-cache-v1-
 
       - name: Compile all registered family and cost-row manifests
