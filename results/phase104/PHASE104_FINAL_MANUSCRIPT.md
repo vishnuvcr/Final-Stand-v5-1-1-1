@@ -104,7 +104,7 @@ No strategy P&L, return series or trade sample was produced; inferential strateg
 
 ### 6.1 Archive availability and aggregate data quality
 
-The automated audit [run 38129590808](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129590808) passed the updated unit-test and acquisition/report publication steps, including the separately itemized NSE IPFT test. It parsed 22 official daily archives, had zero source/schema errors, and generated an aggregate machine-readable report without publishing raw records.
+The automated audit [run 38129926977](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129926977) passed the updated unit-test and acquisition/report publication steps, including the separately itemized NSE IPFT test. It parsed 22 official daily archives, had zero source/schema errors, and generated an aggregate machine-readable report without publishing raw records.
 
 | Audit metric | Result |
 |---|---:|
