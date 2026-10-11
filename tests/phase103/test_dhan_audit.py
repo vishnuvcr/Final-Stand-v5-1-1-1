@@ -237,7 +237,7 @@ class ExpiryCrosscheckTests(unittest.TestCase):
 
     def test_expiry_crosscheck_matches_exact_contract_and_second_future_expiry(self):
         result = self._run()
-        self.assertEqual(result["status"], "PASS_EOD_RECONCILED_EXPIRY_CODE_1")
+        self.assertEqual(result["status"], "PASS_EOD_RECONCILED_EXPIRY_CODE_1", result)
         self.assertEqual(result["eligible_full_session_profiles"], 9)
         self.assertEqual(result["unique_exact_contract_matches"], 9)
         self.assertEqual(result["expiry_code_matches"], 9)
@@ -247,7 +247,7 @@ class ExpiryCrosscheckTests(unittest.TestCase):
 
     def test_expiry_crosscheck_blocks_when_minute_ohlc_does_not_match_eod(self):
         result = self._run((99.0,100.0,98.0,99.0))
-        self.assertEqual(result["status"], "BLOCKED_EOD_EXPIRY_RECONCILIATION_INSUFFICIENT")
+        self.assertEqual(result["status"], "BLOCKED_EOD_EXPIRY_RECONCILIATION_INSUFFICIENT", result)
         self.assertEqual(result["unique_exact_contract_matches"], 0)
         self.assertEqual(result["unmatched_profile_count"], 9)
 
