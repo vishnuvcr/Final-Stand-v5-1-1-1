@@ -167,6 +167,16 @@ def normalize_family(row):
     return {"family_id":family_id,"family_name":desc,"core":core,"confirmation":confirm,"regime":regime,"required_inputs":required,"raw":row}
 
 
+def is_trend_method(method):
+    return method in {"ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM",
+                      "EMA_CROSS","EMA_CROSSOVER","EMA_SLOPE","EMA_TREND","RELATIVE_STRENGTH","RELATIVE_STRENGTH_ROTATION"}
+
+
+def is_mean_reversion_method(method):
+    return method in {"RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION","RSI_REBOUND",
+                      "BOLLINGER_REVERSION","BOLLINGER_MEAN_REVERSION","EMA_DEVIATION_FADE"}
+
+
 def core_method(core):
     if core in SUPPORTED_CORE_METHODS: return core
     # IDs and description labels sometimes differ, so map only unmistakable rule labels.
@@ -397,8 +407,8 @@ def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_i
         bound=sorted(trailing)[len(trailing)//2] if trailing else None
         if bound is None:return 0,"TREND_REGIME_HISTORY_MISSING"
         is_trend=move>=bound
-        trend_method=("MOMENTUM" in method or "EMA" in method or method=="RELATIVE_STRENGTH")
-        reversion_method=("REVERSION" in method or "FADE" in method or method=="RSI_REBOUND" or method=="BOLLINGER_REVERSION")
+        trend_method=is_trend_method(method)
+        reversion_method=is_mean_reversion_method(method)
         if (trend_method and not is_trend) or (reversion_method and is_trend):return 0,"TREND_RANGE_REGIME_FILTER"
     elif regime=="INDIA_VIX":
         if idx>=len(vix_values) or vix_values[idx] is None:return 0,"INDIA_VIX_MISSING"
@@ -407,9 +417,9 @@ def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_i
         if not past_vix:return 0,"INDIA_VIX_HISTORY_MISSING"
         bound=sorted(past_vix)[len(past_vix)//2]
         # Low VIX admits mean-reversion cores; high VIX admits trend/momentum cores.
-        if ("REVERSION" in method or "FADE" in method or method=="RSI_REBOUND" or method=="BOLLINGER_REVERSION") and vix_values[idx]>bound:
+        if is_mean_reversion_method(method) and vix_values[idx]>bound:
             return 0,"VIX_REGIME_FILTER"
-        if ("MOMENTUM" in method or "EMA" in method or method=="RELATIVE_STRENGTH") and vix_values[idx]<bound:
+        if is_trend_method(method) and vix_values[idx]<bound:
             return 0,"VIX_REGIME_FILTER"
     elif regime not in {"NONE",""}:
         return 0,"REGIME_NOT_IMPLEMENTED"
