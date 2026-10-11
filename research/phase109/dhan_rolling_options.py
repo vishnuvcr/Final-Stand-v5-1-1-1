@@ -118,8 +118,17 @@ def audit_rows(rows):
         ts=str(r.get("timestamp",""))
         if ts:
             timestamps.append(ts)
-            day=ts[:10]
-            if len(day)==10 and day[4]=="-" and day[7]=="-":
+            day=""
+            if len(ts)>=10 and ts[4:5]=="-" and ts[7:8]=="-":
+                day=ts[:10]
+            else:
+                try:
+                    stamp=float(ts)
+                    # Dhan may return Unix epoch seconds; preserve the timestamp's date component.
+                    day=datetime.fromtimestamp(stamp,timezone.utc).date().isoformat()
+                except (ValueError,OverflowError,OSError):
+                    day=""
+            if day:
                 by_day.add(day)
             key=(ts,str(r.get("strike","")))
             if key in seen: duplicate_ts+=1
@@ -223,7 +232,7 @@ def main():
       "rows":sum(x.get("rows",0) for x in summaries),
       "call_rows":sum(x.get("rows",0) for x in summaries if x["side"]=="CE"),
       "put_rows":sum(x.get("rows",0) for x in summaries if x["side"]=="PE"),
-      "unique_dates":len(set(x for s in summaries for x in ())),
+      "unique_dates":sum(x.get("unique_observed_dates",0) for x in summaries if x["side"]=="CE"),
       "invalid_ohlc_rows":sum(x.get("invalid_ohlc_rows",0) for x in summaries),
       "invalid_iv_rows":sum(x.get("invalid_or_missing_iv_rows",0) for x in summaries),
       "invalid_volume_rows":sum(x.get("invalid_or_missing_volume_rows",0) for x in summaries),
