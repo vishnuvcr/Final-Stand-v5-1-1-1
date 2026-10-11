@@ -324,3 +324,8 @@ Next: run the same offsets across all five stocks and both CALL/PUT sides, recor
 
 
 **Integrity refinement:** the abort condition now exempts only the explicit `SUCCESS_EMPTY_FOR_REQUESTED_SIDE` status. Any other inconsistent arrays, including zero-timestamp/mismatched non-empty arrays, remain an integrity failure. The accepted audit JSON still belongs to run 38090149633; no post-fix run result has yet been verified.
+
+
+## 2026-10-11 — Regression test entrypoint correction
+
+The empty-side continuation regression class was located after the `unittest.main()` guard, so direct execution of the test file would not discover that class. Moved the guard to the end of the file in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`. This test-file push should trigger the branch audit workflow. **No post-fix run result is verified yet; the data gate remains pending.**
