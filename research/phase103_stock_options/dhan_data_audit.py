@@ -199,6 +199,10 @@ def summarize(symbol, option_type, relative_strike, code, obj, safe_error=None, 
     block=(obj.get("data") or {}).get(side) if isinstance(obj.get("data"),dict) else None
     x["status"]=str(obj.get("status","UNKNOWN"))
     if not isinstance(block,dict):
+        if str(obj.get("status","")).lower()=="success":
+            x["status"]="SUCCESS_EMPTY_FOR_REQUESTED_SIDE"
+        else:
+            x["status"]="REQUESTED_SIDE_PAYLOAD_MISSING"
         return x
     lens=[]
     for f in FIELDS:
@@ -301,8 +305,11 @@ def main():
                         code,obj,safe_error=query(token,m["security_id"],side,relative_strike,a.from_date,api_to_date)
                         probe_summary = summarize(sym,side,relative_strike,code,obj,safe_error,a.from_date,a.to_date)
                         result["probes"].append(probe_summary)
-                        if code != 200 or probe_summary.get("rows",0) == 0 or not probe_summary.get("array_lengths_consistent",False):
-                            result["probe_abort_reason"] = "stopped after the first HTTP error, empty requested-side payload, or inconsistent arrays"
+                        # An empty requested-side payload is a coverage observation, not a reason
+                        # to abandon the entire frozen universe. Continue so later stocks/sides
+                        # are still audited. Abort only on HTTP failure or malformed non-empty data.
+                        if code != 200 or (probe_summary.get("rows",0) > 0 and not probe_summary.get("array_lengths_consistent",False)):
+                            result["probe_abort_reason"] = "stopped after the first HTTP error or inconsistent non-empty arrays"
                             abort_probes = True
                         # Raw timestamps and actual strikes exist only in memory to audit the cross-offset panel.
                         side_key = "ce" if side == "CALL" else "pe"
