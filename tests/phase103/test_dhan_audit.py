@@ -138,13 +138,13 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertNotIn("access-token",encoded.lower())
         self.assertNotIn("9.0",encoded)
 
-if __name__=="__main__":
-    unittest.main()
-
-
 class EmptySideContinuationTests(unittest.TestCase):
     def test_success_response_without_requested_side_is_explicit_empty_coverage(self):
         result=summarize("INFY","CALL","ATM+3",200,{"status":"success","data":{"ce":None,"pe":{"close":[1],"timestamp":[1754000000]}}})
         self.assertEqual(result["status"],"SUCCESS_EMPTY_FOR_REQUESTED_SIDE")
         self.assertEqual(result["rows"],0)
         self.assertFalse(result["array_lengths_consistent"])
+
+
+if __name__=="__main__":
+    unittest.main()
