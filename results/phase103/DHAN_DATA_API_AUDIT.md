@@ -6,7 +6,7 @@
 **Panels:** ICICIBANK:CALL, RELIANCE:CALL, RELIANCE:PUT, SBIN:CALL
 **Relative strikes:** ATM, ATM+1, ATM+2, ATM+3, ATM-1, ATM-2, ATM-3
 **Probe limit:** 28
-**Run:** 38127450209
+**Run:** 38127809994
 **Exact contract identity:** BLOCKED_EXPIRY_EOD_CROSSCHECK (request expiry selectors do not supply a returned expiry date or immutable contract ID)
 
 This is a multi-session data-feasibility audit, not a strategy P&L test. Panels were selected from the prior one-session alignment screen. The token and raw rows are not published.

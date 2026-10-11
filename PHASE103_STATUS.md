@@ -507,3 +507,15 @@ Run 38127433566 produced no current-run JSON; prior run output was not accepted.
 - Canonical code-1 full-panel run [38127450209](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127450209): tests passed; 28/28 probes returned rows; NSE archives 5/5. Eligible full-session exact-strike profiles = 88; exact 4-field OHLC matches = 3; all 3 matched expiry 2026-08-25 and listed-expiry rank 1; expected code-1/rank-2 matches = 0; unmatched = 85; ambiguous = 0; conflicting duplicate keys = 0. Candidate field agreements: open 88, high 48, low 58, close 7. Profiles by matched OHLC field count: 0=0, 1=13, 2=40, 3=32, 4=3. Support volume agreement 0/3; OI 2/3.
 - One-shot code-0 selector attempt [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683): HTTP 400, DH-905 “expiryCode is required” on first probe; 0/1 probes returned rows. No identity comparison possible.
 - Final decision: DATA/IDENTITY NO-GO FOR STRATEGY P&L; no strategy tested, ranked or promoted. Phase calibration closed under the hard stop. Raw rows were not committed or uploaded.
+
+<!-- DHAN_API_RUN_38127809994_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38127809994, attempt 1 — 2026-10-11T09:18:59.980903+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-10 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 28/28.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
