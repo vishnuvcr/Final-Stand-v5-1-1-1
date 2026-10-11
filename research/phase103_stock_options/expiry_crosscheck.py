@@ -137,13 +137,15 @@ def _prices_match(profile, eod):
     return True
 
 
-def audit_expiry_identity(surface_blocks, fetch_bytes):
-    """Cross-check expiryCode=1 against official daily contract OHLC; fetch_bytes is injectable for tests."""
+def audit_expiry_identity(surface_blocks, fetch_bytes, expiry_code=1):
+    """Cross-check a Dhan expiry selector against official daily contract OHLC; rows remain ephemeral."""
+    if expiry_code not in (0, 1, 2):
+        raise ValueError("Expiry code must be 0, 1 or 2.")
     profiles, duplicate_keys, conflict_keys = _extract_profiles(surface_blocks)
     dates = sorted({profile["date"] for profile in profiles})
     result = {
         "status": "BLOCKED_EOD_CROSSCHECK_NOT_RUN",
-        "method": "Exact-strike full-session Dhan OHLC aggregated in memory and matched to NSE UDiFF daily stock-option OHLC; expiryCode=1 is checked against the second future listed expiry",
+        "method": f"Exact-strike full-session Dhan OHLC aggregated in memory and matched to NSE UDiFF daily stock-option OHLC; expiryCode={expiry_code} is checked against active listed-expiry rank {expiry_code + 1}",
         "source": "NSE official F&O UDiFF daily bhavcopy archive",
         "source_url_template": NSE_URL,
         "raw_rows_persisted": False,
@@ -153,7 +155,10 @@ def audit_expiry_identity(surface_blocks, fetch_bytes):
         "expiry_code_matches": 0, "expiry_selector_mismatches": 0,
         "supporting_volume_matches": 0, "supporting_oi_matches": 0,
         "distinct_matched_panels": 0, "duplicate_timestamp_strike_rows_deduplicated": duplicate_keys,
-        "conflicting_duplicate_key_count": conflict_keys, "matched_expiry_counts": {},
+        "conflicting_duplicate_key_count": conflict_keys, "matched_expiry_counts": {}, "matched_expiry_rank_counts": {},
+        "profiles_with_eod_contract_candidates": 0,
+        "price_field_match_counts": {"open": 0, "high": 0, "low": 0, "close": 0},
+        "price_field_match_histogram": {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0},
         "safe_source_errors": [],
     }
     if not dates:
@@ -172,7 +177,11 @@ def audit_expiry_identity(surface_blocks, fetch_bytes):
         return result
 
     matched_expiries = defaultdict(int)
+    matched_expiry_ranks = defaultdict(int)
     matched_panels = set()
+    field_match_counts = {"open": 0, "high": 0, "low": 0, "close": 0}
+    field_match_histogram = defaultdict(int)
+    profiles_with_candidates = 0
     unique_matches = ambiguous = unmatched = code_matches = selector_mismatches = 0
     volume_matches = oi_matches = 0
     for profile in profiles:
@@ -180,6 +189,17 @@ def audit_expiry_identity(surface_blocks, fetch_bytes):
         same_symbol_day = [r for r in day_rows if r["symbol"] == profile["symbol"]]
         side_rows = [r for r in same_symbol_day if r["option_type"] == profile["option_type"]]
         candidates = [r for r in side_rows if r["strike"] == profile["strike"]]
+        if candidates:
+            profiles_with_candidates += 1
+        field_flags = {
+            field: any(profile.get(field) is not None and candidate.get(field) is not None
+                       and abs(profile[field] - candidate[field]) <= PRICE_TOLERANCE for candidate in candidates)
+            for field in ("open", "high", "low", "close")
+        }
+        for field, matched in field_flags.items():
+            if matched:
+                field_match_counts[field] += 1
+        field_match_histogram[str(sum(field_flags.values()))] += 1
         price_candidates = [r for r in candidates if _prices_match(profile, r)]
         if len(price_candidates) != 1:
             if len(price_candidates) > 1:
@@ -196,7 +216,10 @@ def audit_expiry_identity(surface_blocks, fetch_bytes):
         if profile.get("oi") is not None and selected.get("oi") is not None and abs(profile["oi"] - selected["oi"]) < 0.5:
             oi_matches += 1
         active_expiries = sorted({r["expiry"] for r in same_symbol_day if r["expiry"] >= profile["date"]})
-        expected = active_expiries[1] if len(active_expiries) > 1 else None
+        rank = active_expiries.index(selected["expiry"]) + 1 if selected["expiry"] in active_expiries else None
+        if rank is not None:
+            matched_expiry_ranks[str(rank)] += 1
+        expected = active_expiries[expiry_code] if len(active_expiries) > expiry_code else None
         if expected is not None and selected["expiry"] == expected:
             code_matches += 1
         else:
@@ -209,10 +232,14 @@ def audit_expiry_identity(surface_blocks, fetch_bytes):
         "expiry_selector_mismatches": selector_mismatches, "supporting_volume_matches": volume_matches,
         "supporting_oi_matches": oi_matches, "distinct_matched_panels": len(matched_panels),
         "matched_expiry_counts": dict(sorted(matched_expiries.items())),
+        "matched_expiry_rank_counts": dict(sorted(matched_expiry_ranks.items(), key=lambda x:int(x[0]))),
+        "profiles_with_eod_contract_candidates": profiles_with_candidates,
+        "price_field_match_counts": field_match_counts,
+        "price_field_match_histogram": {str(i):field_match_histogram.get(str(i), 0) for i in range(5)},
     })
     if (total >= 8 and unique_matches == total and code_matches == total and ambiguous == 0 and unmatched == 0
         and selector_mismatches == 0 and conflict_keys == 0 and len(matched_panels) >= 3 and len(dates) >= 3):
-        result["status"] = "PASS_EOD_RECONCILED_EXPIRY_CODE_1"
+        result["status"] = f"PASS_EOD_RECONCILED_EXPIRY_CODE_{expiry_code}"
     elif unique_matches:
         result["status"] = "PARTIAL_EOD_EXPIRY_RECONCILIATION"
     else:
