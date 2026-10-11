@@ -428,3 +428,11 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — One-shot selector calibration closed; latest code-1 audit reconciled
+
+- Final diagnostic run [38127450209](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127450209) passed the unit-test step and returned data for 28/28 code-1 probes; 5/5 NSE daily archives downloaded. The machine audit and report now contain field-level OHLC match diagnostics and expected-expiry ranks.
+- Of 88 eligible full-session profiles, all 88 found same symbol/side/strike contract candidates, but only 3 uniquely matched all four OHLC fields; all 3 were expiry 2026-08-25 / rank 1, while code 1 was expected rank 2. Per-field candidates: open 88, high 48, low 58, close 7; match-count histogram 0/1/2/3/4 fields = 0/13/40/32/3. Supporting volume/OI matches 0/3 and 2/3. This establishes that the problem is not simply an absent strike candidate: the full daily/intraday OHLC tape fails to reconcile.
+- Single code-0 selector calibration [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683) failed at request validation with HTTP 400 / DH-905 / “expiryCode is required” before receiving any bars. No further selector, stock, date or offset fishing will occur under this phase.
+- User's Dhan subscription/research rights confirmation is accepted. Raw market rows remain ephemeral; only aggregate results were persisted. Strategy P&L, statistics and promotion remain NOT RUN.
