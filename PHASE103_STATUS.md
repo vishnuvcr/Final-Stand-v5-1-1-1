@@ -377,3 +377,14 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - Strict surface alignment: FAIL for all four selected panels. Common/union timestamp counts were ICICIBANK CALL 1920/1925, RELIANCE CALL 1923/1925, RELIANCE PUT 1922/1925, SBIN CALL 1921/1925.
 - Rolling strike identity is not fixed: per-offset actual-strike change counts were substantial (77–113), so relative-strike series cannot be treated as a fixed listed contract tape.
 - Decision: data acquisition is verified; fixed-contract backtest gate remains blocked. No P&L, strategy ranking, or live approval.
+
+
+## 2026-10-11 — Phase 103.1C bounded source/rights screen
+
+- [x] Reviewed official Dhan expired-options documentation, NSE historical data vending and order/trade specification, NSE individual-stock contract identity definitions, and the public option-chain terms.
+- [x] Published [fixed-contract source and rights screen](results/phase103/FIXED_CONTRACT_SOURCE_RIGHTS_SCREEN.md).
+- [x] Confirmed a plausible official vendor inquiry route through NSE Data & Analytics, but no public evidence establishes the needed package, historical fields, price, automated-use rights, retention/cache rights, or derived-publication rights. No data was purchased.
+- [x] Preserved the existing gate: API retrieval passed, but all four multi-session relative-strike surfaces failed strict alignment; fixed-contract continuity, historical bid/ask/depth, and data-use rights remain unverified.
+- [ ] Do not run strategy P&L until a licensed sample passes contract identity, timestamp/coverage, quote-quality and rights checks. If no eligible source is accessible, record terminal data NO-GO for this bounded branch.
+
+**State remains:** DATA ACQUISITION PASS; FIXED-CONTRACT / EXECUTION / RIGHTS GATES BLOCKED; NO STRATEGY P&L OR PROMOTION.
