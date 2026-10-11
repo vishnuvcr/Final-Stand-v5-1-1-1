@@ -326,3 +326,12 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Strict timestamp alignment failed on every surface: ICICIBANK CALL common/union 1920/1925; RELIANCE CALL 1923/1925; RELIANCE PUT 1922/1925; SBIN CALL 1921/1925.
 - Actual strikes changed 77–113 times per offset over the window. This endpoint is rolling ATM-relative history, not evidence of a fixed listed contract's tape.
 - Decision: do not run strategy P&L from this aggregate. Next phase is contract-identity/coverage diagnosis and a search for a rights-compliant fixed-contract historical source. If unavailable, close with a data NO-GO rather than fabricate fills.
+
+
+## 2026-10-11 — Bounded fixed-contract source and rights screen
+
+- Re-read the phase plan, status, research/error logs, prior audit report and machine summary before the next step.
+- Reviewed official Dhan documentation, NSE Data & Analytics historical-data vending, NSE order/trade field specification, NSE individual-stock contract identity, and NSE option-chain terms.
+- Published `results/phase103/FIXED_CONTRACT_SOURCE_RIGHTS_SCREEN.md` (commit `2ded367ef883bb955bb6cc6ece4a0540f929068c`).
+- Finding: NSE Data & Analytics is a plausible official inquiry route for contract-level historical records, but no public evidence verifies required fields, commercial terms, automated use, caching/retention, or publication rights. Public option-chain terms are not accepted as permission for bulk automated historical reconstruction.
+- Decision unchanged: do not calculate P&L from rolling ATM-relative series or invent fills. No strategy promotion. The next bounded dependency is entitlement confirmation and an authorized small sample; if unavailable, close this empirical attempt as data NO-GO.
