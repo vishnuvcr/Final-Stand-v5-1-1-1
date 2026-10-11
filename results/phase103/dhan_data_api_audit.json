@@ -1,7 +1,7 @@
 {
   "phase": "103.1",
-  "run_id": "38124954633",
-  "generated_at_utc": "2026-10-11T08:29:10.357543+00:00",
+  "run_id": "38125302970",
+  "generated_at_utc": "2026-10-11T08:35:13.480639+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
     "to_exclusive": "2026-08-10",
@@ -29,6 +29,7 @@
     "ATM-3"
   ],
   "endpoint": "https://api.dhan.co/v2/charts/rollingoption",
+  "contract_identity_status": "BLOCKED_EXPIRY_NOT_RETURNED",
   "instrument_master_sha256": "2d962ddbd2681df30f08032f8b355aae50595b7a5a289d7e280c7eb558ca1173",
   "instrument_master_bytes": 26116616,
   "underlying_map": {
@@ -3995,6 +3996,7 @@
   "known_limits": [
     "Rolling strikes can change actual strike over time.",
     "This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.",
+    "Observed response schema does not return contract expiry date or immutable option contract ID; expiryFlag/expiryCode are request selectors, not an audited returned identity.",
     "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
     "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."
   ],

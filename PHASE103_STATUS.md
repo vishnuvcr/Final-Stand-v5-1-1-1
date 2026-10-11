@@ -418,3 +418,15 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - API probes returning rows: 28/28.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+<!-- DHAN_API_RUN_38125302970_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38125302970, attempt 1 — 2026-10-11T08:37:17.401941+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-10 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 28/28.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

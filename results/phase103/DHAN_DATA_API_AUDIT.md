@@ -6,7 +6,8 @@
 **Panels:** ICICIBANK:CALL, RELIANCE:CALL, RELIANCE:PUT, SBIN:CALL
 **Relative strikes:** ATM, ATM+1, ATM+2, ATM+3, ATM-1, ATM-2, ATM-3
 **Probe limit:** 28
-**Run:** 38124954633
+**Run:** 38125302970
+**Exact contract identity:** BLOCKED_EXPIRY_NOT_RETURNED (request expiry selectors do not supply a returned expiry date or immutable contract ID)
 
 This is a multi-session data-feasibility audit, not a strategy P&L test. Panels were selected from the prior one-session alignment screen. The token and raw rows are not published.
 
@@ -126,5 +127,6 @@ This is the deduplicated union of timestamp/actual-strike observations across ro
 
 - Rolling strikes can change actual strike over time.
 - This endpoint documents OHLC, IV, volume, OI, strike and spot, not historical bid/ask/depth.
+- Observed response schema does not return contract expiry date or immutable option contract ID; expiryFlag/expiryCode are request selectors, not an audited returned identity.
 - One stock/side probe does not establish full-history completeness or independent test sufficiency.
 - Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window.
