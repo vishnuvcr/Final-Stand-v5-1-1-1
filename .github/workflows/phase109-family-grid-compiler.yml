@@ -238,6 +238,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add PHASE109_STATUS.md PHASE109_RESEARCH_LOG.md PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md README.md
           git add results/phase109/strategy_families.csv results/phase109/family_configuration_space.csv results/phase109/cost_scenarios.csv results/phase109/cost_row_shard_manifest.csv results/phase109/phase109_grid_summary.json results/phase109/PHASE109_GRID_COMPILER_REPORT.md results/phase109/PHASE109_SELF_TEST.txt results/phase109/source_access_audit.csv results/phase109/huggingface_dataset_candidates.json results/phase109/source_access_summary.json
+          git add results/phase109/nse_archive_source_feasibility.json results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md
+          git add results/phase109/source_feasibility_matrix.csv results/phase109/SOURCE_FEASIBILITY_REPORT.md
           if git diff --cached --quiet; then
             echo "No repository updates to commit."
           else
