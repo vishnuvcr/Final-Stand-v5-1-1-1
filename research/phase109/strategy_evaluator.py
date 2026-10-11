@@ -612,7 +612,7 @@ def choose_contract(data,signal_date,entry_date,exit_date,symbol,side,strike_tar
     return (symbol,r["expiry"],r["strike"],side),"OK"
 
 
-def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes):
+def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="selection"):
     signal_date=dates[signal_idx]
     # The cost schedule begins 1 October 2024. Earlier rows are features/warm-up only.
     entry_idx=signal_idx+1
@@ -706,6 +706,8 @@ def main():
     ap.add_argument("--start-config",type=int,default=0,help="Position in the sorted, source-feasible, implemented configuration list")
     ap.add_argument("--max-configs",type=int,default=5000)
     ap.add_argument("--shard-id",default="")
+    ap.add_argument("--sample",choices=("selection","holdout"),default="selection")
+    ap.add_argument("--config-list",default="",help="CSV containing task_id rows to evaluate; required for the untouched holdout")
     args=ap.parse_args()
     OUT.mkdir(parents=True,exist_ok=True)
     data=load_market()
@@ -714,6 +716,20 @@ def main():
     if not cost_fn_name: raise RuntimeError("Cost model API unresolved. No results emitted.")
     # Full registry is enumerated; unsupported/source-blocked families are explicitly accounted.
     all_tasks,blocked,family_status=load_tasks(max_configs=0)
+    if args.sample=="holdout":
+        if not args.config_list or not Path(args.config_list).exists():
+            raise RuntimeError("Holdout evaluation requires the frozen validation_shortlist.csv; no all-grid holdout sweep is permitted.")
+        selected_rows=read_csv(args.config_list)
+        selected_ids={r.get("task_id","") for r in selected_rows if r.get("task_id")}
+        if not selected_ids:
+            raise RuntimeError("The validation shortlist is empty; holdout evaluation is not launched.")
+        all_tasks=[t for t in all_tasks if t["task_id"] in selected_ids]
+        missing=selected_ids-{t["task_id"] for t in all_tasks}
+        if missing:
+            raise RuntimeError("Shortlisted task IDs do not match the frozen registry: "+str(len(missing))+" unmatched IDs.")
+        shortlist_hash=hashlib.sha256(Path(args.config_list).read_bytes()).hexdigest()
+    else:
+        shortlist_hash=""
     total_tasks=len(all_tasks)
     start=max(0,args.start_config); end=min(total_tasks,start+max(1,args.max_configs))
     tasks=all_tasks[start:end]
@@ -747,7 +763,7 @@ def main():
         trades=[]; reject_reasons=Counter()
         date_to_idx={d:i for i,d in enumerate(dates)}
         for signal_idx,side in signals:
-            trade,reason=simulate_trade(data,dates,date_to_idx,symbol,signal_idx,side,axes)
+            trade,reason=simulate_trade(data,dates,date_to_idx,symbol,signal_idx,side,axes,args.sample)
             if trade is None:reject_reasons[reason]+=1
             else:trades.append(trade)
         config_counts["attempted"]+=1
@@ -766,7 +782,8 @@ def main():
           "duplicate_or_archive_parse_errors":len(data["archive_errors"]),
           "cost_model_callable":cost_fn_name,
           "execution_model":"prior-close signal, next-session open premium, same-session or second-session close; daily high/low barriers are stop-first",
-          "promotion_status":"DIAGNOSTIC_ONLY_MULTIPLE_TESTING_AND_OOS_GATE_NOT_PASSED",
+          "sample":args.sample,
+          "promotion_status":"HOLDOUT_DIAGNOSTIC_NO_PROMOTION" if args.sample=="holdout" else "SELECTION_DIAGNOSTIC_ONLY_MULTIPLE_TESTING_AND_HOLDOUT_GATE_NOT_PASSED",
         }
         for cost in cost_cases:
             metric=compute_metrics(trades,cost,cost_model)
@@ -781,7 +798,8 @@ def main():
                               "cost_rows":len(results),"global_config_cursor":start+n},sort_keys=True),flush=True)
     # Output only per-config, per-cost summary metrics: individual trade tapes/raw option records stay private.
     shard=args.shard_id or f"{start:09d}-{end:09d}"
-    path=OUT/"evaluation_shards"/("phase109_eval_"+shard+".csv.gz")
+    outdir=OUT/("holdout_shards" if args.sample=="holdout" else "evaluation_shards")
+    path=outdir/(("phase109_holdout_" if args.sample=="holdout" else "phase109_eval_")+shard+".csv.gz")
     path.parent.mkdir(parents=True,exist_ok=True)
     fields=sorted({k for r in results for k in r})
     with gzip.open(path,"wt",encoding="utf-8",newline="") as fh:
@@ -795,15 +813,18 @@ def main():
       "archive_parse_or_duplicate_warnings":len(data["archive_errors"]),
       "archive_count_loaded":data["raw_archive_count"],"unique_option_archive_dates":len(data["option_dates"]),
       "cost_model_callable":cost_fn_name,"first_cost_eligible_date":FIRST_COST_DATE.isoformat(),
+      "sample":args.sample,
+      "frozen_validation_shortlist_sha256":shortlist_hash if args.sample=="holdout" else "",
+      "holdout_window": {"start":HOLDOUT_START.isoformat(),"end_exclusive":HOLDOUT_END_EXCLUSIVE.isoformat()} if args.sample=="holdout" else None,
       "cost_model_guard":"Net P&L starts only on entries >=2024-10-01; earlier prices are signal warm-up only.",
       "raw_trade_tapes_publicly_published":False,
       "result_path":str(path),"result_sha256":hashlib.sha256(path.read_bytes()).hexdigest(),
       "status":"PARTIAL_SHARD_COMPLETE" if end<total_tasks else ("COMPLETE_GRID_ATTEMPTED" if config_counts["attempted"]==len(tasks) else "COMPLETE_GRID_WITH_SKIPS"),
       "no_promotion":"All reported results are diagnostic until holdout, multiple testing, coverage, costs and execution evidence pass.",
     }
-    progress_path=OUT/"evaluation_progress.json"
+    progress_path=OUT/("holdout_progress.json" if args.sample=="holdout" else "evaluation_progress.json")
     previous=read_json(progress_path,{})
-    if previous.get("engine_version")!=ENGINE_VERSION:
+    if previous.get("engine_version")!=ENGINE_VERSION or previous.get("sample",args.sample)!=args.sample:
         previous={}
     completed=previous.get("completed_config_ranges",[])
     shard_record={"start":start,"end_exclusive":end,"configs_requested":len(tasks),"configs_attempted":config_counts["attempted"],
@@ -816,7 +837,7 @@ def main():
     summary["completed_configs_all_ranges"]=sum(int(x.get("configs_attempted",0)) for x in completed)
     summary["completed_cost_rows_all_ranges"]=sum(int(x.get("cost_rows",0)) for x in completed)
     summary["remaining_supported_configs"]=max(0,total_tasks-max((x.get("end_exclusive",0) for x in completed),default=0))
-    checkpoint={"engine_version":ENGINE_VERSION,"updated_utc":summary["generated_utc"],
+    checkpoint={"engine_version":ENGINE_VERSION,"sample":args.sample,"updated_utc":summary["generated_utc"],
       "total_supported_source_feasible_configs":total_tasks,"completed_config_ranges":completed,
       "next_config_cursor":max((x.get("end_exclusive",0) for x in completed),default=0),
       "configs_attempted_total":summary["completed_configs_all_ranges"],
