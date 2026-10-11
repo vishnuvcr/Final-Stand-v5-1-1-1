@@ -106,7 +106,7 @@ def normalize_strike(value):
         return None
 
 def summarize_surface(surface_blocks, requested_strikes):
-    """Aggregate relative-strike alignment; raw rows remain in runner memory only."""
+    """Aggregate relative-strike and exact-strike coverage; raw rows remain in runner memory only."""
     groups = {}
     for block in surface_blocks:
         groups.setdefault((block["symbol"], block["option_type"]), []).append(block)
