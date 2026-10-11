@@ -278,3 +278,13 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 
 
 - Follow-up refinement after the initial fix: only the explicit `SUCCESS_EMPTY_FOR_REQUESTED_SIDE` state is non-fatal. All other inconsistent array payloads remain fatal, including malformed responses with zero timestamps. This avoids silently accepting malformed arrays as ordinary missing coverage. Post-fix Actions output remains pending; the old run 38090149633 JSON is not accepted as a rerun.
+
+
+## 2026-10-11 — Continuation checkpoint after regression-harness correction
+
+- Re-read the branch status, error log, audit JSON, test file and workflow before continuing.
+- The latest stored audit is still run `38090149633`, status `PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE`, 60 probes attempted, 59 `DATA_RETURNED`, one `UNKNOWN`. It is historical incomplete evidence, not a post-fix result.
+- Moved the `unittest.main()` guard below `EmptySideContinuationTests` in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`, so the regression class is defined before direct test execution.
+- Updated Phase 103 status and main README to distinguish the passed one-session API smoke test from the still-pending expanded surface audit.
+- The GitHub connector returned no commit status checks and exposes no workflow-dispatch action in this session. The push-triggered rerun could not be directly verified here. No new API data or strategy P&L was generated; no strategy is promoted.
+- Next gate: inspect/verify a fresh Actions run; require all unit tests and full-panel result accounting before multi-session continuity, rights and execution-cost assessment.
