@@ -406,3 +406,15 @@ The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE
 - Artifact upload: succeeded. [Run and artifact](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38115661084).
 - Repository publication: **failed** at final non-fast-forward push due to concurrent branch advancement. Checked-in JSON/report remain from run 38115153795; the new run is not yet the canonical committed audit.
 - Next: reconcile fresh exact-strike coverage from the run artifact and correct safe concurrent result publication. Expiry identity, source rights, execution prices and Paytm Money cost assumptions remain hard gates. No strategy P&L or promotion.
+
+<!-- DHAN_API_RUN_38124954633_ATTEMPT_1 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38124954633, attempt 1 — 2026-10-11T08:31:15.963855+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-10 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 28/28.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

@@ -1,7 +1,7 @@
 {
   "phase": "103.1",
-  "run_id": "38115153795",
-  "generated_at_utc": "2026-10-11T05:33:20.454120+00:00",
+  "run_id": "38124954633",
+  "generated_at_utc": "2026-10-11T08:29:10.357543+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
     "to_exclusive": "2026-08-10",
@@ -3021,6 +3021,153 @@
       "distinct_actual_strikes_in_surface": 11,
       "actual_strikes_observed_at_every_union_timestamp": 3,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1390",
+          "observed_minutes": 64,
+          "union_timestamp_coverage_pct": 3.325,
+          "ist_date_minutes": {
+            "2026-08-07": 64
+          },
+          "first_timestamp_utc": "2026-08-07T09:01:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1400",
+          "observed_minutes": 265,
+          "union_timestamp_coverage_pct": 13.766,
+          "ist_date_minutes": {
+            "2026-08-04": 55,
+            "2026-08-05": 41,
+            "2026-08-07": 169
+          },
+          "first_timestamp_utc": "2026-08-04T07:51:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1410",
+          "observed_minutes": 833,
+          "union_timestamp_coverage_pct": 43.273,
+          "ist_date_minutes": {
+            "2026-08-07": 280,
+            "2026-08-04": 248,
+            "2026-08-05": 218,
+            "2026-08-03": 87
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1420",
+          "observed_minutes": 1684,
+          "union_timestamp_coverage_pct": 87.481,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 374,
+            "2026-08-07": 382,
+            "2026-08-04": 384,
+            "2026-08-06": 159
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1430",
+          "observed_minutes": 1925,
+          "union_timestamp_coverage_pct": 100.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1440",
+          "observed_minutes": 1925,
+          "union_timestamp_coverage_pct": 100.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1450",
+          "observed_minutes": 1925,
+          "union_timestamp_coverage_pct": 100.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1460",
+          "observed_minutes": 1861,
+          "union_timestamp_coverage_pct": 96.675,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-06": 385,
+            "2026-08-03": 385,
+            "2026-08-07": 321,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:43:00+00:00"
+        },
+        {
+          "actual_strike": "1470",
+          "observed_minutes": 1660,
+          "union_timestamp_coverage_pct": 86.234,
+          "ist_date_minutes": {
+            "2026-08-05": 344,
+            "2026-08-06": 385,
+            "2026-08-03": 385,
+            "2026-08-07": 216,
+            "2026-08-04": 330
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T07:57:00+00:00"
+        },
+        {
+          "actual_strike": "1480",
+          "observed_minutes": 1091,
+          "union_timestamp_coverage_pct": 56.675,
+          "ist_date_minutes": {
+            "2026-08-06": 385,
+            "2026-08-05": 167,
+            "2026-08-03": 298,
+            "2026-08-07": 105,
+            "2026-08-04": 136
+          },
+          "first_timestamp_utc": "2026-08-03T03:56:00+00:00",
+          "last_timestamp_utc": "2026-08-07T05:29:00+00:00"
+        },
+        {
+          "actual_strike": "1490",
+          "observed_minutes": 237,
+          "union_timestamp_coverage_pct": 12.312,
+          "ist_date_minutes": {
+            "2026-08-06": 226,
+            "2026-08-03": 11
+          },
+          "first_timestamp_utc": "2026-08-03T09:59:00+00:00",
+          "last_timestamp_utc": "2026-08-06T10:09:00+00:00"
+        }
+      ],
       "per_offset": {
         "ATM": {
           "timestamp_count": 1925,
@@ -3095,6 +3242,181 @@
       "distinct_actual_strikes_in_surface": 14,
       "actual_strikes_observed_at_every_union_timestamp": 0,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1240",
+          "observed_minutes": 37,
+          "union_timestamp_coverage_pct": 1.922,
+          "ist_date_minutes": {
+            "2026-08-05": 37
+          },
+          "first_timestamp_utc": "2026-08-05T08:54:00+00:00",
+          "last_timestamp_utc": "2026-08-05T09:43:00+00:00"
+        },
+        {
+          "actual_strike": "1250",
+          "observed_minutes": 166,
+          "union_timestamp_coverage_pct": 8.623,
+          "ist_date_minutes": {
+            "2026-08-05": 166
+          },
+          "first_timestamp_utc": "2026-08-05T07:07:00+00:00",
+          "last_timestamp_utc": "2026-08-05T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1260",
+          "observed_minutes": 559,
+          "union_timestamp_coverage_pct": 29.039,
+          "ist_date_minutes": {
+            "2026-08-05": 372,
+            "2026-08-04": 183,
+            "2026-08-06": 4
+          },
+          "first_timestamp_utc": "2026-08-04T06:30:00+00:00",
+          "last_timestamp_utc": "2026-08-06T03:48:00+00:00"
+        },
+        {
+          "actual_strike": "1270",
+          "observed_minutes": 809,
+          "union_timestamp_coverage_pct": 42.026,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-04": 323,
+            "2026-08-06": 101
+          },
+          "first_timestamp_utc": "2026-08-04T04:09:00+00:00",
+          "last_timestamp_utc": "2026-08-06T05:25:00+00:00"
+        },
+        {
+          "actual_strike": "1280",
+          "observed_minutes": 1296,
+          "union_timestamp_coverage_pct": 67.325,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 374,
+            "2026-08-06": 152,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T06:53:00+00:00"
+        },
+        {
+          "actual_strike": "1290",
+          "observed_minutes": 1645,
+          "union_timestamp_coverage_pct": 85.455,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-04": 383,
+            "2026-08-07": 107
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T05:49:00+00:00"
+        },
+        {
+          "actual_strike": "1300",
+          "observed_minutes": 1907,
+          "union_timestamp_coverage_pct": 99.065,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 367,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1310",
+          "observed_minutes": 1888,
+          "union_timestamp_coverage_pct": 98.078,
+          "ist_date_minutes": {
+            "2026-08-05": 348,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1320",
+          "observed_minutes": 1759,
+          "union_timestamp_coverage_pct": 91.377,
+          "ist_date_minutes": {
+            "2026-08-05": 219,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1330",
+          "observed_minutes": 1366,
+          "union_timestamp_coverage_pct": 70.961,
+          "ist_date_minutes": {
+            "2026-08-03": 385,
+            "2026-08-06": 381,
+            "2026-08-07": 385,
+            "2026-08-04": 202,
+            "2026-08-05": 13
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1340",
+          "observed_minutes": 1116,
+          "union_timestamp_coverage_pct": 57.974,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 284,
+            "2026-08-03": 385,
+            "2026-08-04": 62
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1350",
+          "observed_minutes": 629,
+          "union_timestamp_coverage_pct": 32.675,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 233,
+            "2026-08-03": 11
+          },
+          "first_timestamp_utc": "2026-08-03T09:59:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1360",
+          "observed_minutes": 278,
+          "union_timestamp_coverage_pct": 14.442,
+          "ist_date_minutes": {
+            "2026-08-07": 278
+          },
+          "first_timestamp_utc": "2026-08-07T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1370",
+          "observed_minutes": 18,
+          "union_timestamp_coverage_pct": 0.935,
+          "ist_date_minutes": {
+            "2026-08-07": 18
+          },
+          "first_timestamp_utc": "2026-08-07T06:06:00+00:00",
+          "last_timestamp_utc": "2026-08-07T06:35:00+00:00"
+        }
+      ],
       "per_offset": {
         "ATM": {
           "timestamp_count": 1925,
@@ -3169,6 +3491,181 @@
       "distinct_actual_strikes_in_surface": 14,
       "actual_strikes_observed_at_every_union_timestamp": 0,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1240",
+          "observed_minutes": 37,
+          "union_timestamp_coverage_pct": 1.922,
+          "ist_date_minutes": {
+            "2026-08-05": 37
+          },
+          "first_timestamp_utc": "2026-08-05T08:54:00+00:00",
+          "last_timestamp_utc": "2026-08-05T09:43:00+00:00"
+        },
+        {
+          "actual_strike": "1250",
+          "observed_minutes": 166,
+          "union_timestamp_coverage_pct": 8.623,
+          "ist_date_minutes": {
+            "2026-08-05": 166
+          },
+          "first_timestamp_utc": "2026-08-05T07:07:00+00:00",
+          "last_timestamp_utc": "2026-08-05T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1260",
+          "observed_minutes": 559,
+          "union_timestamp_coverage_pct": 29.039,
+          "ist_date_minutes": {
+            "2026-08-05": 372,
+            "2026-08-04": 183,
+            "2026-08-06": 4
+          },
+          "first_timestamp_utc": "2026-08-04T06:30:00+00:00",
+          "last_timestamp_utc": "2026-08-06T03:48:00+00:00"
+        },
+        {
+          "actual_strike": "1270",
+          "observed_minutes": 808,
+          "union_timestamp_coverage_pct": 41.974,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-04": 323,
+            "2026-08-06": 100
+          },
+          "first_timestamp_utc": "2026-08-04T04:09:00+00:00",
+          "last_timestamp_utc": "2026-08-06T05:25:00+00:00"
+        },
+        {
+          "actual_strike": "1280",
+          "observed_minutes": 1296,
+          "union_timestamp_coverage_pct": 67.325,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 374,
+            "2026-08-06": 152,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T06:53:00+00:00"
+        },
+        {
+          "actual_strike": "1290",
+          "observed_minutes": 1645,
+          "union_timestamp_coverage_pct": 85.455,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-04": 383,
+            "2026-08-07": 107
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T05:49:00+00:00"
+        },
+        {
+          "actual_strike": "1300",
+          "observed_minutes": 1907,
+          "union_timestamp_coverage_pct": 99.065,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 385,
+            "2026-08-07": 367,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1310",
+          "observed_minutes": 1887,
+          "union_timestamp_coverage_pct": 98.026,
+          "ist_date_minutes": {
+            "2026-08-05": 348,
+            "2026-08-03": 385,
+            "2026-08-06": 384,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1320",
+          "observed_minutes": 1758,
+          "union_timestamp_coverage_pct": 91.325,
+          "ist_date_minutes": {
+            "2026-08-05": 219,
+            "2026-08-03": 385,
+            "2026-08-06": 384,
+            "2026-08-07": 385,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1330",
+          "observed_minutes": 1365,
+          "union_timestamp_coverage_pct": 70.909,
+          "ist_date_minutes": {
+            "2026-08-03": 385,
+            "2026-08-06": 381,
+            "2026-08-07": 385,
+            "2026-08-04": 201,
+            "2026-08-05": 13
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1340",
+          "observed_minutes": 1116,
+          "union_timestamp_coverage_pct": 57.974,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 284,
+            "2026-08-03": 385,
+            "2026-08-04": 62
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1350",
+          "observed_minutes": 629,
+          "union_timestamp_coverage_pct": 32.675,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 233,
+            "2026-08-03": 11
+          },
+          "first_timestamp_utc": "2026-08-03T09:59:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1360",
+          "observed_minutes": 278,
+          "union_timestamp_coverage_pct": 14.442,
+          "ist_date_minutes": {
+            "2026-08-07": 278
+          },
+          "first_timestamp_utc": "2026-08-07T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1370",
+          "observed_minutes": 18,
+          "union_timestamp_coverage_pct": 0.935,
+          "ist_date_minutes": {
+            "2026-08-07": 18
+          },
+          "first_timestamp_utc": "2026-08-07T06:06:00+00:00",
+          "last_timestamp_utc": "2026-08-07T06:35:00+00:00"
+        }
+      ],
       "per_offset": {
         "ATM": {
           "timestamp_count": 1925,
@@ -3243,6 +3740,200 @@
       "distinct_actual_strikes_in_surface": 16,
       "actual_strikes_observed_at_every_union_timestamp": 0,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "exact_strike_diagnostic": "PASS_UNIQUE_TIMESTAMP_STRIKE_KEYS",
+      "actual_strike_coverage": [
+        {
+          "actual_strike": "1000",
+          "observed_minutes": 180,
+          "union_timestamp_coverage_pct": 9.351,
+          "ist_date_minutes": {
+            "2026-08-04": 146,
+            "2026-08-03": 34
+          },
+          "first_timestamp_utc": "2026-08-03T03:47:00+00:00",
+          "last_timestamp_utc": "2026-08-04T09:57:00+00:00"
+        },
+        {
+          "actual_strike": "1010",
+          "observed_minutes": 701,
+          "union_timestamp_coverage_pct": 36.416,
+          "ist_date_minutes": {
+            "2026-08-04": 384,
+            "2026-08-03": 301,
+            "2026-08-05": 16
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-05T05:01:00+00:00"
+        },
+        {
+          "actual_strike": "1020",
+          "observed_minutes": 1155,
+          "union_timestamp_coverage_pct": 60.0,
+          "ist_date_minutes": {
+            "2026-08-05": 384,
+            "2026-08-04": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 1
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T03:45:00+00:00"
+        },
+        {
+          "actual_strike": "1030",
+          "observed_minutes": 1391,
+          "union_timestamp_coverage_pct": 72.26,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 236,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T07:40:00+00:00"
+        },
+        {
+          "actual_strike": "1040",
+          "observed_minutes": 1406,
+          "union_timestamp_coverage_pct": 73.039,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 251,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-06T07:56:00+00:00"
+        },
+        {
+          "actual_strike": "1050",
+          "observed_minutes": 1540,
+          "union_timestamp_coverage_pct": 80.0,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-03": 385,
+            "2026-08-06": 344,
+            "2026-08-07": 41,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T06:54:00+00:00"
+        },
+        {
+          "actual_strike": "1060",
+          "observed_minutes": 1812,
+          "union_timestamp_coverage_pct": 94.13,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-06": 385,
+            "2026-08-03": 385,
+            "2026-08-07": 272,
+            "2026-08-04": 385
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:24:00+00:00"
+        },
+        {
+          "actual_strike": "1070",
+          "observed_minutes": 1683,
+          "union_timestamp_coverage_pct": 87.429,
+          "ist_date_minutes": {
+            "2026-08-05": 385,
+            "2026-08-06": 385,
+            "2026-08-03": 351,
+            "2026-08-07": 323,
+            "2026-08-04": 239
+          },
+          "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1080",
+          "observed_minutes": 1186,
+          "union_timestamp_coverage_pct": 61.61,
+          "ist_date_minutes": {
+            "2026-08-06": 385,
+            "2026-08-05": 367,
+            "2026-08-07": 350,
+            "2026-08-03": 84
+          },
+          "first_timestamp_utc": "2026-08-03T04:16:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1090",
+          "observed_minutes": 769,
+          "union_timestamp_coverage_pct": 39.948,
+          "ist_date_minutes": {
+            "2026-08-06": 384,
+            "2026-08-07": 385
+          },
+          "first_timestamp_utc": "2026-08-06T03:46:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1100",
+          "observed_minutes": 534,
+          "union_timestamp_coverage_pct": 27.74,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 149
+          },
+          "first_timestamp_utc": "2026-08-06T07:41:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1110",
+          "observed_minutes": 518,
+          "union_timestamp_coverage_pct": 26.909,
+          "ist_date_minutes": {
+            "2026-08-07": 385,
+            "2026-08-06": 133
+          },
+          "first_timestamp_utc": "2026-08-06T07:57:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1120",
+          "observed_minutes": 385,
+          "union_timestamp_coverage_pct": 20.0,
+          "ist_date_minutes": {
+            "2026-08-07": 344,
+            "2026-08-06": 41
+          },
+          "first_timestamp_utc": "2026-08-06T09:11:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1130",
+          "observed_minutes": 113,
+          "union_timestamp_coverage_pct": 5.87,
+          "ist_date_minutes": {
+            "2026-08-07": 113
+          },
+          "first_timestamp_utc": "2026-08-07T08:16:00+00:00",
+          "last_timestamp_utc": "2026-08-07T10:09:00+00:00"
+        },
+        {
+          "actual_strike": "1140",
+          "observed_minutes": 62,
+          "union_timestamp_coverage_pct": 3.221,
+          "ist_date_minutes": {
+            "2026-08-07": 62
+          },
+          "first_timestamp_utc": "2026-08-07T08:16:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:20:00+00:00"
+        },
+        {
+          "actual_strike": "1150",
+          "observed_minutes": 35,
+          "union_timestamp_coverage_pct": 1.818,
+          "ist_date_minutes": {
+            "2026-08-07": 35
+          },
+          "first_timestamp_utc": "2026-08-07T08:20:00+00:00",
+          "last_timestamp_utc": "2026-08-07T09:14:00+00:00"
+        }
+      ],
       "per_offset": {
         "ATM": {
           "timestamp_count": 1925,

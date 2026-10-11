@@ -348,3 +348,13 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 
 ## 2026-10-11 — Run 38115661084 execution result
 The fresh run passed 20 unit tests and completed all 28 selected Dhan probes with rows and zero out-of-window timestamps. It uploaded an aggregate artifact, but the workflow's result commit failed non-fast-forward because the branch advanced concurrently. The checked-in aggregate report/JSON are still from run 38115153795; the newer run must not be represented as committed repository data until reconciled. No strategy P&L was run. Next: inspect the exact-strike diagnostic from the run artifact, reconcile it with current branch state, and fix safe result publication concurrency.
+
+<!-- DHAN_API_RUN_38124954633_ATTEMPT_1 -->
+## Dhan Data API audit — run 38124954633, attempt 1 — 2026-10-11T08:31:15.963855+00:00
+
+- **Result:** PASS_API_DATA_RETURNED_FOR_ALL_REQUESTED_PROBES.
+- Window: 2026-08-03 inclusive to 2026-08-10 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 28/28.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
