@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase109-family-grid-${{ github.ref }}
+  group: phase109-writer-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
