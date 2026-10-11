@@ -8,3 +8,16 @@
 - Phase 104 is registered as a distinct EOD-source feasibility study. It will test the official daily archive, rather than the Dhan rolling-option endpoint. The initial bounded sample is 2026-08-03 to 2026-09-02 (exclusive, max 30 calendar days).
 - No raw data are cached or published until retention/caching and reuse rights are verified. First deliverable is aggregate data-quality evidence; EOD price bars cannot be treated as verified executable fills.
 - No strategy P&L has been run in this phase.
+
+<!-- PHASE104_RUN_38129231405_ATTEMPT_1 -->
+### Phase 104.1 EOD audit — run 38129231405, attempt 1 — 2026-10-11T09:41:13.036711+00:00
+
+- Result: PASS_EOD_CONTRACT_IDENTITY
+- Target window: 2026-08-03 inclusive to 2026-09-02 exclusive.
+- Official daily archives parsed: 22.
+- Source/schema errors: 0; no-archive dates: 8.
+- Selected five-stock stock-option rows: 18082; parsed rows: 18082.
+- Identity completeness: 100.0%; OHLC completeness: 100.0%.
+- Unique daily contract keys: 18082; duplicate keys: 0.
+- Raw rows persisted/uploaded: no. Raw price values and row-level contract records are not written to artifacts.
+- Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
