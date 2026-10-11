@@ -1,3 +1,39 @@
+<!-- PHASE106_FORWARD_REPLICATION_START -->
+# Phase 106 — Forward EOD Replication (2026-10-11)
+
+**Status: COMPLETE AS AN EXPLORATORY OHLC PROXY REPLICATION; NO STRATEGY PROMOTED.** The successful replay run [38132092115](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38132092115) processed a later non-overlapping calendar window, 2026-09-02 inclusive through 2026-10-02 exclusive. The subsequent output-publication workflow is [here](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions).
+
+## Source and gates
+
+21 official NSE daily archives parsed; 17,791 selected/parsed rows; identity and OHLC completeness 100%; zero duplicate daily contract keys, date mismatches, or invalid positive-volume OHLC rows. There were 21 sessions with all five underlying values and 19 post-warm-up outcome sessions. Regression tests and all 72 cost-scenario accounting checks passed.
+
+## Primary case
+
+Assumptions: ₹20 brokerage per order, ₹0.25 adverse slippage per option unit on each side, and 1.0× modeled fees. Entry/exit remain next-session open and same-session close proxies.
+
+| Fixed candidate | Proxy trades | Net P&L | Return on premium | Max drawdown |
+|---|---:|---:|---:|---:|
+| MOMENTUM_ATM | 95 | -₹57,392.82 | -4.9831% | ₹93,318.30 |
+| REVERSAL_ATM | 95 | -₹51,308.17 | -4.2106% | ₹87,274.01 |
+| MOMENTUM_OI_CONFIRM | 65 | -₹10,630.92 | -1.2363% | ₹51,594.51 |
+
+All three 95% session-cluster bootstrap intervals crossed zero. Under strict stress (₹20/order, ₹0.50 slippage per unit per side, 1.5× modeled fees), net P&L was -₹89,420.31, -₹83,420.84 and -₹32,582.46 respectively. The OI-confirmation candidate lost less in this window, but the result is still negative and does not justify promotion.
+
+## Conclusion
+
+**No strategy is promoted.** This later calendar sample reinforces caution rather than the Phase 105 reversal signal: all candidates were negative under the registered primary costs and stricter stress. The window is short, and calendar non-overlap does not establish statistical independence. OHLC prices and assumed slippage do not verify real fills, and account-specific Paytm Money fees remain unverified.
+
+## Phase 106 files
+
+- [Isolated branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-106-forward-eod-replication)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/PHASE106_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/PHASE106_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/PHASE106_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/PHASE106_ERROR_LOG.md)
+- [Full report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/results/phase106/PHASE106_REPORT.md) · [72 scenario CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/results/phase106/summary.csv) · [structured summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/results/phase106/summary.json) · [decision](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-106-forward-eod-replication/results/phase106/decision.json)
+
+Phase 105 remains unchanged. Both phases are explicitly OHLC execution-proxy studies, not verified-fill backtests.
+
+<!-- PHASE106_FORWARD_REPLICATION_END -->
+
+
 <!-- PHASE105_EOD_OHLC_PILOT_START -->
 # Phase 105 — EOD OHLC Stock-Options Strategy Pilot (2026-10-11)
 
