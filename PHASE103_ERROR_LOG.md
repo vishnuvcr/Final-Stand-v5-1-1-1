@@ -211,3 +211,10 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Finding:** `EmptySideContinuationTests` was appended after `if __name__ == "__main__": unittest.main()`. Test discovery imports the module and sees the class, but direct execution invokes the runner before the class is defined.  
 **Correction:** moved the main guard to the end of `tests/phase103/test_dhan_audit.py` in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`.  
 **Verification:** awaiting the resulting GitHub Actions run; do not infer a passing test or data audit from the commit alone.
+
+<!-- DHAN_API_RUN_38113895829_ATTEMPT_2 -->
+### E103-DHAN-38113895829 — Dhan API access/data gate did not fully pass
+**Type:** runtime/access/data-availability gate.
+**Status:** PARTIAL_DATA_RETURNED; rows returned by 68/70 probes.
+**Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
+**Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38113895829

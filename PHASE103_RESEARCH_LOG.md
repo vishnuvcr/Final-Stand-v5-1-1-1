@@ -288,3 +288,13 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Updated Phase 103 status and main README to distinguish the passed one-session API smoke test from the still-pending expanded surface audit.
 - The GitHub connector returned no commit status checks and exposes no workflow-dispatch action in this session. The push-triggered rerun could not be directly verified here. No new API data or strategy P&L was generated; no strategy is promoted.
 - Next gate: inspect/verify a fresh Actions run; require all unit tests and full-panel result accounting before multi-session continuity, rights and execution-cost assessment.
+
+<!-- DHAN_API_RUN_38113895829_ATTEMPT_2 -->
+## Dhan Data API audit — run 38113895829, attempt 2 — 2026-10-11T05:23:53.395084+00:00
+
+- **Result:** PARTIAL_DATA_RETURNED.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 68/70.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.

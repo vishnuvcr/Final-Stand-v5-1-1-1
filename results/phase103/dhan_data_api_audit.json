@@ -1,7 +1,7 @@
 {
   "phase": "103.1",
-  "run_id": "38090149633",
-  "generated_at_utc": "2026-10-10T22:06:20.003993+00:00",
+  "run_id": "38113895829",
+  "generated_at_utc": "2026-10-11T05:21:20.601331+00:00",
   "window": {
     "from_inclusive": "2026-08-03",
     "to_exclusive": "2026-08-04",
@@ -2030,6 +2030,334 @@
       "actual_strike_changes": 0,
       "first_actual_strike": null,
       "last_actual_strike": null
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1155",
+      "last_actual_strike": "1175"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1140",
+      "last_actual_strike": "1160"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "CALL",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1120",
+      "last_actual_strike": "1155"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1160",
+      "last_actual_strike": "1180"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM+1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1175",
+      "last_actual_strike": "1200"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM+2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 215,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 215,
+        "high": 215,
+        "low": 215,
+        "close": 215,
+        "iv": 215,
+        "volume": 215,
+        "strike": 215,
+        "oi": 215,
+        "spot": 215,
+        "timestamp": 215
+      },
+      "first_timestamp_utc": "2026-08-03T03:46:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 215
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 7,
+      "first_actual_strike": "1175",
+      "last_actual_strike": "1220"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM+3",
+      "http_status": 200,
+      "status": "UNKNOWN",
+      "rows": 0,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 0,
+        "high": 0,
+        "low": 0,
+        "close": 0,
+        "iv": 0,
+        "volume": 0,
+        "strike": 0,
+        "oi": 0,
+        "spot": 0,
+        "timestamp": 0
+      },
+      "first_timestamp_utc": null,
+      "last_timestamp_utc": null,
+      "timestamp_counts_by_ist_date": {},
+      "outside_requested_date_window_rows": null,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 0,
+      "actual_strike_changes": 0,
+      "first_actual_strike": null,
+      "last_actual_strike": null
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM-1",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1155",
+      "last_actual_strike": "1175"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM-2",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1140",
+      "last_actual_strike": "1160"
+    },
+    {
+      "symbol": "INFY",
+      "requested_option_type": "PUT",
+      "requested_relative_strike": "ATM-3",
+      "http_status": 200,
+      "status": "DATA_RETURNED",
+      "rows": 385,
+      "array_lengths_consistent": true,
+      "nonempty_fields": {
+        "open": 385,
+        "high": 385,
+        "low": 385,
+        "close": 385,
+        "iv": 385,
+        "volume": 385,
+        "strike": 385,
+        "oi": 385,
+        "spot": 385,
+        "timestamp": 385
+      },
+      "first_timestamp_utc": "2026-08-03T03:45:00+00:00",
+      "last_timestamp_utc": "2026-08-03T10:09:00+00:00",
+      "timestamp_counts_by_ist_date": {
+        "2026-08-03": 385
+      },
+      "outside_requested_date_window_rows": 0,
+      "api_error_code": null,
+      "api_error_message": null,
+      "distinct_actual_strikes": 4,
+      "actual_strike_changes": 26,
+      "first_actual_strike": "1120",
+      "last_actual_strike": "1155"
     }
   ],
   "surface_audit": [
@@ -2341,13 +2669,13 @@
         "ATM-2",
         "ATM-3"
       ],
-      "offset_series_returned": 4,
+      "offset_series_returned": 7,
       "common_timestamp_count_across_offsets": 0,
       "union_timestamp_count": 385,
-      "minimum_distinct_actual_strikes_per_timestamp": 2,
-      "maximum_distinct_actual_strikes_per_timestamp": 3,
-      "distinct_actual_strikes_in_surface": 6,
-      "actual_strikes_observed_at_every_union_timestamp": 0,
+      "minimum_distinct_actual_strikes_per_timestamp": 5,
+      "maximum_distinct_actual_strikes_per_timestamp": 6,
+      "distinct_actual_strikes_in_surface": 9,
+      "actual_strikes_observed_at_every_union_timestamp": 3,
       "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
       "per_offset": {
         "ATM": {
@@ -2377,6 +2705,101 @@
           "actual_strike_changes": 0,
           "first_actual_strike": null,
           "last_actual_strike": null
+        },
+        "ATM-1": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1155",
+          "last_actual_strike": "1175"
+        },
+        "ATM-2": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1140",
+          "last_actual_strike": "1160"
+        },
+        "ATM-3": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1120",
+          "last_actual_strike": "1155"
+        }
+      },
+      "relative_surface_alignment_gate": "FAIL",
+      "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
+    },
+    {
+      "symbol": "INFY",
+      "option_type": "PUT",
+      "requested_relative_strikes": [
+        "ATM",
+        "ATM+1",
+        "ATM+2",
+        "ATM+3",
+        "ATM-1",
+        "ATM-2",
+        "ATM-3"
+      ],
+      "offset_series_returned": 7,
+      "common_timestamp_count_across_offsets": 0,
+      "union_timestamp_count": 385,
+      "minimum_distinct_actual_strikes_per_timestamp": 5,
+      "maximum_distinct_actual_strikes_per_timestamp": 6,
+      "distinct_actual_strikes_in_surface": 9,
+      "actual_strikes_observed_at_every_union_timestamp": 3,
+      "duplicate_timestamp_actual_strike_keys_across_offsets": 0,
+      "per_offset": {
+        "ATM": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1160",
+          "last_actual_strike": "1180"
+        },
+        "ATM+1": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1175",
+          "last_actual_strike": "1200"
+        },
+        "ATM+2": {
+          "timestamp_count": 215,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 7,
+          "first_actual_strike": "1175",
+          "last_actual_strike": "1220"
+        },
+        "ATM+3": {
+          "timestamp_count": 0,
+          "distinct_actual_strikes": 0,
+          "actual_strike_changes": 0,
+          "first_actual_strike": null,
+          "last_actual_strike": null
+        },
+        "ATM-1": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1155",
+          "last_actual_strike": "1175"
+        },
+        "ATM-2": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1140",
+          "last_actual_strike": "1160"
+        },
+        "ATM-3": {
+          "timestamp_count": 385,
+          "distinct_actual_strikes": 4,
+          "actual_strike_changes": 26,
+          "first_actual_strike": "1120",
+          "last_actual_strike": "1155"
         }
       },
       "relative_surface_alignment_gate": "FAIL",
@@ -2679,7 +3102,7 @@
       "interpretation": "Do not calculate fixed-strike P&L until missing timestamps, strike overlap or incomplete offset tapes are resolved."
     }
   ],
-  "probe_abort_reason": "stopped after the first HTTP error, empty requested-side payload, or inconsistent arrays",
+  "probe_abort_reason": null,
   "raw_rows_persisted": false,
   "raw_data_policy": "Raw rows kept ephemeral; no raw data artifact or public commit until retention/republication rights are verified.",
   "known_limits": [
@@ -2688,6 +3111,6 @@
     "One stock/side probe does not establish full-history completeness or independent test sufficiency.",
     "Empirical diagnostic showed Dhan included toDate in returned rows despite documentation describing it as non-inclusive; requests therefore pass target_end_exclusive minus one day and still audit every timestamp in the original half-open target window."
   ],
-  "status": "PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE",
+  "status": "PARTIAL_DATA_RETURNED",
   "rows_outside_requested_date_window_total": 0
 }

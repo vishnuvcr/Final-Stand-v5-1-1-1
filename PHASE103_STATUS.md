@@ -334,3 +334,15 @@ The empty-side continuation regression class was located after the `unittest.mai
 ## 2026-10-11 — Latest continuation checkpoint
 
 The previous audit JSON still belongs to run `38090149633` (59/60 probes; `PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE`) and is not accepted as post-fix evidence. The regression test entrypoint was corrected in commit `f0973d5c66a10bf84dc10a2593849827a45c3dba`; the status and error logs now record that correction. The available GitHub integration returned no commit status checks, and no workflow-dispatch action is exposed in this session, so a fresh run could not be directly triggered or verified here. Next step is to inspect the Actions page for the push-triggered run, verify unit tests and the complete probe panel, then proceed only if multi-session contract continuity and execution-cost gates pass. No strategy P&L or promotion.
+
+<!-- DHAN_API_RUN_38113895829_ATTEMPT_2 -->
+### Latest Dhan API data gate
+
+## Dhan Data API audit — run 38113895829, attempt 2 — 2026-10-11T05:23:53.395084+00:00
+
+- **Result:** PARTIAL_DATA_RETURNED.
+- Window: 2026-08-03 inclusive to 2026-08-04 exclusive.
+- Underlying IDs resolved: 5/5.
+- API probes returning rows: 68/70.
+- Raw rows committed/uploaded: no. Token value printed/logged: no.
+- Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
