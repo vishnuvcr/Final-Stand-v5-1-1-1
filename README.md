@@ -1,3 +1,40 @@
+<!-- PHASE105_EOD_OHLC_PILOT_START -->
+# Phase 105 — EOD OHLC Stock-Options Strategy Pilot (2026-10-11)
+
+**Status: COMPLETE AS AN EXPLORATORY OHLC EXECUTION-PROXY PILOT; NO STRATEGY PROMOTED.** GitHub Actions run [38131616138](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38131616138) passed the 8 unit tests, the bounded official NSE EOD data gate, and all 72 prespecified scenario accounting checks. This result is not evidence of verified executable fills or live profitability.
+
+## Verified source sample
+
+The pilot reprocessed 22 official NSE daily UDiFF F&O archives for 2026-08-03 inclusive through 2026-09-02 exclusive. The frozen basket is HDFCBANK, ICICIBANK, INFY, RELIANCE and SBIN. Of 18,082 selected records, identity and OHLC completeness were 100%; duplicate daily contract keys, date mismatches, invalid positive-volume OHLC bars and missing OI/underlying/lot-size fields were zero. Volume was positive for 12,160 records and zero for 5,922. Raw exchange rows and per-trade price records were not persisted or uploaded.
+
+## Primary after-cost proxy comparison
+
+Primary assumptions: Paytm Money brokerage sensitivity set to ₹20 per executed order, ₹0.25 adverse slippage per option unit on each side, and 1.0× date-effective model fees. Entries proxy the next session open; exits proxy that same session's close. Rules use only prior-session information.
+
+| Fixed candidate | Proxy trades | Net P&L | Return on premium | Maximum drawdown |
+|---|---:|---:|---:|---:|
+| MOMENTUM_ATM | 79 | -₹117,882.02 | -12.1585% | ₹123,599.29 |
+| REVERSAL_ATM | 79 | +₹15,018.02 | +1.4912% | ₹42,223.32 |
+| MOMENTUM_OI_CONFIRM | 55 | -₹84,041.39 | -11.9918% | ₹85,292.63 |
+
+The reversal proxy does **not** pass a robustness interpretation: its 95% session-cluster bootstrap interval for mean daily net P&L crossed zero (-₹2,682.37 to +₹3,957.35), its median trade was -₹798.60, and its net result became -₹11,709.36 under the registered stress of ₹20/order, ₹0.50 per-unit-per-side adverse slippage and 1.5× model fees. The two momentum candidates were materially negative in the primary case.
+
+## Conclusion
+
+**No strategy is recommended or promoted.** These results apply to one previously inspected month and only 20 post-warm-up outcome sessions. Open/close bar prices, positive day-level volume and assumed slippage do not establish fillable prices, spread, depth, queue priority, latency, partial fills or market impact. The account-specific Paytm Money contract note is also unverified. This is an exploratory falsification/implementation pilot, not a proof that any candidate is profitable or that every strategy is unprofitable. Further testing requires a new bounded plan, an independently frozen longer sample and an execution model validated against authorized quotes/trades or a separately validated conservative proxy.
+
+## Phase 105 files
+
+- [Isolated Phase 105 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-105-eod-ohlc-strategy-pilot)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/PHASE105_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/PHASE105_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/PHASE105_RESEARCH_LOG.md) · [error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/PHASE105_ERROR_LOG.md) · [visible conversation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/PHASE105_CHAT_LOG.md)
+- [Complete report/manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/results/phase105/PHASE105_REPORT.md) · [all 72 cost scenarios CSV](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/results/phase105/summary.csv) · [structured aggregate summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/results/phase105/summary.json) · [decision JSON](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/results/phase105/decision.json) · [slippage sensitivity figure](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/results/phase105/figures/net_pnl_by_slippage.svg)
+- [Python runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/research/phase105_eod_ohlc_strategy_pilot.py) · [unit tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-105-eod-ohlc-strategy-pilot/tests/phase105) · [automated/manual workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-105-eod-ohlc-strategy-pilot/.github/workflows/phase105-eod-ohlc-strategy-pilot.yml)
+
+**Phase 104 remains unchanged:** it passed EOD contract identity and OHLC completeness, but did not calculate strategy P&L because it did not define a proxy strategy experiment. Phase 105 is the separately registered proxy experiment described above.
+
+<!-- PHASE105_EOD_OHLC_PILOT_END -->
+
+
 <!-- PHASE104_EOD_STOCK_OPTIONS_START -->
 # Phase 104 — EOD contract-identified stock-options research
 
