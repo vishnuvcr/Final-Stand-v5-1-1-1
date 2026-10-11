@@ -15,6 +15,11 @@ class Phase104CostModelTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             exchange_transaction_rate("2024-09-30")
 
+    def test_nse_ipft_contribution_is_date_effective(self):
+        from cost_model import ipft_contribution_rate
+        self.assertAlmostEqual(ipft_contribution_rate("2026-02-28"), 0.000005)
+        self.assertAlmostEqual(ipft_contribution_rate("2026-03-01"), 0.000000001)
+
     def test_option_stt_rate_changes_on_april_1_2026(self):
         before = round_trip_cost(50, 60, 150, "2026-03-31", brokerage_per_order=20)
         after = round_trip_cost(50, 60, 150, "2026-04-01", brokerage_per_order=20)
@@ -25,7 +30,7 @@ class Phase104CostModelTests(unittest.TestCase):
     def test_cost_breakdown_sums_and_labels_unmodelled_execution_costs(self):
         result = round_trip_cost(50, 60, 150, "2026-08-03", brokerage_per_order=20)
         components = [
-            "brokerage", "exchange_transaction_charges", "sebi_turnover_fee",
+            "brokerage", "exchange_transaction_charges", "nse_ipft_contribution", "sebi_turnover_fee",
             "gst_on_service_fees", "stt_on_option_sale", "stamp_duty_on_option_buy",
             "stt_on_exercise_if_applicable",
         ]
