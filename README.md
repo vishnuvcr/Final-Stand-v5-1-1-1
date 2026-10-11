@@ -1,3 +1,14 @@
+<!-- PHASE104_EOD_STOCK_OPTIONS_START -->
+# Phase 104 — EOD contract-identified stock-options research
+
+**Status: Registered; official NSE daily UDiFF source audit running. No strategy P&L has been run in Phase 104.** This is a new bounded branch and an EOD-only source path; Phase 103's intraday stock-options NO-GO and evidence remain frozen. The initial sample is 2026-08-03 inclusive through 2026-09-02 exclusive (maximum 30 calendar days). The workflow stores aggregate counts/hashes only; no raw rows are committed or uploaded.
+
+- [Phase 104 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-104-eod-stock-options)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-104-eod-stock-options/PHASE104_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-104-eod-stock-options/PHASE104_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-104-eod-stock-options/PHASE104_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-104-eod-stock-options/PHASE104_ERROR_LOG.md)
+- [Source/rights screen](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-104-eod-stock-options/results/phase104/SOURCE_SCREEN.md) · [manual GitHub Actions workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-104-eod-stock-options/.github/workflows/phase104-eod-stock-options-audit.yml)
+- **Next gate:** exact expiry/strike/side identity, date/field completeness and duplicate-key audit. Passing EOD identity does not prove historical bid/ask or executable fills; date-effective Paytm Money charges, statutory levies and conservative execution costs are required before strategy P&L.
+<!-- PHASE104_EOD_STOCK_OPTIONS_END -->
+
 <!-- PHASE103_STOCK_OPTIONS_START -->
 # Phase 103 — NIFTY 50 constituent stock-options research
 
