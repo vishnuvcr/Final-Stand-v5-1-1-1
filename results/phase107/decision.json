@@ -1,0 +1,25 @@
+{
+  "phase": "107",
+  "registered_window": {
+    "from_inclusive": "2026-09-02",
+    "to_exclusive": "2026-10-02"
+  },
+  "source_gate": "PASS",
+  "strategy_replay": "COMPLETE_ACCOUNTING_CHECKS_PASS",
+  "promotion": "NONE",
+  "interpretation": "OHLC_EXECUTION_PROXY_NOT_VERIFIED_FILLS",
+  "reasons": [
+    "This is a short, previously inspected OHLC proxy sample; no strategy is promoted irrespective of simulated returns.",
+    "Daily open/close marks do not verify executable fills, spread, depth, latency, partial fills or market impact."
+  ],
+  "primary_cost_case": {
+    "brokerage_per_order": 20.0,
+    "slippage_per_unit_per_side": 0.25,
+    "fee_multiplier": 1.0
+  },
+  "strict_stress_case": {
+    "brokerage_per_order": 20.0,
+    "slippage_per_unit_per_side": 0.5,
+    "fee_multiplier": 1.5
+  }
+}
