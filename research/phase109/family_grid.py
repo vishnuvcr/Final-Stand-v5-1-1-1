@@ -359,7 +359,7 @@ def self_test(out_dir: Path):
     if summary["family_count"] < 1000 or summary["family_count"] != len(family_registry()) or summary["exact_duplicate_fingerprints"] != 0:
         raise RuntimeError("Family count or duplicate gate failed.")
     space_rows = list(csv.DictReader((out_dir / "family_configuration_space.csv").open(encoding="utf-8")))
-    if len(space_rows) != summary["family_count":
+    if len(space_rows) != summary["family_count"]:
         raise RuntimeError(f"Configuration-space rows={len(space_rows)} expected 1000.")
     for family, spec in zip(families, space_rows):
         axes = axes_for_family(family)
