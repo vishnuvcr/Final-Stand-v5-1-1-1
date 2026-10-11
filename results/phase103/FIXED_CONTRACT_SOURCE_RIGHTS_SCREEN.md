@@ -1,7 +1,7 @@
 # Phase 103.1C — Fixed-contract source and rights screen
 
 **Date:** 2026-10-11  
-**Decision:** NO-GO for strategy P&L until a fixed-contract source and permitted data use are verified.  
+**Decision:** NO-GO for strategy P&L because fixed-contract identity / price reconciliation failed. The user confirmed a Dhan subscription and research authorization; that access assumption is accepted, while raw market rows remain unpublished.  
 **Scope:** Bounded public-source review; no paid data was purchased, no protected endpoint was scraped, and no strategy rules or holdout data were changed.
 
 ## Question
@@ -28,12 +28,12 @@ Can the currently identified source set support a rights-compliant, fixed listed
 | Fixed listed-contract identity across time | Rolling strike changed repeatedly; strict surfaces failed | Fail |
 | Exact contract expiry mapping and continuity | Not verified in accepted aggregate output | Fail |
 | Historical bid/ask and depth for realistic fills | Not established by the Dhan expired-options endpoint used | Fail |
-| Automated use, retention/cache, and publication rights | Not verified for raw Dhan payloads or any replacement source | Fail |
+| Automated use, retention/cache, and publication rights | User-confirmed subscription/research authorization; raw rows not committed or republished | Accepted for research access; account-specific public redistribution scope not independently audited |
 | Paytm Money brokerage, statutory levies, spread, slippage, latency | Cannot estimate defensibly before contract/quote data and execution model are available | Blocked |
 
 ## Decision and bounded next step
 
-Do not calculate strategy P&L from rolling ATM-offset bars, and do not infer that an HTTP-200 response is evidence of a complete contract tape. Keep raw market rows out of the public repository unless storage and redistribution rights are confirmed.
+Do not calculate strategy P&L from rolling ATM-offset bars, and do not infer that an HTTP-200 response is evidence of a complete contract tape. The user has confirmed research access; keep raw market rows out of this public repository and publish aggregates only.
 
 The only justified source lead from this bounded review is an **official NSE Data & Analytics inquiry** for contract-level historical stock-options data. Required vendor confirmation: target dates and minute frequency; immutable symbol/expiry/strike/CE-PE keys; trade prices and preferably historical bid/ask plus quantities/depth; corporate-action and lot-size metadata; automated research, caching/retention, and derived-publication rights; price/usage limits. This is a procurement/entitlement dependency, not permission to buy data or a claim that a suitable package is available.
 
@@ -76,3 +76,10 @@ The expanded search did not find a verified free source with all three required 
 ## User-confirmed Dhan subscription — 2026-10-11
 
 The user explicitly confirmed that they have the required rights and subscribed to Dhan, and authorized research continuation. This confirmation is accepted as the project's access/entitlement assumption; it is not an independent legal review of the account-specific agreement. Raw Dhan minute data are not committed or publicly republished. This branch stores only aggregate audit results, schema/quality diagnostics and non-row-level expiry counts. The NSE EOD files are used only for an independent contract-identity cross-check; any raw rows remain ephemeral and are not cached in the public repository. This step does not infer that subscription rights automatically include redistribution of raw market data.
+
+
+## Follow-up reconciliation results and bounded stop — 2026-10-11
+
+The user confirmed Dhan subscription and research authorization. That is accepted for research access; it is no longer treated as the primary blocker, although this repository does not republish raw Dhan or NSE rows.
+
+The code-1 run [38126663036](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126663036) downloaded all 5 NSE daily files but found only 3 unique four-field OHLC matches among 88 complete-session profiles, all at the 2026-08-25 expiry; zero matched the expected rank-2 expiry and 85 were unmatched. The code-0 attempt [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683) was rejected by Dhan at the first request with HTTP 400 / DH-905 / “expiryCode is required”, so no price comparison was possible. The one-shot selector calibration is exhausted. Current phase outcome remains **NO-GO for strategy P&L** based on data identity/price quality, not lack of subscription.
