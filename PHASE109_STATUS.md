@@ -1,6 +1,6 @@
 # Phase 109 Status — Strategy-Family Discovery and Exhaustive Grid
 
-Last updated: 2026-10-11 19:41 UTC
+Last updated: 2026-10-11 19:43 UTC
 Branch: `phase-109-exhaustive-parameter-grid`
 State: **REGISTRY AND GRID MANIFEST COMPILED; EMPIRICAL EVALUATION NOT YET RUN**
 Promotion: **NONE**
@@ -12,6 +12,7 @@ Promotion: **NONE**
 - [x] Registry self-test: PASS; contiguous shard coverage reconciled.
 - [x] Run initial Dhan/Hugging Face source-access, discovery and dataset-card checks.
 - [x] Probe official NSE legacy/UDiFF schema boundary and a recent official session: Official NSE legacy/UDiFF boundary + recent session probes: 3/3 passed; overall=PASS.
+- [x] Compile provenance-aware source feasibility inventory: Source feasibility inventory: 14 registered source classes; see matrix/report for source gates and blocked datasets.
 
 ## Still pending
 - [ ] 109.3 Validate licensed historical datasets, point-in-time fields, longer chronologically split development/validation/untouched test windows and contract identity.
@@ -24,6 +25,7 @@ Promotion: **NONE**
 
 - [Grid compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md)
 - [Official NSE archive source-feasibility report](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) and [machine-readable audit](results/phase109/nse_archive_source_feasibility.json)
+- [Source feasibility decision report](results/phase109/SOURCE_FEASIBILITY_REPORT.md) and [source matrix CSV](results/phase109/source_feasibility_matrix.csv)
 - [Family registry](results/phase109/strategy_families.csv)
 - [Per-family configuration manifest](results/phase109/family_configuration_space.csv)
 - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
