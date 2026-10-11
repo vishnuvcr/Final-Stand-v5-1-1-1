@@ -64,6 +64,7 @@ def main():
     index=read_json("niftyindices_context_summary.json")
     fut=read_json("nse_index_futures_summary.json")
     dhan=read_json("dhan_rolling_options_audit.json")
+    model_greeks=read_json("options_model_greeks_summary.json")
     grid=read_json("phase109_grid_summary.json")
     index_summary={r.get("series"):r for r in index.get("merged_series_summary",[])}
     nse_rows=get_num(option,"archive_dates_parsed")
@@ -78,6 +79,7 @@ def main():
     vix_ok=bool(vix.get("unique_date_count",0) and not vix.get("invalid_OHLC_rows",0))
     future_ok=bool(get_num(fut,"dates_with_selected_index_futures") and not get_num(fut,"invalid_ohlc_positive_volume_rows"))
     dhan_ok=bool(dhan.get("summary",{}).get("rows",0) and dhan.get("summary",{}).get("invalid_ohlc_rows",0)==0)
+    model_greeks_ok=bool(model_greeks.get("valid_model_greek_rows",0) and model_greeks.get("udiff_dates_parsed",0))
     caps={
       "underlying_close":(option_ok,"Official option archive/underlying observations present; per-symbol coverage still required"),
       "underlying_ohlc":(index_ok,"Official NIFTY 50/NIFTY BANK daily OHLC only; not all underlying indices"),
@@ -97,7 +99,8 @@ def main():
       "future_contract_identity":(future_ok,"Future symbol/expiry identity present; date-level duplicate/coverage gates remain"),
       "index_context":(index_ok,"Official NIFTY 50 and NIFTY BANK context series present"),
       "india_vix":(vix_ok,"Official NSE Indices VIX series only; timestamp/release lag still required"),
-      "option_iv":(dhan_ok,"Dhan rolling weekly ATM IV present, but strike/contract may roll; feature-only and not fixed-contract IV"),
+      "option_iv":(dhan_ok or model_greeks_ok,"Dhan rolling ATM IV and/or exact-contract Black-Scholes implied-vol estimates are present; both require separate model/proxy sensitivity gates"),
+      "model_iv_estimate":(model_greeks_ok,"Exact-contract EOD premium-implied volatility estimated using flat 6.5% rate, zero dividend, European Black-Scholes; not exchange-published IV"),
       "rolling_atm_iv":(dhan_ok,"Dhan rolling ATM IV feature series present; use only as lagged market feature"),
       "rolling_atm_oi":(dhan_ok,"Dhan rolling ATM OI feature series present; rolling contract transitions limit interpretation"),
       "underlying_volume":(False,"No synchronized underlying-index volume series has passed source audit"),
@@ -119,7 +122,11 @@ def main():
       "news_sentiment":(False,"No timestamped news-source dataset has passed point-in-time/right checks"),
       "breadth":(False,"Historical point-in-time breadth/constituent data not yet ingested"),
       "sector_rotation":(False,"Historical sector constituents/weights not yet verified point-in-time"),
-      "greeks":(False,"Direct historical Greek fields are not verified; model-derived Greeks need a separate validated pipeline"),
+      "greeks":(model_greeks_ok,"Model-derived delta/gamma/vega/theta from exact-contract EOD close; r=6.5%, q=0%, model and stale-mark sensitivities pending"),
+      "delta_model":(model_greeks_ok,"Model-derived Black-Scholes delta; not exchange-published"),
+      "gamma_model":(model_greeks_ok,"Model-derived Black-Scholes gamma; not exchange-published"),
+      "vega_per_vol_point_model":(model_greeks_ok,"Model-derived vega; not exchange-published"),
+      "theta_per_calendar_day_model":(model_greeks_ok,"Model-derived theta; not exchange-published"),
       "option_skew":(False,"Exact-expiry matched IV smile/skew is not available from the rolling ATM source"),
       "synthetic_future":(future_ok and option_ok,"Synthetic-forward can be computed from matched call/put and future closes; carry/exit realism still required"),
       "basis":(future_ok and option_ok,"EOD spot/futures basis candidate; exact timestamp alignment and dated costs remain"),
@@ -162,7 +169,7 @@ def main():
                 missing.append((key,"Unregistered/unverified input; default block"))
             elif not caps[cap][0]:
                 missing.append((key,caps[cap][1]))
-            elif cap in {"option_iv","rolling_atm_iv","rolling_atm_oi","basis","synthetic_future","future_price","future_contract_identity"}:
+            elif cap in {"option_iv","model_iv_estimate","delta_model","gamma_model","vega_per_vol_point_model","theta_per_calendar_day_model","greeks","rolling_atm_iv","rolling_atm_oi","basis","synthetic_future","future_price","future_contract_identity"}:
                 partial.append((key,caps[cap][1]))
         eligible=total if not missing else 0
         why="; ".join(f"{x}: {y}" for x,y in missing)
@@ -207,6 +214,9 @@ def main():
         "option_archive_dates_parsed":nse_rows,"positive_volume_option_rows":nse_pos,
         "index_context_series":{k:v.get("unique_date_count",0) for k,v in index_summary.items()},
         "dhan_rolling_rows":get_num(dhan.get("summary",{}),"rows"),
+        "valid_model_greek_rows":get_num(model_greeks,"valid_model_greek_rows"),
+        "model_greeks_rate_assumption":model_greeks.get("risk_free_rate_assumption"),
+        "model_greeks_dividend_assumption":model_greeks.get("dividend_yield_assumption"),
         "futures_dates":get_num(fut,"dates_with_selected_index_futures"),
       },
       "note":"This matrix uses declared input fields and audited source presence only; it does not run a strategy, verify complete chronological holdout coverage, or promote a family.",
@@ -232,7 +242,7 @@ def main():
       "- Dhan historical rolling ATM IV/OI is a feature candidate only; rolling contracts are not fixed-contract entries/exits.",
       "- Futures EOD may support a basis feature after spot/expiry/lot-size checks, not intraday fills.",
       "- India VIX is usable only if official NSE Indices series passes range/schema/time alignment checks.",
-      "- Greek-, skew-, global-, FII/DII-, event-, news-, breadth- and corporate-action-dependent families stay blocked until their respective audited sources are present. Never substitute unlabeled or unverified proxies.",
+      "- Greek-dependent families may use the separately labelled exact-contract Black-Scholes estimates only as model-derived features with explicit r=6.5%/q=0% sensitivity gates; directly observed Greeks and matched IV skew remain unavailable. Global-, FII/DII-, event-, news-, breadth- and corporate-action-dependent families stay blocked until their respective audited sources are present. Never substitute unlabeled or unverified proxies.",
       "- All P&L rows before 2024-10-01 remain blocked under the currently verified transaction-cost model. Earlier price history may serve as indicator warm-up, not as a net-return sample, until an approved pre-October-2024 cost schedule is implemented.",
       "",
       "See family_data_feasibility.csv and family_data_feasibility_summary.json for the full list of missing inputs and eligibility decisions.")
