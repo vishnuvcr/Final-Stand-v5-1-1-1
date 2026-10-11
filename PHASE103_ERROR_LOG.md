@@ -246,3 +246,11 @@ The 10/10 ATM pass validates access and array shape but does not show that an AT
 **Evidence:** Dhan's rolling relative-strike surface fails multi-session alignment; the endpoint used does not establish historical bid/ask/depth. NSE Data & Analytics advertises historical data vending, but the public information reviewed does not confirm the required minute-level contract-specific fields, price, automated research rights, retention/caching rights, or publication rights. The public NSE option-chain page carries restrictions against aggregation/copying.  
 **Handling:** no data purchased or scraped; no raw rows or credentials published; no strategy P&L generated.  
 **Next action:** use an authorized existing dataset or obtain vendor confirmation and validate a small permitted sample. If neither is available within this bounded branch, record data NO-GO and stop numerical strategy testing.
+
+
+### E103-023 — Surface-wide timestamp gate conflated rolling offsets with contract coverage
+**Type:** diagnostic-design defect.  
+**Finding:** the earlier gate required every relative-strike offset to contain the same timestamps. Because the API is rolling ATM-relative data, a missing timestamp in one offset does not automatically mean an actual strike lacks an observation at that time in the union of offsets.  
+**Correction:** add a deduplicated timestamp/actual-strike union and report per-strike coverage counts, coverage percentage, UTC boundaries and IST-date counts. Add a regression test for non-identical offset timestamps.  
+**Commits:** `3848124afe46635a7bbc761bab268c8f2186313b`, `1e1a94e0b8d9b13028cbe4c23c0551813135b04c`, `c5ac2361c62af1f6995e22570c4442d933983742`.  
+**Verification:** pending automated Actions run. Expiry identity, source rights, executable quotes and transaction-cost gates remain required.
