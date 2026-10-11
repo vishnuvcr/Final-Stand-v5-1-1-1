@@ -70,3 +70,9 @@ Even the 100% figures are only five-session timestamp/strike coverage in the off
 ### Bounded conclusion
 
 The expanded search did not find a verified free source with all three required properties for this branch: (a) individual NSE stock-option intraday history with returned/reconstructable exact expiry/strike/CE-PE identity; (b) adequate historical executable quote evidence or a defensible fill proxy; and (c) explicit usable data retention/caching rights. Therefore the present **intraday stock-options empirical gate is NO-GO**. The Dhan API remains a demonstrated aggregate data-feasibility source, not a strategy-testing dataset under the registered hard gates. Do not silently substitute index-options data or daily EOD data for the registered stock-options question. Reopen numerical P&L only after an authorized contract-specific sample passes the gates; otherwise complete the branch as a documented data NO-GO at the registered closeout phase.
+
+
+
+## User-confirmed Dhan subscription — 2026-10-11
+
+The user explicitly confirmed that they have the required rights and subscribed to Dhan, and authorized research continuation. This confirmation is accepted as the project's access/entitlement assumption; it is not an independent legal review of the account-specific agreement. Raw Dhan minute data are not committed or publicly republished. This branch stores only aggregate audit results, schema/quality diagnostics and non-row-level expiry counts. The NSE EOD files are used only for an independent contract-identity cross-check; any raw rows remain ephemeral and are not cached in the public repository. This step does not infer that subscription rights automatically include redistribution of raw market data.
