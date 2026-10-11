@@ -1,13 +1,22 @@
+# Phase 109 — Exhaustive parameter grid (registered 2026-10-12)
+
+**Status: PLAN REGISTERED; implementation and execution pending. No strategy promoted.** User requested at least 1,000 tests/configurations per strategy and exhaustive testing of every registered variable. The registered acceptance target is ≥1,000 unique parameter tuples per strategy family (≥10,000 overall), with all registered cost configurations evaluated for every tuple, deterministic manifest, no duplicates/skips, chronological development/validation/untouched-test split where data permit, and multiple-testing controls. Phase 108's month is development/debug data only, not a holdout. The grid has not yet been run; do not interpret registration as completed tests.
+
+- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid)
+- [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/PHASE109_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/PHASE109_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/PHASE109_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/PHASE109_ERROR_LOG.md)
+
 <!-- PHASE108_VOL_REGIME_START -->
 # Phase 108 — Volatility-regime candidates
 
-**Status: REGISTERED; automated run pending. No strategy promoted.** This branch retains the six Phase 107 candidates and adds low-/high-realized-volatility momentum and reversal variants. The volatility proxy is absolute daily underlying return classified against a rolling median of prior observations. It is not India VIX or implied volatility. The sample is the already-inspected 2026-09-02 to 2026-10-02 window, so this is exploratory only.
+**Status: COMPLETE AS EXPLORATORY SCREEN; NO STRATEGY PROMOTED.** Workflow [38167282757](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38167282757) passed tests, source gate, ten-candidate replay, aggregate upload and publication. 21 official NSE archives, 17,791 selected/parsed rows, 100% identity/OHLC completeness and zero duplicate keys, date mismatches or invalid positive-volume OHLC rows. All 240 cost-scenario accounting checks passed.
+
+Primary case (₹20/order, ₹0.25 adverse slippage per option unit per side, 1× modeled fees): MOMENTUM_ATM -₹57,392.82; REVERSAL_ATM -₹51,308.17; MOMENTUM_OI_CONFIRM -₹10,630.92; LARGE_MOVE_MOMENTUM -₹45,941.08; SMALL_MOVE_REVERSAL -₹29,635.78; LARGE_MOVE_REVERSAL -₹21,672.39; LOW_VOL_MOMENTUM -₹23,935.51; HIGH_VOL_MOMENTUM -₹22,037.97; LOW_VOL_REVERSAL -₹32,571.87; HIGH_VOL_REVERSAL -₹23,172.15. All ten candidates were also negative in strict stress. This reused one-month daily-OHLC proxy sample is not an independent holdout or proof of executable fills.
 
 - [Phase 108 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-108-volatility-and-market-regime-rules)
 - [Plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_ERROR_LOG.md)
-- [Runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/research/phase108_eod_ohlc_strategy_pilot.py) · [tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-108-volatility-and-market-regime-rules/tests/phase108) · [workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/.github/workflows/phase108-volatility-and-market-regime-rules.yml)
+- [Full report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/results/phase108/PHASE108_REPORT.md) · [240-row summary](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/results/phase108/summary.csv)
 
-Ten candidates × 24 cost scenarios = 240 planned rows. Brokerage sensitivity, modeled statutory fees and adverse slippage are included; account-specific Paytm Money contract-note costs and executable fills remain unverified.
+Volatility estimator is absolute daily underlying return classified against prior observations, not India VIX or implied volatility. Account-specific Paytm Money fees and actual fills remain unverified. No strategy promoted.
 
 <!-- PHASE108_VOL_REGIME_END -->
 
