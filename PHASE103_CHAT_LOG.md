@@ -25,3 +25,12 @@ This log records user-visible conversation events and research decisions. It doe
 - Exact-strike union diagnostics: 1,925 union timestamps per panel; zero duplicate timestamp/actual-strike keys. Best union coverage: ICICIBANK CALL three strikes 100%, RELIANCE CALL/PUT 99.065%, SBIN CALL 94.130%. These are not expiry-verified contract-level histories.
 - Public/free source review found no verified dataset meeting the registered intraday stock-options identity, executable-price and retention/cache rights gates. The branch was closed out at the data gate as **NO-GO for numerical intraday stock-options strategy P&L**. No P&L, strategy inference or strategy promotion was reported.
 - Published the final data-feasibility manuscript and SVG coverage chart. Phases 103.2–103.6 remain unentered under the registered stop rule; 103.7 contains the bounded closeout. Reopening requires a new authorized sample meeting the registered gates.
+
+
+
+## 2026-10-11 — User confirmed subscription and instructed continuation
+
+- User said: “We have the rights! I have subscribed” and then “Ok proceed!”
+- Research decision: accept the user's confirmation of their Dhan subscription and authorization for the intended research access; do not continue treating “subscription not established” as a reason to stop acquisition.
+- Data handling remains conservative: raw Dhan minute rows and raw NSE EOD contract rows stay ephemeral in the runner. The repository and GitHub Pages outputs contain only aggregate audit counts, safe diagnostics and expiry-date counts, not raw price rows.
+- Next bounded gate: independently reconcile full-session exact-strike Dhan OHLC against official NSE daily stock-option OHLC to test the expiryCode=1 selection. No strategy P&L until this identity and price-quality test passes; no profitability inference from the cross-check itself.
