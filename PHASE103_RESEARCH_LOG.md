@@ -265,3 +265,13 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - API probes returning rows: 59/60.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+## 2026-10-11 — Empty requested-side payload remediation
+
+- Reviewed the latest full-surface audit [38090149633](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38090149633): 59/60 probes returned before the runner stopped on the first empty/invalid INFY CALL ATM+3 response. This is a coverage limitation; it is not evidence of profitability or broad source failure.
+- Updated `dhan_data_audit.py` so an HTTP-200 success envelope without the requested CALL/PUT block is labelled `SUCCESS_EMPTY_FOR_REQUESTED_SIDE`. Such a result is preserved as a zero-row coverage observation, and the frozen-stock scan continues. HTTP failures and inconsistent non-empty arrays remain abort conditions.
+- Added a unit test for the explicit empty-side status.
+- Corrected the Actions command's duplicated `--strikes` argument and changed its default probe limit from 7 to 70 so automatic runs attempt the full configured panel.
+- The remediation commits are 7114e9601b8dc3a4a25d7a293162fd8ff45ccf44, 4d8e07634257c07a74fc8423c562c676bf06371e, and 8f0e7b345f8869e229f423acda860624a4569ffc.
+- Awaiting the post-fix Actions result. Do not promote partial surface groups or calculate strategy P&L until multi-session fixed-contract coverage and cost/data-rights gates pass.
