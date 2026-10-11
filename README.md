@@ -1,3 +1,16 @@
+<!-- PHASE107_REGIME_FILTERED_START -->
+# Phase 107 — Regime-filtered EOD option candidates (2026-10-12)
+
+**Status: REGISTERED; automated run pending. No strategy promoted.** This exploratory screen adds three fixed candidates to the Phase 106 baselines: momentum only after an absolute one-session move of at least 0.5%, reversal only below 0.5%, and reversal only at/above 0.5%. The threshold is fixed, not optimized. It reuses the already-inspected Phase 106 window (2026-09-02 inclusive to 2026-10-02 exclusive), so results cannot count as independent confirmation or select a live-trading winner.
+
+- [Phase 107 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-107-regime-filtered-eod-strategies)
+- [Registered plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_RESEARCH_LOG.md) · [error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_ERROR_LOG.md) · [visible chat log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/PHASE107_CHAT_LOG.md)
+- [Python runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/research/phase107_eod_ohlc_strategy_pilot.py) · [tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-107-regime-filtered-eod-strategies/tests/phase107) · [manual/automatic workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-107-regime-filtered-eod-strategies/.github/workflows/phase107-regime-filtered-eod-strategies.yml)
+
+The workflow is registered for branch pushes and manual dispatch, and will publish aggregate-only output. Six candidates × 24 cost combinations = 144 planned scenarios. Costs include Paytm Money brokerage sensitivity, modeled statutory fees, and adverse slippage; account-specific contract-note costs and executable fills remain unverified. No promotion is permitted from this reused sample.
+
+<!-- PHASE107_REGIME_FILTERED_END -->
+
 <!-- PHASE106_FORWARD_REPLICATION_START -->
 # Phase 106 — Forward EOD Replication (2026-10-11)
 
