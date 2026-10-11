@@ -772,6 +772,8 @@ def main():
     }
     progress_path=OUT/"evaluation_progress.json"
     previous=read_json(progress_path,{})
+    if previous.get("engine_version")!=ENGINE_VERSION:
+        previous={}
     completed=previous.get("completed_config_ranges",[])
     shard_record={"start":start,"end_exclusive":end,"configs_requested":len(tasks),"configs_attempted":config_counts["attempted"],
                   "cost_rows":len(results),"result_path":str(path),"result_sha256":summary["result_sha256"],
