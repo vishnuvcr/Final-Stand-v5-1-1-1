@@ -480,3 +480,15 @@ First run failed closed on code-fingerprint drift and exposed escaped workflow e
 - Rows with prior-OI-qualified selections: 3892
 - Exact entry fill bars available: 2232
 - Model delta is diagnostic only; no P&L or promotion.
+
+
+## Point-in-time delta audit — run 38131479306 (2026-10-11T10:24:42.166288+00:00)
+- Status: MODEL_DELTA_AUDIT_COMPLETE
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Audit source SHA256: 9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3
+- Replay protocol SHA256: 5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6
+- Expiry files audited/errors: 267/0
+- Expected/actual selection rows: 4272/4272
+- Rows with prior-OI-qualified selections: 3892
+- Exact entry fill bars available: 2232
+- Model delta is diagnostic only; no P&L or promotion.
