@@ -51,7 +51,7 @@ jobs:
           test -f results/phase109/phase109_grid_summary.json
           test -f results/phase109/family_data_feasibility.csv
           test -f results/phase109/nse_index_options_daily_coverage.csv
-          python -m py_compile research/phase109/strategy_evaluator.py research/phase109/test_phase109_data_clients.py
+          python -m py_compile research/phase109/strategy_evaluator.py research/phase109/selection_audit.py research/phase109/test_phase109_data_clients.py
           python -m unittest discover -s research/phase109 -p 'test_*.py' -v
 
       - name: Determine next resumable cursor
@@ -65,7 +65,7 @@ jobs:
           from pathlib import Path
           p=Path("results/phase109/evaluation_progress.json")
           s=json.loads(p.read_text()) if p.exists() else {}
-          valid=s.get("engine_version")=="phase109-eod-engine-v2-selection-only"
+          valid=s.get("engine_version")=="phase109-eod-engine-v3-selection-and-holdout-firewall"
           cursor=int(s.get("next_config_cursor",0) or 0) if valid else 0
           limit=int(os.environ.get("MAX_CONFIGS","2000") or 2000)
           if not 1<=limit<=20000:
