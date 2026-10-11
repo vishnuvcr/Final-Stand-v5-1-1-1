@@ -21,10 +21,11 @@ These are source-based inputs and scenario ranges, not a claim about the user's 
 | STT on sale of an option | 0.15% of option premium from 1 April 2026 | Official NSE rate page: https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax |
 | Stamp duty | 0.003% of option premium turnover on the buy side | Official NSE levies page: https://www.nseindia.com/static/invest/first-time-investor-sebi-turnover-fees-stt-other-levies |
 | SEBI turnover fee | 0.0001% of premium turnover on purchase and sale | Official NSE levies page above |
+| NSE IPFT contribution | Separately itemized in the model: ₹50/crore through February 2026 and ₹0.01/crore from 1 March 2026 | NSE circular above distinguishes transaction charges from IPFT contribution. For March onward it rounds the combined total per crore to ₹3,553; the code uses separate inputs so the contract note can be reconciled. |
 | GST | 18% applied in the cost engine to brokerage, NSE transaction charges and SEBI turnover fee | Statutory/service tax assumption; retain as an explicit component for reconciliation against contract notes |
 | Exercise/assignment | Separate effective-date STT-on-exercise path is supported by the fee model | Initial strategies should exit before expiry; physical settlement and exercise obligations require explicit handling if any future rule can reach expiry. |
 
-The fee implementation is in `research/phase104_eod_stock_options/cost_model.py`. Tests cover effective-date boundaries for NSE transaction charges and STT, brokerage sensitivity, arithmetic reconciliation and explicit marking of unmodelled execution costs.
+The fee implementation is in `research/phase104_eod_stock_options/cost_model.py`. Tests cover effective-date boundaries for NSE transaction charges, the separately itemized IPFT contribution and STT, brokerage sensitivity, arithmetic reconciliation and explicit marking of unmodelled execution costs. The GST base includes brokerage, NSE transaction charges and SEBI fee; GST treatment of any separately billed IPFT amount must be checked against the user's actual contract note.
 
 ## 3. Why the execution gate remains blocked
 
