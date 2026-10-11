@@ -46,7 +46,7 @@ def main():
 - Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
 """
         append_once(STATUS, marker, block)
-        append_once(RESEARCH, marker + "\n" + block, block)
+        append_once(RESEARCH, marker, block)
         current = STATUS.read_text(encoding="utf-8")
         state = "PHASE 104.1 EOD CONTRACT IDENTITY PASS; EXECUTION/COST GATES PENDING" if data.get("status") == "PASS_EOD_CONTRACT_IDENTITY" else "PHASE 104.1 EOD AUDIT COMPLETED; DATA/IDENTITY QUALITY GATE NOT PASSED"
         import re
