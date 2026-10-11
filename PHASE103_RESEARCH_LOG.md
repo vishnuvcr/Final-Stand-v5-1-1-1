@@ -454,3 +454,11 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - Final run [38127809994](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127809994) passed 25 unit tests, returned data for 28/28 probes, and downloaded all five NSE EOD archives. It reproduced the same partial OHLC reconciliation as run 38127450209: 88 eligible profiles, 3 unique four-field OHLC matches (all expiry 2026-08-25 / rank 1), 0 expected rank-2 matches, and 85 unmatched. All field-level counts are in the aggregate report and JSON.
 - Verified NSE equity-derivatives normal session ends at 15:40; 1-minute timestamps from 09:15 through 15:39 represent 385 interval-start stamps. The full-session eligibility window was therefore not shortened to the equities cash-market close.
 - Terminal Phase 103 result unchanged: access confirmed; contract identity / price reconciliation NO-GO; historical bid/ask/depth unverified; no strategy P&L or promotion.
+
+
+## Final workflow-locked confirmation — run 38127809994 (2026-10-11)
+
+- After closing the one-shot code-0 attempt, the selector was removed from manual workflow inputs and the audit workflow was locked to code 1. Manual dispatch remains available, but cannot initiate further selector-code hunting within Phase 103.
+- Final run [38127809994](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127809994) passed 25 unit tests, returned data for 28/28 probes, and downloaded all five NSE EOD archives. It reproduced the same partial OHLC reconciliation as run 38127450209: 88 eligible profiles, 3 unique four-field OHLC matches (all expiry 2026-08-25 / rank 1), 0 expected rank-2 matches, and 85 unmatched. Field-level counts are in the aggregate report and JSON.
+- Verified from NSE's official market-timing page that normal equity-derivatives trading ends at 15:40. The 1-minute timestamps 09:15 through 15:39 are interval-start timestamps for 385 minutes; the audit's full-session window was retained. Source: https://www.nseindia.com/static/market-data/market-timings
+- Terminal Phase 103 result unchanged: technical access confirmed; contract identity / price reconciliation NO-GO; historical bid/ask/depth not documented; no strategy P&L or promotion.
