@@ -14,6 +14,9 @@ import dhan_rolling_options
 import futures_eod_extract
 import options_greeks_extract
 import strategy_evaluator
+import selection_audit
+import family_grid
+import tempfile
 import tempfile
 
 
@@ -119,6 +122,48 @@ class TestDhanRollingOptions(unittest.TestCase):
         self.assertEqual(result["invalid_ohlc_rows"],0)
         self.assertEqual(result["invalid_or_missing_iv_rows"],0)
         self.assertEqual(result["invalid_or_missing_volume_rows"],0)
+
+class TestPhase109ManifestAndSelection(unittest.TestCase):
+    def test_base_family_has_1080_unique_applicable_configs(self):
+        axes=family_grid.axes_for_family({"regime_id":"NONE","confirmation_id":"NONE"})
+        count=1
+        for values in axes.values(): count*=len(values)
+        self.assertEqual(count,1080)
+        self.assertNotIn("vol_lookback_sessions",axes)
+        self.assertNotIn("regime_definition",axes)
+        self.assertNotIn("oi_confirmation_method",axes)
+
+    def test_regime_and_oi_axes_are_only_attached_when_applicable(self):
+        vol=family_grid.axes_for_family({"regime_id":"REALIZED_VOL_LOW_HIGH","confirmation_id":"NONE"})
+        flow=family_grid.axes_for_family({"regime_id":"NONE","confirmation_id":"OPTIONS_FLOW"})
+        self.assertIn("vol_lookback_sessions",vol)
+        self.assertIn("regime_definition",vol)
+        self.assertIn("oi_confirmation_method",flow)
+        self.assertNotIn("vol_lookback_sessions",flow)
+
+    def test_holm_adjustment_is_monotonic_and_keyed_to_test_identity(self):
+        adjusted, rejected, count=selection_audit.holm([(("a",),0.01),(("b",),0.04),(("c",),0.03)])
+        self.assertEqual(count,3)
+        self.assertAlmostEqual(adjusted[("a",)],0.03)
+        self.assertAlmostEqual(adjusted[("c",)],0.06)
+        self.assertAlmostEqual(adjusted[("b",)],0.06)
+
+    def test_exact_24_cost_scenarios_are_required(self):
+        import csv, itertools
+        old_out=str(strategy_evaluator.OUT)
+        with tempfile.TemporaryDirectory() as td:
+            strategy_evaluator.OUT=Path(td)
+            path=Path(td)/"cost_scenarios.csv"
+            with path.open("w",newline="",encoding="utf-8") as fh:
+                w=csv.DictWriter(fh,fieldnames=["cost_case_id","brokerage_per_order","slippage_per_unit_per_side","fee_multiplier"])
+                w.writeheader()
+                for b,s,m in itertools.product((10,15,20),(0,0.05,0.25,0.50),(1,1.5)):
+                    w.writerow({"cost_case_id":f"{b}-{s}-{m}","brokerage_per_order":b,"slippage_per_unit_per_side":s,"fee_multiplier":m})
+            result=strategy_evaluator.load_cost_cases()
+            self.assertEqual(len(result),24)
+            self.assertEqual(len({(x["brokerage_per_order"],x["slippage_per_unit_per_side"],x["fee_multiplier"]) for x in result}),24)
+        strategy_evaluator.OUT=Path(old_out)
+
 
 class TestStrategyEvaluator(unittest.TestCase):
     def test_momentum_signal_is_lagged_and_thresholded(self):
