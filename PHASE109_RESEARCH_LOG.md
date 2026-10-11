@@ -34,3 +34,8 @@
 - Source feasibility inventory: 14 registered source classes; see matrix/report for source gates and blocked datasets.
 - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
 
+
+## 2026-10-12 — Parameter-grid compute correction
+- The initial registry had 325,124,800 tuples / 7,802,995,200 cost rows, substantially above the requested ≥1,000 configurations per family. That manifest was registered only and was not a backtest.
+- Revised axis values to 5 lookbacks, 4 signal thresholds, 3 volatility lookbacks, 1–2 regime definitions, 3 strike targets, 2 holding/exit windows, 4 risk profiles, and 3 OI methods only for OI/flow families. Every applicable combination remains Cartesian-enumerated; all families still require at least 1,000 configurations and all 24 cost cases apply per eligible tuple.
+- New counts and hashes are pending compiler regeneration; previous counts remain preserved only as historical log facts. No trading result or family promotion is implied by this design change.
