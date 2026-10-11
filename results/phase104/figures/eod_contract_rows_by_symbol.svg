@@ -5,28 +5,28 @@
   <text x="60" y="52" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#172033">NSE EOD stock-option rows by symbol</text>
   <text x="60" y="83" font-family="Arial, sans-serif" font-size="16" fill="#495466">Phase 104.1 · 3 Aug–1 Sep 2026 · 22 daily archives · 18,082 rows total</text>
   <line x1="260" y1="135" x2="260" y2="475" stroke="#9aa5b1" stroke-width="1"/>
-  <line x1="445" y1="135" x2="445" y2="475" stroke="#d9dfe6" stroke-width="1"/>
-  <line x1="630" y1="135" x2="630" y2="475" stroke="#d9dfe6" stroke-width="1"/>
-  <line x1="815" y1="135" x2="815" y2="475" stroke="#d9dfe6" stroke-width="1"/>
+  <line x1="425" y1="135" x2="425" y2="475" stroke="#d9dfe6" stroke-width="1"/>
+  <line x1="590" y1="135" x2="590" y2="475" stroke="#d9dfe6" stroke-width="1"/>
+  <line x1="755" y1="135" x2="755" y2="475" stroke="#d9dfe6" stroke-width="1"/><line x1="920" y1="135" x2="920" y2="475" stroke="#d9dfe6" stroke-width="1"/>
   <text x="260" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">0</text>
-  <text x="445" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">1,100</text>
-  <text x="630" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">2,200</text>
-  <text x="815" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">3,300</text>
+  <text x="425" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">1,100</text>
+  <text x="590" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">2,200</text>
+  <text x="755" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">3,300</text><text x="920" y="121" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5c6676">4,400</text>
   <text x="60" y="190" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#172033">HDFCBANK</text>
-  <rect x="260" y="164" width="507" height="38" rx="5" fill="#3268a8"/>
-  <text x="780" y="190" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#172033">3,022</text>
+  <rect x="260" y="164" width="453" height="38" rx="5" fill="#3268a8"/>
+  <text x="722" y="190" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#172033">3,022</text>
   <text x="60" y="255" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#172033">ICICIBANK</text>
-  <rect x="260" y="229" width="711" height="38" rx="5" fill="#3268a8"/>
-  <text x="895" y="255" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">4,241</text>
+  <rect x="260" y="229" width="636" height="38" rx="5" fill="#3268a8"/>
+  <text x="902" y="255" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">4,241</text>
   <text x="60" y="320" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#172033">INFY</text>
-  <rect x="260" y="294" width="458" height="38" rx="5" fill="#3268a8"/>
-  <text x="730" y="320" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#172033">2,734</text>
+  <rect x="260" y="294" width="410" height="38" rx="5" fill="#3268a8"/>
+  <text x="679" y="320" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#172033">2,734</text>
   <text x="60" y="385" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#172033">RELIANCE</text>
-  <rect x="260" y="359" width="721" height="38" rx="5" fill="#3268a8"/>
-  <text x="900" y="385" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">4,303</text>
+  <rect x="260" y="359" width="645" height="38" rx="5" fill="#3268a8"/>
+  <text x="906" y="385" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">4,303</text>
   <text x="60" y="450" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#172033">SBIN</text>
-  <rect x="260" y="424" width="634" height="38" rx="5" fill="#3268a8"/>
-  <text x="905" y="450" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#172033">3,782</text>
+  <rect x="260" y="424" width="567" height="38" rx="5" fill="#3268a8"/>
+  <text x="834" y="450" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#172033">3,782</text>
   <line x1="60" y1="504" x2="940" y2="504" stroke="#d9dfe6"/>
   <text x="60" y="535" font-family="Arial, sans-serif" font-size="15" fill="#495466">All 18,082 records have complete audited daily contract identity fields and OHLC.</text>
   <text x="60" y="558" font-family="Arial, sans-serif" font-size="15" fill="#495466">This is data coverage, not an options-volume ranking or a strategy-performance result.</text>
