@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"research"/"phase103_stock_options"))
-from dhan_data_audit import ALLOWED_STRIKES, DEFAULT_PANELS, EXPIRY_CODE, check_window, map_underlyings, normalize_strike, parse_panels, parse_strikes, provider_to_date, safe_error_details, summarize, summarize_surface
+from dhan_data_audit import ALLOWED_STRIKES, CONTRACT_IDENTITY_STATUS, DEFAULT_PANELS, EXPIRY_CODE, check_window, map_underlyings, normalize_strike, parse_panels, parse_strikes, provider_to_date, safe_error_details, summarize, summarize_surface
 
 class DhanDataAuditTests(unittest.TestCase):
     def test_relative_strike_parser_validates_and_preserves_order(self):
@@ -99,6 +99,11 @@ class DhanDataAuditTests(unittest.TestCase):
         self.assertNotIn("123",str(envelope))
 
     def test_next_expiry_value_matches_dhan_request_sample(self):
+        self.assertEqual(EXPIRY_CODE, 1)
+
+    def test_exact_contract_identity_remains_blocked_without_returned_expiry(self):
+        self.assertEqual(CONTRACT_IDENTITY_STATUS, "BLOCKED_EXPIRY_NOT_RETURNED")
+        # expiryCode=1 is only a request selector; this endpoint response does not supply the actual expiry date.
         self.assertEqual(EXPIRY_CODE, 1)
 
     def test_window_and_provider_end_date_adapter(self):
