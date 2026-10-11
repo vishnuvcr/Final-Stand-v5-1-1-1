@@ -39,3 +39,9 @@
 - The initial registry had 325,124,800 tuples / 7,802,995,200 cost rows, substantially above the requested ≥1,000 configurations per family. That manifest was registered only and was not a backtest.
 - Revised axis values to 5 lookbacks, 4 signal thresholds, 3 volatility lookbacks, 1–2 regime definitions, 3 strike targets, 2 holding/exit windows, 4 risk profiles, and 3 OI methods only for OI/flow families. Every applicable combination remains Cartesian-enumerated; all families still require at least 1,000 configurations and all 24 cost cases apply per eligible tuple.
 - New counts and hashes are pending compiler regeneration; previous counts remain preserved only as historical log facts. No trading result or family promotion is implied by this design change.
+
+
+## 2026-10-12 — Removal of irrelevant parameter duplicates
+- Review found that no-regime families carried volatility lookback and regime-definition axes even though those values did not affect their rule, creating repeated result paths under nominally different configurations. This was corrected before any new corrected-grid results are interpreted.
+- Every family now uses 1,080 base configs (5 lookbacks × 4 signal thresholds × 3 strikes × 2 exits × 9 risk profiles). Volatility lookback adds only for realized-vol/trend-range regimes; two regime definitions add only for realized-vol regime; three OI methods add only for OPTIONS_FLOW confirmations.
+- The evaluator now uses the actual percent named in each stop/target profile. All new exact counts and manifest hashes must come from the compiler. This is a design correction only, not a trading result.
