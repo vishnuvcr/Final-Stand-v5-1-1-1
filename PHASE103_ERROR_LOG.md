@@ -289,3 +289,11 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126410692
 ### E103-RUN-38127433566 — No fresh audit JSON for this run
 Tests, network requests or audit generation did not produce a machine result whose run_id matches the current Actions run. Any prior JSON is not valid evidence for this run.
 Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127433566
+
+
+### E103-028 — Code-0 selector calibration rejected by Dhan; bounded attempt closed
+**Type:** provider-request / contract-identity gate.
+**Run:** [38127361683](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683).
+**Evidence:** The first ICICIBANK CALL / ATM request returned HTTP 400, provider code DH-905, message “expiryCode is required”; only 1 request was attempted and 0 returned data. Thus no price/expiry comparison was possible. The user has confirmed the Dhan subscription and research authorization; this is not evidence of missing subscription permission.
+**Interpretation:** The provider documents 0 as current/near expiry, but the endpoint rejected the value as missing. One calibration was pre-registered and is now exhausted; no further selector-code searching is permitted in Phase 103.1D.
+**Next gate:** no P&L. Reopen only after Dhan confirms a request that supplies a fixed historical contract identity/expiry, or an authorized alternative source yields contract-specific history and passes the same identity/price-quality test. Raw rows remain ephemeral; no secrets or raw price data were published.
