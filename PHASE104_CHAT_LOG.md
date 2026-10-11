@@ -21,3 +21,10 @@ This log records visible user instructions and research decisions only; it does 
 - Final workflow run [38129926977](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38129926977) completed successfully after adding a regression test that keeps the phase terminal state from being reset by a data audit rerun.
 - The final aggregate JSON reports 18,082 rows, 100% identity and OHLC completeness, zero duplicate daily contract keys/date mismatches/source errors, and no raw rows in the repository or artifact.
 - Final decision remains: daily contract identity feasibility PASS, executable after-cost strategy gate NO-GO, no strategy P&L or profitability inference.
+
+## 2026-10-11 — Resume: source-eligibility follow-up
+
+- Re-read Phase 104 plan, terminal status, error log, research log, visible conversation log and main README before continuing.
+- Reviewed official NSE historical order/trade subscription information, real-time feed level descriptions and NSE Data Sharing & Usage Policy; also reviewed Global Datafeeds' published API scope and terms.
+- Conclusion: there is a credible inquiry path for historical F&O order/trade data, but the public pages do not prove historical bid/ask/depth for expired stock options or rights for automated backtesting/caching/publication. Global Datafeeds requires clarification because its public terms restrict simulation/virtual-trading uses without approvals.
+- Phase 104 remains terminal and unchanged: EOD identity pass, executable strategy P&L gate NO-GO, no strategy promoted. No purchase or external contact was made.
