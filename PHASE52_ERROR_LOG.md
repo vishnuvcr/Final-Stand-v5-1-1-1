@@ -631,3 +631,11 @@ Any registry-validation failure, duplicate configuration ID, quote coverage gap,
 - Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.
 - Root cause: pending review of the failed job logs.
 - Status: OPEN.
+
+## F52-AUTO-38131105610 — Automated workflow failure
+
+- Date: 2026-10-11
+- Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38131105610
+- Impact: no output is accepted solely because this workflow failed or partially ran. Check each output manifest/gate; preserve any completed audit/replay as diagnostic unless its own evidence gate passes.
+- Root cause: pending review of the failed job logs.
+- Status: OPEN.
