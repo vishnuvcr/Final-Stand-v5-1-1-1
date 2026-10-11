@@ -1,0 +1,199 @@
+name: Phase 109 — frozen-shortlist untouched holdout
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_configs:
+        description: Finalist configs per holdout shard (1–20,000)
+        required: true
+        default: "2000"
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: phase109-writer-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  holdout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Check out Phase 109
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Restore private source cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache/phase109
+          key: ${{ runner.os }}-phase109-eval-source-v3-${{ github.ref_name }}-${{ github.run_number }}
+          restore-keys: |
+            ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-eval-source-v3-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-data-v2-${{ github.ref_name }}-
+
+      - name: Validate frozen shortlist and grid completion
+        id: gate
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import csv,json
+          from pathlib import Path
+          p=Path("results/phase109/selection_audit_summary.json")
+          if not p.exists(): raise SystemExit("No selection audit exists; holdout must not run.")
+          s=json.loads(p.read_text())
+          if s.get("status")!="FINAL_SHORTLIST_READY_FOR_UNTOUCHED_HOLDOUT":
+              raise SystemExit("Grid incomplete or no validation shortlist; holdout is blocked.")
+          f=Path("results/phase109/validation_shortlist.csv")
+          if not f.exists(): raise SystemExit("Frozen shortlist CSV is missing.")
+          rows=list(csv.DictReader(f.open(encoding="utf-8")))
+          if len(rows)!=int(s.get("final_shortlist_count",0)) or not rows:
+              raise SystemExit("Shortlist row count is empty or inconsistent with selection audit.")
+          h=json.loads(Path("results/phase109/holdout_progress.json").read_text()) if Path("results/phase109/holdout_progress.json").exists() else {}
+          if h.get("shortlist_hash")==s.get("result_files_sha256",{}).get("shortlist") and int(h.get("remaining_supported_configs",1))==0:
+              raise SystemExit("This frozen shortlist has already completed the holdout; no repeated look.")
+          print("shortlist_count="+str(len(rows)))
+          print("shortlist_hash="+s["result_files_sha256"]["shortlist"])
+          PY
+
+      - name: Run offline regression suite
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/strategy_evaluator.py research/phase109/holdout_audit.py research/phase109/test_phase109_data_clients.py
+          python -m unittest discover -s research/phase109 -p 'test_*.py' -v
+
+      - name: Determine finalist cursor
+        id: cursor
+        env:
+          MAX_CONFIGS: ${{ inputs.max_configs || '2000' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json,os
+          from pathlib import Path
+          saved=json.loads(Path("results/phase109/holdout_progress.json").read_text()) if Path("results/phase109/holdout_progress.json").exists() else {}
+          shortlist=json.loads(Path("results/phase109/selection_audit_summary.json").read_text())
+          short_hash=shortlist["result_files_sha256"]["shortlist"]
+          same=saved.get("shortlist_hash")==short_hash and saved.get("engine_version")=="phase109-eod-engine-v3-selection-and-holdout-firewall"
+          cursor=int(saved.get("next_config_cursor",0) or 0) if same else 0
+          limit=int(os.environ.get("MAX_CONFIGS","2000") or 2000)
+          if not 1<=limit<=20000:raise SystemExit("max_configs must be 1–20,000")
+          print("start_config="+str(cursor));print("max_configs="+str(limit));print("shortlist_hash="+short_hash)
+          PY
+
+      - name: Evaluate frozen shortlist on untouched holdout only
+        env:
+          START_CONFIG: ${{ steps.cursor.outputs.start_config }}
+          MAX_CONFIGS: ${{ steps.cursor.outputs.max_configs }}
+        run: |
+          set -euo pipefail
+          python research/phase109/strategy_evaluator.py --sample holdout --config-list results/phase109/validation_shortlist.csv --start-config "$START_CONFIG" --max-configs "$MAX_CONFIGS"
+
+      - name: Run final holdout gate and multiple-testing audit
+        run: |
+          set -euo pipefail
+          python research/phase109/holdout_audit.py
+
+      - name: Update Phase 109 status and public research logs
+        if: success()
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,datetime
+          from pathlib import Path
+          s=json.loads(Path("results/phase109/holdout_shard_summary.json").read_text())
+          a=json.loads(Path("results/phase109/holdout_audit_summary.json").read_text())
+          h=json.loads(Path("results/phase109/holdout_progress.json").read_text())
+          shortlist_hash=json.loads(Path("results/phase109/selection_audit_summary.json").read_text())["result_files_sha256"]["shortlist"]
+          h["shortlist_hash"]=shortlist_hash
+          Path("results/phase109/holdout_progress.json").write_text(json.dumps(h,sort_keys=True,indent=2)+"\n")
+          now=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          marker="## 109.5 — Frozen-shortlist untouched holdout"
+          entry=f"""{marker} ({now})
+
+          - Frozen validation shortlist hash: {shortlist_hash}; finalist configurations with held-out records: {a['holdout_configuration_count_with_results']:,}; finalist denominator {a['holdout_total_source_feasible_finalist_configs']:,}; remaining {a['holdout_remaining']:,}.
+          - Holdout sample: 1 April 2026 to 8 October 2026; grid/parameter selection never reads this period.
+          - Primary/stress gates: ₹20/order + ₹0.25/unit/side + 1× modeled cost; stress ₹20/order + ₹0.50/unit/side + 1.5× modeled cost. Holm correction is applied within the frozen finalist set.
+          - Holdout audit state: {a['status']}; candidates meeting all predeclared gates: {a['final_eligible_candidates']:,}. Passing candidates are eligible for paper-forward testing only; **no automatic live deployment or strategy promotion**.
+          - [Holdout report](results/phase109/HOLDOUT_AUDIT_REPORT.md) · [machine summary](results/phase109/holdout_audit_summary.json) · [candidate result table](results/phase109/holdout_candidate_results.csv) · [shard result](results/phase109/holdout_shard_summary.json).
+          """
+          p=Path("PHASE109_STATUS.md");old=p.read_text();old=old.split(marker)[0].rstrip()+"\n\n"+entry+"\n" if marker in old else old.rstrip()+"\n\n"+entry+"\n";p.write_text(old)
+          l=Path("PHASE109_RESEARCH_LOG.md");old=l.read_text()
+          l.write_text(old.rstrip()+f"\n\n## {now} — Holdout evaluation\n- Frozen finalist hash {shortlist_hash}; evaluated {s['configs_attempted']:,} finalist configs and {s['cost_rows_generated']:,} cost rows in this shard.\n- Holdout status {a['status']}; completed finalists {a['holdout_configuration_count_with_results']:,}/{a['holdout_total_source_feasible_finalist_configs']:,}; final eligible paper-forward candidates {a['final_eligible_candidates']:,}. The holdout is only evaluated once per frozen shortlist.\n")
+          e=Path("PHASE109_ERROR_LOG.md");old=e.read_text()
+          e.write_text(old.rstrip()+f"\n\n## {now} — Holdout data-quality check\n- Raw option bars/contract-level Greeks are not published. Exact contract/volume/lot-size exclusions and cost-model failures are represented in evaluator output summary. Daily OHLC remains an execution proxy, not proof of achieved fills.\n- Holdout audit status={a['status']}; no failed gate is silently treated as pass.\n")
+          ch=Path("PHASE109_CHAT_LOG.md");old=ch.read_text()
+          ch.write_text(old.rstrip()+f"\n\n## {now} — Frozen-shortlist holdout step\nAssistant action summary: evaluated only the immutable validation shortlist on the untouched 2026-04+ sample; selection never used holdout outcomes. Reported candidates passing all predeclared gates={a['final_eligible_candidates']:,} and audit status={a['status']}. A pass means paper-forward candidate only, not live strategy promotion.\n")
+          readme=Path("README.md");text=readme.read_text()
+          start="<!-- PHASE109_GRID_STATUS_START -->";end="<!-- PHASE109_GRID_STATUS_END -->"
+          if start in text and end in text:
+            before,rest=text.split(start,1);_,after=rest.split(end,1)
+            block=f"""# Phase 109 — 1,000+ Strategy-Family Grid and Evaluation
+
+          - Selection and holdout reports are distinct. The untouched holdout ran only on the frozen validation shortlist: hash {shortlist_hash}.
+          - Holdout state: {a['status']}; finalist configs with results {a['holdout_configuration_count_with_results']:,}/{a['holdout_total_source_feasible_finalist_configs']:,}; candidates passing held-out gates {a['final_eligible_candidates']:,}.
+          - [Holdout audit](results/phase109/HOLDOUT_AUDIT_REPORT.md) · [selection audit](results/phase109/SELECTION_AUDIT_REPORT.md) · [source coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [model IV/Greeks audit](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
+          - Even a successful holdout is not authorization for live deployment; paper-forward validation and true fill/slippage evidence remain.
+          """
+            readme.write_text(before+start+"\n"+block+end+after)
+          PY
+
+      - name: Commit held-out result tables, status and logs
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase109/holdout_shards results/phase109/holdout_progress.json results/phase109/holdout_shard_summary.json results/phase109/PHASE109_HOLDOUT_SHARD_REPORT.md
+          git add results/phase109/holdout_candidate_results.csv results/phase109/holdout_audit_summary.json results/phase109/HOLDOUT_AUDIT_REPORT.md
+          git add PHASE109_STATUS.md PHASE109_RESEARCH_LOG.md PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md README.md
+          git commit -m "Phase 109: publish frozen-shortlist holdout audit"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}"
+            if ! git rebase "origin/${GITHUB_REF_NAME}"; then git rebase --abort || true; exit 1; fi
+          done
+          exit 1
+
+      - name: Continue holdout shards automatically
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          remaining=$(python -c 'import json; print(json.load(open("results/phase109/holdout_progress.json"))["remaining_supported_configs"])')
+          if [[ "$remaining" -le 0 ]]; then echo "All frozen-shortlist holdout configs are complete."; exit 0; fi
+          payload=$(python - <<'PY'
+          import json
+          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
+          PY
+          )
+          curl --silent --show-error --fail -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-holdout-evaluation.yml/dispatches" \
+            -d "$payload"
+          echo "Next held-out shard dispatched; remaining finalists=$remaining."
+
+      - name: Upload public holdout audit
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase109-holdout-${{ github.run_id }}
+          path: |
+            results/phase109/holdout_shard_summary.json
+            results/phase109/holdout_audit_summary.json
+            results/phase109/HOLDOUT_AUDIT_REPORT.md
+          if-no-files-found: warn
