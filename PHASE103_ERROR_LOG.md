@@ -283,3 +283,9 @@ Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38126410692
 **Status:** PROBE_ABORTED_AFTER_FIRST_INVALID_RELATIVE_STRIKE; rows returned by 0/1 probes.
 **Handling:** no raw rows or secret values were logged. Do not start strategy P&L testing until access, entitlement, mapping and coverage issues are resolved.
 **Run:** https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127361683
+
+
+<!-- DHAN_NO_RESULT_RUN_38127433566 -->
+### E103-RUN-38127433566 — No fresh audit JSON for this run
+Tests, network requests or audit generation did not produce a machine result whose run_id matches the current Actions run. Any prior JSON is not valid evidence for this run.
+Run: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38127433566

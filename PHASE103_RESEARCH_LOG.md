@@ -413,3 +413,8 @@ No current-run JSON was produced; previous audit data were not accepted as this 
 - API probes returning rows: 0/1.
 - Raw rows committed/uploaded: no. Token value printed/logged: no.
 - Report: results/phase103/DHAN_DATA_API_AUDIT.md; machine summary: results/phase103/dhan_data_api_audit.json.
+
+
+<!-- DHAN_NO_RESULT_RUN_38127433566 -->
+## Dhan audit no result — run 38127433566
+No current-run JSON was produced; previous audit data were not accepted as this run's output.
