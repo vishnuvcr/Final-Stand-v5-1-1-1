@@ -21,3 +21,16 @@
 - Unique daily contract keys: 18082; duplicate keys: 0.
 - Raw rows persisted/uploaded: no. Raw price values and row-level contract records are not written to artifacts.
 - Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
+
+<!-- PHASE104_RUN_38129389678_ATTEMPT_1 -->
+### Phase 104.1 EOD audit — run 38129389678, attempt 1 — 2026-10-11T09:43:59.736476+00:00
+
+- Result: PASS_EOD_CONTRACT_IDENTITY
+- Target window: 2026-08-03 inclusive to 2026-09-02 exclusive.
+- Official daily archives parsed: 22.
+- Source/schema errors: 0; no-archive dates: 8.
+- Selected five-stock stock-option rows: 18082; parsed rows: 18082.
+- Identity completeness: 100.0%; OHLC completeness: 100.0%.
+- Unique daily contract keys: 18082; duplicate keys: 0.
+- Raw rows persisted/uploaded: no. Raw price values and row-level contract records are not written to artifacts.
+- Report: results/phase104/NSE_EOD_DATA_AUDIT.md; machine summary: results/phase104/nse_eod_data_audit.json.
