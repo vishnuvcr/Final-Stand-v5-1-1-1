@@ -11,6 +11,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import nse_backfill
 import niftyindices_history
 import dhan_rolling_options
+import futures_eod_extract
+import tempfile
 
 
 def zipped_csv(headers, rows, filename="sample.csv"):
@@ -115,6 +117,27 @@ class TestDhanRollingOptions(unittest.TestCase):
         self.assertEqual(result["invalid_ohlc_rows"],0)
         self.assertEqual(result["invalid_or_missing_iv_rows"],0)
         self.assertEqual(result["invalid_or_missing_volume_rows"],0)
+
+class TestIndexFuturesExtractor(unittest.TestCase):
+    def test_extract_udiff_futures_and_ignore_options(self):
+        headers=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","OpnPric","HghPric","LwPric","ClsPric",
+                 "TtlTradgVol","OpnIntrst","NewBrdLotQty","UndrlygPric"]
+        rows=[
+          ["2024-10-01","FUTIDX","NIFTY","2024-10-31","25000","25100","24950","25080","100000","500000","25","25010"],
+          ["2024-10-01","OPTIDX","NIFTY","2024-10-10","100","125","90","110","12000","80000","25","25010"],
+        ]
+        payload=zipped_csv(headers,rows,"future.csv")
+        with tempfile.TemporaryDirectory() as td:
+            p=Path(td)/"20241001.zip"; p.write_bytes(payload)
+            summary,extracted=futures_eod_extract.extract_zip(p,"2024-10-01")
+        self.assertEqual(summary["schema"],"UDiFF")
+        self.assertEqual(summary["selected_futures_rows"],1)
+        self.assertEqual(extracted[0]["symbol"],"NIFTY")
+        self.assertEqual(extracted[0]["expiry"],"2024-10-31")
+        self.assertEqual(extracted[0]["lot_size"],25)
+        self.assertEqual(extracted[0]["close"],25080.0)
+        self.assertEqual(summary["invalid_ohlc_positive_volume_rows"],0)
+
 
 
 if __name__=="__main__":
