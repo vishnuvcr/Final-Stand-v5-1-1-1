@@ -1,3 +1,16 @@
+<!-- PHASE108_VOL_REGIME_START -->
+# Phase 108 — Volatility-regime candidates
+
+**Status: REGISTERED; automated run pending. No strategy promoted.** This branch retains the six Phase 107 candidates and adds low-/high-realized-volatility momentum and reversal variants. The volatility proxy is absolute daily underlying return classified against a rolling median of prior observations. It is not India VIX or implied volatility. The sample is the already-inspected 2026-09-02 to 2026-10-02 window, so this is exploratory only.
+
+- [Phase 108 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-108-volatility-and-market-regime-rules)
+- [Plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_RESEARCH_LOG.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/PHASE108_ERROR_LOG.md)
+- [Runner](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/research/phase108_eod_ohlc_strategy_pilot.py) · [tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-108-volatility-and-market-regime-rules/tests/phase108) · [workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-108-volatility-and-market-regime-rules/.github/workflows/phase108-volatility-and-market-regime-rules.yml)
+
+Ten candidates × 24 cost scenarios = 240 planned rows. Brokerage sensitivity, modeled statutory fees and adverse slippage are included; account-specific Paytm Money contract-note costs and executable fills remain unverified.
+
+<!-- PHASE108_VOL_REGIME_END -->
+
 <!-- PHASE107_REGIME_FILTERED_START -->
 # Phase 107 — Regime-filtered EOD option candidates (2026-10-12)
 
