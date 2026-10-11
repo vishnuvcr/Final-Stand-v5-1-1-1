@@ -59,8 +59,11 @@ jobs:
             ${{ runner.os }}-phase109-dhan-hf-source-cache-v2-
             ${{ runner.os }}-phase109-dhan-hf-source-cache-v1-
 
-      - name: Validate backfill source client
-        run: python -m py_compile research/phase109/nse_backfill.py
+      - name: Validate source clients and run offline regression tests
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/nse_backfill.py research/phase109/niftyindices_history.py research/phase109/calendar_reconcile.py research/phase109/test_phase109_data_clients.py
+          python -m unittest discover -s research/phase109 -p 'test_*.py' -v
 
       - name: Acquire and validate official NSE archives into private cache
         env:
