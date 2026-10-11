@@ -74,10 +74,10 @@ def number(value):
     except (ValueError,TypeError,OverflowError): return None
 
 
-def value(row,*names):
+def value(row,*names,default=""):
     for name in names:
         if row.get(name) not in (None,""): return row[name]
-    return ""
+    return default
 
 
 def json_field(row,*names,default=None):
@@ -270,6 +270,7 @@ def ema(values,period,end):
     alpha=2/(period+1)
     current=values[end-period+1]
     for x in values[end-period+2:end+1]:
+        if x is None: continue
         current=alpha*x+(1-alpha)*current
     return current
 
@@ -278,6 +279,7 @@ def rsi(values,end,period):
     if end<period: return None
     ups=downs=0.0
     for i in range(end-period+1,end+1):
+        if values[i] is None or values[i-1] is None: continue
         delta=values[i]-values[i-1]
         if delta>0: ups+=delta
         elif delta<0: downs-=delta
@@ -299,7 +301,7 @@ def compute_signal(method,values,idx,lookback,threshold,params=None):
     if idx<max(lookback,3): return 0
     now=values[idx]
     past=values[idx-lookback]
-    if not now or not past or past<=0: return 0
+    if now is None or past is None or not now or not past or past<=0: return 0
     change_pct=(now/past-1.0)*100.0
     thr=float(threshold)
     if method in {"ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM","EMA_SLOPE","EMA_TREND"}:
@@ -315,7 +317,7 @@ def compute_signal(method,values,idx,lookback,threshold,params=None):
         if spread<=-thr/2: return -1
         return 0
     if method in {"RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION"}:
-        window=[values[j]/values[j-1]-1 for j in range(max(1,idx-lookback+1),idx+1) if values[j-1]>0]
+        window=[values[j]/values[j-1]-1 for j in range(max(1,idx-lookback+1),idx+1) if values[j] is not None and values[j-1] is not None and values[j-1]>0]
         m,sd=mean_sd(window)
         if sd is None or sd<=1e-10:return 0
         z=(values[idx]/values[idx-1]-1-m)/sd
