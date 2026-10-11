@@ -1,7 +1,7 @@
 <!-- PHASE103_STOCK_OPTIONS_START -->
 # Phase 103 — NIFTY 50 constituent stock-options research
 
-**Status: Initial Dhan screen found four eligible stock/side panels; bounded multi-session audit is running (run 38115153795).** The test is restricted to ICICIBANK CALL, RELIANCE CALL/PUT and SBIN CALL across 2026-08-03 through 2026-08-10 exclusive. Failed first-session panels remain excluded; no stock-options strategy backtest or profitability ranking has been performed. Prior index-options research/data remain frozen on their original branches.
+**Status: Multi-session API acquisition passed (28/28 probes), but strict surface alignment failed for all four selected stock/side panels.** ICICIBANK CALL, RELIANCE CALL/PUT and SBIN CALL returned five sessions; common timestamps were 1,920–1,923 of 1,925 per panel, and rolling actual strikes changed 77–113 times per offset. This is not fixed-contract evidence, so no stock-options strategy backtest or profitability ranking has been performed. Prior index-options research/data remain frozen on their original branches.
 
 - [Phase 103 isolated branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-103-nifty50-stock-options)
 - [Research plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_STATUS.md) · [research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_RESEARCH_LOG.md) · [error/limitation log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-103-nifty50-stock-options/PHASE103_ERROR_LOG.md)
