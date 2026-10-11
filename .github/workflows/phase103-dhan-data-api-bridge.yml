@@ -33,6 +33,7 @@ on:
 # Diagnostic retry: report allow-listed Dhan API error codes only; never persist raw error bodies or credentials.
 # Data probe v2: use expiryCode 1 after the provider rejected expiryCode 0 as missing.
 # Data probe v3: first validate one trading session/one symbol-side before expanding.
+# Coverage policy: an HTTP-success response with an empty requested CALL/PUT side is a zero-row coverage observation; continue the frozen panel. Abort only on HTTP failure or malformed non-empty arrays.
 
 concurrency:
   group: phase103-dhan-data-api-audit
