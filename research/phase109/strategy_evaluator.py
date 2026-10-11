@@ -387,9 +387,21 @@ def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_i
         if previous_move*side<=0:return 0,"CROSS_INDEX_CONFIRMATION_FAIL"
     elif confirm=="OPTIONS_FLOW":
         feat=chain_features.get((symbol,idx),{})
-        side_oi_delta=feat.get("ce_oi_delta",0) if side>0 else feat.get("pe_oi_delta",0)
-        side_volume=feat.get("ce_volume",0) if side>0 else feat.get("pe_volume",0)
-        if side_oi_delta<=0 or side_volume<=0:return 0,"OPTIONS_FLOW_CONFIRMATION_FAIL"
+        method=canonical(axes.get("oi_confirmation_method","OI_AND_VOLUME"))
+        is_call_signal=side>0
+        side_oi_delta=feat.get("ce_oi_delta",0) if is_call_signal else feat.get("pe_oi_delta",0)
+        side_volume=feat.get("ce_volume",0) if is_call_signal else feat.get("pe_volume",0)
+        side_volume_delta=feat.get("ce_volume_delta",0) if is_call_signal else feat.get("pe_volume_delta",0)
+        needs_oi=("OI" in method or "OPEN_INTEREST" in method)
+        needs_volume=("VOLUME" in method or "VOL" in method)
+        if not needs_oi and not needs_volume:return 0,"OI_CONFIRMATION_METHOD_NOT_IMPLEMENTED"
+        if needs_oi and side_oi_delta<=0:return 0,"OPTIONS_FLOW_OI_CONFIRMATION_FAIL"
+        if needs_volume:
+            # Methods labelled volume-change/spike require the signed volume delta;
+            # simple volume confirmation requires a positive volume total.
+            if "DELTA" in method or "SPIKE" in method:
+                if side_volume_delta<=0:return 0,"OPTIONS_FLOW_VOLUME_DELTA_FAIL"
+            elif side_volume<=0:return 0,"OPTIONS_FLOW_VOLUME_FAIL"
     elif confirm not in {"NONE",""}:
         return 0,"CONFIRMATION_NOT_IMPLEMENTED"
     if regime in {"REALIZED_VOL_LOW_HIGH","REALIZED_VOL"}:
@@ -497,6 +509,7 @@ def aggregate_chain_features(data,symbol,dates):
         out[(symbol,idx)]={
            "ce_oi":ce_oi,"pe_oi":pe_oi,"ce_volume":ce_vol,"pe_volume":pe_vol,
            "ce_oi_delta":ce_oi-previous[0],"pe_oi_delta":pe_oi-previous[1],
+           "ce_volume_delta":ce_vol-previous[2],"pe_volume_delta":pe_vol-previous[3],
         }
         previous=(ce_oi,pe_oi,ce_vol,pe_vol)
     return out
