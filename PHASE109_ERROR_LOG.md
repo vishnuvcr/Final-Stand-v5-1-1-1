@@ -23,3 +23,9 @@
 - Corrected unused-axis duplication before the next results run. Prior compact manifest counts are historical only and must not be reused as current denominators.
 - Evaluator API and data assumptions are not yet validated by a completed automated run. The new source-coverage run must complete, the grid compiler must regenerate counts, and the canonical cost-model adapter regression test must pass before any net P&L row is considered completed.
 - EOD option OPEN/CLOSE/HIGH/LOW are price proxies, not exchange quotes or proven fills. STOP/TARGET overlap uses conservative stop-first resolution; selection window excludes the held-out period. No promotion is allowed from preliminary results.
+
+
+## 2026-10-12 — Compiler gate caught a Python syntax error
+- Workflow run [38172152251](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38172152251) failed before source probing because `research/phase109/family_feasibility.py` ended a `lines.extend([...])` list with `) ` instead of `])`. No grid/source probe or strategy evaluation occurred in that run.
+- Fixed the list terminator in commit `1fbdde3b22a53e70aa9da34ec95165616babd97d`. The next push-triggered compiler run must pass all Python compile and offline regression tests before data acquisition resumes.
+- The compiler workflow's restore-keys did not include the current `phase109-data-v3` / v2 shared cache prefixes in the failed run. Cache key/restore behavior remains to be verified and corrected before relying on expensive re-downloads.
