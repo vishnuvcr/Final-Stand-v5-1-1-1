@@ -79,3 +79,6 @@
 
 ## 2026-10-12 15:00 UTC — Data-quality and execution notes
 - Archive parse/duplicate warnings in this shard: 0. Source gaps, zero-volume and unmatchable exact contracts are excluded and reported; detailed raw price rows are not published. Daily OHLC does not prove achieved fills.
+
+## 2026-10-12 15:04 UTC — Data-quality and execution notes
+- Archive parse/duplicate warnings in this shard: 0. Source gaps, zero-volume and unmatchable exact contracts are excluded and reported; detailed raw price rows are not published. Daily OHLC does not prove achieved fills.
