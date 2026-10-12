@@ -2,7 +2,7 @@
 
 Updated: 2026-10-12  
 Branch: `phase-109-strategy-semantics-remediation`  
-State: **CODED; AUTOMATED WORKFLOW VERIFICATION PENDING**  
+State: **SEMANTIC AND PERFORMANCE REGRESSION TESTS PASS; DATA PIPELINE ACTIVE; V2 SHARD PENDING**  
 Promotion: **NONE**
 
 ## Remediation
@@ -21,7 +21,7 @@ Promotion: **NONE**
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-The 26-test workflow passed. The first v2 evaluator attempt failed at startup with `Private NSE data cache is missing` before any configuration was scored. Branch-local NSE acquisition/cache warmup [run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is in progress. Its final aggregate source gate will dispatch a bounded v2 shard if coverage/lot-size/index-VIX checks pass. No strategy profitability result exists yet.
+The implementation tests passed 29/29 in run [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522), including the new assertion that invariant daily options-flow aggregates are precomputed once per supported symbol. The source acquisition workflow [run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) completed option archive acquisition, Dhan rolling ATM feature acquisition and exact-contract futures extraction; it is currently deriving model IV/Greeks, with index/VIX context, date reconciliation, report publication and the source-gated v2 dispatch still pending. The corrected evaluator has not yet produced a verified v2 shard. No strategy profitability conclusion or promotion is available.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
@@ -47,3 +47,12 @@ The 26-test workflow passed. The first v2 evaluator attempt failed at startup wi
 - [Run 38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) completed successfully: **27 tests passed**, including exact core mappings, unsupported confirmation/regime rejection, EMA semantics and stop/target-profile parsing.
 - This validates tested code paths only. The evaluator still requires the private source cache and source-quality gate before any v2 configuration is scored.
 - [NSE acquisition/cache warmup run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) remains the active data prerequisite at log time.
+
+
+## 2026-10-12 08:31 UTC — Performance optimization and regression verification
+
+- Static profiling review found daily option-chain aggregation was repeated inside each configuration iteration although it is invariant across parameters.
+- Updated the v2 evaluator to precompute the daily options-flow feature aggregates once per supported underlying per shard, then reuse those aggregates across configurations. This is intended to reduce duplicated row scanning without changing the feature definition.
+- Automated regression run [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed **29/29 tests**, including the new one-precomputation-per-symbol test.
+- Acquisition run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) has completed options, Dhan and index-futures acquisition steps; IV/Greeks derivation remains active at this checkpoint. V2 results are still pending source gate and evaluator dispatch.
+- No strategy is promoted; cost, execution realism, validation, multiple-testing and holdout requirements remain unchanged.
