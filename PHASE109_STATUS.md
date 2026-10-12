@@ -33,3 +33,9 @@ Promotion: **NONE**
 - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
 - [Source-access audit](results/phase109/source_access_audit.csv)
 - [Research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [chat log](PHASE109_CHAT_LOG.md)
+
+## 2026-10-12 — Immediate-testing restart checkpoint
+- Corrected audit failure in official index/VIX summary generation; see error log.
+- Corrected UDiFF instrument normalization in evaluator and model-Greeks extraction; regression test added.
+- Current published acquisition summary is stale and must not be used as a pass/fail result for the corrected parser. Wait for the active/new acquisition run to regenerate eligible-window coverage.
+- Evaluation has not yet been confirmed complete. Registered grid counts remain manifest counts only; no strategy promoted.
