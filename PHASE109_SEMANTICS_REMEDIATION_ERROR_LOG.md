@@ -12,3 +12,10 @@
 
 ## 2026-10-12 08:02 UTC — v2 evaluation workflow failure
 - Run 38221168260 failed before a verified shard checkpoint. Inspect the Actions job log; do not infer performance results.
+
+## 2026-10-12 — Root cause for first v2 evaluator failure
+
+- Run [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) passed compilation and all 26 offline tests and resolved `start_config=0`, then failed in `load_market()` with `Private NSE data cache is missing; run the official NSE acquisition workflow first.`
+- Cause: GitHub Actions caches are branch-scoped for this pipeline; the new remediation branch did not have the parent's private source archive cache. No strategy configuration was scored and no v2 metrics were emitted.
+- Correction: enabled the official NSE acquisition workflow for the remediation branch, allowed safe aggregate report publication there, and added a cost-window/source-gated evaluator dispatch after acquisition completes. Run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is running. If row/lot-size/index-context gates fail, the evaluator must remain blocked rather than use partial rows.
+- This is a source-cache setup issue, not evidence that the strategies won or lost. No raw response or token was published.
