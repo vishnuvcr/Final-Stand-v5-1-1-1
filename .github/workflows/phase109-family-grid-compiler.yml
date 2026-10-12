@@ -325,11 +325,22 @@ jobs:
           PY
           )
           echo "Families with declared source inputs present (execution/OOS gates may remain): $eligible"
-          missing_lots=$(python -c 'import json; d=json.load(open("results/phase109/nse_index_options_backfill_summary.json")); print(int(d.get("missing_lot_size_rows",d.get("selected_index_option_rows",0))))')
-          index_rows=$(python -c 'import json; d=json.load(open("results/phase109/niftyindices_context_summary.json")); s=d.get("series",{}); print(sum(int(x.get("unique_dates",0) or 0) for x in s.values() if isinstance(x,dict)))')
-          echo "Missing option lot-size rows=$missing_lots; official index/VIX context rows=$index_rows"
-          if [[ "$missing_lots" -gt 0 || "$index_rows" -le 0 ]]; then
-            echo "BLOCKED: lot-size or official index/VIX coverage is incomplete. Log the source gate and do not launch any P&L evaluation."
+          read -r cost_rows missing_lots index_rows < <(python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          rows=csv.DictReader(Path("results/phase109/nse_index_options_daily_coverage.csv").open(encoding="utf-8"))
+          eligible=[r for r in rows if (r.get("expected_date") or "") >= "2024-10-01" and r.get("status") in {"DOWNLOADED_AND_PARSED","CACHE_HIT_VALIDATED"}]
+          count=sum(int(r.get("selected_index_option_rows",0) or 0) for r in eligible)
+          missing=sum(int(r.get("missing_lot_size_rows",0) or 0) for r in eligible)
+          d=json.loads(Path("results/phase109/niftyindices_context_summary.json").read_text())
+          series=d.get("merged_series_summary",[])
+          index_count=sum(int(x.get("unique_date_count",0) or 0) for x in series)
+          print(count,missing,index_count)
+          PY
+          )
+          echo "Cost-window selected option rows=$cost_rows; missing lot-size rows=$missing_lots; official index/VIX context rows=$index_rows"
+          if [[ "$cost_rows" -le 0 || "$missing_lots" -gt 0 || "$index_rows" -le 0 ]]; then
+            echo "BLOCKED: eligible-window lot-size or official index/VIX coverage is incomplete. Do not launch P&L evaluation."
             exit 0
           fi
           if [[ "$eligible" -le 0 ]]; then
