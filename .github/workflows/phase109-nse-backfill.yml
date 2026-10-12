@@ -68,6 +68,16 @@ jobs:
           python -m py_compile research/phase109/nse_backfill.py research/phase109/niftyindices_history.py research/phase109/calendar_reconcile.py research/phase109/test_phase109_data_clients.py
           python -m unittest discover -s research/phase109 -p 'test_*.py' -v
 
+      - name: Acquire official India VIX and index OHLC into private cache
+        env:
+          FROM_DATE: ${{ inputs.from_date || '2023-10-01' }}
+          TO_DATE: ${{ inputs.to_date || '2026-10-09' }}
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/niftyindices_history.py research/phase109/calendar_reconcile.py
+          python research/phase109/niftyindices_history.py --from-date "$FROM_DATE" --to-date "$TO_DATE"
+
+
       - name: Acquire and validate official NSE archives into private cache
         env:
           FROM_DATE: ${{ inputs.from_date || '2023-10-01' }}
@@ -106,15 +116,6 @@ jobs:
           set -euo pipefail
           python -m py_compile research/phase109/options_greeks_extract.py
           python research/phase109/options_greeks_extract.py
-
-      - name: Acquire official India VIX and index OHLC into private cache
-        env:
-          FROM_DATE: ${{ inputs.from_date || '2023-10-01' }}
-          TO_DATE: ${{ inputs.to_date || '2026-10-09' }}
-        run: |
-          set -euo pipefail
-          python -m py_compile research/phase109/niftyindices_history.py research/phase109/calendar_reconcile.py
-          python research/phase109/niftyindices_history.py --from-date "$FROM_DATE" --to-date "$TO_DATE"
 
       - name: Reconcile option archives against the observed official NIFTY 50 session dates
         run: |
