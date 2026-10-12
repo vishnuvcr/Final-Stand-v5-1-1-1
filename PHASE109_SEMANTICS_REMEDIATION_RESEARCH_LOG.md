@@ -71,3 +71,7 @@
 ## 2026-10-12 09:39 UTC — Corrected v2 evaluator checkpoint
 - Engine phase109-eod-engine-v4-session-coverage processed cursor [0,2,000); attempted 2,000 configurations and emitted 48,000 cost rows.
 - Cumulative attempted 2,000; remaining 170,800. These remain EOD execution proxies, not verified fills.
+
+## 2026-10-12 10:35 UTC — Corrected v2 evaluator checkpoint
+- Engine phase109-eod-engine-v4-session-coverage processed cursor [2,000,4,000); attempted 2,000 configurations and emitted 48,000 cost rows.
+- Cumulative attempted 4,000; remaining 168,800. These remain EOD execution proxies, not verified fills.
