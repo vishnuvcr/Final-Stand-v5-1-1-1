@@ -32,3 +32,7 @@
 - Added a regression test for one aggregation call per supported symbol. Workflow [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed 29/29 offline tests.
 - Acquisition workflow [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) completed NSE options acquisition, Dhan rolling-options acquisition and index futures extraction; IV/Greeks is the active step, with index/VIX context and reconciliation still pending.
 - The current v2 grid has not yet been empirically scored. No strategy results are inferred from a running job or registered configuration count.
+
+## 2026-10-12 08:48 UTC — Corrected v2 evaluator checkpoint
+- Engine phase109-eod-engine-v2-semantics processed cursor [0,2,000); attempted 2,000 configurations and emitted 48,000 cost rows.
+- Cumulative attempted 2,000; remaining 170,800. These remain EOD execution proxies, not verified fills.

@@ -60,6 +60,13 @@ def read_json(path,default=None):
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def shard_result_filename(sample,shard):
+    """Include the engine version in result filenames to preserve old-engine evidence."""
+    sample_tag="holdout" if sample=="holdout" else "eval"
+    engine_tag=ENGINE_VERSION.replace("phase109-eod-engine-","").replace("-","_")
+    return f"phase109_{sample_tag}_{engine_tag}_{shard}.csv.gz"
+
+
 def parse_date(value):
     s=str(value or "").strip()
     for fmt in ("%Y-%m-%d","%d-%b-%Y","%d-%B-%Y","%d/%m/%Y","%d%m%Y","%Y%m%d","%d %b %Y"):
@@ -276,7 +283,7 @@ def validate_context_coverage(dates,vix_by_date,index_closes):
         1 for offset in range((end_exclusive-start).days)
         if (start+timedelta(days=offset)).weekday()<5
     )
-    minimum=max(1,math.ceil(weekday_count*0.60))
+    minimum=max(1,math.ceil(weekday_count*0.90))
     observed={
         "INDIA_VIX":len(vix_by_date),
         "NIFTY 50":len(index_closes.get("NIFTY",{})),
@@ -288,7 +295,7 @@ def validate_context_coverage(dates,vix_by_date,index_closes):
         "window_end_inclusive":max(dates).isoformat(),
         "expected_weekdays":weekday_count,
         "minimum_unique_dates_per_series":minimum,
-        "coverage_ratio_threshold":0.60,
+        "coverage_ratio_threshold":0.90,
         "observed_unique_dates":observed,
         "coverage_pass":not missing,
     }
@@ -866,7 +873,7 @@ def main():
     # Output only per-config, per-cost summary metrics: individual trade tapes/raw option records stay private.
     shard=args.shard_id or f"{start:09d}-{end:09d}"
     outdir=OUT/("holdout_shards" if args.sample=="holdout" else "evaluation_shards")
-    path=outdir/(("phase109_holdout_" if args.sample=="holdout" else "phase109_eval_")+shard+".csv.gz")
+    path=outdir/shard_result_filename(args.sample,shard)
     path.parent.mkdir(parents=True,exist_ok=True)
     fields=sorted({k for r in results for k in r})
     with gzip.open(path,"wt",encoding="utf-8",newline="") as fh:

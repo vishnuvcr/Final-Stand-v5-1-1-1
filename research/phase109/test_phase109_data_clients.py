@@ -90,7 +90,7 @@ class TestNiftyIndicesHistory(unittest.TestCase):
         self.assertGreater(minimum,218)
         self.assertGreaterEqual(
             minimum,
-            int(niftyindices_history.expected_weekdays(start,end)*0.60),
+            int(niftyindices_history.expected_weekdays(start,end)*0.90),
         )
 
     def test_index_date_parsing(self):
@@ -205,6 +205,25 @@ class TestStrategyEvaluator(unittest.TestCase):
         )
         self.assertGreaterEqual(fee,0.0)
         self.assertIn("model_callable",detail)
+
+
+class TestPhase109CostSchedule(unittest.TestCase):
+    def test_paytm_money_order_brokerage_and_2026_nse_rates(self):
+        model = strategy_evaluator.load_cost_model()
+        self.assertAlmostEqual(model.exchange_transaction_rate(date(2026, 2, 28)), 0.0003503)
+        self.assertAlmostEqual(model.exchange_transaction_rate(date(2026, 3, 1)), 0.0003552)
+        self.assertAlmostEqual(model.STT_SELL_RATE_BEFORE_2026_04_01, 0.0010)
+        self.assertAlmostEqual(model.STT_SELL_RATE_FROM_2026_04_01, 0.0015)
+        result = model.round_trip_cost(
+            buy_premium=100.0,
+            sell_premium=110.0,
+            quantity=25,
+            trade_date=date(2026, 4, 1),
+            brokerage_per_order=10.0,
+        )
+        self.assertEqual(result["brokerage"], 20.0)
+        self.assertAlmostEqual(result["stt_sell_rate"], 0.0015)
+        self.assertAlmostEqual(result["exchange_rate_per_side"], 0.0003552)
 
 
 class TestModelGreeks(unittest.TestCase):

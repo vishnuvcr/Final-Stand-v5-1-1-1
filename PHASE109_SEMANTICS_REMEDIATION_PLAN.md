@@ -38,3 +38,18 @@ Opening-gap, VWAP/intraday-volume, ATR/true-range, futures basis, synthetic pari
 
 ## Bounded completion
 This sub-phase stops after semantic tests and a bounded v2 shard create a verifiable checkpoint. It does not expand indefinitely. Completion means tests pass, v2 starts at cursor zero, rows reconcile to 24 costs per attempted eligible configuration, blocker reasons are visible and repository documentation is updated. It does not itself promote a strategy.
+
+## Plan amendment — 2026-10-12: time-series context completeness
+
+The initial source audit discovered that official NSE index/VIX queries over the requested multi-year window returned only 218 unique dates per series, while 743 official options archive dates were present. The former schema gate incorrectly accepted any non-empty, valid series and allowed materially incomplete context into model input. This invalidates VIX-regime/cross-index conclusions from that cache and prevents its use for promotion.
+
+Additional preregistered data gates now apply before corrected evaluation:
+
+1. Each official India VIX, NIFTY 50 and NIFTY BANK query window must span at most 60 calendar days to avoid observed long-window response truncation.
+2. Across the full required window, each series must contain at least 90% of weekdays as unique, valid observations. The check is a minimum data-density safeguard, not a claim that every weekday was a trading session.
+3. Compare index dates with official options-archive dates. Archive/index mismatches and observed-index sessions without valid options archives must remain reported and must not exceed the source workflow's bounded coverage tolerances; individual option trades are still excluded if entry/exit archives are absent.
+4. Save the refreshed private data cache before dispatching any evaluation. Public commits/artifacts remain aggregates only.
+5. The current evaluator version is `phase109-eod-engine-v3-context-coverage`. Any v1/v2 cursor or result shard is diagnostic only and cannot be reused as v3 progress. The evaluator independently fails closed if any official context series is below the 90% threshold.
+6. Acceptance requires automated regression coverage for both insufficient and sufficient context, a successful source workflow, and one verifiable v3 shard whose attempted configurations reconcile to 24 cost cases/configuration. No profitability claim follows from the data gate alone.
+
+This is a research-plan change because source-context completeness has become an explicit acceptance criterion. The parameter grid, transaction-cost design and untouched holdout remain unchanged.

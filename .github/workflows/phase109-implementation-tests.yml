@@ -5,8 +5,8 @@ on:
     branches:
       - phase-109-strategy-semantics-remediation
     paths:
-      - "research/phase109/strategy_evaluator.py"
-      - "research/phase109/test_phase109_strategy_semantics.py"
+      - "research/phase109/**"
+      - "research/phase104_eod_stock_options/cost_model.py"
       - ".github/workflows/phase109-implementation-tests.yml"
   workflow_dispatch:
 
