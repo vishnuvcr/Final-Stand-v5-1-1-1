@@ -33,3 +33,10 @@ Promotion: **NONE**
 - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
 - [Source-access audit](results/phase109/source_access_audit.csv)
 - [Research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [chat log](PHASE109_CHAT_LOG.md)
+
+## 109.3 — UDiFF parser correction checkpoint
+
+- **Correction to previous audit:** UDiFF option/futures rows were excluded by legacy instrument codes. The prior `1,003,768` missing-lot-size count covers selected legacy rows only; it is not a valid whole-window statement because the UDiFF rows were not selected by the parser.
+- Corrected option parser to `IDO`, futures parser to `IDF`, and offline test fixtures. The next acquisition run must regenerate coverage, futures, model-Greeks and official index/VIX audits from the cached archives.
+- Compiler source gate now checks date-appropriate lot-size completeness only for the eligible window (2024-10-01 onward) and reads the correct `merged_series_summary` schema for index/VIX context.
+- **Current status: awaiting fresh acquisition + regression verification; no P&L results have been evaluated; promotion remains NONE.**
