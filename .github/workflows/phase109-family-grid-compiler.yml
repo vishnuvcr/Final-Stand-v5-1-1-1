@@ -325,6 +325,13 @@ jobs:
           PY
           )
           echo "Families with declared source inputs present (execution/OOS gates may remain): $eligible"
+          missing_lots=$(python -c 'import json; d=json.load(open("results/phase109/nse_index_options_backfill_summary.json")); print(int(d.get("missing_lot_size_rows",d.get("selected_index_option_rows",0))))')
+          index_rows=$(python -c 'import json; d=json.load(open("results/phase109/niftyindices_context_summary.json")); s=d.get("series",{}); print(sum(int(x.get("unique_dates",0) or 0) for x in s.values() if isinstance(x,dict)))')
+          echo "Missing option lot-size rows=$missing_lots; official index/VIX context rows=$index_rows"
+          if [[ "$missing_lots" -gt 0 || "$index_rows" -le 0 ]]; then
+            echo "BLOCKED: lot-size or official index/VIX coverage is incomplete. Log the source gate and do not launch any P&L evaluation."
+            exit 0
+          fi
           if [[ "$eligible" -le 0 ]]; then
             echo "No families passed the source-input gate; preserve blocked status and do not launch evaluator."
             exit 0
