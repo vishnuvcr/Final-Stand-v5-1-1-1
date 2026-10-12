@@ -1,22 +1,22 @@
 # Phase 109 family-by-family data-feasibility gate
 
-Generated: 2026-10-12T06:36:20.249572+00:00
+Generated: 2026-10-12T06:48:40.080302+00:00
 
 **This is an input availability gate, not a backtest.** Family counts and candidate configurations are not performance-tested observations.
 
 | State | Families |
 |---|---:|
-| BLOCKED_MISSING_INPUTS | 923 |
-| INPUTS_PRESENT_EXECUTION_AND_SPLIT_GATES_PENDING | 48 |
-| INPUTS_PRESENT_WITH_PROXY_OR_EXECUTION_GATES | 54 |
+| BLOCKED_MISSING_INPUTS | 689 |
+| INPUTS_PRESENT_EXECUTION_AND_SPLIT_GATES_PENDING | 300 |
+| INPUTS_PRESENT_WITH_PROXY_OR_EXECUTION_GATES | 36 |
 
 ## Aggregate
 - Registered architecture combinations: 1,025.
 - Total registered configurations under current grid: 3,719,520.
-- Candidate configurations whose declared fields are present (before date, symbol and execution gates): 642,600.
-- Data-gated families: 923.
-- Families with proxy or execution conditions: 54.
-- Families with source fields present but execution/split gates pending: 48.
+- Candidate configurations whose declared fields are present (before date, symbol and execution gates): 1,663,200.
+- Data-gated families: 689.
+- Families with proxy or execution conditions: 36.
+- Families with source fields present but execution/split gates pending: 300.
 
 ## Interpretation
 - Official NSE EOD index-option archives support exact symbol/expiry/strike/side, OHLC, volume and OI, subject to session coverage and positive-volume filters.

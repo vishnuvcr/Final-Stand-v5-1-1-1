@@ -1,28 +1,28 @@
 {
-  "candidate_configs_with_all_inputs_present": 642600,
-  "families_with_inputs_present": 48,
-  "families_with_missing_inputs": 923,
-  "families_with_proxy_or_execution_gates": 54,
+  "candidate_configs_with_all_inputs_present": 1663200,
+  "families_with_inputs_present": 300,
+  "families_with_missing_inputs": 689,
+  "families_with_proxy_or_execution_gates": 36,
   "family_counts_by_status": {
-    "BLOCKED_MISSING_INPUTS": 923,
-    "INPUTS_PRESENT_EXECUTION_AND_SPLIT_GATES_PENDING": 48,
-    "INPUTS_PRESENT_WITH_PROXY_OR_EXECUTION_GATES": 54
+    "BLOCKED_MISSING_INPUTS": 689,
+    "INPUTS_PRESENT_EXECUTION_AND_SPLIT_GATES_PENDING": 300,
+    "INPUTS_PRESENT_WITH_PROXY_OR_EXECUTION_GATES": 36
   },
-  "generated_utc": "2026-10-12T06:36:20.249572+00:00",
+  "generated_utc": "2026-10-12T06:48:40.080302+00:00",
   "grid_summary_family_count": 1025,
   "known_data_presence": {
     "dhan_rolling_rows": 75177,
-    "futures_dates": 185,
+    "futures_dates": 743,
     "index_context_series": {
-      "INDIA_VIX": 0,
-      "NIFTY 50": 0,
-      "NIFTY BANK": 0
+      "INDIA_VIX": 218,
+      "NIFTY 50": 218,
+      "NIFTY BANK": 218
     },
     "model_greeks_dividend_assumption": 0.0,
     "model_greeks_rate_assumption": 0.065,
     "option_archive_dates_parsed": 743,
-    "positive_volume_option_rows": 368210,
-    "valid_model_greek_rows": 0
+    "positive_volume_option_rows": 1353090,
+    "valid_model_greek_rows": 769213
   },
   "note": "This matrix uses declared input fields and audited source presence only; it does not run a strategy, verify complete chronological holdout coverage, or promote a family.",
   "registered_configurations_total": 3719520,
