@@ -277,8 +277,8 @@ jobs:
                 exit 0
               fi
               echo "Push rejected (attempt ${attempt}); fetch/rebase before retry."
-              git fetch origin "${GITHUB_REF_NAME}"
-              if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+              git fetch origin "${TARGET_BRANCH}"
+              if ! git rebase "origin/${TARGET_BRANCH}"; then
                 git rebase --abort || true
                 echo "Rebase conflict remains; fail explicitly for audited rerun."
                 exit 1
@@ -318,14 +318,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          grid=Path("results/phase109/phase109_grid_summary.json")
-          gate=Path("results/phase109/family_data_feasibility_summary.json")
-          if not grid.exists() or not gate.exists():
-              raise SystemExit("Required compiler or family-feasibility summary is missing; do not launch evaluation.")
-          g=json.loads(grid.read_text()); f=json.loads(gate.read_text())
           eligible=$(python - <<'PY'
           import json
           f=json.loads(open("results/phase109/family_data_feasibility_summary.json",encoding="utf-8").read())
@@ -334,7 +326,7 @@ jobs:
           )
           echo "Families with declared source inputs present (execution/OOS gates may remain): $eligible"
           if [[ "$eligible" -le 0 ]]; then
-            echo "No families passed the source-input gate. Do not launch evaluator; preserve blocked status and wait for the official historical-data cache gate."
+            echo "No families passed the source-input gate; preserve blocked status and do not launch evaluator."
             exit 0
           fi
           payload=$(python - <<'PY'
