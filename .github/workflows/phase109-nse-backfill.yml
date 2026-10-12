@@ -24,8 +24,6 @@ on:
       - phase-109-strategy-semantics-remediation
     paths:
       - "research/phase109/nse_backfill.py"
-      - "research/phase109/niftyindices_history.py"
-      - ".github/workflows/phase109-nse-backfill.yml"
 
 permissions:
   contents: write
