@@ -17,3 +17,9 @@
 - The exhaustive Cartesian grid is large and must be resumed by deterministic shards. Any failed/skipped shard or cost case must remain explicitly logged.
 - Resolved workflow error: actions/setup-python pip caching failed because this repository has no requirements.txt or pyproject.toml; removed the pip-cache assumption.
 - Resolved compiler error: the architecture gate assumed 1,000 families although 41 core rules × 5 confirmation structures × 5 regime gates creates 1,025; changed the gate to compare against registered Cartesian cardinality.
+
+## 2026-10-12 — UDiFF instrument mapping defect and corrected gates
+- Root cause found in schema-transition audit: UDiFF uses `IDO` for index options and `IDF` for index futures, whereas the legacy schema uses `OPTIDX`/`FUTIDX`. The parsers were filtering UDiFF rows using legacy instrument codes, so the previous audit selected zero UDiFF option/futures rows. This invalidates the earlier interpretation that all 1,003,768 rows across the whole window lacked lot size: those were legacy rows only.
+- Fixed `research/phase109/nse_backfill.py` to select UDiFF `IDO` options and `research/phase109/futures_eod_extract.py` to select UDiFF `IDF` futures. Updated offline fixtures to use the correct UDiFF codes and added an assertion that a synthetic UDiFF option lot-size field is captured. Regression validation is pending in the latest queued compiler run.
+- Fixed the compiler's index-context gate to read `merged_series_summary` (the actual summary schema), and scoped lot-size eligibility to dates from 2024-10-01 onward, matching the evaluator's verified cost window. Legacy rows are not silently assigned a current lot size.
+- The NSE Indices parser now safely attempts `ast.literal_eval` only after JSON parsing fails; the acquisition workflow has been configured to rerun when that client changes. Official index/VIX recovery is not yet verified. No P&L evaluation or strategy promotion is claimed.
