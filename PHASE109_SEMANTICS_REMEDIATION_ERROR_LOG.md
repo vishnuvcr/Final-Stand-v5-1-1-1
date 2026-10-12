@@ -63,3 +63,15 @@
 - Calendar audit still shows five observed NIFTY 50 sessions without valid option archives. They are explicit coverage exclusions, not fabricated prices. No valid option archive date lacks a NIFTY 50 observation.
 - Workflow concurrency allowed an evaluator launched on an earlier source/engine checkout to remain active while v4 was queued. Such earlier jobs cannot certify v4 and their results must not be combined. The evaluator workflow checks the exact engine version and resets the cursor on mismatch.
 - Updated source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is active; v4 run [38227220343](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227220343) is pending. No v4 empirical checkpoint yet.
+
+## 2026-10-12 09:04 UTC — E109-S15 — Option archive step used a potentially stale index session calendar
+
+- Observation: the supplemental-session helper read results/phase109/niftyindices_session_calendar.csv, but the source workflow originally ran the NSE option archive backfill before refreshing that file. The source request could therefore omit newly observed special-session dates even though the later reconciliation knew about them.
+- Correction: reordered the workflow so official NSE Indices context acquisition produces the current session calendar before the NSE archive probe. The date builder unions weekdays and NIFTY 50-observed dates outside Monday-Friday; unavailability remains explicit.
+- Regression run [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38 tests. Latest corrected source job [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active; no special-session results are claimed until it finishes.
+
+## 2026-10-12 09:04 UTC — E109-S16 — Obsolete Actions runs occupied branch concurrency groups
+
+- Observation: source and evaluation runs built against earlier workflow commits held their branch concurrency slots, leaving the current special-session source refresh and v4 evaluation pending. Repeated code updates also produced superseded/cancelled pending attempts.
+- Correction: enabled cancel-in-progress for the corresponding source/evaluator workflow groups so new commits replace obsolete in-flight versions. Obsolete source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) was cancelled, and corrected source run [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active.
+- Caveat: the diagnostic v3 evaluator [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) was still running at last check while the v4 evaluator run [38227487048](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048) remained pending. Do not claim cancellation of that evaluator until its API state changes.
