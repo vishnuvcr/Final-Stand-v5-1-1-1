@@ -235,6 +235,11 @@ def load_or_fetch(kind,index_name,start,end):
     return rows,hashlib.sha256(json.dumps(rows,sort_keys=True,separators=(",",":")).encode()).hexdigest(),"NETWORK"
 
 
+def all_summaries_for_series_have_parseable_dates(merged_metrics, all_summaries):
+    # Chunk-level audit rows carry unparseable_date_rows; merged metrics do not.
+    return all(int(x.get("unparseable_date_rows", 0) or 0) == 0 for x in all_summaries)
+
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--from-date",default=START_DEFAULT)
@@ -330,7 +335,7 @@ def main():
       "observed_calendar_rows":len(calendar_rows),
       "observed_calendar_min_date":calendar_rows[0]["date"] if calendar_rows else "",
       "observed_calendar_max_date":calendar_rows[-1]["date"] if calendar_rows else "",
-      "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>0 and x["invalid_OHLC_rows"]==0 and x["missing_OHLC_rows"]==0 and x["duplicate_date_rows_across_chunks"]==0 and x["unparseable_date_rows"]==0 for x in merged_metrics) else "PARTIAL_OR_FAILED",
+      "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>0 and x["invalid_OHLC_rows"]==0 and x["missing_OHLC_rows"]==0 and x["duplicate_date_rows_across_chunks"]==0 and all_summaries_for_series_have_parseable_dates(merged_metrics, all_summaries) for x in merged_metrics) else "PARTIAL_OR_FAILED",
       "note":"Official index/VIX input feasibility only; not strategy evaluation. Series rows are stored in Actions cache. Do not substitute unverified public-HF VIX labels.",
     }
     OUT.mkdir(parents=True,exist_ok=True)
