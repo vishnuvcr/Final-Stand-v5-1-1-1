@@ -2,7 +2,7 @@
 
 Updated: 2026-10-12  
 Branch: `phase-109-strategy-semantics-remediation`  
-State: **38 REGRESSION TESTS PASS; 90% CONTEXT GATE PASS; SPECIAL-SESSION REACQUISITION RUNNING; V4 SHARD QUEUED**  
+State: **38 REGRESSION TESTS PASS; OFFICIAL CONTEXT + OPTION SESSION GATES PASS; V4 SHARD COMPLETE; NEXT-SHARD BRANCH ROUTING FIX IN PROGRESS**  
 Promotion: **NONE**
 
 ## Remediation
@@ -22,7 +22,7 @@ Promotion: **NONE**
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-The official index/VIX history now has 748 unique dates each for India VIX, NIFTY 50 and NIFTY BANK across 2023-10-03–2026-10-08 (minimum 711, 90% of 789 weekdays); zero failed chunk-series calls, duplicate dates and invalid/missing OHLC rows. Calendar reconciliation identified five NIFTY 50-observed special sessions without an option archive (2023-11-12, 2024-01-20, 2024-05-18, 2025-02-01, 2026-02-01). The acquisition workflow has been reordered to acquire the official session calendar before probing NSE option archives, and the archive request now unions weekday probes with observed weekend/special sessions. Source run [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active on this corrected order; the obsolete source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) was cancelled as stale. Engine v4 independently requires the 90% context-density and explicit options/index session reconciliation gates. Regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38/38 tests. The v4 evaluation run [38227487048](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048) is pending behind diagnostic v3 run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004), which had processed 800/2,000 configurations at the last log checkpoint. Workflow concurrency is now configured to replace obsolete in-flight runs when newer commits arrive; the old evaluation job has not yet reported a terminal state. No v4 result shard has been verified and no strategy is promoted.
+The official India VIX, NIFTY 50 and NIFTY BANK series each contain 748 unique dates (2023-10-03–2026-10-08), passing the context gate. Latest reconciliation has 748 valid option-archive dates aligned to 748 observed NIFTY 50 sessions, with zero observed sessions missing a valid archive and zero archive dates without a NIFTY 50 row. The corrected acquisition run [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) succeeded. Regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38/38 tests. V4 evaluator run [38228843868](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38228843868) completed successfully with cursor [0,2,000), 2,000 configurations and 48,000 cost rows across 24 cost scenarios per configuration; 170,800 supported configurations remain. Audit then found that its continuation dispatched to the parent v1 branch rather than this isolated remediation branch. The workflow has been corrected to route subsequent evaluation and holdout dispatches to the active branch; validation run [38235043545](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38235043545) is running. No strategy is promoted.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
