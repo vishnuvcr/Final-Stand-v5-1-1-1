@@ -84,4 +84,10 @@ def round_trip_cost(
     costs["brokerage_per_order_assumption"] = float(brokerage_per_order)
     costs["execution_spread_slippage_impact"] = None
     costs["net_pnl_status"] = "NOT_COMPUTABLE_WITHOUT_EXECUTABLE_FILL_MODEL"
-    return {k: round(v, 6) if isinstance(v, float) else v for k, v in costs.items()}
+    # Keep reported rates at high precision; rounding a rate such as 0.0003552
+    # to six decimal places would misreport the official 2026 exchange charge.
+    return {
+        k: (round(v, 12) if "rate" in k else round(v, 6))
+        if isinstance(v, float) else v
+        for k, v in costs.items()
+    }
