@@ -38,3 +38,15 @@
 ## 2026-10-12 07:14 UTC — Grid evaluation shard
 - Engine phase109-eod-engine-v1 attempted 2,000 configs and produced 48,000 rows across 24 cost cases/config; cumulative attempts 2,000, remaining 592,000.
 - Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted.
+
+## 2026-10-12 — Official NSE index-options backfill
+- Window 2023-10-01 to 2026-10-09 (exclusive): 789 weekdays probed, 743 official archives parsed/cache-hit, 46 no-archive/fetch/schema statuses (not automatically called missing trading sessions).
+- Selected index-option rows 3,321,984; identity-complete 3,321,984; price-complete 3,321,984; positive-volume 1,353,090; zero-volume 1,968,894; invalid positive-volume OHLC 0; duplicate contract keys 0.
+- Legacy/UDiFF archives: 185/558. Raw ZIP data are in the private Actions cache and excluded from public repository artifacts.
+- The three schema transition probes remain PASS: 2024-07-05 legacy, 2024-07-08 UDiFF, 2026-10-08 UDiFF. This expands source coverage but does not establish complete exchange-session coverage or execute any strategy.
+- Official NSE Indices context status=PASS; VIX/NIFTY50/NIFTY BANK unique date counts: 218, 218, 218. Session reconciliation shows 1 observed NIFTY 50 dates without an option archive. See [VIX/index audit](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) and [calendar reconciliation](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
+- Dhan rolling ATM supplement PASS: 75,177 5-minute rows; successful window-sides 50/50; failed/empty window-sides 0; these rows are feature-only because the contract may roll across strikes. See [Dhan audit](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md).
+- Official index futures extracted from 743 cached archives: futures dates 743; rows 8,916; missing lot-size 2,220; invalid positive-volume OHLC 4. Raw rows remain in private cache; EOD basis is not an intraday fill claim.
+- Exact-contract model-derived IV/Greeks: 769,213 valid rows across 499 UDiFF archive dates. Exclusions: below-model lower bound 58,888; above-model upper bound 0; solver failures 37,032. Constant r=6.5%, q=0% must be sensitivity-tested; these are not exchange-reported Greeks.
+- Backfill report: [NSE index-options coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md). Strategy evaluation, contract-size audit, out-of-sample split and multiple-testing correction remain pending.
+

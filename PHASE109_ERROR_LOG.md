@@ -23,3 +23,15 @@
 
 ## 2026-10-12 08:02 UTC — Grid evaluator failure
 - Run 38221168260 failed before a successful shard checkpoint. Inspect the Actions log; do not copy credentials or raw authenticated responses into the repo. Last committed checkpoint remains the resume point.
+
+## 2026-10-12 — NSE historical backfill limitations
+- Backfill reported 46 weekdays with no archive or fetch/schema error across 789 weekdays. Do not treat these as all exchange holidays or all missing sessions; cross-check against an official calendar and retry the non-holiday failures.
+- Legacy archive records report 1,003,768 rows with missing/nonpositive lot size (legacy format lacks the UDiFF lot-size field). Historical quantity P&L is blocked until contract-size schedule is recovered from approved dated sources.
+- Zero-volume option rows (1,968,894) are excluded from executable-entry eligibility. OHLC completeness is not spread/bid-ask/fill validation.
+- Official NSE Indices context audit status=PASS; failed series-chunk requests=0. Review error detail in niftyindices_context_summary.json before any VIX/regime family is marked feasible.
+- Dhan rolling ATM supplement status=PASS; failed/empty chunk-side requests=0; any missing window remains blocked. All Dhan rows are rolling ATM feature series, not fixed-contract execution prices.
+- Index-futures source gate: 0 archive dates failed extraction; 2,220 futures rows lack positive lot size; 4 positive-volume rows fail OHLC checks. Future/basis families stay blocked until these and spot synchronization are audited.
+- Model-IV/Greeks assumption warning: r=6.5%, q=0%, and EOD close/spot marks can bias estimates; 58,888 premiums were below the model lower bound and 0 above the model upper bound. Do not use excluded rows or report model Greeks as directly observed.
+- Cross-source session reconciliation found 1 NIFTY 50-observed dates without a valid option archive and 526 archive dates without a NIFTY 50 observed date. These require gap/boundary investigation and are not silently removed.
+- Raw source archives are cached privately and are not committed to this public repository. Public outputs contain date-level aggregates and hashes only.
+

@@ -5,7 +5,7 @@
     "options_max": "2026-10-08",
     "options_min": "2023-10-02"
   },
-  "generated_utc": "2026-10-12T06:48:13.345392+00:00",
+  "generated_utc": "2026-10-12T08:32:32.014014+00:00",
   "interpretation": "NIFTY 50 is an observed-session proxy. A date with an official NIFTY 50 observation but no valid option archive is a confirmed coverage gap. A weekday with neither is not automatically a holiday; consult official calendars/exceptions.",
   "no_archive_status_on_date_without_nifty50_row": 46,
   "no_archive_status_on_observed_nifty50_session": 0,

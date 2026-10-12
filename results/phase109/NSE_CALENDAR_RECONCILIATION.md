@@ -1,6 +1,6 @@
 # NSE archive and NIFTY 50 session-calendar reconciliation
 
-Generated: 2026-10-12T06:48:13.345392+00:00
+Generated: 2026-10-12T08:32:32.014014+00:00
 
 | Metric | Count |
 |---|---:|
