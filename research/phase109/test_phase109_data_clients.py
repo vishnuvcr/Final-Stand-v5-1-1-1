@@ -48,10 +48,10 @@ class TestNseBackfill(unittest.TestCase):
         fields=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","StrkPric","OptnTp",
                 "OpnPric","HghPric","LwPric","ClsPric","OpnIntrst","TtlTradgVol","NewBrdLotQty"]
         rows=[
-          ["2024-07-08","OPTIDX","NIFTY","2024-07-25","24000","CE","10","12","9","11","1000","50","25"],
+          ["2024-07-08","IDO","NIFTY","2024-07-25","24000","CE","10","12","9","11","1000","50","25"],
           ["2024-07-08","OPTIDX","NIFTY","2024-07-25","24000","PE","9","10","8","8","800","30","25"],
-          ["2024-07-08","FUTIDX","NIFTY","2024-07-25","0","XX","24000","24100","23900","24050","5000","100","25"],
-          ["2024-07-08","OPTIDX","RELIANCE","2024-07-25","3000","CE","20","22","19","21","800","20","250"],
+          ["2024-07-08","IDF","NIFTY","2024-07-25","0","XX","24000","24100","23900","24050","5000","100","25"],
+          ["2024-07-08","STO","RELIANCE","2024-07-25","3000","CE","20","22","19","21","800","20","250"],
         ]
         payload=zipped_csv(fields,rows,"udiff.csv")
         result=nse_backfill.read_archive(payload,date(2024,7,8))
@@ -61,6 +61,7 @@ class TestNseBackfill(unittest.TestCase):
         self.assertEqual(result["positive_volume_rows"],2)
         self.assertEqual(result["invalid_ohlc_positive_volume_rows"],0)
         self.assertEqual(result["duplicate_daily_contract_keys"],0)
+        self.assertEqual(result["missing_lot_size_rows"],0)
 
     def test_duplicate_daily_contract_key_is_counted(self):
         fields=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","StrkPric","OptnTp",
@@ -207,8 +208,8 @@ class TestIndexFuturesExtractor(unittest.TestCase):
         headers=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","OpnPric","HghPric","LwPric","ClsPric",
                  "TtlTradgVol","OpnIntrst","NewBrdLotQty","UndrlygPric"]
         rows=[
-          ["2024-10-01","FUTIDX","NIFTY","2024-10-31","25000","25100","24950","25080","100000","500000","25","25010"],
-          ["2024-10-01","OPTIDX","NIFTY","2024-10-10","100","125","90","110","12000","80000","25","25010"],
+          ["2024-10-01","IDF","NIFTY","2024-10-31","25000","25100","24950","25080","100000","500000","25","25010"],
+          ["2024-10-01","IDO","NIFTY","2024-10-10","100","125","90","110","12000","80000","25","25010"],
         ]
         payload=zipped_csv(headers,rows,"future.csv")
         with tempfile.TemporaryDirectory() as td:
