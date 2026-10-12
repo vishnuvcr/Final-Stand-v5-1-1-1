@@ -113,7 +113,7 @@ class StrategySemanticTests(unittest.TestCase):
             for i in range((end - start).days)
             if (start + timedelta(days=i)).weekday() < 5
         ]
-        covered = all_dates[:600]
+        covered = all_dates[:740]
         vix = {d: 12.0 for d in covered}
         index = {
             "NIFTY": {d: 22000.0 for d in covered},
