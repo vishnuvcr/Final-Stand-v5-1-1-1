@@ -26,3 +26,17 @@ Each evaluated eligible configuration must be costed at all 24 registered combin
 The official index/VIX context audit returned only 218 unique dates per series across the requested multi-year range, while 743 options archive dates were available. The source audit previously checked schema/duplicate/OHLC quality and nonempty data but did not check date density, so its PASS was not sufficient for VIX/regime research. The prior context and any v2 results using it are diagnostic only.
 
 Current correction: source queries are now limited to 60-calendar-day windows and each of India VIX, NIFTY 50 and NIFTY BANK must cover at least 90% of weekdays in the requested window. The dispatch gate also validates archive/index date overlap; the evaluator has an independent v3 runtime coverage guard and refuses the old v2 cursor. Latest test evidence: [run 38225233888](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233888), 32/32 passed. Updated source run [38225253211](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225253211) remains queued behind the earlier acquisition run [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723). No corrected v3 empirical checkpoint is yet verified.
+
+## Cost-schedule source check — 2026-10-12
+
+### Verified public schedule inputs
+
+- Paytm Money's official F&O FAQ states brokerage of **₹10 for every unique order that gets executed** ([official Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web)). The model's ₹10/order case is the public baseline; ₹15 and ₹20 per order remain explicit higher-cost stress cases. The trade-specific contract note and account-level add-ons have not been inspected, so these remain indicative.
+- NSE's official STT page lists option-sale STT at **0.15% from 1 April 2026**, versus 0.10% through 31 March 2026, and exercised-option STT at 0.15% from that date ([NSE STT schedule](https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax)).
+- NSE's 27 February 2026 circular revises equity-options exchange charges effective **1 March 2026**. The schedule records ₹3,552 per crore premium value in exchange transaction charges plus ₹0.01 per crore IPFT contribution ([NSE Circular FA73061](https://nsearchives.nseindia.com/content/circulars/FA73061.pdf)). These are separate fields in the canonical model.
+- NSE's levy guide lists equity-options stamp duty at 0.003% on the buyer and SEBI turnover fee at ₹10 per crore ([NSE levies guide](https://www.nseindia.com/static/invest/first-time-investor-sebi-turnover-fees-stt-other-levies)).
+- Regression coverage now checks date-effective exchange-fee rates, April 2026 STT, and the ₹10 round-trip brokerage total for two executed orders. Model calculations were not changed; reported numeric rate fields now preserve 12 decimal places so the displayed exchange/IPFT rates are not rounded into a misleading value.
+
+### Limitations
+
+The canonical model uses a configurable brokerage-per-order parameter and applies the 1.5× stress multiplier to modeled round-trip fees; per-option-unit adverse slippage remains a separate scenario. The model estimates statutory/service fees but cannot prove spread, depth, latency, impact, partial-fill or achieved-execution costs. Exact contract-note treatment of IPFT/GST and any client-specific paid services remains to be reconciled before live-use claims. No strategy is promoted.
