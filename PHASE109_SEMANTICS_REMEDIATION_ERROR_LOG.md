@@ -12,3 +12,25 @@
 
 ## 2026-10-12 08:02 UTC — v2 evaluation workflow failure
 - Run 38221168260 failed before a verified shard checkpoint. Inspect the Actions job log; do not infer performance results.
+
+## 2026-10-12 — Root cause for first v2 evaluator failure
+
+- Run [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) passed compilation and all 26 offline tests and resolved `start_config=0`, then failed in `load_market()` with `Private NSE data cache is missing; run the official NSE acquisition workflow first.`
+- Cause: GitHub Actions caches are branch-scoped for this pipeline; the new remediation branch did not have the parent's private source archive cache. No strategy configuration was scored and no v2 metrics were emitted.
+- Correction: enabled the official NSE acquisition workflow for the remediation branch, allowed safe aggregate report publication there, and added a cost-window/source-gated evaluator dispatch after acquisition completes. Run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is running. If row/lot-size/index-context gates fail, the evaluator must remain blocked rather than use partial rows.
+- This is a source-cache setup issue, not evidence that the strategies won or lost. No raw response or token was published.
+
+## 2026-10-12 — E109-S07 risk-profile parsing defect
+- Static review found the v2 `simulate_trade()` stop/target regex used doubled escaping, which can leave stop/target percentages unset and falsely execute a barrier configuration as a plain close trade.
+- Correction: introduced `parse_risk_profile()` with standard digit groups and added regression assertions for stop-only, target-only, combined stop-target and no-barrier profiles. Updated v2 source and test file commits are `d78a68e9` and `4ded4700` respectively.
+- The new semantic-test run is queued; do not treat this correction as validated until that run passes. The source acquisition and data gate are still running; no v2 P&L result exists.
+
+## 2026-10-12 08:08 UTC — Regression retest passed
+- Run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) passed 27/27 unit tests after the risk-profile parsing fix. This closes the code-regression check for the listed paths only; data acquisition and corrected empirical evaluation remain open.
+
+## 2026-10-12 08:31 UTC — E109-S08 — Repeated feature aggregation overhead
+
+- Observation: aggregate_chain_features was called once for every configuration, despite depending only on cached source rows, symbol and date range. That repeated work across the grid and risked exhausting the bounded workflow time budget.
+- Correction: precompute per-symbol feature maps once immediately after loading the source data and reuse them inside every task. The intended feature values and strategy decisions are unchanged.
+- Regression evidence: [run 38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed all 29 offline tests, including the precomputation-call-count test.
+- Limitation: no full-shard runtime comparison has yet been observed, so the actual wall-time reduction is not quantified. The active acquisition/evaluation workflows remain authoritative for empirical checkpoints.

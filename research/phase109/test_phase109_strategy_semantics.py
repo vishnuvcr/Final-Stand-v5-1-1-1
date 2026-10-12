@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 
 import strategy_evaluator as evaluator
 
@@ -57,6 +58,34 @@ class StrategySemanticTests(unittest.TestCase):
         self.assertEqual(evaluator.compute_signal("EMA_CROSS", rising, 20, 5, 0.1), 1)
         self.assertEqual(evaluator.compute_signal("EMA_CROSS", falling, 20, 5, 0.1), -1)
         self.assertEqual(evaluator.compute_signal("EMA_CROSS", flat, 25, 5, 0.1), 0)
+
+    def test_stop_and_target_profile_percentages_are_parsed(self):
+        self.assertEqual(evaluator.parse_risk_profile("STOP_10PCT_PREMIUM"), (0.1, None))
+        self.assertEqual(evaluator.parse_risk_profile("TARGET_30PCT_PREMIUM"), (None, 0.3))
+        self.assertEqual(
+            evaluator.parse_risk_profile("STOP_20PCT_TARGET_30PCT_PREMIUM"),
+            (0.2, 0.3),
+        )
+        self.assertEqual(evaluator.parse_risk_profile("NO_STOP_NO_TARGET"), (None, None))
+
+    def test_signal_direction_maps_to_exact_nse_option_side(self):
+        self.assertEqual(evaluator.option_side_from_direction(1), "CE")
+        self.assertEqual(evaluator.option_side_from_direction(-1), "PE")
+        self.assertIsNone(evaluator.option_side_from_direction(0))
+        self.assertIsNone(evaluator.option_side_from_direction(None))
+
+    def test_chain_features_are_precomputed_once_per_supported_symbol(self):
+        dates = ["2026-01-01", "2026-01-02", "2026-01-03"]
+        sentinel = {"NIFTY": {("NIFTY", 0): {"ce_oi": 1}},
+                    "BANKNIFTY": {("BANKNIFTY", 0): {"pe_oi": 2}}}
+        with mock.patch.object(
+            evaluator, "aggregate_chain_features",
+            side_effect=lambda data, symbol, dates: sentinel[symbol],
+        ) as aggregate:
+            result = evaluator.precompute_chain_features({}, dates)
+        self.assertEqual(set(result), set(evaluator.INDEX_SYMBOLS))
+        self.assertEqual(result, sentinel)
+        self.assertEqual(aggregate.call_count, len(evaluator.INDEX_SYMBOLS))
 
     def test_engine_version_prevents_reuse_of_v1_cursor(self):
         self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v2-semantics")

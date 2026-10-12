@@ -509,6 +509,16 @@ def aggregate_chain_features(data,symbol,dates):
         previous=(ce_oi,pe_oi,ce_vol,pe_vol)
     return out
 
+def precompute_chain_features(data,dates):
+    """Build each supported underlying's daily chain features once per shard.
+
+    These features are invariant across parameter configurations. Recomputing the
+    full option chain inside the configuration loop multiplies archive-row scans
+    by the grid size without changing the signal definitions.
+    """
+    return {symbol:aggregate_chain_features(data,symbol,dates)
+            for symbol in sorted(INDEX_SYMBOLS)}
+
 
 def load_cost_cases():
     rows=read_csv(OUT/"cost_scenarios.csv")
@@ -607,6 +617,27 @@ def choose_contract(data,signal_date,entry_date,exit_date,symbol,side,strike_tar
     return (symbol,r["expiry"],r["strike"],side),"OK"
 
 
+def parse_risk_profile(risk):
+    """Parse registered premium stop/target profiles; missing barriers stay None."""
+    risk=canonical(risk)
+    stop_match=re.search(r"STOP_(\d+)PCT",risk)
+    target_match=re.search(r"TARGET_(\d+)PCT",risk)
+    stop_pct=float(stop_match.group(1))/100.0 if stop_match else None
+    target_pct=float(target_match.group(1))/100.0 if target_match else None
+    return stop_pct,target_pct
+
+
+def option_side_from_direction(direction):
+    """Convert signed directional signal to the exact NSE option side."""
+    try:
+        value=float(direction)
+    except (TypeError,ValueError):
+        return None
+    if value>0:return "CE"
+    if value<0:return "PE"
+    return None
+
+
 def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="selection"):
     signal_date=dates[signal_idx]
     # The cost schedule begins 1 October 2024. Earlier rows are features/warm-up only.
@@ -620,7 +651,10 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="
     # Cannot jump across a date where the option archive failed. Requires each selected session to be present.
     if entry_date not in data["option_dates"] or exit_date not in data["option_dates"]:return None,"OPTION_ARCHIVE_SESSION_MISSING"
     target=canonical(axes.get("strike_target","ATM"))
-    contract,reason=choose_contract(data,signal_date,entry_date,exit_date,symbol,side,target)
+    direction=1 if float(side)>0 else (-1 if float(side)<0 else 0)
+    option_side=option_side_from_direction(direction)
+    if option_side is None:return None,"INVALID_DIRECTION_SIGNAL"
+    contract,reason=choose_contract(data,signal_date,entry_date,exit_date,symbol,option_side,target)
     if contract is None:return None,reason
     entry_row=data["contracts"].get(entry_date,{}).get(contract)
     exit_row=data["contracts"].get(exit_date,{}).get(contract)
@@ -634,10 +668,7 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="
     risk=canonical(axes.get("risk_profile","NO_STOP_NO_TARGET"))
     exit_price=None; exit_reason="PLANNED_CLOSE"
     if risk!="NO_STOP_NO_TARGET":
-        stop_match=re.search(r"STOP_(\\d+)PCT",risk)
-        target_match=re.search(r"TARGET_(\\d+)PCT",risk)
-        stop_pct=float(stop_match.group(1))/100.0 if stop_match else None
-        target_pct=float(target_match.group(1))/100.0 if target_match else None
+        stop_pct,target_pct=parse_risk_profile(risk)
         for j in range(entry_idx,exit_idx+1):
             day=dates[j]
             bar=data["contracts"].get(day,{}).get(contract)
@@ -663,7 +694,8 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="
     gross=(exit_price-entry)*qty
     return {
       "signal_date":signal_date.isoformat(),"entry_date":entry_date.isoformat(),"exit_date":exit_date.isoformat(),
-      "symbol":symbol,"expiry":contract[1].isoformat(),"strike":contract[2],"side":side,
+      "symbol":symbol,"expiry":contract[1].isoformat(),"strike":contract[2],
+      "side":option_side,"direction":direction,
       "entry_price_proxy":entry,"exit_price_proxy":exit_price,"lot_size":qty,
       "gross_pnl":gross,"exit_reason":exit_reason,"holding_sessions":hold_sessions,
       "execution_model":"signal-at-prior-close, next-session daily OPEN, exit at daily CLOSE or conservative stop/target using daily H/L; positive EOD volume required",
@@ -706,6 +738,8 @@ def main():
     args=ap.parse_args()
     OUT.mkdir(parents=True,exist_ok=True)
     data=load_market()
+    dates_for_features=data["dates"]
+    chain_features_by_symbol=precompute_chain_features(data,dates_for_features)
     cost_model=load_cost_model()
     cost_fn_name,_=find_cost_function(cost_model)
     if not cost_fn_name: raise RuntimeError("Cost model API unresolved. No results emitted.")
@@ -745,7 +779,7 @@ def main():
             for i,x in enumerate(arr):
                 if x is not None and x>0:last=x
                 elif last is not None:arr[i]=last
-        chain_features=aggregate_chain_features(data,symbol,dates)
+        chain_features=chain_features_by_symbol.get(symbol,{})
         signals=[]; no_signal=Counter()
         for idx,d in enumerate(dates):
             if d<FIRST_COST_DATE-timedelta(days=45):continue

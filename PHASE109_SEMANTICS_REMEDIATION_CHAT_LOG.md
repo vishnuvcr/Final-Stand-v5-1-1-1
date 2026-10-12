@@ -7,3 +7,17 @@ Visible action summary: checked the parent Phase 109 Actions run and repository 
 
 ## 2026-10-12 08:02 UTC — v2 evaluation failure action
 Run 38221168260 failed before successful publication. No empirical conclusion was accepted.
+
+## 2026-10-12 — Automatic source-cache remediation
+
+Visible action summary: verified the first semantic test run passed 26 tests. The first v2 evaluator run failed before any strategy evaluation because the isolated branch's private NSE cache was missing. Updated the branch-local source-acquisition workflow so it can rebuild the cache, publish aggregate-only coverage, and dispatch a corrected evaluator shard after the source gate passes. Current acquisition run: [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273).
+
+## 2026-10-12 — Risk-control parameter audit
+Visible action summary: a second static review found the stop/target profile parser could fail to apply registered barriers. Corrected it with a shared parser and added a test that covers stop-only, target-only, combined and unbounded risk profiles. The new semantic workflow is queued; source acquisition is still running and no v2 profitability result is available.
+
+## 2026-10-12 08:08 UTC — Regression retest checkpoint
+Run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) passed 27 tests, including the new stop/target parser test. The source acquisition remained in progress; no v2 strategy outcomes were accepted.
+
+## 2026-10-12 08:31 UTC — Resume / evaluator throughput correction
+
+User requested “Resume”. Visible action summary: checked current Phase 109 Actions and read the remediation plan, status, research log, error log and visible chat log before making a code change. The source acquisition workflow had completed official NSE archive acquisition, Dhan rolling ATM feature acquisition and index-futures extraction, and was deriving model IV/Greeks. The evaluator's option-chain feature aggregation was found to repeat for every configuration. It is now precomputed once per supported symbol per shard. The new test workflow [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed 29/29 tests. The corrected v2 shard is still pending source-gated dispatch; no profitability conclusion or strategy promotion is claimed.

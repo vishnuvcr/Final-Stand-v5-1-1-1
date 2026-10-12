@@ -34,6 +34,14 @@ Promotion: **NONE**
 - [Source-access audit](results/phase109/source_access_audit.csv)
 - [Research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [chat log](PHASE109_CHAT_LOG.md)
 
+## 109.4.1 — Semantic-validity remediation checkpoint (2026-10-12)
+
+The parent `phase-109-exhaustive-parameter-grid` branch has published 4,000 v1 configuration attempts and 96,000 cost rows; 590,000 remain in its previous 594,000 eligible denominator. These v1 metrics are workflow counts only and are not accepted as strategy evidence after source review found signal-semantic risks.
+
+On this isolated remediation branch, the semantic workflow [38221129326](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326) passed 26/26 offline tests. The first v2 evaluator [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) failed before loading market data because the branch-local private cache was empty; no v2 configuration was scored. The branch-local source reacquisition/cache warmup [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is in progress, with an automatic evaluator dispatch gated on eligible exact-contract rows, lot-size completeness and index/VIX context.
+
+The remediation branch's existing v1 files reflect its fork point and must not be read as the newer parent branch's ledger. A corrected v2 run starts with a new engine identifier and cursor zero. No strategy promoted.
+
 ## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 07:14 UTC)
 
 - Eligible implemented/source-feasible configs: 594,000; cursor [0,2,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
