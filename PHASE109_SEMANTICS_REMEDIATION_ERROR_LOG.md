@@ -84,3 +84,12 @@
 
 ## 2026-10-12 11:57 UTC — v2 shard audit
 - Archive parse/duplicate warnings: 0; skipped reasons: {}. No raw records or secrets published. No profitability assertion from shard completion.
+
+
+## 2026-10-12 — E109-S17 — Automatic continuation dispatch returned HTTP 422
+
+- Run [38235043545](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38235043545) successfully published cursor [4,000,6,000) and its checkpoint, then failed in `Dispatch the next shard automatically` with HTTP 422.
+- The logged command builds JSON inside a single-quoted Python heredoc containing `"ref":"${GITHUB_REF_NAME}"`. Shell expansion is suppressed, so the request likely sends the literal expression instead of a valid branch ref. Fix by passing the branch through an environment variable and add a payload regression test.
+- Consequence: the shard is published; resume from the committed cursor 6,000, with 166,800 supported configurations remaining. Do not rerun the completed range or mix parent-v1 results with the isolated v4 branch.
+- Developer next: repair dispatch serialization, test branch routing, then resume bounded shards. Tester next: independently assert active-branch routing, 24 cost rows/config, engine-specific cursor isolation and untouched holdout.
+- Status: OPEN pending fix and successful follow-on run.
