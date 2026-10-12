@@ -78,3 +78,11 @@
 
 ## 2026-10-12 09:39 UTC — v2 shard audit
 - Archive parse/duplicate warnings: 0; skipped reasons: {}. No raw records or secrets published. No profitability assertion from shard completion.
+
+
+## 2026-10-12 10:14 UTC — E-109-ROUTING-01 (fixed; verification running)
+
+- **Issue:** The v4 evaluator completed successfully but its continuation step hard-coded `phase-109-exhaustive-parameter-grid` for both the next grid shard and holdout dispatch. This launched separate parent engine-v1 run [38231326972](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38231326972), risking branch/progress confusion.
+- **Impact:** Parent-v1 progress remains isolated on the parent branch. It is not evidence for v4 and must not be merged into remediation totals. The remediation branch still records v4 cursor [0,2,000), 2,000 configs and 48,000 cost rows.
+- **Fix:** Both dispatch payloads now use the active workflow ref `${GITHUB_REF_NAME}` (commit `e64ed40c40a78bd6b308f57d8def362208648865`). Verification run [38235043545](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38235043545) is in progress.
+- **Prevention:** Validate `head_branch` and `engine_version` for every resumed shard before combining outputs; maintain separate branch-local progress and result paths. Do not promote a strategy based on shard completion.
