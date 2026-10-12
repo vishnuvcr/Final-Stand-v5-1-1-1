@@ -10,9 +10,3 @@ Assistant action summary: corrected the plan to require at least 1,000 meaningfu
 User: “I have added dhan access token and hf token. Utilise them alongwith other free sources if needed”
 Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 3,719,520 registered configuration tuples with 89,268,480 cost-adjusted rows across 45 shards. These are manifest counts, not observed trading tests.
 
-## 2026-10-12 — Official NSE historical data acquisition
-Assistant action summary: added a resumable official NSE F&O archive backfill with legacy/UDiFF schema normalization and private Actions caching. It attempted 789 weekdays from 2023-10-01 to 2026-10-09 and parsed/cached 743 archives, generating 1,003,768 selected index-option rows. Also fetched official NSE Indices India VIX, NIFTY 50 and NIFTY BANK context (PARTIAL_OR_FAILED) and compared archive dates against observed NIFTY 50 dates. These are source/coverage audits only; no strategy P&L was computed. Raw price series are not published. Historical lot size, source rights, missing sessions, execution and OOS gates remain.
-Dhan rolling-options supplement: PASS with 75,177 5-minute ATM-selected call/put rows and 0 failed/empty chunks. Dhan rows are private cached feature inputs only; no raw authenticated responses or token values are published.
-Official index futures: 185 dates / 2,220 rows. Contract prices, OI and volume were extracted from the exact official F&O archives and cached privately; aggregate counts/hashes only are published.
-Model-derived Greeks: 0 exact-contract rows pass the Black-Scholes solver at assumed r=6.5%, q=0%; infeasible premiums are counted and excluded, not force-fitted. Raw contract-level model values stay private.
-
