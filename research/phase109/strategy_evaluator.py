@@ -607,6 +607,16 @@ def choose_contract(data,signal_date,entry_date,exit_date,symbol,side,strike_tar
     return (symbol,r["expiry"],r["strike"],side),"OK"
 
 
+def parse_risk_profile(risk):
+    """Parse registered premium stop/target profiles; missing barriers stay None."""
+    risk=canonical(risk)
+    stop_match=re.search(r"STOP_(\d+)PCT",risk)
+    target_match=re.search(r"TARGET_(\d+)PCT",risk)
+    stop_pct=float(stop_match.group(1))/100.0 if stop_match else None
+    target_pct=float(target_match.group(1))/100.0 if target_match else None
+    return stop_pct,target_pct
+
+
 def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="selection"):
     signal_date=dates[signal_idx]
     # The cost schedule begins 1 October 2024. Earlier rows are features/warm-up only.
@@ -634,10 +644,7 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="
     risk=canonical(axes.get("risk_profile","NO_STOP_NO_TARGET"))
     exit_price=None; exit_reason="PLANNED_CLOSE"
     if risk!="NO_STOP_NO_TARGET":
-        stop_match=re.search(r"STOP_(\\d+)PCT",risk)
-        target_match=re.search(r"TARGET_(\\d+)PCT",risk)
-        stop_pct=float(stop_match.group(1))/100.0 if stop_match else None
-        target_pct=float(target_match.group(1))/100.0 if target_match else None
+        stop_pct,target_pct=parse_risk_profile(risk)
         for j in range(entry_idx,exit_idx+1):
             day=dates[j]
             bar=data["contracts"].get(day,{}).get(contract)
