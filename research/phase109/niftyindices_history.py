@@ -4,7 +4,7 @@
 Responses are retained only in Actions cache. Public outputs contain aggregate
 coverage, field-quality metrics and response hashes, not the full price history.
 """
-import argparse, ast, hashlib, json, math, time, urllib.error, urllib.request, http.cookiejar
+import argparse, ast, hashlib, json, math, time, urllib.error, urllib.request, urllib.parse, http.cookiejar
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -89,16 +89,71 @@ def post(url, body_bytes):
     return raw,rows
 
 
+def nse_get(path, params, bootstrap_page):
+    # Use the official NSE India historical-OR API; the older niftyindices.com
+    # Backpage endpoints returned HTML challenge pages in GitHub Actions.
+    headers={
+      "User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+      "Accept":"application/json, text/plain, */*",
+      "Accept-Language":"en-US,en;q=0.9",
+      "Referer":"https://www.nseindia.com/",
+      "X-Requested-With":"XMLHttpRequest",
+    }
+    try:
+        req=urllib.request.Request(bootstrap_page,headers=headers)
+        with urllib.request.urlopen(req,timeout=15) as resp: resp.read(4096)
+    except Exception:
+        # Continue to the data endpoint; some runners receive cookies on the API response.
+        pass
+    query=urllib.parse.urlencode(params)
+    req=urllib.request.Request("https://www.nseindia.com"+path+"?"+query,headers=headers)
+    with OPENER.open(req,timeout=45) as resp:
+        raw=resp.read()
+    decoded=raw.decode("utf-8-sig").strip()
+    try: outer=json.loads(decoded)
+    except json.JSONDecodeError as exc:
+        raise ValueError("NSE_HISTORICAL_API_NON_JSON_PREFIX_"+repr(decoded[:80])) from exc
+    rows=outer.get("data",[]) if isinstance(outer,dict) else []
+    if isinstance(rows,dict):
+        for key in ("indexCloseOnlineRecords","data","records"):
+            if isinstance(rows.get(key),list):
+                rows=rows[key]; break
+    if not isinstance(rows,list):
+        raise ValueError("NSE_HISTORICAL_API_UNEXPECTED_DATA_SHAPE")
+    return raw,rows
+
+
 def vix_request(start,end):
-    # The published website endpoint expects a raw single-quoted form string.
-    body=("{'name':'India VIX','startDate':'"+date_text(start)+"','endDate':'"+date_text(end)+"'}").encode()
-    return post(BASE+"/BindHistoricalIndiaVixData",body)
+    raw, source_rows=nse_get("/api/historicalOR/vixhistory",
+      {"from":start.strftime("%d-%m-%Y"),"to":end.strftime("%d-%m-%Y")},
+      "https://www.nseindia.com/reports-indices-historical-vix")
+    rows=[]
+    for r in source_rows:
+        rows.append({
+          "date":r.get("EOD_TIMESTAMP") or r.get("EOD_DATE") or r.get("date") or r.get("DATE"),
+          "open":r.get("EOD_OPEN_INDEX_VAL",r.get("EOD_OPEN_INDEX_VAL")),
+          "high":r.get("EOD_HIGH_INDEX_VAL"),
+          "low":r.get("EOD_LOW_INDEX_VAL"),
+          "close":r.get("EOD_CLOSE_INDEX_VAL",r.get("EOD_INDEX_VAL") or r.get("close")),
+        })
+    return raw,rows
 
 
 def index_request(index_name,start,end):
-    inner=("{'name':'"+index_name+"','startDate':'"+date_text(start)+"','endDate':'"+date_text(end)+"','indexName':'"+index_name+"'}")
-    body=json.dumps({"cinfo":inner}).encode()
-    return post(BASE+"/getHistoricaldatatabletoString",body)
+    raw, source_rows=nse_get("/api/historicalOR/indicesHistory",
+      {"indexType":index_name,"from":start.strftime("%d-%m-%Y"),"to":end.strftime("%d-%m-%Y")},
+      "https://www.nseindia.com/reports-indices-historical-index-data")
+    rows=[]
+    for r in source_rows:
+        rows.append({
+          "HistoricalDate":r.get("EOD_TIMESTAMP") or r.get("HistoricalDate") or r.get("DATE"),
+          "OPEN":r.get("EOD_OPEN_INDEX_VAL",r.get("OPEN")),
+          "HIGH":r.get("EOD_HIGH_INDEX_VAL",r.get("HIGH")),
+          "LOW":r.get("EOD_LOW_INDEX_VAL",r.get("LOW")),
+          "CLOSE":r.get("EOD_CLOSE_INDEX_VAL",r.get("CLOSE")),
+          "IndexName":r.get("EOD_INDEX_NAME") or index_name,
+        })
+    return raw,rows
 
 
 def parse_d(s):
