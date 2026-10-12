@@ -28,16 +28,17 @@ CONTEXT_CACHE=CACHE/"niftyindices_history"
 MODEL_GREEKS_CACHE=CACHE/"options_model_greeks"
 FUTURES_CACHE=CACHE/"futures_eod"
 FIRST_COST_DATE=date(2024,10,1)
-ENGINE_VERSION="phase109-eod-engine-v1"
+ENGINE_VERSION="phase109-eod-engine-v2-semantics"
+# Exact registered core IDs only. Unimplemented architectures are blocked, never proxied.
 SUPPORTED_CORE_METHODS={
- "ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM",
- "EMA_CROSS","EMA_CROSSOVER","EMA_SLOPE","EMA_TREND",
- "RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION","RSI_REBOUND",
- "BOLLINGER_REVERSION","BOLLINGER_MEAN_REVERSION","EMA_DEVIATION_FADE",
- "RELATIVE_STRENGTH","RELATIVE_STRENGTH_ROTATION",
+ "ROC_MOMENTUM","EMA_CROSS","EMA_SLOPE","RETURN_ZSCORE_FADE",
+ "RSI_REBOUND","BOLLINGER_REVERSION","EMA_DEVIATION_FADE","RELATIVE_STRENGTH",
 }
-SUPPORTED_CONFIRMS={"NONE","OPTIONS_FLOW","CROSS_ASSET","CROSS_INDEX"}
-SUPPORTED_REGIMES={"NONE","REALIZED_VOL_LOW_HIGH","REALIZED_VOL","TREND_RANGE","INDIA_VIX"}
+# Cross-asset/basis/flow confirmation schemas other than the audited daily chain flow
+# are intentionally blocked until their own point-in-time feature pipeline exists.
+SUPPORTED_CONFIRMS={"NONE","OPTIONS_FLOW"}
+# REALIZED_VOL_LOW_HIGH has no registered target-state axis; block until preregistered.
+SUPPORTED_REGIMES={"NONE","TREND_RANGE","INDIA_VIX"}
 INDEX_SYMBOLS={"NIFTY","BANKNIFTY"}
 COST_MODEL_PATH=ROOT/"research/phase104_eod_stock_options/cost_model.py"
 
@@ -173,27 +174,18 @@ def normalize_family(row):
 
 
 def is_trend_method(method):
-    return method in {"ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM",
-                      "EMA_CROSS","EMA_CROSSOVER","EMA_SLOPE","EMA_TREND","RELATIVE_STRENGTH","RELATIVE_STRENGTH_ROTATION"}
+    return method in {"ROC_MOMENTUM","EMA_CROSS","EMA_SLOPE","RELATIVE_STRENGTH"}
 
 
 def is_mean_reversion_method(method):
-    return method in {"RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION","RSI_REBOUND",
-                      "BOLLINGER_REVERSION","BOLLINGER_MEAN_REVERSION","EMA_DEVIATION_FADE"}
+    return method in {"RETURN_ZSCORE_FADE","RSI_REBOUND",
+                      "BOLLINGER_REVERSION","EMA_DEVIATION_FADE"}
 
 
 def core_method(core):
-    if core in SUPPORTED_CORE_METHODS: return core
-    # IDs and description labels sometimes differ, so map only unmistakable rule labels.
-    if "EMA" in core and "CROSS" in core: return "EMA_CROSS"
-    if "EMA" in core and "SLOPE" in core: return "EMA_SLOPE"
-    if "RSI" in core and ("REBOUND" in core or "REVERS" in core): return "RSI_REBOUND"
-    if "BOLLINGER" in core or "BOLLINGER_BAND" in core: return "BOLLINGER_REVERSION"
-    if "ZSCORE" in core or "Z_SCORE" in core: return "RETURN_ZSCORE_FADE"
-    if "RELATIVE_STRENGTH" in core: return "RELATIVE_STRENGTH"
-    if "MOMENTUM" in core and "GLOBAL" not in core: return "ROC_MOMENTUM"
-    if "DEVIATION" in core and "EMA" in core: return "EMA_DEVIATION_FADE"
-    return None
+    """Return a method only for an exact registered ID with a coded implementation."""
+    normalized=canonical(core)
+    return normalized if normalized in SUPPORTED_CORE_METHODS else None
 
 
 def read_archive(path,expected_date):
@@ -313,17 +305,27 @@ def compute_signal(method,values,idx,lookback,threshold,params=None):
     if now is None or past is None or not now or not past or past<=0: return 0
     change_pct=(now/past-1.0)*100.0
     thr=float(threshold)
-    if method in {"ROC_MOMENTUM","MOMENTUM","PRICE_MOMENTUM","TREND_MOMENTUM","MOMENTUM_ATM","EMA_SLOPE","EMA_TREND"}:
-        if change_pct>=thr: return 1
-        if change_pct<=-thr: return -1
+    if method=="ROC_MOMENTUM":
+        if change_pct>=thr:return 1
+        if change_pct<=-thr:return -1
         return 0
-    if method in {"EMA_CROSS","EMA_CROSSOVER"}:
+    if method=="EMA_SLOPE":
+        current=ema(values,lookback,idx)
+        previous=ema(values,lookback,idx-1)
+        if current is None or previous is None or previous<=0:return 0
+        slope=(current/previous-1.0)*100.0
+        if slope>=thr:return 1
+        if slope<=-thr:return -1
+        return 0
+    if method=="EMA_CROSS":
         fast=max(2,lookback//2)
-        fastval=ema(values,fast,idx); slowval=ema(values,lookback,idx)
-        if fastval is None or slowval is None or slowval<=0: return 0
-        spread=(fastval/slowval-1)*100
-        if spread>=thr/2: return 1
-        if spread<=-thr/2: return -1
+        fast_now,slow_now=ema(values,fast,idx),ema(values,lookback,idx)
+        fast_prev,slow_prev=ema(values,fast,idx-1),ema(values,lookback,idx-1)
+        if None in (fast_now,slow_now,fast_prev,slow_prev) or slow_now<=0 or slow_prev<=0:return 0
+        spread_now=(fast_now/slow_now-1.0)*100.0
+        spread_prev=(fast_prev/slow_prev-1.0)*100.0
+        if spread_prev<=0 and spread_now>=thr/2.0:return 1
+        if spread_prev>=0 and spread_now<=-thr/2.0:return -1
         return 0
     if method in {"RETURN_ZSCORE_FADE","RETURN_ZSCORE_MEAN_REVERSION"}:
         window=[values[j]/values[j-1]-1 for j in range(max(1,idx-lookback+1),idx+1) if values[j] is not None and values[j-1] is not None and values[j-1]>0]
@@ -378,18 +380,20 @@ def realized_vol(values,end,period):
 
 
 def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_idx,axes,symbol,chain_features):
+    method=canonical(method)
+    confirm=canonical(confirm)
+    regime=canonical(regime)
+    if method not in SUPPORTED_CORE_METHODS:return 0,"CORE_IMPLEMENTATION_NOT_REGISTERED"
+    if confirm not in SUPPORTED_CONFIRMS:return 0,"CONFIRMATION_NOT_IMPLEMENTED"
+    if regime not in SUPPORTED_REGIMES:return 0,"REGIME_NOT_IMPLEMENTED"
     lookback=int(axes.get("lookback_sessions",axes.get("signal_lookback_sessions",axes.get("lookback",5))))
     threshold=float(axes.get("move_threshold_pct",axes.get("move_or_signal_threshold_pct",axes.get("threshold_pct",0.5))))
     vol_lb=int(axes.get("vol_lookback_sessions",axes.get("volatility_lookback_sessions",5)))
     method_params={"other_values":other_values}
     side=compute_signal(method,values,idx,lookback,threshold,method_params)
     if side==0:return 0,"NO_SIGNAL"
-    # All confirmations use only information known by the close of the signal day.
-    if confirm in {"CROSS_ASSET","CROSS_INDEX"}:
-        if other_values is None or idx<lookback+1:return 0,"CONFIRMATION_HISTORY_MISSING"
-        previous_move=(other_values[idx-1]/other_values[idx-lookback-1]-1)*100
-        if previous_move*side<=0:return 0,"CROSS_INDEX_CONFIRMATION_FAIL"
-    elif confirm=="OPTIONS_FLOW":
+    # Options-flow uses only prior-close/close-index daily OI and volume deltas.
+    if confirm=="OPTIONS_FLOW":
         feat=chain_features.get((symbol,idx),{})
         method=canonical(axes.get("oi_confirmation_method","OI_AND_VOLUME"))
         is_call_signal=side>0
@@ -408,20 +412,7 @@ def make_signal(method,confirm,regime,values,other_values,vix_values,idx,entry_i
             elif side_volume<=0:return 0,"OPTIONS_FLOW_VOLUME_FAIL"
     elif confirm not in {"NONE",""}:
         return 0,"CONFIRMATION_NOT_IMPLEMENTED"
-    if regime in {"REALIZED_VOL_LOW_HIGH","REALIZED_VOL"}:
-        vol=realized_vol(values,idx,vol_lb)
-        past=[realized_vol(values,j,vol_lb) for j in range(max(vol_lb+1,idx-60),idx)]
-        past=[v for v in past if v is not None]
-        if vol is None or not past:return 0,"REALIZED_VOL_HISTORY_MISSING"
-        definition=canonical(axes.get("regime_definition","ROLLING_MEDIAN"))
-        if definition in {"ROLLING_MEDIAN","MEDIAN"}:
-            bound=sorted(past)[len(past)//2]
-        else:
-            ordered=sorted(past); bound=ordered[max(0,int(0.67*len(ordered))-1)]
-        # Admit both vol states; side follows underlying signal, but the regime is recorded.
-        high=vol>=bound
-        if not high and not vol>0:return 0,"REALIZED_VOL_ZERO"
-    elif regime=="TREND_RANGE":
+    if regime=="TREND_RANGE":
         move=abs(values[idx]/values[idx-lookback]-1)*100 if values[idx-lookback] and values[idx-lookback]>0 else 0
         trailing=[]
         for j in range(max(lookback+1,idx-60),idx):
