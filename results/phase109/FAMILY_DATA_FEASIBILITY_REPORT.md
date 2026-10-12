@@ -1,6 +1,6 @@
 # Phase 109 family-by-family data-feasibility gate
 
-Generated: 2026-10-12T06:35:41.675801+00:00
+Generated: 2026-10-12T06:36:20.249572+00:00
 
 **This is an input availability gate, not a backtest.** Family counts and candidate configurations are not performance-tested observations.
 
