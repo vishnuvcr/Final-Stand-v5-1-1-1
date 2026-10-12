@@ -36,3 +36,11 @@
 ## 2026-10-12 08:48 UTC — Corrected v2 evaluator checkpoint
 - Engine phase109-eod-engine-v2-semantics processed cursor [0,2,000); attempted 2,000 configurations and emitted 48,000 cost rows.
 - Cumulative attempted 2,000; remaining 170,800. These remain EOD execution proxies, not verified fills.
+
+## 2026-10-12 08:50 UTC — Paytm Money / NSE cost-source recheck
+
+- Checked Paytm Money's official F&O FAQ: ₹10 per unique order that gets executed. Registered cases remain ₹10/₹15/₹20 per order; 2 executed orders generate twice the per-order brokerage in the round-trip fee model. The user's individual contract note/add-ons remain unverified.
+- Checked NSE's current official STT table: options-sale STT is 0.15% from 2026-04-01 (0.10% through 2026-03-31). Checked NSE Circular FA73061: equity-options exchange transaction outflow effective 2026-03-01 is ₹3,552 per crore plus ₹0.01 per crore IPFT; model stores these separately.
+- Added a regression test for pre/post-March exchange charges, pre/post-April STT, and two-order brokerage. Test runs [38225975745](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225975745) passed 33 tests and [38226082378](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226082378) passed 34 tests after the result-filename isolation test was added.
+- Adjusted displayed rate-field precision only; no fee arithmetic or resulting P&L values were altered. Full model fees remain under all 24 brokerage/slippage/fee-stress cases.
+- Official sources: [Paytm Money F&O FAQ](https://www.paytmmoney.com/stocks/customer/fno-faq/onboarding-and-kyc/account-segment-activation/how-to-activate-fo-from-mobile-app-web), [NSE STT table](https://www.nseindia.com/static/products-services/equity-derivatives-securities-transaction-tax), [NSE Circular FA73061](https://nsearchives.nseindia.com/content/circulars/FA73061.pdf), and [NSE levies guide](https://www.nseindia.com/static/invest/first-time-investor-sebi-turnover-fees-stt-other-levies).
