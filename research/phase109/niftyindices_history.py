@@ -24,10 +24,23 @@ def date_text(d):
 def intervals(start, end_exclusive):
     cur=start
     while cur<end_exclusive:
-        # Keep inclusive API ranges comfortably below its documented 365-day limit.
-        chunk_end=min(end_exclusive, cur+timedelta(days=364))
+        # NSE's historical endpoint returned only about 70 observations for a
+        # 364-day request. Keep each request under 60 calendar days so the API
+        # response limit cannot silently truncate a series.
+        chunk_end=min(end_exclusive, cur+timedelta(days=60))
         yield cur, chunk_end-timedelta(days=1)
         cur=chunk_end
+
+
+def expected_weekdays(start, end_exclusive):
+    """Count weekdays in the requested half-open date window."""
+    return sum(1 for offset in range((end_exclusive-start).days)
+               if (start+timedelta(days=offset)).weekday()<5)
+
+
+def minimum_expected_observations(start, end_exclusive):
+    """Fail closed if the source returns less than 60% of request-window weekdays."""
+    return max(1,math.ceil(expected_weekdays(start,end_exclusive)*0.60))
 
 
 COOKIE_JAR = http.cookiejar.CookieJar()
@@ -248,6 +261,8 @@ def main():
     args=ap.parse_args()
     start=date.fromisoformat(args.from_date); end=date.fromisoformat(args.to_date)
     if end<=start: raise ValueError("to-date must be after from-date")
+    expected_weekdays_count=expected_weekdays(start,end)
+    minimum_unique_dates=minimum_expected_observations(start,end)
     all_summaries=[]; failures=[]
     merged={"INDIA_VIX":[],"NIFTY 50":[],"NIFTY BANK":[]}
     hashes={}
@@ -319,6 +334,8 @@ def main():
                 if min(vals)<=0 or h<max(o,l,c) or l>min(o,h,c): invalid+=1
         merged_metrics.append({
           "series":name,"source_rows_before_date_dedup":len(rows),"unique_date_count":len(seen),
+          "minimum_expected_unique_dates":minimum_unique_dates,
+          "meets_minimum_expected_coverage":len(seen)>=minimum_unique_dates,
           "duplicate_date_rows_across_chunks":max(0,len(rows)-len(seen)),
           "min_date":min(dates) if dates else "","max_date":max(dates) if dates else "",
           "missing_OHLC_rows":missing,"invalid_OHLC_rows":invalid,
@@ -330,13 +347,17 @@ def main():
       "generated_utc":datetime.now(timezone.utc).isoformat(),"requested_from":start.isoformat(),
       "requested_to_exclusive":end.isoformat(),"source":"NSE Indices official historical data endpoints",
       "source_references":["https://www.niftyindices.com/reports/historical-data","https://www.niftyindices.com/Backpage.aspx/BindHistoricalIndiaVixData","https://www.niftyindices.com/Backpage.aspx/getHistoricaldatatabletoString"],
-      "chunk_count":len(list(intervals(start,end))),"successful_chunk_series_calls":len(all_summaries),
+      "chunk_count":len(list(intervals(start,end))),"expected_weekdays_in_requested_window":expected_weekdays_count,
+      "minimum_expected_unique_dates_per_series":minimum_unique_dates,
+      "coverage_threshold_ratio":0.60,
+      "successful_chunk_series_calls":len(all_summaries),
       "failed_chunk_series_calls":len(failures),"fetch_cache_modes":fetch_modes,
       "chunk_summaries":all_summaries,"merged_series_summary":merged_metrics,"errors":failures,
       "observed_calendar_rows":len(calendar_rows),
       "observed_calendar_min_date":calendar_rows[0]["date"] if calendar_rows else "",
       "observed_calendar_max_date":calendar_rows[-1]["date"] if calendar_rows else "",
-      "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>0 and x["invalid_OHLC_rows"]==0 and x["missing_OHLC_rows"]==0 and x["duplicate_date_rows_across_chunks"]==0 and all_summaries_for_series_have_parseable_dates(merged_metrics, all_summaries) for x in merged_metrics) else "PARTIAL_OR_FAILED",
+      "overall_status":"PASS" if len(failures)==0 and all(x["unique_date_count"]>=minimum_unique_dates and x["invalid_OHLC_rows"]==0 and x["missing_OHLC_rows"]==0 and x["duplicate_date_rows_across_chunks"]==0 and all_summaries_for_series_have_parseable_dates(merged_metrics, all_summaries) for x in merged_metrics) else "PARTIAL_OR_FAILED",
+      "coverage_failures":[{"series":x["series"],"observed_unique_dates":x["unique_date_count"],"minimum_expected_unique_dates":minimum_unique_dates} for x in merged_metrics if x["unique_date_count"]<minimum_unique_dates],
       "note":"Official index/VIX input feasibility only; not strategy evaluation. Series rows are stored in Actions cache. Do not substitute unverified public-HF VIX labels.",
     }
     OUT.mkdir(parents=True,exist_ok=True)
@@ -353,6 +374,7 @@ def main():
     lines.extend(["","## Data gates","",
       "- A VIX series is accepted only from the official NSE Indices endpoint and must pass plausibility/duplicate/schema checks. Publisher-labelled VIX datasets are not used as substitutes.",
       "- The selected NIFTY 50 and NIFTY BANK daily OHLC are inputs for lagged market-regime and cross-index/underlying features; only prior-known values may enter a strategy signal.",
+      "- Each series must cover at least 60% of requested-window weekdays; short API responses are treated as truncated/incomplete even if their values pass OHLC checks.",
       "- Check the returned index/VIX dates against the official trading calendar and option-archive date manifest before model fitting.",
       "- Any non-zero invalid OHLC count, duplicate dates, missing windows or implausible values blocks dependent families until resolved.",
       "",
