@@ -1,6 +1,6 @@
 # Phase 109 Status — Strategy-Family Discovery and Exhaustive Grid
 
-Last updated: 2026-10-12 05:27 UTC
+Last updated: 2026-10-12 05:28 UTC
 Branch: `phase-109-exhaustive-parameter-grid`
 State: **REGISTRY AND GRID MANIFEST COMPILED; EMPIRICAL EVALUATION NOT YET RUN**
 Promotion: **NONE**
@@ -33,14 +33,3 @@ Promotion: **NONE**
 - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
 - [Source-access audit](results/phase109/source_access_audit.csv)
 - [Research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [chat log](PHASE109_CHAT_LOG.md)
-
-## 109.3 — Fresh acquisition and source-client repair
-
-- [x] Corrected UDiFF synthetic test fixtures to use IDO for index options; all 19 offline regression tests passed in compiler run 38207937673.
-- [x] Diagnosed stale acquisition snapshot: run 38203267125 succeeded operationally but used pre-fix parser code, so it is not evidence of corrected UDiFF selection.
-- [x] Replaced the blocked NSE Indices Backpage data calls with official NSE India historical-OR API calls for index OHLC and India VIX.
-- [ ] Fresh acquisition and corrected UDiFF lot-size coverage verification — queued at run 38207969439.
-- [ ] Official index/VIX parser verification and chronological-session reconciliation.
-- [ ] Only after gates pass: bounded cost-adjusted evaluation. The latest successful compiler correctly blocked evaluation because the snapshot had zero eligible-window option rows and zero official index/VIX rows.
-
-No backtest result or profitable strategy is claimed. Promotion remains NONE.
