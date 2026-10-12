@@ -2,7 +2,7 @@
 
 Updated: 2026-10-12  
 Branch: `phase-109-strategy-semantics-remediation`  
-State: **90% OFFICIAL CONTEXT GATE PASSES; V4 REGRESSION PASS; V4 SHARD PENDING**  
+State: **38 REGRESSION TESTS PASS; 90% CONTEXT GATE PASS; SPECIAL-SESSION REACQUISITION RUNNING; V4 SHARD QUEUED**  
 Promotion: **NONE**
 
 ## Remediation
@@ -15,13 +15,14 @@ Promotion: **NONE**
 - [x] Added semantic regression tests.
 - [x] Dedicated test workflow passed 26/26 offline tests (run [38221129326](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326)).
 - [x] Evaluator resolved v2 cursor to zero; first attempt failed before scoring because the private branch-local NSE cache was missing ([run 38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260)).
-- [ ] After source reacquisition, corrected evaluator publishes a v2 shard.
+- [x] Corrected v2 publishes one diagnostic shard: 2,000 configurations / 48,000 cost rows; not eligible for promotion because it used incomplete official index/VIX context.
+- [x] Replaced v3 with v4 session-coverage gate and unique result filenames.
 - [ ] Reconcile 24 cost rows/config, blockers, cursor and result SHA after the source gate allows empirical replay.
 - [ ] Update final statistical report only after validation/holdout/multiple-testing gates.
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-The refreshed official index/VIX context audit now **passes the 90% density gate**: 748 unique dates each for India VIX, NIFTY 50 and NIFTY BANK, versus 711 required (789 weekdays in the requested interval); zero failed chunk-series calls, zero duplicate dates and zero invalid/missing OHLC rows. Calendar reconciliation found 743 valid option-archive dates, all overlapping NIFTY 50 dates, plus five observed NIFTY 50 sessions without a valid option archive; those sessions remain excluded rather than imputed. See [context summary](results/phase109/niftyindices_context_summary.json) and [calendar reconciliation](results/phase109/nse_calendar_reconciliation.json). Regression run [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed. The current evaluator is engine `phase109-eod-engine-v4-session-coverage`; its cursor reset is required because prior v1/v2/v3 checkpoints used different implementation/context gates. The v4 evaluator run [38227220343](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227220343) is pending behind an older evaluator job [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004); the updated acquisition run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is reacquiring the cache from the latest source code. No v4 result shard is yet verified; no strategy is promoted.
+The official index/VIX history now has 748 unique dates each for India VIX, NIFTY 50 and NIFTY BANK across 2023-10-03–2026-10-08 (minimum 711, 90% of 789 weekdays); zero failed chunk-series calls, duplicate dates and invalid/missing OHLC rows. Calendar reconciliation identified five NIFTY 50-observed special sessions without an option archive (2023-11-12, 2024-01-20, 2024-05-18, 2025-02-01, 2026-02-01). The acquisition workflow has been reordered to acquire the official session calendar before probing NSE option archives, and the archive request now unions weekday probes with observed weekend/special sessions. Source run [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active on this corrected order; the obsolete source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) was cancelled as stale. Engine v4 independently requires the 90% context-density and explicit options/index session reconciliation gates. Regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38/38 tests. The v4 evaluation run [38227487048](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048) is pending behind diagnostic v3 run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004), which had processed 800/2,000 configurations at the last log checkpoint. Workflow concurrency is now configured to replace obsolete in-flight runs when newer commits arrive; the old evaluation job has not yet reported a terminal state. No v4 result shard has been verified and no strategy is promoted.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
@@ -71,3 +72,12 @@ The refreshed official index/VIX context audit now **passes the 90% density gate
 - Calendar reconciliation reports 743 valid options archive dates, all with a NIFTY 50 observation; five observed NIFTY 50 sessions lack valid option archives and are excluded rather than synthesized.
 - The current engine version is `phase109-eod-engine-v4-session-coverage`; prior v1/v2/v3 progress is ineligible for cursor reuse. Latest test workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed. The updated acquisition run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is running and v4 evaluator run [38227220343](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227220343) is pending. The older run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) was launched on an earlier checkout and cannot certify v4.
 - No strategy has been promoted and no profitability conclusion is inferred from coverage completion.
+
+
+## 2026-10-12 09:04 UTC — Reorder source dependency and supersede stale runs
+
+- The first special-session implementation read the committed session calendar before the same workflow had refreshed it. Fixed acquisition order so official NSE Indices history and its observed-session calendar are generated before the NSE option archive probe, ensuring the five special dates are available to that same run.
+- Enabled replace-obsolete-run concurrency in the source and evaluator workflows. A source refresh on the latest workflow [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active. The prior run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) was cancelled, then superseded by the corrected workflow. The v4 evaluator workflow [38227487048](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048) remains queued behind a diagnostic v3 run.
+- Verified previous context: 748 dates per official series; minimum expected 711. The option archive table is being rebuilt to explicitly attempt special observed NIFTY 50 sessions.
+- Last complete regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38/38 tests.
+- No strategy result or promotion is inferred from pending workflows.
