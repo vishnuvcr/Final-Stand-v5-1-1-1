@@ -276,7 +276,7 @@ def validate_context_coverage(dates,vix_by_date,index_closes):
         1 for offset in range((end_exclusive-start).days)
         if (start+timedelta(days=offset)).weekday()<5
     )
-    minimum=max(1,math.ceil(weekday_count*0.60))
+    minimum=max(1,math.ceil(weekday_count*0.90))
     observed={
         "INDIA_VIX":len(vix_by_date),
         "NIFTY 50":len(index_closes.get("NIFTY",{})),
@@ -288,7 +288,7 @@ def validate_context_coverage(dates,vix_by_date,index_closes):
         "window_end_inclusive":max(dates).isoformat(),
         "expected_weekdays":weekday_count,
         "minimum_unique_dates_per_series":minimum,
-        "coverage_ratio_threshold":0.60,
+        "coverage_ratio_threshold":0.90,
         "observed_unique_dates":observed,
         "coverage_pass":not missing,
     }
