@@ -1,0 +1,34 @@
+name: Phase 109 — semantic implementation tests
+
+on:
+  push:
+    branches:
+      - phase-109-strategy-semantics-remediation
+    paths:
+      - "research/phase109/strategy_evaluator.py"
+      - "research/phase109/test_phase109_strategy_semantics.py"
+      - ".github/workflows/phase109-implementation-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  semantic-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out semantic remediation branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile evaluator and semantic tests
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/strategy_evaluator.py research/phase109/test_phase109_strategy_semantics.py
+      - name: Run all offline Phase 109 regression tests
+        run: python -m unittest discover -s research/phase109 -p 'test_*.py' -v
