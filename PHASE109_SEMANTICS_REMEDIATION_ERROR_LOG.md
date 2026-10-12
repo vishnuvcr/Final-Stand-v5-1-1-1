@@ -46,3 +46,9 @@
 
 - Run [38224769569](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224769569) failed because the evaluator had already been bumped to v3 while the version regression assertion still expected v2. The test fixture was updated to v3 and new tests were added for truncated/sufficient context.
 - Follow-up run [38224798558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798558) passed **32/32 tests**. No runtime data output was implicated in the mismatch.
+
+## 2026-10-12 08:43 UTC — E109-S11 — Context-density cutoff strengthened
+
+- The first corrective proposal used a 60% weekday threshold; that can still permit too much missing historical context for regime filtering.
+- Updated the official source and evaluator gates to require at least 90% of weekdays per official series and added tests for truncated-context rejection and adequate-context acceptance.
+- Regression [38225233888](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233888) passed 32 tests. This verifies code behavior only; the updated API re-acquisition still needs to pass its coverage gate.
