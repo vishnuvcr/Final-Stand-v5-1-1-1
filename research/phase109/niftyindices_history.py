@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Restart checkpoint: keep acquisition workflow retriggerable after audit/parser fixes.
 """Acquire official NSE Indices historical India VIX and index OHLC context.
 
 Responses are retained only in Actions cache. Public outputs contain aggregate
