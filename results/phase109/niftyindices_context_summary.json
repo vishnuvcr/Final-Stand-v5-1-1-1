@@ -1,0 +1,142 @@
+{
+  "chunk_count": 4,
+  "chunk_summaries": [],
+  "errors": [
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2023-10-01",
+      "series": "INDIA_VIX",
+      "to": "2024-09-28"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2023-10-01",
+      "series": "INDEX_NIFTY50",
+      "to": "2024-09-28"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2023-10-01",
+      "series": "INDEX_NIFTYBANK",
+      "to": "2024-09-28"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2024-09-29",
+      "series": "INDIA_VIX",
+      "to": "2025-09-27"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2024-09-29",
+      "series": "INDEX_NIFTY50",
+      "to": "2025-09-27"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2024-09-29",
+      "series": "INDEX_NIFTYBANK",
+      "to": "2025-09-27"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2025-09-28",
+      "series": "INDIA_VIX",
+      "to": "2026-09-26"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2025-09-28",
+      "series": "INDEX_NIFTY50",
+      "to": "2026-09-26"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2025-09-28",
+      "series": "INDEX_NIFTYBANK",
+      "to": "2026-09-26"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2026-09-27",
+      "series": "INDIA_VIX",
+      "to": "2026-10-08"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2026-09-27",
+      "series": "INDEX_NIFTY50",
+      "to": "2026-10-08"
+    },
+    {
+      "error": "JSONDecodeError:Expecting value: line 1 column 2 (char 1)",
+      "from": "2026-09-27",
+      "series": "INDEX_NIFTYBANK",
+      "to": "2026-10-08"
+    }
+  ],
+  "failed_chunk_series_calls": 12,
+  "fetch_cache_modes": {},
+  "generated_utc": "2026-10-12T03:34:26.708903+00:00",
+  "merged_series_summary": [
+    {
+      "all_OHLC_values_max": null,
+      "all_OHLC_values_min": null,
+      "duplicate_date_rows_across_chunks": 0,
+      "invalid_OHLC_rows": 0,
+      "max_date": "",
+      "maximum_close": null,
+      "merged_rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "min_date": "",
+      "minimum_close": null,
+      "missing_OHLC_rows": 0,
+      "series": "INDIA_VIX",
+      "source_rows_before_date_dedup": 0,
+      "unique_date_count": 0
+    },
+    {
+      "all_OHLC_values_max": null,
+      "all_OHLC_values_min": null,
+      "duplicate_date_rows_across_chunks": 0,
+      "invalid_OHLC_rows": 0,
+      "max_date": "",
+      "maximum_close": null,
+      "merged_rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "min_date": "",
+      "minimum_close": null,
+      "missing_OHLC_rows": 0,
+      "series": "NIFTY 50",
+      "source_rows_before_date_dedup": 0,
+      "unique_date_count": 0
+    },
+    {
+      "all_OHLC_values_max": null,
+      "all_OHLC_values_min": null,
+      "duplicate_date_rows_across_chunks": 0,
+      "invalid_OHLC_rows": 0,
+      "max_date": "",
+      "maximum_close": null,
+      "merged_rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "min_date": "",
+      "minimum_close": null,
+      "missing_OHLC_rows": 0,
+      "series": "NIFTY BANK",
+      "source_rows_before_date_dedup": 0,
+      "unique_date_count": 0
+    }
+  ],
+  "note": "Official index/VIX input feasibility only; not strategy evaluation. Series rows are stored in Actions cache. Do not substitute unverified public-HF VIX labels.",
+  "observed_calendar_max_date": "",
+  "observed_calendar_min_date": "",
+  "observed_calendar_rows": 0,
+  "overall_status": "PARTIAL_OR_FAILED",
+  "requested_from": "2023-10-01",
+  "requested_to_exclusive": "2026-10-09",
+  "source": "NSE Indices official historical data endpoints",
+  "source_references": [
+    "https://www.niftyindices.com/reports/historical-data",
+    "https://www.niftyindices.com/Backpage.aspx/BindHistoricalIndiaVixData",
+    "https://www.niftyindices.com/Backpage.aspx/getHistoricaldatatabletoString"
+  ],
+  "successful_chunk_series_calls": 0
+}

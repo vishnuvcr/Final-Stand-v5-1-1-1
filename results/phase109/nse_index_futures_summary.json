@@ -1,0 +1,18 @@
+{
+  "dates_with_selected_index_futures": 185,
+  "duplicate_daily_contract_keys": 0,
+  "failed_dates": 0,
+  "futures_dates_parsed": 743,
+  "generated_utc": "2026-10-12T03:32:43.193332+00:00",
+  "identity_complete_rows": 2220,
+  "interpretation": "Futures rows are extracted for feature/basis research only; daily OHLC/settlement is not an intraday fill model.",
+  "invalid_ohlc_positive_volume_rows": 0,
+  "missing_or_nonpositive_lot_size_rows": 2220,
+  "option_archive_files_seen": 743,
+  "positive_volume_rows": 2164,
+  "price_complete_rows": 2220,
+  "private_cache_bytes": 250029,
+  "selected_futures_rows": 2220,
+  "source": "Official NSE daily F&O archives",
+  "zero_volume_rows": 56
+}
