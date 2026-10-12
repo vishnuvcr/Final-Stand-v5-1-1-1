@@ -40,7 +40,7 @@ def expected_weekdays(start, end_exclusive):
 
 def minimum_expected_observations(start, end_exclusive):
     """Fail closed if the source returns less than 60% of request-window weekdays."""
-    return max(1,math.ceil(expected_weekdays(start,end_exclusive)*0.60))
+    return max(1,math.ceil(expected_weekdays(start,end_exclusive)*0.90))
 
 
 COOKIE_JAR = http.cookiejar.CookieJar()
@@ -349,7 +349,7 @@ def main():
       "source_references":["https://www.niftyindices.com/reports/historical-data","https://www.niftyindices.com/Backpage.aspx/BindHistoricalIndiaVixData","https://www.niftyindices.com/Backpage.aspx/getHistoricaldatatabletoString"],
       "chunk_count":len(list(intervals(start,end))),"expected_weekdays_in_requested_window":expected_weekdays_count,
       "minimum_expected_unique_dates_per_series":minimum_unique_dates,
-      "coverage_threshold_ratio":0.60,
+      "coverage_threshold_ratio":0.90,
       "successful_chunk_series_calls":len(all_summaries),
       "failed_chunk_series_calls":len(failures),"fetch_cache_modes":fetch_modes,
       "chunk_summaries":all_summaries,"merged_series_summary":merged_metrics,"errors":failures,
@@ -374,7 +374,7 @@ def main():
     lines.extend(["","## Data gates","",
       "- A VIX series is accepted only from the official NSE Indices endpoint and must pass plausibility/duplicate/schema checks. Publisher-labelled VIX datasets are not used as substitutes.",
       "- The selected NIFTY 50 and NIFTY BANK daily OHLC are inputs for lagged market-regime and cross-index/underlying features; only prior-known values may enter a strategy signal.",
-      "- Each series must cover at least 60% of requested-window weekdays; short API responses are treated as truncated/incomplete even if their values pass OHLC checks.",
+      "- Each series must cover at least 90% of requested-window weekdays; short API responses are treated as truncated/incomplete even if their values pass OHLC checks.",
       "- Check the returned index/VIX dates against the official trading calendar and option-archive date manifest before model fitting.",
       "- Any non-zero invalid OHLC count, duplicate dates, missing windows or implausible values blocks dependent families until resolved.",
       "",
