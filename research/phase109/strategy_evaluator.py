@@ -28,7 +28,7 @@ CONTEXT_CACHE=CACHE/"niftyindices_history"
 MODEL_GREEKS_CACHE=CACHE/"options_model_greeks"
 FUTURES_CACHE=CACHE/"futures_eod"
 FIRST_COST_DATE=date(2024,10,1)
-ENGINE_VERSION="phase109-eod-engine-v2-semantics"
+ENGINE_VERSION="phase109-eod-engine-v3-context-coverage"
 # Exact registered core IDs only. Unimplemented architectures are blocked, never proxied.
 SUPPORTED_CORE_METHODS={
  "ROC_MOMENTUM","EMA_CROSS","EMA_SLOPE","RETURN_ZSCORE_FADE",
@@ -266,6 +266,43 @@ def read_index_closes():
     return out
 
 
+def validate_context_coverage(dates,vix_by_date,index_closes):
+    """Fail closed when the official index/VIX history is materially truncated."""
+    if not dates:
+        raise RuntimeError("OFFICIAL_CONTEXT_COVERAGE_GATE_FAILED: no market dates available.")
+    start=min(dates)
+    end_exclusive=max(dates)+timedelta(days=1)
+    weekday_count=sum(
+        1 for offset in range((end_exclusive-start).days)
+        if (start+timedelta(days=offset)).weekday()<5
+    )
+    minimum=max(1,math.ceil(weekday_count*0.60))
+    observed={
+        "INDIA_VIX":len(vix_by_date),
+        "NIFTY 50":len(index_closes.get("NIFTY",{})),
+        "NIFTY BANK":len(index_closes.get("BANKNIFTY",{})),
+    }
+    missing={name:count for name,count in observed.items() if count<minimum}
+    report={
+        "window_start":start.isoformat(),
+        "window_end_inclusive":max(dates).isoformat(),
+        "expected_weekdays":weekday_count,
+        "minimum_unique_dates_per_series":minimum,
+        "coverage_ratio_threshold":0.60,
+        "observed_unique_dates":observed,
+        "coverage_pass":not missing,
+    }
+    if missing:
+        raise RuntimeError(
+            "OFFICIAL_CONTEXT_COVERAGE_GATE_FAILED: need at least "
+            +str(minimum)+" unique dates per official VIX/index series over "
+            +start.isoformat()+"–"+max(dates).isoformat()
+            +"; observed "+json.dumps(observed,sort_keys=True)
+            +". No strategy configurations were scored."
+        )
+    return report
+
+
 def ema(values,period,end):
     if period<1 or end<period-1: return None
     alpha=2/(period+1)
@@ -480,11 +517,12 @@ def load_market():
     dates=sorted(set(closes["NIFTY"]) | set(closes["BANKNIFTY"]) | option_dates)
     if not dates: raise RuntimeError("No usable official option/index dates.")
     vix=read_vix_cache()
+    context_coverage=validate_context_coverage(dates,vix,index_closes)
     vix_series=[vix.get(d) for d in dates]
     data={
       "contracts":contracts,"closes":closes,"dates":dates,"vix":vix_series,"vix_by_date":vix,
       "option_dates":option_dates,"archive_errors":archive_errors,
-      "raw_archive_count":len(archive_paths),
+      "raw_archive_count":len(archive_paths),"context_coverage":context_coverage,
     }
     return data
 
@@ -840,6 +878,7 @@ def main():
       "cost_rows_generated":len(results),"cost_cases_per_config":len(cost_cases),
       "skipped_reasons":dict(sorted(skip_counts.items())),"blocked_families_reasons":dict(sorted(blocked.items())),
       "archive_parse_or_duplicate_warnings":len(data["archive_errors"]),
+      "official_context_coverage":data["context_coverage"],
       "archive_count_loaded":data["raw_archive_count"],"unique_option_archive_dates":len(data["option_dates"]),
       "cost_model_callable":cost_fn_name,"first_cost_eligible_date":FIRST_COST_DATE.isoformat(),
       "sample":args.sample,
@@ -882,6 +921,7 @@ def main():
       f"- Configs attempted in this shard: {config_counts['attempted']:,}; cost-adjusted rows generated: {len(results):,}; expected cost cases/config: 24.",
       f"- Completed shard ranges currently recorded: {len(completed):,}; cumulative attempted configs: {summary['completed_configs_all_ranges']:,}; cumulative cost rows: {summary['completed_cost_rows_all_ranges']:,}; remaining eligible configs: {summary['remaining_supported_configs']:,}.",
       f"- Archive dates loaded: {len(data['option_dates']):,}; source files loaded: {data['raw_archive_count']:,}; archive parse/duplicate warnings: {len(data['archive_errors']):,}.",
+      f"- Official context coverage gate: {data['context_coverage']['observed_unique_dates']}; minimum required per series: {data['context_coverage']['minimum_unique_dates_per_series']:,} over {data['context_coverage']['window_start']}–{data['context_coverage']['window_end_inclusive']}.",
       f"- Cost model: `{cost_fn_name}`; P&L trade entries before {FIRST_COST_DATE.isoformat()} are blocked.",
       "- Sample: "+args.sample+". Selection mode uses development/validation only; holdout mode must load the frozen validation shortlist and scores only 2026-04-01 through 2026-10-08.",
       "- All net results remain diagnostic, use EOD OHLC execution proxies, and are exposed to selection/multiple-testing bias. No strategy is promoted.",
