@@ -44,3 +44,9 @@ The original registered space was reduced because 7.8 billion cost rows was disp
 - [ ] Regenerate family counts, configuration manifest, 24-case cost-row shards, and fingerprints from the corrected grid; previous totals no longer apply.
 - [ ] Pass the offline regression suite and validate the cost-model adapter before declaring any evaluator shard complete.
 - [ ] Run development/validation only; holdout from 2026-04-01 remains reserved.
+
+
+## Resume checkpoint — 2026-10-12
+- Latest observed compiler run 38172152251 failed at Python syntax validation in family_feasibility.py before any source probes; correction committed as 1fbdde3b22a53e70aa9da34ec95165616babd97d.
+- Status: awaiting push-triggered validation of the fix. No empirical strategy evaluation occurred in the failed run; do not infer source/strategy results from it.
+- Grid-size revision is in progress; all exact current counts must be taken from a successful regenerated compiler summary, not historical log values.
