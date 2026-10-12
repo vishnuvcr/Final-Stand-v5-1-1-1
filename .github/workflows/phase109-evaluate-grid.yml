@@ -1,0 +1,232 @@
+name: Phase 109 — resumable cost-adjusted options grid evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_configs:
+        description: Eligible configurations to process in each bounded shard (1–20,000)
+        required: true
+        default: "2000"
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: phase109-writer-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Check out Phase 109 branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Restore private official source cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache/phase109
+          key: ${{ runner.os }}-phase109-eval-source-v3-${{ github.ref_name }}-${{ github.run_number }}
+          restore-keys: |
+            ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-eval-source-v3-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-data-v2-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-dhan-hf-source-cache-v2-
+            ${{ runner.os }}-phase109-dhan-hf-source-cache-v1-
+
+      - name: Verify source gates and run regression tests
+        run: |
+          set -euo pipefail
+          test -f results/phase109/phase109_grid_summary.json
+          test -f results/phase109/family_data_feasibility.csv
+          test -f results/phase109/nse_index_options_daily_coverage.csv
+          python - <<'PY'
+          import json
+          g=json.load(open("results/phase109/family_data_feasibility_summary.json",encoding="utf-8"))
+          if int(g.get("families_with_inputs_present",0))+int(g.get("families_with_proxy_or_execution_gates",0))<=0:
+              raise SystemExit("Source-input gate has zero eligible families; do not run evaluator without a fresh official-data feasibility audit.")
+          print("Source-input gate passed; final execution and OOS gates still apply.")
+          PY
+          python -m py_compile research/phase109/strategy_evaluator.py research/phase109/selection_audit.py research/phase109/test_phase109_data_clients.py
+          python -m unittest discover -s research/phase109 -p 'test_*.py' -v
+
+      - name: Determine next resumable cursor
+        id: cursor
+        env:
+          MAX_CONFIGS: ${{ inputs.max_configs || '2000' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          from pathlib import Path
+          p=Path("results/phase109/evaluation_progress.json")
+          s=json.loads(p.read_text()) if p.exists() else {}
+          valid=s.get("engine_version")=="phase109-eod-engine-v1"
+          cursor=int(s.get("next_config_cursor",0) or 0) if valid else 0
+          limit=int(os.environ.get("MAX_CONFIGS","2000") or 2000)
+          if not 1<=limit<=20000:
+              raise SystemExit("max_configs must be 1–20,000")
+          print("start_config="+str(cursor))
+          print("max_configs="+str(limit))
+          PY
+
+      - name: Execute one development/validation grid shard
+        run: |
+          set -euo pipefail
+          python research/phase109/strategy_evaluator.py --start-config "${{ steps.cursor.outputs.start_config }}" --max-configs "${{ steps.cursor.outputs.max_configs }}"
+
+      - name: Update status, logs and feature-branch README
+        if: success()
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, datetime
+          from pathlib import Path
+          s=json.loads(Path("results/phase109/evaluation_shard_summary.json").read_text())
+          now=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          heading="## 109.4 — Cost-adjusted EOD grid evaluation checkpoint"
+          summary=f"""{heading} ({now})
+
+          - Eligible implemented/source-feasible configs: {s['total_supported_source_feasible_configs']:,}; cursor [{s['global_config_start']:,},{s['global_config_end_exclusive']:,}); this shard attempted {s['configs_attempted']:,}; cost rows {s['cost_rows_generated']:,} (24 registered cost cases/config).
+          - Cumulative completed ranges={s['completed_ranges_total']:,}; configs attempted={s['completed_configs_all_ranges']:,}; cost rows={s['completed_cost_rows_all_ranges']:,}; remaining eligible configs={s['remaining_supported_configs']:,}.
+          - Official option archives loaded={s['archive_count_loaded']:,}; unique option archive dates={s['unique_option_archive_dates']:,}; parse/duplicate warnings={s['archive_parse_or_duplicate_warnings']:,}.
+          - Development window: 2024-10-01–2025-09-30. Validation: 2025-10-01–2026-03-31. The 2026-04-01 onward holdout is not scored during the configuration sweep.
+          - Net returns use the canonical transaction-cost model, with daily OHLC entry/exit proxies; they are not observed achieved fills. Multiple-testing correction and holdout remain pending. No strategy is promoted.
+          - [Shard report](results/phase109/PHASE109_EVALUATION_SHARD_REPORT.md) · [summary](results/phase109/evaluation_shard_summary.json) · [resume ledger](results/phase109/evaluation_progress.json) · [compressed results](results/phase109/evaluation_shards/)
+          """
+          p=Path("PHASE109_STATUS.md"); old=p.read_text()
+          old=old.split(heading)[0].rstrip()+"\n\n"+summary+"\n" if heading in old else old.rstrip()+"\n\n"+summary+"\n"
+          p.write_text(old)
+          for fn,entry in [
+            ("PHASE109_RESEARCH_LOG.md",f"## {now} — Grid evaluation shard\n- Engine {s['engine_version']} attempted {s['configs_attempted']:,} configs and produced {s['cost_rows_generated']:,} rows across 24 cost cases/config; cumulative attempts {s['completed_configs_all_ranges']:,}, remaining {s['remaining_supported_configs']:,}.\n- Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted."),
+            ("PHASE109_ERROR_LOG.md",f"## {now} — Data-quality and execution notes\n- Archive parse/duplicate warnings in this shard: {s['archive_parse_or_duplicate_warnings']:,}. Source gaps, zero-volume and unmatchable exact contracts are excluded and reported; detailed raw price rows are not published. Daily OHLC does not prove achieved fills."),
+            ("PHASE109_CHAT_LOG.md",f"## {now} — Visible grid evaluation action\nThe evaluator processed cursor range [{s['global_config_start']:,},{s['global_config_end_exclusive']:,}), attempted {s['configs_attempted']:,} supported configurations and generated {s['cost_rows_generated']:,} cost rows. Development/validation only; untouched holdout preserved; no strategy promotion asserted."),
+          ]:
+            q=Path(fn);q.write_text(q.read_text().rstrip()+"\n\n"+entry+"\n")
+
+          readme=Path("README.md");text=readme.read_text()
+          start="<!-- PHASE109_GRID_STATUS_START -->";end="<!-- PHASE109_GRID_STATUS_END -->"
+          block=f"""# Phase 109 — 1,000+ Strategy-Family Grid and Evaluation
+
+          **Current evaluation status: {s['status']}**. Registered, source-feasible, attempted and completed counts are reported separately.
+
+          - Registered [family registry](results/phase109/strategy_families.csv), [configuration space](results/phase109/family_configuration_space.csv) and [cost shard manifest](results/phase109/cost_row_shard_manifest.csv).
+          - Cumulative supported configurations attempted: {s['completed_configs_all_ranges']:,}; cost-adjusted rows: {s['completed_cost_rows_all_ranges']:,}; eligible configs remaining: {s['remaining_supported_configs']:,}.
+          - Data audits: [family feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md) · [NSE option coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [India VIX/index context](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [Dhan rolling ATM features](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md) · [index futures](results/phase109/NSE_INDEX_FUTURES_AUDIT.md) · [model IV/Greeks](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
+          - Development 2024-10 through 2025-09; validation 2025-10 through 2026-03; holdout from 2026-04 reserved. **No strategy promoted.**
+          - [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
+          """
+          if start in text and end in text:
+            before,rest=text.split(start,1);_,after=rest.split(end,1)
+            text=before+start+"\n"+block+end+after
+          readme.write_text(text)
+          PY
+
+      - name: Log a failed shard without revealing raw data or credentials
+        if: failure()
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import datetime
+          from pathlib import Path
+          now=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          p=Path("PHASE109_ERROR_LOG.md")
+          old=p.read_text() if p.exists() else "# Phase 109 error log"
+          p.write_text(old.rstrip()+f"\n\n## {now} — Grid evaluator failure\n- Run ${{ github.run_id }} failed before a successful shard checkpoint. Inspect the Actions log; do not copy credentials or raw authenticated responses into the repo. Last committed checkpoint remains the resume point.\n")
+          c=Path("PHASE109_CHAT_LOG.md");c.write_text(c.read_text().rstrip()+f"\n\n## {now} — Evaluator failure action record\nRun ${{ github.run_id }} failed before shard publication; no successful result inferred.\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md
+          git commit -m "Phase 109: log failed evaluator shard"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Publish compressed results and checkpoint
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/phase109/evaluation_shards results/phase109/evaluation_shard_summary.json results/phase109/evaluation_progress.json results/phase109/PHASE109_EVALUATION_SHARD_REPORT.md
+          git add PHASE109_STATUS.md PHASE109_RESEARCH_LOG.md PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md README.md
+          git commit -m "Phase 109: publish bounded EOD grid evaluation shard"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            git fetch origin "${GITHUB_REF_NAME}"
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-edit -X ours "origin/${GITHUB_REF_NAME}"
+          done
+          exit 1
+
+      - name: Dispatch the next shard automatically
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          remaining=$(python -c 'import json; print(json.load(open("results/phase109/evaluation_progress.json"))["remaining_supported_configs"])')
+          total=$(python -c 'import json; print(json.load(open("results/phase109/evaluation_progress.json"))["total_supported_source_feasible_configs"])')
+          if [[ "$remaining" -le 0 || "$total" -le 0 ]]; then
+            echo "Grid evaluation has no remaining supported configurations."
+            selection_status=$(python -c 'import json; from pathlib import Path; p=Path("results/phase109/selection_audit_summary.json"); print(json.load(p.open()).get("status","MISSING") if p.exists() else "MISSING")')
+            shortlist=$(python -c 'import json; from pathlib import Path; p=Path("results/phase109/selection_audit_summary.json"); print(json.load(p.open()).get("final_shortlist_count",0) if p.exists() else 0)')
+            holdout_status=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("results/phase109/holdout_audit_summary.json")
+          print(json.loads(p.read_text()).get("status","NOT_RUN") if p.exists() else "NOT_RUN")
+          PY
+          )
+            if [[ "$selection_status" == "FINAL_SHORTLIST_READY_FOR_UNTOUCHED_HOLDOUT" && "$shortlist" -gt 0 && "$holdout_status" == "NOT_RUN" ]]; then
+              payload=$(python - <<'PY'
+          import json
+          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
+          PY
+          )
+              curl --silent --show-error --fail -X POST \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-holdout-evaluation.yml/dispatches" \
+                -d "$payload"
+              echo "Started one-shot held-out replay for frozen validation shortlist ($shortlist configs)."
+            else
+              echo "No frozen shortlist ready; no holdout is run. selection_status=$selection_status shortlist=$shortlist prior_holdout=$holdout_status"
+            fi
+            exit 0
+          fi
+          payload=$(python - <<'PY'
+          import json
+          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
+          PY
+          )
+          curl --silent --show-error --fail -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-evaluate-grid.yml/dispatches" \
+            -d "$payload"
+          echo "Next shard dispatched; remaining eligible configs=$remaining."
+
+      - name: Upload compact audit artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase109-evaluation-${{ github.run_id }}
+          path: |
+            results/phase109/evaluation_shard_summary.json
+            results/phase109/evaluation_progress.json
+            results/phase109/PHASE109_EVALUATION_SHARD_REPORT.md
+          if-no-files-found: warn
