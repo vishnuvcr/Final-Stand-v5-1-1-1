@@ -225,6 +225,10 @@ def read_archive(path,expected_date):
         sym=str(value(row,*aliases["symbol"])).strip().upper()
         inst=str(value(row,*aliases["instrument"])).strip().upper()
         if sym not in INDEX_SYMBOLS: continue
+        # NSE UDiFF uses IDO/IDF; normalize to evaluator's canonical names.
+        if udiff:
+            if inst=="IDO": inst="OPTIDX"
+            elif inst=="IDF": inst="FUTIDX"
         if inst not in {"OPTIDX","FUTIDX"}: continue
         record={"date":expected_date.isoformat(),"symbol":sym,"instrument":inst,
           "expiry":parse_date(value(row,*aliases["expiry"])),"strike":number(value(row,*aliases["strike"])),
