@@ -177,6 +177,29 @@ def expected_weekdays(start,end):
         cur+=timedelta(days=1)
 
 
+def observed_index_sessions(start,end,calendar_path=None):
+    """Read prior public session observations, including Saturday/Sunday trading days."""
+    path=Path(calendar_path) if calendar_path else OUT/"niftyindices_session_calendar.csv"
+    if not path.exists():
+        return []
+    sessions=[]
+    with path.open(newline="",encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            day=parse_date(row.get("date"))
+            if day and start.isoformat()<=day<end.isoformat() and row.get("nifty50_present")=="1":
+                sessions.append(date.fromisoformat(day))
+    return sorted(set(sessions))
+
+
+def requested_dates(start,end,calendar_path=None):
+    """Union weekday probes with all previously observed official NIFTY50 session dates."""
+    weekdays=list(expected_weekdays(start,end))
+    observed=observed_index_sessions(start,end,calendar_path)
+    extras=sorted(set(observed)-set(weekdays))
+    dates=sorted(set(weekdays)|set(observed))
+    return weekdays,observed,extras,dates
+
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--from-date",default="2023-10-01")
@@ -187,8 +210,10 @@ def main():
     start=date.fromisoformat(args.from_date); end=date.fromisoformat(args.to_date)
     if end<=start: raise ValueError("to-date must be after from-date")
     CACHE_ROOT.mkdir(parents=True,exist_ok=True); OUT.mkdir(parents=True,exist_ok=True)
-    dates=list(expected_weekdays(start,end))
+    weekday_dates,observed_sessions,supplemental_sessions,dates=requested_dates(start,end)
     if args.max_days>0: dates=dates[:args.max_days]
+    attempted_weekdays=sum(1 for day in dates if day.weekday()<5)
+    attempted_supplemental_sessions=sum(1 for day in dates if day in set(supplemental_sessions))
     out_rows=[]
     failures=Counter()
     for ix,day in enumerate(dates,1):
@@ -220,7 +245,7 @@ def main():
         out_rows.append(row)
         failures[row.get("status","UNKNOWN")]+=1
         if ix%25==0:
-            print(json.dumps({"progress":ix,"total_weekdays":len(dates),"date":day.isoformat(),
+            print(json.dumps({"progress":ix,"total_requested_dates":len(dates),"date":day.isoformat(),
                               "archives_parsed":sum(1 for r in out_rows if r["status"] in {"DOWNLOADED_AND_PARSED","CACHE_HIT_VALIDATED"}),
                               "no_archive_or_error":sum(1 for r in out_rows if r["status"]=="NO_ARCHIVE_OR_FETCH_ERROR")},sort_keys=True),flush=True)
         # Polite pacing even after cached items.
@@ -232,7 +257,14 @@ def main():
     good=[r for r in out_rows if r.get("status") in {"DOWNLOADED_AND_PARSED","CACHE_HIT_VALIDATED"}]
     summary={
       "generated_utc":datetime.now(timezone.utc).isoformat(),"from_date":start.isoformat(),"to_date_exclusive":end.isoformat(),
-      "requested_weekdays":len(dates),"archive_dates_parsed":len(good),
+      "requested_weekdays":attempted_weekdays,
+      "weekdays_in_requested_window":len(weekday_dates),
+      "requested_session_dates":len(dates),
+      "observed_nifty50_sessions_in_requested_window":len(observed_sessions),
+      "supplemental_observed_index_sessions_in_requested_window":len(supplemental_sessions),
+      "supplemental_observed_index_sessions_probed":attempted_supplemental_sessions,
+      "index_session_calendar_available":(OUT/"niftyindices_session_calendar.csv").exists(),
+      "archive_dates_parsed":len(good),
       "no_archive_or_fetch_error":sum(r.get("status")=="NO_ARCHIVE_OR_FETCH_ERROR" for r in out_rows),
       "legacy_archive_count":sum(r.get("schema")=="LEGACY" for r in good),
       "udiff_archive_count":sum(r.get("schema")=="UDiFF" for r in good),
@@ -260,7 +292,12 @@ def main():
       "| Metric | Result |","|---|---:|",
     ]
     for label,key in [
-      ("Weekdays requested","requested_weekdays"),("Valid archive dates parsed","archive_dates_parsed"),
+      ("Weekdays requested/probed","requested_weekdays"),
+      ("Weekdays in date window","weekdays_in_requested_window"),
+      ("All requested session-date probes","requested_session_dates"),
+      ("Observed NIFTY 50 sessions in window","observed_nifty50_sessions_in_requested_window"),
+      ("Supplemental observed weekend/special sessions","supplemental_observed_index_sessions_probed"),
+      ("Valid archive dates parsed","archive_dates_parsed"),
       ("Legacy archives","legacy_archive_count"),("UDiFF archives","udiff_archive_count"),
       ("Selected option rows","selected_index_option_rows"),("Identity-complete rows","identity_complete_rows"),
       ("Price-complete rows","price_complete_rows"),("Positive-volume rows","positive_volume_rows"),
@@ -270,7 +307,7 @@ def main():
       ("Weekday no-archive/fetch failures","no_archive_or_fetch_error")]:
         lines.append("| "+label+" | "+format(summary[key],",")+" |")
     lines.extend(["","## Interpretation","",
-      "The downloader caches original official NSE daily archives privately and publishes no raw option rows. Weekdays without a valid archive can include exchange holidays or source/network issues; this is not an authoritative exchange-calendar coverage count.",
+      "The downloader caches official NSE daily archives privately and publishes no raw option rows. When a prior NSE Indices session calendar is available, this run also probes any observed NIFTY 50 sessions outside Monday-Friday (for example special Saturday/Sunday sessions). Weekdays without a valid archive may be holidays or source/network issues; the NIFTY 50 series is an observed-session proxy, not a legal exchange calendar.",
       "Before using these data for strategy backtesting, Phase 109 still needs: (1) reconcile all actual exchange sessions using an official trading calendar; (2) verify exact expiry/strike/option-type identity and schema transitions; (3) confirm lot size and contract specifications per date (legacy files do not supply lot size); (4) exclude zero-volume and otherwise non-executable rows; (5) build development/validation/untouched chronological splits; and (6) prove cost/accounting reconciliation. EOD high/low cannot be used to claim exact stop/target execution or bid/ask fills.",
       "No profitable strategy or completed exhaustive grid is implied by this archive count."])
     (OUT/"NSE_INDEX_OPTIONS_BACKFILL_REPORT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
