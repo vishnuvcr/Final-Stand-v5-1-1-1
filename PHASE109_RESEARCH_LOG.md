@@ -45,3 +45,7 @@
 - Review found that no-regime families carried volatility lookback and regime-definition axes even though those values did not affect their rule, creating repeated result paths under nominally different configurations. This was corrected before any new corrected-grid results are interpreted.
 - Every family now uses 1,080 base configs (5 lookbacks × 4 signal thresholds × 3 strikes × 2 exits × 9 risk profiles). Volatility lookback adds only for realized-vol/trend-range regimes; two regime definitions add only for realized-vol regime; three OI methods add only for OPTIONS_FLOW confirmations.
 - The evaluator now uses the actual percent named in each stop/target profile. All new exact counts and manifest hashes must come from the compiler. This is a design correction only, not a trading result.
+
+## 2026-10-12 — Compiler gate repair
+- The latest compiler attempt (run 38172152251) stopped at Python compilation before any source probing due to a mismatched list terminator in family_feasibility.py. Corrected it and logged the error; this attempt has zero strategy evaluations.
+- The next push-triggered run is the verification gate for the correction. Do not reuse any prior assumption that the family feasibility stage passed until that run is green.
