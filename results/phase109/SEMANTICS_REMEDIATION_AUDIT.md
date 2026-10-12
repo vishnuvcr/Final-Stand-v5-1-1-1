@@ -12,6 +12,7 @@
 | EMA crossover | Current EMA spread sign only | Requires a previous/current sign crossing and threshold |
 | Cross-asset confirmation | Reused the opposite domestic index as generic cross-asset evidence | Unsupported confirmation families are blocked |
 | Realised-volatility low/high | Computed a state but did not select a target state | Blocked until target state is explicitly preregistered |
+| Risk-profile execution | Escaped stop/target regex could fail to parse registered premium barriers | Shared `parse_risk_profile()` helper and regression coverage |
 | Resume reproducibility | Existing cursor could be reused by modified logic | Engine version bump resets cursor; v2 results separate from v1 |
 
 ## Rule coverage
