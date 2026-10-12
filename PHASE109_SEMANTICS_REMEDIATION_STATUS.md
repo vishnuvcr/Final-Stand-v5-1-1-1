@@ -56,3 +56,10 @@ The implementation tests passed 29/29 in run [38224068522](https://github.com/vi
 - Automated regression run [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed **29/29 tests**, including the new one-precomputation-per-symbol test.
 - Acquisition run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) has completed options, Dhan and index-futures acquisition steps; IV/Greeks derivation remains active at this checkpoint. V2 results are still pending source gate and evaluator dispatch.
 - No strategy is promoted; cost, execution realism, validation, multiple-testing and holdout requirements remain unchanged.
+
+## Automated checkpoint — 2026-10-12 08:48 UTC
+
+- [Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224200260)
+- Engine: phase109-eod-engine-v2-semantics; status: PARTIAL_SHARD_COMPLETE; cursor [0,2,000).
+- This shard: 2,000 configurations; 48,000 cost rows. Cumulative: 2,000 configurations; 170,800 remaining.
+- This is workflow/evaluation progress only. OHLC execution proxies are not verified fills; no strategy promoted.

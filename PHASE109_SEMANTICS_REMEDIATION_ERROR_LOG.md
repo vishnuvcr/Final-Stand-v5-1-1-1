@@ -34,3 +34,6 @@
 - Correction: precompute per-symbol feature maps once immediately after loading the source data and reuse them inside every task. The intended feature values and strategy decisions are unchanged.
 - Regression evidence: [run 38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed all 29 offline tests, including the precomputation-call-count test.
 - Limitation: no full-shard runtime comparison has yet been observed, so the actual wall-time reduction is not quantified. The active acquisition/evaluation workflows remain authoritative for empirical checkpoints.
+
+## 2026-10-12 08:48 UTC — v2 shard audit
+- Archive parse/duplicate warnings: 0; skipped reasons: {}. No raw records or secrets published. No profitability assertion from shard completion.

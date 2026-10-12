@@ -42,31 +42,12 @@ On this isolated remediation branch, the semantic workflow [38221129326](https:/
 
 The remediation branch's existing v1 files reflect its fork point and must not be read as the newer parent branch's ledger. A corrected v2 run starts with a new engine identifier and cursor zero. No strategy promoted.
 
-## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 07:14 UTC)
+## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 08:48 UTC)
 
-- Eligible implemented/source-feasible configs: 594,000; cursor [0,2,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
-- Cumulative completed ranges=1; configs attempted=2,000; cost rows=48,000; remaining eligible configs=592,000.
+- Eligible implemented/source-feasible configs: 172,800; cursor [0,2,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
+- Cumulative completed ranges=1; configs attempted=2,000; cost rows=48,000; remaining eligible configs=170,800.
 - Official option archives loaded=743; unique option archive dates=743; parse/duplicate warnings=0.
 - Development window: 2024-10-01–2025-09-30. Validation: 2025-10-01–2026-03-31. The 2026-04-01 onward holdout is not scored during the configuration sweep.
 - Net returns use the canonical transaction-cost model, with daily OHLC entry/exit proxies; they are not observed achieved fills. Multiple-testing correction and holdout remain pending. No strategy is promoted.
 - [Shard report](results/phase109/PHASE109_EVALUATION_SHARD_REPORT.md) · [summary](results/phase109/evaluation_shard_summary.json) · [resume ledger](results/phase109/evaluation_progress.json) · [compressed results](results/phase109/evaluation_shards/)
-
-## 109.3 — Historical data acquisition checkpoint
-
-Last updated: 2026-10-12 08:32 UTC
-
-- Date range: 2023-10-01 through 2026-10-09 (end exclusive).
-- Weekdays probed: 789; valid official NSE archive dates parsed/cached: 743; weekdays without archive or with fetch/schema errors: 46.
-- Schema counts: legacy=185; UDiFF=558.
-- Selected index-option rows: 3,321,984; identity complete: 3,321,984; price complete: 3,321,984; positive volume: 1,353,090; zero volume: 1,968,894; invalid OHLC with positive volume: 0; duplicate daily contract keys: 0; date mismatches: 0.
-- Raw archive cache bytes: 787,820,355. Raw archives remain in the Actions cache; only aggregate coverage data and hashes are committed.
-- **This is still source acquisition, not a strategy backtest.** Weekdays without an archive may be exchange holidays, or may represent source/URL issues; no missing weekday is declared a trading-session gap until compared to an official trading calendar.
-- Official NSE Indices India VIX / NIFTY 50 / NIFTY BANK series: PASS; successful chunk-series calls=12, failed=0; see [context report](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md).
-- Dhan rolling weekly ATM historical options: PASS; 75,177 5-minute rows (calls=37,590, puts=37,587) from 2024-10-01 to 2026-10-09; successful chunks 50/50; invalid/missing IV rows 463; feature-only, not fixed-contract fills. See [Dhan report](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md).
-- Official NSE index-futures extraction: 743 dates / 8,916 FUTIDX rows cached privately; invalid positive-volume OHLC=4; duplicate date-symbol-expiry keys=0; missing lot size=2,220. See [futures audit](results/phase109/NSE_INDEX_FUTURES_AUDIT.md).
-- Exact-contract model IV/Greeks: PASS; 769,213 valid rows across 499 UDiFF dates; premium-below-model-bound exclusions 58,888; upper-bound exclusions 0; other solver failures 37,032. Uses flat r=6.5%, q=0%; model estimates only. See [model IV/Greeks audit](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
-- Option archive/calendar reconciliation: 1 observed NIFTY 50 sessions had no valid option archive; 0 of them had a no-archive/fetch status; full date lists/samples are in [calendar reconciliation report](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
-- Remaining data gate: official holiday/exception calendar reconciliation; source-rights review; historical contract/lot-size specification; chronologically separated development/validation/untouched OOS; FII publication lags; Dhan expiry and fixed-contract semantics.
-- [Coverage table](results/phase109/nse_index_options_daily_coverage.csv) · [machine-readable summary](results/phase109/nse_index_options_backfill_summary.json) · [option archive report](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md).
-- [Official India VIX/index context audit](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [context summary JSON](results/phase109/niftyindices_context_summary.json) · [date-only session calendar](results/phase109/niftyindices_session_calendar.csv) · [archive/calendar reconciliation](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
 

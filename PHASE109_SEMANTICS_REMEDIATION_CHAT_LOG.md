@@ -21,3 +21,6 @@ Run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs
 ## 2026-10-12 08:31 UTC — Resume / evaluator throughput correction
 
 User requested “Resume”. Visible action summary: checked current Phase 109 Actions and read the remediation plan, status, research log, error log and visible chat log before making a code change. The source acquisition workflow had completed official NSE archive acquisition, Dhan rolling ATM feature acquisition and index-futures extraction, and was deriving model IV/Greeks. The evaluator's option-chain feature aggregation was found to repeat for every configuration. It is now precomputed once per supported symbol per shard. The new test workflow [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed 29/29 tests. The corrected v2 shard is still pending source-gated dispatch; no profitability conclusion or strategy promotion is claimed.
+
+## 2026-10-12 08:48 UTC — Automated v2 shard action
+The corrected evaluator published cursor [0,2,000) with 2,000 attempted configurations and 48,000 cost rows. The untouched holdout is not used for selection and no strategy is promoted.
