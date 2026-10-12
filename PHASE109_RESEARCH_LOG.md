@@ -35,3 +35,8 @@
 - Family input feasibility: 1,025 families; 923 blocked on unavailable inputs, 54 with proxy/execution gates, 48 with fields present but final gates pending. This is not a backtest.
 - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
 
+## 2026-10-12 — Restart fixes before first valid shard
+- Fixed the merged-index audit's field mismatch after acquisition run 38207969439 failed; chunk-level date-parse metrics are now used for that gate.
+- Corrected UDiFF normalization in the evaluator (IDO→OPTIDX, IDF→FUTIDX) and model-Greeks extractor (IDO). Added a synthetic UDiFF evaluator regression test. This addresses code paths that could otherwise silently produce zero option/factor rows.
+- Compiler run 38211795297 passed its compile/source-inventory steps and invoked its dispatch step; the evaluation job's actual execution/result must be verified separately.
+- Next: confirm latest acquisition and regression-test outcomes, inspect evaluation shard counts/coverage, and only then report empirical strategy performance. No promotion yet.
