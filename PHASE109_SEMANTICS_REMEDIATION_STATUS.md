@@ -2,7 +2,7 @@
 
 Updated: 2026-10-12  
 Branch: `phase-109-strategy-semantics-remediation`  
-State: **SEMANTIC AND PERFORMANCE REGRESSION TESTS PASS; DATA PIPELINE ACTIVE; V2 SHARD PENDING**  
+State: **32 REGRESSION TESTS PASS; HISTORICAL-CONTEXT COVERAGE REMEDIATION ACTIVE; V3 SHARD PENDING**  
 Promotion: **NONE**
 
 ## Remediation
@@ -21,7 +21,7 @@ Promotion: **NONE**
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-The implementation tests passed 29/29 in run [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522), including the new assertion that invariant daily options-flow aggregates are precomputed once per supported symbol. The source acquisition workflow [run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) completed option archive acquisition, Dhan rolling ATM feature acquisition and exact-contract futures extraction; it is currently deriving model IV/Greeks, with index/VIX context, date reconciliation, report publication and the source-gated v2 dispatch still pending. The corrected evaluator has not yet produced a verified v2 shard. No strategy profitability conclusion or promotion is available.
+The test suite passed **32/32** in run [38224798558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798558), including regression tests for one-time feature precomputation and fail-closed rejection of truncated official context. The preceding acquisition audit exposed that a 3-year index/VIX request had only 218 dates per series, despite 743 option archive dates; the old gate checked only for nonempty context. Corrective code now uses 60-calendar-day NSE history windows, enforces at least 60% of request-window weekdays per series, reconciles index/options session gaps, saves cache before dispatch, and advances the evaluator to engine v3 with its own runtime context-coverage gate. The corrected source workflow [run 38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) is reacquiring/revalidating data; the prior v2 shard [run 38224200260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224200260) is still running and is diagnostic only. The v3 evaluator run [38224798595](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798595) is pending. No strategy profitability conclusion or promotion is available.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
@@ -56,3 +56,12 @@ The implementation tests passed 29/29 in run [38224068522](https://github.com/vi
 - Automated regression run [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed **29/29 tests**, including the new one-precomputation-per-symbol test.
 - Acquisition run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) has completed options, Dhan and index-futures acquisition steps; IV/Greeks derivation remains active at this checkpoint. V2 results are still pending source gate and evaluator dispatch.
 - No strategy is promoted; cost, execution realism, validation, multiple-testing and holdout requirements remain unchanged.
+
+
+## 2026-10-12 08:38 UTC — Official context coverage gate added
+
+- The previous three-year NSE index/VIX audit had only 218 observed dates per series and 526 valid option-archive dates without a corresponding NIFTY 50 observation. Its status was too permissive because PASS did not enforce a minimum date-density requirement.
+- Corrected the endpoint windows to no more than 60 calendar days; added a coverage threshold of at least 60% of request-window weekdays per series, strict calendar reconciliation and a source gate requiring archive/index overlap.
+- Bumped the evaluator to phase109-eod-engine-v3-context-coverage so v2 checkpoints produced with incomplete context cannot be reused. The evaluator now raises an explicit coverage error before scoring if the official India VIX, NIFTY 50 or NIFTY BANK history is truncated.
+- Source acquisition run [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) is active; v3 evaluator run [38224798595](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798595) is pending. The old v2 run [38224200260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224200260) is diagnostic only and its results will be separated by the engine-version reset.
+- Regression run [38224798558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798558) passed 32/32 tests; the immediately preceding staged test run failed only because the engine-version expectation still said v2 and was corrected before the passing run.
