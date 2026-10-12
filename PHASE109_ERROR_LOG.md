@@ -17,3 +17,9 @@
 - The exhaustive Cartesian grid is large and must be resumed by deterministic shards. Any failed/skipped shard or cost case must remain explicitly logged.
 - Resolved workflow error: actions/setup-python pip caching failed because this repository has no requirements.txt or pyproject.toml; removed the pip-cache assumption.
 - Resolved compiler error: the architecture gate assumed 1,000 families although 41 core rules × 5 confirmation structures × 5 regime gates creates 1,025; changed the gate to compare against registered Cartesian cardinality.
+
+## 2026-10-12 — Acquisition/evaluator regression found during restart
+- Acquisition run 38207969439 failed in the final India VIX/index summary with KeyError `unparseable_date_rows`: the overall-status expression looked for a chunk-only field on merged metrics. Corrected the audit to check the chunk summaries instead.
+- Code review found a second, more consequential UDiFF mapping defect: evaluator and model-Greeks extractor filtered the modern `FinInstrmTp` values as legacy `OPTIDX`, while official UDiFF index options are `IDO` and futures are `IDF`. Normalized these codes before evaluation and added a network-free regression fixture. Prior evaluator runs with the old mapping must not be interpreted as strategy results.
+- The current public backfill summary is stale (generated 04:22 UTC, before the UDiFF parser correction) and still reports legacy-only lot-size counts. Wait for fresh acquisition output before opening the source gate.
+- Official NSE index/VIX endpoint response has not yet been validated end-to-end; no index/VIX availability or model-Greeks coverage is claimed until fresh run summaries confirm it.
