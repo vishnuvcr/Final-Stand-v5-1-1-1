@@ -8,6 +8,11 @@ on:
         required: true
         default: "2000"
         type: string
+      auto_continue:
+        description: Continue v1 shards automatically (disabled by default while semantic remediation is active)
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -171,7 +176,7 @@ jobs:
           exit 1
 
       - name: Dispatch the next shard automatically
-        if: success()
+        if: success() && inputs.auto_continue
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
