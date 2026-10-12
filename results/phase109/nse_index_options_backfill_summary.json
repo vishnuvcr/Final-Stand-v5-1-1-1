@@ -4,7 +4,7 @@
   "date_mismatch_rows": 0,
   "duplicate_daily_contract_keys": 0,
   "from_date": "2023-10-01",
-  "generated_utc": "2026-10-12T08:44:05.745726+00:00",
+  "generated_utc": "2026-10-12T08:56:27.016279+00:00",
   "identity_complete_rows": 3321984,
   "interpretation": "Weekdays with no archive may be exchange holidays or fetch/URL errors; they are not automatically treated as sessions. A separate official calendar/coverage audit is required. This data gate does not mean any strategy was tested.",
   "invalid_ohlc_positive_volume_rows": 0,

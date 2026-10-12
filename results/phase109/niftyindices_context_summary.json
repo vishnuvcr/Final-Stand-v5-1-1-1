@@ -972,14 +972,14 @@
     }
   ],
   "coverage_failures": [],
-  "coverage_threshold_ratio": 0.6,
+  "coverage_threshold_ratio": 0.9,
   "errors": [],
   "expected_weekdays_in_requested_window": 789,
   "failed_chunk_series_calls": 0,
   "fetch_cache_modes": {
-    "NETWORK": 57
+    "CACHE": 57
   },
-  "generated_utc": "2026-10-12T08:51:39.339648+00:00",
+  "generated_utc": "2026-10-12T09:01:22.019954+00:00",
   "merged_series_summary": [
     {
       "all_OHLC_values_max": 31.71,
@@ -992,7 +992,7 @@
       "merged_rows_sha256": "eb58614c32320a1ac2cd1857a3d35aa4e224943771823218af441b12c809e7a2",
       "min_date": "2023-10-03",
       "minimum_close": 9.15,
-      "minimum_expected_unique_dates": 474,
+      "minimum_expected_unique_dates": 711,
       "missing_OHLC_rows": 0,
       "series": "INDIA_VIX",
       "source_rows_before_date_dedup": 748,
@@ -1009,7 +1009,7 @@
       "merged_rows_sha256": "86d1127f9b25933c3ec1c221cdb9e70dd3f17cb6ef597e1d822e0ad2ca47eef5",
       "min_date": "2023-10-03",
       "minimum_close": 18857.25,
-      "minimum_expected_unique_dates": 474,
+      "minimum_expected_unique_dates": 711,
       "missing_OHLC_rows": 0,
       "series": "NIFTY 50",
       "source_rows_before_date_dedup": 748,
@@ -1026,14 +1026,14 @@
       "merged_rows_sha256": "c92b70899f5c40c45b7faeef36967b2c88ae52625ee0664d3412b141877e392d",
       "min_date": "2023-10-03",
       "minimum_close": 42280.15,
-      "minimum_expected_unique_dates": 474,
+      "minimum_expected_unique_dates": 711,
       "missing_OHLC_rows": 0,
       "series": "NIFTY BANK",
       "source_rows_before_date_dedup": 748,
       "unique_date_count": 748
     }
   ],
-  "minimum_expected_unique_dates_per_series": 474,
+  "minimum_expected_unique_dates_per_series": 711,
   "note": "Official index/VIX input feasibility only; not strategy evaluation. Series rows are stored in Actions cache. Do not substitute unverified public-HF VIX labels.",
   "observed_calendar_max_date": "2026-10-08",
   "observed_calendar_min_date": "2023-10-03",

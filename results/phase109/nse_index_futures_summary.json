@@ -3,7 +3,7 @@
   "duplicate_daily_contract_keys": 0,
   "failed_dates": 0,
   "futures_dates_parsed": 743,
-  "generated_utc": "2026-10-12T08:47:35.868646+00:00",
+  "generated_utc": "2026-10-12T08:59:10.757763+00:00",
   "identity_complete_rows": 8916,
   "interpretation": "Futures rows are extracted for feature/basis research only; daily OHLC/settlement is not an intraday fill model.",
   "invalid_ohlc_positive_volume_rows": 4,

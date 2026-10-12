@@ -53,7 +53,7 @@ The remediation branch's existing v1 files reflect its fork point and must not b
 
 ## 109.3 — Historical data acquisition checkpoint
 
-Last updated: 2026-10-12 08:51 UTC
+Last updated: 2026-10-12 09:01 UTC
 
 - Date range: 2023-10-01 through 2026-10-09 (end exclusive).
 - Weekdays probed: 789; valid official NSE archive dates parsed/cached: 743; weekdays without archive or with fetch/schema errors: 46.

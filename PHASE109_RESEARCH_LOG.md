@@ -50,6 +50,3 @@
 - Exact-contract model-derived IV/Greeks: 769,213 valid rows across 499 UDiFF archive dates. Exclusions: below-model lower bound 58,888; above-model upper bound 0; solver failures 37,032. Constant r=6.5%, q=0% must be sensitivity-tested; these are not exchange-reported Greeks.
 - Backfill report: [NSE index-options coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md). Strategy evaluation, contract-size audit, out-of-sample split and multiple-testing correction remain pending.
 
-## 2026-10-12 08:48 UTC — Grid evaluation shard
-- Engine phase109-eod-engine-v2-semantics attempted 2,000 configs and produced 48,000 rows across 24 cost cases/config; cumulative attempts 2,000, remaining 170,800.
-- Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted.

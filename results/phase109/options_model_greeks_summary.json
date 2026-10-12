@@ -5,7 +5,7 @@
   "execution_warning": "Exact contract IDs are preserved but marks are EOD closes and can be stale. Model IV/Greeks are not direct market Greeks; no bid/ask/depth or achieved fills.",
   "failed_dates": 0,
   "first_date": "2024-10-01",
-  "generated_utc": "2026-10-12T08:50:43.059402+00:00",
+  "generated_utc": "2026-10-12T09:01:18.984586+00:00",
   "last_date": "2026-10-08",
   "missing_contract_price_or_spot_rows": 0,
   "model": "European Black-Scholes, flat continuously compounded 6.5% risk-free rate and 0% dividend yield; model-implied IV is solved from closing premium, UDiFF spot, strike and expiry. Greeks are calculated at that IV.",
