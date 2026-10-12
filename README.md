@@ -1,3 +1,15 @@
+# Phase 109 family-compliance audit (updated 2026-10-12)
+
+**Scope gap is now explicitly tracked:** the full research plan requires at least 1,000 meaningfully distinct strategy families and at least 1,000 configurations per family. The broad compiler registers 1,025 architecture combinations, 3,719,520 configuration tuples and 89,268,480 cost rows; these are manifest counts, not completed tests. The semantic-remediation evaluator currently implements eight core signal methods, so its bounded V4 results do not satisfy the full-family requirement. The full plan remains active and no strategy is promoted.
+
+- [Family-compliance plan](PHASE109_FAMILY_COMPLIANCE_PLAN.md)
+- [Status and acceptance checklist](PHASE109_FAMILY_COMPLIANCE_STATUS.md)
+- [Research log](PHASE109_FAMILY_COMPLIANCE_RESEARCH_LOG.md)
+- [Error/limitation log](PHASE109_FAMILY_COMPLIANCE_ERROR_LOG.md)
+- [Visible conversation/action log](PHASE109_FAMILY_COMPLIANCE_CHAT_LOG.md)
+- [Broad registry/compiler report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/results/phase109/PHASE109_GRID_COMPILER_REPORT.md)
+- [Current narrow semantic-remediation branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-strategy-semantics-remediation)
+
 <!-- PHASE109_GRID_STATUS_START -->
 # Phase 109 — 1,000+ Strategy-Family Grid and Evaluation
 
