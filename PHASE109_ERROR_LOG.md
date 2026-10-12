@@ -17,3 +17,10 @@
 - The exhaustive Cartesian grid is large and must be resumed by deterministic shards. Any failed/skipped shard or cost case must remain explicitly logged.
 - Resolved workflow error: actions/setup-python pip caching failed because this repository has no requirements.txt or pyproject.toml; removed the pip-cache assumption.
 - Resolved compiler error: the architecture gate assumed 1,000 families although 41 core rules × 5 confirmation structures × 5 regime gates creates 1,025; changed the gate to compare against registered Cartesian cardinality.
+
+## 2026-10-12 — Acquisition gate and compiler workflow repair
+- Official NSE archive acquisition completed successfully: 743/789 requested weekdays parsed; 1,003,768 selected option rows have complete identity and OHLC fields, 368,210 positive-volume rows, 635,558 zero-volume rows, zero duplicate keys and zero invalid positive-volume OHLC rows. Forty-six weekdays remain no-archive/fetch-uncertain and must be reconciled to an official session calendar.
+- **Critical blocker:** all 1,003,768 option rows are reported missing/without historical lot size. Do not calculate net P&L until date-appropriate lot sizes are obtained and reconciled.
+- Official NIFTY 50, NIFTY BANK and India VIX history currently contain zero rows; dependent market-regime and cross-asset features remain blocked. Model-derived IV/Greeks also has zero valid rows because no eligible positive-volume contracts were processed in the selected recent UDiFF subset.
+- Compiler dispatch step failed with a Python SyntaxError because a shell heredoc was nested inside a Python heredoc. Fixed the workflow by making the eligibility calculation a shell-level Python command. The retry loop also fetched/rebased `GITHUB_REF_NAME` (which is `main` for `workflow_run`) rather than `TARGET_BRANCH`; corrected it to use the target branch.
+- Added a fail-closed dispatch gate: evaluation will not start while any selected option row lacks verified lot size or official index/VIX context coverage is empty. The 3,719,520 configurations and 89,268,480 cost rows remain manifest counts, not tested returns.
