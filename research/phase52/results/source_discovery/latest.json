@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-11T10:21:39.408002+00:00",
+  "timestamp_utc": "2026-10-12T11:24:53.853454+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 19872,
+          "downloads": 20666,
           "likes": 5,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 611,
+          "downloads": 610,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-10T22:47:18.000Z",
-          "downloads": 246,
+          "last_modified": "2026-10-11T22:46:44.000Z",
+          "downloads": 241,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -115,6 +115,15 @@
       "query_url": "https://api.github.com/search/repositories?q=NIFTY+options+backtest&per_page=20&sort=updated",
       "status": "OK",
       "sources": [
+        {
+          "full_name": "suraj9321/dhan-api-backtest-options-framework",
+          "description": "End to end quant research stack for systematic Nifty option selling: event-driven backtester, vol/VRP signals, DhanHQ data pipeline.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-12T11:22:53Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/suraj9321/dhan-api-backtest-options-framework"
+        },
         {
           "full_name": "Aarya-19/nifty50-volatility-engine",
           "description": "Nifty 50 Implied Volatility Surface & Delta-Neutral Options Backtesting Engine",
@@ -285,15 +294,6 @@
           "stars": 1,
           "license": null,
           "url": "https://github.com/rishabhhurkat-coder/TradesBacktestingEngine"
-        },
-        {
-          "full_name": "omsingh090/options-research-platform",
-          "description": "Quantitative options research platform with Black-Scholes pricing, Greeks, backtesting, transaction-cost modelling, and paper trading.",
-          "default_branch": "main",
-          "pushed_at": "2026-08-20T06:21:20Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/omsingh090/options-research-platform"
         }
       ],
       "result_count": 20
@@ -371,7 +371,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-11T10:06:05Z",
+          "pushed_at": "2026-10-12T07:55:06Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
