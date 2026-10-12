@@ -8,7 +8,7 @@
 - Phase 108 run 38167282757 passed its ten-family/240-cost-row exploratory OHLC proxy screen; all ten were negative in primary and strict stress cases. No promotion.
 
 ## 2026-10-12 — Family registry and grid compiler
-- Deterministic registry build completed at 2026-10-12 03:34 UTC. Registered 1,025 architecture combinations; exact duplicate fingerprints=0; fingerprints=1,025.
+- Deterministic registry build completed at 2026-10-12 04:16 UTC. Registered 1,025 architecture combinations; exact duplicate fingerprints=0; fingerprints=1,025.
 - Minimum/maximum configurations per family: 1,080/19,440; complete applicable Cartesian universe=3,719,520 configuration tuples and 89,268,480 cost rows across 45 deterministic shards.
 - Registry and manifest hashes: registry `7554ceceb9df6a403f409b9877b6ff0b57c9b0bca724e4ee2c8c25799dbdf60d`; configuration `3253d8df32e73d5b66208373d7ca2d9e30fc20f656dbed52776b71fb31f9941a`; cost grid `0dc9f1792ba6b8eeec903577d3cfd83d122aaa36785248313982e7843a00e33f`; full manifest `f5c0439bc9d9b994a4b5b5ca2bc2260e5b26b8346b91335b4eed894ff5cae6cc`.
 - Self-test: PASS. This verifies count, distinct architecture fingerprints, valid per-family Cartesian counts, 24 cost scenarios and contiguous shard ranges only; it does not run the strategies.

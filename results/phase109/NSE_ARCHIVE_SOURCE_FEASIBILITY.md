@@ -1,6 +1,6 @@
 # Official NSE archive access and schema feasibility
 
-Generated: 2026-10-12T03:34:51.271247+00:00
+Generated: 2026-10-12T04:16:26.403126+00:00
 Overall probe: PASS
 
 Three schema-boundary dates are sampled: last pre-UDiFF session (5 July 2024), first UDiFF session (8 July 2024), and a recent session (8 October 2026). ZIP bytes were parsed in memory and not saved or published. This is not a historical backfill or performance test.
