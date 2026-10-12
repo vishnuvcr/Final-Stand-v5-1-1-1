@@ -1,6 +1,13 @@
 name: Phase 109 — resumable cost-adjusted options grid evaluation
 
 on:
+  push:
+    branches:
+      - phase-109-strategy-semantics-remediation
+    paths:
+      - "research/phase109/strategy_evaluator.py"
+      - "research/phase109/test_phase109_strategy_semantics.py"
+      - ".github/workflows/phase109-evaluate-grid.yml"
   workflow_dispatch:
     inputs:
       max_configs:
@@ -72,7 +79,7 @@ jobs:
           from pathlib import Path
           p=Path("results/phase109/evaluation_progress.json")
           s=json.loads(p.read_text()) if p.exists() else {}
-          valid=s.get("engine_version")=="phase109-eod-engine-v1"
+          valid=s.get("engine_version")=="phase109-eod-engine-v2-semantics"
           cursor=int(s.get("next_config_cursor",0) or 0) if valid else 0
           limit=int(os.environ.get("MAX_CONFIGS","2000") or 2000)
           if not 1<=limit<=20000:
@@ -114,6 +121,9 @@ jobs:
             ("PHASE109_RESEARCH_LOG.md",f"## {now} — Grid evaluation shard\n- Engine {s['engine_version']} attempted {s['configs_attempted']:,} configs and produced {s['cost_rows_generated']:,} rows across 24 cost cases/config; cumulative attempts {s['completed_configs_all_ranges']:,}, remaining {s['remaining_supported_configs']:,}.\n- Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted."),
             ("PHASE109_ERROR_LOG.md",f"## {now} — Data-quality and execution notes\n- Archive parse/duplicate warnings in this shard: {s['archive_parse_or_duplicate_warnings']:,}. Source gaps, zero-volume and unmatchable exact contracts are excluded and reported; detailed raw price rows are not published. Daily OHLC does not prove achieved fills."),
             ("PHASE109_CHAT_LOG.md",f"## {now} — Visible grid evaluation action\nThe evaluator processed cursor range [{s['global_config_start']:,},{s['global_config_end_exclusive']:,}), attempted {s['configs_attempted']:,} supported configurations and generated {s['cost_rows_generated']:,} cost rows. Development/validation only; untouched holdout preserved; no strategy promotion asserted."),
+            ("PHASE109_SEMANTICS_REMEDIATION_RESEARCH_LOG.md",f"## {now} — Corrected v2 evaluator checkpoint\n- Engine {s['engine_version']} processed cursor [{s['global_config_start']:,},{s['global_config_end_exclusive']:,}); attempted {s['configs_attempted']:,} configurations and emitted {s['cost_rows_generated']:,} cost rows.\n- Cumulative attempted {s['completed_configs_all_ranges']:,}; remaining {s['remaining_supported_configs']:,}. These remain EOD execution proxies, not verified fills."),
+            ("PHASE109_SEMANTICS_REMEDIATION_ERROR_LOG.md",f"## {now} — v2 shard audit\n- Archive parse/duplicate warnings: {s['archive_parse_or_duplicate_warnings']:,}; skipped reasons: {json.dumps(s.get('skipped_reasons',{}),sort_keys=True)}. No raw records or secrets published. No profitability assertion from shard completion."),
+            ("PHASE109_SEMANTICS_REMEDIATION_CHAT_LOG.md",f"## {now} — Automated v2 shard action\nThe corrected evaluator published cursor [{s['global_config_start']:,},{s['global_config_end_exclusive']:,}) with {s['configs_attempted']:,} attempted configurations and {s['cost_rows_generated']:,} cost rows. The untouched holdout is not used for selection and no strategy is promoted."),
           ]:
             q=Path(fn);q.write_text(q.read_text().rstrip()+"\n\n"+entry+"\n")
 
@@ -133,6 +143,12 @@ jobs:
             before,rest=text.split(start,1);_,after=rest.split(end,1)
             text=before+start+"\n"+block+end+after
           readme.write_text(text)
+
+          sem_path=Path("PHASE109_SEMANTICS_REMEDIATION_STATUS.md")
+          if sem_path.exists():
+            sem=sem_path.read_text()
+            sem=sem.rstrip()+f"\n\n## Automated checkpoint — {now}\n\n- [Actions run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n- Engine: {s['engine_version']}; status: {s['status']}; cursor [{s['global_config_start']:,},{s['global_config_end_exclusive']:,}).\n- This shard: {s['configs_attempted']:,} configurations; {s['cost_rows_generated']:,} cost rows. Cumulative: {s['completed_configs_all_ranges']:,} configurations; {s['remaining_supported_configs']:,} remaining.\n- This is workflow/evaluation progress only. OHLC execution proxies are not verified fills; no strategy promoted.\n"
+            sem_path.write_text(sem)
           PY
 
       - name: Log a failed shard without revealing raw data or credentials
@@ -147,10 +163,18 @@ jobs:
           old=p.read_text() if p.exists() else "# Phase 109 error log"
           p.write_text(old.rstrip()+f"\n\n## {now} — Grid evaluator failure\n- Run ${{ github.run_id }} failed before a successful shard checkpoint. Inspect the Actions log; do not copy credentials or raw authenticated responses into the repo. Last committed checkpoint remains the resume point.\n")
           c=Path("PHASE109_CHAT_LOG.md");c.write_text(c.read_text().rstrip()+f"\n\n## {now} — Evaluator failure action record\nRun ${{ github.run_id }} failed before shard publication; no successful result inferred.\n")
+          for fn,entry in [
+            ("PHASE109_SEMANTICS_REMEDIATION_ERROR_LOG.md",f"## {now} — v2 evaluation workflow failure\n- Run ${{ github.run_id }} failed before a verified shard checkpoint. Inspect the Actions job log; do not infer performance results."),
+            ("PHASE109_SEMANTICS_REMEDIATION_CHAT_LOG.md",f"## {now} — v2 evaluation failure action\nRun ${{ github.run_id }} failed before successful publication. No empirical conclusion was accepted.")
+          ]:
+            q=Path(fn)
+            if q.exists(): q.write_text(q.read_text().rstrip()+"\n\n"+entry+"\n")
+          sem=Path("PHASE109_SEMANTICS_REMEDIATION_STATUS.md")
+          if sem.exists(): sem.write_text(sem.read_text().rstrip()+f"\n\n## Automated failure checkpoint — {now}\n\n- [Actions run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) failed before successful publication. No profitability result inferred.\n")
           PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md
+          git add PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md PHASE109_SEMANTICS_REMEDIATION_STATUS.md PHASE109_SEMANTICS_REMEDIATION_ERROR_LOG.md PHASE109_SEMANTICS_REMEDIATION_CHAT_LOG.md
           git commit -m "Phase 109: log failed evaluator shard"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
@@ -161,7 +185,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/phase109/evaluation_shards results/phase109/evaluation_shard_summary.json results/phase109/evaluation_progress.json results/phase109/PHASE109_EVALUATION_SHARD_REPORT.md
-          git add PHASE109_STATUS.md PHASE109_RESEARCH_LOG.md PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md README.md
+          git add PHASE109_STATUS.md PHASE109_RESEARCH_LOG.md PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md PHASE109_SEMANTICS_REMEDIATION_STATUS.md PHASE109_SEMANTICS_REMEDIATION_RESEARCH_LOG.md PHASE109_SEMANTICS_REMEDIATION_ERROR_LOG.md PHASE109_SEMANTICS_REMEDIATION_CHAT_LOG.md README.md
           git commit -m "Phase 109: publish bounded EOD grid evaluation shard"
           for attempt in 1 2 3; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
