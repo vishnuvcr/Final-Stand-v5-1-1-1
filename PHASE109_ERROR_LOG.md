@@ -32,6 +32,6 @@
 - Dhan rolling ATM supplement status=PASS; failed/empty chunk-side requests=0; any missing window remains blocked. All Dhan rows are rolling ATM feature series, not fixed-contract execution prices.
 - Index-futures source gate: 0 archive dates failed extraction; 2,220 futures rows lack positive lot size; 4 positive-volume rows fail OHLC checks. Future/basis families stay blocked until these and spot synchronization are audited.
 - Model-IV/Greeks assumption warning: r=6.5%, q=0%, and EOD close/spot marks can bias estimates; 58,888 premiums were below the model lower bound and 0 above the model upper bound. Do not use excluded rows or report model Greeks as directly observed.
-- Cross-source session reconciliation found 1 NIFTY 50-observed dates without a valid option archive and 526 archive dates without a NIFTY 50 observed date. These require gap/boundary investigation and are not silently removed.
+- Cross-source session reconciliation found 5 NIFTY 50-observed dates without a valid option archive and 0 archive dates without a NIFTY 50 observed date. These require gap/boundary investigation and are not silently removed.
 - Raw source archives are cached privately and are not committed to this public repository. Public outputs contain date-level aggregates and hashes only.
 
