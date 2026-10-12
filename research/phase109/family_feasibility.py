@@ -256,7 +256,7 @@ def main():
       "- Greek-dependent families may use the separately labelled exact-contract Black-Scholes estimates only as model-derived features with explicit r=6.5%/q=0% sensitivity gates; directly observed Greeks and matched IV skew remain unavailable. Global-, FII/DII-, event-, news-, breadth- and corporate-action-dependent families stay blocked until their respective audited sources are present. Never substitute unlabeled or unverified proxies.",
       "- All P&L rows before 2024-10-01 remain blocked under the currently verified transaction-cost model. Earlier price history may serve as indicator warm-up, not as a net-return sample, until an approved pre-October-2024 cost schedule is implemented.",
       "",
-      "See family_data_feasibility.csv and family_data_feasibility_summary.json for the full list of missing inputs and eligibility decisions.")
+      "See family_data_feasibility.csv and family_data_feasibility_summary.json for the full list of missing inputs and eligibility decisions."])
     (OUT/"FAMILY_DATA_FEASIBILITY_REPORT.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
     print(json.dumps(summary,sort_keys=True))
 
