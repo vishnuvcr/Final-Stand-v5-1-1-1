@@ -127,7 +127,7 @@ def derive_day(path, trade_date):
     candidates=valid=volume_zero=missing=below_bound=upper_bound=other_fail=near_min=0
     per_symbol=Counter(); out=[]
     for row in reader:
-        if str(row.get("FinInstrmTp","")).strip().upper()!="OPTIDX": continue
+        if str(row.get("FinInstrmTp","")).strip().upper()!="IDO": continue
         symbol=str(row.get("TckrSymb","")).strip().upper()
         side=str(row.get("OptnTp","")).strip().upper()
         if symbol not in SYMBOLS or side not in {"CE","PE"}: continue
