@@ -509,6 +509,16 @@ def aggregate_chain_features(data,symbol,dates):
         previous=(ce_oi,pe_oi,ce_vol,pe_vol)
     return out
 
+def precompute_chain_features(data,dates):
+    """Build each supported underlying's daily chain features once per shard.
+
+    These features are invariant across parameter configurations. Recomputing the
+    full option chain inside the configuration loop multiplies archive-row scans
+    by the grid size without changing the signal definitions.
+    """
+    return {symbol:aggregate_chain_features(data,symbol,dates)
+            for symbol in sorted(INDEX_SYMBOLS)}
+
 
 def load_cost_cases():
     rows=read_csv(OUT/"cost_scenarios.csv")
@@ -728,6 +738,8 @@ def main():
     args=ap.parse_args()
     OUT.mkdir(parents=True,exist_ok=True)
     data=load_market()
+    dates_for_features=data["dates"]
+    chain_features_by_symbol=precompute_chain_features(data,dates_for_features)
     cost_model=load_cost_model()
     cost_fn_name,_=find_cost_function(cost_model)
     if not cost_fn_name: raise RuntimeError("Cost model API unresolved. No results emitted.")
@@ -767,7 +779,7 @@ def main():
             for i,x in enumerate(arr):
                 if x is not None and x>0:last=x
                 elif last is not None:arr[i]=last
-        chain_features=aggregate_chain_features(data,symbol,dates)
+        chain_features=chain_features_by_symbol.get(symbol,{})
         signals=[]; no_signal=Counter()
         for idx,d in enumerate(dates):
             if d<FIRST_COST_DATE-timedelta(days=45):continue
