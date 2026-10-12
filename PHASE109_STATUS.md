@@ -42,10 +42,10 @@ On this isolated remediation branch, the semantic workflow [38221129326](https:/
 
 The remediation branch's existing v1 files reflect its fork point and must not be read as the newer parent branch's ledger. A corrected v2 run starts with a new engine identifier and cursor zero. No strategy promoted.
 
-## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 14:45 UTC)
+## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 14:49 UTC)
 
-- Eligible implemented/source-feasible configs: 172,800; cursor [20,000,22,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
-- Cumulative completed ranges=11; configs attempted=22,000; cost rows=528,000; remaining eligible configs=150,800.
+- Eligible implemented/source-feasible configs: 172,800; cursor [22,000,24,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
+- Cumulative completed ranges=12; configs attempted=24,000; cost rows=576,000; remaining eligible configs=148,800.
 - Official option archives loaded=748; unique option archive dates=748; parse/duplicate warnings=0.
 - Development window: 2024-10-01–2025-09-30. Validation: 2025-10-01–2026-03-31. The 2026-04-01 onward holdout is not scored during the configuration sweep.
 - Net returns use the canonical transaction-cost model, with daily OHLC entry/exit proxies; they are not observed achieved fills. Multiple-testing correction and holdout remain pending. No strategy is promoted.
