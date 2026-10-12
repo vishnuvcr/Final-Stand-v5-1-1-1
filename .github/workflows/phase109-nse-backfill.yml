@@ -21,6 +21,7 @@ on:
   push:
     branches:
       - phase-109-exhaustive-parameter-grid
+      - phase-109-strategy-semantics-remediation
     paths:
       - "research/phase109/nse_backfill.py"
       - "research/phase109/niftyindices_history.py"
@@ -28,6 +29,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: phase109-writer-${{ github.ref }}
@@ -239,7 +241,7 @@ jobs:
           PY
 
       - name: Commit public aggregate outputs and logs (never raw market archives)
-        if: github.ref == 'refs/heads/phase-109-exhaustive-parameter-grid'
+        if: github.ref == 'refs/heads/phase-109-exhaustive-parameter-grid' || github.ref == 'refs/heads/phase-109-strategy-semantics-remediation'
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -292,3 +294,42 @@ jobs:
             results/phase109/options_model_greeks_summary.json
             results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md
           if-no-files-found: error
+
+      - name: Dispatch the corrected evaluator after source acquisition and cache save
+        if: success() && github.ref == 'refs/heads/phase-109-strategy-semantics-remediation'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          read -r cost_rows missing_lots index_rows < <(python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          p=Path("results/phase109/nse_index_options_daily_coverage.csv")
+          if not p.exists():
+              print(0, 1, 0)
+              raise SystemExit(0)
+          rows=csv.DictReader(p.open(encoding="utf-8"))
+          eligible=[r for r in rows
+                    if (r.get("expected_date") or "") >= "2024-10-01"
+                    and r.get("status") in {"DOWNLOADED_AND_PARSED","CACHE_HIT_VALIDATED"}]
+          count=sum(int(r.get("selected_index_option_rows",0) or 0) for r in eligible)
+          lots=sum(int(r.get("missing_lot_size_rows",0) or 0) for r in eligible)
+          context_path=Path("results/phase109/niftyindices_context_summary.json")
+          context=json.loads(context_path.read_text()) if context_path.exists() else {}
+          index_count=sum(int(x.get("unique_date_count",0) or 0) for x in context.get("merged_series_summary",[]))
+          print(count,lots,index_count)
+          PY
+          )
+          echo "Eligible-window exact-contract rows=$cost_rows; missing lot-size rows=$missing_lots; index/VIX context rows=$index_rows"
+          if [[ "$cost_rows" -le 0 || "$missing_lots" -gt 0 || "$index_rows" -le 0 ]]; then
+            echo "Source gate not satisfied. Preserve the cache and logs, but do not start the corrected evaluator."
+            exit 0
+          fi
+          payload='{"ref":"phase-109-strategy-semantics-remediation","inputs":{"max_configs":"2000"}}'
+          curl --silent --show-error --fail -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-evaluate-grid.yml/dispatches" \
+            -d "$payload"
+          echo "Dispatched one bounded semantic-v2 shard after aggregate source gates passed."
