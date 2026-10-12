@@ -198,6 +198,7 @@ jobs:
         if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTIVE_BRANCH: ${{ github.ref_name }}
         run: |
           set -euo pipefail
           remaining=$(python -c 'import json; print(json.load(open("results/phase109/evaluation_progress.json"))["remaining_supported_configs"])')
