@@ -67,6 +67,12 @@ class StrategySemanticTests(unittest.TestCase):
         )
         self.assertEqual(evaluator.parse_risk_profile("NO_STOP_NO_TARGET"), (None, None))
 
+    def test_signal_direction_maps_to_exact_nse_option_side(self):
+        self.assertEqual(evaluator.option_side_from_direction(1), "CE")
+        self.assertEqual(evaluator.option_side_from_direction(-1), "PE")
+        self.assertIsNone(evaluator.option_side_from_direction(0))
+        self.assertIsNone(evaluator.option_side_from_direction(None))
+
     def test_engine_version_prevents_reuse_of_v1_cursor(self):
         self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v2-semantics")
 
