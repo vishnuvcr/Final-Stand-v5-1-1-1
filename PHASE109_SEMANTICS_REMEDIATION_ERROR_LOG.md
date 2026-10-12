@@ -75,3 +75,6 @@
 - Observation: source and evaluation runs built against earlier workflow commits held their branch concurrency slots, leaving the current special-session source refresh and v4 evaluation pending. Repeated code updates also produced superseded/cancelled pending attempts.
 - Correction: enabled cancel-in-progress for the corresponding source/evaluator workflow groups so new commits replace obsolete in-flight versions. Obsolete source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) was cancelled, and corrected source run [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active.
 - Caveat: the diagnostic v3 evaluator [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) was still running at last check while the v4 evaluator run [38227487048](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048) remained pending. Do not claim cancellation of that evaluator until its API state changes.
+
+## 2026-10-12 09:39 UTC — v2 shard audit
+- Archive parse/duplicate warnings: 0; skipped reasons: {}. No raw records or secrets published. No profitability assertion from shard completion.

@@ -81,3 +81,10 @@ The official index/VIX history now has 748 unique dates each for India VIX, NIFT
 - Verified previous context: 748 dates per official series; minimum expected 711. The option archive table is being rebuilt to explicitly attempt special observed NIFTY 50 sessions.
 - Last complete regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38/38 tests.
 - No strategy result or promotion is inferred from pending workflows.
+
+## Automated checkpoint — 2026-10-12 09:39 UTC
+
+- [Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38228843868)
+- Engine: phase109-eod-engine-v4-session-coverage; status: PARTIAL_SHARD_COMPLETE; cursor [0,2,000).
+- This shard: 2,000 configurations; 48,000 cost rows. Cumulative: 2,000 configurations; 170,800 remaining.
+- This is workflow/evaluation progress only. OHLC execution proxies are not verified fills; no strategy promoted.

@@ -22,3 +22,5 @@ Dhan rolling-options supplement: PASS with 75,177 5-minute ATM-selected call/put
 Official index futures: 748 dates / 8,976 rows. Contract prices, OI and volume were extracted from the exact official F&O archives and cached privately; aggregate counts/hashes only are published.
 Model-derived Greeks: 772,355 exact-contract rows pass the Black-Scholes solver at assumed r=6.5%, q=0%; infeasible premiums are counted and excluded, not force-fitted. Raw contract-level model values stay private.
 
+## 2026-10-12 09:39 UTC — Visible grid evaluation action
+The evaluator processed cursor range [0,2,000), attempted 2,000 supported configurations and generated 48,000 cost rows. Development/validation only; untouched holdout preserved; no strategy promotion asserted.

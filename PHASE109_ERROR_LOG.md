@@ -35,3 +35,5 @@
 - Cross-source session reconciliation found 0 NIFTY 50-observed dates without a valid option archive and 0 archive dates without a NIFTY 50 observed date. These require gap/boundary investigation and are not silently removed.
 - Raw source archives are cached privately and are not committed to this public repository. Public outputs contain date-level aggregates and hashes only.
 
+## 2026-10-12 09:39 UTC — Data-quality and execution notes
+- Archive parse/duplicate warnings in this shard: 0. Source gaps, zero-volume and unmatchable exact contracts are excluded and reported; detailed raw price rows are not published. Daily OHLC does not prove achieved fills.

@@ -1,21 +1,13 @@
 <!-- PHASE109_GRID_STATUS_START -->
-# Phase 109 — 1,000+ Strategy-Family Discovery and Historical Data Audit
+# Phase 109 — 1,000+ Strategy-Family Grid and Evaluation
 
-**Current status: 1,025 architecture combinations and full Cartesian grid registered; semantically corrected v4 evaluation has not yet published a verified shard. No strategy promoted.** Registry totals of 3,719,520 family/configuration tuples and 89,268,480 cost rows are not backtest results.
+**Current evaluation status: PARTIAL_SHARD_COMPLETE**. Registered, source-feasible, attempted and completed counts are reported separately.
 
-Official NSE index-options backfill: **748 daily archives parsed/cached** across 2023-10-01–2026-10-09; 3,345,150 selected option rows, 1,361,445 positive-volume rows, 1,983,705 zero-volume rows, 0 invalid positive-volume OHLC rows, 0 duplicate keys. The backfill probed 789 weekdays plus 5 previously observed special-session dates; 46 requested dates have no archive/fetch status and are not automatically declared missing sessions. Official NSE Indices VIX/NIFTY 50/BANK context status=PASS. Calendar reconciliation reports 0 NIFTY 50 observations without a valid options archive. Dhan rolling ATM feature data status=PASS (75,177 5-minute rows, feature-only—not fixed-contract fills). Official FUTIDX extraction covers 748 dates / 8,976 rows (private data; audit-only count). Model-derived exact-contract Greeks audit: 772,355 valid rows with r=6.5%, q=0% assumptions (see linked limits).
-
-Official NSE options archive: 743 daily archives with 3,321,984 selected rows before volume filters; Dhan rolling ATM feature series has 75,177 five-minute rows; official NSE index-futures extraction includes 8,916 rows; model-derived Greeks audit includes 769,213 estimates under flat 6.5% rate / 0% dividend assumptions. These are source and feature counts, not profitable trade results.
-
-Official NSE Indices India VIX, NIFTY 50 and NIFTY BANK history now has **748 unique dates per series** and clears the 90% weekday density gate. Five observed NIFTY 50 special sessions had been missed by the weekday-only options archive probe (2023-11-12, 2024-01-20, 2024-05-18, 2025-02-01 and 2026-02-01). The source workflow now fetches the index-session calendar first and probes options archives for both weekdays and observed weekend/special sessions.
-
-- [Main Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [parent status](PHASE109_STATUS.md) · [plan](PHASE109_RESEARCH_PLAN.md)
-- [Semantic remediation branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-strategy-semantics-remediation) · [remediation plan](PHASE109_SEMANTICS_REMEDIATION_PLAN.md) · [status](PHASE109_SEMANTICS_REMEDIATION_STATUS.md) · [semantic/source audit](results/phase109/SEMANTICS_REMEDIATION_AUDIT.md)
-- [Latest tests: 38/38 pass](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) · [current source acquisition run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) · [queued v4 evaluation](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048)
-- [Daily coverage table](results/phase109/nse_index_options_daily_coverage.csv) · [index/VIX summary](results/phase109/niftyindices_context_summary.json) · [session reconciliation](results/phase109/nse_calendar_reconciliation.json)
-- [Remediation research log](PHASE109_SEMANTICS_REMEDIATION_RESEARCH_LOG.md) · [error log](PHASE109_SEMANTICS_REMEDIATION_ERROR_LOG.md) · [visible action/chat log](PHASE109_SEMANTICS_REMEDIATION_CHAT_LOG.md)
-
-Raw authenticated archive/market rows stay in private Actions cache; public reports contain aggregate counts only. Remaining trade results use EOD OHLC execution proxies, not achieved fills. Historical lot-size/contract, source-rights, special-session coverage, account-specific Paytm Money charges, bid-ask/depth, publication-time leakage, untouched holdout and multiple-testing/session-cluster inference gates remain mandatory. No profitability conclusion or live-trading recommendation is made from data ingestion alone.
+- Registered [family registry](results/phase109/strategy_families.csv), [configuration space](results/phase109/family_configuration_space.csv) and [cost shard manifest](results/phase109/cost_row_shard_manifest.csv).
+- Cumulative supported configurations attempted: 2,000; cost-adjusted rows: 48,000; eligible configs remaining: 170,800.
+- Data audits: [family feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md) · [NSE option coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [India VIX/index context](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [Dhan rolling ATM features](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md) · [index futures](results/phase109/NSE_INDEX_FUTURES_AUDIT.md) · [model IV/Greeks](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
+- Development 2024-10 through 2025-09; validation 2025-10 through 2026-03; holdout from 2026-04 reserved. **No strategy promoted.**
+- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
 <!-- PHASE109_GRID_STATUS_END -->
 
 <!-- PHASE103_STOCK_OPTIONS_START -->

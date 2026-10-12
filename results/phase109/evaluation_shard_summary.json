@@ -1,5 +1,5 @@
 {
-  "archive_count_loaded": 743,
+  "archive_count_loaded": 748,
   "archive_parse_or_duplicate_warnings": 0,
   "blocked_families_reasons": {
     "CONFIRMATION_NOT_IMPLEMENTED": 120,
@@ -15,21 +15,43 @@
   "cost_model_callable": "round_trip_cost",
   "cost_model_guard": "Net P&L starts only on entries >=2024-10-01; earlier prices are signal warm-up only.",
   "cost_rows_generated": 48000,
-  "engine_version": "phase109-eod-engine-v2-semantics",
+  "engine_version": "phase109-eod-engine-v4-session-coverage",
   "first_cost_eligible_date": "2024-10-01",
   "frozen_validation_shortlist_sha256": "",
-  "generated_utc": "2026-10-12T08:48:29.294782+00:00",
+  "generated_utc": "2026-10-12T09:39:43.358010+00:00",
   "global_config_end_exclusive": 2000,
   "global_config_start": 0,
   "holdout_window": null,
   "no_promotion": "All reported results are diagnostic until holdout, multiple testing, coverage, costs and execution evidence pass.",
+  "official_context_coverage": {
+    "coverage_pass": true,
+    "coverage_ratio_threshold": 0.9,
+    "expected_weekdays": 788,
+    "minimum_unique_dates_per_series": 710,
+    "observed_unique_dates": {
+      "INDIA_VIX": 748,
+      "NIFTY 50": 748,
+      "NIFTY BANK": 748
+    },
+    "window_end_inclusive": "2026-10-08",
+    "window_start": "2023-10-03"
+  },
+  "options_session_coverage": {
+    "coverage_pass": true,
+    "interpretation": "Any remaining gaps must be explicitly present in the acquisition audit; trades requiring an absent archive remain excluded.",
+    "maximum_allowed_explicitly_attempted_gaps": 8,
+    "no_archive_status_on_observed_nifty50_session": 0,
+    "observed_nifty50_sessions_without_valid_option_archive": 0,
+    "official_nifty50_dates_observed": 748,
+    "valid_option_archive_dates_without_nifty50_index_date": 0
+  },
   "raw_trade_tapes_publicly_published": false,
   "remaining_supported_configs": 170800,
-  "result_path": "results/phase109/evaluation_shards/phase109_eval_000000000-000002000.csv.gz",
-  "result_sha256": "16d0e8b815aabe23e7dd22936d66e51f7f5023d387050f5b076a5b4f90d6f745",
+  "result_path": "results/phase109/evaluation_shards/phase109_eval_v4_session_coverage_000000000-000002000.csv.gz",
+  "result_sha256": "a5bdac5a76f0afad69774d46b258de22216badc647681b113c33a1b5449af065",
   "sample": "selection",
   "skipped_reasons": {},
   "status": "PARTIAL_SHARD_COMPLETE",
   "total_supported_source_feasible_configs": 172800,
-  "unique_option_archive_dates": 743
+  "unique_option_archive_dates": 748
 }

@@ -67,3 +67,7 @@
 - The archive request includes weekdays plus observed official NIFTY 50 dates outside weekdays. Any unavailable archive remains an explicit no-archive status; no options rows are imputed.
 - Replaced stale-run concurrency settings with cancel-in-progress on source/evaluator workflows. Obsolete source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) was cancelled; corrected source run [38227481409](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227481409) is active. V4 evaluator run [38227487048](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227487048) is pending behind old diagnostic v3 run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004), which had processed 800/2,000 configs at the most recent logs.
 - Latest complete regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38/38 tests. No v4 shard or strategy promotion is yet verified.
+
+## 2026-10-12 09:39 UTC — Corrected v2 evaluator checkpoint
+- Engine phase109-eod-engine-v4-session-coverage processed cursor [0,2,000); attempted 2,000 configurations and emitted 48,000 cost rows.
+- Cumulative attempted 2,000; remaining 170,800. These remain EOD execution proxies, not verified fills.
