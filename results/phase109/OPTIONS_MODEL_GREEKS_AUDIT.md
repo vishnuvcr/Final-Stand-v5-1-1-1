@@ -1,22 +1,22 @@
 # Exact-contract model-derived IV and Greeks audit
 
-Status: **PARTIAL_OR_FAILED**
+Status: **PASS**
 Window: 2024-10-01 through 2026-10-08
 Model: European Black-Scholes, flat r=6.5%, q=0%; only the UDiFF sample from 1 October 2024 onward is used for model features.
 
 | Metric | Count |
 |---|---:|
 | UDiFF archive dates parsed | 499 |
-| Positive-volume contract rows considered | 0 |
-| Valid model IV/Greeks rows | 0 |
-| Zero/invalid-volume rows excluded | 0 |
+| Positive-volume contract rows considered | 865,133 |
+| Valid model IV/Greeks rows | 769,213 |
+| Zero/invalid-volume rows excluded | 1,108,641 |
 | Missing contract price/spot/expiry rows | 0 |
-| Premium below model lower bound | 0 |
+| Premium below model lower bound | 58,888 |
 | Premium above model upper bound | 0 |
-| Other solver/Greek failures | 0 |
-| Near-minimum IV fits | 0 |
+| Other solver/Greek failures | 37,032 |
+| Near-minimum IV fits | 589 |
 | Failed dates | 0 |
-| Private model-feature cache bytes | 218,745 |
+| Private model-feature cache bytes | 57,293,703 |
 
 ## Important modelling limits
 

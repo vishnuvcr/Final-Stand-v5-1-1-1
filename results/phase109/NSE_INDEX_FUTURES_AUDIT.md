@@ -1,17 +1,17 @@
 # Official NSE index-futures extraction audit
 
-Generated: 2026-10-12T04:25:45.923872+00:00
+Generated: 2026-10-12T06:45:38.125848+00:00
 
 | Metric | Count |
 |---|---:|
 | Option archives inspected | 743 |
 | Archive dates parsed | 743 |
-| Dates with selected index futures | 185 |
-| Futures rows | 2,220 |
-| Identity-complete rows | 2,220 |
-| Positive-volume rows | 2,164 |
-| Zero-volume rows | 56 |
-| Invalid positive-volume OHLC rows | 0 |
+| Dates with selected index futures | 743 |
+| Futures rows | 8,916 |
+| Identity-complete rows | 8,916 |
+| Positive-volume rows | 8,331 |
+| Zero-volume rows | 585 |
+| Invalid positive-volume OHLC rows | 4 |
 | Duplicate date-symbol-expiry keys | 0 |
 | Rows missing/nonpositive lot size | 2,220 |
 | Failed date parses | 0 |

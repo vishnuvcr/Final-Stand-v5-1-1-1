@@ -13,3 +13,10 @@ Assistant action summary: added a deterministic family registry/grid compiler an
 ## 2026-10-12 — User requested immediate strategy testing
 User: “Proceed”
 Assistant action summary: resumed Phase 109, inspected latest Actions state and logs, found and fixed an acquisition summary KeyError plus two UDiFF instrument-code filters that could suppress option rows. Added a network-free evaluator regression test and updated the error/research logs. These are code fixes; no completed strategy performance is claimed at this checkpoint. Hidden internal reasoning is not stored.
+
+## 2026-10-12 — Official NSE historical data acquisition
+Assistant action summary: added a resumable official NSE F&O archive backfill with legacy/UDiFF schema normalization and private Actions caching. It attempted 789 weekdays from 2023-10-01 to 2026-10-09 and parsed/cached 743 archives, generating 3,321,984 selected index-option rows. Also fetched official NSE Indices India VIX, NIFTY 50 and NIFTY BANK context (PASS) and compared archive dates against observed NIFTY 50 dates. These are source/coverage audits only; no strategy P&L was computed. Raw price series are not published. Historical lot size, source rights, missing sessions, execution and OOS gates remain.
+Dhan rolling-options supplement: PASS with 75,177 5-minute ATM-selected call/put rows and 0 failed/empty chunks. Dhan rows are private cached feature inputs only; no raw authenticated responses or token values are published.
+Official index futures: 743 dates / 8,916 rows. Contract prices, OI and volume were extracted from the exact official F&O archives and cached privately; aggregate counts/hashes only are published.
+Model-derived Greeks: 769,213 exact-contract rows pass the Black-Scholes solver at assumed r=6.5%, q=0%; infeasible premiums are counted and excluded, not force-fitted. Raw contract-level model values stay private.
+

@@ -1,18 +1,18 @@
 # NSE archive and NIFTY 50 session-calendar reconciliation
 
-Generated: 2026-10-12T04:27:16.915173+00:00
+Generated: 2026-10-12T06:48:13.345392+00:00
 
 | Metric | Count |
 |---|---:|
 | Weekdays requested for option archives | 789 |
-| Official NIFTY 50 observations | 0 |
-| Official India VIX observations | 0 |
-| Official NIFTY BANK observations | 0 |
+| Official NIFTY 50 observations | 218 |
+| Official India VIX observations | 218 |
+| Official NIFTY BANK observations | 218 |
 | Valid NSE option archive dates | 743 |
-| Option archive dates on NIFTY 50 dates | 0 |
-| NIFTY 50 sessions without a valid option archive | 0 |
+| Option archive dates on NIFTY 50 dates | 217 |
+| NIFTY 50 sessions without a valid option archive | 1 |
 | No-archive statuses on observed NIFTY 50 sessions | 0 |
-| Valid option archive dates without NIFTY 50 observations | 743 |
+| Valid option archive dates without NIFTY 50 observations | 526 |
 | Weekday no-archive statuses without index rows (holiday/other uncertain) | 46 |
 
 ## Interpretation

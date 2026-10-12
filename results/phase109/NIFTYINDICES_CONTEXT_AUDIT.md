@@ -1,16 +1,16 @@
 # NSE Indices historical index and India VIX audit
 
-Generated: 2026-10-12T04:27:16.865386+00:00
+Generated: 2026-10-12T06:48:13.295692+00:00
 Requested window: 2023-10-01 to 2026-10-09 (end exclusive)
-Overall status: PARTIAL_OR_FAILED
+Overall status: PASS
 
 No strategy returns were evaluated. Full historical rows remain in the private GitHub Actions cache; this report exposes only aggregate audit metrics and hashes.
 
 | Series | Unique dates | Range | Missing OHLC | Invalid OHLC | Close min | Close max |
 |---|---:|---|---:|---:|---:|---:|
-| INDIA_VIX | 0 | – | 0 | 0 | None | None |
-| NIFTY 50 | 0 | – | 0 | 0 | None | None |
-| NIFTY BANK | 0 | – | 0 | 0 | None | None |
+| INDIA_VIX | 218 | 2023-10-03–2026-10-08 | 0 | 0 | 9.15 | 16.6875 |
+| NIFTY 50 | 218 | 2023-10-03–2026-10-08 | 0 | 0 | 18857.25 | 26328.55 |
+| NIFTY BANK | 218 | 2023-10-03–2026-10-08 | 0 | 0 | 42280.15 | 60150.95 |
 
 ## Data gates
 

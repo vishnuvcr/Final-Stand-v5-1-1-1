@@ -1,6 +1,6 @@
 # NSE index-options daily archive coverage report
 
-Generated: 2026-10-12T04:22:54.971030+00:00
+Generated: 2026-10-12T06:42:42.579973+00:00
 Window: 2023-10-01 through 2026-10-09 (end exclusive)
 
 **Data-acquisition audit only; no strategy/configuration P&L evaluated.**
@@ -11,11 +11,11 @@ Window: 2023-10-01 through 2026-10-09 (end exclusive)
 | Valid archive dates parsed | 743 |
 | Legacy archives | 185 |
 | UDiFF archives | 558 |
-| Selected option rows | 1,003,768 |
-| Identity-complete rows | 1,003,768 |
-| Price-complete rows | 1,003,768 |
-| Positive-volume rows | 368,210 |
-| Zero-volume rows | 635,558 |
+| Selected option rows | 3,321,984 |
+| Identity-complete rows | 3,321,984 |
+| Price-complete rows | 3,321,984 |
+| Positive-volume rows | 1,353,090 |
+| Zero-volume rows | 1,968,894 |
 | Invalid positive-volume OHLC rows | 0 |
 | Duplicate daily contract keys | 0 |
 | Date mismatch rows | 0 |

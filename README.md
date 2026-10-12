@@ -1,13 +1,13 @@
-<!-- PHASE109_GRID_STATUS_START -->
-# Phase 109 — 1,000+ strategy-family discovery and exhaustive grid
+<!-- PHASE109_GRID_STATUS_START --># Phase 109 — 1,000+ Strategy-Family Discovery and Historical Data Audit
 
-**Status: registry/manifest compiled; empirical backtests not run. No strategy promoted.** 1,025 architecture combinations are registered with 0 exact duplicate fingerprints. The Cartesian grid contains 3,719,520 registered family-configuration pairs and 89,268,480 cost-adjusted rows (24 cost cases), partitioned into 45 deterministic shards. These are planned coverage counts, not completed trading tests.
+**Status: 1,025 architecture combinations and full Cartesian grid registered; backtesting not complete. No strategy promoted.** Registry: 3,719,520 family-configuration tuples and 89,268,480 cost-adjusted rows registered, not tested.
 
-- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid)
-- [Status](PHASE109_STATUS.md) · [research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
-- [Registry](results/phase109/strategy_families.csv) · [configuration space](results/phase109/family_configuration_space.csv) · [shard manifest](results/phase109/cost_row_shard_manifest.csv) · [source audit](results/phase109/source_access_audit.csv) · [compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md) · [official NSE archive feasibility](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) · [source feasibility matrix](results/phase109/SOURCE_FEASIBILITY_REPORT.md) · [family data feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md)
+Official NSE index-options backfill: **743 daily archives parsed/cached** across 2023-10-01–2026-10-09; 3,321,984 selected option rows, 1,353,090 positive-volume rows, 1,968,894 zero-volume rows, 0 invalid positive-volume OHLC rows, 0 duplicate keys. No-archive/fetch statuses are 46 weekdays—not declared missing sessions until reconciled against the official calendar. Official NSE Indices VIX/NIFTY 50/BANK context status=PASS. Calendar reconciliation reports 1 NIFTY 50 observations without a valid options archive. Dhan rolling ATM feature data status=PASS (75,177 5-minute rows, feature-only—not fixed-contract fills). Official FUTIDX extraction covers 743 dates / 8,916 rows (private data; audit-only count). Model-derived exact-contract Greeks audit: 769,213 valid rows with r=6.5%, q=0% assumptions (see linked limits).
 
-Source-access checks do not prove dataset completeness or tradeability. Chronological splits, exact option contracts, transaction costs, slippage, multiple-testing correction and untouched OOS validation remain mandatory.
+- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [latest backfill report](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [daily coverage table](results/phase109/nse_index_options_daily_coverage.csv) · [source matrix](results/phase109/SOURCE_FEASIBILITY_REPORT.md)
+- [Research plan](PHASE109_RESEARCH_PLAN.md) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
+
+Raw archive files stay in private Actions cache, not in public commits/artifacts. Exact session/calendar coverage, historical lot sizes/contract specifications, date-effective Paytm Money costs, bid-ask/fill realism, chronology/OOS, India VIX/FII/global publication timestamps, and statistical multiple-testing corrections remain mandatory. No inference of profitability is supported by data ingestion alone.
 <!-- PHASE109_GRID_STATUS_END -->
 
 <!-- PHASE103_STOCK_OPTIONS_START -->
