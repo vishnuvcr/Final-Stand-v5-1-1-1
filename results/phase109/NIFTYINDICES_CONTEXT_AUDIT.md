@@ -1,6 +1,6 @@
 # NSE Indices historical index and India VIX audit
 
-Generated: 2026-10-12T09:01:22.019954+00:00
+Generated: 2026-10-12T09:04:42.686969+00:00
 Requested window: 2023-10-01 to 2026-10-09 (end exclusive)
 Overall status: PASS
 

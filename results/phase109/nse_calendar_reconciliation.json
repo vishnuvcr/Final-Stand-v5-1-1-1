@@ -5,25 +5,19 @@
     "options_max": "2026-10-08",
     "options_min": "2023-10-02"
   },
-  "generated_utc": "2026-10-12T09:01:22.063446+00:00",
+  "generated_utc": "2026-10-12T09:16:33.953480+00:00",
   "interpretation": "NIFTY 50 is an observed-session proxy. A date with an official NIFTY 50 observation but no valid option archive is a confirmed coverage gap. A weekday with neither is not automatically a holiday; consult official calendars/exceptions.",
   "no_archive_status_on_date_without_nifty50_row": 46,
   "no_archive_status_on_observed_nifty50_session": 0,
-  "observed_nifty50_sessions_without_valid_option_archive": 5,
+  "observed_nifty50_sessions_without_valid_option_archive": 0,
   "official_india_vix_dates_observed": 748,
   "official_nifty50_dates_observed": 748,
   "official_nifty_bank_dates_observed": 748,
-  "option_archive_dates_valid": 743,
-  "option_weekdays_requested": 789,
+  "option_archive_dates_valid": 748,
+  "option_weekdays_requested": 794,
   "raw_price_data_published": false,
   "sample_archive_without_nifty50_dates": [],
-  "sample_missing_archive_dates": [
-    "2023-11-12",
-    "2024-01-20",
-    "2024-05-18",
-    "2025-02-01",
-    "2026-02-01"
-  ],
+  "sample_missing_archive_dates": [],
   "sample_no_archive_on_observed_session": [],
   "sample_no_archive_without_index_row": [
     "2023-10-02",
@@ -73,6 +67,6 @@
     "2026-09-14",
     "2026-10-02"
   ],
-  "valid_archive_dates_also_nifty50_session": 743,
+  "valid_archive_dates_also_nifty50_session": 748,
   "valid_option_archive_dates_without_nifty50_index_date": 0
 }
