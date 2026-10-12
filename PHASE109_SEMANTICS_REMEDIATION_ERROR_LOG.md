@@ -27,3 +27,10 @@
 
 ## 2026-10-12 08:08 UTC — Regression retest passed
 - Run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) passed 27/27 unit tests after the risk-profile parsing fix. This closes the code-regression check for the listed paths only; data acquisition and corrected empirical evaluation remain open.
+
+## 2026-10-12 08:31 UTC — E109-S08 — Repeated feature aggregation overhead
+
+- Observation: aggregate_chain_features was called once for every configuration, despite depending only on cached source rows, symbol and date range. That repeated work across the grid and risked exhausting the bounded workflow time budget.
+- Correction: precompute per-symbol feature maps once immediately after loading the source data and reuse them inside every task. The intended feature values and strategy decisions are unchanged.
+- Regression evidence: [run 38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed all 29 offline tests, including the precomputation-call-count test.
+- Limitation: no full-shard runtime comparison has yet been observed, so the actual wall-time reduction is not quantified. The active acquisition/evaluation workflows remain authoritative for empirical checkpoints.
