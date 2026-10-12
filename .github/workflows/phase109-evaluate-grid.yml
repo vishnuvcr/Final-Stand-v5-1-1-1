@@ -22,7 +22,7 @@ permissions:
 
 concurrency:
   group: phase109-writer-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   evaluate:
