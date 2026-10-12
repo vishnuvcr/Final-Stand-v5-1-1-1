@@ -56,3 +56,10 @@
 - Corrected by using the observed NIFTY 50 session calendar as an additional acquisition list. Any unavailability remains an explicit gap, not synthetic option data.
 - Added runtime v4 reconciliation validation. Unattempted gaps fail the source gate; explicitly attempted gaps remain visible and are limited to at most max(5, ceil(1% of observed sessions)); archive dates without a corresponding index row must be zero.
 - The prior v3 shard run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) can still finish but is diagnostic-only. Regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38 tests.
+
+## 2026-10-12 09:03 UTC — E109-S12 — Historical context coverage recovered; old jobs remain stale
+
+- Earlier source context had only 218 dates per series due long-window truncation; the corrected short-window query now yields 748 dates per series with zero malformed/duplicate OHLC rows and passes the 90% weekday-density threshold (711 required).
+- Calendar audit still shows five observed NIFTY 50 sessions without valid option archives. They are explicit coverage exclusions, not fabricated prices. No valid option archive date lacks a NIFTY 50 observation.
+- Workflow concurrency allowed an evaluator launched on an earlier source/engine checkout to remain active while v4 was queued. Such earlier jobs cannot certify v4 and their results must not be combined. The evaluator workflow checks the exact engine version and resets the cursor on mismatch.
+- Updated source run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is active; v4 run [38227220343](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227220343) is pending. No v4 empirical checkpoint yet.
