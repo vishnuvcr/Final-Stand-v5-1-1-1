@@ -124,6 +124,18 @@ class TestDhanRollingOptions(unittest.TestCase):
         self.assertEqual(result["invalid_or_missing_volume_rows"],0)
 
 class TestPhase109ManifestAndSelection(unittest.TestCase):
+    def test_evaluator_normalizes_udiff_index_options(self):
+        fields=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","StrkPric","OptnTp",
+                "OpnPric","HghPric","LwPric","ClsPric","OpnIntrst","TtlTradgVol","NewBrdLotQty","UndrlygPric"]
+        row=["2024-10-01","IDO","NIFTY","2024-10-31","25000","CE","100","110","90","105","1000","50","25","25010"]
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/"sample.zip"
+            path.write_bytes(zipped_csv(fields,[row],"udiff.csv"))
+            parsed=strategy_evaluator.read_archive(path,date(2024,10,1))
+        self.assertEqual(len(parsed),1)
+        self.assertEqual(parsed[0]["instrument"],"OPTIDX")
+        self.assertEqual(parsed[0]["lot"],25)
+
     def test_base_family_has_1080_unique_applicable_configs(self):
         axes=family_grid.axes_for_family({"regime_id":"NONE","confirmation_id":"NONE"})
         count=1
