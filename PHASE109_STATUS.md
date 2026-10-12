@@ -34,10 +34,10 @@ Promotion: **NONE**
 - [Source-access audit](results/phase109/source_access_audit.csv)
 - [Research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [chat log](PHASE109_CHAT_LOG.md)
 
-## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 08:07 UTC)
+## 109.4 — Cost-adjusted EOD grid evaluation checkpoint (2026-10-12 08:36 UTC)
 
-- Eligible implemented/source-feasible configs: 594,000; cursor [4,000,6,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
-- Cumulative completed ranges=3; configs attempted=6,000; cost rows=144,000; remaining eligible configs=588,000.
+- Eligible implemented/source-feasible configs: 594,000; cursor [6,000,8,000); this shard attempted 2,000; cost rows 48,000 (24 registered cost cases/config).
+- Cumulative completed ranges=4; configs attempted=8,000; cost rows=192,000; remaining eligible configs=586,000.
 - Official option archives loaded=743; unique option archive dates=743; parse/duplicate warnings=0.
 - Development window: 2024-10-01–2025-09-30. Validation: 2025-10-01–2026-03-31. The 2026-04-01 onward holdout is not scored during the configuration sweep.
 - Net returns use the canonical transaction-cost model, with daily OHLC entry/exit proxies; they are not observed achieved fills. Multiple-testing correction and holdout remain pending. No strategy is promoted.

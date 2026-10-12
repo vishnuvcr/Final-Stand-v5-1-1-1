@@ -46,3 +46,7 @@
 ## 2026-10-12 08:07 UTC — Grid evaluation shard
 - Engine phase109-eod-engine-v1 attempted 2,000 configs and produced 48,000 rows across 24 cost cases/config; cumulative attempts 6,000, remaining 588,000.
 - Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted.
+
+## 2026-10-12 08:36 UTC — Grid evaluation shard
+- Engine phase109-eod-engine-v1 attempted 2,000 configs and produced 48,000 rows across 24 cost cases/config; cumulative attempts 8,000, remaining 586,000.
+- Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted.
