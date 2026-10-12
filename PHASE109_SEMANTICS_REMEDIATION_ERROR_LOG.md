@@ -49,3 +49,10 @@
 - Before v3 scoring, found that versioned progress would write the first v3 shard to the same filename as the prior v2 shard. That risks overwriting diagnostic evidence even though the engine-version cursor resets.
 - Added an engine-tagged shard filename (phase109_eval_v3_context_coverage_...csv.gz) and an automated test; v2 and v3 outputs now use distinct names.
 - Latest regression test [38226082378](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226082378) passed. No conclusion about profitability follows from file naming or test success.
+
+## 2026-10-12 08:59 UTC — E109-S14 — Weekday-only option archive probes omitted observed special sessions
+
+- The repaired index history exposed five observed NIFTY 50 sessions without an option archive: 2023-11-12, 2024-01-20, 2024-05-18, 2025-02-01 and 2026-02-01. They were absent from the request table because archive discovery enumerated weekdays only.
+- Corrected by using the observed NIFTY 50 session calendar as an additional acquisition list. Any unavailability remains an explicit gap, not synthetic option data.
+- Added runtime v4 reconciliation validation. Unattempted gaps fail the source gate; explicitly attempted gaps remain visible and are limited to at most max(5, ceil(1% of observed sessions)); archive dates without a corresponding index row must be zero.
+- The prior v3 shard run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) can still finish but is diagnostic-only. Regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38 tests.
