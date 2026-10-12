@@ -1,6 +1,6 @@
 # Phase 109 Status — Strategy-Family Discovery and Exhaustive Grid
 
-Last updated: 2026-10-12 04:17 UTC
+Last updated: 2026-10-12 05:26 UTC
 Branch: `phase-109-exhaustive-parameter-grid`
 State: **REGISTRY AND GRID MANIFEST COMPILED; EMPIRICAL EVALUATION NOT YET RUN**
 Promotion: **NONE**
@@ -33,23 +33,3 @@ Promotion: **NONE**
 - [Cost-row shard manifest](results/phase109/cost_row_shard_manifest.csv)
 - [Source-access audit](results/phase109/source_access_audit.csv)
 - [Research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [chat log](PHASE109_CHAT_LOG.md)
-
-## 109.3 — Historical data acquisition checkpoint
-
-Last updated: 2026-10-12 04:27 UTC
-
-- Date range: 2023-10-01 through 2026-10-09 (end exclusive).
-- Weekdays probed: 789; valid official NSE archive dates parsed/cached: 743; weekdays without archive or with fetch/schema errors: 46.
-- Schema counts: legacy=185; UDiFF=558.
-- Selected index-option rows: 1,003,768; identity complete: 1,003,768; price complete: 1,003,768; positive volume: 368,210; zero volume: 635,558; invalid OHLC with positive volume: 0; duplicate daily contract keys: 0; date mismatches: 0.
-- Raw archive cache bytes: 787,820,355. Raw archives remain in the Actions cache; only aggregate coverage data and hashes are committed.
-- **This is still source acquisition, not a strategy backtest.** Weekdays without an archive may be exchange holidays, or may represent source/URL issues; no missing weekday is declared a trading-session gap until compared to an official trading calendar.
-- Official NSE Indices India VIX / NIFTY 50 / NIFTY BANK series: PARTIAL_OR_FAILED; successful chunk-series calls=0, failed=12; see [context report](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md).
-- Dhan rolling weekly ATM historical options: PASS; 75,177 5-minute rows (calls=37,590, puts=37,587) from 2024-10-01 to 2026-10-09; successful chunks 50/50; invalid/missing IV rows 463; feature-only, not fixed-contract fills. See [Dhan report](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md).
-- Official NSE index-futures extraction: 185 dates / 2,220 FUTIDX rows cached privately; invalid positive-volume OHLC=0; duplicate date-symbol-expiry keys=0; missing lot size=2,220. See [futures audit](results/phase109/NSE_INDEX_FUTURES_AUDIT.md).
-- Exact-contract model IV/Greeks: PARTIAL_OR_FAILED; 0 valid rows across 499 UDiFF dates; premium-below-model-bound exclusions 0; upper-bound exclusions 0; other solver failures 0. Uses flat r=6.5%, q=0%; model estimates only. See [model IV/Greeks audit](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
-- Option archive/calendar reconciliation: 0 observed NIFTY 50 sessions had no valid option archive; 0 of them had a no-archive/fetch status; full date lists/samples are in [calendar reconciliation report](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
-- Remaining data gate: official holiday/exception calendar reconciliation; source-rights review; historical contract/lot-size specification; chronologically separated development/validation/untouched OOS; FII publication lags; Dhan expiry and fixed-contract semantics.
-- [Coverage table](results/phase109/nse_index_options_daily_coverage.csv) · [machine-readable summary](results/phase109/nse_index_options_backfill_summary.json) · [option archive report](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md).
-- [Official India VIX/index context audit](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [context summary JSON](results/phase109/niftyindices_context_summary.json) · [date-only session calendar](results/phase109/niftyindices_session_calendar.csv) · [archive/calendar reconciliation](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
-
