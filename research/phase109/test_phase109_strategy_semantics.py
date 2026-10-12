@@ -123,6 +123,14 @@ class StrategySemanticTests(unittest.TestCase):
         self.assertTrue(result["coverage_pass"])
         self.assertGreater(result["minimum_unique_dates_per_series"], 218)
 
+    def test_result_filename_keeps_engine_versions_separate(self):
+        name = evaluator.shard_result_filename("selection", "000000000-000002000")
+        self.assertEqual(
+            name,
+            "phase109_eval_v3_context_coverage_000000000-000002000.csv.gz",
+        )
+        self.assertNotEqual(name, "phase109_eval_000000000-000002000.csv.gz")
+
     def test_engine_version_prevents_reuse_of_v1_cursor(self):
         self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v3-context-coverage")
 
