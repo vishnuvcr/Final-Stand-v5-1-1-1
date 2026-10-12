@@ -215,11 +215,16 @@ jobs:
           )
             if [[ "$selection_status" == "FINAL_SHORTLIST_READY_FOR_UNTOUCHED_HOLDOUT" && "$shortlist" -gt 0 && "$holdout_status" == "NOT_RUN" ]]; then
               payload=$(python - <<'PY'
-          import json
-          print(json.dumps({"ref":"${GITHUB_REF_NAME}","inputs":{"max_configs":"2000"}}))
+          import json, os
+          print(json.dumps({"ref":os.environ["GITHUB_REF_NAME"],"inputs":{"max_configs":"2000"}}))
           PY
           )
-              curl --silent --show-error --fail -X POST \
+          dispatch_ref=$(python -c 'import json,sys; print(json.load(sys.stdin)["ref"])' <<< "$payload")
+          if [[ "$dispatch_ref" != "$GITHUB_REF_NAME" ]]; then
+            echo "::error::Workflow-dispatch ref mismatch: expected $GITHUB_REF_NAME, got $dispatch_ref"
+            exit 1
+          fi
+              curl --silent --show-error --fail-with-body -X POST \
                 -H "Accept: application/vnd.github+json" \
                 -H "Authorization: Bearer $GH_TOKEN" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -232,11 +237,16 @@ jobs:
             exit 0
           fi
           payload=$(python - <<'PY'
-          import json
-          print(json.dumps({"ref":"${GITHUB_REF_NAME}","inputs":{"max_configs":"2000"}}))
+          import json, os
+          print(json.dumps({"ref":os.environ["GITHUB_REF_NAME"],"inputs":{"max_configs":"2000"}}))
           PY
           )
-          curl --silent --show-error --fail -X POST \
+          dispatch_ref=$(python -c 'import json,sys; print(json.load(sys.stdin)["ref"])' <<< "$payload")
+          if [[ "$dispatch_ref" != "$GITHUB_REF_NAME" ]]; then
+            echo "::error::Workflow-dispatch ref mismatch: expected $GITHUB_REF_NAME, got $dispatch_ref"
+            exit 1
+          fi
+          curl --silent --show-error --fail-with-body -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
