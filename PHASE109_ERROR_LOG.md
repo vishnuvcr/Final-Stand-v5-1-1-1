@@ -20,3 +20,6 @@
 
 ## 2026-10-12 07:14 UTC — Data-quality and execution notes
 - Archive parse/duplicate warnings in this shard: 0. Source gaps, zero-volume and unmatchable exact contracts are excluded and reported; detailed raw price rows are not published. Daily OHLC does not prove achieved fills.
+
+## 2026-10-12 08:02 UTC — Grid evaluator failure
+- Run 38221168260 failed before a successful shard checkpoint. Inspect the Actions log; do not copy credentials or raw authenticated responses into the repo. Last committed checkpoint remains the resume point.

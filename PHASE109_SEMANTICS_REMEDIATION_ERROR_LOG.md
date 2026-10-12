@@ -9,3 +9,6 @@
 - **E109-S06 — Execution evidence:** EOD OHLC, even with positive volume, does not verify fills, spread, depth, latency or partial fills; user-specific Paytm Money contract-note charges remain unverified.
 - **Parent sweep checkpoint:** at resume, the v1 cursor had completed 4,000 configurations / 96,000 cost rows and had 590,000 eligible configurations remaining. This is a count checkpoint only.
 - No secret or authenticated raw response was copied to public logs.
+
+## 2026-10-12 08:02 UTC — v2 evaluation workflow failure
+- Run 38221168260 failed before a verified shard checkpoint. Inspect the Actions job log; do not infer performance results.
