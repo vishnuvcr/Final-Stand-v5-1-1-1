@@ -2,7 +2,7 @@
 
 Updated: 2026-10-12  
 Branch: `phase-109-strategy-semantics-remediation`  
-State: **32 REGRESSION TESTS PASS; 90% HISTORICAL-CONTEXT GATE ACTIVE; V3 SHARD PENDING**  
+State: **90% OFFICIAL CONTEXT GATE PASSES; V4 REGRESSION PASS; V4 SHARD PENDING**  
 Promotion: **NONE**
 
 ## Remediation
@@ -21,7 +21,7 @@ Promotion: **NONE**
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-The latest corrected test run [38225233888](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233888) passed **32/32 tests** after raising the expected official context density to 90% of weekdays. The previous context audit was insufficient: ~218 dates per series versus a multi-year trading history. The NSE context client now uses at most 60-calendar-day request windows and requires ≥90% weekday coverage; the evaluator is engine `phase109-eod-engine-v3-context-coverage`, refuses truncated input at runtime, and the source dispatch additionally checks option/index calendar overlap. Source reacquisition run [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) is progressing through the Dhan historical-feature step; refreshed run [38225253211](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225253211) is queued. The v3 evaluation workflow [38225233884](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233884) is pending; no corrected v3 shard has been verified. No strategy profitability conclusion or promotion is available.
+The refreshed official index/VIX context audit now **passes the 90% density gate**: 748 unique dates each for India VIX, NIFTY 50 and NIFTY BANK, versus 711 required (789 weekdays in the requested interval); zero failed chunk-series calls, zero duplicate dates and zero invalid/missing OHLC rows. Calendar reconciliation found 743 valid option-archive dates, all overlapping NIFTY 50 dates, plus five observed NIFTY 50 sessions without a valid option archive; those sessions remain excluded rather than imputed. See [context summary](results/phase109/niftyindices_context_summary.json) and [calendar reconciliation](results/phase109/nse_calendar_reconciliation.json). Regression run [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed. The current evaluator is engine `phase109-eod-engine-v4-session-coverage`; its cursor reset is required because prior v1/v2/v3 checkpoints used different implementation/context gates. The v4 evaluator run [38227220343](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227220343) is pending behind an older evaluator job [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004); the updated acquisition run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is reacquiring the cache from the latest source code. No v4 result shard is yet verified; no strategy is promoted.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
@@ -63,3 +63,11 @@ The latest corrected test run [38225233888](https://github.com/vishnuvcr/Final-S
 - Engine: phase109-eod-engine-v2-semantics; status: PARTIAL_SHARD_COMPLETE; cursor [0,2,000).
 - This shard: 2,000 configurations; 48,000 cost rows. Cumulative: 2,000 configurations; 170,800 remaining.
 - This is workflow/evaluation progress only. OHLC execution proxies are not verified fills; no strategy promoted.
+
+
+## 2026-10-12 09:03 UTC — Official context gate passed; v4 queued
+
+- Refreshed official context summary reports 748 unique dates for India VIX, NIFTY 50 and NIFTY BANK, all above the minimum 711 observations (90% of 789 weekdays). There are zero failed chunk-series calls, duplicate date rows, invalid OHLC rows or missing OHLC rows.
+- Calendar reconciliation reports 743 valid options archive dates, all with a NIFTY 50 observation; five observed NIFTY 50 sessions lack valid option archives and are excluded rather than synthesized.
+- The current engine version is `phase109-eod-engine-v4-session-coverage`; prior v1/v2/v3 progress is ineligible for cursor reuse. Latest test workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed. The updated acquisition run [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is running and v4 evaluator run [38227220343](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38227220343) is pending. The older run [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) was launched on an earlier checkout and cannot certify v4.
+- No strategy has been promoted and no profitability conclusion is inferred from coverage completion.
