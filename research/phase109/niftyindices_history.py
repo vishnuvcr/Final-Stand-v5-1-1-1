@@ -101,7 +101,7 @@ def nse_get(path, params, bootstrap_page):
     }
     try:
         req=urllib.request.Request(bootstrap_page,headers=headers)
-        with urllib.request.urlopen(req,timeout=15) as resp: resp.read(4096)
+        with OPENER.open(req,timeout=15) as resp: resp.read(4096)
     except Exception:
         # Continue to the data endpoint; some runners receive cookies on the API response.
         pass
