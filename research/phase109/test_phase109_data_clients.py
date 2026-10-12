@@ -44,6 +44,26 @@ class TestNseBackfill(unittest.TestCase):
         dates=list(nse_backfill.expected_weekdays(date(2024,7,5),date(2024,7,10)))
         self.assertEqual([d.isoformat() for d in dates],["2024-07-05","2024-07-08","2024-07-09"])
 
+    def test_requested_dates_include_observed_weekend_sessions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            calendar=Path(tmp)/"niftyindices_session_calendar.csv"
+            with calendar.open("w",newline="",encoding="utf-8") as fh:
+                w=csv.writer(fh)
+                w.writerow(["date","nifty50_present"])
+                w.writerow(["2024-07-06","1"])
+                w.writerow(["2024-07-07","0"])
+                w.writerow(["2024-07-08","1"])
+                w.writerow(["2024-07-13","1"])
+            weekdays,observed,extras,dates=nse_backfill.requested_dates(
+                date(2024,7,5),date(2024,7,10),calendar
+            )
+        self.assertEqual([d.isoformat() for d in weekdays],
+                         ["2024-07-05","2024-07-08","2024-07-09"])
+        self.assertEqual([d.isoformat() for d in observed],["2024-07-06","2024-07-08"])
+        self.assertEqual([d.isoformat() for d in extras],["2024-07-06"])
+        self.assertEqual([d.isoformat() for d in dates],
+                         ["2024-07-05","2024-07-06","2024-07-08","2024-07-09"])
+
     def test_udiff_contract_filter_and_integrity_metrics(self):
         fields=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","StrkPric","OptnTp",
                 "OpnPric","HghPric","LwPric","ClsPric","OpnIntrst","TtlTradgVol","NewBrdLotQty"]
