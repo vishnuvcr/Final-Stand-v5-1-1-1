@@ -10,3 +10,6 @@ Assistant action summary: corrected the plan to require at least 1,000 meaningfu
 User: “I have added dhan access token and hf token. Utilise them alongwith other free sources if needed”
 Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 3,719,520 registered configuration tuples with 89,268,480 cost-adjusted rows across 45 shards. These are manifest counts, not observed trading tests.
 
+## 2026-10-12 — User requested immediate strategy testing
+User: “Proceed”
+Assistant action summary: resumed Phase 109, inspected latest Actions state and logs, found and fixed an acquisition summary KeyError plus two UDiFF instrument-code filters that could suppress option rows. Added a network-free evaluator regression test and updated the error/research logs. These are code fixes; no completed strategy performance is claimed at this checkpoint. Hidden internal reasoning is not stored.
