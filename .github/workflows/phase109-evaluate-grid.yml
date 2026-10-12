@@ -216,7 +216,7 @@ jobs:
             if [[ "$selection_status" == "FINAL_SHORTLIST_READY_FOR_UNTOUCHED_HOLDOUT" && "$shortlist" -gt 0 && "$holdout_status" == "NOT_RUN" ]]; then
               payload=$(python - <<'PY'
           import json
-          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
+          print(json.dumps({"ref":"${GITHUB_REF_NAME}","inputs":{"max_configs":"2000"}}))
           PY
           )
               curl --silent --show-error --fail -X POST \
@@ -233,7 +233,7 @@ jobs:
           fi
           payload=$(python - <<'PY'
           import json
-          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
+          print(json.dumps({"ref":"${GITHUB_REF_NAME}","inputs":{"max_configs":"2000"}}))
           PY
           )
           curl --silent --show-error --fail -X POST \
