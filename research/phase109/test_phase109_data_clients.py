@@ -90,7 +90,7 @@ class TestNiftyIndicesHistory(unittest.TestCase):
         self.assertGreater(minimum,218)
         self.assertGreaterEqual(
             minimum,
-            int(niftyindices_history.expected_weekdays(start,end)*0.60),
+            int(niftyindices_history.expected_weekdays(start,end)*0.90),
         )
 
     def test_index_date_parsing(self):
