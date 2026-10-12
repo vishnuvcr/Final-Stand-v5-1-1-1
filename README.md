@@ -1,13 +1,13 @@
 <!-- PHASE109_GRID_STATUS_START -->
-# Phase 109 — 1,000+ Strategy-Family Grid and Evaluation
+# Phase 109 — 1,000+ Strategy-Family Grid and Evaluator Status
 
-**Current evaluation status: PARTIAL_SHARD_COMPLETE**. Registered, source-feasible, attempted and completed counts are reported separately.
+**Parent v1 progress:** 4,000 configuration attempts / 96,000 cost rows published; 590,000 remain within the prior 594,000 eligible denominator. A semantic audit found v1 mapping risks, so these remain diagnostic only. No strategy promoted.
 
-- Registered [family registry](results/phase109/strategy_families.csv), [configuration space](results/phase109/family_configuration_space.csv) and [cost shard manifest](results/phase109/cost_row_shard_manifest.csv).
-- Cumulative supported configurations attempted: 2,000; cost-adjusted rows: 48,000; eligible configs remaining: 592,000.
-- Data audits: [family feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md) · [NSE option coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [India VIX/index context](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [Dhan rolling ATM features](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md) · [index futures](results/phase109/NSE_INDEX_FUTURES_AUDIT.md) · [model IV/Greeks](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
-- Development 2024-10 through 2025-09; validation 2025-10 through 2026-03; holdout from 2026-04 reserved. **No strategy promoted.**
-- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
+- [Parent Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/PHASE109_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-exhaustive-parameter-grid/PHASE109_STATUS.md)
+- [Semantic remediation branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-strategy-semantics-remediation) · [plan](PHASE109_SEMANTICS_REMEDIATION_PLAN.md) · [status](PHASE109_SEMANTICS_REMEDIATION_STATUS.md) · [semantic audit](results/phase109/SEMANTICS_REMEDIATION_AUDIT.md)
+- [26-test pass](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326) · [first v2 evaluator attempt (failed on missing branch-local cache)](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) · [source reacquisition/cache warmup](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273)
+- Registered [family registry](results/phase109/strategy_families.csv), [configuration space](results/phase109/family_configuration_space.csv) and [cost shard manifest](results/phase109/cost_row_shard_manifest.csv). All rows must be separately labelled registered, blocked, attempted or completed.
+- Every eligible configuration retains all 24 canonical cost cases. Daily OHLC prices are proxies, not verified fills. Holdout and multiplicity gates remain mandatory; **no strategy is promoted**.
 <!-- PHASE109_GRID_STATUS_END -->
 
 <!-- PHASE103_STOCK_OPTIONS_START -->
