@@ -24,15 +24,13 @@ on:
       - phase-109-strategy-semantics-remediation
     paths:
       - "research/phase109/nse_backfill.py"
-      - "research/phase109/niftyindices_history.py"
-      - ".github/workflows/phase109-nse-backfill.yml"
 
 permissions:
   contents: write
   actions: write
 
 concurrency:
-  group: phase109-writer-${{ github.ref }}
+  group: phase109-source-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -52,7 +50,7 @@ jobs:
           python-version: "3.11"
 
       - name: Restore private NSE/Dhan source cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: data/cache/phase109
           key: ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-${{ github.run_number }}
@@ -120,6 +118,12 @@ jobs:
         run: |
           set -euo pipefail
           python research/phase109/calendar_reconcile.py
+
+      - name: Save refreshed private source cache before downstream dispatch
+        uses: actions/cache/save@v4
+        with:
+          path: data/cache/phase109
+          key: ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-${{ github.run_number }}
 
       - name: Update Phase 109 data-acquisition status, research/error/chat logs and main README
         run: |
@@ -295,34 +299,47 @@ jobs:
             results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md
           if-no-files-found: error
 
-      - name: Dispatch the corrected evaluator after source acquisition and cache save
+      - name: Dispatch the corrected evaluator only after complete context and cache gates pass
         if: success() && github.ref == 'refs/heads/phase-109-strategy-semantics-remediation'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          read -r cost_rows missing_lots index_rows < <(python - <<'PY'
+          read -r cost_rows missing_lots context_ok calendar_ok minimum_context vix_rows nifty_rows bank_rows archives_without_index missing_archive_sessions < <(python - <<'PY'
           import csv, json
           from pathlib import Path
           p=Path("results/phase109/nse_index_options_daily_coverage.csv")
-          if not p.exists():
-              print(0, 1, 0)
-              raise SystemExit(0)
-          rows=csv.DictReader(p.open(encoding="utf-8"))
-          eligible=[r for r in rows
-                    if (r.get("expected_date") or "") >= "2024-10-01"
-                    and r.get("status") in {"DOWNLOADED_AND_PARSED","CACHE_HIT_VALIDATED"}]
+          eligible=[]
+          if p.exists():
+              eligible=[r for r in csv.DictReader(p.open(encoding="utf-8"))
+                        if (r.get("expected_date") or "") >= "2024-10-01"
+                        and r.get("status") in {"DOWNLOADED_AND_PARSED","CACHE_HIT_VALIDATED"}]
           count=sum(int(r.get("selected_index_option_rows",0) or 0) for r in eligible)
           lots=sum(int(r.get("missing_lot_size_rows",0) or 0) for r in eligible)
-          context_path=Path("results/phase109/niftyindices_context_summary.json")
-          context=json.loads(context_path.read_text()) if context_path.exists() else {}
-          index_count=sum(int(x.get("unique_date_count",0) or 0) for x in context.get("merged_series_summary",[]))
-          print(count,lots,index_count)
+          cp=Path("results/phase109/niftyindices_context_summary.json")
+          ctx=json.loads(cp.read_text()) if cp.exists() else {}
+          series={x.get("series"):int(x.get("unique_date_count",0) or 0)
+                  for x in ctx.get("merged_series_summary",[])}
+          minimum=int(ctx.get("minimum_expected_unique_dates_per_series",0) or 0)
+          context_ok=int(ctx.get("overall_status")=="PASS" and minimum>0 and
+                         all(series.get(n,0)>=minimum for n in ("INDIA_VIX","NIFTY 50","NIFTY BANK")))
+          rp=Path("results/phase109/nse_calendar_reconciliation.json")
+          cal=json.loads(rp.read_text()) if rp.exists() else {}
+          archive_dates=int(cal.get("option_archive_dates_valid",0) or 0)
+          sessions=int(cal.get("official_nifty50_dates_observed",0) or 0)
+          archive_gap=int(cal.get("valid_option_archive_dates_without_nifty50_index_date",0) or 0)
+          session_gap=int(cal.get("observed_nifty50_sessions_without_valid_option_archive",0) or 0)
+          max_archive_gap=max(5,int(archive_dates*0.05))
+          max_session_gap=max(5,int(sessions*0.05))
+          calendar_ok=int(archive_dates>0 and sessions>=minimum and
+                          archive_gap<=max_archive_gap and session_gap<=max_session_gap)
+          print(count,lots,context_ok,calendar_ok,minimum,series.get("INDIA_VIX",0),
+                series.get("NIFTY 50",0),series.get("NIFTY BANK",0),archive_gap,session_gap)
           PY
           )
-          echo "Eligible-window exact-contract rows=$cost_rows; missing lot-size rows=$missing_lots; index/VIX context rows=$index_rows"
-          if [[ "$cost_rows" -le 0 || "$missing_lots" -gt 0 || "$index_rows" -le 0 ]]; then
-            echo "Source gate not satisfied. Preserve the cache and logs, but do not start the corrected evaluator."
+          echo "Eligible-window option rows=$cost_rows; missing lot-size rows=$missing_lots; minimum context dates=$minimum_context; VIX/NIFTY50/NIFTYBANK=$vix_rows/$nifty_rows/$bank_rows; archive dates without index=$archives_without_index; observed index sessions without archive=$missing_archive_sessions"
+          if [[ "$cost_rows" -le 0 || "$missing_lots" -gt 0 || "$context_ok" != "1" || "$calendar_ok" != "1" ]]; then
+            echo "Source-quality gate is not satisfied. Cache and audit stay published, but corrected evaluation is not dispatched."
             exit 0
           fi
           payload='{"ref":"phase-109-strategy-semantics-remediation","inputs":{"max_configs":"2000"}}'
@@ -332,4 +349,4 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-evaluate-grid.yml/dispatches" \
             -d "$payload"
-          echo "Dispatched one bounded semantic-v2 shard after aggregate source gates passed."
+          echo "Dispatched one bounded semantic-v3 shard after exact-option, lot-size, context-density and calendar-reconciliation gates passed."
