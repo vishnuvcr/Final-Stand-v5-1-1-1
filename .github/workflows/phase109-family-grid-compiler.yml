@@ -339,9 +339,12 @@ jobs:
           PY
           )
           echo "Cost-window selected option rows=$cost_rows; missing lot-size rows=$missing_lots; official index/VIX context rows=$index_rows"
-          if [[ "$cost_rows" -le 0 || "$missing_lots" -gt 0 || "$index_rows" -le 0 ]]; then
-            echo "BLOCKED: eligible-window lot-size or official index/VIX coverage is incomplete. Do not launch P&L evaluation."
+          if [[ "$cost_rows" -le 0 || "$missing_lots" -gt 0 ]]; then
+            echo "BLOCKED: eligible-window exact-contract option rows or lot-size integrity is incomplete. Do not launch P&L evaluation."
             exit 0
+          fi
+          if [[ "$index_rows" -le 0 ]]; then
+            echo "PARTIAL MODE: official index/VIX context unavailable. Run only source-supported configurations that do not require missing index/VIX inputs; dependent configurations must remain no-signal/blocked and cannot be promoted."
           fi
           if [[ "$eligible" -le 0 ]]; then
             echo "No families passed the source-input gate; preserve blocked status and do not launch evaluator."
