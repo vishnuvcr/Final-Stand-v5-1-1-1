@@ -93,3 +93,6 @@
 - Consequence: the shard is published; resume from the committed cursor 6,000, with 166,800 supported configurations remaining. Do not rerun the completed range or mix parent-v1 results with the isolated v4 branch.
 - Developer next: repair dispatch serialization, test branch routing, then resume bounded shards. Tester next: independently assert active-branch routing, 24 cost rows/config, engine-specific cursor isolation and untouched holdout.
 - Status: OPEN pending fix and successful follow-on run.
+
+## 2026-10-12 13:13 UTC — v2 shard audit
+- Archive parse/duplicate warnings: 0; skipped reasons: {}. No raw records or secrets published. No profitability assertion from shard completion.
