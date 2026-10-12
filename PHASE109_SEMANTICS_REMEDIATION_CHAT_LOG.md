@@ -17,3 +17,7 @@ Visible action summary: a second static review found the stop/target profile par
 
 ## 2026-10-12 08:08 UTC — Regression retest checkpoint
 Run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) passed 27 tests, including the new stop/target parser test. The source acquisition remained in progress; no v2 strategy outcomes were accepted.
+
+## 2026-10-12 08:31 UTC — Resume / evaluator throughput correction
+
+User requested “Resume”. Visible action summary: checked current Phase 109 Actions and read the remediation plan, status, research log, error log and visible chat log before making a code change. The source acquisition workflow had completed official NSE archive acquisition, Dhan rolling ATM feature acquisition and index-futures extraction, and was deriving model IV/Greeks. The evaluator's option-chain feature aggregation was found to repeat for every configuration. It is now precomputed once per supported symbol per shard. The new test workflow [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed 29/29 tests. The corrected v2 shard is still pending source-gated dispatch; no profitability conclusion or strategy promotion is claimed.
