@@ -82,7 +82,16 @@ class TestNiftyIndicesHistory(unittest.TestCase):
         self.assertEqual(chunks[-1][1]+niftyindices_history.timedelta(days=1),end)
         for left,right in zip(chunks,chunks[1:]):
             self.assertEqual(left[1]+niftyindices_history.timedelta(days=1),right[0])
-            self.assertLessEqual((left[1]-left[0]).days,363)
+            self.assertLessEqual((left[1]-left[0]).days,59)
+
+    def test_minimum_expected_observation_gate_rejects_short_api_responses(self):
+        start=date(2023,10,1); end=date(2026,10,9)
+        minimum=niftyindices_history.minimum_expected_observations(start,end)
+        self.assertGreater(minimum,218)
+        self.assertGreaterEqual(
+            minimum,
+            int(niftyindices_history.expected_weekdays(start,end)*0.60),
+        )
 
     def test_index_date_parsing(self):
         self.assertEqual(niftyindices_history.parse_d("01 Jan 2024"),"2024-01-01")
