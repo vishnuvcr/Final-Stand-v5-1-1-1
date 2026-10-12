@@ -617,6 +617,17 @@ def parse_risk_profile(risk):
     return stop_pct,target_pct
 
 
+def option_side_from_direction(direction):
+    """Convert signed directional signal to the exact NSE option side."""
+    try:
+        value=float(direction)
+    except (TypeError,ValueError):
+        return None
+    if value>0:return "CE"
+    if value<0:return "PE"
+    return None
+
+
 def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="selection"):
     signal_date=dates[signal_idx]
     # The cost schedule begins 1 October 2024. Earlier rows are features/warm-up only.
@@ -630,7 +641,10 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="
     # Cannot jump across a date where the option archive failed. Requires each selected session to be present.
     if entry_date not in data["option_dates"] or exit_date not in data["option_dates"]:return None,"OPTION_ARCHIVE_SESSION_MISSING"
     target=canonical(axes.get("strike_target","ATM"))
-    contract,reason=choose_contract(data,signal_date,entry_date,exit_date,symbol,side,target)
+    direction=1 if float(side)>0 else (-1 if float(side)<0 else 0)
+    option_side=option_side_from_direction(direction)
+    if option_side is None:return None,"INVALID_DIRECTION_SIGNAL"
+    contract,reason=choose_contract(data,signal_date,entry_date,exit_date,symbol,option_side,target)
     if contract is None:return None,reason
     entry_row=data["contracts"].get(entry_date,{}).get(contract)
     exit_row=data["contracts"].get(exit_date,{}).get(contract)
@@ -670,7 +684,8 @@ def simulate_trade(data,dates,index_by_date,symbol,signal_idx,side,axes,sample="
     gross=(exit_price-entry)*qty
     return {
       "signal_date":signal_date.isoformat(),"entry_date":entry_date.isoformat(),"exit_date":exit_date.isoformat(),
-      "symbol":symbol,"expiry":contract[1].isoformat(),"strike":contract[2],"side":side,
+      "symbol":symbol,"expiry":contract[1].isoformat(),"strike":contract[2],
+      "side":option_side,"direction":direction,
       "entry_price_proxy":entry,"exit_price_proxy":exit_price,"lot_size":qty,
       "gross_pnl":gross,"exit_reason":exit_reason,"holding_sessions":hold_sessions,
       "execution_model":"signal-at-prior-close, next-session daily OPEN, exit at daily CLOSE or conservative stop/target using daily H/L; positive EOD volume required",
