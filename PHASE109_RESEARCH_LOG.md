@@ -8,9 +8,9 @@
 - Phase 108 run 38167282757 passed its ten-family/240-cost-row exploratory OHLC proxy screen; all ten were negative in primary and strict stress cases. No promotion.
 
 ## 2026-10-12 — Family registry and grid compiler
-- Deterministic registry build completed at 2026-10-11 19:54 UTC. Registered 1,025 architecture combinations; exact duplicate fingerprints=0; fingerprints=1,025.
-- Minimum/maximum configurations per family: 78,400/705,600; complete applicable Cartesian universe=325,124,800 configuration tuples and 7,802,995,200 cost rows across 3,902 deterministic shards.
-- Registry and manifest hashes: registry `7554ceceb9df6a403f409b9877b6ff0b57c9b0bca724e4ee2c8c25799dbdf60d`; configuration `8798c760a346555bbaaa22314487032cba6f0e1886d81dc6d2f206b59d3c2821`; cost grid `0dc9f1792ba6b8eeec903577d3cfd83d122aaa36785248313982e7843a00e33f`; full manifest `556a08e9ff7c05c58cf409f0ef6d30eeebfa5f71273482297e6133a9a9486b39`.
+- Deterministic registry build completed at 2026-10-12 03:11 UTC. Registered 1,025 architecture combinations; exact duplicate fingerprints=0; fingerprints=1,025.
+- Minimum/maximum configurations per family: 1,080/19,440; complete applicable Cartesian universe=3,719,520 configuration tuples and 89,268,480 cost rows across 45 deterministic shards.
+- Registry and manifest hashes: registry `7554ceceb9df6a403f409b9877b6ff0b57c9b0bca724e4ee2c8c25799dbdf60d`; configuration `3253d8df32e73d5b66208373d7ca2d9e30fc20f656dbed52776b71fb31f9941a`; cost grid `0dc9f1792ba6b8eeec903577d3cfd83d122aaa36785248313982e7843a00e33f`; full manifest `f5c0439bc9d9b994a4b5b5ca2bc2260e5b26b8346b91335b4eed894ff5cae6cc`.
 - Self-test: PASS. This verifies count, distinct architecture fingerprints, valid per-family Cartesian counts, 24 cost scenarios and contiguous shard ranges only; it does not run the strategies.
 - Source-access findings:
 - DhanHQ rolling expired-options API : **AUTH_AND_SCHEMA_PROBE_OK**; candidates=; bars=231.
@@ -32,20 +32,6 @@
 - Hugging Face dataset card inspection : **METADATA_DISCOVERED_LICENSE_DECLARED_BUT_UNVERIFIED**; candidates=; bars=.
 - Official NSE legacy/UDiFF boundary + recent session probes: 3/3 passed; overall=PASS.
 - Source feasibility inventory: 14 registered source classes; see matrix/report for source gates and blocked datasets.
+- Family input feasibility: 1,025 families; 1,025 blocked on unavailable inputs, 0 with proxy/execution gates, 0 with fields present but final gates pending. This is not a backtest.
 - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
 
-
-## 2026-10-12 — Parameter-grid compute correction
-- The initial registry had 325,124,800 tuples / 7,802,995,200 cost rows, substantially above the requested ≥1,000 configurations per family. That manifest was registered only and was not a backtest.
-- Revised axis values to 5 lookbacks, 4 signal thresholds, 3 volatility lookbacks, 1–2 regime definitions, 3 strike targets, 2 holding/exit windows, 4 risk profiles, and 3 OI methods only for OI/flow families. Every applicable combination remains Cartesian-enumerated; all families still require at least 1,000 configurations and all 24 cost cases apply per eligible tuple.
-- New counts and hashes are pending compiler regeneration; previous counts remain preserved only as historical log facts. No trading result or family promotion is implied by this design change.
-
-
-## 2026-10-12 — Removal of irrelevant parameter duplicates
-- Review found that no-regime families carried volatility lookback and regime-definition axes even though those values did not affect their rule, creating repeated result paths under nominally different configurations. This was corrected before any new corrected-grid results are interpreted.
-- Every family now uses 1,080 base configs (5 lookbacks × 4 signal thresholds × 3 strikes × 2 exits × 9 risk profiles). Volatility lookback adds only for realized-vol/trend-range regimes; two regime definitions add only for realized-vol regime; three OI methods add only for OPTIONS_FLOW confirmations.
-- The evaluator now uses the actual percent named in each stop/target profile. All new exact counts and manifest hashes must come from the compiler. This is a design correction only, not a trading result.
-
-## 2026-10-12 — Compiler gate repair
-- The latest compiler attempt (run 38172152251) stopped at Python compilation before any source probing due to a mismatched list terminator in family_feasibility.py. Corrected it and logged the error; this attempt has zero strategy evaluations.
-- The next push-triggered run is the verification gate for the correction. Do not reuse any prior assumption that the family feasibility stage passed until that run is green.

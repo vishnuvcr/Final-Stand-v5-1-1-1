@@ -8,12 +8,5 @@ Assistant action summary: corrected the plan to require at least 1,000 meaningfu
 
 ## 2026-10-12 — Dhan and Hugging Face access requested
 User: “I have added dhan access token and hf token. Utilise them alongwith other free sources if needed”
-Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 325,124,800 registered configuration tuples with 7,802,995,200 cost-adjusted rows across 3,902 shards. These are manifest counts, not observed trading tests.
+Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 3,719,520 registered configuration tuples with 89,268,480 cost-adjusted rows across 45 shards. These are manifest counts, not observed trading tests.
 
-
-## 2026-10-12 — Grid compute-burden correction
-Assistant action summary: narrowed the number of candidate values per variable after the first registered grid expanded to 7.8 billion cost rows. The revised registry keeps all applicable declared variables and their complete Cartesian product but targets a compact ≥1,000 configurations per family. All 24 declared cost cases remain per eligible configuration. Compiler re-run will establish updated counts/hashes; no strategy rows are claimed tested by this correction.
-
-
-## 2026-10-12 — Applicable-axis correction and evaluator implementation
-Assistant action summary: removed volatility/regime axes from strategy families that do not use them, expanded distinct stop/target rules to nine so each family still has at least 1,080 configurations, and updated evaluation logic to preserve the untouched 2026-04 onward holdout. Implemented source/data-feasibility gates and a resumable evaluation workflow. The corrected manifest counts, automated transaction-cost adapter test, and source acquisition still have to pass before strategy performance can be reported; no promotion was made.

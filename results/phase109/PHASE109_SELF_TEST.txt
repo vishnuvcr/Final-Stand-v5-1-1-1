@@ -1,6 +1,6 @@
 PASS
 families and unique fingerprints; per-family Cartesian counts reconciled; 24 unique cost cases; shard ranges contiguous and complete.
-configuration_tuples=325124800
-cost_adjusted_rows=7802995200
-shards=3902
+configuration_tuples=3719520
+cost_adjusted_rows=89268480
+shards=45
 No empirical trading results were evaluated by this self-test.

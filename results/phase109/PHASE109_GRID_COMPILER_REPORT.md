@@ -1,6 +1,6 @@
 # Phase 109 Grid Compiler Report
 
-Generated: 2026-10-11T19:54:36.434084+00:00
+Generated: 2026-10-12T03:11:42.113669+00:00
 
 **State: GRID REGISTERED, NOT EVALUATED. No strategy promoted.**
 
@@ -10,12 +10,12 @@ Generated: 2026-10-11T19:54:36.434084+00:00
 | Exact duplicate fingerprints | 0 |
 | Distinct architecture fingerprints | 1,025 |
 | Structural one-component-neighbour pairs retained for audit | 4,100 |
-| Minimum configurations per family | 78,400 |
-| Maximum configurations per family | 705,600 |
-| Total family-configuration tuples | 325,124,800 |
+| Minimum configurations per family | 1,080 |
+| Maximum configurations per family | 19,440 |
+| Total family-configuration tuples | 3,719,520 |
 | Cost scenarios per tuple | 24 |
-| Total cost-adjusted rows in registered universe | 7,802,995,200 |
-| Cost-row shards | 3,902 |
+| Total cost-adjusted rows in registered universe | 89,268,480 |
+| Cost-row shards | 45 |
 | Rows per full shard (last shard may be smaller) | 2,000,000 |
 
 ## Interpretation
@@ -29,6 +29,6 @@ The full Cartesian configuration space applies all applicable lookback, signal-t
 ## Reproducibility hashes
 
 - Registry: `7554ceceb9df6a403f409b9877b6ff0b57c9b0bca724e4ee2c8c25799dbdf60d`
-- Configuration manifest: `8798c760a346555bbaaa22314487032cba6f0e1886d81dc6d2f206b59d3c2821`
+- Configuration manifest: `3253d8df32e73d5b66208373d7ca2d9e30fc20f656dbed52776b71fb31f9941a`
 - Cost grid: `0dc9f1792ba6b8eeec903577d3cfd83d122aaa36785248313982e7843a00e33f`
-- Full manifest: `556a08e9ff7c05c58cf409f0ef6d30eeebfa5f71273482297e6133a9a9486b39`
+- Full manifest: `f5c0439bc9d9b994a4b5b5ca2bc2260e5b26b8346b91335b4eed894ff5cae6cc`

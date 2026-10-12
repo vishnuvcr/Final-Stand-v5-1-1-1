@@ -1,0 +1,24 @@
+{
+  "candidate_configs_with_all_inputs_present": 0,
+  "families_with_inputs_present": 0,
+  "families_with_missing_inputs": 1025,
+  "families_with_proxy_or_execution_gates": 0,
+  "family_counts_by_status": {
+    "BLOCKED_MISSING_INPUTS": 1025
+  },
+  "generated_utc": "2026-10-12T03:11:47.204189+00:00",
+  "grid_summary_family_count": 1025,
+  "known_data_presence": {
+    "dhan_rolling_rows": 0,
+    "futures_dates": 0,
+    "index_context_series": {},
+    "model_greeks_dividend_assumption": null,
+    "model_greeks_rate_assumption": null,
+    "option_archive_dates_parsed": 0,
+    "positive_volume_option_rows": 0,
+    "valid_model_greek_rows": 0
+  },
+  "note": "This matrix uses declared input fields and audited source presence only; it does not run a strategy, verify complete chronological holdout coverage, or promote a family.",
+  "registered_configurations_total": 3719520,
+  "registered_families": 1025
+}
