@@ -58,6 +58,15 @@ class StrategySemanticTests(unittest.TestCase):
         self.assertEqual(evaluator.compute_signal("EMA_CROSS", falling, 20, 5, 0.1), -1)
         self.assertEqual(evaluator.compute_signal("EMA_CROSS", flat, 25, 5, 0.1), 0)
 
+    def test_stop_and_target_profile_percentages_are_parsed(self):
+        self.assertEqual(evaluator.parse_risk_profile("STOP_10PCT_PREMIUM"), (0.1, None))
+        self.assertEqual(evaluator.parse_risk_profile("TARGET_30PCT_PREMIUM"), (None, 0.3))
+        self.assertEqual(
+            evaluator.parse_risk_profile("STOP_20PCT_TARGET_30PCT_PREMIUM"),
+            (0.2, 0.3),
+        )
+        self.assertEqual(evaluator.parse_risk_profile("NO_STOP_NO_TARGET"), (None, None))
+
     def test_engine_version_prevents_reuse_of_v1_cursor(self):
         self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v2-semantics")
 
