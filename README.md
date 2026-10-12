@@ -1,13 +1,13 @@
 <!-- PHASE109_GRID_STATUS_START -->
-# Phase 109 — 1,000+ strategy-family discovery and exhaustive grid
+# Phase 109 — 1,000+ Strategy-Family Grid and Evaluation
 
-**Status: registry/manifest compiled; empirical backtests not run. No strategy promoted.** 1,025 architecture combinations are registered with 0 exact duplicate fingerprints. The Cartesian grid contains 3,719,520 registered family-configuration pairs and 89,268,480 cost-adjusted rows (24 cost cases), partitioned into 45 deterministic shards. These are planned coverage counts, not completed trading tests.
+**Current evaluation status: PARTIAL_SHARD_COMPLETE**. Registered, source-feasible, attempted and completed counts are reported separately.
 
-- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid)
-- [Status](PHASE109_STATUS.md) · [research plan](PHASE109_RESEARCH_PLAN.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
-- [Registry](results/phase109/strategy_families.csv) · [configuration space](results/phase109/family_configuration_space.csv) · [shard manifest](results/phase109/cost_row_shard_manifest.csv) · [source audit](results/phase109/source_access_audit.csv) · [compiler report](results/phase109/PHASE109_GRID_COMPILER_REPORT.md) · [official NSE archive feasibility](results/phase109/NSE_ARCHIVE_SOURCE_FEASIBILITY.md) · [source feasibility matrix](results/phase109/SOURCE_FEASIBILITY_REPORT.md) · [family data feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md)
-
-Source-access checks do not prove dataset completeness or tradeability. Chronological splits, exact option contracts, transaction costs, slippage, multiple-testing correction and untouched OOS validation remain mandatory.
+- Registered [family registry](results/phase109/strategy_families.csv), [configuration space](results/phase109/family_configuration_space.csv) and [cost shard manifest](results/phase109/cost_row_shard_manifest.csv).
+- Cumulative supported configurations attempted: 2,000; cost-adjusted rows: 48,000; eligible configs remaining: 592,000.
+- Data audits: [family feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md) · [NSE option coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [India VIX/index context](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [Dhan rolling ATM features](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md) · [index futures](results/phase109/NSE_INDEX_FUTURES_AUDIT.md) · [model IV/Greeks](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
+- Development 2024-10 through 2025-09; validation 2025-10 through 2026-03; holdout from 2026-04 reserved. **No strategy promoted.**
+- [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
 <!-- PHASE109_GRID_STATUS_END -->
 
 <!-- PHASE103_STOCK_OPTIONS_START -->

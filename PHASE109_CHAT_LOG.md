@@ -10,3 +10,5 @@ Assistant action summary: corrected the plan to require at least 1,000 meaningfu
 User: “I have added dhan access token and hf token. Utilise them alongwith other free sources if needed”
 Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 3,719,520 registered configuration tuples with 89,268,480 cost-adjusted rows across 45 shards. These are manifest counts, not observed trading tests.
 
+## 2026-10-12 07:14 UTC — Visible grid evaluation action
+The evaluator processed cursor range [0,2,000), attempted 2,000 supported configurations and generated 48,000 cost rows. Development/validation only; untouched holdout preserved; no strategy promotion asserted.

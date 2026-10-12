@@ -35,3 +35,6 @@
 - Family input feasibility: 1,025 families; 689 blocked on unavailable inputs, 36 with proxy/execution gates, 300 with fields present but final gates pending. This is not a backtest.
 - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
 
+## 2026-10-12 07:14 UTC — Grid evaluation shard
+- Engine phase109-eod-engine-v1 attempted 2,000 configs and produced 48,000 rows across 24 cost cases/config; cumulative attempts 2,000, remaining 592,000.
+- Selection used development/validation only; the 2026-04+ holdout was not evaluated. EOD fills are proxies and no strategy was promoted.
