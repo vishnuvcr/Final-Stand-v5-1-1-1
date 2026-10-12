@@ -1,0 +1,293 @@
+name: Phase 109 — official NSE historical index-options acquisition
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_date:
+        description: Start date (inclusive)
+        required: true
+        default: "2023-10-01"
+        type: string
+      to_date:
+        description: End date (exclusive)
+        required: true
+        default: "2026-10-09"
+        type: string
+      retry_failures:
+        description: Retry dates that are missing/failed in the existing coverage audit
+        required: true
+        default: false
+        type: boolean
+  push:
+    branches:
+      - phase-109-exhaustive-parameter-grid
+    paths:
+      - "research/phase109/nse_backfill.py"
+      - ".github/workflows/phase109-nse-backfill.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase109-writer-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  acquire-and-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout the research branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Restore private NSE/Dhan source cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache/phase109
+          key: ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-${{ github.run_number }}
+          restore-keys: |
+            ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-data-v2-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-dhan-hf-source-cache-v2-
+            ${{ runner.os }}-phase109-dhan-hf-source-cache-v1-
+
+      - name: Validate source clients and run offline regression tests
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/nse_backfill.py research/phase109/niftyindices_history.py research/phase109/calendar_reconcile.py research/phase109/test_phase109_data_clients.py
+          python -m unittest discover -s research/phase109 -p 'test_*.py' -v
+
+      - name: Acquire and validate official NSE archives into private cache
+        env:
+          FROM_DATE: ${{ inputs.from_date || '2023-10-01' }}
+          TO_DATE: ${{ inputs.to_date || '2026-10-09' }}
+          RETRY_FAILURES: ${{ inputs.retry_failures || 'false' }}
+        run: |
+          set -euo pipefail
+          args=(--from-date "$FROM_DATE" --to-date "$TO_DATE")
+          if [[ "$RETRY_FAILURES" == "true" ]]; then
+            args+=(--retry-failures)
+          fi
+          python research/phase109/nse_backfill.py "${args[@]}"
+
+      - name: Acquire Dhan rolling weekly ATM IV/OI history for feature research
+        env:
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN || secrets.DHAN_TOKEN || secrets.DHAN_JWT_TOKEN }}
+          FROM_DATE: "2024-10-01"
+          TO_DATE: "2026-10-09"
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/dhan_rolling_options.py
+          if [[ -z "$DHAN_ACCESS_TOKEN" ]]; then
+            echo "Dhan token was not mapped into the workflow. No credential printed."
+            exit 1
+          fi
+          python research/phase109/dhan_rolling_options.py --from-date "$FROM_DATE" --to-date "$TO_DATE"
+
+      - name: Extract exact-contract index futures from cached official F&O archives
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/futures_eod_extract.py
+          python research/phase109/futures_eod_extract.py
+
+      - name: Derive exact-contract model IV and Greeks into private cache
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/options_greeks_extract.py
+          python research/phase109/options_greeks_extract.py
+
+      - name: Acquire official India VIX and index OHLC into private cache
+        env:
+          FROM_DATE: ${{ inputs.from_date || '2023-10-01' }}
+          TO_DATE: ${{ inputs.to_date || '2026-10-09' }}
+        run: |
+          set -euo pipefail
+          python -m py_compile research/phase109/niftyindices_history.py research/phase109/calendar_reconcile.py
+          python research/phase109/niftyindices_history.py --from-date "$FROM_DATE" --to-date "$TO_DATE"
+
+      - name: Reconcile option archives against the observed official NIFTY 50 session dates
+        run: |
+          set -euo pipefail
+          python research/phase109/calendar_reconcile.py
+
+      - name: Update Phase 109 data-acquisition status, research/error/chat logs and main README
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, csv
+          from datetime import datetime, timezone
+          from pathlib import Path
+          s=json.loads(Path("results/phase109/nse_index_options_backfill_summary.json").read_text(encoding="utf-8"))
+          nse=json.loads(Path("results/phase109/nse_archive_source_feasibility.json").read_text(encoding="utf-8"))
+          context=json.loads(Path("results/phase109/niftyindices_context_summary.json").read_text(encoding="utf-8"))
+          calendar=json.loads(Path("results/phase109/nse_calendar_reconciliation.json").read_text(encoding="utf-8"))
+          dhan=json.loads(Path("results/phase109/dhan_rolling_options_audit.json").read_text(encoding="utf-8"))
+          ds=dhan["summary"]
+          futures=json.loads(Path("results/phase109/nse_index_futures_summary.json").read_text(encoding="utf-8"))
+          greeks=json.loads(Path("results/phase109/options_model_greeks_summary.json").read_text(encoding="utf-8"))
+          now=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          status=Path("PHASE109_STATUS.md")
+          old=status.read_text(encoding="utf-8")
+          marker="## 109.3 — Historical data acquisition checkpoint"
+          block=f"""{marker}
+
+          Last updated: {now}
+
+          - Date range: {s['from_date']} through {s['to_date_exclusive']} (end exclusive).
+          - Weekdays probed: {s['requested_weekdays']:,}; valid official NSE archive dates parsed/cached: {s['archive_dates_parsed']:,}; weekdays without archive or with fetch/schema errors: {s['no_archive_or_fetch_error']:,}.
+          - Schema counts: legacy={s['legacy_archive_count']:,}; UDiFF={s['udiff_archive_count']:,}.
+          - Selected index-option rows: {s['selected_index_option_rows']:,}; identity complete: {s['identity_complete_rows']:,}; price complete: {s['price_complete_rows']:,}; positive volume: {s['positive_volume_rows']:,}; zero volume: {s['zero_volume_rows']:,}; invalid OHLC with positive volume: {s['invalid_ohlc_positive_volume_rows']:,}; duplicate daily contract keys: {s['duplicate_daily_contract_keys']:,}; date mismatches: {s['date_mismatch_rows']:,}.
+          - Raw archive cache bytes: {s['compressed_cache_bytes']:,}. Raw archives remain in the Actions cache; only aggregate coverage data and hashes are committed.
+          - **This is still source acquisition, not a strategy backtest.** Weekdays without an archive may be exchange holidays, or may represent source/URL issues; no missing weekday is declared a trading-session gap until compared to an official trading calendar.
+          - Official NSE Indices India VIX / NIFTY 50 / NIFTY BANK series: {context['overall_status']}; successful chunk-series calls={context['successful_chunk_series_calls']}, failed={context['failed_chunk_series_calls']}; see [context report](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md).
+          - Dhan rolling weekly ATM historical options: {ds['status']}; {ds['rows']:,} 5-minute rows (calls={ds['call_rows']:,}, puts={ds['put_rows']:,}) from {ds['from_date']} to {ds['to_date_exclusive']}; successful chunks {ds['successful_chunks']:,}/{ds['attempt_count']:,}; invalid/missing IV rows {ds['invalid_iv_rows']:,}; feature-only, not fixed-contract fills. See [Dhan report](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md).
+          - Official NSE index-futures extraction: {futures['dates_with_selected_index_futures']:,} dates / {futures['selected_futures_rows']:,} FUTIDX rows cached privately; invalid positive-volume OHLC={futures['invalid_ohlc_positive_volume_rows']:,}; duplicate date-symbol-expiry keys={futures['duplicate_daily_contract_keys']:,}; missing lot size={futures['missing_or_nonpositive_lot_size_rows']:,}. See [futures audit](results/phase109/NSE_INDEX_FUTURES_AUDIT.md).
+          - Exact-contract model IV/Greeks: {greeks['status']}; {greeks['valid_model_greek_rows']:,} valid rows across {greeks['udiff_dates_parsed']:,} UDiFF dates; premium-below-model-bound exclusions {greeks['premium_below_model_bound_rows']:,}; upper-bound exclusions {greeks['premium_above_model_bound_rows']:,}; other solver failures {greeks['other_solver_failures']:,}. Uses flat r=6.5%, q=0%; model estimates only. See [model IV/Greeks audit](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
+          - Option archive/calendar reconciliation: {calendar['observed_nifty50_sessions_without_valid_option_archive']:,} observed NIFTY 50 sessions had no valid option archive; {calendar['no_archive_status_on_observed_nifty50_session']:,} of them had a no-archive/fetch status; full date lists/samples are in [calendar reconciliation report](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
+          - Remaining data gate: official holiday/exception calendar reconciliation; source-rights review; historical contract/lot-size specification; chronologically separated development/validation/untouched OOS; FII publication lags; Dhan expiry and fixed-contract semantics.
+          - [Coverage table](results/phase109/nse_index_options_daily_coverage.csv) · [machine-readable summary](results/phase109/nse_index_options_backfill_summary.json) · [option archive report](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md).
+          - [Official India VIX/index context audit](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [context summary JSON](results/phase109/niftyindices_context_summary.json) · [date-only session calendar](results/phase109/niftyindices_session_calendar.csv) · [archive/calendar reconciliation](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
+          """
+          if marker in old:
+            old=old.split(marker)[0].rstrip()+"\n\n"+block+"\n"
+          else:
+            old=old.rstrip()+"\n\n"+block+"\n"
+          status.write_text(old,encoding="utf-8")
+
+          log=Path("PHASE109_RESEARCH_LOG.md")
+          old=log.read_text(encoding="utf-8")
+          marker="## 2026-10-12 — Official NSE index-options backfill"
+          entry=f"""{marker}
+          - Window {s['from_date']} to {s['to_date_exclusive']} (exclusive): {s['requested_weekdays']:,} weekdays probed, {s['archive_dates_parsed']:,} official archives parsed/cache-hit, {s['no_archive_or_fetch_error']:,} no-archive/fetch/schema statuses (not automatically called missing trading sessions).
+          - Selected index-option rows {s['selected_index_option_rows']:,}; identity-complete {s['identity_complete_rows']:,}; price-complete {s['price_complete_rows']:,}; positive-volume {s['positive_volume_rows']:,}; zero-volume {s['zero_volume_rows']:,}; invalid positive-volume OHLC {s['invalid_ohlc_positive_volume_rows']:,}; duplicate contract keys {s['duplicate_daily_contract_keys']:,}.
+          - Legacy/UDiFF archives: {s['legacy_archive_count']:,}/{s['udiff_archive_count']:,}. Raw ZIP data are in the private Actions cache and excluded from public repository artifacts.
+          - The three schema transition probes remain PASS: 2024-07-05 legacy, 2024-07-08 UDiFF, 2026-10-08 UDiFF. This expands source coverage but does not establish complete exchange-session coverage or execute any strategy.
+          - Official NSE Indices context status={context['overall_status']}; VIX/NIFTY50/NIFTY BANK unique date counts: {', '.join(str(x['unique_date_count']) for x in context['merged_series_summary'])}. Session reconciliation shows {calendar['observed_nifty50_sessions_without_valid_option_archive']:,} observed NIFTY 50 dates without an option archive. See [VIX/index audit](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) and [calendar reconciliation](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
+          - Dhan rolling ATM supplement {ds['status']}: {ds['rows']:,} 5-minute rows; successful window-sides {ds['successful_chunks']:,}/{ds['attempt_count']:,}; failed/empty window-sides {ds['failure_count']:,}; these rows are feature-only because the contract may roll across strikes. See [Dhan audit](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md).
+          - Official index futures extracted from {futures['option_archive_files_seen']:,} cached archives: futures dates {futures['dates_with_selected_index_futures']:,}; rows {futures['selected_futures_rows']:,}; missing lot-size {futures['missing_or_nonpositive_lot_size_rows']:,}; invalid positive-volume OHLC {futures['invalid_ohlc_positive_volume_rows']:,}. Raw rows remain in private cache; EOD basis is not an intraday fill claim.
+          - Exact-contract model-derived IV/Greeks: {greeks['valid_model_greek_rows']:,} valid rows across {greeks['udiff_dates_parsed']:,} UDiFF archive dates. Exclusions: below-model lower bound {greeks['premium_below_model_bound_rows']:,}; above-model upper bound {greeks['premium_above_model_bound_rows']:,}; solver failures {greeks['other_solver_failures']:,}. Constant r=6.5%, q=0% must be sensitivity-tested; these are not exchange-reported Greeks.
+          - Backfill report: [NSE index-options coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md). Strategy evaluation, contract-size audit, out-of-sample split and multiple-testing correction remain pending.
+          """
+          if marker in old:
+            old=old.split(marker)[0].rstrip()+"\n\n"+entry+"\n"
+          else: old=old.rstrip()+"\n\n"+entry+"\n"
+          log.write_text(old,encoding="utf-8")
+
+          err=Path("PHASE109_ERROR_LOG.md")
+          old=err.read_text(encoding="utf-8")
+          marker="## 2026-10-12 — NSE historical backfill limitations"
+          missing=[]
+          for row in csv.DictReader(Path("results/phase109/nse_index_options_daily_coverage.csv").open(encoding="utf-8")):
+            if row.get("status")=="NO_ARCHIVE_OR_FETCH_ERROR":
+              missing.append(row.get("expected_date",""))
+          failures=s['no_archive_or_fetch_error']
+          entry=f"""{marker}
+          - Backfill reported {failures:,} weekdays with no archive or fetch/schema error across {s['requested_weekdays']:,} weekdays. Do not treat these as all exchange holidays or all missing sessions; cross-check against an official calendar and retry the non-holiday failures.
+          - Legacy archive records report {s['missing_lot_size_rows']:,} rows with missing/nonpositive lot size (legacy format lacks the UDiFF lot-size field). Historical quantity P&L is blocked until contract-size schedule is recovered from approved dated sources.
+          - Zero-volume option rows ({s['zero_volume_rows']:,}) are excluded from executable-entry eligibility. OHLC completeness is not spread/bid-ask/fill validation.
+          - Official NSE Indices context audit status={context['overall_status']}; failed series-chunk requests={context['failed_chunk_series_calls']}. Review error detail in niftyindices_context_summary.json before any VIX/regime family is marked feasible.
+          - Dhan rolling ATM supplement status={ds['status']}; failed/empty chunk-side requests={ds['failure_count']}; any missing window remains blocked. All Dhan rows are rolling ATM feature series, not fixed-contract execution prices.
+          - Index-futures source gate: {futures['failed_dates']:,} archive dates failed extraction; {futures['missing_or_nonpositive_lot_size_rows']:,} futures rows lack positive lot size; {futures['invalid_ohlc_positive_volume_rows']:,} positive-volume rows fail OHLC checks. Future/basis families stay blocked until these and spot synchronization are audited.
+          - Model-IV/Greeks assumption warning: r=6.5%, q=0%, and EOD close/spot marks can bias estimates; {greeks['premium_below_model_bound_rows']:,} premiums were below the model lower bound and {greeks['premium_above_model_bound_rows']:,} above the model upper bound. Do not use excluded rows or report model Greeks as directly observed.
+          - Cross-source session reconciliation found {calendar['observed_nifty50_sessions_without_valid_option_archive']:,} NIFTY 50-observed dates without a valid option archive and {calendar['valid_option_archive_dates_without_nifty50_index_date']:,} archive dates without a NIFTY 50 observed date. These require gap/boundary investigation and are not silently removed.
+          - Raw source archives are cached privately and are not committed to this public repository. Public outputs contain date-level aggregates and hashes only.
+          """
+          if marker in old:
+            old=old.split(marker)[0].rstrip()+"\n\n"+entry+"\n"
+          else: old=old.rstrip()+"\n\n"+entry+"\n"
+          err.write_text(old,encoding="utf-8")
+
+          chat=Path("PHASE109_CHAT_LOG.md")
+          old=chat.read_text(encoding="utf-8")
+          marker="## 2026-10-12 — Official NSE historical data acquisition"
+          entry=f"""{marker}
+          Assistant action summary: added a resumable official NSE F&O archive backfill with legacy/UDiFF schema normalization and private Actions caching. It attempted {s['requested_weekdays']:,} weekdays from {s['from_date']} to {s['to_date_exclusive']} and parsed/cached {s['archive_dates_parsed']:,} archives, generating {s['selected_index_option_rows']:,} selected index-option rows. Also fetched official NSE Indices India VIX, NIFTY 50 and NIFTY BANK context ({context['overall_status']}) and compared archive dates against observed NIFTY 50 dates. These are source/coverage audits only; no strategy P&L was computed. Raw price series are not published. Historical lot size, source rights, missing sessions, execution and OOS gates remain.
+          Dhan rolling-options supplement: {ds['status']} with {ds['rows']:,} 5-minute ATM-selected call/put rows and {ds['failure_count']:,} failed/empty chunks. Dhan rows are private cached feature inputs only; no raw authenticated responses or token values are published.
+          Official index futures: {futures['dates_with_selected_index_futures']:,} dates / {futures['selected_futures_rows']:,} rows. Contract prices, OI and volume were extracted from the exact official F&O archives and cached privately; aggregate counts/hashes only are published.
+          Model-derived Greeks: {greeks['valid_model_greek_rows']:,} exact-contract rows pass the Black-Scholes solver at assumed r=6.5%, q=0%; infeasible premiums are counted and excluded, not force-fitted. Raw contract-level model values stay private.
+          """
+          if marker in old:
+            old=old.split(marker)[0].rstrip()+"\n\n"+entry+"\n"
+          else: old=old.rstrip()+"\n\n"+entry+"\n"
+          chat.write_text(old,encoding="utf-8")
+
+          readme=Path("README.md")
+          text=readme.read_text(encoding="utf-8")
+          start="<!-- PHASE109_GRID_STATUS_START -->"; end="<!-- PHASE109_GRID_STATUS_END -->"
+          a,b=text.split(start,1); section,tail=b.split(end,1)
+          report=f"""# Phase 109 — 1,000+ Strategy-Family Discovery and Historical Data Audit
+
+          **Status: 1,025 architecture combinations and full Cartesian grid registered; backtesting not complete. No strategy promoted.** Registry: {json.loads(Path('results/phase109/phase109_grid_summary.json').read_text())['total_family_configuration_pairs']:,} family-configuration tuples and {json.loads(Path('results/phase109/phase109_grid_summary.json').read_text())['total_cost_adjusted_rows']:,} cost-adjusted rows registered, not tested.
+
+          Official NSE index-options backfill: **{s['archive_dates_parsed']:,} daily archives parsed/cached** across {s['from_date']}–{s['to_date_exclusive']}; {s['selected_index_option_rows']:,} selected option rows, {s['positive_volume_rows']:,} positive-volume rows, {s['zero_volume_rows']:,} zero-volume rows, {s['invalid_ohlc_positive_volume_rows']:,} invalid positive-volume OHLC rows, {s['duplicate_daily_contract_keys']:,} duplicate keys. No-archive/fetch statuses are {s['no_archive_or_fetch_error']:,} weekdays—not declared missing sessions until reconciled against the official calendar. Official NSE Indices VIX/NIFTY 50/BANK context status={context['overall_status']}. Calendar reconciliation reports {calendar['observed_nifty50_sessions_without_valid_option_archive']:,} NIFTY 50 observations without a valid options archive. Dhan rolling ATM feature data status={ds['status']} ({ds['rows']:,} 5-minute rows, feature-only—not fixed-contract fills). Official FUTIDX extraction covers {futures['dates_with_selected_index_futures']:,} dates / {futures['selected_futures_rows']:,} rows (private data; audit-only count). Model-derived exact-contract Greeks audit: {greeks['valid_model_greek_rows']:,} valid rows with r=6.5%, q=0% assumptions (see linked limits).
+
+          - [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [latest backfill report](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [daily coverage table](results/phase109/nse_index_options_daily_coverage.csv) · [source matrix](results/phase109/SOURCE_FEASIBILITY_REPORT.md)
+          - [Research plan](PHASE109_RESEARCH_PLAN.md) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
+
+          Raw archive files stay in private Actions cache, not in public commits/artifacts. Exact session/calendar coverage, historical lot sizes/contract specifications, date-effective Paytm Money costs, bid-ask/fill realism, chronology/OOS, India VIX/FII/global publication timestamps, and statistical multiple-testing corrections remain mandatory. No inference of profitability is supported by data ingestion alone.
+          """
+          readme.write_text(a+start+report+end+tail,encoding="utf-8")
+          PY
+
+      - name: Commit public aggregate outputs and logs (never raw market archives)
+        if: github.ref == 'refs/heads/phase-109-exhaustive-parameter-grid'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add PHASE109_STATUS.md PHASE109_RESEARCH_LOG.md PHASE109_ERROR_LOG.md PHASE109_CHAT_LOG.md README.md
+          git add results/phase109/nse_index_options_daily_coverage.csv results/phase109/nse_index_options_backfill_summary.json results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md
+          git add results/phase109/niftyindices_context_summary.json results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md results/phase109/niftyindices_session_calendar.csv
+          git add results/phase109/nse_calendar_reconciliation.json results/phase109/NSE_CALENDAR_RECONCILIATION.md
+          git add results/phase109/dhan_rolling_options_audit.json results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md
+          git add results/phase109/nse_index_futures_daily_coverage.csv results/phase109/nse_index_futures_summary.json results/phase109/NSE_INDEX_FUTURES_AUDIT.md
+          git add results/phase109/options_model_greeks_daily_audit.csv results/phase109/options_model_greeks_summary.json results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md
+          if git diff --cached --quiet; then
+            echo "No public aggregate changes."
+          else
+            git commit -m "Phase 109: publish official NSE archive coverage audit"
+            for attempt in 1 2 3; do
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                exit 0
+              fi
+              echo "Push rejected (attempt ${attempt}); merge latest branch and preserve this run's generated audit snapshot."
+              git fetch origin "${GITHUB_REF_NAME}"
+              git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-edit -X ours "origin/${GITHUB_REF_NAME}" || {
+                echo "Merge conflict could not be resolved; fail explicitly."
+                exit 1
+              }
+            done
+            echo "Could not push after three audited attempts."
+            exit 1
+          fi
+
+      - name: Upload public aggregates and report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase109-nse-coverage-${{ github.run_id }}
+          path: |
+            results/phase109/nse_index_options_daily_coverage.csv
+            results/phase109/nse_index_options_backfill_summary.json
+            results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md
+            results/phase109/niftyindices_context_summary.json
+            results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md
+            results/phase109/niftyindices_session_calendar.csv
+            results/phase109/nse_calendar_reconciliation.json
+            results/phase109/NSE_CALENDAR_RECONCILIATION.md
+            results/phase109/dhan_rolling_options_audit.json
+            results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md
+            results/phase109/nse_index_futures_daily_coverage.csv
+            results/phase109/nse_index_futures_summary.json
+            results/phase109/NSE_INDEX_FUTURES_AUDIT.md
+            results/phase109/options_model_greeks_daily_audit.csv
+            results/phase109/options_model_greeks_summary.json
+            results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md
+          if-no-files-found: error
