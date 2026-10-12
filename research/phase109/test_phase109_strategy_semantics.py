@@ -1,4 +1,5 @@
 import unittest
+from datetime import date, timedelta
 from unittest import mock
 
 import strategy_evaluator as evaluator
@@ -87,8 +88,43 @@ class StrategySemanticTests(unittest.TestCase):
         self.assertEqual(result, sentinel)
         self.assertEqual(aggregate.call_count, len(evaluator.INDEX_SYMBOLS))
 
+    def test_truncated_official_context_fails_closed(self):
+        start = date(2023, 10, 1)
+        end = date(2026, 10, 9)
+        all_dates = [
+            start + timedelta(days=i)
+            for i in range((end - start).days)
+            if (start + timedelta(days=i)).weekday() < 5
+        ]
+        truncated = all_dates[:218]
+        vix = {d: 12.0 for d in truncated}
+        index = {
+            "NIFTY": {d: 22000.0 for d in truncated},
+            "BANKNIFTY": {d: 48000.0 for d in truncated},
+        }
+        with self.assertRaisesRegex(RuntimeError, "OFFICIAL_CONTEXT_COVERAGE_GATE_FAILED"):
+            evaluator.validate_context_coverage(all_dates, vix, index)
+
+    def test_sufficient_official_context_coverage_passes_gate(self):
+        start = date(2023, 10, 1)
+        end = date(2026, 10, 9)
+        all_dates = [
+            start + timedelta(days=i)
+            for i in range((end - start).days)
+            if (start + timedelta(days=i)).weekday() < 5
+        ]
+        covered = all_dates[:740]
+        vix = {d: 12.0 for d in covered}
+        index = {
+            "NIFTY": {d: 22000.0 for d in covered},
+            "BANKNIFTY": {d: 48000.0 for d in covered},
+        }
+        result = evaluator.validate_context_coverage(all_dates, vix, index)
+        self.assertTrue(result["coverage_pass"])
+        self.assertGreater(result["minimum_unique_dates_per_series"], 218)
+
     def test_engine_version_prevents_reuse_of_v1_cursor(self):
-        self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v2-semantics")
+        self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v3-context-coverage")
 
 
 if __name__ == "__main__":

@@ -82,7 +82,16 @@ class TestNiftyIndicesHistory(unittest.TestCase):
         self.assertEqual(chunks[-1][1]+niftyindices_history.timedelta(days=1),end)
         for left,right in zip(chunks,chunks[1:]):
             self.assertEqual(left[1]+niftyindices_history.timedelta(days=1),right[0])
-            self.assertLessEqual((left[1]-left[0]).days,363)
+            self.assertLessEqual((left[1]-left[0]).days,59)
+
+    def test_minimum_expected_observation_gate_rejects_short_api_responses(self):
+        start=date(2023,10,1); end=date(2026,10,9)
+        minimum=niftyindices_history.minimum_expected_observations(start,end)
+        self.assertGreater(minimum,218)
+        self.assertGreaterEqual(
+            minimum,
+            int(niftyindices_history.expected_weekdays(start,end)*0.90),
+        )
 
     def test_index_date_parsing(self):
         self.assertEqual(niftyindices_history.parse_d("01 Jan 2024"),"2024-01-01")
@@ -196,6 +205,25 @@ class TestStrategyEvaluator(unittest.TestCase):
         )
         self.assertGreaterEqual(fee,0.0)
         self.assertIn("model_callable",detail)
+
+
+class TestPhase109CostSchedule(unittest.TestCase):
+    def test_paytm_money_order_brokerage_and_2026_nse_rates(self):
+        model = strategy_evaluator.load_cost_model()
+        self.assertAlmostEqual(model.exchange_transaction_rate(date(2026, 2, 28)), 0.0003503)
+        self.assertAlmostEqual(model.exchange_transaction_rate(date(2026, 3, 1)), 0.0003552)
+        self.assertAlmostEqual(model.STT_SELL_RATE_BEFORE_2026_04_01, 0.0010)
+        self.assertAlmostEqual(model.STT_SELL_RATE_FROM_2026_04_01, 0.0015)
+        result = model.round_trip_cost(
+            buy_premium=100.0,
+            sell_premium=110.0,
+            quantity=25,
+            trade_date=date(2026, 4, 1),
+            brokerage_per_order=10.0,
+        )
+        self.assertEqual(result["brokerage"], 20.0)
+        self.assertAlmostEqual(result["stt_sell_rate"], 0.0015)
+        self.assertAlmostEqual(result["exchange_rate_per_side"], 0.0003552)
 
 
 class TestModelGreeks(unittest.TestCase):

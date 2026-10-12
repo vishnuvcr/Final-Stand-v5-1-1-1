@@ -2,7 +2,7 @@
 
 Updated: 2026-10-12  
 Branch: `phase-109-strategy-semantics-remediation`  
-State: **SEMANTIC AND PERFORMANCE REGRESSION TESTS PASS; DATA PIPELINE ACTIVE; V2 SHARD PENDING**  
+State: **32 REGRESSION TESTS PASS; 90% HISTORICAL-CONTEXT GATE ACTIVE; V3 SHARD PENDING**  
 Promotion: **NONE**
 
 ## Remediation
@@ -21,7 +21,7 @@ Promotion: **NONE**
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-The implementation tests passed 29/29 in run [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522), including the new assertion that invariant daily options-flow aggregates are precomputed once per supported symbol. The source acquisition workflow [run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) completed option archive acquisition, Dhan rolling ATM feature acquisition and exact-contract futures extraction; it is currently deriving model IV/Greeks, with index/VIX context, date reconciliation, report publication and the source-gated v2 dispatch still pending. The corrected evaluator has not yet produced a verified v2 shard. No strategy profitability conclusion or promotion is available.
+The latest corrected test run [38225233888](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233888) passed **32/32 tests** after raising the expected official context density to 90% of weekdays. The previous context audit was insufficient: ~218 dates per series versus a multi-year trading history. The NSE context client now uses at most 60-calendar-day request windows and requires ≥90% weekday coverage; the evaluator is engine `phase109-eod-engine-v3-context-coverage`, refuses truncated input at runtime, and the source dispatch additionally checks option/index calendar overlap. Source reacquisition run [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) is progressing through the Dhan historical-feature step; refreshed run [38225253211](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225253211) is queued. The v3 evaluation workflow [38225233884](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233884) is pending; no corrected v3 shard has been verified. No strategy profitability conclusion or promotion is available.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
