@@ -13,14 +13,15 @@ Promotion: **NONE**
 - [x] Blocked unsupported confirmation and unparameterized realised-volatility target regimes.
 - [x] Bumped engine to `phase109-eod-engine-v2-semantics` so v1 cursor state is not reused.
 - [x] Added semantic regression tests.
-- [ ] Dedicated test workflow passes.
-- [ ] Corrected evaluator starts at cursor zero and publishes a v2 shard.
+- [x] Dedicated test workflow passed 26/26 offline tests (run [38221129326](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326)).
+- [x] Evaluator resolved v2 cursor to zero; first attempt failed before scoring because the private branch-local NSE cache was missing ([run 38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260)).
+- [ ] After source reacquisition, corrected evaluator publishes a v2 shard.
 - [ ] Reconcile 24 cost rows/config, blockers, cursor and result SHA.
 - [ ] Update final statistical report only after validation/holdout/multiple-testing gates.
 
 ## Latest checkpoint
 <!-- SEMANTICS_LIVE_CHECKPOINT_START -->
-V2 Actions results are not yet verified at initial log creation. Inspect GitHub Actions and do not infer profitability from code/test success.
+The 26-test workflow passed. The first v2 evaluator attempt failed at startup with `Private NSE data cache is missing` before any configuration was scored. Branch-local NSE acquisition/cache warmup [run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is in progress. Its final aggregate source gate will dispatch a bounded v2 shard if coverage/lot-size/index-VIX checks pass. No strategy profitability result exists yet.
 <!-- SEMANTICS_LIVE_CHECKPOINT_END -->
 
 ## Links
@@ -33,3 +34,10 @@ V2 Actions results are not yet verified at initial log creation. Inspect GitHub 
 ## Automated failure checkpoint — 2026-10-12 08:02 UTC
 
 - [Actions run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) failed before successful publication. No profitability result inferred.
+
+## Verified implementation checkpoint — 2026-10-12
+
+- Semantic regression run [38221129326](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326): PASS, 26 tests.
+- v2 evaluator run [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260): FAILED before scoring because the private cache was unavailable on the new branch; exact cursor resolved to 0, no configuration results were emitted.
+- Source cache warmup [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273): RUNNING. It will dispatch the evaluator after completion only if the audited source gate passes.
+- Current decision: implementation tests pass; empirical v2 evaluation pending. No strategy is promoted.
