@@ -34,3 +34,15 @@
 - Correction: precompute per-symbol feature maps once immediately after loading the source data and reuse them inside every task. The intended feature values and strategy decisions are unchanged.
 - Regression evidence: [run 38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed all 29 offline tests, including the precomputation-call-count test.
 - Limitation: no full-shard runtime comparison has yet been observed, so the actual wall-time reduction is not quantified. The active acquisition/evaluation workflows remain authoritative for empirical checkpoints.
+
+## 2026-10-12 08:38 UTC — E109-S09 — Truncated official index/VIX history passed a weak gate
+
+- Observation: near-annual NSE historical API requests yielded about 70 rows per series; the previously published three-year context contained only 218 unique dates per series against 743 option archive dates. Although the OHLC schema was clean, source context was not temporally complete and 526 archive dates had no corresponding NIFTY 50 date. The prior gate incorrectly treated any nonempty series as sufficient.
+- Correction: split requests into 60-calendar-day windows, set a minimum of 60% of weekday observations per series, mark low-coverage audit output as PARTIAL_OR_FAILED, enforce archive/index calendar overlap before dispatch and add a runtime fail-closed gate in the evaluator.
+- Version control: moved the evaluator to phase109-eod-engine-v3-context-coverage so partial v2 checkpoint ranges cannot be reused with the repaired context. Existing v2 output is diagnostic only.
+- Run [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) is re-acquiring context. No v3 empirical checkpoint has been verified yet.
+
+## 2026-10-12 08:38 UTC — E109-S10 — Staged engine-version test mismatch
+
+- Run [38224769569](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224769569) failed because the evaluator had already been bumped to v3 while the version regression assertion still expected v2. The test fixture was updated to v3 and new tests were added for truncated/sufficient context.
+- Follow-up run [38224798558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798558) passed **32/32 tests**. No runtime data output was implicated in the mismatch.
