@@ -39,6 +39,8 @@ jobs:
           path: data/cache/phase109
           key: ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-${{ github.run_number }}
           restore-keys: |
+            ${{ runner.os }}-phase109-data-v3-${{ github.ref_name }}-
+            ${{ runner.os }}-phase109-data-v2-${{ github.ref_name }}-
             ${{ runner.os }}-phase109-dhan-hf-source-cache-v2-${{ github.ref_name }}-
             ${{ runner.os }}-phase109-dhan-hf-source-cache-v1-
 
