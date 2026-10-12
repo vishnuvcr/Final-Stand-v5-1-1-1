@@ -12,7 +12,7 @@
 
 - [Remediation branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-strategy-semantics-remediation)
 - [Remediation plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-strategy-semantics-remediation/PHASE109_SEMANTICS_REMEDIATION_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-strategy-semantics-remediation/PHASE109_SEMANTICS_REMEDIATION_STATUS.md) · [audit report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-strategy-semantics-remediation/results/phase109/SEMANTICS_REMEDIATION_AUDIT.md)
-- [Semantic test run 38221129326](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326) passed **26 offline tests**. The first v2 evaluator attempt [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) failed before backtesting because the isolated branch lacked a private source cache.
+- Latest semantic test run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) passed **27/27 offline tests**, including risk-profile parsing. The first v2 evaluator attempt [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) failed before backtesting because the isolated branch lacked a private source cache.
 - [Branch-local NSE acquisition/cache warmup](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is running. Its workflow is configured to publish aggregate coverage only and dispatch a corrected v2 shard if the source gates pass. Raw price archives/authenticated responses are not to be committed.
 
 ## Research controls
