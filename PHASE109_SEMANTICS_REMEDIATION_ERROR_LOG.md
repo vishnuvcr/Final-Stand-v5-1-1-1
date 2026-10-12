@@ -37,3 +37,15 @@
 
 ## 2026-10-12 08:48 UTC — v2 shard audit
 - Archive parse/duplicate warnings: 0; skipped reasons: {}. No raw records or secrets published. No profitability assertion from shard completion.
+
+## 2026-10-12 08:50 UTC — E109-S12 — Cost-rate report precision regression
+
+- Run [38225233884](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233884) failed before configuration evaluation because an added source-check test expected 0.0003552 from a rate field that the cost-model serializer rounded to six decimal places. The underlying fee calculation used the full rate already; this was a reporting/test-contract defect, not a fee calculation mismatch.
+- Corrected canonical cost-model reporting to preserve 12 decimal places for fields with names containing rate, leaving currency amounts rounded to 6 decimal places. Regression runs [38225975745](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225975745) and [38226082378](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226082378) passed 33 and 34 tests respectively.
+- The workflow's automatic failure-log push for 38225233884 was rejected due to a concurrent branch update; this manual entry restores the visible error record. No configuration rows were scored by that failed v3 attempt.
+
+## 2026-10-12 08:50 UTC — E109-S13 — Preserve engine-specific result artifacts
+
+- Before v3 scoring, found that versioned progress would write the first v3 shard to the same filename as the prior v2 shard. That risks overwriting diagnostic evidence even though the engine-version cursor resets.
+- Added an engine-tagged shard filename (phase109_eval_v3_context_coverage_...csv.gz) and an automated test; v2 and v3 outputs now use distinct names.
+- Latest regression test [38226082378](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226082378) passed. No conclusion about profitability follows from file naming or test success.
