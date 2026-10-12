@@ -4,7 +4,7 @@
 **Current evaluation status: PARTIAL_SHARD_COMPLETE**. Registered, source-feasible, attempted and completed counts are reported separately.
 
 - Registered [family registry](results/phase109/strategy_families.csv), [configuration space](results/phase109/family_configuration_space.csv) and [cost shard manifest](results/phase109/cost_row_shard_manifest.csv).
-- Cumulative supported configurations attempted: 110,000; cost-adjusted rows: 2,640,000; eligible configs remaining: 62,800.
+- Cumulative supported configurations attempted: 112,000; cost-adjusted rows: 2,688,000; eligible configs remaining: 60,800.
 - Data audits: [family feasibility](results/phase109/FAMILY_DATA_FEASIBILITY_REPORT.md) · [NSE option coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md) · [India VIX/index context](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) · [Dhan rolling ATM features](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md) · [index futures](results/phase109/NSE_INDEX_FUTURES_AUDIT.md) · [model IV/Greeks](results/phase109/OPTIONS_MODEL_GREEKS_AUDIT.md).
 - Development 2024-10 through 2025-09; validation 2025-10 through 2026-03; holdout from 2026-04 reserved. **No strategy promoted.**
 - [Phase 109 branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-109-exhaustive-parameter-grid) · [status](PHASE109_STATUS.md) · [research log](PHASE109_RESEARCH_LOG.md) · [error log](PHASE109_ERROR_LOG.md) · [visible chat log](PHASE109_CHAT_LOG.md)
