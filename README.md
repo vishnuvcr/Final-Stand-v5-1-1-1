@@ -1,3 +1,12 @@
+## Full 1,000+ family requirement — compliance audit opened (2026-10-12)
+
+The user-required scope is **at least 1,000 meaningfully distinct strategy families**, each with at least 1,000 valid configurations. The 1,025-family registry / 3,719,520 configuration tuples / 89,268,480 cost rows are manifest counts, not completed backtests. The current semantic-remediation evaluator implements only eight core signal methods, so its narrow results do not complete the full scope. A separate audit branch now tracks novelty, feasibility, implementation coverage and full-sweep recovery; no strategy is promoted.
+
+- [Family-compliance plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-family-compliance-audit/PHASE109_FAMILY_COMPLIANCE_PLAN.md)
+- [Family-compliance status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-family-compliance-audit/PHASE109_FAMILY_COMPLIANCE_STATUS.md)
+- [Research log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-family-compliance-audit/PHASE109_FAMILY_COMPLIANCE_RESEARCH_LOG.md)
+- [Error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-109-family-compliance-audit/PHASE109_FAMILY_COMPLIANCE_ERROR_LOG.md)
+
 # Phase 109 — Strategy-family evaluation and semantic remediation (updated 2026-10-12)
 
 **Current decision: NO STRATEGY PROMOTED.** The registered grid has **1,025 architecture combinations**, **3,719,520 family/configuration pairs** and **89,268,480 registered cost rows**. These are registry counts, not completed backtests or evidence of profitability.
