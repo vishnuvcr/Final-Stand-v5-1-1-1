@@ -71,3 +71,11 @@
 ## 2026-10-12 09:39 UTC — Corrected v2 evaluator checkpoint
 - Engine phase109-eod-engine-v4-session-coverage processed cursor [0,2,000); attempted 2,000 configurations and emitted 48,000 cost rows.
 - Cumulative attempted 2,000; remaining 170,800. These remain EOD execution proxies, not verified fills.
+
+
+## 2026-10-12 10:14 UTC — V4 checkpoint and continuation routing audit
+
+- V4 run [38228843868](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38228843868) completed 2,000 supported configurations, emitting 48,000 cost rows (24 cost scenarios/config); engine `phase109-eod-engine-v4-session-coverage`; cursor [0,2,000), 170,800 remaining.
+- Source gates passed: 748 observed official context dates per series and 748 valid option archives matched to 748 observed NIFTY 50 sessions; no observed-session archive gaps or archive-only dates.
+- Audit of completed job logs found a hard-coded continuation branch. A separate parent-v1 continuation run [38231326972](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38231326972) ran on `phase-109-exhaustive-parameter-grid`; it is isolated from v4 and its outputs are not combined.
+- Corrected both grid and holdout dispatch refs to `${GITHUB_REF_NAME}` in commit `e64ed40c40a78bd6b308f57d8def362208648865`. Verification run [38235043545](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38235043545) is active. No strategy is promoted; holdout remains untouched.
