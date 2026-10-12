@@ -1,6 +1,6 @@
 # Phase 109 source-feasibility report
 
-Generated: 2026-10-12T04:16:52.890197+00:00
+Generated: 2026-10-12T04:17:34.792739+00:00
 
 This records candidate sources and their current gates; it does not claim that they are approved, downloaded, or used in a backtest.
 

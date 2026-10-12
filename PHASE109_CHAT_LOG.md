@@ -10,6 +10,3 @@ Assistant action summary: corrected the plan to require at least 1,000 meaningfu
 User: “I have added dhan access token and hf token. Utilise them alongwith other free sources if needed”
 Assistant action summary: added a deterministic family registry/grid compiler and an automatic/manual GitHub Actions workflow. Dhan credentials are read only from the secret environment; Hugging Face metadata discovery uses HF_TOKEN when available. This step compiled 1,025 architecture combinations and 3,719,520 registered configuration tuples with 89,268,480 cost-adjusted rows across 45 shards. These are manifest counts, not observed trading tests.
 
-## 2026-10-12 — Resume checkpoint: official archive acquisition
-User: “Resume”
-Assistant action summary: verified the official NSE acquisition workflow completed successfully. It parsed 743 archive dates from 789 requested weekdays and audited 1,003,768 option rows (368,210 positive-volume; 635,558 zero-volume; zero duplicate keys and zero invalid positive-volume OHLC rows). The audit found all rows missing/without lot size and zero official index/VIX context rows, so no P&L evaluation is permitted yet. Fixed the compiler workflow's nested-heredoc SyntaxError and branch-target retry logic, and added a fail-closed data gate. No strategy results or promotion are claimed.
