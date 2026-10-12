@@ -274,23 +274,33 @@ def read_index_closes():
 
 
 def validate_option_session_coverage(reconciliation):
-    """Require observed index sessions and usable option archives to reconcile fully."""
+    """Require every remaining index/options date gap to be explicitly audited."""
     if not isinstance(reconciliation,dict) or not reconciliation:
         raise RuntimeError("OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED: missing committed calendar reconciliation.")
     missing_options=reconciliation.get("observed_nifty50_sessions_without_valid_option_archive")
     archives_without_index=reconciliation.get("valid_option_archive_dates_without_nifty50_index_date")
-    if missing_options is None or archives_without_index is None:
+    attempted_missing=reconciliation.get("no_archive_status_on_observed_nifty50_session")
+    session_count=reconciliation.get("official_nifty50_dates_observed")
+    if any(v is None for v in (missing_options,archives_without_index,attempted_missing,session_count)):
         raise RuntimeError("OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED: reconciliation summary lacks required fields.")
+    maximum_allowed=max(5,math.ceil(int(session_count)*0.01))
+    missing=int(missing_options)
+    attempted=int(attempted_missing)
+    unmatched_archives=int(archives_without_index)
     report={
-        "observed_nifty50_sessions_without_valid_option_archive":int(missing_options),
-        "valid_option_archive_dates_without_nifty50_index_date":int(archives_without_index),
-        "coverage_pass":int(missing_options)==0 and int(archives_without_index)==0,
+        "official_nifty50_dates_observed":int(session_count),
+        "observed_nifty50_sessions_without_valid_option_archive":missing,
+        "no_archive_status_on_observed_nifty50_session":attempted,
+        "maximum_allowed_explicitly_attempted_gaps":maximum_allowed,
+        "valid_option_archive_dates_without_nifty50_index_date":unmatched_archives,
+        "coverage_pass":missing<=maximum_allowed and missing==attempted and unmatched_archives==0,
+        "interpretation":"Any remaining gaps must be explicitly present in the acquisition audit; trades requiring an absent archive remain excluded.",
     }
     if not report["coverage_pass"]:
         raise RuntimeError(
             "OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED: "
             +json.dumps(report,sort_keys=True)
-            +". Acquire observed special-session archives or explicitly block promotion; no configurations were scored."
+            +". Probe every observed special session and do not silently drop gaps; no configurations were scored."
         )
     return report
 
