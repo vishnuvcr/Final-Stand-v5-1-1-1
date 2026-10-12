@@ -49,7 +49,7 @@ class TestNseBackfill(unittest.TestCase):
                 "OpnPric","HghPric","LwPric","ClsPric","OpnIntrst","TtlTradgVol","NewBrdLotQty"]
         rows=[
           ["2024-07-08","IDO","NIFTY","2024-07-25","24000","CE","10","12","9","11","1000","50","25"],
-          ["2024-07-08","OPTIDX","NIFTY","2024-07-25","24000","PE","9","10","8","8","800","30","25"],
+          ["2024-07-08","IDO","NIFTY","2024-07-25","24000","PE","9","10","8","8","800","30","25"],
           ["2024-07-08","IDF","NIFTY","2024-07-25","0","XX","24000","24100","23900","24050","5000","100","25"],
           ["2024-07-08","STO","RELIANCE","2024-07-25","3000","CE","20","22","19","21","800","20","250"],
         ]
@@ -66,7 +66,7 @@ class TestNseBackfill(unittest.TestCase):
     def test_duplicate_daily_contract_key_is_counted(self):
         fields=["BizDt","FinInstrmTp","TckrSymb","FininstrmActlXpryDt","StrkPric","OptnTp",
                 "OpnPric","HghPric","LwPric","ClsPric","OpnIntrst","TtlTradgVol","NewBrdLotQty"]
-        row=["2024-07-08","OPTIDX","NIFTY","2024-07-25","24000","CE","10","12","9","11","1000","50","25"]
+        row=["2024-07-08","IDO","NIFTY","2024-07-25","24000","CE","10","12","9","11","1000","50","25"]
         payload=zipped_csv(fields,[row,row],"dup.csv")
         result=nse_backfill.read_archive(payload,date(2024,7,8))
         self.assertEqual(result["selected_index_option_rows"],2)
