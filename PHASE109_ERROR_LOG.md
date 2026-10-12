@@ -17,3 +17,10 @@
 - The exhaustive Cartesian grid is large and must be resumed by deterministic shards. Any failed/skipped shard or cost case must remain explicitly logged.
 - Resolved workflow error: actions/setup-python pip caching failed because this repository has no requirements.txt or pyproject.toml; removed the pip-cache assumption.
 - Resolved compiler error: the architecture gate assumed 1,000 families although 41 core rules × 5 confirmation structures × 5 regime gates creates 1,025; changed the gate to compare against registered Cartesian cardinality.
+
+## 2026-10-12 — Fresh acquisition / compiler checkpoint
+- The official NSE archive workflow completed successfully at run 38203267125, but it checked out commit 85f43c7 before the corrected UDiFF instrument mapping was present. Its published coverage therefore still showed legacy-selected option rows and did not validate corrected UDiFF selection.
+- Compiler run 38203401904 failed two synthetic tests because the fixtures still used legacy OPTIDX inside a UDiFF schema. Updated those fixtures to IDO; subsequent compiler run 38207937673 passed all 19 regression tests.
+- The successful compiler's source gate correctly blocked P&L evaluation: eligible-window option rows=0 and official index/VIX context rows=0 in the stale acquisition snapshot. No evaluation was dispatched and no strategy returns were generated.
+- The NSE Indices Backpage endpoint returned HTML challenge pages in GitHub Actions rather than data. Replaced the client request path with official NSE India /api/historicalOR/vixhistory and /api/historicalOR/indicesHistory endpoints, with date/field normalization. New acquisition run 38207969439 is queued to validate this correction and regenerate data.
+- Until that acquisition passes, source coverage and profitability remain unverified; no strategy is promoted.
