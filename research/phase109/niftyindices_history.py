@@ -4,7 +4,7 @@
 Responses are retained only in Actions cache. Public outputs contain aggregate
 coverage, field-quality metrics and response hashes, not the full price history.
 """
-import argparse, hashlib, json, math, time, urllib.error, urllib.request
+import argparse, hashlib, json, math, time, urllib.error, urllib.request, http.cookiejar
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -29,14 +29,36 @@ def intervals(start, end_exclusive):
         cur=chunk_end
 
 
+COOKIE_JAR = http.cookiejar.CookieJar()
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(COOKIE_JAR))
+BOOTSTRAPPED = False
+
+
+def bootstrap_session():
+    global BOOTSTRAPPED
+    if BOOTSTRAPPED:
+        return
+    req=urllib.request.Request("https://www.niftyindices.com/reports/historical-data",headers={
+      "User-Agent":UA,"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    })
+    try:
+        with OPENER.open(req,timeout=5) as resp:
+            resp.read(1024)
+    except Exception:
+        # The API can work without the page cookie; this is a best-effort Akamai bootstrap.
+        pass
+    BOOTSTRAPPED=True
+
+
 def post(url, body_bytes):
+    bootstrap_session()
     req=urllib.request.Request(url,data=body_bytes,headers={
       "User-Agent":UA,"Accept":"application/json, text/plain, */*",
       "Content-Type":"application/json; charset=utf-8",
       "Origin":"https://www.niftyindices.com",
       "Referer":"https://www.niftyindices.com/reports/historical-data",
     },method="POST")
-    with urllib.request.urlopen(req,timeout=45) as resp:
+    with OPENER.open(req,timeout=45) as resp:
         if resp.status!=200: raise RuntimeError("HTTP_"+str(resp.status))
         raw=resp.read()
     outer=json.loads(raw.decode("utf-8-sig"))

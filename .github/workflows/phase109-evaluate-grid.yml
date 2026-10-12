@@ -51,6 +51,13 @@ jobs:
           test -f results/phase109/phase109_grid_summary.json
           test -f results/phase109/family_data_feasibility.csv
           test -f results/phase109/nse_index_options_daily_coverage.csv
+          python - <<'PY'
+          import json
+          g=json.load(open("results/phase109/family_data_feasibility_summary.json",encoding="utf-8"))
+          if int(g.get("families_with_inputs_present",0))+int(g.get("families_with_proxy_or_execution_gates",0))<=0:
+              raise SystemExit("Source-input gate has zero eligible families; do not run evaluator without a fresh official-data feasibility audit.")
+          print("Source-input gate passed; final execution and OOS gates still apply.")
+          PY
           python -m py_compile research/phase109/strategy_evaluator.py research/phase109/selection_audit.py research/phase109/test_phase109_data_clients.py
           python -m unittest discover -s research/phase109 -p 'test_*.py' -v
 
@@ -65,7 +72,7 @@ jobs:
           from pathlib import Path
           p=Path("results/phase109/evaluation_progress.json")
           s=json.loads(p.read_text()) if p.exists() else {}
-          valid=s.get("engine_version")=="phase109-eod-engine-v3-selection-and-holdout-firewall"
+          valid=s.get("engine_version")=="phase109-eod-engine-v1"
           cursor=int(s.get("next_config_cursor",0) or 0) if valid else 0
           limit=int(os.environ.get("MAX_CONFIGS","2000") or 2000)
           if not 1<=limit<=20000:
@@ -159,7 +166,7 @@ jobs:
           for attempt in 1 2 3; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             git fetch origin "${GITHUB_REF_NAME}"
-            if ! git rebase "origin/${GITHUB_REF_NAME}"; then git rebase --abort || true; exit 1; fi
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-edit -X ours "origin/${GITHUB_REF_NAME}"
           done
           exit 1
 
@@ -173,8 +180,8 @@ jobs:
           total=$(python -c 'import json; print(json.load(open("results/phase109/evaluation_progress.json"))["total_supported_source_feasible_configs"])')
           if [[ "$remaining" -le 0 || "$total" -le 0 ]]; then
             echo "Grid evaluation has no remaining supported configurations."
-            selection_status=$(python -c 'import json; print(json.load(open("results/phase109/selection_audit_summary.json")).get("status","MISSING"))')
-            shortlist=$(python -c 'import json; print(json.load(open("results/phase109/selection_audit_summary.json")).get("final_shortlist_count",0))')
+            selection_status=$(python -c 'import json; from pathlib import Path; p=Path("results/phase109/selection_audit_summary.json"); print(json.load(p.open()).get("status","MISSING") if p.exists() else "MISSING")')
+            shortlist=$(python -c 'import json; from pathlib import Path; p=Path("results/phase109/selection_audit_summary.json"); print(json.load(p.open()).get("final_shortlist_count",0) if p.exists() else 0)')
             holdout_status=$(python - <<'PY'
           import json
           from pathlib import Path

@@ -2,6 +2,11 @@ name: Phase 109 — family registry, exhaustive grid manifest and source access 
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Phase 109 — official NSE historical index-options acquisition"]
+    types: [completed]
+    branches:
+      - phase-109-exhaustive-parameter-grid
   push:
     branches:
       - phase-109-exhaustive-parameter-grid
@@ -14,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase109-writer-${{ github.ref }}
+  group: phase109-writer-${{ github.event.workflow_run.head_branch || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -25,7 +30,7 @@ jobs:
       - name: Checkout Phase 109 branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.event.workflow_run.head_branch || github.ref_name }}
           fetch-depth: 1
 
       - name: Set up Python
@@ -251,7 +256,9 @@ jobs:
           PY
 
       - name: Commit generated registry and audit logs to Phase 109 branch
-        if: github.ref == 'refs/heads/phase-109-exhaustive-parameter-grid'
+        if: (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'phase-109-exhaustive-parameter-grid') || github.ref == 'refs/heads/phase-109-exhaustive-parameter-grid'
+        env:
+          TARGET_BRANCH: ${{ github.event.workflow_run.head_branch || github.ref_name }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -266,7 +273,7 @@ jobs:
           else
             git commit -m "Phase 109: publish strategy-family registry and exhaustive grid manifest"
             for attempt in 1 2 3; do
-              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              if git push origin "HEAD:${TARGET_BRANCH}"; then
                 exit 0
               fi
               echo "Push rejected (attempt ${attempt}); fetch/rebase before retry."
@@ -319,9 +326,17 @@ jobs:
           if not grid.exists() or not gate.exists():
               raise SystemExit("Required compiler or family-feasibility summary is missing; do not launch evaluation.")
           g=json.loads(grid.read_text()); f=json.loads(gate.read_text())
-          print("registered_families=",f.get("registered_families",0))
-          print("families_with_inputs_present=",f.get("families_with_inputs_present",0))
+          eligible=$(python - <<'PY'
+          import json
+          f=json.loads(open("results/phase109/family_data_feasibility_summary.json",encoding="utf-8").read())
+          print(int(f.get("families_with_inputs_present",0))+int(f.get("families_with_proxy_or_execution_gates",0)))
           PY
+          )
+          echo "Families with declared source inputs present (execution/OOS gates may remain): $eligible"
+          if [[ "$eligible" -le 0 ]]; then
+            echo "No families passed the source-input gate. Do not launch evaluator; preserve blocked status and wait for the official historical-data cache gate."
+            exit 0
+          fi
           payload=$(python - <<'PY'
           import json
           print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
@@ -333,4 +348,4 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/phase109-evaluate-grid.yml/dispatches" \
             -d "$payload"
-          echo "Started bounded Phase 109 grid evaluation; the evaluator stops at its eligible-config denominator."
+          echo "Dispatched one bounded evaluation shard only after source-input gate passed."
