@@ -24,3 +24,11 @@
 ## 2026-10-12 08:08 UTC — Corrected semantic tests passed
 - [Run 38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) passed **27/27** offline tests, including stop/target percentage parsing. This is code verification, not empirical profitability evidence.
 - The v2 evaluator remains pending usable source cache: acquisition run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is still in progress. No v2 returns have been generated.
+
+## 2026-10-12 08:31 UTC — Chain-feature throughput correction
+
+- Reviewed the remediation plan/status/error/chat logs, current evaluator implementation, and active Actions runs before editing.
+- Identified duplicated aggregate_chain_features work inside the per-configuration loop. Replaced it with a shard-start precomputation for the supported NIFTY and BANKNIFTY feature series; each configuration reuses the same point-in-time aggregated feature mapping.
+- Added a regression test for one aggregation call per supported symbol. Workflow [38224068522](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224068522) passed 29/29 offline tests.
+- Acquisition workflow [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) completed NSE options acquisition, Dhan rolling-options acquisition and index futures extraction; IV/Greeks is the active step, with index/VIX context and reconciliation still pending.
+- The current v2 grid has not yet been empirically scored. No strategy results are inferred from a running job or registered configuration count.
