@@ -4,7 +4,7 @@
 Responses are retained only in Actions cache. Public outputs contain aggregate
 coverage, field-quality metrics and response hashes, not the full price history.
 """
-import argparse, hashlib, json, math, time, urllib.error, urllib.request, http.cookiejar
+import argparse, ast, hashlib, json, math, time, urllib.error, urllib.request, http.cookiejar
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -61,11 +61,28 @@ def post(url, body_bytes):
     with OPENER.open(req,timeout=45) as resp:
         if resp.status!=200: raise RuntimeError("HTTP_"+str(resp.status))
         raw=resp.read()
-    outer=json.loads(raw.decode("utf-8-sig"))
+    decoded=raw.decode("utf-8-sig").strip()
+    try:
+        outer=json.loads(decoded)
+    except json.JSONDecodeError:
+        # Some ASP.NET endpoints/proxies return a Python-literal-compatible
+        # single-quoted object rather than valid JSON. Parse strictly as a
+        # literal; never evaluate source text.
+        try:
+            outer=ast.literal_eval(decoded)
+        except (ValueError,SyntaxError) as exc:
+            raise ValueError("UNPARSEABLE_NSE_INDICES_RESPONSE_PREFIX_"+repr(decoded[:80])) from exc
+    if not isinstance(outer,dict):
+        raise ValueError("UNEXPECTED_NSE_INDICES_OUTER_RESPONSE_TYPE")
     inner=outer.get("d",[])
     if isinstance(inner,str):
         if inner.strip().lower() in {"false","[]",""}: rows=[]
-        else: rows=json.loads(inner)
+        else:
+            try: rows=json.loads(inner)
+            except json.JSONDecodeError:
+                try: rows=ast.literal_eval(inner)
+                except (ValueError,SyntaxError) as exc:
+                    raise ValueError("UNPARSEABLE_NSE_INDICES_INNER_RESPONSE") from exc
     elif isinstance(inner,list): rows=inner
     else: rows=[]
     if not isinstance(rows,list): raise ValueError("Unexpected response data type")
