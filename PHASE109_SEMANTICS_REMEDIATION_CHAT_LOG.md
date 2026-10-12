@@ -43,3 +43,7 @@ Visible action summary: reordered source acquisition so the official NSE Indices
 
 ## 2026-10-12 09:39 UTC — Automated v2 shard action
 The corrected evaluator published cursor [0,2,000) with 2,000 attempted configurations and 48,000 cost rows. The untouched holdout is not used for selection and no strategy is promoted.
+
+
+## 2026-10-12 10:14 UTC — Visible user interaction/action summary
+User said “Proceed.” I checked the v4 Actions run, its logs, the branch-local checkpoint, session reconciliation and recent workflow runs. The v4 shard succeeded (2,000 configs; 48,000 cost rows; 170,800 remaining), and the source gate passed (748/748 archive/session alignment). The run log revealed a hard-coded branch-routing defect, so I changed both continuation dispatches to follow the active branch. Verification run [38235043545](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38235043545) is active. This log records visible actions and decisions, not private chain-of-thought. No strategy is promoted.
