@@ -1,6 +1,6 @@
 # Official NSE index-futures extraction audit
 
-Generated: 2026-10-12T03:32:43.193332+00:00
+Generated: 2026-10-12T04:25:45.923872+00:00
 
 | Metric | Count |
 |---|---:|

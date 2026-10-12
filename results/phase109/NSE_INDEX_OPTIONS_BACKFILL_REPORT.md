@@ -1,6 +1,6 @@
 # NSE index-options daily archive coverage report
 
-Generated: 2026-10-12T03:25:15.436398+00:00
+Generated: 2026-10-12T04:22:54.971030+00:00
 Window: 2023-10-01 through 2026-10-09 (end exclusive)
 
 **Data-acquisition audit only; no strategy/configuration P&L evaluated.**

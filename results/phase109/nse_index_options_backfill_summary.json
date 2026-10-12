@@ -4,7 +4,7 @@
   "date_mismatch_rows": 0,
   "duplicate_daily_contract_keys": 0,
   "from_date": "2023-10-01",
-  "generated_utc": "2026-10-12T03:25:15.436398+00:00",
+  "generated_utc": "2026-10-12T04:22:54.971030+00:00",
   "identity_complete_rows": 1003768,
   "interpretation": "Weekdays with no archive may be exchange holidays or fetch/URL errors; they are not automatically treated as sessions. A separate official calendar/coverage audit is required. This data gate does not mean any strategy was tested.",
   "invalid_ohlc_positive_volume_rows": 0,
@@ -16,7 +16,7 @@
   "raw_data_policy": "Raw ZIPs are stored only in the workflow cache and excluded from git and public artifacts.",
   "requested_weekdays": 789,
   "run_status_counts": {
-    "DOWNLOADED_AND_PARSED": 743,
+    "CACHE_HIT_VALIDATED": 743,
     "NO_ARCHIVE_OR_FETCH_ERROR": 46
   },
   "selected_index_option_rows": 1003768,

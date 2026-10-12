@@ -35,3 +35,14 @@
 - Family input feasibility: 1,025 families; 923 blocked on unavailable inputs, 54 with proxy/execution gates, 48 with fields present but final gates pending. This is not a backtest.
 - No strategy is promoted. All empirical evaluation remains pending historical source/point-in-time/license and OOS gates.
 
+## 2026-10-12 — Official NSE index-options backfill
+- Window 2023-10-01 to 2026-10-09 (exclusive): 789 weekdays probed, 743 official archives parsed/cache-hit, 46 no-archive/fetch/schema statuses (not automatically called missing trading sessions).
+- Selected index-option rows 1,003,768; identity-complete 1,003,768; price-complete 1,003,768; positive-volume 368,210; zero-volume 635,558; invalid positive-volume OHLC 0; duplicate contract keys 0.
+- Legacy/UDiFF archives: 185/558. Raw ZIP data are in the private Actions cache and excluded from public repository artifacts.
+- The three schema transition probes remain PASS: 2024-07-05 legacy, 2024-07-08 UDiFF, 2026-10-08 UDiFF. This expands source coverage but does not establish complete exchange-session coverage or execute any strategy.
+- Official NSE Indices context status=PARTIAL_OR_FAILED; VIX/NIFTY50/NIFTY BANK unique date counts: 0, 0, 0. Session reconciliation shows 0 observed NIFTY 50 dates without an option archive. See [VIX/index audit](results/phase109/NIFTYINDICES_CONTEXT_AUDIT.md) and [calendar reconciliation](results/phase109/NSE_CALENDAR_RECONCILIATION.md).
+- Dhan rolling ATM supplement PASS: 75,177 5-minute rows; successful window-sides 50/50; failed/empty window-sides 0; these rows are feature-only because the contract may roll across strikes. See [Dhan audit](results/phase109/DHAN_ROLLING_OPTIONS_AUDIT.md).
+- Official index futures extracted from 743 cached archives: futures dates 185; rows 2,220; missing lot-size 2,220; invalid positive-volume OHLC 0. Raw rows remain in private cache; EOD basis is not an intraday fill claim.
+- Exact-contract model-derived IV/Greeks: 0 valid rows across 499 UDiFF archive dates. Exclusions: below-model lower bound 0; above-model upper bound 0; solver failures 0. Constant r=6.5%, q=0% must be sensitivity-tested; these are not exchange-reported Greeks.
+- Backfill report: [NSE index-options coverage](results/phase109/NSE_INDEX_OPTIONS_BACKFILL_REPORT.md). Strategy evaluation, contract-size audit, out-of-sample split and multiple-testing correction remain pending.
+
