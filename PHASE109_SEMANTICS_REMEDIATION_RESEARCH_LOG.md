@@ -15,3 +15,8 @@
 - The first corrected v2 evaluator run [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260) resolved its cursor to 0 but stopped before loading/evaluating strategies because the sibling branch could not restore the parent's private Actions cache: `Private NSE data cache is missing`. This is not a performance result.
 - Corrected the branch-local source acquisition workflow to rebuild/cache official NSE/index/VIX/Dhan features once, publish aggregate reports only, and dispatch the evaluator after the cache-producing job ends and source gates pass. Acquisition run [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) is the current source gate.
 - Continue only with the bounded evaluator if exact-option rows, historical lot sizes and nonempty official index/VIX context pass; otherwise preserve a blocked decision. No strategy promoted.
+
+## 2026-10-12 — Risk-profile parser correction
+- Found an additional variable-application defect in the stop/target parser while reviewing the registered risk grid. Fixed parsing for `STOP_10/20/30PCT`, `TARGET_10/20/30PCT` and combined profiles using `parse_risk_profile()`.
+- Added a regression test for stop-only, target-only, combined and no-barrier configurations. Updated test workflow run [38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) is queued at log time; no PASS claim yet.
+- The source acquisition remains in progress in [run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273). No v2 configuration P&L has been scored.
