@@ -53,3 +53,16 @@ Additional preregistered data gates now apply before corrected evaluation:
 6. Acceptance requires automated regression coverage for both insufficient and sufficient context, a successful source workflow, and one verifiable v3 shard whose attempted configurations reconcile to 24 cost cases/configuration. No profitability claim follows from the data gate alone.
 
 This is a research-plan change because source-context completeness has become an explicit acceptance criterion. The parameter grid, transaction-cost design and untouched holdout remain unchanged.
+
+## Plan amendment — 2026-10-12: special-session completeness and engine v4
+
+The rebuilt official NSE index series has 748 observations per series, covering 2023-10-03 through 2026-10-08. The options archive has 743 dates because the downloader previously only probed Monday–Friday. Calendar reconciliation identified five dates with NIFTY 50 observations but no options archive in the previous request list: 2023-11-12, 2024-01-20, 2024-05-18, 2025-02-01 and 2026-02-01. These include special weekend sessions and must not silently disappear from the experiment.
+
+The source acquisition step now reads the committed observed-session calendar and unions NIFTY 50-observed dates outside weekdays into the archive probe dates. All supplemental probes will be written to the same dated coverage table with an explicit NO_ARCHIVE_OR_FETCH_ERROR status if the official archive cannot be retrieved. A missing archive that was explicitly attempted is not converted into valid option data; trades needing it remain excluded.
+
+A fourth evaluator generation phase109-eod-engine-v4-session-coverage supersedes v3, resets the cursor and writes a distinct engine-tagged result filename. Before scoring, it requires the 90% official VIX/index context density check plus reconciliation evidence that:
+- all remaining NIFTY 50-observed dates without a valid option archive were explicitly attempted;
+- those attempted archive gaps are within the bounded gap tolerance of max(5, ceil(1% of observed NIFTY 50 sessions)); and
+- no option archive date lacks an NIFTY 50 index-session row.
+
+This does not assert the gaps are harmless; every trade entry or exit needing absent data is excluded, and final coverage/audit reports will show the gaps. Only v4 results generated after this audit may be considered for selection. Prior v1/v2/v3 output remains diagnostic. Cost scenarios and the reserved holdout remain unchanged.

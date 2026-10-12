@@ -24,3 +24,11 @@ User requested “Resume”. Visible action summary: checked current Phase 109 A
 
 ## 2026-10-12 08:48 UTC — Automated v2 shard action
 The corrected evaluator published cursor [0,2,000) with 2,000 attempted configurations and 48,000 cost rows. The untouched holdout is not used for selection and no strategy is promoted.
+
+## 2026-10-12 08:50 UTC — Resume / brokerage and statutory fee review
+
+Visible action summary: verified the current Paytm Money F&O FAQ's ₹10 per executed unique order and official NSE fee schedules. The canonical model's date-effective options-sale STT is 0.15% from 2026-04-01 and the official equity-options exchange charge uses the 2026-03-01 schedule. Rate display precision was corrected without changing calculated fee amounts. Regression suites passed 33 tests in [38225975745](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225975745) and 34 in [38226082378](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226082378). The failed run [38225233884](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233884) failed at tests before scoring; its automatic failure-log push lost a race and is recorded in the error log. Engine-specific result filenames now preserve old v2 evidence when v3 begins.
+
+## 2026-10-12 08:59 UTC — Resume / special-session data-coverage correction
+
+Visible action summary: the corrected official index context has 748 observations per series, but calendar reconciliation found five NIFTY 50-observed special sessions absent from the previous options archive list. Added acquisition support for weekend/special observed index sessions and changed the evaluator to v4 with a runtime requirement that those session gaps be explicitly attempted. v4 uses separate result filenames and cannot reuse v3 cursor state. Latest regression run [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38 tests. Latest acquisition workflow [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is queued; no v4 empirical result is yet verified.

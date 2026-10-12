@@ -40,3 +40,11 @@ Current correction: source queries are now limited to 60-calendar-day windows an
 ### Limitations
 
 The canonical model uses a configurable brokerage-per-order parameter and applies the 1.5× stress multiplier to modeled round-trip fees; per-option-unit adverse slippage remains a separate scenario. The model estimates statutory/service fees but cannot prove spread, depth, latency, impact, partial-fill or achieved-execution costs. Exact contract-note treatment of IPFT/GST and any client-specific paid services remains to be reconciled before live-use claims. No strategy is promoted.
+
+## Special-session coverage and evaluator v4 — 2026-10-12
+
+- The repaired NSE Indices context audit contains 748 observations for India VIX, NIFTY 50 and NIFTY BANK from 2023-10-03 through 2026-10-08, with zero context-fetch failures, clearing the 90% weekday data-density threshold.
+- Calendar reconciliation still reports five NIFTY 50-observed sessions without a valid option archive: 2023-11-12, 2024-01-20, 2024-05-18, 2025-02-01 and 2026-02-01. The weekday-only options downloader had not tried those dates.
+- Added requested_dates() to union weekdays with observed official NIFTY 50 sessions outside weekdays, plus regression coverage. Latest full regression workflow [38226876842](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226876842) passed 38 tests.
+- Evaluator v4 (phase109-eod-engine-v4-session-coverage) resets progress independently from v3, writes unique result filenames, requires the 90% context gate and checks that remaining session/archive gaps were explicitly probed. The latest source workflow [38226910940](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226910940) is queued after the prior source workflow [38225253211](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225253211) finishes.
+- The old v3 evaluation [38226206004](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38226206004) may complete but is diagnostic only because its engine did not require special-session reconciliation. No v4 empirical shard or strategy promotion is yet verified.

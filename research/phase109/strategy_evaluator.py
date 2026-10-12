@@ -28,7 +28,7 @@ CONTEXT_CACHE=CACHE/"niftyindices_history"
 MODEL_GREEKS_CACHE=CACHE/"options_model_greeks"
 FUTURES_CACHE=CACHE/"futures_eod"
 FIRST_COST_DATE=date(2024,10,1)
-ENGINE_VERSION="phase109-eod-engine-v3-context-coverage"
+ENGINE_VERSION="phase109-eod-engine-v4-session-coverage"
 # Exact registered core IDs only. Unimplemented architectures are blocked, never proxied.
 SUPPORTED_CORE_METHODS={
  "ROC_MOMENTUM","EMA_CROSS","EMA_SLOPE","RETURN_ZSCORE_FADE",
@@ -271,6 +271,38 @@ def read_index_closes():
                 if d and close and close>0: out[sym][d]=close
         except Exception: continue
     return out
+
+
+def validate_option_session_coverage(reconciliation):
+    """Require every remaining index/options date gap to be explicitly audited."""
+    if not isinstance(reconciliation,dict) or not reconciliation:
+        raise RuntimeError("OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED: missing committed calendar reconciliation.")
+    missing_options=reconciliation.get("observed_nifty50_sessions_without_valid_option_archive")
+    archives_without_index=reconciliation.get("valid_option_archive_dates_without_nifty50_index_date")
+    attempted_missing=reconciliation.get("no_archive_status_on_observed_nifty50_session")
+    session_count=reconciliation.get("official_nifty50_dates_observed")
+    if any(v is None for v in (missing_options,archives_without_index,attempted_missing,session_count)):
+        raise RuntimeError("OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED: reconciliation summary lacks required fields.")
+    maximum_allowed=max(5,math.ceil(int(session_count)*0.01))
+    missing=int(missing_options)
+    attempted=int(attempted_missing)
+    unmatched_archives=int(archives_without_index)
+    report={
+        "official_nifty50_dates_observed":int(session_count),
+        "observed_nifty50_sessions_without_valid_option_archive":missing,
+        "no_archive_status_on_observed_nifty50_session":attempted,
+        "maximum_allowed_explicitly_attempted_gaps":maximum_allowed,
+        "valid_option_archive_dates_without_nifty50_index_date":unmatched_archives,
+        "coverage_pass":missing<=maximum_allowed and missing==attempted and unmatched_archives==0,
+        "interpretation":"Any remaining gaps must be explicitly present in the acquisition audit; trades requiring an absent archive remain excluded.",
+    }
+    if not report["coverage_pass"]:
+        raise RuntimeError(
+            "OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED: "
+            +json.dumps(report,sort_keys=True)
+            +". Probe every observed special session and do not silently drop gaps; no configurations were scored."
+        )
+    return report
 
 
 def validate_context_coverage(dates,vix_by_date,index_closes):
@@ -525,11 +557,15 @@ def load_market():
     if not dates: raise RuntimeError("No usable official option/index dates.")
     vix=read_vix_cache()
     context_coverage=validate_context_coverage(dates,vix,index_closes)
+    options_session_coverage=validate_option_session_coverage(
+        read_json(OUT/"nse_calendar_reconciliation.json",{})
+    )
     vix_series=[vix.get(d) for d in dates]
     data={
       "contracts":contracts,"closes":closes,"dates":dates,"vix":vix_series,"vix_by_date":vix,
       "option_dates":option_dates,"archive_errors":archive_errors,
       "raw_archive_count":len(archive_paths),"context_coverage":context_coverage,
+      "options_session_coverage":options_session_coverage,
     }
     return data
 
@@ -886,6 +922,7 @@ def main():
       "skipped_reasons":dict(sorted(skip_counts.items())),"blocked_families_reasons":dict(sorted(blocked.items())),
       "archive_parse_or_duplicate_warnings":len(data["archive_errors"]),
       "official_context_coverage":data["context_coverage"],
+      "options_session_coverage":data["options_session_coverage"],
       "archive_count_loaded":data["raw_archive_count"],"unique_option_archive_dates":len(data["option_dates"]),
       "cost_model_callable":cost_fn_name,"first_cost_eligible_date":FIRST_COST_DATE.isoformat(),
       "sample":args.sample,
@@ -929,6 +966,7 @@ def main():
       f"- Completed shard ranges currently recorded: {len(completed):,}; cumulative attempted configs: {summary['completed_configs_all_ranges']:,}; cumulative cost rows: {summary['completed_cost_rows_all_ranges']:,}; remaining eligible configs: {summary['remaining_supported_configs']:,}.",
       f"- Archive dates loaded: {len(data['option_dates']):,}; source files loaded: {data['raw_archive_count']:,}; archive parse/duplicate warnings: {len(data['archive_errors']):,}.",
       f"- Official context coverage gate: {data['context_coverage']['observed_unique_dates']}; minimum required per series: {data['context_coverage']['minimum_unique_dates_per_series']:,} over {data['context_coverage']['window_start']}–{data['context_coverage']['window_end_inclusive']}.",
+      f"- Official options/index session reconciliation gate: {data['options_session_coverage']}.",
       f"- Cost model: `{cost_fn_name}`; P&L trade entries before {FIRST_COST_DATE.isoformat()} are blocked.",
       "- Sample: "+args.sample+". Selection mode uses development/validation only; holdout mode must load the frozen validation shortlist and scores only 2026-04-01 through 2026-10-08.",
       "- All net results remain diagnostic, use EOD OHLC execution proxies, and are exposed to selection/multiple-testing bias. No strategy is promoted.",

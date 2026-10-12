@@ -127,12 +127,43 @@ class StrategySemanticTests(unittest.TestCase):
         name = evaluator.shard_result_filename("selection", "000000000-000002000")
         self.assertEqual(
             name,
-            "phase109_eval_v3_context_coverage_000000000-000002000.csv.gz",
+            "phase109_eval_v4_session_coverage_000000000-000002000.csv.gz",
         )
         self.assertNotEqual(name, "phase109_eval_000000000-000002000.csv.gz")
 
+    def test_unattempted_special_sessions_fail_session_gate(self):
+        reconciliation = {
+            "observed_nifty50_sessions_without_valid_option_archive": 5,
+            "valid_option_archive_dates_without_nifty50_index_date": 0,
+            "no_archive_status_on_observed_nifty50_session": 0,
+            "official_nifty50_dates_observed": 748,
+        }
+        with self.assertRaisesRegex(RuntimeError, "OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED"):
+            evaluator.validate_option_session_coverage(reconciliation)
+
+    def test_explicitly_attempted_special_session_gaps_are_visible_and_bounded(self):
+        reconciliation = {
+            "observed_nifty50_sessions_without_valid_option_archive": 5,
+            "valid_option_archive_dates_without_nifty50_index_date": 0,
+            "no_archive_status_on_observed_nifty50_session": 5,
+            "official_nifty50_dates_observed": 748,
+        }
+        result = evaluator.validate_option_session_coverage(reconciliation)
+        self.assertTrue(result["coverage_pass"])
+        self.assertEqual(result["observed_nifty50_sessions_without_valid_option_archive"], 5)
+
+    def test_archive_dates_without_index_context_fail_session_gate(self):
+        reconciliation = {
+            "observed_nifty50_sessions_without_valid_option_archive": 0,
+            "valid_option_archive_dates_without_nifty50_index_date": 1,
+            "no_archive_status_on_observed_nifty50_session": 0,
+            "official_nifty50_dates_observed": 748,
+        }
+        with self.assertRaisesRegex(RuntimeError, "OFFICIAL_OPTIONS_SESSION_COVERAGE_GATE_FAILED"):
+            evaluator.validate_option_session_coverage(reconciliation)
+
     def test_engine_version_prevents_reuse_of_v1_cursor(self):
-        self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v3-context-coverage")
+        self.assertEqual(evaluator.ENGINE_VERSION, "phase109-eod-engine-v4-session-coverage")
 
 
 if __name__ == "__main__":
