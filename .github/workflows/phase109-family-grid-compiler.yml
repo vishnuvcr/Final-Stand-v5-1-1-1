@@ -337,7 +337,7 @@ jobs:
           fi
           payload=$(python - <<'PY'
           import json
-          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"1000","start_config":"-1"}}))
+          print(json.dumps({"ref":"phase-109-exhaustive-parameter-grid","inputs":{"max_configs":"2000"}}))
           PY
           )
           curl --silent --show-error --fail -X POST \
