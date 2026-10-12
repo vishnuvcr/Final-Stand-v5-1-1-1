@@ -65,7 +65,7 @@ jobs:
           from pathlib import Path
           p=Path("results/phase109/evaluation_progress.json")
           s=json.loads(p.read_text()) if p.exists() else {}
-          valid=s.get("engine_version")=="phase109-eod-engine-v3-selection-and-holdout-firewall"
+          valid=s.get("engine_version")=="phase109-eod-engine-v1"
           cursor=int(s.get("next_config_cursor",0) or 0) if valid else 0
           limit=int(os.environ.get("MAX_CONFIGS","2000") or 2000)
           if not 1<=limit<=20000:
@@ -159,7 +159,7 @@ jobs:
           for attempt in 1 2 3; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             git fetch origin "${GITHUB_REF_NAME}"
-            if ! git rebase "origin/${GITHUB_REF_NAME}"; then git rebase --abort || true; exit 1; fi
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-edit -X ours "origin/${GITHUB_REF_NAME}"
           done
           exit 1
 
