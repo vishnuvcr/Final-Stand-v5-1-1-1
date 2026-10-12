@@ -16,7 +16,7 @@ Promotion: **NONE**
 - [x] Dedicated test workflow passed 26/26 offline tests (run [38221129326](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221129326)).
 - [x] Evaluator resolved v2 cursor to zero; first attempt failed before scoring because the private branch-local NSE cache was missing ([run 38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260)).
 - [ ] After source reacquisition, corrected evaluator publishes a v2 shard.
-- [ ] Reconcile 24 cost rows/config, blockers, cursor and result SHA.
+- [ ] Reconcile 24 cost rows/config, blockers, cursor and result SHA after the source gate allows empirical replay.
 - [ ] Update final statistical report only after validation/holdout/multiple-testing gates.
 
 ## Latest checkpoint
@@ -41,3 +41,9 @@ The 26-test workflow passed. The first v2 evaluator attempt failed at startup wi
 - v2 evaluator run [38221168260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221168260): FAILED before scoring because the private cache was unavailable on the new branch; exact cursor resolved to 0, no configuration results were emitted.
 - Source cache warmup [38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273): RUNNING. It will dispatch the evaluator after completion only if the audited source gate passes.
 - Current decision: implementation tests pass; empirical v2 evaluation pending. No strategy is promoted.
+
+## Regression-test verification — 2026-10-12 08:08 UTC
+
+- [Run 38221764332](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221764332) completed successfully: **27 tests passed**, including exact core mappings, unsupported confirmation/regime rejection, EMA semantics and stop/target-profile parsing.
+- This validates tested code paths only. The evaluator still requires the private source cache and source-quality gate before any v2 configuration is scored.
+- [NSE acquisition/cache warmup run 38221333273](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38221333273) remains the active data prerequisite at log time.
