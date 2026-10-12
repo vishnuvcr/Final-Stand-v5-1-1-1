@@ -40,3 +40,10 @@
 - Added an independent fail-closed check to the evaluator and bumped engine version to phase109-eod-engine-v3-context-coverage so incomplete-context v2 checkpoints are never reused. Tightened dispatch to require complete VIX/index coverage and low option/index session-gap counts. Changed the source cache workflow to save the refreshed cache before dispatch.
 - The corrected source workflow [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) is running. The v3 evaluation run [38224798595](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798595) is pending; the older v2 run [38224200260](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224200260) is not eligible for promotion.
 - Latest regression workflow [38224798558](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224798558) passed 32/32 tests. No profitability claim is based on context acquisition alone.
+
+## 2026-10-12 08:43 UTC — Raise context-density gate to 90%
+
+- Raised minimum expected official index/VIX coverage to 90% of weekdays after the initial 60% threshold was judged too permissive for a multi-year options comparison.
+- Source-client and evaluator-runtime checks now use that stronger threshold, and a test verifies short series at the previous 218-date scale fail closed while sufficiently covered series pass.
+- Regression run [38225233888](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225233888) passed 32/32 tests.
+- The existing source run [38224816723](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38224816723) began before the threshold was raised; the updated source run [38225253211](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/38225253211) is queued. The v3 evaluator workflow is pending and will refuse the old v2 cursor.
