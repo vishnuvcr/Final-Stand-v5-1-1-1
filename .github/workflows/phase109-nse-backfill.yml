@@ -258,13 +258,12 @@ jobs:
               if git push origin "HEAD:${GITHUB_REF_NAME}"; then
                 exit 0
               fi
-              echo "Push rejected (attempt ${attempt}); fetch/rebase before retry."
+              echo "Push rejected (attempt ${attempt}); merge latest branch and preserve this run's generated audit snapshot."
               git fetch origin "${GITHUB_REF_NAME}"
-              if ! git rebase "origin/${GITHUB_REF_NAME}"; then
-                git rebase --abort || true
-                echo "Rebase conflict remains; fail explicitly for audited rerun."
+              git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-edit -X ours "origin/${GITHUB_REF_NAME}" || {
+                echo "Merge conflict could not be resolved; fail explicitly."
                 exit 1
-              fi
+              }
             done
             echo "Could not push after three audited attempts."
             exit 1
