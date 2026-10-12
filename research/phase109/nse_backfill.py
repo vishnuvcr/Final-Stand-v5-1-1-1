@@ -90,7 +90,7 @@ def read_archive(payload, expected):
         instrument=str(row.get(aliases["instrument"],"")).strip().upper()
         if symbol not in INDEX_SYMBOLS or side not in {"CE","PE"}:
             continue
-        if schema=="UDiFF" and instrument not in {"OPTIDX"}:
+        if schema=="UDiFF" and instrument not in {"IDO"}:
             continue
         if schema=="LEGACY" and instrument not in {"OPTIDX","OPTIDX "}:
             continue

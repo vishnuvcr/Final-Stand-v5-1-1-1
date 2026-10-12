@@ -77,7 +77,8 @@ def extract_zip(path, expected):
     for row in rows:
         inst=str(pick(row,names["instrument"]) or "").strip().upper()
         sym=str(pick(row,names["symbol"]) or "").strip().upper()
-        if inst!="FUTIDX" or sym not in SYMBOLS:
+        expected_instrument="IDF" if schema=="UDiFF" else "FUTIDX"
+        if inst!=expected_instrument or sym not in SYMBOLS:
             continue
         selected+=1; per_symbol[sym]+=1
         dt=parse_date(pick(row,names["date"])) or expected
