@@ -789,24 +789,34 @@
       "result_sha256": "51fb89025b365d03f24a04c1d5da18c4c0cdfb304e207ac090cb40190dc20da5",
       "start": 156000,
       "status": "PARTIAL_SHARD_COMPLETE"
+    },
+    {
+      "configs_attempted": 2000,
+      "configs_requested": 2000,
+      "cost_rows": 48000,
+      "end_exclusive": 160000,
+      "result_path": "results/phase109/evaluation_shards/phase109_eval_v4_session_coverage_000158000-000160000.csv.gz",
+      "result_sha256": "a0374c07576928f3e86c0345c5d47fbcc3d0a7c4184ea06ff83a12fd9e8d45bc",
+      "start": 158000,
+      "status": "PARTIAL_SHARD_COMPLETE"
     }
   ],
-  "configs_attempted_total": 158000,
-  "cost_rows_generated_total": 3792000,
+  "configs_attempted_total": 160000,
+  "cost_rows_generated_total": 3840000,
   "engine_version": "phase109-eod-engine-v4-session-coverage",
   "latest_shard": {
     "configs_attempted": 2000,
     "configs_requested": 2000,
     "cost_rows": 48000,
-    "end_exclusive": 158000,
-    "result_path": "results/phase109/evaluation_shards/phase109_eval_v4_session_coverage_000156000-000158000.csv.gz",
-    "result_sha256": "51fb89025b365d03f24a04c1d5da18c4c0cdfb304e207ac090cb40190dc20da5",
-    "start": 156000,
+    "end_exclusive": 160000,
+    "result_path": "results/phase109/evaluation_shards/phase109_eval_v4_session_coverage_000158000-000160000.csv.gz",
+    "result_sha256": "a0374c07576928f3e86c0345c5d47fbcc3d0a7c4184ea06ff83a12fd9e8d45bc",
+    "start": 158000,
     "status": "PARTIAL_SHARD_COMPLETE"
   },
-  "next_config_cursor": 158000,
-  "remaining_supported_configs": 14800,
+  "next_config_cursor": 160000,
+  "remaining_supported_configs": 12800,
   "sample": "selection",
   "total_supported_source_feasible_configs": 172800,
-  "updated_utc": "2026-10-13T00:52:45.585297+00:00"
+  "updated_utc": "2026-10-13T01:03:31.869326+00:00"
 }
