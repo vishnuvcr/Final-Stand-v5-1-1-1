@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-13T11:14:34.598393+00:00",
+  "timestamp_utc": "2026-10-14T09:10:01.789116+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -18,7 +18,7 @@
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
           "downloads": 21122,
-          "likes": 5,
+          "likes": 6,
           "tags": [
             "language:en",
             "license:cc-by-nc-4.0",
@@ -89,7 +89,7 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-12T22:52:16.000Z",
+          "last_modified": "2026-10-13T22:52:06.000Z",
           "downloads": 240,
           "likes": 0,
           "tags": [
@@ -119,10 +119,19 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-10-12T21:42:44Z",
+          "pushed_at": "2026-10-13T19:50:36Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "shivam61/nifty-options-backtester",
+          "description": "This is repo for backtesting nifty option selling strategies ",
+          "default_branch": "main",
+          "pushed_at": "2026-10-13T18:20:31Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/shivam61/nifty-options-backtester"
         },
         {
           "full_name": "suraj9321/dhan-api-backtest-options-framework",
@@ -260,15 +269,6 @@
           "url": "https://github.com/sahilempire/nifty-options-research-lab"
         },
         {
-          "full_name": "shivam61/nifty-options-backtester",
-          "description": "This is repo for backtesting nifty option selling strategies ",
-          "default_branch": "main",
-          "pushed_at": "2026-09-05T16:41:28Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/shivam61/nifty-options-backtester"
-        },
-        {
           "full_name": "Vikki35292/NiftyTrader",
           "description": "Automated intraday trading system for Nifty 50 stocks using NSE option chain  OI imbalance signals and 1-minute breakout confirmation. Features paper trading  mode, live execution via Zerodha Kite Connect, Streamlit dashboard, and  walk-forward backtesting.  Note: Requires Zerodha Kite Connect API credentials. Never commit your .env file.",
           "default_branch": "main",
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-13T11:13:44Z",
+          "pushed_at": "2026-10-14T09:08:29Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
