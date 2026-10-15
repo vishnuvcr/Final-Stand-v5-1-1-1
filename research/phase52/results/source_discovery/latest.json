@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-14T09:10:01.789116+00:00",
+  "timestamp_utc": "2026-10-15T08:40:49.250849+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 21122,
+          "downloads": 21684,
           "likes": 6,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 591,
+          "downloads": 604,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-13T22:52:06.000Z",
-          "downloads": 240,
+          "last_modified": "2026-10-14T22:53:20.000Z",
+          "downloads": 236,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -119,10 +119,19 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-10-13T19:50:36Z",
+          "pushed_at": "2026-10-14T17:57:48Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "Krishang2004/options-strategy-reports",
+          "description": "Public static dashboard of NIFTY/SENSEX backtest strategy reports",
+          "default_branch": "master",
+          "pushed_at": "2026-10-14T12:19:33Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/Krishang2004/options-strategy-reports"
         },
         {
           "full_name": "shivam61/nifty-options-backtester",
@@ -168,15 +177,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/Shivaansh29/nifty_backtest"
-        },
-        {
-          "full_name": "Krishang2004/options-strategy-reports",
-          "description": "Public static dashboard of NIFTY/SENSEX backtest strategy reports",
-          "default_branch": "master",
-          "pushed_at": "2026-10-08T11:47:11Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/Krishang2004/options-strategy-reports"
         },
         {
           "full_name": "abhi15724/quantforge-ai",
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-14T09:08:29Z",
+          "pushed_at": "2026-10-15T08:37:45Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
