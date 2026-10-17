@@ -1,10 +1,10 @@
 {
   "status": "DAILY_EOD_FACTOR_BUILD_WITH_COVERAGE_AUDIT",
-  "created_at_utc": "2026-10-16T08:37:22.599267+00:00",
+  "created_at_utc": "2026-10-17T08:11:28.564189+00:00",
   "hf_option_dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "hf_index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
   "nse_fno_archive_repo": "SantoshSrinivas79/NSE-FNO-Data-bank",
-  "nse_fno_archive_commit_sha": "b5f7d930ab7478bb2134ed40e619ab81aac7cc4e",
+  "nse_fno_archive_commit_sha": "7f399141c579de3476613bc24f7b2978436daf88",
   "nse_fno_archive_repository_code_license": "MIT; does not grant rights to bundled NSE market data",
   "nse_market_data_rights": "NSE terms/rightsholder review required; data is daily EOD only and not an intraday quote feed",
   "expected_event_rows": 256,
