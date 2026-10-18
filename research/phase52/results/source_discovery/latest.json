@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-17T08:11:56.056423+00:00",
+  "timestamp_utc": "2026-10-18T08:27:34.344788+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 22308,
+          "downloads": 22666,
           "likes": 6,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 584,
+          "downloads": 581,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-16T22:57:08.000Z",
-          "downloads": 242,
+          "last_modified": "2026-10-17T23:24:45.000Z",
+          "downloads": 239,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -116,6 +116,15 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "shivam61/nifty-options-backtester",
+          "description": "This is repo for backtesting nifty option selling strategies ",
+          "default_branch": "main",
+          "pushed_at": "2026-10-18T07:32:42Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/shivam61/nifty-options-backtester"
+        },
+        {
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
@@ -132,15 +141,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/Krishang2004/options-strategy-reports"
-        },
-        {
-          "full_name": "shivam61/nifty-options-backtester",
-          "description": "This is repo for backtesting nifty option selling strategies ",
-          "default_branch": "main",
-          "pushed_at": "2026-10-13T18:20:31Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/shivam61/nifty-options-backtester"
         },
         {
           "full_name": "suraj9321/dhan-api-backtest-options-framework",
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-16T19:20:13Z",
+          "pushed_at": "2026-10-18T08:21:28Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -440,5 +440,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 1
+  "new_unique_source_leads_added": 0
 }
