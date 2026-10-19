@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-18T08:27:34.344788+00:00",
+  "timestamp_utc": "2026-10-19T09:18:55.026375+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,8 +17,8 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 22666,
-          "likes": 6,
+          "downloads": 23614,
+          "likes": 7,
           "tags": [
             "language:en",
             "license:cc-by-nc-4.0",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 581,
+          "downloads": 573,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-17T23:24:45.000Z",
-          "downloads": 239,
+          "last_modified": "2026-10-18T22:48:24.000Z",
+          "downloads": 243,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -119,10 +119,37 @@
           "full_name": "shivam61/nifty-options-backtester",
           "description": "This is repo for backtesting nifty option selling strategies ",
           "default_branch": "main",
-          "pushed_at": "2026-10-18T07:32:42Z",
+          "pushed_at": "2026-10-19T09:05:10Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/shivam61/nifty-options-backtester"
+        },
+        {
+          "full_name": "Shivaansh29/nifty_backtest",
+          "description": "nifty options backtesting ",
+          "default_branch": "main",
+          "pushed_at": "2026-10-19T00:31:46Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Shivaansh29/nifty_backtest"
+        },
+        {
+          "full_name": "mimran-khan/deltaforge",
+          "description": "Autonomous Nifty options trading — backtest, paper-trade, and go live with the same engine.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-18T18:07:05Z",
+          "stars": 2,
+          "license": "MIT",
+          "url": "https://github.com/mimran-khan/deltaforge"
+        },
+        {
+          "full_name": "2005legend/nifty-edge-research",
+          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-18T16:21:40Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/2005legend/nifty-edge-research"
         },
         {
           "full_name": "karbburn/nifty-option-simulator",
@@ -159,24 +186,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/Aarya-19/nifty50-volatility-engine"
-        },
-        {
-          "full_name": "mimran-khan/deltaforge",
-          "description": "Autonomous Nifty options trading — backtest, paper-trade, and go live with the same engine.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-09T18:25:34Z",
-          "stars": 2,
-          "license": "MIT",
-          "url": "https://github.com/mimran-khan/deltaforge"
-        },
-        {
-          "full_name": "Shivaansh29/nifty_backtest",
-          "description": "nifty options backtesting ",
-          "default_branch": "main",
-          "pushed_at": "2026-10-09T11:33:08Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/Shivaansh29/nifty_backtest"
         },
         {
           "full_name": "abhi15724/quantforge-ai",
@@ -285,15 +294,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/Vikki35292/NiftyTrader"
-        },
-        {
-          "full_name": "rajappa-adabala/nifty-options-backtesting-engine",
-          "description": "",
-          "default_branch": "main",
-          "pushed_at": "2026-08-27T08:44:36Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/rajappa-adabala/nifty-options-backtesting-engine"
         }
       ],
       "result_count": 20
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-18T08:21:28Z",
+          "pushed_at": "2026-10-19T09:06:31Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -440,5 +440,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "new_unique_source_leads_added": 1
 }
