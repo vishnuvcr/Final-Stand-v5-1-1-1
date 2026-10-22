@@ -700,3 +700,15 @@ First run failed closed on code-fingerprint drift and exposed escaped workflow e
 - Selected ATM-offset audit: SELECTED_STRIKE_ATM_OFFSET_COVERAGE_AUDIT_COMPLETE; 27,768 leg-event rows; strict exact-index/OI/expiry-exit rows=10,405; no P&L.
 - Daily EOD factor-selector: EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION; validation diagnostic=EOD_VOLUME_PCR uplift=923 INR/event, Holm p=1.0000; report at results/phase52/daily_eod_selector/REPORT.md.
 - Legacy factor-selector pilot: FACTOR_SELECTOR_VALIDATION_ONLY_HOLDOUT_BLOCKED_NO_PROMOTION (PIT match 68.2%); report at research/phase52/results/factor_attribution/REPORT.md.
+
+
+## Point-in-time delta audit — run 39751319049 (2026-10-22T09:03:39.041593+00:00)
+- Status: MODEL_DELTA_AUDIT_COMPLETE
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Audit source SHA256: 9d343d1f53338a6fe5741ba8c0d560a8ebfe783a2565c860f6873235a61b4ce3
+- Replay protocol SHA256: 5d1a450407e07fc272272db9d42b9ddaad6bb43187ec7e5f7c2bbdd5841cf5a6
+- Expiry files audited/errors: 267/0
+- Expected/actual selection rows: 4272/4272
+- Rows with prior-OI-qualified selections: 3892
+- Exact entry fill bars available: 2232
+- Model delta is diagnostic only; no P&L or promotion.
