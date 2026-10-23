@@ -280,6 +280,14 @@ def select_entry_legs(df: pd.DataFrame, selection_ts: pd.Timestamp, entry_ts: pd
         return None, "MISSING_EXACT_0959_SPOT_OR_OPTION_BAR"
     if not valid_ohlc(prior_spot):
         return None, "INVALID_0959_SPOT_OHLC"
+    # Duplicate source rows can be repeated under different symbol labels. A row is
+    # deduplicated only when all market/contract fields agree; conflicting prices,
+    # volume or OI for the same contract-minute remain a hard exclusion.
+    identity_fields = [x for x in (
+        "timestamp", "expiry", "option_type", "strike", "open", "high", "low",
+        "close", "volume", "open_interest", "trading_day"
+    ) if x in snap.columns]
+    snap = snap.drop_duplicates(subset=identity_fields, keep="first")
     if snap.duplicated(["option_type", "strike"], keep=False).any():
         return None, "DUPLICATE_SELECTION_CONTRACT_MINUTE"
     expiry_ts = pd.Timestamp(f"{expiry} {EXPIRY_CLOSE}", tz=TZ)
