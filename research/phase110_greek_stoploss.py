@@ -133,13 +133,19 @@ def bs_greeks(spot: float, strike: float, tau: float, sigma: float, typ: str) ->
 
 
 def historical_lot_size(expiry: str) -> int | None:
+    """NIFTY weekly lot schedule from NSE transition circulars; gaps are deliberately blocked."""
     d = date.fromisoformat(expiry)
     if d < date(2021, 8, 1):
         return 75
-    if date(2021, 8, 1) <= d <= date(2024, 12, 19):
+    if date(2021, 8, 1) <= d <= date(2024, 4, 25):
         return 50
+    # NSE FAOP61415: first weekly expiry with the 25-lot size was 02-May-2024.
+    if date(2024, 5, 2) <= d <= date(2024, 12, 19):
+        return 25
+    # NSE FAOP64625: first weekly expiry with the new 75-lot size was 02-Jan-2025.
     if date(2025, 1, 2) <= d <= date(2025, 12, 23):
         return 75
+    # NSE FAOP70616: first weekly expiry with the 65-lot size was 06-Jan-2026.
     if d >= date(2026, 1, 6):
         return 65
     return None
