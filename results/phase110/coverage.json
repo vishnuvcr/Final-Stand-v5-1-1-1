@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-23T11:13:43.208994+00:00",
+  "created_at_utc": "2026-10-23T11:34:05.531629+00:00",
   "dataset": "thetrademarkk/india-index-options-1m",
   "dataset_revision_requested": "main",
   "dataset_revision_resolved_sha": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
@@ -16,10 +16,10 @@
   "source_file_errors": 0,
   "weekly_pairs_scheduled": 259,
   "long_or_nonweekly_gaps_skipped": 3,
-  "eligible_campaigns": 46,
+  "eligible_campaigns": 52,
   "eligible_by_split": {
-    "development": 8,
-    "validation": 37,
+    "development": 12,
+    "validation": 39,
     "holdout": 1
   },
   "expected_by_split": {
@@ -27,10 +27,13 @@
     "validation": 103,
     "holdout": 23
   },
-  "exclusion_count": 217,
+  "exclusion_count": 211,
   "exclusion_reason_counts": {
-    "DUPLICATE_SELECTION_CONTRACT_MINUTE": 134,
+    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_CE": 105,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_0_PUT_18": 1,
+    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_PE": 29,
+    "INVALID_GREEK_IV_CE_AT_10:59": 1,
+    "INVALID_GREEK_IV_PE_AT_13:43": 1,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_1_PUT_8": 1,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_269_PUT_268": 1,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_0_PUT_27": 1,
@@ -44,11 +47,9 @@
     "INVALID_GREEK_IV_PE_AT_09:15": 1,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_4_PUT_0": 1,
     "UNSUPPORTED_HISTORICAL_LOT_SIZE_DATE": 2,
-    "NO_VALID_0_15_DELTA_PE_WITH_PRE_ENTRY_OI": 16,
-    "NO_VALID_0_15_DELTA_CE_WITH_PRE_ENTRY_OI": 17,
-    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_CE": 7,
+    "NO_VALID_0_15_DELTA_CE_WITH_PRE_ENTRY_OI": 20,
+    "NO_VALID_0_15_DELTA_PE_WITH_PRE_ENTRY_OI": 18,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_140_PUT_1333": 1,
-    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_PE": 6,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_644_PUT_552": 1,
     "ENTRY_OPEN_HAS_NO_VALID_MODEL_IV_PE": 1,
     "INCOMPLETE_SELECTED_LEG_PATH_CALL_89_PUT_251": 1,
