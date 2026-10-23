@@ -691,14 +691,14 @@ def main() -> int:
 
     val = grid.loc[grid["split"].eq("validation") & grid["primary_cost_case"]].drop_duplicates("config_id").copy()
     val["holm_p_adjusted"] = val["config_id"].map(adjusted).fillna(1.0)
-    val["validation_mean_net_boot_low"], val["validation_mean_net_boot_high"] = math.nan, math.nan
-    for ridx, r in val.iterrows():
-        nets = [float(x["net_pnl_inr"]) for x in primary_val_rows.get(str(r["config_id"]), [])]
-        lo, hi = bootstrap_ci(nets, RNG_SEED + int(str(r["config_id"] == "NO_STOP_REFERENCE")))
-        val.loc[ridx, "validation_mean_net_boot_low"] = lo
-        val.loc[ridx, "validation_mean_net_boot_high"] = hi
+    val["validation_mean_paired_uplift_boot_low"], val["validation_mean_paired_uplift_boot_high"] = math.nan, math.nan
+    cost_sensitivity = grid.loc[grid["split"].eq("validation")].groupby("config_id")["paired_uplift_sum_inr"].agg(
+        positive_uplift_cost_scenarios=lambda x: int((x > 0).sum()),
+        worst_case_paired_uplift_inr="min", median_paired_uplift_across_costs="median").reset_index()
+    val = val.merge(cost_sensitivity, on="config_id", how="left")
     val["holdout_used_for_ranking"] = False
-    val = val.sort_values(["net_pnl_inr", "max_drawdown_inr"], ascending=[False, True])
+    val = val.sort_values(["paired_uplift_sum_inr", "positive_uplift_cost_scenarios", "net_pnl_inr", "max_drawdown_inr"],
+                          ascending=[False, False, False, True])
     cfg_by_id = {c["config_id"]: c for c in configs}
     mandatory = [c["config_id"] for c in configs if c["active_count"] == 1 and
                  c["delta_threshold"] is not None and abs(float(c["delta_threshold"])-0.40) < 1e-9 and
@@ -713,11 +713,26 @@ def main() -> int:
         if len(selected) >= MAX_HOLDOUT_CANDIDATES:
             break
     selected = selected[:MAX_HOLDOUT_CANDIDATES]
+    # Bootstrap the baseline and frozen candidates only; interval concerns paired
+    # event-level uplift, not the winner's absolute net P&L.
+    for ridx, r in val.iterrows():
+        cid = str(r["config_id"])
+        if cid not in (set(selected) | {"NO_STOP_REFERENCE"}):
+            continue
+        diffs = []
+        for trade in primary_val_rows.get(cid, []):
+            bnet = baseline_net_by_cost_event.get((cost_primary["cost_id"], trade["event_id"]))
+            if bnet is not None:
+                diffs.append(float(trade["net_pnl_inr"] - bnet))
+        seed = RNG_SEED if cid == "NO_STOP_REFERENCE" else RNG_SEED + int(cid[:6], 16)
+        lo, hi = bootstrap_ci(diffs, seed)
+        val.loc[ridx, "validation_mean_paired_uplift_boot_low"] = lo
+        val.loc[ridx, "validation_mean_paired_uplift_boot_high"] = hi
     frozen = {"created_at_utc": utc_now(), "selection_split": "validation only",
               "primary_cost_case": PRIMARY_COST, "maximum_candidate_count": MAX_HOLDOUT_CANDIDATES,
               "candidate_count": len(selected), "baseline_tested_separately": True,
               "mandatory_preregistered_delta_configs": mandatory, "candidate_config_ids": selected,
-              "selection_rule": "Mandatory net/gross single-delta 0.40 rules plus highest validation primary-cost net P&L ranks. Holdout metrics are not inputs.",
+              "selection_rule": "Mandatory net/gross single-delta 0.40 rules plus highest validation paired-uplift ranks; positive cost-case count is the tie-breaker. Holdout metrics are not inputs.",
               "code_sha256": sha256_file(Path(__file__)), "dataset_revision": revision}
     (OUT / "shortlist_frozen.json").write_text(json.dumps(frozen, indent=2) + "\n", encoding="utf-8")
     val.to_csv(OUT / "validation_candidates.csv", index=False)
