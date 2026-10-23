@@ -1,0 +1,220 @@
+name: Phase 111 — Non-Repainting ZigZag Weekly Options
+
+on:
+  push:
+    branches: [phase-111-zigzag-weekly-expiry-options]
+    paths:
+      - "research/phase111_zigzag_weekly_expiry.py"
+      - "research/phase111_zigzag_plus_nonrepainting.pine"
+      - "tests/phase111/**"
+      - ".github/workflows/phase111-zigzag-weekly-expiry.yml"
+      - "PHASE111_RESEARCH_PLAN.md"
+  workflow_dispatch:
+    inputs:
+      dataset_revision:
+        description: Hugging Face dataset revision/tag/branch; resolved SHA is recorded
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase111-zigzag-weekly-expiry-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      PHASE111_DATASET_REVISION: ${{ inputs.dataset_revision || 'main' }}
+      PYTHONUNBUFFERED: "1"
+      PHASE_BRANCH: ${{ github.ref_name }}
+    steps:
+      - name: Check out the active research branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore historical data cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase111-hf-${{ runner.os }}-${{ hashFiles('PHASE111_RESEARCH_PLAN.md') }}
+          restore-keys: |
+            phase111-hf-${{ runner.os }}-
+            phase110-hf-${{ runner.os }}-
+            phase109-hf-${{ runner.os }}-
+            phase52-delta-cache-${{ runner.os }}-
+            hf-nifty-options-${{ runner.os }}-
+
+      - name: Install research dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy scipy pyarrow huggingface_hub matplotlib
+
+      - name: Compile engine and tests
+        id: compile
+        run: python -m py_compile research/phase111_zigzag_weekly_expiry.py tests/phase111/test_phase111_zigzag.py
+
+      - name: Run no-repaint, IV, delta, timestamp and cost tests
+        id: tests
+        run: python -m unittest discover -s tests/phase111 -p 'test_*.py' -v
+
+      - name: Execute frozen historical replay
+        id: replay
+        if: success()
+        run: python research/phase111_zigzag_weekly_expiry.py
+
+      - name: Append result, status, and error logs
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          COMPILE_OUTCOME: ${{ steps.compile.outcome }}
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          REPLAY_OUTCOME: ${{ steps.replay.outcome }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          now=datetime.now(timezone.utc).isoformat()
+          out=Path("results/phase111")
+          summary_path=out/"summary.json"
+          runtime_path=out/"runtime_error.json"
+          outcome={k:os.getenv(k,"unknown") for k in ("JOB_STATUS","COMPILE_OUTCOME","TEST_OUTCOME","REPLAY_OUTCOME")}
+          run_id=os.getenv("RUN_ID","unknown")
+          run_url=os.getenv("RUN_URL","")
+          if summary_path.exists():
+              s=json.loads(summary_path.read_text())
+              entry=(f"\n\n## Automated replay — run {run_id} ({now})\n"
+                f"- Workflow: {run_url}\n- Outcome compile/tests/replay: {outcome['COMPILE_OUTCOME']}/{outcome['TEST_OUTCOME']}/{outcome['REPLAY_OUTCOME']}\n"
+                f"- Dataset revision: {s.get('dataset_revision_resolved_sha')}\n"
+                f"- Scheduled/eligible/excluded campaigns: {s.get('scheduled_campaigns')}/{s.get('eligible_campaigns')}/{s.get('excluded_campaigns')}\n"
+                f"- Costs: {s.get('cost_scenarios')}; status: {s.get('status')}; promotion: NONE.\n")
+              status="EMPIRICAL SCREEN COMPLETE — NO PROMOTION" if s.get("eligible_campaigns",0)>0 else "BLOCKED — NO VALID CAMPAIGNS"
+          else:
+              detail=runtime_path.read_text() if runtime_path.exists() else "No summary was produced; inspect the first failed Actions step. No P&L result is inferred."
+              entry=(f"\n\n## Failed or blocked execution — run {run_id} ({now})\n- Workflow: {run_url}\n"
+                f"- Outcomes: {json.dumps(outcome,sort_keys=True)}\n- Error: {detail[:1800]}\n- No accepted strategy result or promotion claim.\n")
+              status="FAILED/BLOCKED — SEE ERROR LOG"
+          for filename in ("PHASE111_STATUS.md","PHASE111_RESEARCH_LOG.md"):
+              p=Path(filename)
+              if p.exists(): p.write_text(p.read_text(encoding="utf-8")+entry,encoding="utf-8")
+          if not summary_path.exists() or outcome["JOB_STATUS"]!="success":
+              p=Path("PHASE111_ERROR_LOG.md")
+              p.write_text(p.read_text(encoding="utf-8")+entry,encoding="utf-8")
+          p=Path("README.md")
+          old=p.read_text(encoding="utf-8") if p.exists() else "# Phase 111 Research"
+          start="<!-- PHASE111_STATUS_START -->"; end="<!-- PHASE111_STATUS_END -->"
+          block=(f"{start}\n## Phase 111 — Non-Repainting ZigZag Weekly Options\n\n"
+            f"**Status:** {status}. **No strategy promoted.**\n\n"
+            f"- [Research plan](PHASE111_RESEARCH_PLAN.md) · [status](PHASE111_STATUS.md) · [research log](PHASE111_RESEARCH_LOG.md) · [error log](PHASE111_ERROR_LOG.md) · [visible chat log](PHASE111_CHAT_LOG.md)\n"
+            f"- [Replay engine](research/phase111_zigzag_weekly_expiry.py) · [regression tests](tests/phase111/test_phase111_zigzag.py) · [manual/automatic workflow](.github/workflows/phase111-zigzag-weekly-expiry.yml)\n"
+            f"- [Report](results/phase111/PHASE111_REPORT.md) · [manuscript](results/phase111/PHASE111_MANUSCRIPT.md) · [cost grid](results/phase111/cost_grid.csv) · [run {run_id}]({run_url})\n{end}")
+          if start in old and end in old:
+              before,rest=old.split(start,1); _,after=rest.split(end,1); new=before+block+after
+          elif "<!-- PHASE110_STATUS_START -->" in old:
+              new=old.replace("<!-- PHASE110_STATUS_START -->",block+"\n\n<!-- PHASE110_STATUS_START -->",1)
+          else: new=block+"\n\n"+old
+          p.write_text(new,encoding="utf-8")
+          PY
+
+      - name: Upload research artifact bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase111-zigzag-${{ github.run_id }}
+          path: |
+            results/phase111/
+            PHASE111_STATUS.md
+            PHASE111_RESEARCH_LOG.md
+            PHASE111_ERROR_LOG.md
+          if-no-files-found: warn
+          retention-days: 60
+
+      - name: Persist data summaries and logs to the research branch
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p results/phase111
+          git add README.md PHASE111_STATUS.md PHASE111_RESEARCH_LOG.md PHASE111_ERROR_LOG.md results/phase111
+          if git diff --cached --quiet; then
+            echo "No new output to persist."
+            exit 0
+          fi
+          git commit -m "Phase 111: record workflow ${GITHUB_RUN_ID} outputs"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            git rebase "origin/$PHASE_BRANCH" || { git rebase --abort; git merge --no-edit -X ours "origin/$PHASE_BRANCH"; }
+            if git push origin "HEAD:$PHASE_BRANCH"; then exit 0; fi
+          done
+          exit 1
+
+  sync-main-readme:
+    needs: research
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out main for a compact status link
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Update main README Phase 111 status
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_RESULT: ${{ needs.research.result }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          p=Path("README.md"); text=p.read_text(encoding="utf-8")
+          start="<!-- PHASE111_STATUS_START -->"; end="<!-- PHASE111_STATUS_END -->"
+          run_id=os.getenv("RUN_ID","unknown"); run_url=os.getenv("RUN_URL","")
+          result=os.getenv("JOB_RESULT","unknown")
+          status="workflow completed; inspect report for numerical validity" if result=="success" else "workflow failed or was blocked; inspect research-branch error log"
+          repo="vishnuvcr/Final-Stand-v5-1-1-1"
+          block=(f"{start}\n## Phase 111 — Non-Repainting ZigZag Weekly Options\n\n"
+            f"**Latest workflow result:** {result}. **Status:** {status}. No strategy is promoted merely from a successful run.\n\n"
+            f"- [Research branch](https://github.com/{repo}/tree/phase-111-zigzag-weekly-expiry-options) · "
+            f"[plan](https://github.com/{repo}/blob/phase-111-zigzag-weekly-expiry-options/PHASE111_RESEARCH_PLAN.md) · "
+            f"[status](https://github.com/{repo}/blob/phase-111-zigzag-weekly-expiry-options/PHASE111_STATUS.md)\n"
+            f"- [Report](https://github.com/{repo}/blob/phase-111-zigzag-weekly-expiry-options/results/phase111/PHASE111_REPORT.md) · "
+            f"[manuscript](https://github.com/{repo}/blob/phase-111-zigzag-weekly-expiry-options/results/phase111/PHASE111_MANUSCRIPT.md) · "
+            f"[error log](https://github.com/{repo}/blob/phase-111-zigzag-weekly-expiry-options/PHASE111_ERROR_LOG.md) · "
+            f"[latest run {run_id}]({run_url})\n{end}")
+          if start in text and end in text:
+              before,rest=text.split(start,1); _,after=rest.split(end,1); out=before+block+after
+          elif "<!-- PHASE110_STATUS_START -->" in text:
+              out=text.replace("<!-- PHASE110_STATUS_START -->",block+"\n\n<!-- PHASE110_STATUS_START -->",1)
+          else: out=block+"\n\n"+text
+          p.write_text(out,encoding="utf-8")
+          PY
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase 111: update main README research status"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; git merge --no-edit -X ours origin/main; }
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
