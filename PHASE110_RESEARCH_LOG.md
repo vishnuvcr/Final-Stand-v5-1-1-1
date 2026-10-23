@@ -130,3 +130,16 @@ For each run append: timestamp; branch and workflow URL/run ID; dataset repo + r
 }
 
 - No accepted P&L results or promotion claim.
+
+
+## Phase 110 failure — run 39942500470 (2026-10-23T11:05:52.988946+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39942500470
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "failure", "TEST_OUTCOME": "success"}
+- Failure detail: {
+  "status": "RUNTIME_ERROR",
+  "created_at_utc": "2026-10-23T11:05:52.372896+00:00",
+  "error_type": "KeyError",
+  "error": "'net_uplift_vs_no_stop_inr'"
+}
+
+- No accepted P&L results or promotion claim.
