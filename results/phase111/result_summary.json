@@ -1,0 +1,13 @@
+{
+  "status": "EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION",
+  "scheduled_campaigns": 259,
+  "eligible_campaigns": 142,
+  "excluded_campaigns": 121,
+  "cost_rows": 144,
+  "figure_paths": [
+    "results/phase111/figures/net_pnl_development.svg",
+    "results/phase111/figures/net_pnl_validation.svg",
+    "results/phase111/figures/net_pnl_holdout.svg"
+  ],
+  "promoted": false
+}

@@ -57,3 +57,11 @@ Finish the source audit and exact one-rule replay. Preserve the registered split
 - Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "skipped", "TEST_OUTCOME": "failure"}
 - Error: No summary was produced; inspect the first failed Actions step. No P&L result is inferred.
 - No accepted strategy result or promotion claim.
+
+
+## Automated replay — run 40035385054 (2026-10-23T22:50:24.906414+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40035385054
+- Outcome compile/tests/replay: success/success/success
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Scheduled/eligible/excluded campaigns: 259/142/121
+- Costs: 24; status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.

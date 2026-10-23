@@ -1,0 +1,26 @@
+{
+  "scheduled": 259,
+  "eligible": 142,
+  "excluded": 121,
+  "scheduled_by_split": {
+    "development": 133,
+    "validation": 103,
+    "holdout": 23
+  },
+  "eligible_by_split": {
+    "development": 96,
+    "validation": 45,
+    "holdout": 1
+  },
+  "exclusion_reasons": {
+    "NO_CONFIRMED_PIVOT_SIGNAL": 22,
+    "INCOMPLETE_OPTION_PATH": 50,
+    "INCOMPLETE_SPOT_PATH": 1,
+    "UNSUPPORTED_HISTORICAL_LOT_SIZE_DATE": 2,
+    "NO_VALID_ABS_0_10_DELTA_CONTRACT": 22,
+    "MISSING_INVALID_OR_DUPLICATE_ENTRY_BAR": 17,
+    "INVALID_SESSION_GRID": 1,
+    "PREVIOUS_EXPIRY_DAILY_CANDLE_INCOMPLETE": 2,
+    "NO_NEXT_OBSERVED_SESSION": 4
+  }
+}

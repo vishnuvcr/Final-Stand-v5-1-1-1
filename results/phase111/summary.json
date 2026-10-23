@@ -1,0 +1,33 @@
+{
+  "generated_at_utc": "2026-10-23T22:50:21.850067+00:00",
+  "dataset_repo": "thetrademarkk/india-index-options-1m",
+  "dataset_revision_requested": "main",
+  "dataset_revision_resolved_sha": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "index_file_bytes": 8383208,
+  "expiry_file_count": 267,
+  "first_expiry": "2021-05-27",
+  "last_expiry": "2026-08-04",
+  "complete_daily_candles": 1250,
+  "incomplete_daily_sessions": 8,
+  "duplicate_index_timestamps": 0,
+  "scheduled_campaigns": 259,
+  "eligible_campaigns": 142,
+  "excluded_campaigns": 121,
+  "scheduled_by_split": {
+    "development": 133,
+    "validation": 103,
+    "holdout": 23
+  },
+  "eligible_by_split": {
+    "development": 96,
+    "validation": 45,
+    "holdout": 1
+  },
+  "cost_scenarios": 24,
+  "signal_proxy": "confirmed unique local extrema +/-12 days, minimum 5 ticks reversal, 2-bar backstep",
+  "ziglib_parity": "NOT VERIFIED: supplied Pine references external DevLucem/ZigLib/1; proxy only",
+  "status": "EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION",
+  "strategy_promotion": "NONE",
+  "tester_review": "WAIVED BY USER"
+}

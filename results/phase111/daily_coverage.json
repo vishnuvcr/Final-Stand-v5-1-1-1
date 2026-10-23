@@ -1,0 +1,6 @@
+{
+  "complete_daily_candles": 1250,
+  "first_complete_session": "2021-05-24",
+  "last_complete_session": "2026-07-02",
+  "incomplete_sessions_excluded": 8
+}
