@@ -50,3 +50,10 @@ Finish the source audit and exact one-rule replay. Preserve the registered split
 - Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "skipped", "TEST_OUTCOME": "failure"}
 - Error: No summary was produced; inspect the first failed Actions step. No P&L result is inferred.
 - No accepted strategy result or promotion claim.
+
+
+## Failed or blocked execution — run 40035279559 (2026-10-23T22:42:47.797264+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40035279559
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "skipped", "TEST_OUTCOME": "failure"}
+- Error: No summary was produced; inspect the first failed Actions step. No P&L result is inferred.
+- No accepted strategy result or promotion claim.
