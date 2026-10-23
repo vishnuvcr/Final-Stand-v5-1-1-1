@@ -40,10 +40,18 @@ class GreekMathTests(unittest.TestCase):
         short_delta = -(call["delta"] + put["delta"])
         short_gamma = -(call["gamma"] + put["gamma"])
         short_vega = -(call["vega"] + put["vega"])
-        self.assertAlmostEqual(call["delta"] + put["delta"], math.exp(-RATE*t)*0 + call["delta"] + put["delta"], places=10)
+        self.assertAlmostEqual(call["delta"] - put["delta"], 1.0, places=10)
         self.assertLess(short_gamma, 0)
         self.assertLess(short_vega, 0)
         self.assertTrue(math.isfinite(short_delta))
+
+    def test_deep_itm_european_put_iv_respects_discounted_lower_bound(self):
+        spot, strike, tau, sigma = 24000.0, 25000.0, 7.0 / YEAR_DAYS, 0.22
+        premium = bs_price(spot, strike, tau, sigma, "PE")
+        self.assertLess(premium, strike - spot)
+        iv = implied_vol(spot, strike, tau, premium, "PE")
+        self.assertIsNotNone(iv)
+        self.assertAlmostEqual(iv, sigma, places=6)
 
     def test_invalid_price_rejected(self):
         self.assertIsNone(implied_vol(25000, 24000, 7/YEAR_DAYS, 1.0, "CE"))
