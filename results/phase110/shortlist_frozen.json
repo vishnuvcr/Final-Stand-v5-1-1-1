@@ -1,0 +1,41 @@
+{
+  "created_at_utc": "2026-10-23T10:46:29.286101+00:00",
+  "selection_split": "validation only",
+  "primary_cost_case": {
+    "brokerage_per_order": 20.0,
+    "slippage_per_unit": 0.25,
+    "fee_multiplier": 1.0
+  },
+  "maximum_candidate_count": 20,
+  "candidate_count": 20,
+  "baseline_tested_separately": true,
+  "mandatory_preregistered_delta_configs": [
+    "fd8afe638d183387",
+    "3733e9d692fa7a90"
+  ],
+  "candidate_config_ids": [
+    "fd8afe638d183387",
+    "3733e9d692fa7a90",
+    "NO_STOP_REFERENCE",
+    "faa3cfb951e63209",
+    "9f17908fbacb80ae",
+    "44410b4081b87633",
+    "25942d0d643a5822",
+    "027ff175e5c62018",
+    "793c0bf00fec5988",
+    "9e62a8b78ccc75bb",
+    "00c94c4178d92699",
+    "b4afee278ec428da",
+    "87209386fef82eff",
+    "88cf3a54439c5206",
+    "393d21adc40663be",
+    "f44a596196e5f262",
+    "ca777663b2177dd0",
+    "e7e58bfbca600f7b",
+    "5052d1ebf1eb6406",
+    "54aa3f844ebd22ac"
+  ],
+  "selection_rule": "Mandatory net/gross single-delta 0.40 rules plus highest validation paired-uplift ranks; positive cost-case count is the tie-breaker. Holdout metrics are not inputs.",
+  "code_sha256": "95e8d40f48e12c7aac8597ad85519689233d51096779f2ce881a131782c1aab9",
+  "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5"
+}

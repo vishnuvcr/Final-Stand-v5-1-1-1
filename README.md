@@ -1,11 +1,11 @@
 <!-- PHASE110_STATUS_START -->
 ## Phase 110 — Greek stop-loss study
 
-- Status: RUN FAILED/BLOCKED — REVIEW LOG
+- Status: RESULTS AVAILABLE — NO PROMOTION
 - Branch: [phase-110-greek-stoploss-short-strangle](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-110-greek-stoploss-short-strangle)
 - Plan: [PHASE110_RESEARCH_PLAN.md](PHASE110_RESEARCH_PLAN.md); current status: [PHASE110_STATUS.md](PHASE110_STATUS.md)
 - Report: [Phase 110 report](results/phase110/PHASE110_REPORT.md); manuscript: [manuscript](results/phase110/PHASE110_MANUSCRIPT.md)
-- Last workflow: [39940933286](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39940933286)
+- Last workflow: [39941034072](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39941034072)
 <!-- PHASE110_STATUS_END -->
 
 ## Full 1,000+ family requirement — compliance audit opened (2026-10-12)

@@ -1,0 +1,47 @@
+{
+  "created_at_utc": "2026-10-23T10:46:29.356409+00:00",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision_requested": "main",
+  "dataset_revision_resolved_sha": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "index_file_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "index_rows_valid": 486050,
+  "index_observed_session_dates": 1258,
+  "index_quality_counters": {
+    "index_duplicate_timestamp_rows": 0
+  },
+  "option_expiry_files_discovered": 267,
+  "earliest_expiry_file": "2021-05-27",
+  "latest_expiry_file": "2026-08-04",
+  "source_files_loaded": 257,
+  "source_file_errors": 0,
+  "weekly_pairs_scheduled": 259,
+  "long_or_nonweekly_gaps_skipped": 3,
+  "eligible_campaigns": 0,
+  "eligible_by_split": {
+    "development": 0,
+    "validation": 0,
+    "holdout": 0
+  },
+  "expected_by_split": {
+    "development": 133,
+    "validation": 103,
+    "holdout": 23
+  },
+  "exclusion_count": 263,
+  "exclusion_reason_counts": {
+    "DUPLICATE_SELECTION_CONTRACT_MINUTE": 134,
+    "UNEXPECTED_ENTRY_TO_EXIT_MINUTE_COUNT": 74,
+    "UNSUPPORTED_HISTORICAL_LOT_SIZE_DATE": 2,
+    "NO_VALID_0_15_DELTA_PE_WITH_PRE_ENTRY_OI": 22,
+    "NO_VALID_0_15_DELTA_CE_WITH_PRE_ENTRY_OI": 17,
+    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_CE": 5,
+    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_PE": 4,
+    "MISSING_EXACT_0959_SPOT_OR_OPTION_BAR": 1,
+    "NO_OBSERVED_SESSION_AFTER_PREVIOUS_EXPIRY": 4
+  },
+  "primary_source_license": "CC BY-NC 4.0 (research only)",
+  "selection": "exact 09:59 close model delta, OI>=100, exact 10:00 open; absolute delta nearest 0.15",
+  "exit": "exact 14:00 expiry-day open or next-minute open after completed-bar Greek stop",
+  "no_forward_fill": true,
+  "raw_market_rows_committed": false
+}
