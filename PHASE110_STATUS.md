@@ -1,0 +1,46 @@
+# Phase 110 Status — Greek Stop-Loss Research
+
+Updated: 2026-10-23 (Asia/Kolkata)  
+Branch: phase-110-greek-stoploss-short-strangle  
+Parent: main  
+Research state: registration/source audit in progress  
+Promotion status: **NONE — NO STRATEGY PROMOTED**
+
+## Current checkpoint
+
+- [x] Reviewed the main README, global research/data acquisition plan, historical source policy, Phase 52 dataset and exact-minute/Greek-selection implementation, and prior stop-loss research code.
+- [x] Created isolated Phase 110 branch without changing prior research branches.
+- [x] Frozen user-specified strategy: entry at 10:00 on next trading day after the previous observed weekly expiry; sell current week's approximately 0.15-absolute-delta call and put; expiry-day exit at 14:00.
+- [x] Registered net-delta and gross-combined-delta interpretations; fixed 0.40 threshold is explicitly tested.
+- [x] Registered all non-empty Greek rule combinations and the finite research phase plan.
+- [ ] Commit engine, regression tests and automatic/manual GitHub Actions workflow.
+- [ ] Resolve and record source dataset revision and maximum available expiry.
+- [ ] Validate source/calendar/selected-leg/path coverage; exclude, rather than synthesize, gaps.
+- [ ] Complete full development/validation combination grid under 24 cost scenarios.
+- [ ] Apply multiple-testing correction; freeze validation shortlist.
+- [ ] Test only frozen shortlist plus baseline and preregistered 0.40-delta rules on reserved holdout.
+- [ ] Create developer/tester branches after empirical result acquisition.
+- [ ] Publish independently audited manuscript, charts, tables, supplements, README links and final decision.
+
+## Gate policy
+
+A registered rule is not an evaluated rule; an attempted replay is not automatically a valid result. No strategy promotion occurs before exact contract/data coverage, Greek sign/unit tests, one-minute exit timing, date-effective lot/fee accounting, full grid denominator reconciliation, validation multiple-testing control, reserved holdout checks, and independent tester approval.
+
+## Primary data constraints
+
+Primary source is Hugging Face thetrademarkk/india-index-options-1m, declared CC BY-NC 4.0. Its OHLC is not bid/ask or guaranteed executable. Source revision and file list must be resolved during execution; the true cutoff will be recorded. No forward fill/interpolation is allowed. If coverage is missing, report it and retain no-promotion status.
+
+## Phase completion states
+
+| Phase | Purpose | State |
+|---|---|---|
+| 110.0 | Plan, repo/source audit, specification registration | COMPLETE |
+| 110.1 | Historical source/calendar/coverage gate | PENDING |
+| 110.2 | Greek engine and regression tests | PENDING |
+| 110.3 | Development/validation grid, all costs | PENDING |
+| 110.4 | Inference, multiple testing, shortlist freeze | PENDING |
+| 110.5 | Holdout of frozen shortlist | PENDING |
+| 110.6 | Independent developer/tester audit | PENDING |
+| 110.7 | Final manuscript/publication/stop | PENDING |
+
+Developer next instruction: finish the engine/workflow and execute Phase 110.1–110.5 without using holdout results to tune thresholds. Tester next instruction after result acquisition: independently reproduce the control metrics and inspect Greek signs, event joins, time causality, exact fills, fees, lot sizes, split use, grid completeness and manuscript-to-data reconciliation before any promotion decision.
