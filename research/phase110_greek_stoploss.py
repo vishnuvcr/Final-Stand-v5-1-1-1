@@ -442,7 +442,7 @@ def summarize_trade_rows(rows: list[dict[str, Any]], expected: int) -> dict[str,
         return {"expected_events": int(expected), "trades": 0, "coverage_pct": 0.0, "gross_pnl_inr": 0.0,
                 "net_pnl_inr": 0.0, "net_return_on_credit_pct": math.nan, "win_rate_pct": math.nan,
                 "mean_net_trade_inr": math.nan, "median_net_trade_inr": math.nan, "profit_factor": math.nan,
-                "max_drawdown_inr": math.nan, "median_holding_minutes": math.nan}
+                "max_drawdown_inr": 0.0, "median_holding_minutes": math.nan}
     ordered = sorted(rows, key=lambda r: (r["expiry"], r.get("entry_date", "")))
     vals = np.asarray([r["net_pnl_inr"] for r in ordered], dtype=float)
     gross = np.asarray([r["gross_pnl_inr"] for r in ordered], dtype=float)
@@ -519,9 +519,9 @@ def write_svg_figures(validation: pd.DataFrame, full_grid: pd.DataFrame) -> list
             & (full_grid["fee_multiplier"] == PRIMARY_COST["fee_multiplier"])
         ]
         if len(d040):
-            sens = d040.groupby("slippage_per_unit", as_index=False)["net_pnl_inr"].median()
+            sens = d040.groupby("slippage_per_unit", as_index=False)["paired_uplift_sum_inr"].median()
             fig, ax = plt.subplots(figsize=(9, 5))
-            ax.plot(sens["slippage_per_unit"], sens["net_pnl_inr"], marker="o")
+            ax.plot(sens["slippage_per_unit"], sens["paired_uplift_sum_inr"], marker="o")
             ax.set_xlabel("Adverse slippage per option unit per side (INR)")
             ax.set_ylabel("Median paired uplift vs no-stop (INR)")
             ax.set_title("0.40 delta rules: paired uplift under slippage stress")
@@ -774,12 +774,22 @@ def main() -> int:
                         "call_strike": ev["call_strike"], "put_strike": ev["put_strike"],
                         "call_delta_prior": ev["call_delta_prior"], "put_delta_prior": ev["put_delta_prior"],
                         "entry_net_delta": ev["entry_net_delta"], "entry_gross_delta": ev["entry_gross_delta"],
-                        "exit_ts": xt.isoformat(), "exit_reason": reason, **fee})
+                        "exit_ts": xt.isoformat(), "exit_reason": reason,
+                        "baseline_net_pnl_inr": baseline_net_by_cost_event.get((cost["cost_id"], eid)),
+                        "net_uplift_vs_no_stop_inr": (fee["net_pnl_inr"] - baseline_net_by_cost_event[(cost["cost_id"], eid)])
+                            if (cost["cost_id"], eid) in baseline_net_by_cost_event else math.nan, **fee})
+            uplift = [float(x["net_uplift_vs_no_stop_inr"]) for x in tr
+                      if math.isfinite(float(x["net_uplift_vs_no_stop_inr"]))]
+            hstats = summarize_trade_rows(tr, expected_by_split["holdout"])
+            hstats.update({"paired_events": len(uplift),
+                "paired_uplift_sum_inr": float(np.sum(uplift)) if uplift else 0.0,
+                "paired_uplift_mean_net_inr": float(np.mean(uplift)) if uplift else math.nan,
+                "paired_uplift_win_rate_pct": float(100*np.mean(np.asarray(uplift)>0)) if uplift else math.nan})
             holdout_rows.append({"config_id": cid, "name": cfg["name"], "delta_mode": cfg["delta_mode"],
                 "delta_threshold": cfg["delta_threshold"], "gamma_threshold": cfg["gamma_threshold"],
                 "vega_threshold": cfg["vega_threshold"], "theta_threshold": cfg["theta_threshold"],
                 "aggregation": cfg["aggregation"], "active_criteria": cfg["active_criteria"],
-                "split": "holdout", **cost, **summarize_trade_rows(tr, expected_by_split["holdout"])})
+                "split": "holdout", **cost, **hstats})
             if cost == cost_primary:
                 holdout_trade_rows.extend(tr)
     pd.DataFrame(holdout_rows).to_csv(OUT / "holdout_shortlist.csv", index=False)
@@ -804,8 +814,9 @@ def main() -> int:
 
     primary_val = grid.loc[grid["split"].eq("validation") & grid["primary_cost_case"]].copy()
     positive = int((primary_val["net_pnl_inr"] > 0).sum()) if len(primary_val) else 0
+    positive_uplift = int((primary_val["paired_uplift_sum_inr"] > 0).sum()) if len(primary_val) else 0
     corrected = int((primary_val["holm_p_adjusted_validation"] < 0.05).sum()) if len(primary_val) else 0
-    best = primary_val.sort_values("net_pnl_inr", ascending=False).head(10)
+    best = primary_val.sort_values(["paired_uplift_sum_inr", "net_pnl_inr"], ascending=[False, False]).head(10)
     primary_ho = pd.DataFrame(holdout_rows)
     if len(primary_ho):
         primary_ho = primary_ho[(primary_ho["brokerage_per_order"] == PRIMARY_COST["brokerage_per_order"])
@@ -822,8 +833,10 @@ def main() -> int:
         "cost_scenarios": len(costs), "config_cost_pairs": len(configs)*len(costs),
         "grid_rows_completed_development_validation": len(grid_rows), "primary_cost_case": PRIMARY_COST,
         "validation_rule_count": int(len(primary_val)), "validation_positive_net_rule_count": positive,
+        "validation_positive_paired_uplift_rule_count": positive_uplift,
         "validation_holm_adjusted_p_lt_0_05_rule_count": corrected,
-        "validation_top_rules": best[["config_id","name","net_pnl_inr","max_drawdown_inr","trades","holm_p_adjusted_validation"]].to_dict("records") if len(best) else [],
+        "validation_top_rules": best[["config_id","name","net_pnl_inr","paired_uplift_sum_inr",
+                                     "max_drawdown_inr","trades","holm_p_adjusted_validation"]].to_dict("records") if len(best) else [],
         "holdout_candidate_count": len(selected), "holdout_rules_including_baseline": len(holdout_ids),
         "holdout_primary_cost_top5": primary_ho.sort_values("net_pnl_inr", ascending=False).head(5)[["config_id","name","net_pnl_inr","max_drawdown_inr","trades"]].to_dict("records") if len(primary_ho) else [],
         "holdout_used_for_ranking": False, "promotion": "NONE", "script_sha256": sha256_file(Path(__file__)),
