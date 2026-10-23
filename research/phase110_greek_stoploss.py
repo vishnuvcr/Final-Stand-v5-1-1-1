@@ -852,7 +852,10 @@ def main() -> int:
                        "slippage_per_unit": cost["slippage_per_unit"], "fee_multiplier": cost["fee_multiplier"],
                        "event_id": eid, "entry_date": ev["entry_date"], "expiry": ev["expiry"],
                        "exit_ts": xt.isoformat(), "exit_reason": reason,
-                       "holding_minutes": (xt-ev["entry_ts"]).total_seconds()/60.0, **fee}
+                       "holding_minutes": (xt-ev["entry_ts"]).total_seconds()/60.0,
+                       "baseline_net_pnl_inr": baseline_net_by_cost_event.get((cost["cost_id"], eid)),
+                       "net_uplift_vs_no_stop_inr": (fee["net_pnl_inr"] - baseline_net_by_cost_event[(cost["cost_id"], eid)])
+                           if (cost["cost_id"], eid) in baseline_net_by_cost_event else math.nan, **fee}
                 tr.append(row)
                 if cost == cost_primary:
                     aggregate_ledger.append({"config_id": cid, "name": cfg["name"], "event_id": eid,
