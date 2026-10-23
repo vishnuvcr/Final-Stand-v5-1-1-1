@@ -174,7 +174,7 @@ def make_configs() -> list[dict[str, Any]]:
                     "theta_threshold": None if t is None else float(t)}
         active = [f"{k.upper()}={val:.2f}" for k, val in [
             ("delta", payload0["delta_threshold"]), ("gamma", payload0["gamma_threshold"]),
-            ("vega", payload0["vega_threshold"]), ("theta", payload0["theta_threshold"]) if False else ("theta", payload0["theta_threshold"])
+            ("vega", payload0["vega_threshold"]), ("theta", payload0["theta_threshold"])
         ] if val is not None]
         for agg in aggregations:
             p = {**payload0, "aggregation": agg}
@@ -504,9 +504,9 @@ def write_svg_figures(validation: pd.DataFrame, full_grid: pd.DataFrame) -> list
         top = validation.sort_values("net_pnl_inr", ascending=False).head(15).sort_values("net_pnl_inr")
         if len(top):
             fig, ax = plt.subplots(figsize=(12, 8))
-            ax.barh(top["name"].astype(str), top["net_pnl_inr"])
-            ax.set_xlabel("Validation net P&L (INR, primary cost case, one lot)")
-            ax.set_title("Top validation rules; not holdout-ranked")
+            ax.barh(top["name"].astype(str), top["paired_uplift_sum_inr"])
+            ax.set_xlabel("Validation net uplift vs no-stop (INR, primary cost case, one lot)")
+            ax.set_title("Top Greek-stop rules by validation uplift; not holdout-ranked")
             fig.tight_layout()
             p = d / "validation_top_rules.svg"
             fig.savefig(p, format="svg")
@@ -523,8 +523,8 @@ def write_svg_figures(validation: pd.DataFrame, full_grid: pd.DataFrame) -> list
             fig, ax = plt.subplots(figsize=(9, 5))
             ax.plot(sens["slippage_per_unit"], sens["net_pnl_inr"], marker="o")
             ax.set_xlabel("Adverse slippage per option unit per side (INR)")
-            ax.set_ylabel("Median validation net P&L (INR)")
-            ax.set_title("0.40 delta rules: slippage sensitivity")
+            ax.set_ylabel("Median paired uplift vs no-stop (INR)")
+            ax.set_title("0.40 delta rules: paired uplift under slippage stress")
             fig.tight_layout()
             p = d / "delta040_slippage_sensitivity.svg"
             fig.savefig(p, format="svg")
@@ -622,6 +622,14 @@ def main() -> int:
                         and c["fee_multiplier"] == PRIMARY_COST["fee_multiplier"])
     expected_by_split = {sp: sum(x["split"] == sp for x in scheduled) for sp in ("development","validation","holdout")}
     eligible_by_split = {sp: sum(x["split"] == sp for x in eligible_events) for sp in ("development","validation","holdout")}
+    # Precompute same-event baseline P&L for every cost case; stop value is paired uplift.
+    baseline_net_by_cost_event = {}
+    for cost in costs:
+        for ev in eligible_events:
+            bf = premium_fee_model(ev["call_entry"], ev["put_entry"], ev["base_call_exit"], ev["base_put_exit"],
+                                   ev["lot_size"], ev["expiry"], cost)
+            if bf is not None:
+                baseline_net_by_cost_event[(cost["cost_id"], ev["event_id"])] = bf["net_pnl_inr"]
     grid_rows, pvals, val_metrics = [], {}, {}
     primary_val_rows = {}
     for idx, cfg in enumerate(configs, 1):
@@ -637,17 +645,26 @@ def main() -> int:
                 continue
         for cost in costs:
             for sp in ("development", "validation"):
-                trades = []
+                trades, uplift_values = [], []
                 for eid, (xc, xp, xt, reason, hit_i, ev) in exit_cache.items():
                     if ev["split"] != sp:
                         continue
                     fee = premium_fee_model(ev["call_entry"], ev["put_entry"], xc, xp, ev["lot_size"], ev["expiry"], cost)
                     if fee is None:
                         continue
-                    trades.append({"event_id": eid, "entry_date": ev["entry_date"], "expiry": ev["expiry"],
-                                   "exit_ts": xt.isoformat(), "exit_reason": reason,
-                                   "holding_minutes": (xt - ev["entry_ts"]).total_seconds() / 60.0, **fee})
+                    trade = {"event_id": eid, "entry_date": ev["entry_date"], "expiry": ev["expiry"],
+                             "exit_ts": xt.isoformat(), "exit_reason": reason,
+                             "holding_minutes": (xt - ev["entry_ts"]).total_seconds() / 60.0, **fee}
+                    trades.append(trade)
+                    bnet = baseline_net_by_cost_event.get((cost["cost_id"], eid))
+                    if bnet is not None:
+                        uplift_values.append(float(trade["net_pnl_inr"] - bnet))
                 stats = summarize_trade_rows(trades, expected_by_split[sp])
+                stats.update({"paired_events": int(len(uplift_values)),
+                    "paired_uplift_sum_inr": float(np.sum(uplift_values)) if uplift_values else 0.0,
+                    "paired_uplift_mean_net_inr": float(np.mean(uplift_values)) if uplift_values else math.nan,
+                    "paired_uplift_median_net_inr": float(np.median(uplift_values)) if uplift_values else math.nan,
+                    "paired_uplift_win_rate_pct": float(100*np.mean(np.asarray(uplift_values)>0)) if uplift_values else math.nan})
                 grid_rows.append({"config_id": cfg["config_id"], "name": cfg["name"], "delta_mode": cfg["delta_mode"],
                                   "delta_threshold": cfg["delta_threshold"], "gamma_threshold": cfg["gamma_threshold"],
                                   "vega_threshold": cfg["vega_threshold"], "theta_threshold": cfg["theta_threshold"],
@@ -655,7 +672,8 @@ def main() -> int:
                                   "active_count": cfg["active_count"], "split": sp, **cost, **stats})
                 if cost == cost_primary and sp == "validation":
                     primary_val_rows[cfg["config_id"]] = trades
-                    pvals[cfg["config_id"]] = test_pvalue(trades)
+                    pvals[cfg["config_id"]] = 1.0 if cfg["config_id"] == "NO_STOP_REFERENCE" else test_pvalue(
+                        [{"net_pnl_inr": u} for u in uplift_values])
                     val_metrics[cfg["config_id"]] = stats
     adjusted = holm_adjust(pvals)
     grid = pd.DataFrame(grid_rows)
@@ -665,6 +683,8 @@ def main() -> int:
             & (grid["slippage_per_unit"] == PRIMARY_COST["slippage_per_unit"])
             & (grid["fee_multiplier"] == PRIMARY_COST["fee_multiplier"])
         )
+        grid["paired_uplift_p_value_validation"] = grid.apply(
+            lambda r: pvals.get(r["config_id"], 1.0) if r["split"] == "validation" and r["primary_cost_case"] else math.nan, axis=1)
         grid["holm_p_adjusted_validation"] = grid.apply(
             lambda r: adjusted.get(r["config_id"], 1.0) if r["split"] == "validation" and r["primary_cost_case"] else math.nan, axis=1)
     grid.to_csv(OUT / "greek_stoploss_grid.csv", index=False)
