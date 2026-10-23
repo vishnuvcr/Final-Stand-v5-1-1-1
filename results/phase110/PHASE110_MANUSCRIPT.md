@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This preregistered historical screen tests 4294 Greek-based stop configurations for a short NIFTY weekly strangle: sell a roughly 0.15-absolute-delta call and put at 10:00 IST on the first observed trading session after the previous listed weekly expiry, and cover at 14:00 IST on the target expiry day unless a Greek stop triggers. Source SHA: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5. Scheduled campaigns: 259; strict exact-minute campaigns passing all gates: 52. Results are one-minute OHLC simulations with model-derived Greeks and not executable fills. No strategy is promoted.
+This preregistered historical screen tests 4294 Greek-based stop configurations for a short NIFTY weekly strangle: sell a roughly 0.15-absolute-delta call and put at 10:00 IST on the first observed trading session after the previous listed weekly expiry, and cover at 14:00 IST on the target expiry day unless a Greek stop triggers. Source SHA: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5. Scheduled campaigns: 259; strict exact-minute campaigns passing all gates: 130. Results are one-minute OHLC simulations with model-derived Greeks and not executable fills. No strategy is promoted.
 
 ## Research questions
 
@@ -28,7 +28,7 @@ Development is target expiries through 2023-12-31; validation is 2024-01-01 thro
 
 ## Results
 
-The first run checkpoint reports 259 scheduled and 52 eligible campaigns; 211 are excluded for the reasons enumerated in exclusions.csv. Positive-net validation rules: 3934; positive paired-uplift rules: 187; Holm-adjusted paired-uplift p<0.05 rules: 0. Use PHASE110_REPORT.md and the CSV/JSON files for the complete grid, cost sensitivity and campaign-level results.
+The first run checkpoint reports 259 scheduled and 130 eligible campaigns; 133 are excluded for the reasons enumerated in exclusions.csv. Positive-net validation rules: 3934; positive paired-uplift rules: 170; Holm-adjusted paired-uplift p<0.05 rules: 0. Use PHASE110_REPORT.md and the CSV/JSON files for the complete grid, cost sensitivity and campaign-level results.
 
 ## Discussion
 
