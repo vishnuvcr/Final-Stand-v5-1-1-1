@@ -874,7 +874,8 @@ def main() -> int:
         f"- Primary comparison case: ₹{PRIMARY_COST['brokerage_per_order']:.0f}/order, ₹{PRIMARY_COST['slippage_per_unit']:.2f} slippage/unit/side, {PRIMARY_COST['fee_multiplier']:.1f}× fee model.",
         "- The requested 0.40 threshold is tested both as absolute signed net position delta and as the sum of absolute leg deltas.", "",
         "## Validation findings", "", f"- Rules with positive net validation P&L at primary costs: {positive}.",
-        f"- Rules with positive paired uplift versus no-stop: {positive_uplift}.\",\n        f\"- Rules with Holm-adjusted one-sided p < 0.05 for paired uplift: {corrected}.",
+        f"- Rules with positive paired uplift versus no-stop: {positive_uplift}.",
+        f"- Rules with Holm-adjusted one-sided p < 0.05 for paired uplift: {corrected}.",
         "- Each stop is paired with the same campaign's no-stop result. Validation ranks rules; the frozen shortlist is persisted before holdout summarization.", "",
         "### Top validation rules by paired uplift (one lot, primary costs)", "",
         "| Rule | Trades | Net P&L (₹) | Paired uplift (₹) | Max drawdown (₹) | Holm-adjusted p |", "|---|---:|---:|---:|---:|---:|"]
