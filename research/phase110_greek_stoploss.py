@@ -16,6 +16,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+import pyarrow.parquet as pq
 from huggingface_hub import HfApi, hf_hub_download
 from scipy.stats import ttest_1samp
 
@@ -240,13 +241,35 @@ def load_index(path: Path) -> tuple[int, dict[pd.Timestamp, dict[str, float]], C
     return valid_row_count, records, counts
 
 
-def normalize_option_df(path: Path) -> pd.DataFrame:
-    df = pd.read_parquet(path, columns=["timestamp", "option_type", "strike", "open", "high", "low", "close", "open_interest"])
+def normalize_option_df(path: Path, target_expiry: str) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Load only required fields and filter to the exact expiry/contract universe."""
+    schema_names = set(pq.ParquetFile(path).schema.names)
+    required = ["timestamp", "option_type", "strike", "open", "high", "low", "close", "open_interest"]
+    missing = sorted(set(required) - schema_names)
+    if missing:
+        raise RuntimeError(f"Option parquet schema missing required columns: {missing}")
+    # Preserve exact identity fields when present; expiry is mandatory for correctness.
+    if "expiry" not in schema_names:
+        raise RuntimeError("Option parquet has no expiry column; exact contract identity cannot be established")
+    keep = required + ["expiry"] + ([ "symbol" ] if "symbol" in schema_names else [])
+    df = pd.read_parquet(path, columns=keep)
     df["timestamp"] = localize_series(df["timestamp"])
     df["option_type"] = df["option_type"].map(normalize_option_type)
+    df["expiry"] = pd.to_datetime(df["expiry"], errors="coerce").dt.strftime("%Y-%m-%d")
     for col in ("strike", "open", "high", "low", "close", "open_interest"):
         df[col] = pd.to_numeric(df[col], errors="coerce")
-    return df.dropna(subset=["timestamp", "strike"])
+    rows_before_expiry_filter = int(len(df))
+    df = df.loc[df["expiry"].eq(target_expiry)].copy()
+    if df.empty:
+        raise RuntimeError(f"No contracts with exact target expiry {target_expiry} in {path.name}")
+    audit = {
+        "rows_before_expiry_filter": rows_before_expiry_filter,
+        "rows_for_target_expiry": int(len(df)),
+        "rows_other_expiries_removed": rows_before_expiry_filter - int(len(df)),
+        "schema_columns": sorted(schema_names),
+        "symbol_column_available": "symbol" in schema_names,
+    }
+    return df.dropna(subset=["timestamp", "strike"]), audit
 
 
 def select_entry_legs(df: pd.DataFrame, selection_ts: pd.Timestamp, entry_ts: pd.Timestamp,
@@ -314,6 +337,35 @@ def select_entry_legs(df: pd.DataFrame, selection_ts: pd.Timestamp, entry_ts: pd
     return {"legs": selected, "spot_entry": float(spot_entry["open"]), "entry_greeks": entry_greeks}, "PASS"
 
 
+def expected_market_minutes(entry_ts: pd.Timestamp, exit_ts: pd.Timestamp,
+                            spot_map: dict[pd.Timestamp, dict[str, float]]) -> pd.DatetimeIndex:
+    """Build observed-session minute OPEN timestamps, skipping nights/weekends/holidays."""
+    first_day, last_day = entry_ts.date(), exit_ts.date()
+    observed_sessions = sorted({
+        ts.date() for ts in spot_map
+        if first_day <= ts.date() <= last_day
+        and datetime.strptime("09:15:00", "%H:%M:%S").time() <= ts.time()
+        < datetime.strptime("15:30:00", "%H:%M:%S").time()
+    })
+    if first_day not in observed_sessions or last_day not in observed_sessions:
+        return pd.DatetimeIndex([])
+    pieces = []
+    for day in observed_sessions:
+        start = entry_ts if day == first_day else pd.Timestamp(f"{day.isoformat()} 09:15:00", tz=TZ)
+        end = exit_ts if day == last_day else pd.Timestamp(f"{day.isoformat()} 15:29:00", tz=TZ)
+        if start > end:
+            continue
+        pieces.append(pd.date_range(start, end, freq="min"))
+    if not pieces:
+        return pd.DatetimeIndex([])
+    result = pieces[0]
+    for piece in pieces[1:]:
+        result = result.append(piece)
+    if not result.is_monotonic_increasing or result.has_duplicates:
+        raise ValueError("Invalid observed-session minute schedule")
+    return result
+
+
 def prepare_event(df: pd.DataFrame, spot_map: dict[pd.Timestamp, dict[str, float]],
                   expiry: str, previous_expiry: str, entry_date: date, split_name: str,
                   event_id: str, lot_size: int) -> tuple[dict[str, Any] | None, str]:
@@ -325,9 +377,11 @@ def prepare_event(df: pd.DataFrame, spot_map: dict[pd.Timestamp, dict[str, float
         return None, status
     legs = selection["legs"]
     cstrike, pstrike = legs["CE"]["strike"], legs["PE"]["strike"]
-    expected = pd.date_range(entry_ts, exit_ts, freq="min")
-    if len(expected) != 241:
-        return None, "UNEXPECTED_ENTRY_TO_EXIT_MINUTE_COUNT"
+    expected = expected_market_minutes(entry_ts, exit_ts, spot_map)
+    if len(expected) == 0 or entry_ts not in expected or exit_ts not in expected:
+        return None, "INVALID_TRADING_SESSION_SCHEDULE"
+    # The path deliberately spans active market minutes only. A missing expected
+    # minute in a source leg/index will still exclude the entire campaign below.
     call = df.loc[df["option_type"].eq("CE") & np.isclose(df["strike"].to_numpy(float), cstrike, rtol=0, atol=1e-9)
                   & df["timestamp"].between(entry_ts, exit_ts)].copy()
     put = df.loc[df["option_type"].eq("PE") & np.isclose(df["strike"].to_numpy(float), pstrike, rtol=0, atol=1e-9)
@@ -608,9 +662,10 @@ def main() -> int:
             path = Path(hf_hub_download(repo_id=HF_REPO, filename=expiry_files[expiry], repo_type="dataset",
                                         revision=revision, token=token))
             sha = sha256_file(path)
-            df = normalize_option_df(path)
+            df, parquet_audit = normalize_option_df(path, expiry)
             source_audit.append({"expiry": expiry, "file": expiry_files[expiry], "sha256": sha,
-                                 "bytes": int(path.stat().st_size), "rows_after_timestamp_parse": int(len(df)), "status": "PASS"})
+                                 "bytes": int(path.stat().st_size), "rows_after_timestamp_parse": int(len(df)),
+                                 **parquet_audit, "status": "PASS"})
             event, status = prepare_event(df, spot_map, expiry, prev_exp, entry_date, split, eid, lot)
             if event is None:
                 exclusions.append({"event_id": eid, "previous_expiry": prev_exp, "expiry": expiry, "split": split, "reason": status})
