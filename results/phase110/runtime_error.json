@@ -1,0 +1,6 @@
+{
+  "status": "RUNTIME_ERROR",
+  "created_at_utc": "2026-10-23T10:42:29.854125+00:00",
+  "error_type": "TypeError",
+  "error": "HfApi.dataset_info() got an unexpected keyword argument 'repo_type'"
+}

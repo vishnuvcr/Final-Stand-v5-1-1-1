@@ -15,3 +15,15 @@ Append-only. Empty empirical-error state at initial registration; expected sourc
 ## Actual code/workflow failures
 
 None recorded at registration. New runtime, data, mathematical, test or persistence errors must be appended with the failing workflow run, root cause, corrective commit, retest and whether any prior metric was invalidated.
+
+## Phase 110 failure — run 39940933286 (2026-10-23T10:42:30.010393+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39940933286
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "failure", "TEST_OUTCOME": "success"}
+- Failure detail: {
+  "status": "RUNTIME_ERROR",
+  "created_at_utc": "2026-10-23T10:42:29.854125+00:00",
+  "error_type": "TypeError",
+  "error": "HfApi.dataset_info() got an unexpected keyword argument 'repo_type'"
+}
+
+- No accepted P&L results or promotion claim.

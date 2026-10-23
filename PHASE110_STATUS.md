@@ -44,3 +44,15 @@ Primary source is Hugging Face thetrademarkk/india-index-options-1m, declared CC
 | 110.7 | Final manuscript/publication/stop | PENDING |
 
 Developer next instruction: finish the engine/workflow and execute Phase 110.1–110.5 without using holdout results to tune thresholds. Tester next instruction after result acquisition: independently reproduce the control metrics and inspect Greek signs, event joins, time causality, exact fills, fees, lot sizes, split use, grid completeness and manuscript-to-data reconciliation before any promotion decision.
+
+## Phase 110 failure — run 39940933286 (2026-10-23T10:42:30.010393+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39940933286
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "failure", "TEST_OUTCOME": "success"}
+- Failure detail: {
+  "status": "RUNTIME_ERROR",
+  "created_at_utc": "2026-10-23T10:42:29.854125+00:00",
+  "error_type": "TypeError",
+  "error": "HfApi.dataset_info() got an unexpected keyword argument 'repo_type'"
+}
+
+- No accepted P&L results or promotion claim.

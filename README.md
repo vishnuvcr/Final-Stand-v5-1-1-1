@@ -1,3 +1,13 @@
+<!-- PHASE110_STATUS_START -->
+## Phase 110 — Greek stop-loss study
+
+- Status: RUN FAILED/BLOCKED — REVIEW LOG
+- Branch: [phase-110-greek-stoploss-short-strangle](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-110-greek-stoploss-short-strangle)
+- Plan: [PHASE110_RESEARCH_PLAN.md](PHASE110_RESEARCH_PLAN.md); current status: [PHASE110_STATUS.md](PHASE110_STATUS.md)
+- Report: [Phase 110 report](results/phase110/PHASE110_REPORT.md); manuscript: [manuscript](results/phase110/PHASE110_MANUSCRIPT.md)
+- Last workflow: [39940933286](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39940933286)
+<!-- PHASE110_STATUS_END -->
+
 ## Full 1,000+ family requirement — compliance audit opened (2026-10-12)
 
 The user-required scope is **at least 1,000 meaningfully distinct strategy families**, each with at least 1,000 valid configurations. The 1,025-family registry / 3,719,520 configuration tuples / 89,268,480 cost rows are manifest counts, not completed backtests. The current semantic-remediation evaluator implements only eight core signal methods, so its narrow results do not complete the full scope. A separate audit branch now tracks novelty, feasibility, implementation coverage and full-sweep recovery; no strategy is promoted.

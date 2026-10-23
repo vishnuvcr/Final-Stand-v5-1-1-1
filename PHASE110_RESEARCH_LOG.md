@@ -17,3 +17,15 @@ Append each completed step, including failures. Do not rewrite failed attempts; 
 ## Research record format for subsequent entries
 
 For each run append: timestamp; branch and workflow URL/run ID; dataset repo + resolved revision SHA; each source-file hash; code/protocol SHA256; expected/eligible/excluded events; Greek coverage and time-gap counts; grid rows planned/attempted/completed/failed; cost cases reconciled; key metrics; tests; remaining blockers; promotion status. Do not store credentials, raw minute data, or hidden chain-of-thought.
+
+## Phase 110 failure — run 39940933286 (2026-10-23T10:42:30.010393+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39940933286
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "failure", "TEST_OUTCOME": "success"}
+- Failure detail: {
+  "status": "RUNTIME_ERROR",
+  "created_at_utc": "2026-10-23T10:42:29.854125+00:00",
+  "error_type": "TypeError",
+  "error": "HfApi.dataset_info() got an unexpected keyword argument 'repo_type'"
+}
+
+- No accepted P&L results or promotion claim.
