@@ -212,7 +212,7 @@ def normalize_option_type(x: Any) -> str:
     return {"CALL": "CE", "C": "CE", "CE": "CE", "PUT": "PE", "P": "PE", "PE": "PE"}.get(s, s)
 
 
-def load_index(path: Path) -> tuple[pd.DataFrame, dict[pd.Timestamp, dict[str, float]], Counter]:
+def load_index(path: Path) -> tuple[int, dict[pd.Timestamp, dict[str, float]], Counter]:
     df = pd.read_parquet(path)
     required = {"timestamp", "open", "high", "low", "close"}
     if not required.issubset(df.columns):
@@ -230,7 +230,8 @@ def load_index(path: Path) -> tuple[pd.DataFrame, dict[pd.Timestamp, dict[str, f
         row = {"open": float(r.open), "high": float(r.high), "low": float(r.low), "close": float(r.close)}
         if valid_ohlc(row):
             records[pd.Timestamp(r.timestamp)] = row
-    return df[df["timestamp"].isin(records)].copy(), records, counts
+    valid_row_count = int(df["timestamp"].isin(records).sum())
+    return valid_row_count, records, counts
 
 
 def normalize_option_df(path: Path) -> pd.DataFrame:
@@ -566,7 +567,7 @@ def main() -> int:
     index_path = Path(hf_hub_download(repo_id=HF_REPO, filename="index/NIFTY.parquet", repo_type="dataset",
                                      revision=revision, token=token))
     index_sha = sha256_file(index_path)
-    index_df, spot_map, index_counts = load_index(index_path)
+    index_rows_valid, spot_map, index_counts = load_index(index_path)
     times = [datetime.strptime(s, "%H:%M:%S").time() for s in ("09:15:00", "15:30:00")]
     sessions = sorted({ts.date() for ts in spot_map if times[0] <= ts.time() <= times[1]})
     if not sessions:
@@ -804,7 +805,7 @@ def main() -> int:
     reasons = dict(Counter(x["reason"] for x in exclusions))
     coverage = {"created_at_utc": utc_now(), "dataset": HF_REPO, "dataset_revision_requested": revision_request,
         "dataset_revision_resolved_sha": revision, "index_file_sha256": index_sha,
-        "index_rows_valid": int(len(index_df)), "index_observed_session_dates": len(sessions),
+        "index_rows_valid": int(index_rows_valid), "index_observed_session_dates": len(sessions),
         "index_quality_counters": dict(index_counts), "option_expiry_files_discovered": len(expiries),
         "earliest_expiry_file": expiries[0], "latest_expiry_file": expiries[-1],
         "source_files_loaded": len(source_audit), "source_file_errors": len(source_errors),
@@ -832,7 +833,7 @@ def main() -> int:
     summary = {"status": "EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION" if eligible_events else "BLOCKED_NO_VALID_CAMPAIGNS",
         "created_at_utc": utc_now(), "branch": "phase-110-greek-stoploss-short-strangle", "dataset": HF_REPO,
         "dataset_revision_resolved_sha": revision, "source_first_expiry": expiries[0], "source_last_expiry": expiries[-1],
-        "source_index_rows": int(len(index_df)), "source_expiry_files_loaded": int(len(source_audit)),
+        "source_index_rows": int(index_rows_valid), "source_expiry_files_loaded": int(len(source_audit)),
         "scheduled_campaigns": len(scheduled), "valid_campaigns": len(eligible_events), "excluded_campaigns": len(exclusions),
         "exclusion_reason_counts": reasons, "configs_registered_including_no_stop": len(configs),
         "cost_scenarios": len(costs), "config_cost_pairs": len(configs)*len(costs),
