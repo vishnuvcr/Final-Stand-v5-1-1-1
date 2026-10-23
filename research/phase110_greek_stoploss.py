@@ -475,8 +475,22 @@ def find_exit(event: dict[str, Any], cfg: dict[str, Any]) -> tuple[float, float,
     return float(event["exit_call_open"][i]), float(event["exit_put_open"][i]), event["exit_timestamps"][i], "GREEK_STOP_NEXT_OPEN", i
 
 
+def transaction_rates(trade_date: str) -> dict[str, float]:
+    """Date-effective India index-options transaction charges (decimal rates)."""
+    d = date.fromisoformat(trade_date)
+    stt = 0.000625 if d < date(2024, 10, 1) else (0.001 if d < date(2026, 4, 1) else 0.0015)
+    if d >= date(2026, 3, 1):
+        exchange, ipft = 0.000355299, 0.000000001
+    elif d >= date(2024, 10, 1):
+        exchange, ipft = 0.0003503, 0.000005
+    else:
+        exchange, ipft = 0.000495, 0.000005
+    return {"stt_sell_premium": stt, "exchange": exchange, "ipft": ipft,
+            "sebi": 0.000001, "stamp_buy_premium": 0.00003}
+
+
 def premium_fee_model(entry_call: float, entry_put: float, exit_call: float, exit_put: float,
-                      lot: int, expiry: str, cost: dict[str, Any]) -> dict[str, float] | None:
+                      lot: int, entry_date: str, exit_date: str, cost: dict[str, Any]) -> dict[str, float] | None:
     slip = float(cost["slippage_per_unit"])
     ec, ep, xc, xp = entry_call - slip, entry_put - slip, exit_call + slip, exit_put + slip
     if min(ec, ep, entry_call, entry_put, exit_call, exit_put) <= 0:
@@ -485,17 +499,22 @@ def premium_fee_model(entry_call: float, entry_put: float, exit_call: float, exi
     slippage_cost = 4.0 * slip * lot
     brokerage = 4.0 * float(cost["brokerage_per_order"])
     sell_turnover, buy_turnover = (ec + ep) * lot, (xc + xp) * lot
-    turnover = sell_turnover + buy_turnover
-    expdate = date.fromisoformat(expiry)
-    stt_rate = 0.001 if expdate <= date(2026, 3, 31) else 0.0015
-    stt0, exchange0, sebi0, stamp0 = sell_turnover * stt_rate, turnover * 0.0003553, turnover * 0.000001, buy_turnover * 0.00003
+    entry_rates, exit_rates = transaction_rates(entry_date), transaction_rates(exit_date)
+    stt_raw = sell_turnover * entry_rates["stt_sell_premium"]
+    exchange_raw = sell_turnover * entry_rates["exchange"] + buy_turnover * exit_rates["exchange"]
+    ipft_raw = sell_turnover * entry_rates["ipft"] + buy_turnover * exit_rates["ipft"]
+    sebi_raw = (sell_turnover + buy_turnover) * entry_rates["sebi"]
+    stamp_raw = buy_turnover * exit_rates["stamp_buy_premium"]
     fm = float(cost["fee_multiplier"])
-    stt, exchange, sebi, stamp = stt0 * fm, exchange0 * fm, sebi0 * fm, stamp0 * fm
-    gst = 0.18 * brokerage + 0.18 * (exchange0 + sebi0) * fm
-    fees = stt + exchange + sebi + stamp + gst
+    stt, exchange, ipft, sebi, stamp = (
+        stt_raw * fm, exchange_raw * fm, ipft_raw * fm, sebi_raw * fm, stamp_raw * fm
+    )
+    gst = 0.18 * brokerage + 0.18 * (exchange_raw + ipft_raw + sebi_raw) * fm
+    fees = stt + exchange + ipft + sebi + stamp + gst
     return {
         "gross_pnl_inr": gross, "slippage_cost_inr": slippage_cost, "brokerage_inr": brokerage,
-        "stt_inr": stt, "exchange_ipft_inr": exchange, "sebi_fee_inr": sebi, "stamp_duty_inr": stamp,
+        "stt_inr": stt, "exchange_ipft_inr": exchange + ipft, "exchange_fee_inr": exchange,
+        "ipft_inr": ipft, "sebi_fee_inr": sebi, "stamp_duty_inr": stamp,
         "gst_inr": gst, "statutory_fees_inr": fees, "total_costs_inr": slippage_cost + brokerage + fees,
         "net_pnl_inr": gross - slippage_cost - brokerage - fees,
         "entry_credit_inr": (entry_call + entry_put) * lot,
@@ -694,7 +713,7 @@ def main() -> int:
     for cost in costs:
         for ev in eligible_events:
             bf = premium_fee_model(ev["call_entry"], ev["put_entry"], ev["base_call_exit"], ev["base_put_exit"],
-                                   ev["lot_size"], ev["expiry"], cost)
+                                   ev["lot_size"], ev["entry_date"], ev["expiry"], cost)
             if bf is not None:
                 baseline_net_by_cost_event[(cost["cost_id"], ev["event_id"])] = bf["net_pnl_inr"]
     grid_rows, pvals, val_metrics = [], {}, {}
@@ -716,7 +735,7 @@ def main() -> int:
                 for eid, (xc, xp, xt, reason, hit_i, ev) in exit_cache.items():
                     if ev["split"] != sp:
                         continue
-                    fee = premium_fee_model(ev["call_entry"], ev["put_entry"], xc, xp, ev["lot_size"], ev["expiry"], cost)
+                    fee = premium_fee_model(ev["call_entry"], ev["put_entry"], xc, xp, ev["lot_size"], ev["entry_date"], xt.date().isoformat(), cost)
                     if fee is None:
                         continue
                     trade = {"event_id": eid, "entry_date": ev["entry_date"], "expiry": ev["expiry"],
