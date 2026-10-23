@@ -862,20 +862,20 @@ def main() -> int:
         f"- Primary comparison case: ₹{PRIMARY_COST['brokerage_per_order']:.0f}/order, ₹{PRIMARY_COST['slippage_per_unit']:.2f} slippage/unit/side, {PRIMARY_COST['fee_multiplier']:.1f}× fee model.",
         "- The requested 0.40 threshold is tested both as absolute signed net position delta and as the sum of absolute leg deltas.", "",
         "## Validation findings", "", f"- Rules with positive net validation P&L at primary costs: {positive}.",
-        f"- Rules with Holm-adjusted one-sided p < 0.05: {corrected}.",
-        "- Only validation results are used to rank the finite sweep. The validation shortlist was persisted before holdout summarization.", "",
-        "### Top validation rules (one lot, primary costs)", "",
-        "| Rule | Trades | Net P&L (₹) | Max drawdown (₹) | Holm-adjusted p |", "|---|---:|---:|---:|---:|"]
+        f"- Rules with positive paired uplift versus no-stop: {positive_uplift}.\",\n        f\"- Rules with Holm-adjusted one-sided p < 0.05 for paired uplift: {corrected}.",
+        "- Each stop is paired with the same campaign's no-stop result. Validation ranks rules; the frozen shortlist is persisted before holdout summarization.", "",
+        "### Top validation rules by paired uplift (one lot, primary costs)", "",
+        "| Rule | Trades | Net P&L (₹) | Paired uplift (₹) | Max drawdown (₹) | Holm-adjusted p |", "|---|---:|---:|---:|---:|---:|"]
     if len(best):
         for r in best.to_dict("records"):
-            report.append(f"| {str(r['name']).replace('|',' / ')} | {int(r['trades'])} | {float(r['net_pnl_inr']):,.2f} | {float(r['max_drawdown_inr']):,.2f} | {float(r['holm_p_adjusted_validation']):.4g} |")
+            report.append(f"| {str(r['name']).replace('|',' / ')} | {int(r['trades'])} | {float(r['net_pnl_inr']):,.2f} | {float(r['paired_uplift_sum_inr']):,.2f} | {float(r['max_drawdown_inr']):,.2f} | {float(r['holm_p_adjusted_validation']):.4g} |")
     else:
         report.append("| No validation data | 0 | — | — | — |")
     report += ["", "## Frozen holdout (not used for selection)", "",
-        "| Rule | Trades | Net P&L (₹) | Max drawdown (₹) |", "|---|---:|---:|---:|"]
+        "| Rule | Trades | Net P&L (₹) | Paired uplift (₹) | Max drawdown (₹) |", "|---|---:|---:|---:|"]
     if len(primary_ho):
         for r in primary_ho.sort_values("net_pnl_inr", ascending=False).head(10).to_dict("records"):
-            report.append(f"| {str(r['name']).replace('|',' / ')} | {int(r['trades'])} | {float(r['net_pnl_inr']):,.2f} | {float(r['max_drawdown_inr']):,.2f} |")
+            report.append(f"| {str(r['name']).replace('|',' / ')} | {int(r['trades'])} | {float(r['net_pnl_inr']):,.2f} | {float(r['paired_uplift_sum_inr']):,.2f} | {float(r['max_drawdown_inr']):,.2f} |")
     else:
         report.append("| No eligible frozen holdout rows | 0 | — | — |")
     report += ["", "## Decision", "",
@@ -906,9 +906,9 @@ def main() -> int:
         "### Rule and cost grid", "",
         f"The finite sweep registered {len(configs)} distinct rules including the no-stop reference. Threshold domains: net delta 0.20–0.80, gross delta 0.40–1.00, gamma and vega normalized 10%–50% of credit, theta ratio 0.00/0.25/0.50/0.75. Test all nonempty subsets, active thresholds, and ANY/ALL simultaneous-trigger modes. Each development/validation rule is evaluated across {len(costs)} costs: ₹10/₹15/₹20 brokerage/order × ₹0/₹0.05/₹0.25/₹0.50 adverse per-unit slippage × 1.0×/1.5× modeled statutory charges. The 1.5× value is a stress scenario, not a claim about actual statutory charges.", "",
         "### Statistical design", "",
-        "Development is target expiries through 2023-12-31; validation is 2024-01-01 through 2025-12-31; holdout starts 2026-01-01 and ends at the source cutoff. One-sided one-sample tests on validation net P&L are Holm-adjusted over the full rule sweep. Bootstrap 95% confidence intervals are calculated for validation mean trade P&L. The holdout shortlist is frozen from validation only, before holdout results are summarized. Holdout metrics do not rank or modify candidates.", "",
+        "Development is target expiries through 2023-12-31; validation is 2024-01-01 through 2025-12-31; holdout starts 2026-01-01 and ends at the source cutoff. One-sided one-sample tests on event-paired net uplift versus the same campaigns' no-stop result are Holm-adjusted over the full rule sweep. Bootstrap 95% confidence intervals are calculated for mean paired uplift for the frozen validation shortlist only. The holdout shortlist is frozen from validation before holdout results are summarized. Holdout metrics do not rank or modify candidates.", "",
         "## Results", "",
-        f"The first run checkpoint reports {len(scheduled)} scheduled and {len(eligible_events)} eligible campaigns; {len(exclusions)} are excluded for the reasons enumerated in exclusions.csv. Positive-net validation rules at primary costs: {positive}; Holm-adjusted p<0.05 rules: {corrected}. Use PHASE110_REPORT.md and the CSV/JSON files for the complete grid, cost sensitivity and campaign-level results.", "",
+        f"The first run checkpoint reports {len(scheduled)} scheduled and {len(eligible_events)} eligible campaigns; {len(exclusions)} are excluded for the reasons enumerated in exclusions.csv. Positive-net validation rules: {positive}; positive paired-uplift rules: {positive_uplift}; Holm-adjusted paired-uplift p<0.05 rules: {corrected}. Use PHASE110_REPORT.md and the CSV/JSON files for the complete grid, cost sensitivity and campaign-level results.", "",
         "## Discussion", "",
         "A stop can limit exposure to directional/volatility moves but may also realize losses earlier, cut profitable positions and increase costs. Signed net delta and gross leg delta answer different risk questions. Gamma is a local second-order spot-move proxy; vega assumes a one-volatility-point move; theta is a decay-edge guard. These are distinct measures and their normalized thresholds are hypotheses rather than interchangeable loss limits. A one-minute model can miss sub-minute triggers.", "",
         "## Strengths", "",
