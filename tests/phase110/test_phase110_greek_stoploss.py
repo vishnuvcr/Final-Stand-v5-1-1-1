@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from research.phase110_greek_stoploss import (
     RATE, YEAR_DAYS, bs_price, implied_vol, bs_greeks, historical_lot_size,
     make_configs, make_cost_grid, premium_fee_model, find_exit, condition_matrix,
-    holm_adjust,
+    holm_adjust, expected_market_minutes,
 )
 import numpy as np
 import pandas as pd
@@ -102,6 +102,34 @@ class GridAndCostTests(unittest.TestCase):
         self.assertAlmostEqual(got["net_pnl_inr"], 5000-got["total_costs_inr"], places=7)
         new_rate = premium_fee_model(100, 100, 50, 50, 65, "2026-06-09", cost)
         self.assertAlmostEqual(new_rate["stt_inr"], ((99.75*2)*65)*0.0015, places=7)
+
+
+
+    def test_expected_market_minutes_skips_overnights_weekends_and_nonmarket_minutes(self):
+        # These sparse timestamps mark observed NSE sessions. The helper should
+        # construct the active session grid, not an impossible wall-clock minute range.
+        sess_dates = ["2025-06-05", "2025-06-06", "2025-06-09", "2025-06-10", "2025-06-11", "2025-06-12"]
+        spot = {}
+        for d in sess_dates:
+            for clock in ("09:15:00", "15:29:00"):
+                ts = pd.Timestamp(f"{d} {clock}", tz="Asia/Kolkata")
+                spot[ts] = {"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0}
+        entry = pd.Timestamp("2025-06-05 10:00:00", tz="Asia/Kolkata")
+        exit_ts = pd.Timestamp("2025-06-12 14:00:00", tz="Asia/Kolkata")
+        spot[entry] = {"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0}
+        spot[exit_ts] = {"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0}
+        got = expected_market_minutes(entry, exit_ts, spot)
+        self.assertIn(entry, got)
+        self.assertIn(exit_ts, got)
+        self.assertGreater(len(got), 2000)
+        self.assertLess(len(got), 2200)
+        self.assertFalse(any(ts.weekday() >= 5 for ts in got))
+        self.assertFalse(any(ts.date() == entry.date() and ts < entry for ts in got))
+        self.assertFalse(any(ts.date() == exit_ts.date() and ts > exit_ts for ts in got))
+        # Overnight is not treated as one-minute spacing; each series interval is session-local.
+        deltas = pd.Series(got).diff().dropna()
+        self.assertTrue((deltas >= pd.Timedelta(minutes=1)).all())
+        self.assertTrue((deltas <= pd.Timedelta(days=1)).all())
 
 
 class ExitTimingTests(unittest.TestCase):
