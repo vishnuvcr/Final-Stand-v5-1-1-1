@@ -65,3 +65,11 @@ Finish the source audit and exact one-rule replay. Preserve the registered split
 - Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
 - Scheduled/eligible/excluded campaigns: 259/142/121
 - Costs: 24; status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.
+
+
+## Automated replay — run 40035279559 (2026-10-23T22:56:40.621926+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40035279559
+- Outcome compile/tests/replay: success/success/success
+- Dataset revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Scheduled/eligible/excluded campaigns: 259/142/121
+- Costs: 24; status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.
