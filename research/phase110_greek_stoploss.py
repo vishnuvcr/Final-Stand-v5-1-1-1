@@ -687,7 +687,7 @@ def main() -> int:
             lambda r: pvals.get(r["config_id"], 1.0) if r["split"] == "validation" and r["primary_cost_case"] else math.nan, axis=1)
         grid["holm_p_adjusted_validation"] = grid.apply(
             lambda r: adjusted.get(r["config_id"], 1.0) if r["split"] == "validation" and r["primary_cost_case"] else math.nan, axis=1)
-    grid.to_csv(OUT / "greek_stoploss_grid.csv", index=False)
+    grid.to_csv(OUT / "greek_stoploss_grid.csv.gz", index=False, compression="gzip")
 
     val = grid.loc[grid["split"].eq("validation") & grid["primary_cost_case"]].drop_duplicates("config_id").copy()
     val["holm_p_adjusted"] = val["config_id"].map(adjusted).fillna(1.0)
@@ -841,7 +841,7 @@ def main() -> int:
         "holdout_primary_cost_top5": primary_ho.sort_values("net_pnl_inr", ascending=False).head(5)[["config_id","name","net_pnl_inr","max_drawdown_inr","trades"]].to_dict("records") if len(primary_ho) else [],
         "holdout_used_for_ranking": False, "promotion": "NONE", "script_sha256": sha256_file(Path(__file__)),
         "figure_paths": figures, "outputs": ["summary.json","coverage.json","source_files.csv","exclusions.csv",
-        "greek_stoploss_grid.csv","validation_candidates.csv","shortlist_frozen.json","holdout_shortlist.csv",
+        "greek_stoploss_grid.csv.gz","validation_candidates.csv","shortlist_frozen.json","holdout_shortlist.csv",
         "holdout_primary_cost_summary.csv","holdout_trade_summary.csv","trade_ledger_aggregates.csv"],
         "limitations": ["Greeks are model estimates, not historical exchange Greeks.",
         "One-minute OHLC opens are execution proxies, not executable bid/ask fills; sub-minute moves can be missed.",
@@ -881,7 +881,7 @@ def main() -> int:
     report += ["", "## Decision", "",
         "**No strategy is promoted from this screen.** Historical Greeks are Black–Scholes estimates, execution is a one-minute OHLC proxy, the dataset is CC BY-NC 4.0, and exact-path coverage can select a non-representative subset. The highest result from a multi-thousand-rule sweep is not sufficient evidence of executable profitability. Independent testing and the registered gates remain mandatory.", "",
         "## Files", "", "- summary.json: source and run provenance.", "- coverage.json / source_files.csv / exclusions.csv: coverage and failure reasons.",
-        "- greek_stoploss_grid.csv: complete development/validation rule sweep and 24 cost scenarios.",
+        "- greek_stoploss_grid.csv.gz: complete development/validation rule sweep and 24 cost scenarios.",
         "- validation_candidates.csv: validation rank, Holm correction and bootstrap intervals.",
         "- shortlist_frozen.json: candidate list frozen before holdout output.", "- holdout_shortlist.csv: holdout cost grid for the frozen candidates.",
         "- holdout_primary_cost_summary.csv: primary cost comparison.", "- trade_ledger_aggregates.csv: campaign-level outcomes without raw minute rows.",
