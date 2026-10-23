@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from research.phase110_greek_stoploss import (
     RATE, YEAR_DAYS, bs_price, implied_vol, bs_greeks, historical_lot_size,
     make_configs, make_cost_grid, premium_fee_model, find_exit, condition_matrix,
-    holm_adjust, expected_market_minutes,
+    holm_adjust, expected_market_minutes, transaction_rates,
 )
 import numpy as np
 import pandas as pd
@@ -91,16 +91,26 @@ class GridAndCostTests(unittest.TestCase):
         for expiry, size in expected.items():
             self.assertEqual(historical_lot_size(expiry), size, expiry)
 
+
+    def test_transaction_fee_rates_change_on_legal_effective_dates(self):
+        self.assertAlmostEqual(transaction_rates("2024-09-30")["stt_sell_premium"], 0.000625)
+        self.assertAlmostEqual(transaction_rates("2024-10-01")["stt_sell_premium"], 0.001)
+        self.assertAlmostEqual(transaction_rates("2026-03-31")["stt_sell_premium"], 0.001)
+        self.assertAlmostEqual(transaction_rates("2026-04-01")["stt_sell_premium"], 0.0015)
+        self.assertAlmostEqual(transaction_rates("2024-09-30")["exchange"] + transaction_rates("2024-09-30")["ipft"], 0.0005)
+        self.assertAlmostEqual(transaction_rates("2024-10-01")["exchange"] + transaction_rates("2024-10-01")["ipft"], 0.0003553)
+        self.assertAlmostEqual(transaction_rates("2026-03-01")["exchange"] + transaction_rates("2026-03-01")["ipft"], 0.0003553)
+
     def test_fee_model_arithmetic_and_date_aware_stt(self):
         cost = {"cost_id": "TEST", "brokerage_per_order": 20.0, "slippage_per_unit": 0.25, "fee_multiplier": 1.0}
-        got = premium_fee_model(100, 100, 50, 50, 50, "2025-06-12", cost)
+        got = premium_fee_model(100, 100, 50, 50, 50, "2025-06-05", "2025-06-12", cost)
         self.assertIsNotNone(got)
         self.assertAlmostEqual(got["gross_pnl_inr"], 5000.0, places=7)
         self.assertAlmostEqual(got["slippage_cost_inr"], 50.0, places=7)
         self.assertAlmostEqual(got["brokerage_inr"], 80.0, places=7)
         self.assertAlmostEqual(got["stt_inr"], ((99.75*2)*50)*0.001, places=7)
         self.assertAlmostEqual(got["net_pnl_inr"], 5000-got["total_costs_inr"], places=7)
-        new_rate = premium_fee_model(100, 100, 50, 50, 65, "2026-06-09", cost)
+        new_rate = premium_fee_model(100, 100, 50, 50, 65, "2026-06-02", "2026-06-09", cost)
         self.assertAlmostEqual(new_rate["stt_inr"], ((99.75*2)*65)*0.0015, places=7)
 
 
