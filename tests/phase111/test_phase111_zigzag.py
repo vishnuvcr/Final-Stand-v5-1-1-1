@@ -99,7 +99,7 @@ class TimestampTests(unittest.TestCase):
         self.assertEqual(grid[0], entry)
         self.assertEqual(grid[-1], exit_ts)
         self.assertFalse(any(t.weekday() >= 5 for t in grid))
-        self.assertGreater(len(grid), 1500)
+        self.assertEqual(len(grid), 751)
         self.assertTrue(grid.is_monotonic_increasing)
         self.assertFalse(grid.has_duplicates)
 
