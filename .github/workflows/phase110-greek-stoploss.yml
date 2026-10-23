@@ -43,7 +43,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
 
       - name: Restore Hugging Face and prior phase source caches
         uses: actions/cache/restore@v4
@@ -185,6 +184,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p results/phase110
           git add README.md PHASE110_STATUS.md PHASE110_RESEARCH_LOG.md PHASE110_ERROR_LOG.md results/phase110
           if git diff --cached --quiet; then
             echo "No new status/results to persist."
