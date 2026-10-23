@@ -547,7 +547,7 @@ def main() -> int:
     token = os.environ.get("HF_TOKEN")
     revision_request = os.environ.get("PHASE110_DATASET_REVISION", "main").strip() or "main"
     api = HfApi(token=token or None)
-    info = api.dataset_info(HF_REPO, repo_type="dataset", revision=revision_request)
+    info = api.dataset_info(HF_REPO, revision=revision_request)
     revision = str(info.sha)
     source_list = api.list_repo_files(repo_id=HF_REPO, repo_type="dataset", revision=revision)
     expiry_files = {}
