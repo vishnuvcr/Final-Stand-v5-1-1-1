@@ -145,8 +145,12 @@ def confirmed_pivots(daily):
         q=active.copy(); q["confirmation_idx"]=p["known"]; out.append(q); active=p.copy()
     prevh=prevl=None
     for p in out:
-        if p["kind"]=="H": p["label"]="HH" if prevh is not None and p["price"]>prevh else "LH"; prevh=p["price"]
-        else: p["label"]="HL" if prevl is not None and p["price"]>prevl else "LL"; prevl=p["price"]
+        if p["kind"]=="H":
+            p["label"] = None if prevh is None else ("HH" if p["price"] > prevh else "LH")
+            prevh = p["price"]
+        else:
+            p["label"] = None if prevl is None else ("HL" if p["price"] > prevl else "LL")
+            prevl = p["price"]
     return out
 
 def signal_asof(daily,cutoff):
@@ -274,6 +278,33 @@ def aggregate(rows,expected,seed):
       "paired_uplift_ci95_low":ulo,"paired_uplift_ci95_high":uhi,"mean_net_ci95_low":mlo,"mean_net_ci95_high":mhi,
       "p_value_greater_than_zero":pval}
 
+
+def write_figures(smry):
+    paths=[]
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        fd=OUT/"figures"; fd.mkdir(parents=True,exist_ok=True)
+        sub=smry.loc[smry.cost_id.eq("B20_S0.25_F1.0")]
+        for sp in ("development","validation","holdout"):
+            q=sub.loc[sub.split.eq(sp)]
+            if q.empty: continue
+            fig,ax=plt.subplots(figsize=(8,4.5))
+            vals=[float(v) if pd.notna(v) else 0.0 for v in q.net_pnl_inr]
+            ax.bar(q.candidate.tolist(),vals)
+            ax.axhline(0,linewidth=1)
+            ax.set_ylabel("Net P&L INR (one lot; primary modeled costs)")
+            ax.set_title("Phase 111 stopped vs no-stop: "+sp)
+            ax.tick_params(axis="x",rotation=12)
+            fig.tight_layout()
+            fp=fd/("net_pnl_"+sp+".svg"); fig.savefig(fp,format="svg"); plt.close(fig)
+            paths.append(str(fp.relative_to(ROOT)))
+        return paths
+    except Exception as e:
+        (OUT/"figure_error.txt").write_text(type(e).__name__+": "+str(e)[:300]+"\n")
+        return paths
+
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     for p in OUT.iterdir():
@@ -292,7 +323,9 @@ def main():
     ipath=Path(hf_hub_download(repo_id=HF_REPO,filename="index/NIFTY.parquet",repo_type="dataset",revision=rev,token=token))
     spot,dupcount=load_index(ipath);daily,incomplete=daily_candles(spot)
     if daily.empty:raise RuntimeError("No complete 375-minute NIFTY daily candles")
-    daily.to_csv(OUT/"daily_candle_coverage.csv",index=False)
+    (OUT/"daily_coverage.json").write_text(json.dumps({"complete_daily_candles":int(len(daily)),
+      "first_complete_session":str(daily.iloc[0]["date"]),"last_complete_session":str(daily.iloc[-1]["date"]),
+      "incomplete_sessions_excluded":int(incomplete)},indent=2)+"\n")
     daily_ix={d:i for i,d in enumerate(daily.date.tolist())}; sessions=sorted({t.date().isoformat() for t in spot})
     planned=[];excluded=[];manifest=[];trades=[]
     for j in range(1,len(expiries)):
@@ -357,8 +390,9 @@ def main():
               "gross_pnl_inr":f["gross_pnl_inr"],"net_pnl_inr":f["net_pnl_inr"],"total_costs_inr":f["total_costs_inr"],**{k:v for k,v in f.items() if k.endswith("_inr") and k not in ("gross_pnl_inr","net_pnl_inr","total_costs_inr","entry_credit_inr")}})
         srows.append({"split":split,"candidate":candidate,**cost,**aggregate(rows,bysplit[split],SEED+len(srows))})
     pd.DataFrame(led).to_csv(OUT/"campaign_ledger.csv",index=False); pd.DataFrame(srows).to_csv(OUT/"cost_grid.csv",index=False)
+    figure_paths=write_figures(pd.DataFrame(srows))
     (OUT/"result_summary.json").write_text(json.dumps({"status":summary["status"],"scheduled_campaigns":len(planned),
-      "eligible_campaigns":len(trades),"excluded_campaigns":len(excluded),"cost_rows":len(srows),"promoted":False},indent=2)+"\n")
+      "eligible_campaigns":len(trades),"excluded_campaigns":len(excluded),"cost_rows":len(srows),"figure_paths":figure_paths,"promoted":False},indent=2)+"\n")
     report=f"""# Phase 111 — ZigZag weekly options report
 
 Generated UTC: {summary['generated_at_utc']}
