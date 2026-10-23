@@ -54,11 +54,6 @@ else
         point := label.new(z2[1], nowPoint, xloc.bar_time, yloc.price,
           color.new(direction[1]<0? upcolor: dncolor, labels), direction[1]>0? label.style_label_down: label.style_label_up,
           color.new(direction[1]>0? upcolor: dncolor, labels), label_size)
-        if direction == direction[1]
-            line.delete(zz[1])
-            label.delete(point[1])
-        else
-            line.set_extend(zz[1], extend.none)
 
 bgcolor(direction<0? color.new(dncolor, background): color.new(upcolor, background), title='Direction Background')
 plotarrow(direction, "direction", display=display.status_line)
