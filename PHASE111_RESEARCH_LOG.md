@@ -16,3 +16,9 @@ Append every step and outcome, including failed attempts. Do not overwrite faile
 
 ## Run log
 The automated workflow appends run IDs, source revision, coverage, metrics, pass/fail status and error details below after every run.
+
+## Failed or blocked execution — run 40035215935 (2026-10-23T22:41:51.256128+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40035215935
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "skipped", "TEST_OUTCOME": "failure"}
+- Error: No summary was produced; inspect the first failed Actions step. No P&L result is inferred.
+- No accepted strategy result or promotion claim.

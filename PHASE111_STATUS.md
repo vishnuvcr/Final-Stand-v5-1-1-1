@@ -44,3 +44,9 @@ Phase 110's status checkpoints included a 259 scheduled / 0 eligible result, whi
 
 ## Developer next instruction
 Finish the source audit and exact one-rule replay. Preserve the registered split/stop/cost definitions. Do not loosen coverage requirements to manufacture trades; if the source is incomplete or the ZigLib port cannot be independently matched, publish the limitation and do not promote.
+
+## Failed or blocked execution — run 40035215935 (2026-10-23T22:41:51.256128+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40035215935
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "skipped", "TEST_OUTCOME": "failure"}
+- Error: No summary was produced; inspect the first failed Actions step. No P&L result is inferred.
+- No accepted strategy result or promotion claim.
