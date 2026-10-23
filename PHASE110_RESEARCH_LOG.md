@@ -1,0 +1,19 @@
+# Phase 110 Research Log
+
+Append each completed step, including failures. Do not rewrite failed attempts; corrections must append a new note linked to the old result. Timestamp all empirical outputs with source revision, source/code hashes, expected and actual event counts, excluded rows and workflow run IDs.
+
+## 2026-10-23 — Registration and baseline repository review
+
+- **User specification:** “Entry 10 am on the next trading day to the previous weekly expiry / Sell 0.15 delta call and put current weekly / Exit at 2 pm on expiry day / I want you to find a stop loss criteria based on the greeks - delta, gamma, vega, theta / Start by testing SL when combined delta moves beyond 0.4. but test all combination”.
+- **Interpretation:** NIFTY weekly options, inferred from the surrounding Final Stand research and available NIFTY minute options source. Entry is on the first NIFTY trading session after the previous observed expiry; target is the next listed weekly expiry.
+- **Repository review:** read current main README phase summary, DYNAMIC_N_RESEARCH_PLAN.md, DATA_ACQUISITION.md, current Phase109 status/plan/log excerpts, Phase52 status/protocol/manifest and the Phase52 point-in-time IV/delta selector, plus Phase30 Greek-stop research implementation. Earlier branches remain untouched.
+- **Source finding:** the preferred source is Hugging Face thetrademarkk/india-index-options-1m, minute OHLCV+OI, partially missing strikes, declared CC BY-NC 4.0. Minute data and model-estimated Black–Scholes Greeks are not tick quote/exchange Greek data.
+- **Critical definition decision:** test both abs(signed net short-portfolio delta) and abs(call delta)+abs(put delta). Short-position portfolio Greeks are the negative of the two long-option Greek sums. The requested net-delta 0.40 threshold is preregistered explicitly.
+- **Cost protocol:** 24 scenarios across ₹10/15/20 brokerage per executed order, ₹0/0.05/0.25/0.50 per-unit adverse slippage on entry and exit, and 1.0×/1.5× modelled-fee stress. Four order executions per campaign; date-effective lot, STT, GST, exchange/IPFT, SEBI and stamp-duty components are reported separately.
+- **Anti-overfit protocol:** full grid on development/validation; candidate ordering only on validation after Holm correction; reserved holdout is restricted to a frozen shortlist (at most 20), baseline, and the preregistered 0.40-delta configs. No holdout-based parameter tuning.
+- **Result state:** no data acquisition or strategy P&L has been accepted as of this entry. Phase 110 remains no-promotion.
+- **Next gate:** implement the fixed Greek engine, exhaustive finite grid, source integrity gates, unit tests and cached/manual+automatic Actions workflow.
+
+## Research record format for subsequent entries
+
+For each run append: timestamp; branch and workflow URL/run ID; dataset repo + resolved revision SHA; each source-file hash; code/protocol SHA256; expected/eligible/excluded events; Greek coverage and time-gap counts; grid rows planned/attempted/completed/failed; cost cases reconciled; key metrics; tests; remaining blockers; promotion status. Do not store credentials, raw minute data, or hidden chain-of-thought.
