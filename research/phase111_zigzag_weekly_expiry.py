@@ -159,6 +159,8 @@ def signal_asof(daily,cutoff):
     i=int(found[0]); piv=[p for p in confirmed_pivots(daily) if p["confirmation_idx"]<=i and p["idx"]<=i]
     if not piv: return None
     p=piv[-1]
+    if p.get("label") not in ("HH", "LH", "HL", "LL"):
+        return None
     return {"label":p["label"],"pivot_date":daily.iloc[p["idx"]]["date"],"confirmed_date":daily.iloc[p["confirmation_idx"]]["date"],
             "signal_date":cutoff,"side":"PE" if p["label"] in ("HL","LL") else "CE","pivot_price":float(p["price"])}
 
