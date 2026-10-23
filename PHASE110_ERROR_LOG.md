@@ -27,3 +27,16 @@ None recorded at registration. New runtime, data, mathematical, test or persiste
 }
 
 - No accepted P&L results or promotion claim.
+
+
+## Phase 110 failure — run 39942399699 (2026-10-23T11:00:21.666698+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39942399699
+- Outcomes: {"COMPILE_OUTCOME": "success", "JOB_STATUS": "failure", "REPLAY_OUTCOME": "failure", "TEST_OUTCOME": "success"}
+- Failure detail: {
+  "status": "RUNTIME_ERROR",
+  "created_at_utc": "2026-10-23T11:00:21.049806+00:00",
+  "error_type": "KeyError",
+  "error": "'net_uplift_vs_no_stop_inr'"
+}
+
+- No accepted P&L results or promotion claim.
