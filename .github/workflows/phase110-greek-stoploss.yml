@@ -1,0 +1,196 @@
+name: Phase 110 Greek Stop-Loss Research
+
+on:
+  push:
+    branches: [phase-110-greek-stoploss-short-strangle]
+    paths:
+      - "research/phase110_greek_stoploss.py"
+      - "tests/phase110/**"
+      - ".github/workflows/phase110-greek-stoploss.yml"
+      - "PHASE110_RESEARCH_PLAN.md"
+  workflow_dispatch:
+    inputs:
+      dataset_revision:
+        description: "Hugging Face dataset revision/tag/branch (resolved and pinned to a SHA in outputs)"
+        required: false
+        default: "main"
+        type: string
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: phase110-greek-stoploss
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      PHASE110_DATASET_REVISION: ${{ inputs.dataset_revision || 'main' }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Check out the isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase-110-greek-stoploss-short-strangle
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Restore Hugging Face and prior phase source caches
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase110-hf-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            phase110-hf-${{ runner.os }}-
+            phase109-hf-${{ runner.os }}-
+            phase52-delta-cache-${{ runner.os }}-
+            hf-nifty-options-${{ runner.os }}-
+
+      - name: Install research dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy scipy pyarrow huggingface_hub matplotlib
+
+      - name: Compile strategy and tests
+        id: compile
+        run: |
+          python -m py_compile research/phase110_greek_stoploss.py tests/phase110/test_phase110_greek_stoploss.py
+
+      - name: Run mathematical, costs, grid and timestamp regression tests
+        id: tests
+        run: python -m unittest discover -s tests/phase110 -p 'test_*.py' -v
+
+      - name: Remove stale run outputs
+        if: success()
+        run: |
+          rm -rf results/phase110
+          mkdir -p results/phase110
+
+      - name: Run exact-minute historical strategy grid
+        id: replay
+        if: success()
+        run: python research/phase110_greek_stoploss.py
+
+      - name: Record outcome in research/status/error logs
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          COMPILE_OUTCOME: ${{ steps.compile.outcome }}
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          REPLAY_OUTCOME: ${{ steps.replay.outcome }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          now = datetime.now(timezone.utc).isoformat()
+          out = Path("results/phase110")
+          summary_file = out / "summary.json"
+          runtime_error = out / "runtime_error.json"
+          run_id = os.getenv("RUN_ID", "unknown")
+          run_url = os.getenv("RUN_URL", "")
+          outcomes = {k: os.getenv(k, "unknown") for k in ("JOB_STATUS", "COMPILE_OUTCOME", "TEST_OUTCOME", "REPLAY_OUTCOME")}
+          if summary_file.exists():
+              summary = json.loads(summary_file.read_text(encoding="utf-8"))
+              entry = (
+                  f"\n\n## Phase 110 empirical checkpoint — run {run_id} ({now})\n"
+                  f"- Workflow: {run_url}\n"
+                  f"- Overall job outcome: {outcomes['JOB_STATUS']}; compile/tests/replay: "
+                  f"{outcomes['COMPILE_OUTCOME']}/{outcomes['TEST_OUTCOME']}/{outcomes['REPLAY_OUTCOME']}\n"
+                  f"- Research status: {summary.get('status')}\n"
+                  f"- Dataset revision SHA: {summary.get('dataset_revision_resolved_sha')}\n"
+                  f"- Scheduled/eligible/excluded campaigns: {summary.get('scheduled_campaigns')}/"
+                  f"{summary.get('valid_campaigns')}/{summary.get('excluded_campaigns')}\n"
+                  f"- Registered configurations/costs/grid rows: {summary.get('configs_registered_including_no_stop')}/"
+                  f"{summary.get('cost_scenarios')}/{summary.get('grid_rows_completed_development_validation')}\n"
+                  f"- Validation positive paired-uplift rules / Holm-significant rules: "
+                  f"{summary.get('validation_positive_paired_uplift_rule_count')}/"
+                  f"{summary.get('validation_holm_adjusted_p_lt_0_05_rule_count')}\n"
+                  "- Strategy promotion: NONE pending independent review.\n"
+              )
+              Path("PHASE110_STATUS.md").write_text(Path("PHASE110_STATUS.md").read_text(encoding="utf-8") + entry, encoding="utf-8")
+              Path("PHASE110_RESEARCH_LOG.md").write_text(Path("PHASE110_RESEARCH_LOG.md").read_text(encoding="utf-8") + entry, encoding="utf-8")
+          else:
+              detail = runtime_error.read_text(encoding="utf-8") if runtime_error.exists() else (
+                  "No summary.json was produced. Inspect the earliest failed Actions step; do not infer data or strategy results."
+              )
+              entry = (
+                  f"\n\n## Phase 110 failure — run {run_id} ({now})\n"
+                  f"- Workflow: {run_url}\n"
+                  f"- Outcomes: {json.dumps(outcomes, sort_keys=True)}\n"
+                  f"- Failure detail: {detail[:2500]}\n"
+                  "- No accepted P&L results or promotion claim.\n"
+              )
+              Path("PHASE110_STATUS.md").write_text(Path("PHASE110_STATUS.md").read_text(encoding="utf-8") + entry, encoding="utf-8")
+              Path("PHASE110_RESEARCH_LOG.md").write_text(Path("PHASE110_RESEARCH_LOG.md").read_text(encoding="utf-8") + entry, encoding="utf-8")
+              Path("PHASE110_ERROR_LOG.md").write_text(Path("PHASE110_ERROR_LOG.md").read_text(encoding="utf-8") + entry, encoding="utf-8")
+
+          # Update the phase-local README without deleting existing research content.
+          readme = Path("README.md")
+          marker = "<!-- PHASE110_STATUS_START -->"
+          block = (
+              f"{marker}\n## Phase 110 — Greek stop-loss study\n\n"
+              f"- Status: {'RESULTS AVAILABLE — NO PROMOTION' if summary_file.exists() else 'RUN FAILED/BLOCKED — REVIEW LOG'}\n"
+              f"- Branch: [phase-110-greek-stoploss-short-strangle](https://github.com/{os.getenv('GITHUB_REPOSITORY','vishnuvcr/Final-Stand-v5-1-1-1')}/tree/phase-110-greek-stoploss-short-strangle)\n"
+              f"- Plan: [PHASE110_RESEARCH_PLAN.md](PHASE110_RESEARCH_PLAN.md); current status: [PHASE110_STATUS.md](PHASE110_STATUS.md)\n"
+              f"- Report: [Phase 110 report](results/phase110/PHASE110_REPORT.md); manuscript: [manuscript](results/phase110/PHASE110_MANUSCRIPT.md)\n"
+              f"- Last workflow: [{run_id}]({run_url})\n"
+              f"<!-- PHASE110_STATUS_END -->\n"
+          )
+          if readme.exists():
+              txt = readme.read_text(encoding="utf-8")
+              end = "<!-- PHASE110_STATUS_END -->"
+              if marker in txt and end in txt:
+                  a = txt.index(marker); b = txt.index(end, a) + len(end)
+                  txt = txt[:a] + block.rstrip() + txt[b:]
+              else:
+                  txt = block + "\n" + txt
+              readme.write_text(txt, encoding="utf-8")
+          PY
+
+      - name: Save Hugging Face cache for future runs
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase110-hf-${{ runner.os }}-${{ github.run_id }}
+
+      - name: Upload full diagnostic outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase110-greek-stoploss-${{ github.run_id }}
+          path: |
+            results/phase110/
+            PHASE110_STATUS.md
+            PHASE110_RESEARCH_LOG.md
+            PHASE110_ERROR_LOG.md
+          if-no-files-found: warn
+          retention-days: 45
+
+      - name: Persist data, reports and status on the phase branch
+        if: always()
+        env:
+          PHASE_BRANCH: phase-110-greek-stoploss-short-strangle
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md PHASE110_STATUS.md PHASE110_RESEARCH_LOG.md PHASE110_ERROR_LOG.md results/phase110
+          if git diff --cached --quiet; then
+            echo "No new status/results to persist."
+            exit 0
+          fi
+          git commit -m "Phase 110: record run ${GITHUB_RUN_ID} outcome and outputs"
+          git fetch origin "$PHASE_BRANCH"
+          git rebase "origin/$PHASE_BRANCH"
+          git push origin HEAD:"$PHASE_BRANCH"
