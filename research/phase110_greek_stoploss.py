@@ -269,7 +269,20 @@ def normalize_option_df(path: Path, target_expiry: str) -> tuple[pd.DataFrame, d
         "schema_columns": sorted(schema_names),
         "symbol_column_available": "symbol" in schema_names,
     }
-    return df.dropna(subset=["timestamp", "strike"]), audit
+    df = df.dropna(subset=["timestamp", "strike"]).copy()
+    # Remove only fully identical market rows across the canonical fields. A
+    # symbol-label difference alone is not a separate option contract when
+    # expiry/type/strike/time and all market values match. Conflicting records
+    # are deliberately retained so the selected-leg gate can reject them.
+    canonical = [x for x in (
+        "timestamp", "expiry", "option_type", "strike", "open", "high", "low",
+        "close", "volume", "open_interest", "trading_day"
+    ) if x in df.columns]
+    before_dedup = len(df)
+    df = df.drop_duplicates(subset=canonical, keep="first")
+    audit["identical_market_rows_removed"] = int(before_dedup - len(df))
+    audit["rows_after_identical_dedup"] = int(len(df))
+    return df, audit
 
 
 def select_entry_legs(df: pd.DataFrame, selection_ts: pd.Timestamp, entry_ts: pd.Timestamp,
