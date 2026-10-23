@@ -316,9 +316,14 @@ def select_entry_legs(df: pd.DataFrame, selection_ts: pd.Timestamp, entry_ts: pd
         if not eligible[typ]:
             return None, f"NO_VALID_0_15_DELTA_{typ}_WITH_PRE_ENTRY_OI"
         selected[typ] = min(eligible[typ], key=lambda x: (abs(abs(x["delta_prior"])-TARGET_ABS_DELTA), x["distance_spot"], x["strike"]))
-    entry_snap = df.loc[df["timestamp"].eq(entry_ts)]
+    entry_snap = df.loc[df["timestamp"].eq(entry_ts)].copy()
     if entry_snap.empty:
         return None, "MISSING_EXACT_1000_ENTRY_BAR"
+    entry_identity_fields = [x for x in (
+        "timestamp", "expiry", "option_type", "strike", "open", "high", "low",
+        "close", "volume", "open_interest", "trading_day"
+    ) if x in entry_snap.columns]
+    entry_snap = entry_snap.drop_duplicates(subset=entry_identity_fields, keep="first")
     for typ in ("CE", "PE"):
         mask = entry_snap["option_type"].eq(typ).to_numpy() & np.isclose(entry_snap["strike"].to_numpy(float), selected[typ]["strike"], rtol=0, atol=1e-9)
         matches = entry_snap.loc[mask]
