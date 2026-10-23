@@ -46,7 +46,7 @@ class GreekMathTests(unittest.TestCase):
         self.assertTrue(math.isfinite(short_delta))
 
     def test_deep_itm_european_put_iv_respects_discounted_lower_bound(self):
-        spot, strike, tau, sigma = 24000.0, 25000.0, 7.0 / YEAR_DAYS, 0.22
+        spot, strike, tau, sigma = 24000.0, 30000.0, 7.0 / YEAR_DAYS, 0.22
         premium = bs_price(spot, strike, tau, sigma, "PE")
         self.assertLess(premium, strike - spot)
         iv = implied_vol(spot, strike, tau, premium, "PE")
