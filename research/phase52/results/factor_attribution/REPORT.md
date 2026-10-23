@@ -21,7 +21,7 @@ Status: exploratory selector screen only; no promotion.
 | MULTI_FACTOR_ROUTER | TREND_X_IV_SKEW | validation | 59 | -112260 | -113957 | -115654 | 446 | [-1740, 2637] | 0.3291 | 1.0000 |
 | MULTI_FACTOR_ROUTER | TREND_X_IV_SKEW | holdout | 0 | nan | nan | nan | nan | — | nan | nan |
 | OI_FLOW_ROUTER | near_atm_oi_pcr | development_in_sample | 102 | 234059 | 231256 | 228454 | 1563 | [-789, 4127] | 0.1382 | nan |
-| OI_FLOW_ROUTER | near_atm_oi_pcr | validation | 59 | -173805 | -175142 | -176478 | -591 | [-2178, 814] | 0.7499 | 1.0000 |
+| OI_FLOW_ROUTER | near_atm_oi_pcr | validation | 59 | -173805 | -175142 | -176478 | -591 | [-2178, 814] | 0.7457 | 1.0000 |
 | OI_FLOW_ROUTER | near_atm_oi_pcr | holdout | 0 | nan | nan | nan | nan | — | nan | nan |
 | SPOT_PROXY_ONLY | nifty_ma_gap_15m | development_in_sample | 102 | 177269 | 174532 | 171794 | 1007 | [-971, 3106] | 0.1830 | nan |
 | SPOT_PROXY_ONLY | nifty_ma_gap_15m | validation | 59 | -159796 | -161556 | -163315 | -361 | [-3363, 2520] | 0.5849 | 1.0000 |

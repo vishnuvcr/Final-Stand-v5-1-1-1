@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-22T08:59:54.129251+00:00",
+  "timestamp_utc": "2026-10-23T08:57:34.645573+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 27723,
+          "downloads": 27764,
           "likes": 7,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 1152,
+          "downloads": 1151,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-21T22:55:03.000Z",
-          "downloads": 245,
+          "last_modified": "2026-10-22T23:17:32.000Z",
+          "downloads": 244,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -116,6 +116,42 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "Shivaansh29/nifty_backtest",
+          "description": "nifty options backtesting ",
+          "default_branch": "main",
+          "pushed_at": "2026-10-22T21:35:36Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Shivaansh29/nifty_backtest"
+        },
+        {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-22T17:56:38Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "2005legend/nifty-edge-research",
+          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-22T17:15:15Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/2005legend/nifty-edge-research"
+        },
+        {
+          "full_name": "NubraAPI/nubra-cookbook",
+          "description": "Nubra cookbook: Python options trading examples (delta hedging, gamma hedging, open interest, backtesting) built on the Nubra Python SDK. Educational use only.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-22T10:59:16Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/NubraAPI/nubra-cookbook"
+        },
+        {
           "full_name": "Krishang2004/options-strategy-reports",
           "description": "Public static dashboard of NIFTY/SENSEX backtest strategy reports",
           "default_branch": "master",
@@ -125,49 +161,13 @@
           "url": "https://github.com/Krishang2004/options-strategy-reports"
         },
         {
-          "full_name": "2005legend/nifty-edge-research",
-          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-22T03:37:28Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/2005legend/nifty-edge-research"
-        },
-        {
-          "full_name": "Shivaansh29/nifty_backtest",
-          "description": "nifty options backtesting ",
-          "default_branch": "main",
-          "pushed_at": "2026-10-21T18:29:08Z",
-          "stars": 0,
-          "license": "MIT",
-          "url": "https://github.com/Shivaansh29/nifty_backtest"
-        },
-        {
-          "full_name": "karbburn/nifty-option-simulator",
-          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-21T17:59:31Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/karbburn/nifty-option-simulator"
-        },
-        {
           "full_name": "shivam61/nifty-options-backtester",
           "description": "This is repo for backtesting nifty option selling strategies ",
           "default_branch": "main",
-          "pushed_at": "2026-10-22T08:18:36Z",
+          "pushed_at": "2026-10-23T08:41:03Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/shivam61/nifty-options-backtester"
-        },
-        {
-          "full_name": "NubraAPI/nubra-cookbook",
-          "description": "Nubra cookbook: Python options trading examples (delta hedging, gamma hedging, open interest, backtesting) built on the Nubra Python SDK. Educational use only.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-19T11:45:37Z",
-          "stars": 0,
-          "license": "MIT",
-          "url": "https://github.com/NubraAPI/nubra-cookbook"
         },
         {
           "full_name": "rxpriyanshu10/Route-Wise-Options-Analytics-Strategy-Backtesting-Platform",
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-22T08:58:38Z",
+          "pushed_at": "2026-10-22T17:45:42Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
