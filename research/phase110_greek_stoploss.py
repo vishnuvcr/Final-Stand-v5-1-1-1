@@ -841,7 +841,7 @@ def main() -> int:
         for cost in costs:
             tr = []
             for eid, (xc, xp, xt, reason, hit_i, ev) in exits.items():
-                fee = premium_fee_model(ev["call_entry"], ev["put_entry"], xc, xp, ev["lot_size"], ev["expiry"], cost)
+                fee = premium_fee_model(ev["call_entry"], ev["put_entry"], xc, xp, ev["lot_size"], ev["entry_date"], xt.date().isoformat(), cost)
                 if fee is None:
                     continue
                 row = {"config_id": cid, "name": cfg["name"], "delta_mode": cfg["delta_mode"],
