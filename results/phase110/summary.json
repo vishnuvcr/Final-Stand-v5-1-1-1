@@ -1,0 +1,225 @@
+{
+  "status": "EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION",
+  "created_at_utc": "2026-10-23T11:13:44.144123+00:00",
+  "branch": "phase-110-greek-stoploss-short-strangle",
+  "dataset": "thetrademarkk/india-index-options-1m",
+  "dataset_revision_resolved_sha": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "source_first_expiry": "2021-05-27",
+  "source_last_expiry": "2026-08-04",
+  "source_index_rows": 486050,
+  "source_expiry_files_loaded": 257,
+  "scheduled_campaigns": 259,
+  "valid_campaigns": 46,
+  "excluded_campaigns": 217,
+  "exclusion_reason_counts": {
+    "DUPLICATE_SELECTION_CONTRACT_MINUTE": 134,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_0_PUT_18": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_1_PUT_8": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_269_PUT_268": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_0_PUT_27": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_2_PUT_0": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_268_PUT_268": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_340_PUT_0": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_0_PUT_7": 1,
+    "INVALID_GREEK_IV_CE_AT_13:06": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_3_PUT_0": 1,
+    "INVALID_GREEK_IV_CE_AT_09:15": 1,
+    "INVALID_GREEK_IV_PE_AT_09:15": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_4_PUT_0": 1,
+    "UNSUPPORTED_HISTORICAL_LOT_SIZE_DATE": 2,
+    "NO_VALID_0_15_DELTA_PE_WITH_PRE_ENTRY_OI": 16,
+    "NO_VALID_0_15_DELTA_CE_WITH_PRE_ENTRY_OI": 17,
+    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_CE": 7,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_140_PUT_1333": 1,
+    "ENTRY_BAR_MISSING_INVALID_OR_DUPLICATE_PE": 6,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_644_PUT_552": 1,
+    "ENTRY_OPEN_HAS_NO_VALID_MODEL_IV_PE": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_89_PUT_251": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_321_PUT_459": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_237_PUT_411": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_515_PUT_249": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_333_PUT_633": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_245_PUT_168": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_442_PUT_275": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_807_PUT_1125": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_689_PUT_1348": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_344_PUT_279": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_1085_PUT_626": 1,
+    "INCOMPLETE_SELECTED_LEG_PATH_CALL_1169_PUT_915": 1,
+    "INVALID_TRADING_SESSION_SCHEDULE": 2,
+    "MISSING_EXACT_0959_SPOT_OR_OPTION_BAR": 1,
+    "NO_OBSERVED_SESSION_AFTER_PREVIOUS_EXPIRY": 4
+  },
+  "configs_registered_including_no_stop": 4294,
+  "cost_scenarios": 24,
+  "config_cost_pairs": 103056,
+  "grid_rows_completed_development_validation": 206112,
+  "primary_cost_case": {
+    "brokerage_per_order": 20.0,
+    "slippage_per_unit": 0.25,
+    "fee_multiplier": 1.0
+  },
+  "validation_rule_count": 4294,
+  "validation_positive_net_rule_count": 3934,
+  "validation_positive_paired_uplift_rule_count": 187,
+  "validation_holm_adjusted_p_lt_0_05_rule_count": 0,
+  "validation_top_rules": [
+    {
+      "config_id": "94f04c2448fe04c9",
+      "name": "DELTA=0.30|GAMMA=0.50|ALL",
+      "net_pnl_inr": 45772.28973293,
+      "paired_uplift_sum_inr": 10928.15144995,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "27c37bd2bb083b83",
+      "name": "GAMMA=0.50|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "143e4372a4dc3efc",
+      "name": "GAMMA=0.50|THETA=0.00|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "4bd83959a81b3ea8",
+      "name": "GAMMA=0.50|THETA=0.25|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "a5de68c461032ee2",
+      "name": "GAMMA=0.50|VEGA=0.40|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "854dbd4e58f9c113",
+      "name": "GAMMA=0.50|VEGA=0.40|THETA=0.00|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "09a7dea146dfe4ce",
+      "name": "GAMMA=0.50|VEGA=0.40|THETA=0.25|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "d47200d362ddab05",
+      "name": "GAMMA=0.50|VEGA=0.50|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "64f2c009cd728a20",
+      "name": "GAMMA=0.50|VEGA=0.50|THETA=0.00|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    },
+    {
+      "config_id": "0a7309956f16ff52",
+      "name": "GAMMA=0.50|VEGA=0.50|THETA=0.25|ANY",
+      "net_pnl_inr": 45364.53660208,
+      "paired_uplift_sum_inr": 10520.3983191,
+      "max_drawdown_inr": 3478.539963969997,
+      "trades": 37,
+      "holm_p_adjusted_validation": 1.0
+    }
+  ],
+  "holdout_candidate_count": 20,
+  "holdout_rules_including_baseline": 21,
+  "holdout_primary_cost_top5": [
+    {
+      "config_id": "09a7dea146dfe4ce",
+      "name": "GAMMA=0.50|VEGA=0.40|THETA=0.25|ANY",
+      "net_pnl_inr": 5987.4932488925,
+      "max_drawdown_inr": 0.0,
+      "trades": 1
+    },
+    {
+      "config_id": "0a7309956f16ff52",
+      "name": "GAMMA=0.50|VEGA=0.50|THETA=0.25|ANY",
+      "net_pnl_inr": 5987.4932488925,
+      "max_drawdown_inr": 0.0,
+      "trades": 1
+    },
+    {
+      "config_id": "143e4372a4dc3efc",
+      "name": "GAMMA=0.50|THETA=0.00|ANY",
+      "net_pnl_inr": 5987.4932488925,
+      "max_drawdown_inr": 0.0,
+      "trades": 1
+    },
+    {
+      "config_id": "17c3ee585c42839a",
+      "name": "DELTA=1.00|GAMMA=0.50|VEGA=0.50|ANY",
+      "net_pnl_inr": 5987.4932488925,
+      "max_drawdown_inr": 0.0,
+      "trades": 1
+    },
+    {
+      "config_id": "25595579186fe2dd",
+      "name": "DELTA=1.00|GAMMA=0.50|VEGA=0.40|THETA=0.00|ANY",
+      "net_pnl_inr": 5987.4932488925,
+      "max_drawdown_inr": 0.0,
+      "trades": 1
+    }
+  ],
+  "holdout_used_for_ranking": false,
+  "promotion": "NONE",
+  "script_sha256": "fede59ecc9791ed6c19b96832d2953dfdf2ec241ddb07355180f5cfe69f87ab6",
+  "figure_paths": [
+    "results/phase110/figures/validation_top_rules.svg",
+    "results/phase110/figures/delta040_slippage_sensitivity.svg"
+  ],
+  "outputs": [
+    "summary.json",
+    "coverage.json",
+    "source_files.csv",
+    "exclusions.csv",
+    "greek_stoploss_grid.csv.gz",
+    "validation_candidates.csv",
+    "shortlist_frozen.json",
+    "holdout_shortlist.csv",
+    "holdout_primary_cost_summary.csv",
+    "holdout_trade_summary.csv",
+    "trade_ledger_aggregates.csv"
+  ],
+  "limitations": [
+    "Greeks are model estimates, not historical exchange Greeks.",
+    "One-minute OHLC opens are execution proxies, not executable bid/ask fills; sub-minute moves can be missed.",
+    "Primary data is CC BY-NC 4.0 non-commercial research only; no commercial conclusion is authorized.",
+    "Exact selected-leg paths are required; missing bars or invalid model IV exclude an entire campaign.",
+    "Source end date is data cutoff, not the current date; no outcomes are extrapolated.",
+    "A multi-thousand-rule winner is exploratory until independent audit and out-of-sample gates pass."
+  ]
+}

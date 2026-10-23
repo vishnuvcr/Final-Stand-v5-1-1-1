@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-23T11:05:52.270193+00:00",
+  "created_at_utc": "2026-10-23T11:13:43.000972+00:00",
   "selection_split": "validation only",
   "primary_cost_case": {
     "brokerage_per_order": 20.0,
@@ -36,6 +36,6 @@
     "17c3ee585c42839a"
   ],
   "selection_rule": "Mandatory net/gross single-delta 0.40 rules plus highest validation paired-uplift ranks; positive cost-case count is the tie-breaker. Holdout metrics are not inputs.",
-  "code_sha256": "5d94e0412ae321c20bce7289b5793ff353d72eab37c9d0b9e986e300f2ada772",
+  "code_sha256": "fede59ecc9791ed6c19b96832d2953dfdf2ec241ddb07355180f5cfe69f87ab6",
   "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5"
 }
