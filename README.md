@@ -1,3 +1,18 @@
+<!-- PHASE110_STATUS_START -->
+## Phase 110 — Greek-conditioned stop-loss study
+
+**Status:** Plan registered; automatic regression and data replay workflow launched. No strategy result or promotion claim yet.
+
+- [Research plan and frozen threshold grid](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-110-greek-stoploss-short-strangle/PHASE110_RESEARCH_PLAN.md)
+- [Phase status and gates](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-110-greek-stoploss-short-strangle/PHASE110_STATUS.md)
+- [Engine](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-110-greek-stoploss-short-strangle/research/phase110_greek_stoploss.py) and [regression tests](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-110-greek-stoploss-short-strangle/tests/phase110/test_phase110_greek_stoploss.py)
+- [Automatic/manual GitHub Actions workflow](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/workflows/phase110-greek-stoploss.yml)
+- [Current run](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/39940933286)
+- [Research branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-110-greek-stoploss-short-strangle)
+
+The preregistered test covers both signed-net and gross-absolute delta at 0.40, all registered delta/gamma/vega/theta combinations, paired comparison against the fixed 14:00 exit, transaction-cost stresses, validation correction, a frozen holdout shortlist and an independent tester gate. Data uses model-estimated Greeks, and no strategy may be promoted without evidence and independent review.
+<!-- PHASE110_STATUS_END -->
+
 ## Full 1,000+ family requirement — compliance audit opened (2026-10-12)
 
 The user-required scope is **at least 1,000 meaningfully distinct strategy families**, each with at least 1,000 valid configurations. The 1,025-family registry / 3,719,520 configuration tuples / 89,268,480 cost rows are manifest counts, not completed backtests. The current semantic-remediation evaluator implements only eight core signal methods, so its narrow results do not complete the full scope. A separate audit branch now tracks novelty, feasibility, implementation coverage and full-sweep recovery; no strategy is promoted.
