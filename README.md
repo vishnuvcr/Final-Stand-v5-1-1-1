@@ -1,3 +1,12 @@
+<!-- PHASE111_STATUS_START -->
+## Phase 111 — Non-Repainting ZigZag Weekly Options
+
+**Latest workflow result:** failure. **Status:** workflow failed or was blocked; inspect research-branch error log. No strategy is promoted merely from a successful run.
+
+- [Research branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-111-zigzag-weekly-expiry-options) · [plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-111-zigzag-weekly-expiry-options/PHASE111_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-111-zigzag-weekly-expiry-options/PHASE111_STATUS.md)
+- [Report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-111-zigzag-weekly-expiry-options/results/phase111/PHASE111_REPORT.md) · [manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-111-zigzag-weekly-expiry-options/results/phase111/PHASE111_MANUSCRIPT.md) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-111-zigzag-weekly-expiry-options/PHASE111_ERROR_LOG.md) · [latest run 40035215935](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40035215935)
+<!-- PHASE111_STATUS_END -->
+
 <!-- PHASE110_STATUS_START -->
 ## Phase 110 — Greek-conditioned stop-loss study
 
