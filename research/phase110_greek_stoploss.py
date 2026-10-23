@@ -85,10 +85,15 @@ def implied_vol(spot: float, strike: float, tau: float, premium: float, typ: str
         return None
     if spot <= 0 or strike <= 0 or tau <= 0 or premium <= 0:
         return None
-    intrinsic = max(spot - strike, 0.0) if typ == "CE" else max(strike - spot, 0.0)
-    upper = spot * math.exp(-DIVIDEND * tau) if typ == "CE" else strike * math.exp(-RATE * tau)
+    # European Black-Scholes no-arbitrage bounds, not American/intrinsic-payoff
+    # bounds. In particular, a deep-ITM European put can trade below K-S because
+    # the strike payment is discounted; using max(K-S, 0) incorrectly rejects it.
+    disc_spot = spot * math.exp(-DIVIDEND * tau)
+    disc_strike = strike * math.exp(-RATE * tau)
+    model_lower = max(disc_spot - disc_strike, 0.0) if typ == "CE" else max(disc_strike - disc_spot, 0.0)
+    upper = disc_spot if typ == "CE" else disc_strike
     tol = max(0.05, 1e-7 * max(spot, strike, premium))
-    if premium < intrinsic - tol or premium >= upper - tol:
+    if premium < model_lower - tol or premium >= upper - tol:
         return None
     lo, hi = 1e-5, 5.0
     p_lo, p_hi = bs_price(spot, strike, tau, lo, typ), bs_price(spot, strike, tau, hi, typ)
