@@ -1,14 +1,11 @@
 <!-- PHASE112_STATUS_START -->
 ## Phase 112 — Greek Stop-Loss Combinations
 
-**Status:** Complete; empirical screen finished. **No stop-loss candidate promoted.**
+**Status:** EMPIRICAL SCREEN COMPLETE — NO PROMOTION. No strategy promoted.
 
-- Source sample: 259 scheduled, 139 eligible, 124 excluded; validation had 45 campaigns and holdout only 1.
-- Registered grid: 72 candidates × 24 cost scenarios = 5,184 rows. All tests and replay passed.
-- No single-Greek threshold or multi-Greek combination improved validation paired P&L versus no-stop across any registered cost case. Gamma 0.30 lowered drawdown but still underperformed no-stop; Vega/Rho stops triggered on every validation campaign.
-- [Plan](PHASE112_RESEARCH_PLAN.md) · [status](PHASE112_STATUS.md) · [research log](PHASE112_RESEARCH_LOG.md) · [error log](PHASE112_ERROR_LOG.md) · [visible chat log](PHASE112_CHAT_LOG.md)
+- [Plan](PHASE112_RESEARCH_PLAN.md) · [status](PHASE112_STATUS.md) · [log](PHASE112_RESEARCH_LOG.md) · [errors](PHASE112_ERROR_LOG.md)
 - [Engine](research/phase112_greek_stop_combinations.py) · [tests](tests/phase112/test_phase112_greek_stops.py) · [workflow](.github/workflows/phase112-greek-stop-combinations.yml)
-- [Report](results/phase112/PHASE112_REPORT.md) · [manuscript](results/phase112/PHASE112_MANUSCRIPT.md) · [full cost grid](results/phase112/candidate_cost_grid.csv) · [run 40072066860](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40072066860)
+- [Report](results/phase112/PHASE112_REPORT.md) · [manuscript](results/phase112/PHASE112_MANUSCRIPT.md) · [cost grid](results/phase112/candidate_cost_grid.csv) · [run 40073175215](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40073175215)
 <!-- PHASE112_STATUS_END -->
 
 <!-- PHASE111_STATUS_START -->

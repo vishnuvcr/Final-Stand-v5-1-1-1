@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T07:03:44.109685+00:00",
+  "generated_at_utc": "2026-10-24T07:16:11.288516+00:00",
   "dataset_repo": "thetrademarkk/india-index-options-1m",
   "dataset_revision_requested": "main",
   "dataset_revision_resolved_sha": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
@@ -28,7 +28,8 @@
   "single_greek_sensitivity_configs": 19,
   "multi_greek_configs": 52,
   "cost_scenarios": 24,
-  "grid_rows": 5184,
+  "grid_rows": 6912,
+  "pooled_all_available_rows": 1728,
   "fixed_combo_thresholds": {
     "delta": 0.5,
     "gamma": 0.2,

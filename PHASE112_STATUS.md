@@ -53,3 +53,12 @@ Primary cost ID \`B20_S0.25_F1.0\` = ₹20/order, ₹0.25 adverse slippage per u
 
 ## Final limitation
 This screen does not prove that Greeks have no possible value in other definitions or market settings. It shows that the registered Greek stop thresholds and combinations did not improve validation net P&L versus no-stop on this partial dataset and proxy signal. Exact TradingView ZigLib parity, executable bid/ask prices and account-specific Paytm Money charges remain unverified. Do not promote a candidate from these results.
+
+
+## Run 40073175215 (2026-10-24T07:16:14.890730+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40073175215
+- Compile/tests/replay: success/success/success
+- Dataset SHA: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Scheduled/eligible/excluded: 259/139/124
+- Candidates/costs/grid rows: 72/24/6912
+- Status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.
