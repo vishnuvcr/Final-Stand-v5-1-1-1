@@ -1,0 +1,746 @@
+[
+  {
+    "candidate_id": "NO_STOP_REFERENCE",
+    "name": "NO STOP",
+    "thresholds": {},
+    "aggregation": "NONE",
+    "active_count": 0
+  },
+  {
+    "candidate_id": "DELTA_0.3",
+    "name": "DELTA=0.3",
+    "thresholds": {
+      "delta": 0.3
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "DELTA_0.4",
+    "name": "DELTA=0.4",
+    "thresholds": {
+      "delta": 0.4
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "DELTA_0.5",
+    "name": "DELTA=0.5",
+    "thresholds": {
+      "delta": 0.5
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "DELTA_0.6",
+    "name": "DELTA=0.6",
+    "thresholds": {
+      "delta": 0.6
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "GAMMA_0.05",
+    "name": "GAMMA=0.05",
+    "thresholds": {
+      "gamma": 0.05
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "GAMMA_0.1",
+    "name": "GAMMA=0.1",
+    "thresholds": {
+      "gamma": 0.1
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "GAMMA_0.2",
+    "name": "GAMMA=0.2",
+    "thresholds": {
+      "gamma": 0.2
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "GAMMA_0.3",
+    "name": "GAMMA=0.3",
+    "thresholds": {
+      "gamma": 0.3
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "VEGA_0.05",
+    "name": "VEGA=0.05",
+    "thresholds": {
+      "vega": 0.05
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "VEGA_0.1",
+    "name": "VEGA=0.1",
+    "thresholds": {
+      "vega": 0.1
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "VEGA_0.2",
+    "name": "VEGA=0.2",
+    "thresholds": {
+      "vega": 0.2
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "VEGA_0.3",
+    "name": "VEGA=0.3",
+    "thresholds": {
+      "vega": 0.3
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "THETA_0",
+    "name": "THETA=0",
+    "thresholds": {
+      "theta": 0.0
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "THETA_0.25",
+    "name": "THETA=0.25",
+    "thresholds": {
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "THETA_0.5",
+    "name": "THETA=0.5",
+    "thresholds": {
+      "theta": 0.5
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "RHO_0.0001",
+    "name": "RHO=0.0001",
+    "thresholds": {
+      "rho": 0.0001
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "RHO_0.0005",
+    "name": "RHO=0.0005",
+    "thresholds": {
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "RHO_0.001",
+    "name": "RHO=0.001",
+    "thresholds": {
+      "rho": 0.001
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "RHO_0.0025",
+    "name": "RHO=0.0025",
+    "thresholds": {
+      "rho": 0.0025
+    },
+    "aggregation": "ANY",
+    "active_count": 1
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_ANY",
+    "name": "DELTA=0.5+VEGA=0.2|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_ALL",
+    "name": "DELTA=0.5+VEGA=0.2|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_theta_ANY",
+    "name": "DELTA=0.5+THETA=0.25|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_theta_ALL",
+    "name": "DELTA=0.5+THETA=0.25|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_rho_ANY",
+    "name": "DELTA=0.5+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_rho_ALL",
+    "name": "DELTA=0.5+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_ANY",
+    "name": "GAMMA=0.2+VEGA=0.2|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_ALL",
+    "name": "GAMMA=0.2+VEGA=0.2|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_gamma_theta_ANY",
+    "name": "GAMMA=0.2+THETA=0.25|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_gamma_theta_ALL",
+    "name": "GAMMA=0.2+THETA=0.25|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_gamma_rho_ANY",
+    "name": "GAMMA=0.2+RHO=0.0005|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_gamma_rho_ALL",
+    "name": "GAMMA=0.2+RHO=0.0005|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_vega_theta_ANY",
+    "name": "VEGA=0.2+THETA=0.25|ANY",
+    "thresholds": {
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_vega_theta_ALL",
+    "name": "VEGA=0.2+THETA=0.25|ALL",
+    "thresholds": {
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_vega_rho_ANY",
+    "name": "VEGA=0.2+RHO=0.0005|ANY",
+    "thresholds": {
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_vega_rho_ALL",
+    "name": "VEGA=0.2+RHO=0.0005|ALL",
+    "thresholds": {
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_theta_rho_ANY",
+    "name": "THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_theta_rho_ALL",
+    "name": "THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 2
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_theta_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+THETA=0.25|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_theta_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+THETA=0.25|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_rho_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_rho_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_theta_ANY",
+    "name": "DELTA=0.5+VEGA=0.2+THETA=0.25|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_theta_ALL",
+    "name": "DELTA=0.5+VEGA=0.2+THETA=0.25|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_rho_ANY",
+    "name": "DELTA=0.5+VEGA=0.2+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_rho_ALL",
+    "name": "DELTA=0.5+VEGA=0.2+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_theta_rho_ANY",
+    "name": "DELTA=0.5+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_theta_rho_ALL",
+    "name": "DELTA=0.5+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_theta_ANY",
+    "name": "GAMMA=0.2+VEGA=0.2+THETA=0.25|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_theta_ALL",
+    "name": "GAMMA=0.2+VEGA=0.2+THETA=0.25|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_rho_ANY",
+    "name": "GAMMA=0.2+VEGA=0.2+RHO=0.0005|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_rho_ALL",
+    "name": "GAMMA=0.2+VEGA=0.2+RHO=0.0005|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_gamma_theta_rho_ANY",
+    "name": "GAMMA=0.2+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_gamma_theta_rho_ALL",
+    "name": "GAMMA=0.2+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_vega_theta_rho_ANY",
+    "name": "VEGA=0.2+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_vega_theta_rho_ALL",
+    "name": "VEGA=0.2+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 3
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_theta_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2+THETA=0.25|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ANY",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_theta_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2+THETA=0.25|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25
+    },
+    "aggregation": "ALL",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_rho_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_rho_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_theta_rho_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_theta_rho_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_theta_rho_ANY",
+    "name": "DELTA=0.5+VEGA=0.2+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_vega_theta_rho_ALL",
+    "name": "DELTA=0.5+VEGA=0.2+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_theta_rho_ANY",
+    "name": "GAMMA=0.2+VEGA=0.2+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_gamma_vega_theta_rho_ALL",
+    "name": "GAMMA=0.2+VEGA=0.2+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 4
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_theta_rho_ANY",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2+THETA=0.25+RHO=0.0005|ANY",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ANY",
+    "active_count": 5
+  },
+  {
+    "candidate_id": "COMBO_delta_gamma_vega_theta_rho_ALL",
+    "name": "DELTA=0.5+GAMMA=0.2+VEGA=0.2+THETA=0.25+RHO=0.0005|ALL",
+    "thresholds": {
+      "delta": 0.5,
+      "gamma": 0.2,
+      "vega": 0.2,
+      "theta": 0.25,
+      "rho": 0.0005
+    },
+    "aggregation": "ALL",
+    "active_count": 5
+  }
+]

@@ -1,3 +1,13 @@
+<!-- PHASE112_STATUS_START -->
+## Phase 112 — Greek Stop-Loss Combinations
+
+**Status:** EMPIRICAL SCREEN COMPLETE — NO PROMOTION. No strategy promoted.
+
+- [Plan](PHASE112_RESEARCH_PLAN.md) · [status](PHASE112_STATUS.md) · [log](PHASE112_RESEARCH_LOG.md) · [errors](PHASE112_ERROR_LOG.md)
+- [Engine](research/phase112_greek_stop_combinations.py) · [tests](tests/phase112/test_phase112_greek_stops.py) · [workflow](.github/workflows/phase112-greek-stop-combinations.yml)
+- [Report](results/phase112/PHASE112_REPORT.md) · [manuscript](results/phase112/PHASE112_MANUSCRIPT.md) · [cost grid](results/phase112/candidate_cost_grid.csv) · [run 40072066860](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40072066860)
+<!-- PHASE112_STATUS_END -->
+
 <!-- PHASE111_STATUS_START -->
 ## Phase 111 — Non-Repainting ZigZag Weekly Options
 

@@ -31,3 +31,12 @@ Dataset revision: `0f4800e43e6f96cec0794369d78eb4d3c4211ef5`; expiry files 2021-
 | 112.6 Repository publication/stop | PENDING |
 
 No strategy is promoted from a successful build, nominal statistical significance, or a single-trade holdout.
+
+
+## Run 40072066860 (2026-10-24T07:03:47.012097+00:00)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40072066860
+- Compile/tests/replay: success/success/success
+- Dataset SHA: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5
+- Scheduled/eligible/excluded: 259/139/124
+- Candidates/costs/grid rows: 72/24/5184
+- Status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.

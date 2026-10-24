@@ -1,0 +1,44 @@
+{
+  "generated_at_utc": "2026-10-24T07:03:44.109685+00:00",
+  "dataset_repo": "thetrademarkk/india-index-options-1m",
+  "dataset_revision_requested": "main",
+  "dataset_revision_resolved_sha": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
+  "index_sha256": "613864738250107807354c17c7092986960220ac3062b830c65cc5f9ec16fcf7",
+  "index_bytes": 8383208,
+  "expiry_file_count": 267,
+  "first_expiry": "2021-05-27",
+  "last_expiry": "2026-08-04",
+  "complete_daily_candles": 1250,
+  "incomplete_daily_sessions": 8,
+  "duplicate_index_timestamps": 0,
+  "scheduled_campaigns": 259,
+  "eligible_campaigns": 139,
+  "excluded_campaigns": 124,
+  "scheduled_by_split": {
+    "development": 133,
+    "validation": 103,
+    "holdout": 23
+  },
+  "eligible_by_split": {
+    "development": 93,
+    "validation": 45,
+    "holdout": 1
+  },
+  "candidate_count": 72,
+  "single_greek_sensitivity_configs": 19,
+  "multi_greek_configs": 52,
+  "cost_scenarios": 24,
+  "grid_rows": 5184,
+  "fixed_combo_thresholds": {
+    "delta": 0.5,
+    "gamma": 0.2,
+    "vega": 0.2,
+    "theta": 0.25,
+    "rho": 0.0005
+  },
+  "primary_cost_id": "B20_S0.25_F1.0",
+  "signal_parity": "NOT VERIFIED: causal Python ZigZag proxy; original external ZigLib body not supplied",
+  "status": "EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION",
+  "strategy_promotion": "NONE",
+  "tester_review": "WAIVED BY USER"
+}
