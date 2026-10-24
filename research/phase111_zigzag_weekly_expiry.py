@@ -156,12 +156,17 @@ def confirmed_pivots(daily):
 def signal_asof(daily,cutoff):
     found=daily.index[daily.date.eq(cutoff)]
     if len(found)!=1: return None
-    i=int(found[0]); piv=[p for p in confirmed_pivots(daily) if p["confirmation_idx"]<=i and p["idx"]<=i]
+    i=int(found[0])
+    # Build pivots only from the data available at the decision cutoff. A full-history
+    # pivot-cleaning pass can otherwise let a later same-kind extreme replace an older
+    # pivot and subtly alter a historical signal even if its confirmation index is filtered.
+    available=daily.iloc[:i+1].reset_index(drop=True)
+    piv=confirmed_pivots(available)
     if not piv: return None
     p=piv[-1]
     if p.get("label") not in ("HH", "LH", "HL", "LL"):
         return None
-    return {"label":p["label"],"pivot_date":daily.iloc[p["idx"]]["date"],"confirmed_date":daily.iloc[p["confirmation_idx"]]["date"],
+    return {"label":p["label"],"pivot_date":available.iloc[p["idx"]]["date"],"confirmed_date":available.iloc[p["confirmation_idx"]]["date"],
             "signal_date":cutoff,"side":"PE" if p["label"] in ("HL","LL") else "CE","pivot_price":float(p["price"])}
 
 def normalize_options(path,expiry):
