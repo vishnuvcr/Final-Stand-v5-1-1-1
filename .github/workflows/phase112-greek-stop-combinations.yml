@@ -1,0 +1,175 @@
+name: Phase 112 — Greek Stop-Loss Combinations
+on:
+  push:
+    branches: [phase-112-zigzag-greek-stop-combinations]
+    paths:
+      - "research/phase112_greek_stop_combinations.py"
+      - "tests/phase112/**"
+      - ".github/workflows/phase112-greek-stop-combinations.yml"
+      - "PHASE112_RESEARCH_PLAN.md"
+  workflow_dispatch:
+    inputs:
+      dataset_revision:
+        description: Dataset revision; resolved SHA will be recorded
+        required: false
+        default: main
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: phase112-greek-stops-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      PHASE112_DATASET_REVISION: ${{ inputs.dataset_revision || 'main' }}
+      PYTHONUNBUFFERED: "1"
+      PHASE_BRANCH: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface/hub
+          key: phase112-hf-${{ runner.os }}-${{ hashFiles('PHASE112_RESEARCH_PLAN.md') }}
+          restore-keys: |
+            phase112-hf-${{ runner.os }}-
+            phase111-hf-${{ runner.os }}-
+            phase110-hf-${{ runner.os }}-
+            hf-nifty-options-${{ runner.os }}-
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check --no-input pandas numpy scipy pyarrow huggingface_hub matplotlib
+      - name: Compile
+        id: compile
+        run: python -m py_compile research/phase111_zigzag_weekly_expiry.py research/phase112_greek_stop_combinations.py tests/phase112/test_phase112_greek_stops.py
+      - name: Greek math, combination, trigger and costs tests
+        id: tests
+        run: python -m unittest discover -s tests/phase112 -p 'test_*.py' -v
+      - name: Run fixed 72-candidate replay
+        id: replay
+        if: success()
+        run: python research/phase112_greek_stop_combinations.py
+      - name: Append status and error logs
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+          COMPILE_OUTCOME: ${{ steps.compile.outcome }}
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          REPLAY_OUTCOME: ${{ steps.replay.outcome }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          out=Path("results/phase112"); p=out/"summary.json"; err=out/"runtime_error.json"
+          rid=os.getenv("RUN_ID","unknown"); url=os.getenv("RUN_URL","")
+          o={k:os.getenv(k,"unknown") for k in ("JOB_STATUS","COMPILE_OUTCOME","TEST_OUTCOME","REPLAY_OUTCOME")}
+          now=datetime.now(timezone.utc).isoformat()
+          if p.exists():
+            s=json.loads(p.read_text()); status="EMPIRICAL SCREEN COMPLETE — NO PROMOTION" if s.get("eligible_campaigns",0)>0 else "BLOCKED — NO VALID CAMPAIGNS"
+            entry=(f"\n\n## Run {rid} ({now})\n- Workflow: {url}\n- Compile/tests/replay: {o['COMPILE_OUTCOME']}/{o['TEST_OUTCOME']}/{o['REPLAY_OUTCOME']}\n"
+             f"- Dataset SHA: {s.get('dataset_revision_resolved_sha')}\n- Scheduled/eligible/excluded: {s.get('scheduled_campaigns')}/{s.get('eligible_campaigns')}/{s.get('excluded_campaigns')}\n"
+             f"- Candidates/costs/grid rows: {s.get('candidate_count')}/{s.get('cost_scenarios')}/{s.get('grid_rows')}\n- Status: {s.get('status')}; promotion: NONE.\n")
+          else:
+            status="FAILED/BLOCKED — SEE ERROR LOG"
+            detail=err.read_text() if err.exists() else "No summary output; inspect first failed Actions step. No P&L accepted."
+            entry=f"\n\n## Failed run {rid} ({now})\n- Workflow: {url}\n- Outcomes: {json.dumps(o,sort_keys=True)}\n- Error: {detail[:1600]}\n"
+          for fn in ("PHASE112_STATUS.md","PHASE112_RESEARCH_LOG.md"):
+            p=Path(fn)
+            if p.exists(): p.write_text(p.read_text(encoding="utf-8")+entry,encoding="utf-8")
+          if not (Path("results/phase112/summary.json").exists()) or o["JOB_STATUS"]!="success":
+            p=Path("PHASE112_ERROR_LOG.md");p.write_text(p.read_text(encoding="utf-8")+entry,encoding="utf-8")
+          p=Path("README.md"); old=p.read_text(encoding="utf-8") if p.exists() else "# Phase 112"
+          start="<!-- PHASE112_STATUS_START -->";end="<!-- PHASE112_STATUS_END -->"
+          block=(f"{start}\n## Phase 112 — Greek Stop-Loss Combinations\n\n**Status:** {status}. No strategy promoted.\n\n"
+            f"- [Plan](PHASE112_RESEARCH_PLAN.md) · [status](PHASE112_STATUS.md) · [log](PHASE112_RESEARCH_LOG.md) · [errors](PHASE112_ERROR_LOG.md)\n"
+            f"- [Engine](research/phase112_greek_stop_combinations.py) · [tests](tests/phase112/test_phase112_greek_stops.py) · [workflow](.github/workflows/phase112-greek-stop-combinations.yml)\n"
+            f"- [Report](results/phase112/PHASE112_REPORT.md) · [manuscript](results/phase112/PHASE112_MANUSCRIPT.md) · [cost grid](results/phase112/candidate_cost_grid.csv) · [run {rid}]({url})\n{end}")
+          if start in old and end in old:
+            a,rest=old.split(start,1);_,b=rest.split(end,1);new=a+block+b
+          elif "<!-- PHASE111_STATUS_START -->" in old:new=old.replace("<!-- PHASE111_STATUS_START -->",block+"\n\n<!-- PHASE111_STATUS_START -->",1)
+          else:new=block+"\n\n"+old
+          p.write_text(new,encoding="utf-8")
+          PY
+      - name: Upload result bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase112-greek-stops-${{ github.run_id }}
+          path: |
+            results/phase112/
+            PHASE112_STATUS.md
+            PHASE112_RESEARCH_LOG.md
+            PHASE112_ERROR_LOG.md
+          if-no-files-found: warn
+          retention-days: 60
+      - name: Persist branch results
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p results/phase112
+          git add README.md PHASE112_STATUS.md PHASE112_RESEARCH_LOG.md PHASE112_ERROR_LOG.md results/phase112
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase 112: record workflow ${GITHUB_RUN_ID} outputs"
+          for attempt in 1 2 3; do
+            git fetch origin "$PHASE_BRANCH"
+            git rebase "origin/$PHASE_BRANCH" || { git rebase --abort; git merge --no-edit -X ours "origin/$PHASE_BRANCH"; }
+            if git push origin "HEAD:$PHASE_BRANCH"; then exit 0; fi
+          done
+          exit 1
+  sync-main:
+    needs: research
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Update main README
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_RESULT: ${{ needs.research.result }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          repo="vishnuvcr/Final-Stand-v5-1-1-1"; p=Path("README.md"); text=p.read_text(encoding="utf-8")
+          start="<!-- PHASE112_STATUS_START -->";end="<!-- PHASE112_STATUS_END -->"
+          rid=os.getenv("RUN_ID","unknown");url=os.getenv("RUN_URL","");result=os.getenv("JOB_RESULT","unknown")
+          block=(f"{start}\n## Phase 112 — Greek Stop-Loss Combinations\n\n**Latest workflow result:** {result}. No candidate is promoted automatically.\n\n"
+           f"- [Branch](https://github.com/{repo}/tree/phase-112-zigzag-greek-stop-combinations) · [plan](https://github.com/{repo}/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_RESEARCH_PLAN.md) · [status](https://github.com/{repo}/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_STATUS.md)\n"
+           f"- [Report](https://github.com/{repo}/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_REPORT.md) · [manuscript](https://github.com/{repo}/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_MANUSCRIPT.md) · [errors](https://github.com/{repo}/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_ERROR_LOG.md) · [run {rid}]({url})\n{end}")
+          if start in text and end in text:
+            a,rest=text.split(start,1);_,b=rest.split(end,1);out=a+block+b
+          elif "<!-- PHASE111_STATUS_START -->" in text:out=text.replace("<!-- PHASE111_STATUS_START -->",block+"\n\n<!-- PHASE111_STATUS_START -->",1)
+          else:out=block+"\n\n"+text
+          p.write_text(out,encoding="utf-8")
+          PY
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Phase 112: update main README research status"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; git merge --no-edit -X ours origin/main; }
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
