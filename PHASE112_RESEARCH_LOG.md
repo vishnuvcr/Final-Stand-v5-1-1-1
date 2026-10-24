@@ -18,3 +18,17 @@ Append every completed step, including failures and corrections. Keep source SHA
 - Scheduled/eligible/excluded: 259/139/124
 - Candidates/costs/grid rows: 72/24/5184
 - Status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.
+
+
+## Final empirical checkpoint — workflow 40072066860 (2026-10-24T07:03:47Z)
+- Workflow: https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40072066860
+- Compile/tests/replay: success/success/success. The registered Greek-sign, candidate-grid, ANY/ALL trigger and cost-reconciliation tests passed.
+- Dataset revision SHA: \`0f4800e43e6f96cec0794369d78eb4d3c4211ef5\`; 267 expiry files, 2021-05-27 through 2026-08-04.
+- Scheduled/eligible/excluded: 259/139/124. Split eligible counts: development 93, validation 45, holdout 1.
+- Candidate/cost/grid rows: 72/24/5,184. No raw minute data was committed.
+- At primary cost B20_S0.25_F1.0, no-stop validation net P&L was ₹10,854.87; Delta 0.50 was ₹7,066.39; Gamma 0.30 was ₹7,567.34; Theta 0.50 was ₹10,367.11; Delta 0.50 + Gamma 0.20 (ANY) was ₹2,669.21.
+- Paired comparison: 0/52 multi-Greek combinations and 0/19 single-Greek threshold variants produced positive validation uplift versus no-stop across any of the 24 registered cost cases. For combinations, 15 rules never triggered and exactly matched no-stop; 37 had negative uplift in every cost case.
+- The Gamma 0.30 variant reduced observed validation max drawdown versus no-stop by about ₹508 but sacrificed ₹3,287.53 net P&L. Delta+Gamma ANY reduced drawdown to ₹1,963.18 but sacrificed ₹8,185.66 net P&L. Vega/Rho registered thresholds triggered on 100% of validation campaigns, with net P&L -₹3,186.70.
+- Inference: **no stop is promoted**. Current stop grid did not improve validation net P&L; one eligible holdout event cannot determine robustness. Results remain proxy-based pending exact ZigLib parity and realistic quote/execution data.
+- Final report: \`results/phase112/PHASE112_REPORT.md\`; manuscript: \`results/phase112/PHASE112_MANUSCRIPT.md\`; complete 5,184-row grid: \`results/phase112/candidate_cost_grid.csv\`.
+- Finite Phase 112 gates 112.0–112.6 are complete; study stopped here as registered. No tester review was run, per user instruction.
