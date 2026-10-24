@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-23T08:57:34.645573+00:00",
+  "timestamp_utc": "2026-10-24T08:35:35.166287+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 27764,
+          "downloads": 28192,
           "likes": 7,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 1151,
+          "downloads": 1145,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-22T23:17:32.000Z",
-          "downloads": 244,
+          "last_modified": "2026-10-23T22:51:47.000Z",
+          "downloads": 245,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -116,10 +116,19 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "ONKAR-PATIL-01/optwise-dashboard",
+          "description": "Broker-style options backtesting dashboard for NIFTY — static front-end",
+          "default_branch": "main",
+          "pushed_at": "2026-10-24T05:50:43Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/ONKAR-PATIL-01/optwise-dashboard"
+        },
+        {
           "full_name": "Shivaansh29/nifty_backtest",
           "description": "nifty options backtesting ",
           "default_branch": "main",
-          "pushed_at": "2026-10-22T21:35:36Z",
+          "pushed_at": "2026-10-23T22:14:08Z",
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/Shivaansh29/nifty_backtest"
@@ -128,7 +137,7 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-10-22T17:56:38Z",
+          "pushed_at": "2026-10-23T17:51:12Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
@@ -137,7 +146,7 @@
           "full_name": "2005legend/nifty-edge-research",
           "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
           "default_branch": "main",
-          "pushed_at": "2026-10-22T17:15:15Z",
+          "pushed_at": "2026-10-23T14:24:11Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/2005legend/nifty-edge-research"
@@ -164,7 +173,7 @@
           "full_name": "shivam61/nifty-options-backtester",
           "description": "This is repo for backtesting nifty option selling strategies ",
           "default_branch": "main",
-          "pushed_at": "2026-10-23T08:41:03Z",
+          "pushed_at": "2026-10-23T11:26:16Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/shivam61/nifty-options-backtester"
@@ -285,15 +294,6 @@
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/yugandharsram123/options-strategy-backtesting"
-        },
-        {
-          "full_name": "sahilempire/nifty-options-research-lab",
-          "description": "Honest backtesting lab for Indian NIFTY options — 40+ strategies tested on 6.1M rows of real data, and why they all lose. 198 tests, walk-forward validation that refuses in-sample reporting.",
-          "default_branch": "main",
-          "pushed_at": "2026-09-06T18:37:00Z",
-          "stars": 1,
-          "license": "MIT",
-          "url": "https://github.com/sahilempire/nifty-options-research-lab"
         }
       ],
       "result_count": 20
@@ -359,6 +359,15 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "Aathirajan/nse-options-bot",
+          "description": "Multi-strategy NSE index-options engine on NautilusTrader with Indian cost model",
+          "default_branch": "master",
+          "pushed_at": "2026-10-23T19:55:31Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Aathirajan/nse-options-bot"
+        },
+        {
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
@@ -422,7 +431,7 @@
           "url": "https://github.com/bhardwaj58/squirrel-backtest-engine"
         }
       ],
-      "result_count": 7
+      "result_count": 8
     },
     {
       "source_type": "github_repository_search",
@@ -440,5 +449,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "new_unique_source_leads_added": 2
 }
