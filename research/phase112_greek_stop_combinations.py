@@ -219,8 +219,9 @@ def main():
             dex=exits[(ev["event_id"],delta050["candidate_id"])]
             d=base.fee_model(ev["entry_price"],dex["price"],ev["lot_size"],ev["entry_date"],pd.Timestamp(dex["ts"]).date().isoformat(),cost)
             dmap[ev["event_id"]]=d["net_pnl_inr"]
-        for split in splitnames:
-            se=[e for e in events if e["split"]==split]
+        for split in (*splitnames,"ALL_AVAILABLE"):
+            se=[e for e in events if split=="ALL_AVAILABLE" or e["split"]==split]
+            expected_count=len(scheduled) if split=="ALL_AVAILABLE" else sched[split]
             for cfg in cfgs:
                 rows=[]
                 for ev in se:
@@ -242,7 +243,7 @@ def main():
                           "slippage_cost_inr":f["slippage_cost_inr"],"brokerage_inr":f["brokerage_inr"],"stt_inr":f["stt_inr"],
                           "exchange_fee_inr":f["exchange_fee_inr"],"ipft_inr":f["ipft_inr"],"sebi_fee_inr":f["sebi_fee_inr"],
                           "stamp_duty_inr":f["stamp_duty_inr"],"gst_inr":f["gst_inr"]})
-                stats=summary(rows,sched[split],SEED+len(gridrows),cost["cost_id"]==PRIMARY_COST_ID)
+                stats=summary(rows,expected_count,SEED+len(gridrows),cost["cost_id"]==PRIMARY_COST_ID)
                 gridrows.append({"split":split,"candidate_id":cfg["candidate_id"],"name":cfg["name"],
                   "active_greeks":"+".join(cfg["thresholds"]) or "NONE","thresholds_json":json.dumps(cfg["thresholds"],sort_keys=True),
                   "aggregation":cfg["aggregation"],**cost,**stats})
@@ -256,7 +257,7 @@ def main():
       "last_expiry":expiries[-1],"complete_daily_candles":int(len(daily)),"incomplete_daily_sessions":int(incomplete),
       "duplicate_index_timestamps":int(dups),"scheduled_campaigns":len(scheduled),"eligible_campaigns":len(events),
       "excluded_campaigns":len(excluded),"scheduled_by_split":sched,"eligible_by_split":elig,"candidate_count":len(cfgs),
-      "single_greek_sensitivity_configs":19,"multi_greek_configs":52,"cost_scenarios":len(costs),"grid_rows":len(gridrows),
+      "single_greek_sensitivity_configs":19,"multi_greek_configs":52,"cost_scenarios":len(costs),"grid_rows":len(gridrows),"pooled_all_available_rows":len(cfgs)*len(costs),
       "fixed_combo_thresholds":FIXED,"primary_cost_id":PRIMARY_COST_ID,
       "signal_parity":"NOT VERIFIED: causal Python ZigZag proxy; original external ZigLib body not supplied",
       "status":"EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION" if events else "BLOCKED_NO_VALID_CAMPAIGNS",
@@ -298,7 +299,15 @@ def main():
             if len(q):
                 r=q.iloc[0]; up="—" if pd.isna(r.paired_uplift_vs_no_stop_inr) else f"{r.paired_uplift_vs_no_stop_inr:.2f}"
                 report.append(f"| {sp} | {r['name']} | {int(r.trades)}/{int(r.expected_campaigns)} | {r.net_pnl_inr:.2f} | {r.mean_net_trade_inr:.2f} | {r.win_rate_pct:.1f} | {r.max_drawdown_inr:.2f} | {r.stop_hit_rate_pct:.1f} | {up} |")
-    report += ["","Full 72 × 24 × 3 rows are in candidate_cost_grid.csv. Primary-cost campaign records are in campaign_ledger_primary.csv.",
+    report += ["","## Pooled all-available-data comparison (development + validation + holdout)",
+      "This is a descriptive aggregate across every eligible campaign, not a replacement for chronological validation. It includes all eligible events and must not be interpreted as an untouched out-of-sample estimate.",
+      "| Candidate | Trades / scheduled | Net P&L ₹ | Mean ₹/trade | Win % | Max DD ₹ | Stop % | Uplift vs no-stop ₹ |",
+      "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    allprim=grid.loc[grid.cost_id.eq(PRIMARY_COST_ID)&grid.split.eq("ALL_AVAILABLE")]
+    for _,r in allprim.sort_values("net_pnl_inr",ascending=False).iterrows():
+        up="—" if pd.isna(r.paired_uplift_vs_no_stop_inr) else f"{r.paired_uplift_vs_no_stop_inr:.2f}"
+        report.append(f"| {r['name']} | {int(r.trades)}/{int(r.expected_campaigns)} | {r.net_pnl_inr:.2f} | {r.mean_net_trade_inr:.2f} | {r.win_rate_pct:.1f} | {r.max_drawdown_inr:.2f} | {r.stop_hit_rate_pct:.1f} | {up} |")
+    report += ["","Full 72 × 24 × 4 rows (including pooled ALL_AVAILABLE) are in candidate_cost_grid.csv. Primary-cost campaign records are in campaign_ledger_primary.csv.",
       "Holdout is not used to select a winner. Bootstrap intervals and one-sided tests are descriptive only and the grid creates multiple-comparison risk.",
       "", "## Decision and limitations",
       "No strategy is promoted. The supplied Pine source imports external DevLucem/ZigLib/1, whose library body was not provided; the Python pivot engine remains a causal proxy. Minute Black–Scholes Greeks, fixed rate/yield, partial CC BY-NC 4.0 option data, OHLC simulated fills and approximate Paytm Money cost assumptions limit conclusions. A sparse holdout or nominal p-value is not proof of an edge.",
