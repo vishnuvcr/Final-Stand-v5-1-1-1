@@ -1,13 +1,10 @@
 <!-- PHASE112_STATUS_START -->
 ## Phase 112 — Greek Stop-Loss Combinations
 
-**Status:** Complete; empirical screen finished. **No stop-loss candidate promoted.**
+**Latest workflow result:** success. No candidate is promoted automatically.
 
-- Source sample: 259 weekly campaigns scheduled, 139 eligible, 124 excluded; development 93, validation 45, holdout 1.
-- Tested 72 candidates (19 single-Greek threshold variants + 52 multi-Greek OR/AND rules + no-stop) × 24 cost scenarios.
-- Validation: no individual-Greek stop or multi-Greek combination improved paired net P&L versus no-stop across the registered cost cases. Gamma 0.30 reduced drawdown somewhat but still lost ₹3,287.53 net versus no-stop. Vega/Rho thresholds triggered too often.
 - [Branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-112-zigzag-greek-stop-combinations) · [plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_STATUS.md)
-- [Results report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_REPORT.md) · [manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_MANUSCRIPT.md) · [full cost grid](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/candidate_cost_grid.csv) · [error log](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_ERROR_LOG.md) · [run 40072066860](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40072066860)
+- [Report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_REPORT.md) · [manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_MANUSCRIPT.md) · [errors](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_ERROR_LOG.md) · [run 40073175215](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40073175215)
 <!-- PHASE112_STATUS_END -->
 
 <!-- PHASE111_STATUS_START -->
