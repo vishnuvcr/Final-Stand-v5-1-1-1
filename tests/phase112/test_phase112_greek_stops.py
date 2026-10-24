@@ -16,7 +16,7 @@ class GreekFormulaTests(unittest.TestCase):
         self.assertGreater(call["delta"],0); self.assertLess(put["delta"],0)
         self.assertGreater(call["gamma"],0); self.assertGreater(put["gamma"],0)
         self.assertGreater(call["vega"],0); self.assertGreater(put["vega"],0)
-        self.assertLess(call["rho"],0) is False
+        self.assertGreater(call["rho"],0)
         self.assertLess(put["rho"],0)
         self.assertTrue(all(np.isfinite(list(call.values()))))
         self.assertAlmostEqual(call["delta"]-put["delta"],1.0,places=5)
