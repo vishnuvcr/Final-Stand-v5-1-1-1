@@ -62,3 +62,11 @@ This screen does not prove that Greeks have no possible value in other definitio
 - Scheduled/eligible/excluded: 259/139/124
 - Candidates/costs/grid rows: 72/24/6912
 - Status: EMPIRICAL_SCREEN_COMPLETE_NO_PROMOTION; promotion: NONE.
+
+
+## User-directed missing-data correction — implementation pending (2026-10-24)
+- User instruction: do not exclude campaigns merely because data are missing; use available data and retain every scheduled campaign in coverage accounting.
+- Policy amendment: [MISSING_DATA_POLICY_AMENDMENT.md](results/phase112/MISSING_DATA_POLICY_AMENDMENT.md).
+- Audit finding: the current engine's `prep_event` returns an exclusion at the first missing option/spot minute or invalid IV/Greek. The existing report's 139 eligible / 124 excluded therefore does not yet satisfy the new directive.
+- Current action: do not represent the existing complete-path results as an all-campaign replay. A correct rerun requires engine changes that preserve campaign rows, perform source recovery where available, mark unresolved fields, and only calculate P&L when entry/exit fills are supportable.
+- Gate status: **OPEN — corrected replay not yet run**. No strategy promotion.
