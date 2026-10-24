@@ -1,3 +1,12 @@
+<!-- PHASE112_STATUS_START -->
+## Phase 112 — Greek Stop-Loss Combinations
+
+**Latest workflow result:** success. No candidate is promoted automatically.
+
+- [Branch](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/tree/phase-112-zigzag-greek-stop-combinations) · [plan](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_RESEARCH_PLAN.md) · [status](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_STATUS.md)
+- [Report](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_REPORT.md) · [manuscript](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/results/phase112/PHASE112_MANUSCRIPT.md) · [errors](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/blob/phase-112-zigzag-greek-stop-combinations/PHASE112_ERROR_LOG.md) · [run 40072066860](https://github.com/vishnuvcr/Final-Stand-v5-1-1-1/actions/runs/40072066860)
+<!-- PHASE112_STATUS_END -->
+
 <!-- PHASE111_STATUS_START -->
 ## Phase 111 — Non-Repainting ZigZag Weekly Options
 
