@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-25T08:49:59.339447+00:00",
+  "timestamp_utc": "2026-10-26T09:26:58.586066+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 28941,
+          "downloads": 28702,
           "likes": 7,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 1144,
+          "downloads": 1149,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-25T00:01:15.000Z",
-          "downloads": 248,
+          "last_modified": "2026-10-25T22:48:42.000Z",
+          "downloads": 258,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -119,10 +119,19 @@
           "full_name": "shivam61/nifty-options-backtester",
           "description": "This is repo for backtesting nifty option selling strategies ",
           "default_branch": "main",
-          "pushed_at": "2026-10-24T18:26:22Z",
+          "pushed_at": "2026-10-26T08:09:43Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/shivam61/nifty-options-backtester"
+        },
+        {
+          "full_name": "2005legend/nifty-edge-research",
+          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-26T07:11:14Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/2005legend/nifty-edge-research"
         },
         {
           "full_name": "ONKAR-PATIL-01/optwise-dashboard",
@@ -150,15 +159,6 @@
           "stars": 1,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
-        },
-        {
-          "full_name": "2005legend/nifty-edge-research",
-          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-23T14:24:11Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/2005legend/nifty-edge-research"
         },
         {
           "full_name": "NubraAPI/nubra-cookbook",
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-25T08:45:04Z",
+          "pushed_at": "2026-10-26T09:26:30Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
