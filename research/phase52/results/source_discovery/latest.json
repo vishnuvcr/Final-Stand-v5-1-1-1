@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-27T09:24:33.073237+00:00",
+  "timestamp_utc": "2026-10-28T10:05:47.567734+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 28767,
+          "downloads": 27114,
           "likes": 7,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 1144,
+          "downloads": 1146,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-27T00:06:17.000Z",
-          "downloads": 257,
+          "last_modified": "2026-10-28T00:49:07.000Z",
+          "downloads": 253,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -116,6 +116,24 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "shivam61/nifty-options-backtester",
+          "description": "This is repo for backtesting nifty option selling strategies ",
+          "default_branch": "main",
+          "pushed_at": "2026-10-28T09:16:16Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/shivam61/nifty-options-backtester"
+        },
+        {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-27T18:39:22Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
           "full_name": "mahav235-svg/nifty-options-lab",
           "description": "NIFTY options research and execution: NSE F&O data, cost-aware backtests with walk-forward and multiple-testing checks, and an Upstox paper-trading layer",
           "default_branch": "main",
@@ -132,24 +150,6 @@
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/Shivaansh29/nifty_backtest"
-        },
-        {
-          "full_name": "karbburn/nifty-option-simulator",
-          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-26T19:12:32Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/karbburn/nifty-option-simulator"
-        },
-        {
-          "full_name": "shivam61/nifty-options-backtester",
-          "description": "This is repo for backtesting nifty option selling strategies ",
-          "default_branch": "main",
-          "pushed_at": "2026-10-26T17:32:44Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/shivam61/nifty-options-backtester"
         },
         {
           "full_name": "2005legend/nifty-edge-research",
@@ -303,16 +303,54 @@
       "query": "India VIX options strategy",
       "query_url": "https://api.github.com/search/repositories?q=India+VIX+options+strategy&per_page=20&sort=updated",
       "status": "OK",
-      "sources": [],
-      "result_count": 0
+      "sources": [
+        {
+          "full_name": "palaemon-codes/vix-strategy-backtest",
+          "description": "India VIX trading strategy — synthetic IV vs India VIX mean-reversion using NSE NIFTY options",
+          "default_branch": "main",
+          "pushed_at": "2026-04-06T06:34:01Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/palaemon-codes/vix-strategy-backtest"
+        },
+        {
+          "full_name": "anshulmadan2022/Nubra-Demo",
+          "description": "Complete UI/UX design system for India's advanced options trading platform. Features market-adaptive strategy recommendations, visual multi-leg options builder, India VIX integration, and mobile-first design. Includes 15+ options strategies (Iron Condor, Bull/Bear spreads, Straddles) with intelligent risk management for NSE/BSE markets.",
+          "default_branch": "main",
+          "pushed_at": "2025-09-28T20:56:34Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/anshulmadan2022/Nubra-Demo"
+        }
+      ],
+      "result_count": 2
     },
     {
       "source_type": "github_repository_search",
       "query": "NIFTY option chain open interest Greeks",
       "query_url": "https://api.github.com/search/repositories?q=NIFTY+option+chain+open+interest+Greeks&per_page=20&sort=updated",
       "status": "OK",
-      "sources": [],
-      "result_count": 0
+      "sources": [
+        {
+          "full_name": "SangerForCode/OpenAlgoTest",
+          "description": "OpenAlgoTest-Developed NiftyQuant, a quantitative options analytics engine that analyzes NIFTY 50 options-chain data, including calls, puts, open interest, implied volatility, and Greeks, to identify market trends, evaluate trading strategies, and generate data-driven recommendations using risk-reward analysis and historical backtesting.",
+          "default_branch": "main",
+          "pushed_at": "2026-09-29T20:08:14Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/SangerForCode/OpenAlgoTest"
+        },
+        {
+          "full_name": "echocmd/option_chain",
+          "description": "Real-time NIFTY Option Chain Viewer — View live prices, open interest, volume, and Option Greeks for NIFTY 50 weekly options in your browser. Includes auto-refresh, ATM highlight, and custom strike range selection.",
+          "default_branch": "main",
+          "pushed_at": "2025-05-23T11:14:35Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/echocmd/option_chain"
+        }
+      ],
+      "result_count": 2
     },
     {
       "source_type": "github_repository_search",
@@ -324,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-27T07:14:08Z",
+          "pushed_at": "2026-10-28T09:39:54Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -400,8 +438,18 @@
       "query": "options backtesting engine India",
       "query_url": "https://api.github.com/search/repositories?q=options+backtesting+engine+India&per_page=20&sort=updated",
       "status": "OK",
-      "sources": [],
-      "result_count": 0
+      "sources": [
+        {
+          "full_name": "Tanishpd/vrp-options-strategy",
+          "description": "Systematic BTC/ETH options selling on Delta Exchange India, built on the measured variance risk premium — honest backtest engine (real BS pricing, live-calibrated spreads, real fees/margin), validated results, full research trail",
+          "default_branch": "main",
+          "pushed_at": "2026-08-21T07:25:40Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/Tanishpd/vrp-options-strategy"
+        }
+      ],
+      "result_count": 1
     },
     {
       "source_type": "youtube_video_search",

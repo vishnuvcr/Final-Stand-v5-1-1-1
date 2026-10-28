@@ -1,10 +1,10 @@
 {
   "status": "EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION",
-  "created_at_utc": "2026-10-27T09:24:18.000881+00:00",
+  "created_at_utc": "2026-10-28T10:05:33.550476+00:00",
   "dataset_revision": "0f4800e43e6f96cec0794369d78eb4d3c4211ef5",
   "base_matrix_sha256": "76b12c6723affbd33cdd736b04e5bba4172cdd5a1ffe9c04b081f69038a081d1",
-  "eod_feature_manifest_sha256": "ad4aa61fb6566042cc7df8a7099802024a186ef4d39ed90189a28ef7065c37df",
-  "eod_features_sha256_gzip": "0379da5997b7c29a9810f045d4e9938ccaa9700f69de39040321797bb1d295f6",
+  "eod_feature_manifest_sha256": "31250241125e1401dfd5f799943b188afff7d2a56a3cd94b8ad9b86b7ea84c90",
+  "eod_features_sha256_gzip": "5865f4c32d3c0036268c9996abb048c3469fa0f28e4f751d3b7f0a85db367631",
   "event_rows": 256,
   "base_matrix_rows": 9699,
   "matched_event_rows": 256,
