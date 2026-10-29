@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-28T10:05:47.567734+00:00",
+  "timestamp_utc": "2026-10-29T10:27:58.642337+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,8 +17,8 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 27114,
-          "likes": 7,
+          "downloads": 26645,
+          "likes": 8,
           "tags": [
             "language:en",
             "license:cc-by-nc-4.0",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 1146,
+          "downloads": 1141,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-28T00:49:07.000Z",
-          "downloads": 253,
+          "last_modified": "2026-10-28T23:20:32.000Z",
+          "downloads": 249,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -116,6 +116,15 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-28T18:48:14Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
           "full_name": "shivam61/nifty-options-backtester",
           "description": "This is repo for backtesting nifty option selling strategies ",
           "default_branch": "main",
@@ -123,15 +132,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/shivam61/nifty-options-backtester"
-        },
-        {
-          "full_name": "karbburn/nifty-option-simulator",
-          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-27T18:39:22Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/karbburn/nifty-option-simulator"
         },
         {
           "full_name": "mahav235-svg/nifty-options-lab",
@@ -215,13 +215,13 @@
           "url": "https://github.com/Aarya-19/nifty50-volatility-engine"
         },
         {
-          "full_name": "abhi15724/quantforge-ai",
-          "description": "AI quant trading agent skill & plugin for Claude, Claude Code, Codex and AGENTS.md tools: build and backtest algorithmic strategies, detect overfitting, run walk-forward and Monte Carlo tests, enforce risk limits. NSE/NIFTY/BANK NIFTY options, futures, forex, crypto.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-07T09:48:37Z",
-          "stars": 1,
-          "license": "MIT",
-          "url": "https://github.com/abhi15724/quantforge-ai"
+          "full_name": "gokulrpillai10-droid/option-buying-backtesting-engine",
+          "description": "NIFTY options backtesting engine — IV/RV classifier, straddle & strategy backtests",
+          "default_branch": "gap-fill-fade",
+          "pushed_at": "2026-10-10T07:57:24Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/gokulrpillai10-droid/option-buying-backtesting-engine"
         },
         {
           "full_name": "iamabhishekjaju/Nifty-Options-Directional-Strategies",
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-10-28T09:39:54Z",
+          "pushed_at": "2026-10-29T02:45:00Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
