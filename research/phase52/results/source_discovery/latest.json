@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-10-30T10:32:09.088922+00:00",
+  "timestamp_utc": "2026-10-31T10:05:28.978558+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 26513,
+          "downloads": 27199,
           "likes": 8,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 1120,
+          "downloads": 739,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,8 +89,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-10-29T23:38:03.000Z",
-          "downloads": 248,
+          "last_modified": "2026-10-31T01:01:08.000Z",
+          "downloads": 240,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -119,10 +119,19 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-10-29T18:55:57Z",
-          "stars": 1,
+          "pushed_at": "2026-10-30T18:33:39Z",
+          "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "ShubhamGarje99/teji",
+          "description": "Backtest NSE index-option strategies with India's real, dated trading costs: STT, exchange fees, SEBI, stamp duty, GST and brokerage.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-30T14:16:40Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/ShubhamGarje99/teji"
         },
         {
           "full_name": "shivam61/nifty-options-backtester",
@@ -285,15 +294,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/abhirick23/option-backtest-engine"
-        },
-        {
-          "full_name": "Srinath-exe/stratify-gemini-extension",
-          "description": "Backtest NIFTY option strategies on real 1-minute data from Gemini CLI",
-          "default_branch": "main",
-          "pushed_at": "2026-09-15T22:56:04Z",
-          "stars": 0,
-          "license": "NOASSERTION",
-          "url": "https://github.com/Srinath-exe/stratify-gemini-extension"
         }
       ],
       "result_count": 20
@@ -359,6 +359,15 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "mevishalsonawane-ai/options-lab",
+          "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-31T09:56:50Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/mevishalsonawane-ai/options-lab"
+        },
+        {
           "full_name": "iamsanaur/indian-day-trader",
           "description": "Claude skills for intraday trading on NSE/BSE: index charts, option chain analytics, F&O strategies incl. option selling, sizing in lots with Indian charges, a PASS/BLOCK risk gate and broker-neutral tickets. Never places orders.",
           "default_branch": "main",
@@ -366,15 +375,6 @@
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/iamsanaur/indian-day-trader"
-        },
-        {
-          "full_name": "mevishalsonawane-ai/options-lab",
-          "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-30T10:09:43Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/mevishalsonawane-ai/options-lab"
         },
         {
           "full_name": "Aathirajan/nse-options-bot",
