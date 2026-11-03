@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-02T11:45:30.109485+00:00",
+  "timestamp_utc": "2026-11-03T11:24:04.725620+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 27526,
+          "downloads": 27728,
           "likes": 8,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 736,
+          "downloads": 737,
           "likes": 1,
           "tags": [
             "language:en",
@@ -90,7 +90,7 @@
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
           "last_modified": "2026-11-01T23:34:50.000Z",
-          "downloads": 234,
+          "downloads": 235,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -119,10 +119,37 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-02T11:28:02Z",
+          "pushed_at": "2026-11-03T11:16:31Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
+        },
+        {
+          "full_name": "DARSHAN120806/neuravol-forecast",
+          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-03T06:00:21Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
+        },
+        {
+          "full_name": "2005legend/nifty-edge-research",
+          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-03T03:23:34Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/2005legend/nifty-edge-research"
+        },
+        {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-02T22:17:10Z",
+          "stars": 2,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
         },
         {
           "full_name": "raghvendrayadava/nifty-options-backtester",
@@ -161,15 +188,6 @@
           "url": "https://github.com/VKHirehalli/trading-research"
         },
         {
-          "full_name": "karbburn/nifty-option-simulator",
-          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-30T18:33:39Z",
-          "stars": 2,
-          "license": null,
-          "url": "https://github.com/karbburn/nifty-option-simulator"
-        },
-        {
           "full_name": "ShubhamGarje99/teji",
           "description": "Backtest NSE index-option strategies with India's real, dated trading costs: STT, exchange fees, SEBI, stamp duty, GST and brokerage.",
           "default_branch": "main",
@@ -186,15 +204,6 @@
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/mahav235-svg/nifty-options-lab"
-        },
-        {
-          "full_name": "2005legend/nifty-edge-research",
-          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
-          "default_branch": "main",
-          "pushed_at": "2026-10-26T17:01:18Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/2005legend/nifty-edge-research"
         },
         {
           "full_name": "ONKAR-PATIL-01/optwise-dashboard",
@@ -285,15 +294,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/VibeCoderMVP/NiftyOptionsBacktest"
-        },
-        {
-          "full_name": "ayyararyan/curvex",
-          "description": "eSSVI butterfly stat-arb backtest on NSE NIFTY intraday options",
-          "default_branch": "main",
-          "pushed_at": "2026-10-03T17:29:09Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/ayyararyan/curvex"
         }
       ],
       "result_count": 20
@@ -362,7 +362,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-02T10:36:00Z",
+          "pushed_at": "2026-11-03T11:23:38Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -468,5 +468,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 2
+  "new_unique_source_leads_added": 1
 }
