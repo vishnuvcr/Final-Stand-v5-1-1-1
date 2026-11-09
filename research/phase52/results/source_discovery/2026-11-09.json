@@ -1,0 +1,528 @@
+{
+  "schema_version": "1.0",
+  "timestamp_utc": "2026-11-09T12:03:39.878200+00:00",
+  "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
+  "credentials_present": {
+    "HF_TOKEN": true,
+    "GITHUB_TOKEN": true,
+    "YOUTUBE_API_KEY": false
+  },
+  "queries": [
+    {
+      "source_type": "huggingface_dataset_search",
+      "query": "india index options",
+      "query_url": "https://huggingface.co/api/datasets?search=india+index+options&limit=20&sort=downloads&direction=-1",
+      "status": "OK",
+      "sources": [
+        {
+          "id": "thetrademarkk/india-index-options-1m",
+          "last_modified": "2026-07-12T18:21:26.000Z",
+          "downloads": 26813,
+          "likes": 8,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/thetrademarkk/india-index-options-1m"
+        },
+        {
+          "id": "codepyx23/india-index-options-1m",
+          "last_modified": "2026-09-08T19:30:45.000Z",
+          "downloads": 746,
+          "likes": 1,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/codepyx23/india-index-options-1m"
+        },
+        {
+          "id": "hariballabh/india-index-options-1m",
+          "last_modified": "2026-11-06T20:50:03.000Z",
+          "downloads": 59,
+          "likes": 1,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/hariballabh/india-index-options-1m"
+        },
+        {
+          "id": "professorRakesh/india-index-options-1m",
+          "last_modified": "2026-11-06T14:08:43.000Z",
+          "downloads": 39,
+          "likes": 0,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/professorRakesh/india-index-options-1m"
+        }
+      ],
+      "result_count": 4
+    },
+    {
+      "source_type": "huggingface_dataset_search",
+      "query": "NIFTY options intraday",
+      "query_url": "https://huggingface.co/api/datasets?search=NIFTY+options+intraday&limit=20&sort=downloads&direction=-1",
+      "status": "OK",
+      "sources": [],
+      "result_count": 0
+    },
+    {
+      "source_type": "huggingface_dataset_search",
+      "query": "NSE options historical",
+      "query_url": "https://huggingface.co/api/datasets?search=NSE+options+historical&limit=20&sort=downloads&direction=-1",
+      "status": "OK",
+      "sources": [],
+      "result_count": 0
+    },
+    {
+      "source_type": "huggingface_dataset_search",
+      "query": "India VIX",
+      "query_url": "https://huggingface.co/api/datasets?search=India+VIX&limit=20&sort=downloads&direction=-1",
+      "status": "OK",
+      "sources": [
+        {
+          "id": "average-developer/stocks-INDIAVIX-1D-candles",
+          "last_modified": "2026-11-08T22:51:11.000Z",
+          "downloads": 273,
+          "likes": 0,
+          "tags": [
+            "size_categories:n<1K",
+            "region:us"
+          ],
+          "url": "https://huggingface.co/datasets/average-developer/stocks-INDIAVIX-1D-candles"
+        }
+      ],
+      "result_count": 1
+    },
+    {
+      "source_type": "huggingface_dataset_search",
+      "query": "NIFTY option chain open interest",
+      "query_url": "https://huggingface.co/api/datasets?search=NIFTY+option+chain+open+interest&limit=20&sort=downloads&direction=-1",
+      "status": "OK",
+      "sources": [],
+      "result_count": 0
+    },
+    {
+      "source_type": "github_repository_search",
+      "query": "NIFTY options backtest",
+      "query_url": "https://api.github.com/search/repositories?q=NIFTY+options+backtest&per_page=20&sort=updated",
+      "status": "OK",
+      "sources": [
+        {
+          "full_name": "gokuls456/straddlecore",
+          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
+          "default_branch": "main",
+          "pushed_at": "2026-11-09T10:10:09Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/gokuls456/straddlecore"
+        },
+        {
+          "full_name": "Shivaansh29/nifty_backtest",
+          "description": "nifty options backtesting ",
+          "default_branch": "main",
+          "pushed_at": "2026-11-08T13:25:46Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Shivaansh29/nifty_backtest"
+        },
+        {
+          "full_name": "vssagar6/option-nifty",
+          "description": "NIFTY Bollinger Band + ALMA options backtesting app with weekly expiry and manually supplied option prices.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-08T08:08:16Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/vssagar6/option-nifty"
+        },
+        {
+          "full_name": "DARSHAN120806/neuravol-forecast",
+          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-06T20:28:27Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
+        },
+        {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-06T19:56:02Z",
+          "stars": 2,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "sajal101agrawal/nse-option-chain-database",
+          "description": "Self-hosted NSE option chain database and analytics API for Indian F&O. 5 years of bhavcopy history, contract-level IV and Greeks, IV rank/percentile, VRP, skew, forward factor, straddle backtests, live Kite/Dhan option chains. FastAPI, PostgreSQL, TimescaleDB, Redis.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-06T10:56:54Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/sajal101agrawal/nse-option-chain-database"
+        },
+        {
+          "full_name": "VibeCoderMVP/NiftyOptionsBacktest",
+          "description": "Nifty weekly options theta harvest strategy — backtested Jan 2023-Jun 2026 via Dhan API, DuckDB + Parquet",
+          "default_branch": "master",
+          "pushed_at": "2026-11-04T18:46:26Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/VibeCoderMVP/NiftyOptionsBacktest"
+        },
+        {
+          "full_name": "2005legend/nifty-edge-research",
+          "description": "Personal research and alert system for Nifty and Sensex weekly options. It combines technical, macro and options-market signals with pre-registered backtests, calibrated probabilities and strict risk rules. Alerts only, no auto-trading.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-03T03:23:34Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/2005legend/nifty-edge-research"
+        },
+        {
+          "full_name": "raghvendrayadava/nifty-options-backtester",
+          "description": "",
+          "default_branch": "main",
+          "pushed_at": "2026-11-01T16:01:45Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/raghvendrayadava/nifty-options-backtester"
+        },
+        {
+          "full_name": "shivam61/nifty-options-backtester",
+          "description": "This is repo for backtesting nifty option selling strategies ",
+          "default_branch": "main",
+          "pushed_at": "2026-11-01T09:22:31Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/shivam61/nifty-options-backtester"
+        },
+        {
+          "full_name": "VKHirehalli/trading-research",
+          "description": "NIFTY options and NSE intraday trading research: tick-verified backtests with real costs, and a live Dhan/Upstox trading bot on AWS",
+          "default_branch": "main",
+          "pushed_at": "2026-10-31T11:28:55Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/VKHirehalli/trading-research"
+        },
+        {
+          "full_name": "ShubhamGarje99/teji",
+          "description": "Backtest NSE index-option strategies with India's real, dated trading costs: STT, exchange fees, SEBI, stamp duty, GST and brokerage.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-30T14:16:40Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/ShubhamGarje99/teji"
+        },
+        {
+          "full_name": "mahav235-svg/nifty-options-lab",
+          "description": "NIFTY options research and execution: NSE F&O data, cost-aware backtests with walk-forward and multiple-testing checks, and an Upstox paper-trading layer",
+          "default_branch": "main",
+          "pushed_at": "2026-10-27T03:40:09Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/mahav235-svg/nifty-options-lab"
+        },
+        {
+          "full_name": "ONKAR-PATIL-01/optwise-dashboard",
+          "description": "Broker-style options backtesting dashboard for NIFTY — static front-end",
+          "default_branch": "main",
+          "pushed_at": "2026-10-24T05:50:43Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/ONKAR-PATIL-01/optwise-dashboard"
+        },
+        {
+          "full_name": "NubraAPI/nubra-cookbook",
+          "description": "Nubra cookbook: Python options trading examples (delta hedging, gamma hedging, open interest, backtesting) built on the Nubra Python SDK. Educational use only.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-22T10:59:16Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/NubraAPI/nubra-cookbook"
+        },
+        {
+          "full_name": "Krishang2004/options-strategy-reports",
+          "description": "Public static dashboard of NIFTY/SENSEX backtest strategy reports",
+          "default_branch": "master",
+          "pushed_at": "2026-10-22T08:24:48Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/Krishang2004/options-strategy-reports"
+        },
+        {
+          "full_name": "rxpriyanshu10/Route-Wise-Options-Analytics-Strategy-Backtesting-Platform",
+          "description": "Route Wise is a full-stack options analytics platform for exploring NIFTY derivatives data with interactive visualizations, Greeks, volatility analysis, anomaly detection, strategy design, backtesting, and AI-assisted insights.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-13T18:29:58Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/rxpriyanshu10/Route-Wise-Options-Analytics-Strategy-Backtesting-Platform"
+        },
+        {
+          "full_name": "suraj9321/dhan-api-backtest-options-framework",
+          "description": "End to end quant research stack for systematic Nifty option selling: event-driven backtester, vol/VRP signals, DhanHQ data pipeline.",
+          "default_branch": "main",
+          "pushed_at": "2026-10-12T11:22:53Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/suraj9321/dhan-api-backtest-options-framework"
+        },
+        {
+          "full_name": "Aarya-19/nifty50-volatility-engine",
+          "description": "Nifty 50 Implied Volatility Surface & Delta-Neutral Options Backtesting Engine",
+          "default_branch": "main",
+          "pushed_at": "2026-10-10T21:48:48Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/Aarya-19/nifty50-volatility-engine"
+        },
+        {
+          "full_name": "gokulrpillai10-droid/option-buying-backtesting-engine",
+          "description": "NIFTY options backtesting engine — IV/RV classifier, straddle & strategy backtests",
+          "default_branch": "gap-fill-fade",
+          "pushed_at": "2026-10-10T07:57:24Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/gokulrpillai10-droid/option-buying-backtesting-engine"
+        }
+      ],
+      "result_count": 20
+    },
+    {
+      "source_type": "github_repository_search",
+      "query": "India VIX options strategy",
+      "query_url": "https://api.github.com/search/repositories?q=India+VIX+options+strategy&per_page=20&sort=updated",
+      "status": "OK",
+      "sources": [
+        {
+          "full_name": "palaemon-codes/vix-strategy-backtest",
+          "description": "India VIX trading strategy — synthetic IV vs India VIX mean-reversion using NSE NIFTY options",
+          "default_branch": "main",
+          "pushed_at": "2026-04-06T06:34:01Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/palaemon-codes/vix-strategy-backtest"
+        },
+        {
+          "full_name": "anshulmadan2022/Nubra-Demo",
+          "description": "Complete UI/UX design system for India's advanced options trading platform. Features market-adaptive strategy recommendations, visual multi-leg options builder, India VIX integration, and mobile-first design. Includes 15+ options strategies (Iron Condor, Bull/Bear spreads, Straddles) with intelligent risk management for NSE/BSE markets.",
+          "default_branch": "main",
+          "pushed_at": "2025-09-28T20:56:34Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/anshulmadan2022/Nubra-Demo"
+        }
+      ],
+      "result_count": 2
+    },
+    {
+      "source_type": "github_repository_search",
+      "query": "NIFTY option chain open interest Greeks",
+      "query_url": "https://api.github.com/search/repositories?q=NIFTY+option+chain+open+interest+Greeks&per_page=20&sort=updated",
+      "status": "OK",
+      "sources": [
+        {
+          "full_name": "SangerForCode/OpenAlgoTest",
+          "description": "OpenAlgoTest-Developed NiftyQuant, a quantitative options analytics engine that analyzes NIFTY 50 options-chain data, including calls, puts, open interest, implied volatility, and Greeks, to identify market trends, evaluate trading strategies, and generate data-driven recommendations using risk-reward analysis and historical backtesting.",
+          "default_branch": "main",
+          "pushed_at": "2026-09-29T20:08:14Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/SangerForCode/OpenAlgoTest"
+        },
+        {
+          "full_name": "echocmd/option_chain",
+          "description": "Real-time NIFTY Option Chain Viewer — View live prices, open interest, volume, and Option Greeks for NIFTY 50 weekly options in your browser. Includes auto-refresh, ATM highlight, and custom strike range selection.",
+          "default_branch": "main",
+          "pushed_at": "2025-05-23T11:14:35Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/echocmd/option_chain"
+        }
+      ],
+      "result_count": 2
+    },
+    {
+      "source_type": "github_repository_search",
+      "query": "Indian index options strategy",
+      "query_url": "https://api.github.com/search/repositories?q=Indian+index+options+strategy&per_page=20&sort=updated",
+      "status": "OK",
+      "sources": [
+        {
+          "full_name": "mevishalsonawane-ai/options-lab",
+          "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-09T08:40:25Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/mevishalsonawane-ai/options-lab"
+        },
+        {
+          "full_name": "iamsanaur/indian-day-trader",
+          "description": "Claude skills for intraday trading on NSE/BSE: index charts, option chain analytics, F&O strategies incl. option selling, sizing in lots with Indian charges, a PASS/BLOCK risk gate and broker-neutral tickets. Never places orders.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-04T16:41:38Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/iamsanaur/indian-day-trader"
+        },
+        {
+          "full_name": "VijaykrishnareddyMuddasani/quant-engine",
+          "description": "Research and execution engine for intraday strategies on Indian index and index-option markets: data quality, conservative backtesting, pre-registered validation, Kite execution and Telegram operations",
+          "default_branch": "main",
+          "pushed_at": "2026-11-04T15:07:36Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/VijaykrishnareddyMuddasani/quant-engine"
+        },
+        {
+          "full_name": "Aathirajan/nse-options-bot",
+          "description": "Multi-strategy NSE index-options engine on NautilusTrader with Indian cost model",
+          "default_branch": "master",
+          "pushed_at": "2026-10-23T19:55:31Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Aathirajan/nse-options-bot"
+        },
+        {
+          "full_name": "loki213-Hash/Try",
+          "description": "Multi-Index Indian Options Signal Bot - Autonomous Strategy Scanner, Risk Management & Paper Trading",
+          "default_branch": "main",
+          "pushed_at": "2026-10-21T09:12:36Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/loki213-Hash/Try"
+        },
+        {
+          "full_name": "Srinath-exe/stratify-mcp",
+          "description": "MCP server for backtesting Indian index-options strategies against real 1-minute data",
+          "default_branch": "main",
+          "pushed_at": "2026-11-08T04:23:35Z",
+          "stars": 1,
+          "license": "NOASSERTION",
+          "url": "https://github.com/Srinath-exe/stratify-mcp"
+        },
+        {
+          "full_name": "nidheeshgalaxys4-ship-it/optionsplayground",
+          "description": "It adresses addresses a critical gap in the Indian retail quantitative trading ecosystem: the lack of accessible, open-source sandboxes for simulating, backtesting, and analyzing complex multi-leg Nifty index options strategies.",
+          "default_branch": "main",
+          "pushed_at": "2026-07-26T12:15:50Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/nidheeshgalaxys4-ship-it/optionsplayground"
+        },
+        {
+          "full_name": "alstonmendonca/AlsQuant",
+          "description": "NSE Options Backtesting Platform - Indian index options backtester with optimization, walk-forward validation, and Monaco strategy editor",
+          "default_branch": "master",
+          "pushed_at": "2026-06-24T07:17:21Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/alstonmendonca/AlsQuant"
+        },
+        {
+          "full_name": "pverma333/qrl-backtest-engine",
+          "description": "EOD-based Indian index derivatives risk lab: options strategies, Greeks, portfolio VaR/CVaR.",
+          "default_branch": "main",
+          "pushed_at": "2026-01-07T11:23:27Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/pverma333/qrl-backtest-engine"
+        },
+        {
+          "full_name": "bhardwaj58/squirrel-backtest-engine",
+          "description": "Backtesting Engine to Backtest Index Strategies on Options, Futures and Spot (BankNIFTY, NIFTY) for Indian Share Market",
+          "default_branch": "master",
+          "pushed_at": "2020-05-09T07:46:07Z",
+          "stars": 11,
+          "license": "MIT",
+          "url": "https://github.com/bhardwaj58/squirrel-backtest-engine"
+        }
+      ],
+      "result_count": 10
+    },
+    {
+      "source_type": "github_repository_search",
+      "query": "options backtesting engine India",
+      "query_url": "https://api.github.com/search/repositories?q=options+backtesting+engine+India&per_page=20&sort=updated",
+      "status": "OK",
+      "sources": [
+        {
+          "full_name": "Tanishpd/vrp-options-strategy",
+          "description": "Systematic BTC/ETH options selling on Delta Exchange India, built on the measured variance risk premium — honest backtest engine (real BS pricing, live-calibrated spreads, real fees/margin), validated results, full research trail",
+          "default_branch": "main",
+          "pushed_at": "2026-08-21T07:25:40Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/Tanishpd/vrp-options-strategy"
+        }
+      ],
+      "result_count": 1
+    },
+    {
+      "source_type": "youtube_video_search",
+      "query": "all registered YouTube queries",
+      "status": "NOT_RUN",
+      "reason": "YOUTUBE_API_KEY secret is not configured. Existing Phase 46 video ledger remains available; do not claim a fresh full-channel crawl."
+    }
+  ],
+  "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence."
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-08T10:51:48.522101+00:00",
+  "timestamp_utc": "2026-11-09T12:03:39.878200+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 26947,
+          "downloads": 26813,
           "likes": 8,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 742,
+          "downloads": 746,
           "likes": 1,
           "tags": [
             "language:en",
@@ -65,7 +65,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 42,
+          "downloads": 59,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,7 +89,7 @@
         {
           "id": "professorRakesh/india-index-options-1m",
           "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 31,
+          "downloads": 39,
           "likes": 0,
           "tags": [
             "language:en",
@@ -137,7 +137,7 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-07T22:47:46.000Z",
+          "last_modified": "2026-11-08T22:51:11.000Z",
           "downloads": 273,
           "likes": 0,
           "tags": [
@@ -164,6 +164,24 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "gokuls456/straddlecore",
+          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
+          "default_branch": "main",
+          "pushed_at": "2026-11-09T10:10:09Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/gokuls456/straddlecore"
+        },
+        {
+          "full_name": "Shivaansh29/nifty_backtest",
+          "description": "nifty options backtesting ",
+          "default_branch": "main",
+          "pushed_at": "2026-11-08T13:25:46Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Shivaansh29/nifty_backtest"
+        },
+        {
           "full_name": "vssagar6/option-nifty",
           "description": "NIFTY Bollinger Band + ALMA options backtesting app with weekly expiry and manually supplied option prices.",
           "default_branch": "main",
@@ -171,24 +189,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/vssagar6/option-nifty"
-        },
-        {
-          "full_name": "Shivaansh29/nifty_backtest",
-          "description": "nifty options backtesting ",
-          "default_branch": "main",
-          "pushed_at": "2026-11-08T06:39:35Z",
-          "stars": 0,
-          "license": "MIT",
-          "url": "https://github.com/Shivaansh29/nifty_backtest"
-        },
-        {
-          "full_name": "gokuls456/straddlecore",
-          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
-          "default_branch": "main",
-          "pushed_at": "2026-11-06T21:12:21Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/gokuls456/straddlecore"
         },
         {
           "full_name": "DARSHAN120806/neuravol-forecast",
@@ -410,7 +410,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-07T22:08:39Z",
+          "pushed_at": "2026-11-09T08:40:25Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -525,5 +525,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 1
+  "new_unique_source_leads_added": 0
 }
