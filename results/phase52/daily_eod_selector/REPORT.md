@@ -3,7 +3,7 @@
 **Status:** EOD_FACTOR_SELECTOR_VALIDATION_ONLY_NO_PROMOTION. No promotion.
 - Events: 256; base matrix rows: 9699; matched base/EOD events: 256.
 - Baseline strategy selected on development only: buy_call.
-- Pinned option revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5; EOD archive commit: 66bbc7fcb43f94a988c674c36931734505cb3259.
+- Pinned option revision: 0f4800e43e6f96cec0794369d78eb4d3c4211ef5; EOD archive commit: 751a2bf9e2cdf28b74b1de9787f55bb84e48d78e.
 - Feature thresholds and strategy mappings are fit only on development; the later development block tunes feature choices; 2024–25 is validation; 2026 is an untouched holdout only if each factor meets the coverage and 20-event gates.
 
 ## Validation and holdout results

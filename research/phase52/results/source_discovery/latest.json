@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-09T12:03:39.878200+00:00",
+  "timestamp_utc": "2026-11-10T11:40:32.307101+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 26813,
+          "downloads": 26142,
           "likes": 8,
           "tags": [
             "language:en",
@@ -65,7 +65,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 59,
+          "downloads": 67,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,7 +89,7 @@
         {
           "id": "professorRakesh/india-index-options-1m",
           "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 39,
+          "downloads": 43,
           "likes": 0,
           "tags": [
             "language:en",
@@ -137,8 +137,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-08T22:51:11.000Z",
-          "downloads": 273,
+          "last_modified": "2026-11-09T23:31:14.000Z",
+          "downloads": 272,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -167,10 +167,28 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-09T10:10:09Z",
+          "pushed_at": "2026-11-10T04:15:23Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
+        },
+        {
+          "full_name": "DARSHAN120806/neuravol-forecast",
+          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-09T23:28:12Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
+        },
+        {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-09T22:57:54Z",
+          "stars": 2,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
         },
         {
           "full_name": "Shivaansh29/nifty_backtest",
@@ -189,24 +207,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/vssagar6/option-nifty"
-        },
-        {
-          "full_name": "DARSHAN120806/neuravol-forecast",
-          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
-          "default_branch": "main",
-          "pushed_at": "2026-11-06T20:28:27Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
-        },
-        {
-          "full_name": "karbburn/nifty-option-simulator",
-          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
-          "default_branch": "main",
-          "pushed_at": "2026-11-06T19:56:02Z",
-          "stars": 2,
-          "license": null,
-          "url": "https://github.com/karbburn/nifty-option-simulator"
         },
         {
           "full_name": "sajal101agrawal/nse-option-chain-database",
@@ -410,7 +410,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-09T08:40:25Z",
+          "pushed_at": "2026-11-10T11:16:33Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
