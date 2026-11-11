@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-10T11:40:32.307101+00:00",
+  "timestamp_utc": "2026-11-11T11:29:58.568107+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 26142,
+          "downloads": 26064,
           "likes": 8,
           "tags": [
             "language:en",
@@ -167,7 +167,7 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-10T04:15:23Z",
+          "pushed_at": "2026-11-11T10:10:19Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
@@ -176,16 +176,25 @@
           "full_name": "DARSHAN120806/neuravol-forecast",
           "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
           "default_branch": "main",
-          "pushed_at": "2026-11-09T23:28:12Z",
+          "pushed_at": "2026-11-11T05:51:51Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/DARSHAN120806/neuravol-forecast"
         },
         {
+          "full_name": "avirajbhatia13/research-portfolio",
+          "description": "Backtest dashboards: NIFTY options portfolio and Indian equity momentum strategies",
+          "default_branch": "main",
+          "pushed_at": "2026-11-10T22:18:28Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/avirajbhatia13/research-portfolio"
+        },
+        {
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-11-09T22:57:54Z",
+          "pushed_at": "2026-11-10T20:26:01Z",
           "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
@@ -213,7 +222,7 @@
           "description": "Self-hosted NSE option chain database and analytics API for Indian F&O. 5 years of bhavcopy history, contract-level IV and Greeks, IV rank/percentile, VRP, skew, forward factor, straddle backtests, live Kite/Dhan option chains. FastAPI, PostgreSQL, TimescaleDB, Redis.",
           "default_branch": "main",
           "pushed_at": "2026-11-06T10:56:54Z",
-          "stars": 0,
+          "stars": 1,
           "license": "MIT",
           "url": "https://github.com/sajal101agrawal/nse-option-chain-database"
         },
@@ -248,7 +257,7 @@
           "full_name": "shivam61/nifty-options-backtester",
           "description": "This is repo for backtesting nifty option selling strategies ",
           "default_branch": "main",
-          "pushed_at": "2026-11-01T09:22:31Z",
+          "pushed_at": "2026-11-11T03:20:00Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/shivam61/nifty-options-backtester"
@@ -333,15 +342,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/Aarya-19/nifty50-volatility-engine"
-        },
-        {
-          "full_name": "gokulrpillai10-droid/option-buying-backtesting-engine",
-          "description": "NIFTY options backtesting engine — IV/RV classifier, straddle & strategy backtests",
-          "default_branch": "gap-fill-fade",
-          "pushed_at": "2026-10-10T07:57:24Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/gokulrpillai10-droid/option-buying-backtesting-engine"
         }
       ],
       "result_count": 20
@@ -410,7 +410,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-10T11:16:33Z",
+          "pushed_at": "2026-11-10T23:52:09Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -420,7 +420,7 @@
           "description": "Claude skills for intraday trading on NSE/BSE: index charts, option chain analytics, F&O strategies incl. option selling, sizing in lots with Indian charges, a PASS/BLOCK risk gate and broker-neutral tickets. Never places orders.",
           "default_branch": "main",
           "pushed_at": "2026-11-04T16:41:38Z",
-          "stars": 0,
+          "stars": 1,
           "license": "MIT",
           "url": "https://github.com/iamsanaur/indian-day-trader"
         },
@@ -525,5 +525,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "new_unique_source_leads_added": 1
 }
