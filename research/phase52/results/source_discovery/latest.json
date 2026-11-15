@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-14T10:58:38.014388+00:00",
+  "timestamp_utc": "2026-11-15T11:31:43.385740+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 26683,
+          "downloads": 26584,
           "likes": 8,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 739,
+          "downloads": 762,
           "likes": 1,
           "tags": [
             "language:en",
@@ -65,7 +65,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 164,
+          "downloads": 167,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,7 +89,7 @@
         {
           "id": "professorRakesh/india-index-options-1m",
           "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 48,
+          "downloads": 49,
           "likes": 0,
           "tags": [
             "language:en",
@@ -137,8 +137,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-13T22:52:46.000Z",
-          "downloads": 316,
+          "last_modified": "2026-11-14T23:30:56.000Z",
+          "downloads": 322,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -194,7 +194,7 @@
           "full_name": "Srinath-exe/stratify-mcp",
           "description": "MCP server for backtesting NIFTY and SENSEX options strategies on real 1-minute data, from ChatGPT, Claude or any MCP client",
           "default_branch": "main",
-          "pushed_at": "2026-11-13T12:13:53Z",
+          "pushed_at": "2026-11-15T04:23:30Z",
           "stars": 1,
           "license": "NOASSERTION",
           "url": "https://github.com/Srinath-exe/stratify-mcp"
@@ -410,7 +410,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-14T10:56:20Z",
+          "pushed_at": "2026-11-15T11:31:04Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -516,5 +516,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 1
+  "new_unique_source_leads_added": 0
 }
