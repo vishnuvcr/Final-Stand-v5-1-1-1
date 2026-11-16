@@ -1,14 +1,14 @@
 {
   "grid_version": "phase52-grid-v1.3",
-  "next_offset": 1310000,
-  "last_start_offset": 1285000,
+  "next_offset": 1335000,
+  "last_start_offset": 1310000,
   "last_shard_size": 25000,
   "requested_shard_size": 25000,
   "total_configurations": 9379584,
-  "shard_sha256": "3ada14e71b7417151e64a0caf2624938aa0ad9b761b00201f4bded27fae7bc0c",
+  "shard_sha256": "3a1b48b73a7eb23e345e4d936bc34d68969d6ec35025428cda52456b2529adc9",
   "configuration_enumeration_complete": false,
   "status": "ENUMERATED_NOT_BACKTESTED",
-  "last_run_id": "43708336374",
-  "updated_at_utc": "2026-11-15T11:31:44.065136+00:00",
+  "last_run_id": "43861320991",
+  "updated_at_utc": "2026-11-16T12:00:21.898379+00:00",
   "interpretation": "The offset records deterministic grid enumeration only. It is not a completed replay count and must not be reported as a number of tested strategies."
 }
