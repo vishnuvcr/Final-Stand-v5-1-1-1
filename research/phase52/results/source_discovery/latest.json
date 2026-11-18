@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-17T12:22:45.862755+00:00",
+  "timestamp_utc": "2026-11-18T12:14:20.757979+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -41,7 +41,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 25108,
+          "downloads": 23605,
           "likes": 8,
           "tags": [
             "language:en",
@@ -65,7 +65,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 777,
+          "downloads": 193,
           "likes": 1,
           "tags": [
             "language:en",
@@ -133,9 +133,33 @@
             "nifty"
           ],
           "url": "https://huggingface.co/datasets/RahulRao44/india-index-options-1m"
+        },
+        {
+          "id": "bsakash137/india-index-options-1m",
+          "last_modified": "2026-11-17T16:49:04.000Z",
+          "downloads": 0,
+          "likes": 0,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/bsakash137/india-index-options-1m"
         }
       ],
-      "result_count": 5
+      "result_count": 6
     },
     {
       "source_type": "huggingface_dataset_search",
@@ -161,8 +185,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-16T23:27:27.000Z",
-          "downloads": 323,
+          "last_modified": "2026-11-17T22:50:32.000Z",
+          "downloads": 326,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -191,7 +215,7 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-17T10:10:22Z",
+          "pushed_at": "2026-11-18T10:10:27Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
@@ -200,7 +224,7 @@
           "full_name": "DARSHAN120806/neuravol-forecast",
           "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
           "default_branch": "main",
-          "pushed_at": "2026-11-16T23:25:19Z",
+          "pushed_at": "2026-11-17T22:26:47Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/DARSHAN120806/neuravol-forecast"
@@ -209,10 +233,19 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-11-16T22:50:47Z",
+          "pushed_at": "2026-11-17T21:43:08Z",
           "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "VibeCoderMVP/NiftyOptionsBacktest",
+          "description": "Nifty weekly options theta harvest strategy — backtested Jan 2023-Jun 2026 via Dhan API, DuckDB + Parquet",
+          "default_branch": "master",
+          "pushed_at": "2026-11-17T19:15:59Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/VibeCoderMVP/NiftyOptionsBacktest"
         },
         {
           "full_name": "ujjawalparashar/NIFTY50-Options-Backtesting-System",
@@ -276,15 +309,6 @@
           "stars": 1,
           "license": "MIT",
           "url": "https://github.com/sajal101agrawal/nse-option-chain-database"
-        },
-        {
-          "full_name": "VibeCoderMVP/NiftyOptionsBacktest",
-          "description": "Nifty weekly options theta harvest strategy — backtested Jan 2023-Jun 2026 via Dhan API, DuckDB + Parquet",
-          "default_branch": "master",
-          "pushed_at": "2026-11-04T18:46:26Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/VibeCoderMVP/NiftyOptionsBacktest"
         },
         {
           "full_name": "2005legend/nifty-edge-research",
@@ -434,7 +458,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-17T04:51:39Z",
+          "pushed_at": "2026-11-18T08:45:18Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -540,5 +564,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "new_unique_source_leads_added": 1
 }
