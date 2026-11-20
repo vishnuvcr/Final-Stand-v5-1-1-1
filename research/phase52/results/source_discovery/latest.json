@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-19T12:11:07.314633+00:00",
+  "timestamp_utc": "2026-11-20T12:07:16.458225+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 36935,
+          "downloads": 37242,
           "likes": 1,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 23605,
+          "downloads": 23329,
           "likes": 8,
           "tags": [
             "language:en",
@@ -63,9 +63,33 @@
           "url": "https://huggingface.co/datasets/thetrademarkk/india-index-options-1m"
         },
         {
+          "id": "professorRakesh/india-index-options-1m",
+          "last_modified": "2026-11-06T14:08:43.000Z",
+          "downloads": 343,
+          "likes": 0,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/professorRakesh/india-index-options-1m"
+        },
+        {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 193,
+          "downloads": 202,
           "likes": 1,
           "tags": [
             "language:en",
@@ -89,7 +113,7 @@
         {
           "id": "RahulRao44/india-index-options-1m",
           "last_modified": "2026-11-15T21:08:18.000Z",
-          "downloads": 86,
+          "downloads": 89,
           "likes": 0,
           "tags": [
             "language:en",
@@ -111,33 +135,9 @@
           "url": "https://huggingface.co/datasets/RahulRao44/india-index-options-1m"
         },
         {
-          "id": "professorRakesh/india-index-options-1m",
-          "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 84,
-          "likes": 0,
-          "tags": [
-            "language:en",
-            "license:cc-by-nc-4.0",
-            "size_categories:100M<n<1B",
-            "format:parquet",
-            "modality:tabular",
-            "modality:text",
-            "library:datasets",
-            "library:dask",
-            "library:polars",
-            "library:mlcroissant",
-            "region:us",
-            "finance",
-            "options",
-            "india",
-            "nifty"
-          ],
-          "url": "https://huggingface.co/datasets/professorRakesh/india-index-options-1m"
-        },
-        {
           "id": "bsakash137/india-index-options-1m",
           "last_modified": "2026-11-17T16:49:04.000Z",
-          "downloads": 41,
+          "downloads": 60,
           "likes": 0,
           "tags": [
             "language:en",
@@ -185,8 +185,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-18T22:51:27.000Z",
-          "downloads": 326,
+          "last_modified": "2026-11-19T22:51:49.000Z",
+          "downloads": 333,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -215,7 +215,7 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-19T10:10:19Z",
+          "pushed_at": "2026-11-20T10:10:07Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
@@ -224,7 +224,7 @@
           "full_name": "DARSHAN120806/neuravol-forecast",
           "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
           "default_branch": "main",
-          "pushed_at": "2026-11-18T21:59:13Z",
+          "pushed_at": "2026-11-19T22:11:25Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/DARSHAN120806/neuravol-forecast"
@@ -233,7 +233,7 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-11-18T21:21:38Z",
+          "pushed_at": "2026-11-19T21:25:29Z",
           "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
@@ -458,7 +458,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-19T11:58:06Z",
+          "pushed_at": "2026-11-20T12:02:54Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
