@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-20T12:07:16.458225+00:00",
+  "timestamp_utc": "2026-11-21T11:42:20.615974+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 37242,
+          "downloads": 37397,
           "likes": 1,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 23329,
+          "downloads": 23162,
           "likes": 8,
           "tags": [
             "language:en",
@@ -65,7 +65,7 @@
         {
           "id": "professorRakesh/india-index-options-1m",
           "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 343,
+          "downloads": 345,
           "likes": 0,
           "tags": [
             "language:en",
@@ -89,7 +89,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 202,
+          "downloads": 200,
           "likes": 1,
           "tags": [
             "language:en",
@@ -113,7 +113,7 @@
         {
           "id": "RahulRao44/india-index-options-1m",
           "last_modified": "2026-11-15T21:08:18.000Z",
-          "downloads": 89,
+          "downloads": 90,
           "likes": 0,
           "tags": [
             "language:en",
@@ -137,7 +137,7 @@
         {
           "id": "bsakash137/india-index-options-1m",
           "last_modified": "2026-11-17T16:49:04.000Z",
-          "downloads": 60,
+          "downloads": 65,
           "likes": 0,
           "tags": [
             "language:en",
@@ -185,8 +185,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-19T22:51:49.000Z",
-          "downloads": 333,
+          "last_modified": "2026-11-20T22:50:12.000Z",
+          "downloads": 336,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -212,19 +212,19 @@
       "status": "OK",
       "sources": [
         {
-          "full_name": "gokuls456/straddlecore",
-          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
+          "full_name": "krishansainicool-del/saini-algo-studio",
+          "description": "Python algorithmic trading & backtesting platform for NIFTY options: 30+ strategies tested on 2021-2025 data, paper/live engines with risk controls (README only, code private)",
           "default_branch": "main",
-          "pushed_at": "2026-11-20T10:10:07Z",
+          "pushed_at": "2026-11-21T06:40:31Z",
           "stars": 0,
           "license": null,
-          "url": "https://github.com/gokuls456/straddlecore"
+          "url": "https://github.com/krishansainicool-del/saini-algo-studio"
         },
         {
           "full_name": "DARSHAN120806/neuravol-forecast",
           "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
           "default_branch": "main",
-          "pushed_at": "2026-11-19T22:11:25Z",
+          "pushed_at": "2026-11-20T21:50:46Z",
           "stars": 1,
           "license": null,
           "url": "https://github.com/DARSHAN120806/neuravol-forecast"
@@ -233,10 +233,19 @@
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-11-19T21:25:29Z",
+          "pushed_at": "2026-11-20T21:01:33Z",
           "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "gokuls456/straddlecore",
+          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
+          "default_branch": "main",
+          "pushed_at": "2026-11-20T10:10:07Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/gokuls456/straddlecore"
         },
         {
           "full_name": "VibeCoderMVP/NiftyOptionsBacktest",
@@ -381,15 +390,6 @@
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/NubraAPI/nubra-cookbook"
-        },
-        {
-          "full_name": "Krishang2004/options-strategy-reports",
-          "description": "Public static dashboard of NIFTY/SENSEX backtest strategy reports",
-          "default_branch": "master",
-          "pushed_at": "2026-10-22T08:24:48Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/Krishang2004/options-strategy-reports"
         }
       ],
       "result_count": 20
@@ -458,7 +458,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-20T12:02:54Z",
+          "pushed_at": "2026-11-21T05:30:25Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -564,5 +564,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "new_unique_source_leads_added": 1
 }
