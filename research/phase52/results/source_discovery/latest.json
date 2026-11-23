@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-22T11:59:26.690003+00:00",
+  "timestamp_utc": "2026-11-23T13:35:23.170967+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 37449,
+          "downloads": 37464,
           "likes": 1,
           "tags": [
             "language:en",
@@ -41,7 +41,7 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 22312,
+          "downloads": 21643,
           "likes": 8,
           "tags": [
             "language:en",
@@ -65,7 +65,7 @@
         {
           "id": "professorRakesh/india-index-options-1m",
           "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 346,
+          "downloads": 355,
           "likes": 0,
           "tags": [
             "language:en",
@@ -89,7 +89,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 202,
+          "downloads": 204,
           "likes": 1,
           "tags": [
             "language:en",
@@ -137,7 +137,7 @@
         {
           "id": "bsakash137/india-index-options-1m",
           "last_modified": "2026-11-17T16:49:04.000Z",
-          "downloads": 68,
+          "downloads": 72,
           "likes": 0,
           "tags": [
             "language:en",
@@ -185,8 +185,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-20T22:50:12.000Z",
-          "downloads": 339,
+          "last_modified": "2026-11-22T23:37:31.000Z",
+          "downloads": 370,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -211,6 +211,15 @@
       "query_url": "https://api.github.com/search/repositories?q=NIFTY+options+backtest&per_page=20&sort=updated",
       "status": "OK",
       "sources": [
+        {
+          "full_name": "gokuls456/straddlecore",
+          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
+          "default_branch": "main",
+          "pushed_at": "2026-11-23T10:10:19Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/gokuls456/straddlecore"
+        },
         {
           "full_name": "krishansainicool-del/saini-algo-studio",
           "description": "Python algorithmic trading & backtesting platform for NIFTY options: 30+ strategies tested on 2021-2025 data, paper/live engines with risk controls (README only, code private)",
@@ -239,15 +248,6 @@
           "url": "https://github.com/karbburn/nifty-option-simulator"
         },
         {
-          "full_name": "gokuls456/straddlecore",
-          "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
-          "default_branch": "main",
-          "pushed_at": "2026-11-20T10:10:07Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/gokuls456/straddlecore"
-        },
-        {
           "full_name": "VibeCoderMVP/NiftyOptionsBacktest",
           "description": "Nifty weekly options theta harvest strategy — backtested Jan 2023-Jun 2026 via Dhan API, DuckDB + Parquet",
           "default_branch": "master",
@@ -257,6 +257,15 @@
           "url": "https://github.com/VibeCoderMVP/NiftyOptionsBacktest"
         },
         {
+          "full_name": "Srinath-exe/stratify-mcp",
+          "description": "MCP server for backtesting NIFTY and SENSEX options strategies on real 1-minute data, from ChatGPT, Claude or any MCP client",
+          "default_branch": "main",
+          "pushed_at": "2026-11-15T04:23:30Z",
+          "stars": 2,
+          "license": "NOASSERTION",
+          "url": "https://github.com/Srinath-exe/stratify-mcp"
+        },
+        {
           "full_name": "ujjawalparashar/NIFTY50-Options-Backtesting-System",
           "description": "NIFTY 50 Historical Data Analysis and Options Strategy Backtesting System",
           "default_branch": "main",
@@ -264,15 +273,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/ujjawalparashar/NIFTY50-Options-Backtesting-System"
-        },
-        {
-          "full_name": "Srinath-exe/stratify-mcp",
-          "description": "MCP server for backtesting NIFTY and SENSEX options strategies on real 1-minute data, from ChatGPT, Claude or any MCP client",
-          "default_branch": "main",
-          "pushed_at": "2026-11-15T04:23:30Z",
-          "stars": 1,
-          "license": "NOASSERTION",
-          "url": "https://github.com/Srinath-exe/stratify-mcp"
         },
         {
           "full_name": "Kandarp-Uchiha/nifty-options-core",
@@ -458,7 +458,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-21T20:24:04Z",
+          "pushed_at": "2026-11-23T13:02:59Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
