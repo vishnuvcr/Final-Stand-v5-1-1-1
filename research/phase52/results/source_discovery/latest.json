@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-25T13:30:59.026793+00:00",
+  "timestamp_utc": "2026-11-26T13:08:23.253380+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -185,7 +185,7 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-24T22:47:08.000Z",
+          "last_modified": "2026-11-25T23:11:11.000Z",
           "downloads": 375,
           "likes": 0,
           "tags": [
@@ -215,28 +215,46 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-25T10:10:30Z",
+          "pushed_at": "2026-11-26T10:10:11Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
         },
         {
-          "full_name": "Viprasol-Tech/claude-options-trading-skills",
-          "description": "Free Claude Code skills for options software: Greeks and implied volatility, exact multi-leg payoffs, option chain data, spread orders on IBKR/Alpaca/Tradier/Kite, NSE & SEBI F&O rules, honest options backtests.",
+          "full_name": "DARSHAN120806/neuravol-forecast",
+          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
           "default_branch": "main",
-          "pushed_at": "2026-11-25T10:08:14Z",
-          "stars": 0,
-          "license": "MIT",
-          "url": "https://github.com/Viprasol-Tech/claude-options-trading-skills"
+          "pushed_at": "2026-11-25T23:08:05Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
         },
         {
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-11-24T22:59:11Z",
+          "pushed_at": "2026-11-25T22:26:49Z",
           "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "kunnjganatraa/nifty-options-backtest",
+          "description": "Nifty weekly short strangle backtest: 72.4% win rate net loss. Code and trade log.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-25T16:33:19Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/kunnjganatraa/nifty-options-backtest"
+        },
+        {
+          "full_name": "Viprasol-Tech/claude-options-trading-skills",
+          "description": "Free Claude Code skills for options software: Greeks and implied volatility, exact multi-leg payoffs, option chain data, spread orders on IBKR/Alpaca/Tradier/Kite, NSE & SEBI F&O rules, honest options backtests.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-25T13:54:57Z",
+          "stars": 0,
+          "license": "MIT",
+          "url": "https://github.com/Viprasol-Tech/claude-options-trading-skills"
         },
         {
           "full_name": "shivam61/nifty-options-backtester",
@@ -255,15 +273,6 @@
           "stars": 2,
           "license": "NOASSERTION",
           "url": "https://github.com/Srinath-exe/stratify-mcp"
-        },
-        {
-          "full_name": "DARSHAN120806/neuravol-forecast",
-          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
-          "default_branch": "main",
-          "pushed_at": "2026-11-24T01:42:38Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
         },
         {
           "full_name": "krishansainicool-del/saini-algo-studio",
@@ -381,15 +390,6 @@
           "stars": 1,
           "license": "MIT",
           "url": "https://github.com/mahav235-svg/nifty-options-lab"
-        },
-        {
-          "full_name": "ONKAR-PATIL-01/optwise-dashboard",
-          "description": "Broker-style options backtesting dashboard for NIFTY — static front-end",
-          "default_branch": "main",
-          "pushed_at": "2026-10-24T05:50:43Z",
-          "stars": 0,
-          "license": null,
-          "url": "https://github.com/ONKAR-PATIL-01/optwise-dashboard"
         }
       ],
       "result_count": 20
