@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-26T13:08:23.253380+00:00",
+  "timestamp_utc": "2026-11-27T13:02:06.528943+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -42,7 +42,7 @@
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
           "downloads": 20935,
-          "likes": 10,
+          "likes": 11,
           "tags": [
             "language:en",
             "license:cc-by-nc-4.0",
@@ -185,7 +185,7 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-25T23:11:11.000Z",
+          "last_modified": "2026-11-26T23:24:40.000Z",
           "downloads": 375,
           "likes": 0,
           "tags": [
@@ -215,28 +215,28 @@
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
-          "pushed_at": "2026-11-26T10:10:11Z",
+          "pushed_at": "2026-11-27T10:10:26Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
         },
         {
-          "full_name": "DARSHAN120806/neuravol-forecast",
-          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
-          "default_branch": "main",
-          "pushed_at": "2026-11-25T23:08:05Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
-        },
-        {
           "full_name": "karbburn/nifty-option-simulator",
           "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
           "default_branch": "main",
-          "pushed_at": "2026-11-25T22:26:49Z",
+          "pushed_at": "2026-11-26T22:15:48Z",
           "stars": 2,
           "license": null,
           "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "DARSHAN120806/neuravol-forecast",
+          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-26T20:15:28Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
         },
         {
           "full_name": "kunnjganatraa/nifty-options-backtest",
@@ -458,7 +458,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-24T19:17:15Z",
+          "pushed_at": "2026-11-27T11:27:20Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -468,7 +468,7 @@
           "description": "Claude skills for intraday trading on NSE/BSE: index charts, option chain analytics, F&O strategies incl. option selling, sizing in lots with Indian charges, a PASS/BLOCK risk gate and broker-neutral tickets. Never places orders.",
           "default_branch": "main",
           "pushed_at": "2026-11-04T16:41:38Z",
-          "stars": 1,
+          "stars": 2,
           "license": "MIT",
           "url": "https://github.com/iamsanaur/indian-day-trader"
         },
@@ -564,5 +564,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 1
+  "new_unique_source_leads_added": 0
 }
