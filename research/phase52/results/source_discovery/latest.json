@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "timestamp_utc": "2026-11-27T13:02:06.528943+00:00",
+  "timestamp_utc": "2026-11-28T12:14:25.117349+00:00",
   "status": "SOURCE_DISCOVERY_ONLY_NOT_BACKTEST_EVIDENCE",
   "credentials_present": {
     "HF_TOKEN": true,
@@ -17,7 +17,7 @@
         {
           "id": "hariballabh/india-index-options-1m",
           "last_modified": "2026-11-06T20:50:03.000Z",
-          "downloads": 37579,
+          "downloads": 37730,
           "likes": 1,
           "tags": [
             "language:en",
@@ -41,8 +41,8 @@
         {
           "id": "thetrademarkk/india-index-options-1m",
           "last_modified": "2026-07-12T18:21:26.000Z",
-          "downloads": 20935,
-          "likes": 11,
+          "downloads": 20094,
+          "likes": 13,
           "tags": [
             "language:en",
             "license:cc-by-nc-4.0",
@@ -65,7 +65,7 @@
         {
           "id": "professorRakesh/india-index-options-1m",
           "last_modified": "2026-11-06T14:08:43.000Z",
-          "downloads": 361,
+          "downloads": 778,
           "likes": 0,
           "tags": [
             "language:en",
@@ -89,7 +89,7 @@
         {
           "id": "codepyx23/india-index-options-1m",
           "last_modified": "2026-09-08T19:30:45.000Z",
-          "downloads": 250,
+          "downloads": 245,
           "likes": 1,
           "tags": [
             "language:en",
@@ -111,33 +111,9 @@
           "url": "https://huggingface.co/datasets/codepyx23/india-index-options-1m"
         },
         {
-          "id": "RahulRao44/india-index-options-1m",
-          "last_modified": "2026-11-15T21:08:18.000Z",
-          "downloads": 100,
-          "likes": 0,
-          "tags": [
-            "language:en",
-            "license:cc-by-nc-4.0",
-            "size_categories:100M<n<1B",
-            "format:parquet",
-            "modality:tabular",
-            "modality:text",
-            "library:datasets",
-            "library:dask",
-            "library:polars",
-            "library:mlcroissant",
-            "region:us",
-            "finance",
-            "options",
-            "india",
-            "nifty"
-          ],
-          "url": "https://huggingface.co/datasets/RahulRao44/india-index-options-1m"
-        },
-        {
           "id": "bsakash137/india-index-options-1m",
           "last_modified": "2026-11-17T16:49:04.000Z",
-          "downloads": 76,
+          "downloads": 159,
           "likes": 0,
           "tags": [
             "language:en",
@@ -157,6 +133,30 @@
             "nifty"
           ],
           "url": "https://huggingface.co/datasets/bsakash137/india-index-options-1m"
+        },
+        {
+          "id": "RahulRao44/india-index-options-1m",
+          "last_modified": "2026-11-15T21:08:18.000Z",
+          "downloads": 121,
+          "likes": 0,
+          "tags": [
+            "language:en",
+            "license:cc-by-nc-4.0",
+            "size_categories:100M<n<1B",
+            "format:parquet",
+            "modality:tabular",
+            "modality:text",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "finance",
+            "options",
+            "india",
+            "nifty"
+          ],
+          "url": "https://huggingface.co/datasets/RahulRao44/india-index-options-1m"
         }
       ],
       "result_count": 6
@@ -185,8 +185,8 @@
       "sources": [
         {
           "id": "average-developer/stocks-INDIAVIX-1D-candles",
-          "last_modified": "2026-11-26T23:24:40.000Z",
-          "downloads": 375,
+          "last_modified": "2026-11-27T22:50:51.000Z",
+          "downloads": 392,
           "likes": 0,
           "tags": [
             "size_categories:n<1K",
@@ -212,6 +212,33 @@
       "status": "OK",
       "sources": [
         {
+          "full_name": "DARSHAN120806/neuravol-forecast",
+          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-27T22:44:43Z",
+          "stars": 1,
+          "license": null,
+          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
+        },
+        {
+          "full_name": "karbburn/nifty-option-simulator",
+          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
+          "default_branch": "main",
+          "pushed_at": "2026-11-27T21:55:30Z",
+          "stars": 2,
+          "license": null,
+          "url": "https://github.com/karbburn/nifty-option-simulator"
+        },
+        {
+          "full_name": "KartikPawar1411/nifty-options-volatility-lab",
+          "description": "NIFTY/BANKNIFTY implied-volatility lab: C++17 Black-76 core via pybind11, SVI surfaces, India VIX replication, delta-hedged backtest and portfolio risk",
+          "default_branch": "main",
+          "pushed_at": "2026-11-27T16:47:26Z",
+          "stars": 0,
+          "license": null,
+          "url": "https://github.com/KartikPawar1411/nifty-options-volatility-lab"
+        },
+        {
           "full_name": "gokuls456/straddlecore",
           "description": "NIFTY options backtest studio + Telegram strategy signal alerts",
           "default_branch": "main",
@@ -219,24 +246,6 @@
           "stars": 0,
           "license": null,
           "url": "https://github.com/gokuls456/straddlecore"
-        },
-        {
-          "full_name": "karbburn/nifty-option-simulator",
-          "description": "A research and backtesting tool for NIFTY 50 that measures weekday‑pair gap probabilities, converts them into CE/PE trade rules, prices options with Black–Scholes, manages trades through a GTT‑style premium‑percentage exit ladder, and reports results , including their limitations.",
-          "default_branch": "main",
-          "pushed_at": "2026-11-26T22:15:48Z",
-          "stars": 2,
-          "license": null,
-          "url": "https://github.com/karbburn/nifty-option-simulator"
-        },
-        {
-          "full_name": "DARSHAN120806/neuravol-forecast",
-          "description": "Neural forecasting of the NIFTY 50 implied-volatility surface: NSE data pipeline, SVI surfaces, GRU factor model, walk-forward tests, options backtest and Streamlit dashboard.",
-          "default_branch": "main",
-          "pushed_at": "2026-11-26T20:15:28Z",
-          "stars": 1,
-          "license": null,
-          "url": "https://github.com/DARSHAN120806/neuravol-forecast"
         },
         {
           "full_name": "kunnjganatraa/nifty-options-backtest",
@@ -381,15 +390,6 @@
           "stars": 0,
           "license": "MIT",
           "url": "https://github.com/ShubhamGarje99/teji"
-        },
-        {
-          "full_name": "mahav235-svg/nifty-options-lab",
-          "description": "NIFTY options research and execution: NSE F&O data, cost-aware backtests with walk-forward and multiple-testing checks, and an Upstox paper-trading layer",
-          "default_branch": "main",
-          "pushed_at": "2026-10-27T03:40:09Z",
-          "stars": 1,
-          "license": "MIT",
-          "url": "https://github.com/mahav235-svg/nifty-options-lab"
         }
       ],
       "result_count": 20
@@ -458,7 +458,7 @@
           "full_name": "mevishalsonawane-ai/options-lab",
           "description": "Net-of-cost research harness for intraday Indian index options, and the one strategy that survived it.",
           "default_branch": "main",
-          "pushed_at": "2026-11-27T11:27:20Z",
+          "pushed_at": "2026-11-27T17:10:57Z",
           "stars": 0,
           "license": null,
           "url": "https://github.com/mevishalsonawane-ai/options-lab"
@@ -564,5 +564,5 @@
     }
   ],
   "interpretation": "Search results are unverified discovery leads. A candidate only enters numerical testing after exact rules, data provenance, licensing and timestamp/contract coverage are audited. Do not treat stars, downloads, video views or author P&L claims as evidence.",
-  "new_unique_source_leads_added": 0
+  "new_unique_source_leads_added": 1
 }
